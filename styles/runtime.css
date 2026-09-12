@@ -1,0 +1,144 @@
+.pf2e-auto-runtime-card .pf2e-auto-runtime-effects {
+    margin: 0.5rem 0;
+    padding-left: 1.25rem;
+}
+
+.pf2e-auto-runtime-card .pf2e-auto-runtime-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.5rem;
+}
+
+.pf2e-auto-runtime-button[disabled] {
+    opacity: 0.65;
+}
+
+.pf2e-auto-save-targets {
+    display: grid;
+    gap: 0.35rem;
+    margin: 0.4rem 0;
+    padding: 0;
+    list-style: none;
+}
+
+.pf2e-auto-save-target {
+    padding: 0.35rem;
+    border: 1px solid var(--color-border-light-2, #9996);
+    border-radius: 3px;
+}
+
+.pf2e-auto-save-target button {
+    width: 100%;
+    margin-top: 0.25rem;
+}
+
+.pf2e-auto-save-reroll {
+    opacity: 0.75;
+}
+
+.pf2e-auto-save-result {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.12rem 0.35rem;
+    border: 1px solid currentColor;
+    border-radius: 3px;
+    font-size: 1.02em;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.pf2e-auto-save-result.criticalSuccess { color: var(--color-pf-text-critical-success, green); }
+.pf2e-auto-save-result.success { color: var(--color-pf-text-success, blue); }
+.pf2e-auto-save-result.failure { color: var(--color-pf-text-failure, orangered); }
+.pf2e-auto-save-result.criticalFailure { color: var(--color-pf-text-critical-failure, red); }
+
+.pf2e-auto-save-result small {
+    opacity: 0.75;
+    font-size: 0.72rem;
+    font-weight: 500;
+}
+
+.pf2e-auto-result-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.4rem;
+}
+
+.pf2e-auto-result-heading > strong,
+.pf2e-auto-secondary-result > strong {
+    min-width: 0;
+}
+
+.pf2e-auto-damage-results {
+    display: grid;
+    gap: 0.3rem;
+    margin-top: 0.35rem;
+}
+
+.pf2e-auto-damage-result {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.45rem;
+    border: 1px solid currentColor;
+    border-radius: 4px;
+    font-size: 1.02em;
+}
+
+.pf2e-auto-damage-result strong {
+    font-size: 1.12em;
+    line-height: 1;
+}
+
+.pf2e-auto-damage-result small {
+    font-weight: 700;
+}
+
+.pf2e-auto-damage-result span:last-child {
+    margin-left: auto;
+    font-weight: 600;
+}
+
+.pf2e-auto-damage-icon {
+    font-size: 1.05em;
+}
+
+.pf2e-auto-result-conditions {
+    margin-top: 0.35rem;
+}
+
+.pf2e-auto-secondary-save,
+.pf2e-auto-secondary-result {
+    margin-top: 0.35rem;
+    padding: 0.3rem;
+    border-left: 3px solid var(--color-border-highlight, #7a7971);
+    background: color-mix(in srgb, currentColor 5%, transparent);
+}
+
+.pf2e-auto-secondary-result {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.35rem;
+}
+
+.pf2e-auto-outcome-damage {
+    display: grid;
+    gap: 0.25rem;
+    margin: 0.35rem 0;
+}
+
+.pf2e-auto-outcome-damage > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.35rem;
+}
+
+.pf2e-auto-save-button[disabled] {
+    opacity: 0.65;
+}

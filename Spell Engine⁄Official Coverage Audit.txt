@@ -1,0 +1,43 @@
+Freeze the current macro as the behavioral baseline
+
+Build an official-content coverage analyzer
+
+Define the normalized ability model
+
+Create the module shell without rewriting behavior
+
+Add durable cast and effect control
+
+Resume spell coverage systematically
+Recommended order:
+1. Structured basic-save damage.
+2. Non-basic degree outcomes.
+3. Conditions and timed effects.
+4. Sustained spells.
+5. Secondary and repeated saves.
+6. Target-dependent damage and healing.
+7. Areas and repeated exposures.
+8. Complex state machines.
+9. Guided/narrative effects.
+
+When to expand beyond spells
+Do not wait until every official spell is perfect. That could take indefinitely.
+Expand to actions after these engine capabilities are stable:
+- Source identification.
+- Normalized ability model.
+- Native save workflow.
+- Provisional results and rerolls.
+- Confirmed application.
+- Persistent cast ledger.
+- Timed and sustained effects.
+- Parser coverage reporting.
+At that point, one representative feature from each category should be implemented:
+- A kineticist impulse.
+- A monster breath weapon.
+- A monster aura reminder.
+- A hazard reaction.
+- An activated consumable.
+
+Recommended immediate milestone
+I would name the next milestone:
+Spell Engine Baseline and Official Coverage Audit

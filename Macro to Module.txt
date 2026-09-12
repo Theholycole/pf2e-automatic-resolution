@@ -1,0 +1,83 @@
+Recommended transition strategy
+
+Phase 1: Wrap it unchanged
+Create the module shell and run the current macro from the module entry point.
+Objective:
+- Confirm the module behaves exactly like macro v8.40.
+- Stop requiring the GM to execute it manually.
+- Establish versioning and compatibility metadata.
+No major logic changes should happen here.
+
+Phase 2: Introduce a namespace
+Move exposed state and public operations under one module object, such as:
+game.pf2eResolution = {
+    api,
+    state,
+    version
+};
+Replace scattered globalThis variables with a controlled runtime object.
+
+Phase 3: Extract low-risk utilities
+Move components with few side effects first:
+- Text normalization.
+- HTML and inline-markup parsing.
+- Duration parsing.
+- Damage-expression parsing.
+- Degree normalization.
+- Condition catalog handling.
+These are also the easiest pieces to unit test.
+
+Phase 4: Formalize the normalized model
+Currently automationProfile, outcome objects, result groups, flows, and managed-effect specifications collectively serve this purpose. They should become an explicit, documented schema.
+Every source adapter should produce the same model regardless of whether the source is a spell, feat, impulse, NPC action, hazard action, or consumable.
+This is the most important architectural step.
+
+Phase 5: Extract the executor
+Centralize:
+- Saves and checks.
+- Damage and healing.
+- Conditions.
+- Native spell effects.
+- Timed effects.
+- Recovery saves.
+- Target eligibility.
+- Manual decisions.
+The executor should not care what kind of item produced the rule model.
+
+Phase 6: Make the ledger durable
+Persist enough information to recover safely after:
+- Browser reload.
+- GM disconnection.
+- A different GM becoming active.
+- Foundry restart.
+- Chat-card deletion.
+- An interrupted damage application.
+Every operation should have a stable identity such as:
+source-use ID + trigger ID + target UUID + outcome component ID
+That makes result application idempotent: repeating an event cannot apply the same component twice.
+
+Phase 7: Add GM authority coordination
+Only one GM client should:
+- Interpret new messages.
+- Create automatic saves.
+- Apply actor mutations.
+- Process aura triggers.
+- Advance timed effects.
+Other clients may render controls, but they should send requests to the authoritative GM executor. This becomes especially important once movement-triggered auras are introduced.
+
+Phase 8: Add new source adapters
+Once the common engine exists, expand in this order:
+1. Feats and kineticist impulses.
+2. NPC actions and abilities.
+3. Consumables and other item activations.
+4. Hazards.
+5. Automatic auras and spatial triggers.
+Auras should come last because they add a new event-detection problem, not merely a new source type.
+
+
+My recommendation
+Do not add the four new content categories directly to the current macro. First convert the existing behavior into a module and formalize the normalized ability model.
+The safest path is:
+Wrap first, preserve behavior, extract incrementally, then expand scope.
+
+The project is already past the size where a single macro remains efficient. The conversion is not especially difficult because Foundry lacks the necessary capabilities—it is difficult because the existing engine is large and needs to remain behaviorally stable while its internal boundaries are changed.

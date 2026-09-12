@@ -1,0 +1,87 @@
+PF2e Automatic Spell Resolution v8.40 ENABLED foundry.mjs line 52346 > AsyncFunction:11485:9
+Explicit spell overrides:
+Array []
+foundry.mjs line 52346 > AsyncFunction:11489:9
+Automatic rule 1: structured PF2e Basic Save + damage + generic condition riders foundry.mjs line 52346 > AsyncFunction:11490:9
+Automatic rule 2: non-basic save outcome text + structured OR per-degree damage foundry.mjs line 52346 > AsyncFunction:11491:9
+Automatic rule 3: no-damage condition-only saves from degree sections or compact prose foundry.mjs line 52346 > AsyncFunction:11492:9
+Automatic rule 4: no-save target-level spells resolve directly from the spell card foundry.mjs line 52346 > AsyncFunction:11493:9
+Automatic rule 5: manual-trigger multi-save crossing spells resolve directly from the spell card foundry.mjs line 52346 > AsyncFunction:11494:9
+Automatic rule 6: cast-once random damage tables + per-creature choices + repeated exposures foundry.mjs line 52346 > AsyncFunction:11495:9
+v8.40: native reroll tracking and immediate chain stopping; run once in the active GM browser after reload foundry.mjs line 52346 > AsyncFunction:11496:9
+Foundry VTT | Rendering NPCSheetPF2e foundry.mjs:42497:15
+Foundry VTT | Retrieved and compiled template systems/pf2e/templates/items/partials/spell-description-prepend.hbs foundry.mjs:88163:15
+Foundry VTT | Retrieved and compiled template systems/pf2e/templates/chat/spell-card.hbs foundry.mjs:88163:15
+PF2e Auto Spell Resolution | Resolved actor from scene token: Orven Quillwake, the Walking Wizard foundry.mjs line 52346 > AsyncFunction:383:13
+PF2e Auto Spell Resolution | Cached spell cast:
+Object { castId: "G6xHXGgqtvYAGUuk", spell: "Chain Lightning", caster: "Orven Quillwake, the Walking Wizard", embeddedSpell: true, save: "reflex", dc: 40, castRank: 6, itemBasicSave: true, structuredDamage: 1, heightening: "interval" }
+foundry.mjs line 52346 > AsyncFunction:383:13
+PF2e Auto Spell Resolution | SPELL ITEM INSPECTION:
+Object { spell: "Chain Lightning", castRank: 6, saveType: "reflex", basicSave: true, damageCount: 1, damageKinds: (1) […], damageComponents: (1) […], heighteningType: "interval" }
+foundry.mjs line 52346 > AsyncFunction:383:13
+Foundry VTT | Constructed index of pf2e.conditionitems Compendium containing 43 entries foundry.mjs:27806:13
+PF2e Auto Spell Resolution | Master resolution card created:
+Object { spell: "Chain Lightning", castId: "G6xHXGgqtvYAGUuk", cycle: 1, messageId: "U3Oi8xBIqqKrjySk" }
+foundry.mjs line 52346 > AsyncFunction:383:13
+PF2e Auto Spell Resolution | Activated spell card:
+Object { spell: "Chain Lightning", castId: "G6xHXGgqtvYAGUuk", cycle: 1 }
+foundry.mjs line 52346 > AsyncFunction:383:13
+Foundry VTT | Rendering CheckModifiersDialog foundry.mjs:42497:15
+Foundry VTT | Retrieved and compiled template systems/pf2e/templates/chat/check-modifiers-dialog.hbs foundry.mjs:88163:15
+PF2e Auto Spell Resolution | Resolved actor from scene token: Void Zombie foundry.mjs line 52346 > AsyncFunction:383:13
+PF2e Auto Spell Resolution | Associated save:
+Object { target: "Void Zombie", spell: "Chain Lightning", degree: "criticalFailure", reroll: false, castId: "G6xHXGgqtvYAGUuk", cycle: 1, automation: "interactive-spell" }
+foundry.mjs line 52346 > AsyncFunction:383:13
+PF2e Auto Spell Resolution | CHAIN SAVE UPDATED:
+Object { spell: "Chain Lightning", castId: "G6xHXGgqtvYAGUuk", target: "Void Zombie", degree: "criticalFailure", reroll: false, entryId: "entry-1", stoppedAt: null, skipped: [], reviewRequired: false }
+foundry.mjs line 52346 > AsyncFunction:383:13
+PF2e Auto Spell Resolution | Activated spell card:
+Object { spell: "Chain Lightning", castId: "G6xHXGgqtvYAGUuk", cycle: 1 }
+foundry.mjs line 52346 > AsyncFunction:383:13
+Foundry VTT | Rendering CheckModifiersDialog foundry.mjs:42497:15
+PF2e Auto Spell Resolution | Resolved actor from scene token: Troll King foundry.mjs line 52346 > AsyncFunction:383:13
+PF2e Auto Spell Resolution | Associated save:
+Object { target: "Troll King", spell: "Chain Lightning", degree: "failure", reroll: false, castId: "G6xHXGgqtvYAGUuk", cycle: 1, automation: "interactive-spell" }
+foundry.mjs line 52346 > AsyncFunction:383:13
+PF2e Auto Spell Resolution | CHAIN SAVE UPDATED:
+Object { spell: "Chain Lightning", castId: "G6xHXGgqtvYAGUuk", target: "Troll King", degree: "failure", reroll: false, entryId: "entry-2", stoppedAt: null, skipped: [], reviewRequired: false }
+foundry.mjs line 52346 > AsyncFunction:383:13
+PF2e Auto Spell Resolution | Activated spell card:
+Object { spell: "Chain Lightning", castId: "G6xHXGgqtvYAGUuk", cycle: 1 }
+foundry.mjs line 52346 > AsyncFunction:383:13
+Foundry VTT | Rendering CheckModifiersDialog foundry.mjs:42497:15
+PF2e Auto Spell Resolution | Resolved actor from scene token: Grandmaster foundry.mjs line 52346 > AsyncFunction:383:13
+PF2e Auto Spell Resolution | Associated save:
+Object { target: "Grandmaster", spell: "Chain Lightning", degree: "failure", reroll: false, castId: "G6xHXGgqtvYAGUuk", cycle: 1, automation: "interactive-spell" }
+foundry.mjs line 52346 > AsyncFunction:383:13
+PF2e Auto Spell Resolution | CHAIN SAVE UPDATED:
+Object { spell: "Chain Lightning", castId: "G6xHXGgqtvYAGUuk", target: "Grandmaster", degree: "failure", reroll: false, entryId: "entry-3", stoppedAt: null, skipped: [], reviewRequired: false }
+foundry.mjs line 52346 > AsyncFunction:383:13
+PF2e Auto Spell Resolution | Activated spell card:
+Object { spell: "Chain Lightning", castId: "G6xHXGgqtvYAGUuk", cycle: 1 }
+foundry.mjs line 52346 > AsyncFunction:383:13
+Foundry VTT | Rendering CheckModifiersDialog foundry.mjs:42497:15
+PF2e Auto Spell Resolution | Resolved actor from scene token: Halaster Blackcloak foundry.mjs line 52346 > AsyncFunction:383:13
+PF2e Auto Spell Resolution | Associated save:
+Object { target: "Halaster Blackcloak", spell: "Chain Lightning", degree: "criticalSuccess", reroll: false, castId: "G6xHXGgqtvYAGUuk", cycle: 1, automation: "interactive-spell" }
+foundry.mjs line 52346 > AsyncFunction:383:13
+PF2e Auto Spell Resolution | CHAIN SAVE UPDATED:
+Object { spell: "Chain Lightning", castId: "G6xHXGgqtvYAGUuk", target: "Halaster Blackcloak", degree: "criticalSuccess", reroll: false, entryId: "entry-4", stoppedAt: "entry-4", skipped: [], reviewRequired: false }
+foundry.mjs line 52346 > AsyncFunction:383:13
+PF2e Auto Spell Resolution | PF2e SPELL DAMAGE READ:
+Object { spell: "Chain Lightning", castRank: 6, resolvedRank: 6, formula: "8d12 electricity", save: {…}, rawDamage: {…}, heightening: {…} }
+foundry.mjs line 52346 > AsyncFunction:383:13
+PF2e Auto Spell Resolution | Applying automatic save damage:
+Object { spell: "Chain Lightning", target: "Void Zombie", multiplier: 2, originalTotal: 52, formula: "8d12 electricity", effectiveFormula: "2 * 8d12 electricity", targetDamageSubstitutions: [], cycle: 1 }
+foundry.mjs line 52346 > AsyncFunction:383:13
+PF2e Auto Spell Resolution | Applying automatic save damage:
+Object { spell: "Chain Lightning", target: "Troll King", multiplier: 1, originalTotal: 52, formula: "8d12 electricity", effectiveFormula: "8d12 electricity", targetDamageSubstitutions: [], cycle: 1 }
+foundry.mjs line 52346 > AsyncFunction:383:13
+PF2e Auto Spell Resolution | Applying automatic save damage:
+Object { spell: "Chain Lightning", target: "Grandmaster", multiplier: 1, originalTotal: 52, formula: "8d12 electricity", effectiveFormula: "8d12 electricity", targetDamageSubstitutions: [], cycle: 1 }
+foundry.mjs line 52346 > AsyncFunction:383:13
+PF2e Auto Spell Resolution | RESET SPELL RESOLUTION CYCLE:
+Object { spell: "Chain Lightning", castId: "G6xHXGgqtvYAGUuk", cycle: 2, reason: "master resolution card deleted" }
+foundry.mjs line 52346 > AsyncFunction:383:13
+PF2e Auto Spell Resolution | Original spell card deleted; removed cast:
+Object { spell: "Chain Lightning", castId: "G6xHXGgqtvYAGUuk" }

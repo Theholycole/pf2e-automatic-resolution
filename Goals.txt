@@ -1,0 +1,6 @@
+The ability to automate every official PF2e spell and their effects in foundry as efficiently as possible. This should work on custom spells too assuming they use the same language as official spells.
+The ability to automate non-spell player effects such as Feat abilities or spell-like abilities such as those used by the Kineticest class.
+The ability to automate monster abilities in the same way as spells so they can apply effects and damage based on the result of the appropriate save. This includes automatic abilities such as auras which should trigger upon meeting specified conditions.
+To automate results from Hazard saving throws and apply their effects or damage.
+The ability to automate item effects from saving throws or from using the item.
+Accomplish all of the above as efficiently as possible using only Foundry with no external modules or aids. Ideally every feature should build on the same logic and re-purpose logic to enable one feature multiple times helping other features.
