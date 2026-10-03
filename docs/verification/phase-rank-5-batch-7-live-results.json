@@ -1,0 +1,24 @@
+{
+  "label": "rank5Batch7",
+  "passed": true,
+  "at": "2026-10-02T12:51:12.154Z",
+  "details": {
+    "batch7": {
+      "skewer": {
+        "supported": true,
+        "lost": [
+          28,
+          56
+        ],
+        "immobilized": [
+          true,
+          false
+        ],
+        "timer": "1 minutes",
+        "push10": true,
+        "push20": true,
+        "question": true
+      }
+    }
+  }
+}

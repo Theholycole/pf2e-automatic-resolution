@@ -1,0 +1,38 @@
+{
+  "batch": "rank-2-11",
+  "date": "2026-09-30",
+  "world": "pftest",
+  "system": "8.5.0",
+  "core": "14.367",
+  "module": "0.8.2",
+  "results": [
+    {
+      "case": "rank2Batch11",
+      "passed": true,
+      "details": {
+        "flatCheckNote": {
+          "notes": [
+            {
+              "duration": "1 rounds",
+              "flatCheckLink": false,
+              "speak": false,
+              "verbal": false
+            },
+            {
+              "duration": "1 minutes",
+              "flatCheckLink": true,
+              "speak": false,
+              "verbal": true
+            },
+            {
+              "duration": "1 minutes",
+              "flatCheckLink": false,
+              "speak": true,
+              "verbal": false
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

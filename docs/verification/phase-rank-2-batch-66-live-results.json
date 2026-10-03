@@ -1,0 +1,47 @@
+{
+  "label": "rank2Batch66",
+  "passed": true,
+  "at": "2026-10-02T00:44:55.365Z",
+  "details": {
+    "batch66": {
+      "asked": [
+        "lantern living",
+        "lantern undead"
+      ],
+      "light": [
+        5,
+        10
+      ],
+      "save-living": "failure",
+      "save-undead": "criticalFailure",
+      "held": {
+        "living": true,
+        "undead": true
+      },
+      "healInside": 5,
+      "left": false,
+      "healOutside": 10,
+      "reentered": {
+        "held": true,
+        "newCards": 0
+      },
+      "sustained": {
+        "radius": 10,
+        "light": [
+          10,
+          20
+        ],
+        "asked": [
+          "lantern later",
+          "lantern living",
+          "lantern undead"
+        ]
+      },
+      "end": {
+        "living": false,
+        "undead": false,
+        "light": false
+      }
+    }
+  }
+}

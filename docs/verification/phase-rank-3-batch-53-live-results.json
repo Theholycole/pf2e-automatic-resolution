@@ -1,0 +1,29 @@
+{
+  "label": "rank3Batch53",
+  "passed": true,
+  "at": "2026-10-02T18:47:13.350Z",
+  "details": {
+    "batch53": {
+      "hit": {
+        "formula": "5d10 force",
+        "total": 26,
+        "initial": 26,
+        "note": true,
+        "cast": {
+          "formula": "2d10 force",
+          "lost": 9
+        }
+      },
+      "critical": {
+        "formula": "5d10 force",
+        "total": 29,
+        "initial": 58,
+        "note": true,
+        "cast": {
+          "formula": "2 * 2d10 force",
+          "lost": 24
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "module": "0.8.2",
+  "regressions": {
+    "counteractExplosion": true,
+    "counteractSpells": true,
+    "counteractCare": true,
+    "care": true,
+    "cleanup": true
+  },
+  "results": [
+    {
+      "label": "counteractExplosion",
+      "passed": true,
+      "at": "2026-09-26T16:24:43.934Z",
+      "details": {
+        "elementalCounter": {
+          "labels": [
+            "Trigger You or a creature within 60 feet rolls a saving throw against a spell with the earth, fire, metal, plant, water, or wood trait, or are targeted by a spell attack with such a trait.",
+            "Requirements You have a spell slot from which you could Cast a Spell of the triggering spell's countering element; see text.",
+            "PFTEST P23 Affliction Elemental Counter caster loses a rank 4 water spell slot (as if casting it).",
+            "Counteract check vs DC 1: critical success (rank 4 vs 3)",
+            "Test fireball is counteracted: it has no effect."
+          ],
+          "refused": "Elemental Counter: lose a spell of water to counter fire, and give its rank."
+        },
+        "detonateSpell": {
+          "labels": [
+            "Test spell buff: counteract check vs DC 1: critical success (rank 9 vs 5)",
+            "Test spell buff counteracted",
+            "If it's a spell, the effect ends and the explosion affects all creatures in the spell's area, or the spell's target and all creatures within 5 feet of it.",
+            "Explosion: 8d6 force, basic reflex save for 2 creatures (save card posted)."
+          ],
+          "buffGone": true,
+          "targets": 2,
+          "lost": [
+            37,
+            37
+          ],
+          "total": 37
+        },
+        "detonateItem": [
+          "Counteract check vs DC 1: critical success (rank 9 vs 3)",
+          "Test wand is counteracted: it's destroyed; the explosion is a 5-foot emanation from it.",
+          "Explosion: 8d6 force, basic reflex save for 1 creature (save card posted)."
+        ]
+      }
+    }
+  ]
+}

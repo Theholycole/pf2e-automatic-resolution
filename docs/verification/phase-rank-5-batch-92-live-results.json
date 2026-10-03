@@ -1,0 +1,24 @@
+{
+  "label": "rank5Batch92",
+  "passed": true,
+  "at": "2026-10-03T12:55:55.825Z",
+  "details": {
+    "batch92": {
+      "kind": "strike-heal",
+      "first": {
+        "healed": 8,
+        "hp": 50,
+        "amount": 10
+      },
+      "again": "Shall not Falter, Shall not Rout: already recovered this round.",
+      "capped": {
+        "status": "capped",
+        "hp": 50
+      },
+      "third": {
+        "healed": 10,
+        "hp": 50
+      }
+    }
+  }
+}

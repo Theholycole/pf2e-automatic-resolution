@@ -1,0 +1,27 @@
+{
+  "label": "rank5Batch28",
+  "passed": true,
+  "at": "2026-10-02T20:38:04.474Z",
+  "details": {
+    "batch28": {
+      "steps": [
+        {
+          "degree": "failure",
+          "slowed": 2,
+          "effect": true
+        },
+        {
+          "degree": "success",
+          "slowed": 1,
+          "effect": true
+        },
+        {
+          "degree": "success",
+          "slowed": 0,
+          "effect": false
+        }
+      ],
+      "start": 1
+    }
+  }
+}

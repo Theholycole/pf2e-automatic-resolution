@@ -1,0 +1,62 @@
+{
+  "generated": "2026-09-25T23:59:08.094Z",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "breathOfDrought": {
+    "label": "drought",
+    "passed": true,
+    "at": "2026-09-25T23:55:47.663Z",
+    "details": {
+      "initial": 2,
+      "degrees": {
+        "human": {
+          "rolled": "failure",
+          "effective": "failure",
+          "rule": "not-applicable"
+        },
+        "plant": {
+          "rolled": "failure",
+          "effective": "criticalFailure",
+          "rule": "applies"
+        }
+      },
+      "sickened": {
+        "human": 1,
+        "plant": 2
+      },
+      "turnEnd": [
+        "Review PFTEST P23 Affliction drought human's exposure (ended its turn in the area)"
+      ],
+      "ended": "ended"
+    }
+  },
+  "homebrewSustainArea": {
+    "label": "sustainArea",
+    "passed": true,
+    "at": "2026-09-25T23:54:53.922Z",
+    "details": {
+      "sustained": 2,
+      "secondSustainInRound": {
+        "rejected": false,
+        "pendingAfter": 2
+      },
+      "damage": 14,
+      "ended": "ended"
+    }
+  },
+  "regressions": {
+    "petalStorm": {
+      "passed": true,
+      "at": "2026-09-25T23:56:42.713Z"
+    },
+    "songbirdsCall": {
+      "passed": true,
+      "at": "2026-09-25T23:57:26.364Z"
+    }
+  },
+  "cleanup": {
+    "fixtureActors": 0,
+    "combats": 0,
+    "concealmentEffects": 0
+  }
+}

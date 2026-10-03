@@ -1,0 +1,26 @@
+{
+  "label": "rank5Batch63",
+  "passed": true,
+  "at": "2026-10-03T05:26:02.447Z",
+  "details": {
+    "batch63": {
+      "cast": {
+        "kind": "brand-mark",
+        "caster": true,
+        "ally": true,
+        "immune": true,
+        "record": 7
+      },
+      "strike": {
+        "bonus": true
+      },
+      "again": "Celestial Brand: PFTEST P23 Affliction brand fiend is temporarily immune.",
+      "wrong": "Celestial Brand: PFTEST P23 Affliction brand plain isn't unholy.",
+      "ended": {
+        "caster": false,
+        "ally": false,
+        "immune": true
+      }
+    }
+  }
+}

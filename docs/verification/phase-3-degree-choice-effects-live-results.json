@@ -1,0 +1,340 @@
+{
+  "generatedAt": "2026-09-26T18:20:26.146Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "world": "pftest",
+  "results": {
+    "degreeChoiceAndRift": {
+      "label": "degreeChoiceAndRift",
+      "passed": true,
+      "at": "2026-09-26T18:12:07.110Z",
+      "details": {
+        "distractingDecoy": {
+          "failure": {
+            "selection": "failure",
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "offGuardSources": 0,
+            "offGuard": true,
+            "attackPenalty": null,
+            "attackPenalties": [],
+            "moduleOffGuard": 0
+          },
+          "criticalFailure": {
+            "selection": "critical-failure",
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "offGuardSources": 0,
+            "offGuard": true,
+            "attackPenalty": null,
+            "attackPenalties": [
+              -2
+            ]
+          },
+          "success": {
+            "effect": false,
+            "offGuard": false
+          }
+        },
+        "illOmen": {
+          "failure": {
+            "selection": "failure",
+            "rollTwice": [
+              {
+                "keep": "lower"
+              }
+            ]
+          },
+          "criticalFailure": {
+            "selection": "critical-failure",
+            "rollTwice": [
+              {
+                "keep": "lower",
+                "removeAfterRoll": false
+              }
+            ]
+          }
+        },
+        "fiendishRift": {
+          "castResult": {
+            "formula": "7d6 spirit",
+            "total": 30,
+            "extra": 10,
+            "hpLost": 40,
+            "conditions": [
+              "grabbed"
+            ]
+          },
+          "sustainResult": {
+            "formula": "7d6 spirit",
+            "total": 20,
+            "extra": 10,
+            "hpLost": 15,
+            "conditions": [
+              "grabbed"
+            ]
+          },
+          "ended": "ended"
+        }
+      }
+    },
+    "sustainedConditions": {
+      "label": "sustainedConditions",
+      "passed": true,
+      "at": "2026-09-26T18:13:15.691Z",
+      "details": {
+        "windfall": {
+          "asked": true,
+          "afterSustained": {
+            "status": "active",
+            "encumbered": true
+          },
+          "askedAgain": true,
+          "missed": {
+            "status": "ended",
+            "reason": "missed-sustain",
+            "encumbered": false
+          }
+        },
+        "overload": {
+          "stupefied": [
+            2,
+            0
+          ],
+          "expired": {
+            "status": "ended",
+            "reason": "maximum-duration",
+            "stupefied": 0
+          }
+        }
+      }
+    },
+    "conditionalDamage": {
+      "label": "conditionalDamage",
+      "passed": true,
+      "at": "2026-09-26T18:14:28.308Z",
+      "details": {
+        "cascade": {
+          "base": 7,
+          "spirit": 20,
+          "extraFormula": "6d6 spirit",
+          "lost": [
+            27,
+            7,
+            13
+          ]
+        },
+        "graveRay": {
+          "lost": 14,
+          "results": [
+            [
+              "shared",
+              4,
+              4
+            ],
+            [
+              "conditional",
+              10,
+              10
+            ]
+          ]
+        }
+      }
+    },
+    "persistentLinked": {
+      "label": "persistentLinked",
+      "passed": true,
+      "at": "2026-09-26T18:15:00.214Z",
+      "details": {
+        "stickyFire": {
+          "before": {
+            "persistent": [
+              "1d8"
+            ],
+            "enfeebled": 1,
+            "linked": [
+              "Sticky Fire: Enfeebled 1 (while taking persistent fire damage)"
+            ]
+          },
+          "after": {
+            "enfeebled": 0,
+            "linked": 0
+          },
+          "immune": {
+            "persistent": 0,
+            "enfeebled": 0,
+            "notes": [
+              "Enfeebled 1 not applied: the creature isn't taking persistent fire damage."
+            ]
+          }
+        },
+        "widowsBite": {
+          "persistent": [
+            "2 * 3d4"
+          ],
+          "enfeebled": 1,
+          "afterEnfeebled": 0,
+          "afterLinked": 0
+        },
+        "chargedJavelin": {
+          "persistent": 1,
+          "effect": "Spell Effect: Charged Javelin",
+          "linked": 1,
+          "afterEffect": 0
+        }
+      }
+    },
+    "selfConditional": {
+      "label": "selfConditional",
+      "passed": true,
+      "at": "2026-09-26T18:15:34.204Z",
+      "details": {
+        "layAlly": {
+          "healed": 6,
+          "roll": 6,
+          "effects": 1,
+          "acChange": 2
+        },
+        "laySelf": {
+          "healed": 6,
+          "roll": 6,
+          "effects": 0,
+          "acChange": 0
+        },
+        "layFail": {
+          "lost": 5,
+          "total": 5,
+          "acChange": -2,
+          "labels": [
+            "Spell Effect: Lay on Hands"
+          ]
+        },
+        "laySuccess": {
+          "lost": 3,
+          "total": 6,
+          "acChange": 0,
+          "labels": []
+        },
+        "touchSelf": {
+          "healed": 6,
+          "roll": 6,
+          "effects": 1,
+          "acChange": 0
+        },
+        "touchOther": {
+          "healed": 6,
+          "roll": 6,
+          "effects": 0,
+          "acChange": 0
+        },
+        "touchCrit": {
+          "lost": 6,
+          "total": 3,
+          "acChange": -2,
+          "labels": [
+            "Spell Effect: Touch of the Void"
+          ]
+        }
+      }
+    },
+    "lingering": {
+      "label": "lingering",
+      "passed": true,
+      "at": "2026-09-26T18:17:48.239Z",
+      "details": {
+        "turnStart": [
+          "Review PFTEST P23 Affliction petal inside's exposure (started its turn in the area)"
+        ],
+        "exposures": [
+          "Review PFTEST P23 Affliction petal inside's exposure (started its turn in the area)",
+          "Review PFTEST P23 Affliction petal outside's exposure (entered the area)"
+        ],
+        "damage": 18,
+        "ended": "ended"
+      }
+    },
+    "sustainDamage": {
+      "passed": true,
+      "note": "rerun alone after cleanup; an overlapped first run failed on timing",
+      "obligations": [
+        {
+          "k": "membership",
+          "label": "Review PFTEST P23 Affliction assault inside's exposure when Animated Assault was cast",
+          "st": "completed"
+        },
+        {
+          "k": "save",
+          "label": "Initial save",
+          "st": "completed"
+        },
+        {
+          "k": "sustain",
+          "label": "Sustain before this turn ends",
+          "st": "completed"
+        },
+        {
+          "k": "membership",
+          "label": "Review PFTEST P23 Affliction assault inside's exposure (the spell was sustained)",
+          "st": "completed"
+        },
+        {
+          "k": "save",
+          "label": "Initial save",
+          "st": "completed"
+        }
+      ],
+      "cards": [
+        {
+          "targets": [
+            {
+              "n": "PFTEST P23 Affliction assault inside",
+              "degree": "failure",
+              "app": "applied",
+              "dmg": [
+                16
+              ]
+            }
+          ],
+          "status": "completed",
+          "review": false
+        },
+        {
+          "targets": [
+            {
+              "n": "PFTEST P23 Affliction assault inside",
+              "degree": "criticalFailure",
+              "app": "applied",
+              "dmg": [
+                8
+              ]
+            }
+          ],
+          "status": "completed",
+          "review": false
+        }
+      ]
+    },
+    "compact": {
+      "passed": true,
+      "note": "rerun alone after cleanup"
+    },
+    "cleanup": {
+      "label": "cleanup",
+      "passed": true,
+      "at": "2026-09-26T18:20:18.139Z",
+      "details": {
+        "actorsRemoved": 6,
+        "journalsRemoved": 3,
+        "remainingFixtureActors": 0
+      }
+    }
+  }
+}

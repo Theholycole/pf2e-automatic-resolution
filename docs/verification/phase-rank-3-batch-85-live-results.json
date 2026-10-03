@@ -1,0 +1,29 @@
+{
+  "label": "rank3Batch85",
+  "passed": true,
+  "at": "2026-10-03T04:25:18.187Z",
+  "details": {
+    "batch85": {
+      "cast": "slowed1+frightened1",
+      "card": true,
+      "secondSave": "failure",
+      "second": "slowed1+frightened0",
+      "secondAgain": "immune (temporarily immune to this spell)",
+      "thirdSave": "success",
+      "third": "slowed0+frightened0",
+      "primaryAfterTurn": "slowed1+frightened1",
+      "ended": "slowed0+frightened0",
+      "fifthSave": "failure",
+      "fifth": {
+        "slowed": "slowed1+frightened0",
+        "duration": {
+          "value": 1,
+          "unit": "minutes",
+          "expiry": "turn-start",
+          "sustained": false
+        }
+      },
+      "fifthEnded": "slowed0+frightened0"
+    }
+  }
+}

@@ -1,0 +1,1727 @@
+{
+  "compilerGeneratedAt": "2026-10-03T21:22:34.808Z",
+  "routeGeneratedAt": "2026-10-03T21:23:42.710Z",
+  "families": [
+    {
+      "id": "direct-persistent",
+      "title": "Direct and persistent damage",
+      "members": [
+        {
+          "id": "OJ91rm1FkJSlf3nk",
+          "name": "Ancient Dust",
+          "sourceFile": "spells/spells/cantrip/ancient-dust.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "dKWc83KKiXoIJkhp",
+          "name": "Beheading Buzz Saw",
+          "sourceFile": "spells/spells/rank-7/beheading-buzz-saw.json",
+          "enabledRoute": false,
+          "route": "disabled",
+          "assessment": {
+            "supported": false,
+            "route": "degree-save",
+            "blockers": [
+              {
+                "code": "shared-damage",
+                "path": "resolution.sharedDamage",
+                "message": "Shared damage contains an unsupported roll mode or category."
+              },
+              {
+                "code": "unaccounted-prose",
+                "path": "resolution.outcomes.criticalFailure.semanticCoverage",
+                "message": "Some rules in this outcome remain unaccounted for."
+              }
+            ]
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "7uL4XhHpxZpgNJPh",
+          "name": "Blinding Foam",
+          "sourceFile": "spells/spells/rank-5/blinding-foam.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "S708JF3E0kuhuRzG",
+          "name": "Bone Spray",
+          "sourceFile": "spells/spells/rank-2/bone-spray.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "basic-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "vGMbpV7GWIFPNUaZ",
+          "name": "Bursting Bloom",
+          "sourceFile": "spells/spells/rank-4/bursting-bloom.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "yil09OX5uMCs3Z8v",
+          "name": "Calcium Rain",
+          "sourceFile": "spells/spells/rank-5/calcium-rain.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "basic-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "g1eY1vN44mgluE33",
+          "name": "Charged Javelin",
+          "sourceFile": "spells/spells/rank-1/charged-javelin.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "bVvGpSOg2WaTUItS",
+          "name": "Cinder Swarm",
+          "sourceFile": "spells/spells/rank-4/cinder-swarm.json",
+          "enabledRoute": true,
+          "route": "ongoing",
+          "assessment": {
+            "supported": false,
+            "route": "lingering-area",
+            "blockers": [
+              {
+                "code": "lingering-area",
+                "path": "resolution.lingering",
+                "message": "This area is resolved by the lingering-area workflow, not a one-time save."
+              }
+            ]
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "1hLxZznnA2kvXlIt",
+          "name": "Cutting Insult",
+          "sourceFile": "spells/spells/rank-2/cutting-insult.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "MFPvs0ARxtThYPFq",
+          "name": "Dimensional Excision",
+          "sourceFile": "spells/spells/rank-9/dimensional-excision.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "NVeN6RrFu12HnTne",
+          "name": "Draw Blood",
+          "sourceFile": "spells/spells/rank-2/draw-blood.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "v4KzRPol5XQOOmk0",
+          "name": "Heat Metal",
+          "sourceFile": "spells/spells/rank-2/heat-metal.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "NIXXJoGuzvctynBt",
+          "name": "Iron Rain",
+          "sourceFile": "spells/spells/rank-3/iron-rain.json",
+          "enabledRoute": true,
+          "route": "ongoing",
+          "assessment": {
+            "supported": false,
+            "route": "lingering-area",
+            "blockers": [
+              {
+                "code": "lingering-area",
+                "path": "resolution.lingering",
+                "message": "This area is resolved by the lingering-area workflow, not a one-time save."
+              }
+            ]
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "nDgrpbKICpjUz372",
+          "name": "Spiked Carapace",
+          "sourceFile": "spells/spells/rank-5/spiked-carapace.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "Vseo7VIy8mzINUES",
+          "name": "Sticky Fire",
+          "sourceFile": "spells/spells/rank-2/sticky-fire.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "avT46uIH3xYJPSv4",
+          "name": "Teeth to Terror",
+          "sourceFile": "spells/spells/rank-2/teeth-to-terror.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "72rjRm7jClesBokV",
+          "name": "Weight of the World",
+          "sourceFile": "spells/spells/rank-5/weight-of-the-world.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "6JDq5d8w11ZuH4Ta",
+          "name": "Widow’s Bite",
+          "sourceFile": "spells/spells/rank-3/widows-bite.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "7tp97g0UCJ9wOrd5",
+          "name": "Withering Grasp",
+          "sourceFile": "spells/spells/rank-1/withering-grasp.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        }
+      ]
+    },
+    {
+      "id": "inline-persistent",
+      "title": "Inline damage with persistent outcomes",
+      "members": [
+        {
+          "id": "f8hRqLJaxBVhF1u0",
+          "name": "Acid Arrow",
+          "sourceFile": "spells/spells/rank-2/acid-arrow.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "9h9YCncqah6VNsKf",
+          "name": "Acid Grip",
+          "sourceFile": "spells/spells/rank-2/acid-grip.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "gISYsBFby1TiXfBt",
+          "name": "Acid Splash",
+          "sourceFile": "spells/spells/cantrip/acid-splash.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "ES6FkwXXqYr4ujQH",
+          "name": "Blood Feast",
+          "sourceFile": "spells/spells/rank-5/blood-feast.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "Hycyiw9xVzoIY4Dy",
+          "name": "Camel Spit",
+          "sourceFile": "spells/spells/rank-1/camel-spit.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "thAHF1zxNplLCJPO",
+          "name": "Caustic Blast",
+          "sourceFile": "spells/spells/cantrip/caustic-blast.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "Z3kJty995FkrsZRb",
+          "name": "Combustion",
+          "sourceFile": "spells/spells/rank-3/combustion.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "h7RtKSKGViNtD5o4",
+          "name": "Coral Eruption",
+          "sourceFile": "spells/spells/rank-4/coral-eruption.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "BlfOg9Ceymgjstjm",
+          "name": "Corrosive Muck",
+          "sourceFile": "spells/spells/rank-5/corrosive-muck.json",
+          "enabledRoute": true,
+          "route": "ongoing",
+          "assessment": {
+            "supported": false,
+            "route": "lingering-area",
+            "blockers": [
+              {
+                "code": "lingering-area",
+                "path": "resolution.lingering",
+                "message": "This area is resolved by the lingering-area workflow, not a one-time save."
+              }
+            ]
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "A16eFTRh82xIjMu8",
+          "name": "Divine Immolation",
+          "sourceFile": "spells/spells/rank-5/divine-immolation.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "WV2aMNN9DO5ZBjSv",
+          "name": "Flense",
+          "sourceFile": "spells/spells/rank-1/flense.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "kvZCQz4NoMAfjvif",
+          "name": "Gasping Marsh",
+          "sourceFile": "spells/spells/rank-3/gasping-marsh.json",
+          "enabledRoute": true,
+          "route": "ongoing",
+          "assessment": {
+            "supported": false,
+            "route": "lingering-area",
+            "blockers": [
+              {
+                "code": "lingering-area",
+                "path": "resolution.lingering",
+                "message": "This area is resolved by the lingering-area workflow, not a one-time save."
+              }
+            ]
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "dgMauNKWeRIu8pMN",
+          "name": "Glass Sand",
+          "sourceFile": "spells/spells/rank-3/glass-sand.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "k34hDOfIIMAxNL4a",
+          "name": "Grim Tendrils",
+          "sourceFile": "spells/spells/rank-1/grim-tendrils.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "3GXU3ugrwLv0P7AH",
+          "name": "Ignite Fireworks",
+          "sourceFile": "spells/spells/rank-2/ignite-fireworks.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "6DfLZBl8wKIV03Iq",
+          "name": "Ignition",
+          "sourceFile": "spells/spells/cantrip/ignition.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "Vbj8bTQ1nwrOBbYF",
+          "name": "Live Wire",
+          "sourceFile": "spells/spells/cantrip/live-wire.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "BWvGBx51RevizICD",
+          "name": "Mutilate",
+          "sourceFile": "spells/spells/rank-4/mutilate.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "iYRDFxeVpJ5KIjmr",
+          "name": "Needle Darts",
+          "sourceFile": "spells/spells/cantrip/needle-darts.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "R8bqnYiThB6MYTxD",
+          "name": "Phantom Pain",
+          "sourceFile": "spells/spells/rank-1/phantom-pain.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "D7ZEhTNIDWDLC2J4",
+          "name": "Puff of Poison",
+          "sourceFile": "spells/spells/cantrip/puff-of-poison.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "nPxYYID5JARKouSV",
+          "name": "Ray of Corruption",
+          "sourceFile": "spells/spells/rank-7/ray-of-corruption.json",
+          "enabledRoute": false,
+          "route": "disabled",
+          "assessment": {
+            "supported": false,
+            "route": "degree-save",
+            "blockers": [
+              {
+                "code": "basic-save-composition",
+                "path": "resolution.check.basic",
+                "message": "Basic-save riders have not been completely compiled."
+              },
+              {
+                "code": "compiler-gap",
+                "path": "automation.pendingCapabilities",
+                "message": "description-effects"
+              },
+              {
+                "code": "compiler-gap",
+                "path": "automation.pendingCapabilities",
+                "message": "description-target-predicates"
+              },
+              {
+                "code": "compiler-gap",
+                "path": "automation.pendingCapabilities",
+                "message": "description-lifecycle"
+              }
+            ]
+          },
+          "compilerPending": [
+            "description-effects",
+            "description-target-predicates",
+            "description-lifecycle"
+          ]
+        },
+        {
+          "id": "xn0V2HDrmDWNzPEt",
+          "name": "Savor the Sting",
+          "sourceFile": "spells/spells/rank-1/savor-the-sting.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "I2IgZu4Rd2dz0J6v",
+          "name": "Sawtooth Terrain",
+          "sourceFile": "spells/spells/rank-5/sawtooth-terrain.json",
+          "enabledRoute": true,
+          "route": "ongoing",
+          "assessment": {
+            "supported": false,
+            "route": "lingering-area",
+            "blockers": [
+              {
+                "code": "lingering-area",
+                "path": "resolution.lingering",
+                "message": "This area is resolved by the lingering-area workflow, not a one-time save."
+              }
+            ]
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "5QD75UbyB5EiG3yz",
+          "name": "Scorching Blast",
+          "sourceFile": "spells/spells/rank-1/scorching-blast.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "9bOqFkewRz7Z3HZ5",
+          "name": "Scouring Pulse",
+          "sourceFile": "spells/spells/rank-5/scouring-pulse.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "1Yoipc5jNcMehtEW",
+          "name": "Slashing Gust",
+          "sourceFile": "spells/spells/cantrip/slashing-gust.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "Bc6QqTmFV4q7G7L0",
+          "name": "Splinter Volley",
+          "sourceFile": "spells/spells/rank-2/splinter-volley.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "DnVTBGCsai6zqMwL",
+          "name": "Ulcerous Canker",
+          "sourceFile": "spells/spells/rank-1/ulcerous-canker.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "89kInqMRs63Cx8E3",
+          "name": "Unravel Existence",
+          "sourceFile": "spells/spells/rank-5/unravel-existence.json",
+          "enabledRoute": true,
+          "route": "ongoing",
+          "assessment": {
+            "supported": false,
+            "route": "lingering-area",
+            "blockers": [
+              {
+                "code": "lingering-area",
+                "path": "resolution.lingering",
+                "message": "This area is resolved by the lingering-area workflow, not a one-time save."
+              }
+            ]
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "tPtTKe0X1dDwoDmQ",
+          "name": "Vibrant Vibrato",
+          "sourceFile": "spells/spells/rank-7/vibrant-vibrato.json",
+          "enabledRoute": false,
+          "route": "disabled",
+          "assessment": {
+            "supported": false,
+            "route": "degree-save",
+            "blockers": [
+              {
+                "code": "compiler-gap",
+                "path": "automation.pendingCapabilities",
+                "message": "manual:conditional-effect"
+              },
+              {
+                "code": "compiler-gap",
+                "path": "automation.pendingCapabilities",
+                "message": "residual-prose"
+              },
+              {
+                "code": "compiler-gap",
+                "path": "automation.pendingCapabilities",
+                "message": "sustain-effect"
+              },
+              {
+                "code": "compiler-gap",
+                "path": "automation.pendingCapabilities",
+                "message": "preamble:ongoing-trigger"
+              },
+              {
+                "code": "compiler-gap",
+                "path": "automation.pendingCapabilities",
+                "message": "preamble:restriction"
+              },
+              {
+                "code": "unused-shared-damage",
+                "path": "resolution.sharedDamage",
+                "message": "The spell's structured damage is not applied by any outcome."
+              },
+              {
+                "code": "unaccounted-prose",
+                "path": "resolution.outcomes.success.semanticCoverage",
+                "message": "Some rules in this outcome remain unaccounted for."
+              },
+              {
+                "code": "unaccounted-prose",
+                "path": "resolution.outcomes.failure.semanticCoverage",
+                "message": "Some rules in this outcome remain unaccounted for."
+              },
+              {
+                "code": "manual-mechanic",
+                "path": "resolution.outcomes.failure.manualInstructions",
+                "message": "This outcome contains mechanics requiring manual handling."
+              },
+              {
+                "code": "manual-mechanic",
+                "path": "resolution.outcomes.criticalFailure.manualInstructions",
+                "message": "This outcome contains mechanics requiring manual handling."
+              }
+            ]
+          },
+          "compilerPending": [
+            "manual:conditional-effect",
+            "residual-prose",
+            "sustain-effect",
+            "preamble:ongoing-trigger",
+            "preamble:restriction"
+          ]
+        },
+        {
+          "id": "3SzuMGusGKg8nw5A",
+          "name": "Warshard Shot",
+          "sourceFile": "spells/spells/rank-5/warshard-shot.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "jks2h5pMsm8pCi8e",
+          "name": "Wildfire",
+          "sourceFile": "spells/spells/rank-1/wildfire.json",
+          "enabledRoute": true,
+          "route": "ongoing",
+          "assessment": {
+            "supported": false,
+            "route": "lingering-area",
+            "blockers": [
+              {
+                "code": "lingering-area",
+                "path": "resolution.lingering",
+                "message": "This area is resolved by the lingering-area workflow, not a one-time save."
+              }
+            ]
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "H4oF5szC7aogqtvw",
+          "name": "Worm's Repast",
+          "sourceFile": "spells/spells/rank-2/worms-repast.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        }
+      ]
+    },
+    {
+      "id": "save-native-effect",
+      "title": "Saving throws with linked native Effects",
+      "members": [
+        {
+          "id": "9h9YCncqah6VNsKf",
+          "name": "Acid Grip",
+          "sourceFile": "spells/spells/rank-2/acid-grip.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "bCZP8N2C41gF10G2",
+          "name": "Anchoring Air",
+          "sourceFile": "spells/spells/rank-4/anchoring-air.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "YSLaCdfIQ2xXzvHd",
+          "name": "Appeal to Authority",
+          "sourceFile": "spells/spells/rank-1/appeal-to-authority.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "7ZinJNzxq0XF0oMx",
+          "name": "Bane",
+          "sourceFile": "spells/spells/rank-1/bane.json",
+          "enabledRoute": true,
+          "route": "ongoing",
+          "assessment": {
+            "supported": false,
+            "route": "lingering-area",
+            "blockers": [
+              {
+                "code": "lingering-area",
+                "path": "resolution.lingering",
+                "message": "This area is resolved by the lingering-area workflow, not a one-time save."
+              }
+            ]
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "VuPDHoVEPLbMfCJC",
+          "name": "Bestial Curse",
+          "sourceFile": "spells/spells/rank-4/bestial-curse.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "tFWa3ouvMC5Zz3P0",
+          "name": "Blood Infusion",
+          "sourceFile": "spells/spells/rank-1/blood-infusion.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "TaaMEYdZXQXF0Sks",
+          "name": "Blood Vendetta",
+          "sourceFile": "spells/spells/rank-2/blood-vendetta.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "L13n9NKvfGLApse1",
+          "name": "Calcification",
+          "sourceFile": "spells/spells/rank-9/calcification.json",
+          "enabledRoute": false,
+          "route": "disabled",
+          "assessment": {
+            "supported": false,
+            "route": "degree-save",
+            "blockers": [
+              {
+                "code": "target-eligibility",
+                "path": "targeting.actorConstraints",
+                "message": "Actor targeting has unsupported or incomplete eligibility rules."
+              },
+              {
+                "code": "compiler-gap",
+                "path": "automation.pendingCapabilities",
+                "message": "manual:secondary-save"
+              },
+              {
+                "code": "compiler-gap",
+                "path": "automation.pendingCapabilities",
+                "message": "manual:conditional-effect"
+              },
+              {
+                "code": "compiler-gap",
+                "path": "automation.pendingCapabilities",
+                "message": "residual-prose"
+              },
+              {
+                "code": "compiler-gap",
+                "path": "automation.pendingCapabilities",
+                "message": "preamble:conditional-eligibility"
+              },
+              {
+                "code": "compiler-gap",
+                "path": "automation.pendingCapabilities",
+                "message": "preamble:modifier"
+              },
+              {
+                "code": "compiler-gap",
+                "path": "automation.pendingCapabilities",
+                "message": "item-duration-grammar"
+              },
+              {
+                "code": "compiler-gap",
+                "path": "automation.pendingCapabilities",
+                "message": "target-eligibility"
+              },
+              {
+                "code": "lifecycle",
+                "path": "lifecycle",
+                "message": "The save route cannot manage this lifecycle or controller."
+              },
+              {
+                "code": "unaccounted-prose",
+                "path": "resolution.outcomes.success.semanticCoverage",
+                "message": "Some rules in this outcome remain unaccounted for."
+              },
+              {
+                "code": "native-effect-composition",
+                "path": "resolution.outcomes.success.nativeEffects.0",
+                "message": "degree selection proof is missing"
+              },
+              {
+                "code": "unaccounted-prose",
+                "path": "resolution.outcomes.failure.semanticCoverage",
+                "message": "Some rules in this outcome remain unaccounted for."
+              },
+              {
+                "code": "native-effect-composition",
+                "path": "resolution.outcomes.failure.nativeEffects.0",
+                "message": "degree selection proof is missing"
+              },
+              {
+                "code": "manual-mechanic",
+                "path": "resolution.outcomes.failure.manualInstructions",
+                "message": "This outcome contains mechanics requiring manual handling."
+              },
+              {
+                "code": "native-effect-composition",
+                "path": "resolution.outcomes.criticalFailure.nativeEffects.0",
+                "message": "degree selection proof is missing"
+              },
+              {
+                "code": "manual-mechanic",
+                "path": "resolution.outcomes.criticalFailure.manualInstructions",
+                "message": "This outcome contains mechanics requiring manual handling."
+              }
+            ]
+          },
+          "compilerPending": [
+            "manual:secondary-save",
+            "manual:conditional-effect",
+            "residual-prose",
+            "preamble:conditional-eligibility",
+            "preamble:modifier",
+            "item-duration-grammar",
+            "target-eligibility"
+          ]
+        },
+        {
+          "id": "qlxM7Ik3uUeUIOcv",
+          "name": "Canticle of Everlasting Grief",
+          "sourceFile": "spells/spells/rank-8/canticle-of-everlasting-grief.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "g1eY1vN44mgluE33",
+          "name": "Charged Javelin",
+          "sourceFile": "spells/spells/rank-1/charged-javelin.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "KMFRKzNCq7hVNH7H",
+          "name": "Charming Push",
+          "sourceFile": "spells/spells/rank-1/charming-push.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "fwPNYmpOyzRehEY4",
+          "name": "Circle of Weakness",
+          "sourceFile": "spells/spells/rank-1/circle-of-weakness.json",
+          "enabledRoute": true,
+          "route": "ongoing",
+          "assessment": {
+            "supported": false,
+            "route": "lingering-area",
+            "blockers": [
+              {
+                "code": "lingering-area",
+                "path": "resolution.lingering",
+                "message": "This area is resolved by the lingering-area workflow, not a one-time save."
+              }
+            ]
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "MraZBLJ4Be3ogmWL",
+          "name": "Clinging Ice",
+          "sourceFile": "spells/spells/cantrip/clinging-ice.json",
+          "enabledRoute": true,
+          "route": "ongoing",
+          "assessment": {
+            "supported": false,
+            "route": "degree-save",
+            "blockers": [
+              {
+                "code": "compiler-gap",
+                "path": "automation.pendingCapabilities",
+                "message": "residual-prose"
+              },
+              {
+                "code": "unaccounted-prose",
+                "path": "resolution.outcomes.failure.semanticCoverage",
+                "message": "Some rules in this outcome remain unaccounted for."
+              },
+              {
+                "code": "unaccounted-prose",
+                "path": "resolution.outcomes.criticalFailure.semanticCoverage",
+                "message": "Some rules in this outcome remain unaccounted for."
+              },
+              {
+                "code": "native-effect-composition",
+                "path": "resolution.outcomes.criticalFailure.nativeEffects.0",
+                "message": "degree selection proof is missing"
+              }
+            ]
+          },
+          "compilerPending": [
+            "residual-prose"
+          ]
+        },
+        {
+          "id": "AiWtiVmyasyL42J8",
+          "name": "Crushing Ground",
+          "sourceFile": "spells/spells/rank-1/crushing-ground.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "9uSBfK8EUVBrcNYx",
+          "name": "Curse of Recoil",
+          "sourceFile": "spells/spells/rank-1/curse-of-recoil.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "AzTFMy9E9HQcLNRg",
+          "name": "Debilitating Terror",
+          "sourceFile": "spells/spells/rank-1/debilitating-terror.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "t1e3U2eluRsp2izf",
+          "name": "Discomfiting Whispers",
+          "sourceFile": "spells/spells/rank-1/discomfiting-whispers.json",
+          "enabledRoute": true,
+          "route": "ongoing",
+          "assessment": {
+            "supported": false,
+            "route": "lingering-area",
+            "blockers": [
+              {
+                "code": "lingering-area",
+                "path": "resolution.lingering",
+                "message": "This area is resolved by the lingering-area workflow, not a one-time save."
+              }
+            ]
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "z8bHh8KVttslQIU9",
+          "name": "Distracting Decoy",
+          "sourceFile": "spells/spells/rank-1/distracting-decoy.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "jsWthW1Qy6tg3SwD",
+          "name": "Draw Ire",
+          "sourceFile": "spells/spells/rank-1/draw-ire.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "Z2oSFY2fT8zLkK4P",
+          "name": "Equal Footing",
+          "sourceFile": "spells/spells/rank-1/equal-footing.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "znMvKqcRDilIVMwA",
+          "name": "Exchange Image",
+          "sourceFile": "spells/spells/rank-1/exchange-image.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "IkS3lDGUpIOMug7v",
+          "name": "Faerie Dust",
+          "sourceFile": "spells/spells/rank-1/faerie-dust.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "FTR8m4qrhYzTRyrD",
+          "name": "Forge",
+          "sourceFile": "spells/spells/rank-1/forge.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "IxhGEKl63R4QBvkj",
+          "name": "Frostbite",
+          "sourceFile": "spells/spells/cantrip/frostbite.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "3VxVbZqIRvpKkg3O",
+          "name": "Fungal Infestation",
+          "sourceFile": "spells/spells/rank-2/fungal-infestation.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "6ZIKB0151LUR19Rw",
+          "name": "Ill Omen",
+          "sourceFile": "spells/spells/rank-1/ill-omen.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "OTd17oXwJH9qb1cS",
+          "name": "Incendiary Ashes",
+          "sourceFile": "spells/spells/rank-3/incendiary-ashes.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "mUz3wqbMQ5JQ06M5",
+          "name": "Infectious Melody",
+          "sourceFile": "spells/spells/rank-4/infectious-melody.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "2tHYKoVc5YhSewDO",
+          "name": "Leaden Steps",
+          "sourceFile": "spells/spells/rank-1/leaden-steps.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "AdZ2rWJStZ5unxzq",
+          "name": "Malediction",
+          "sourceFile": "spells/spells/rank-1/malediction.json",
+          "enabledRoute": true,
+          "route": "ongoing",
+          "assessment": {
+            "supported": false,
+            "route": "lingering-area",
+            "blockers": [
+              {
+                "code": "lingering-area",
+                "path": "resolution.lingering",
+                "message": "This area is resolved by the lingering-area workflow, not a one-time save."
+              }
+            ]
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "4EmLum6EdvXxbxCj",
+          "name": "Murmuration",
+          "sourceFile": "spells/spells/cantrip/murmuration.json",
+          "enabledRoute": true,
+          "route": "ongoing",
+          "assessment": {
+            "supported": false,
+            "route": "stored-trigger",
+            "blockers": [
+              {
+                "code": "stored-trigger",
+                "path": "resolution.storedTrigger",
+                "message": "This spell waits for its trigger in Ongoing spells; it isn't a one-time save."
+              }
+            ]
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "6lO6uMQxbqmYho0e",
+          "name": "Necrotize",
+          "sourceFile": "spells/spells/rank-6/necrotize.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "KSAEhNfZyXMO7Z7V",
+          "name": "Outcast's Curse",
+          "sourceFile": "spells/spells/rank-4/outcasts-curse.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "mFHQ2u4LWiejqKQG",
+          "name": "Overstuff",
+          "sourceFile": "spells/spells/rank-1/overstuff.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "YNAthsgsJjQIXbc8",
+          "name": "Pact Broker",
+          "sourceFile": "spells/spells/cantrip/pact-broker.json",
+          "enabledRoute": true,
+          "route": "ongoing",
+          "assessment": {
+            "supported": false,
+            "route": "stored-trigger",
+            "blockers": [
+              {
+                "code": "stored-trigger",
+                "path": "resolution.storedTrigger",
+                "message": "This spell waits for its trigger in Ongoing spells; it isn't a one-time save."
+              }
+            ]
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "APDrC83QljsyHenB",
+          "name": "Sage's Curse",
+          "sourceFile": "spells/spells/rank-4/sages-curse.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "8E97SA9KAWCNdXfO",
+          "name": "Schadenfreude",
+          "sourceFile": "spells/spells/rank-1/schadenfreude.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "gfKhtVsXF3HKSdmY",
+          "name": "Seal Fate",
+          "sourceFile": "spells/spells/rank-4/seal-fate.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "jyYBuGRfpkZz2kxs",
+          "name": "Sting of the Sea",
+          "sourceFile": "spells/spells/cantrip/sting-of-the-sea.json",
+          "enabledRoute": true,
+          "route": "ongoing",
+          "assessment": {
+            "supported": false,
+            "route": "lingering-area",
+            "blockers": [
+              {
+                "code": "lingering-area",
+                "path": "resolution.lingering",
+                "message": "This area is resolved by the lingering-area workflow, not a one-time save."
+              }
+            ]
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "lbrWMnS2pecKaSVB",
+          "name": "Swampcall",
+          "sourceFile": "spells/spells/rank-1/swampcall.json",
+          "enabledRoute": true,
+          "route": "ongoing",
+          "assessment": {
+            "supported": false,
+            "route": "lingering-area",
+            "blockers": [
+              {
+                "code": "lingering-area",
+                "path": "resolution.lingering",
+                "message": "This area is resolved by the lingering-area workflow, not a one-time save."
+              }
+            ]
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "OAt2ZEns1gIOCgrn",
+          "name": "Synesthesia",
+          "sourceFile": "spells/spells/rank-5/synesthesia.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "uZK2BYzPnxUBnDjr",
+          "name": "Tangle Vine",
+          "sourceFile": "spells/spells/cantrip/tangle-vine.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "EzB9i7R6aBRAtJCh",
+          "name": "Tempest Touch",
+          "sourceFile": "spells/spells/rank-1/tempest-touch.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "3DY4vbXj0BYSWA7z",
+          "name": "Threefold Limb",
+          "sourceFile": "spells/spells/rank-1/threefold-limb.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "4VsCGrIz07NrMaZA",
+          "name": "Undertow",
+          "sourceFile": "spells/spells/rank-3/undertow.json",
+          "enabledRoute": true,
+          "route": "ongoing",
+          "assessment": {
+            "supported": false,
+            "route": "lingering-area",
+            "blockers": [
+              {
+                "code": "lingering-area",
+                "path": "resolution.lingering",
+                "message": "This area is resolved by the lingering-area workflow, not a one-time save."
+              }
+            ]
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "EFLXGyIz2HZVSmll",
+          "name": "Unravel Knowledge",
+          "sourceFile": "spells/spells/rank-3/unravel-knowledge.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "NNoKWiWKqJkdD2ln",
+          "name": "Veil of Dreams",
+          "sourceFile": "spells/spells/rank-1/veil-of-dreams.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "lQbfgAu9uVJQC7x4",
+          "name": "Veil of Spirits",
+          "sourceFile": "spells/spells/rank-2/veil-of-spirits.json",
+          "enabledRoute": true,
+          "route": "ongoing",
+          "assessment": {
+            "supported": false,
+            "route": "lingering-area",
+            "blockers": [
+              {
+                "code": "lingering-area",
+                "path": "resolution.lingering",
+                "message": "This area is resolved by the lingering-area workflow, not a one-time save."
+              }
+            ]
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "g2V4ID0pl1ZGAxZj",
+          "name": "Vitrifying Blast",
+          "sourceFile": "spells/spells/rank-6/vitrifying-blast.json",
+          "enabledRoute": false,
+          "route": "disabled",
+          "assessment": {
+            "supported": false,
+            "route": "degree-save",
+            "blockers": [
+              {
+                "code": "compiler-gap",
+                "path": "automation.pendingCapabilities",
+                "message": "residual-prose"
+              },
+              {
+                "code": "compiler-gap",
+                "path": "automation.pendingCapabilities",
+                "message": "item-duration-grammar"
+              },
+              {
+                "code": "lifecycle",
+                "path": "lifecycle",
+                "message": "The save route cannot manage this lifecycle or controller."
+              },
+              {
+                "code": "unaccounted-prose",
+                "path": "resolution.outcomes.success.semanticCoverage",
+                "message": "Some rules in this outcome remain unaccounted for."
+              },
+              {
+                "code": "unaccounted-prose",
+                "path": "resolution.outcomes.failure.semanticCoverage",
+                "message": "Some rules in this outcome remain unaccounted for."
+              },
+              {
+                "code": "follow-up-composition",
+                "path": "resolution.outcomes.failure.followUps",
+                "message": "Only one fully supported immediate secondary save is executable."
+              },
+              {
+                "code": "native-effect-composition",
+                "path": "resolution.outcomes.criticalFailure.nativeEffects.0",
+                "message": "degree selection proof is missing"
+              },
+              {
+                "code": "follow-up-composition",
+                "path": "resolution.outcomes.criticalFailure.followUps",
+                "message": "Only one fully supported immediate secondary save is executable."
+              }
+            ]
+          },
+          "compilerPending": [
+            "residual-prose",
+            "item-duration-grammar"
+          ]
+        },
+        {
+          "id": "eyKkLp8V55ydA64J",
+          "name": "Weaken Earth",
+          "sourceFile": "spells/spells/rank-1/weaken-earth.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        },
+        {
+          "id": "B3tbO85GBpzQ3u8l",
+          "name": "Wish-Twisted Form",
+          "sourceFile": "spells/spells/rank-5/wish-twisted-form.json",
+          "enabledRoute": true,
+          "route": "save",
+          "assessment": {
+            "supported": true,
+            "route": "degree-save",
+            "blockers": []
+          },
+          "compilerPending": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "label": "rank2Batch76",
+  "passed": true,
+  "at": "2026-10-02T01:24:24.913Z",
+  "details": {
+    "batch76": {
+      "cast": {
+        "level": "automatic",
+        "foe": true,
+        "ally": false
+      },
+      "obstacle": {
+        "card": true,
+        "foe": false,
+        "cost": 15
+      },
+      "again": "The spirits already gave their aid this round.",
+      "missed": {
+        "status": "ended",
+        "region": false
+      },
+      "search": {
+        "aid": "Search",
+        "perception": true,
+        "options": [
+          "action:seek"
+        ],
+        "whisper": 0
+      }
+    }
+  }
+}

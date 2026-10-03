@@ -1,0 +1,27 @@
+{
+ "label": "rank7Batch5",
+ "passed": true,
+ "at": "2026-10-03T17:37:50.667Z",
+ "details": {
+  "batch5": {
+   "regen": {
+    "level": "automatic",
+    "value": "ternary(gte(@item.level,9),20,15)",
+    "deactivatedBy": [
+     "acid",
+     "fire"
+    ],
+    "note": true
+   },
+   "tempest": {
+    "drained": 2,
+    "frightened": 3,
+    "fleeing": true
+   },
+   "stampede": {
+    "lost": 58,
+    "reminder": true
+   }
+  }
+ }
+}

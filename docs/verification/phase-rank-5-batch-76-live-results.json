@@ -1,0 +1,25 @@
+{
+  "label": "rank5Batch76",
+  "passed": true,
+  "at": "2026-10-03T11:46:53.105Z",
+  "details": {
+    "batch76": {
+      "kind": "sacrifice-heal",
+      "tooMuch": "Shepherd of Souls: at most 15 Hit Points.",
+      "first": {
+        "restored": 20,
+        "caster": 190,
+        "ally": 70
+      },
+      "high": {
+        "status": "applied",
+        "ally": 100,
+        "caster": 170
+      },
+      "fallen": {
+        "hp": 10,
+        "dying": false
+      }
+    }
+  }
+}

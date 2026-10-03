@@ -1,0 +1,25 @@
+{
+  "label": "rank5Batch19",
+  "passed": true,
+  "at": "2026-10-02T17:52:47.968Z",
+  "details": {
+    "batch19": {
+      "area": 10,
+      "statistic": "reflex",
+      "formula": "5d6 force + 5d12 electricity",
+      "total": 49,
+      "lost": [
+        49,
+        98
+      ],
+      "deafened": [
+        "1 rounds",
+        "1 minutes"
+      ],
+      "persistent": [
+        null,
+        "2d12"
+      ]
+    }
+  }
+}

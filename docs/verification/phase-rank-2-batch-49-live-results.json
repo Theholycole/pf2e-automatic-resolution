@@ -1,0 +1,48 @@
+{
+  "phase": "rank-2-batch-49",
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cleanup",
+      "passed": true,
+      "at": "2026-10-01T22:59:39.233Z",
+      "details": {
+        "actorsRemoved": 5,
+        "journalsRemoved": 2,
+        "regionsRemoved": 0,
+        "remainingFixtureActors": 0
+      }
+    },
+    {
+      "label": "rank2Batch49",
+      "passed": true,
+      "at": "2026-10-01T22:59:44.721Z",
+      "details": {
+        "batch49": {
+          "light": {
+            "kind": "light-aura",
+            "bright": 30,
+            "caster": true,
+            "ally": true,
+            "foe": false
+          },
+          "hyphae": {
+            "kind": "hyphae",
+            "sense": [
+              "Sense:tremorsense:imprecise:30"
+            ],
+            "strike": {
+              "status": "hit",
+              "formula": "2 * 3d8 bludgeoning",
+              "total": 8
+            },
+            "lost": 8,
+            "afterMove": false
+          }
+        }
+      }
+    }
+  ]
+}

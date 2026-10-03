@@ -1,0 +1,51 @@
+{
+  "batch": "cantrip-rank-1-batch-83",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch83",
+    "passed": true,
+    "details": {
+      "damage": 3,
+      "lost": 6,
+      "drained": 1,
+      "temp": 6,
+      "effect": "-1 unlimited",
+      "card": true,
+      "success": {
+        "damage": 1,
+        "lost": 0,
+        "drained": false,
+        "temp": 0
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch83",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch82",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

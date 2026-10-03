@@ -1,0 +1,60 @@
+{
+  "batch": "cantrip-rank-1-batch-76",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch76",
+    "passed": true,
+    "details": {
+      "total": 6,
+      "lost": [
+        6,
+        6,
+        0
+      ],
+      "clumsy": [
+        1,
+        2,
+        0
+      ],
+      "effect": {
+        "name": "Barbed Spear: Clumsy 1 (ends on Interact)",
+        "lasts": "1 minutes"
+      },
+      "reminder": true
+    }
+  },
+  "runs": [
+    {
+      "n": "cr1Batch76",
+      "passed": false,
+      "note": "first run: the already-clumsy target stayed Clumsy 1 — the card state didn't carry the increment flag; fixed in the card's condition snapshot and re-run"
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch76",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "rank1Batch10",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

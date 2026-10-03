@@ -1,0 +1,61 @@
+{
+  "batch": 121,
+  "spells": [
+    "Dancing Blade",
+    "Spirit Object"
+  ],
+  "results": [
+    {
+      "label": "cr1Batch121",
+      "passed": true,
+      "at": "2026-09-28T09:34:38.248Z",
+      "details": {
+        "sustainAttacks": {
+          "blade": {
+            "rank": 5,
+            "first": {
+              "formula": "5d6 slashing",
+              "total": 11,
+              "lost": 11
+            },
+            "second": {
+              "formula": "5d6 piercing",
+              "total": 25,
+              "lost": 25
+            },
+            "button": "Resolve Spell Attack"
+          },
+          "object": {
+            "rank": 1,
+            "first": {
+              "formula": "2d4 slashing",
+              "total": 5,
+              "lost": 5
+            },
+            "second": {
+              "formula": "2d4 piercing",
+              "total": 5,
+              "lost": 5
+            },
+            "button": "Resolve Spell Attack"
+          }
+        }
+      }
+    }
+  ],
+  "sourceCardButton": {
+    "foe": true,
+    "before": "Resolve Spell Attack",
+    "after": "Sustain: Attack (2)",
+    "window": {
+      "combatId": null,
+      "endsAt": 19300,
+      "attacks": [
+        {
+          "round": null,
+          "turn": null
+        }
+      ]
+    }
+  }
+}

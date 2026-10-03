@@ -1,0 +1,23 @@
+{
+  "label": "rank4Batch94",
+  "passed": true,
+  "at": "2026-10-03T02:59:01.763Z",
+  "details": {
+    "batch94": {
+      "caster": {
+        "effect": true,
+        "mental": 5
+      },
+      "exposed": true,
+      "critical": {
+        "sickened": 2,
+        "slowed": 1
+      },
+      "after": {
+        "sickened": 2,
+        "slowed": 0,
+        "effect": false
+      }
+    }
+  }
+}

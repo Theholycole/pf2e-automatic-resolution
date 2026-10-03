@@ -1,0 +1,4242 @@
+{
+  "summary": {
+    "compared": 1994,
+    "changed": 38,
+    "newlyExecutable": [
+      "Dazzling Flash",
+      "Slime Spit",
+      "Reblooded",
+      "Grasp of the Deep",
+      "Boil Blood"
+    ],
+    "noLongerExecutable": [
+      "Pollen Pods"
+    ]
+  },
+  "changes": [
+    {
+      "id": "spells/spells/rank-1/dazzling-flash.json",
+      "name": "Dazzling Flash",
+      "fields": [
+        "pending",
+        "route",
+        "outcomes"
+      ],
+      "routeBefore": false,
+      "routeAfter": true,
+      "before": {
+        "pending": [
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:residual-prose",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        },
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "success": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "dazzled",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 round"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "blinded",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 round"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              },
+              {
+                "slug": "dazzled",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "minutes",
+                  "expiry": null,
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 minute"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:action+timing:The creature can spend an Interact action rubbing its eyes to end the Blinded condition."
+            ]
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "blinded",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 round"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              },
+              {
+                "slug": "dazzled",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "hours",
+                  "expiry": null,
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 hour"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          }
+        }
+      },
+      "after": {
+        "pending": [],
+        "route": {
+          "supported": true,
+          "blockers": []
+        },
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "success": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "dazzled",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 round"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "blinded",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 round"
+                },
+                "whileCondition": null,
+                "endsWhen": [
+                  {
+                    "event": "action",
+                    "action": "interact"
+                  }
+                ],
+                "expirationMode": "first",
+                "recurringSave": null
+              },
+              {
+                "slug": "dazzled",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "minutes",
+                  "expiry": null,
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 minute"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "blinded",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 round"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              },
+              {
+                "slug": "dazzled",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "hours",
+                  "expiry": null,
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 hour"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          }
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-1/gritty-wheeze.json",
+      "name": "Gritty Wheeze",
+      "fields": [
+        "pending",
+        "route",
+        "outcomes"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "preamble:degree-adjustment",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:degree-adjustment",
+            "compiler-gap:residual-prose",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        },
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:damage:The creature takes no damage."
+            ]
+          },
+          "success": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 0.5,
+              "sourceComponentIds": [
+                "en43qsw1luwagcht"
+              ]
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 1,
+              "sourceComponentIds": [
+                "en43qsw1luwagcht"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "dazzled",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 round"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 2,
+              "sourceComponentIds": [
+                "en43qsw1luwagcht"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "dazzled",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "minutes",
+                  "expiry": null,
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 minute"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          }
+        }
+      },
+      "after": {
+        "pending": [
+          "preamble:degree-adjustment"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:degree-adjustment"
+          ]
+        },
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "success": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 0.5,
+              "sourceComponentIds": [
+                "en43qsw1luwagcht"
+              ]
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 1,
+              "sourceComponentIds": [
+                "en43qsw1luwagcht"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "dazzled",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 round"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 2,
+              "sourceComponentIds": [
+                "en43qsw1luwagcht"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "dazzled",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "minutes",
+                  "expiry": null,
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 minute"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          }
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-1/lift-natures-caul.json",
+      "name": "Lift Nature's Caul",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "item-duration-grammar",
+          "manual:condition-floor",
+          "manual:temporary-immunity",
+          "native-spell-effect-recipient",
+          "native-spell-effect-scope",
+          "preamble:modifier",
+          "preamble:ongoing-trigger",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:item-duration-grammar",
+            "compiler-gap:manual:condition-floor",
+            "compiler-gap:manual:temporary-immunity",
+            "compiler-gap:native-spell-effect-recipient",
+            "compiler-gap:native-spell-effect-scope",
+            "compiler-gap:preamble:modifier",
+            "compiler-gap:preamble:ongoing-trigger",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "item-duration-grammar",
+          "manual:condition-floor",
+          "manual:temporary-immunity",
+          "native-spell-effect-recipient",
+          "native-spell-effect-scope",
+          "preamble:modifier",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:item-duration-grammar",
+            "compiler-gap:manual:condition-floor",
+            "compiler-gap:manual:temporary-immunity",
+            "compiler-gap:native-spell-effect-recipient",
+            "compiler-gap:native-spell-effect-scope",
+            "compiler-gap:preamble:modifier",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-1/scouring-sand.json",
+      "name": "Scouring Sand",
+      "fields": [
+        "pending",
+        "route",
+        "outcomes"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "preamble:conditional-eligibility",
+          "preamble:ongoing-trigger",
+          "preamble:temporary-immunity",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:conditional-eligibility",
+            "compiler-gap:preamble:ongoing-trigger",
+            "compiler-gap:preamble:temporary-immunity",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        },
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "success": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "dazzled",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "minutes",
+                  "expiry": null,
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 minute"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:action:The creature is @UUID[Compendium.pf2e.conditionitems.Item.TkIyaNPgTZFBCCuh]{Dazzled} for 1 minute or until it uses an Interact action to get the sand out of its eyes."
+            ]
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "dazzled",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "minutes",
+                  "expiry": null,
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 minute"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              },
+              {
+                "slug": "blinded",
+                "value": null,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:action:As failure, but the creature is also @UUID[Compendium.pf2e.conditionitems.Item.XgEqL1kFApUbl5Z2]{Blinded} for its next action."
+            ]
+          }
+        }
+      },
+      "after": {
+        "pending": [
+          "preamble:conditional-eligibility",
+          "preamble:counteract",
+          "preamble:ongoing-trigger",
+          "preamble:temporary-immunity",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:conditional-eligibility",
+            "compiler-gap:preamble:counteract",
+            "compiler-gap:preamble:ongoing-trigger",
+            "compiler-gap:preamble:temporary-immunity",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        },
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "success": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "dazzled",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "minutes",
+                  "expiry": null,
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 minute"
+                },
+                "whileCondition": null,
+                "endsWhen": [
+                  {
+                    "event": "action",
+                    "action": "interact"
+                  }
+                ],
+                "expirationMode": "first",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "dazzled",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "minutes",
+                  "expiry": null,
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 minute"
+                },
+                "whileCondition": null,
+                "endsWhen": [
+                  {
+                    "event": "action",
+                    "action": "interact"
+                  }
+                ],
+                "expirationMode": "first",
+                "recurringSave": null
+              },
+              {
+                "slug": "blinded",
+                "value": null,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:action:As failure, but the creature is also @UUID[Compendium.pf2e.conditionitems.Item.XgEqL1kFApUbl5Z2]{Blinded} for its next action."
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-1/slime-spit.json",
+      "name": "Slime Spit",
+      "fields": [
+        "pending",
+        "route",
+        "outcomes"
+      ],
+      "routeBefore": false,
+      "routeAfter": true,
+      "before": {
+        "pending": [
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:residual-prose",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        },
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:damage:The target takes no damage."
+            ]
+          },
+          "success": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 0.5,
+              "sourceComponentIds": [
+                "ysOHtkIhiCrE7YVr"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "dazzled",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 round"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:action:The target takes half damage and is @UUID[Compendium.pf2e.conditionitems.Item.TkIyaNPgTZFBCCuh]{Dazzled} for 1 round, though it can Interact to wipe its eyes and remove the condition."
+            ]
+          },
+          "failure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 1,
+              "sourceComponentIds": [
+                "ysOHtkIhiCrE7YVr"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "dazzled",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-end",
+                  "anchor": "source-turn",
+                  "offset": 1,
+                  "sourceText": "until the end of your next turn"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 2,
+              "sourceComponentIds": [
+                "ysOHtkIhiCrE7YVr"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "blinded",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 round"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              },
+              {
+                "slug": "dazzled",
+                "value": null,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:action:The target takes double damage, is @UUID[Compendium.pf2e.conditionitems.Item.XgEqL1kFApUbl5Z2]{Blinded} for 1 round, and is dazzled until it uses an Interact action to wipe its eyes."
+            ]
+          }
+        }
+      },
+      "after": {
+        "pending": [],
+        "route": {
+          "supported": true,
+          "blockers": []
+        },
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "success": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 0.5,
+              "sourceComponentIds": [
+                "ysOHtkIhiCrE7YVr"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "dazzled",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 round"
+                },
+                "whileCondition": null,
+                "endsWhen": [
+                  {
+                    "event": "action",
+                    "action": "interact"
+                  }
+                ],
+                "expirationMode": "first",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 1,
+              "sourceComponentIds": [
+                "ysOHtkIhiCrE7YVr"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "dazzled",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-end",
+                  "anchor": "source-turn",
+                  "offset": 1,
+                  "sourceText": "until the end of your next turn"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 2,
+              "sourceComponentIds": [
+                "ysOHtkIhiCrE7YVr"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "blinded",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 round"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              },
+              {
+                "slug": "dazzled",
+                "value": null,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": [
+                  {
+                    "event": "action",
+                    "action": "interact"
+                  }
+                ],
+                "expirationMode": "event",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          }
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-10/fabricated-truth.json",
+      "name": "Fabricated Truth",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "item-duration-grammar",
+          "preamble:restriction",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:item-duration-grammar",
+            "compiler-gap:preamble:restriction",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "item-duration-grammar",
+          "preamble:counteract",
+          "preamble:restriction",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:item-duration-grammar",
+            "compiler-gap:preamble:counteract",
+            "compiler-gap:preamble:restriction",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-10/pied-piping.json",
+      "name": "Pied Piping",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "manual:attitude-or-hostility",
+          "manual:conditional-effect",
+          "preamble:conditional-eligibility",
+          "preamble:modifier",
+          "preamble:temporary-immunity",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:manual:attitude-or-hostility",
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:preamble:conditional-eligibility",
+            "compiler-gap:preamble:modifier",
+            "compiler-gap:preamble:temporary-immunity",
+            "compiler-gap:residual-prose",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "manual:attitude-or-hostility",
+          "manual:conditional-effect",
+          "preamble:conditional-eligibility",
+          "preamble:modifier",
+          "preamble:ongoing-trigger",
+          "preamble:temporary-immunity",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:manual:attitude-or-hostility",
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:preamble:conditional-eligibility",
+            "compiler-gap:preamble:modifier",
+            "compiler-gap:preamble:ongoing-trigger",
+            "compiler-gap:preamble:temporary-immunity",
+            "compiler-gap:residual-prose",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-10/shadow-army.json",
+      "name": "Shadow Army",
+      "fields": [
+        "outcomes"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:damage:The creature takes no damage.",
+              "residual:duration:For the duration of the spell, the creature uses the outcome one degree of success better than it rolled on further saves against the spell and can distinguish you from your clones without difficulty."
+            ]
+          },
+          "success": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 0.5,
+              "sourceComponentIds": [
+                "0",
+                "1"
+              ]
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 1,
+              "sourceComponentIds": [
+                "0",
+                "1"
+              ]
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:condition+duration+timing:The creature takes full damage and gains the chosen condition until the end of its next turn."
+            ]
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 2,
+              "sourceComponentIds": [
+                "0",
+                "1"
+              ]
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:condition+duration+timing:The creature takes double damage and gains the chosen condition until the end of its next turn."
+            ]
+          }
+        }
+      },
+      "after": {
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:duration:For the duration of the spell, the creature uses the outcome one degree of success better than it rolled on further saves against the spell and can distinguish you from your clones without difficulty."
+            ]
+          },
+          "success": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 0.5,
+              "sourceComponentIds": [
+                "0",
+                "1"
+              ]
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 1,
+              "sourceComponentIds": [
+                "0",
+                "1"
+              ]
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:condition+duration+timing:The creature takes full damage and gains the chosen condition until the end of its next turn."
+            ]
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 2,
+              "sourceComponentIds": [
+                "0",
+                "1"
+              ]
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:condition+duration+timing:The creature takes double damage and gains the chosen condition until the end of its next turn."
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-2/sea-surge.json",
+      "name": "Sea Surge",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "manual:conditional-effect",
+          "manual:forced-movement",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:manual:forced-movement",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "manual:conditional-effect",
+          "manual:forced-movement",
+          "preamble:ongoing-trigger",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:manual:forced-movement",
+            "compiler-gap:preamble:ongoing-trigger",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-2/the-parrots-whisper.json",
+      "name": "The Parrot's Whisper",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "preamble:ongoing-trigger",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:ongoing-trigger",
+            "compiler-gap:residual-prose",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:residual-prose",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-2/worms-repast.json",
+      "name": "Worm's Repast",
+      "fields": [
+        "outcomes"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:damage:The worms writhe away harmlessly and the target takes no damage."
+            ]
+          },
+          "success": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:damage:The target takes full initial damage but no persistent damage, and the spell ends immediately."
+            ]
+          },
+          "failure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "off-guard",
+                "value": null,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:damage:The target takes full initial and persistent damage and is @UUID[Compendium.pf2e.conditionitems.Item.AJh5ex99aV6VTggg]{Off-Guard} due to the pain for as long as it takes persistent damage."
+            ]
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "off-guard",
+                "value": null,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              },
+              {
+                "slug": "slowed",
+                "value": 1,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:damage:As failure, but the target takes double the initial damage and is also @UUID[Compendium.pf2e.conditionitems.Item.xYTAsEpcJE1Ccni3]{Slowed 1} by the pain for as long as it takes persistent damage."
+            ]
+          }
+        }
+      },
+      "after": {
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "success": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:damage:The target takes full initial damage but no persistent damage, and the spell ends immediately."
+            ]
+          },
+          "failure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "off-guard",
+                "value": null,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:damage:The target takes full initial and persistent damage and is @UUID[Compendium.pf2e.conditionitems.Item.AJh5ex99aV6VTggg]{Off-Guard} due to the pain for as long as it takes persistent damage."
+            ]
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "off-guard",
+                "value": null,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              },
+              {
+                "slug": "slowed",
+                "value": 1,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:damage:As failure, but the target takes double the initial damage and is also @UUID[Compendium.pf2e.conditionitems.Item.xYTAsEpcJE1Ccni3]{Slowed 1} by the pain for as long as it takes persistent damage."
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-3/aqueous-orb.json",
+      "name": "Aqueous Orb",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "manual:conditional-effect",
+          "preamble:ongoing-trigger",
+          "preamble:restriction",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:preamble:ongoing-trigger",
+            "compiler-gap:preamble:restriction",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "manual:conditional-effect",
+          "preamble:counteract",
+          "preamble:ongoing-trigger",
+          "preamble:restriction",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:preamble:counteract",
+            "compiler-gap:preamble:ongoing-trigger",
+            "compiler-gap:preamble:restriction",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-3/curse-of-lost-time.json",
+      "name": "Curse of Lost Time",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "preamble:additional-condition",
+          "preamble:conditional-eligibility",
+          "preamble:restriction",
+          "residual-prose",
+          "target-eligibility"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:additional-condition",
+            "compiler-gap:preamble:conditional-eligibility",
+            "compiler-gap:preamble:restriction",
+            "compiler-gap:residual-prose",
+            "compiler-gap:target-eligibility",
+            "target-eligibility:Actor targeting has unsupported or incomplete eligibility rules.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "preamble:additional-condition",
+          "preamble:conditional-eligibility",
+          "preamble:counteract",
+          "preamble:restriction",
+          "residual-prose",
+          "target-eligibility"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:additional-condition",
+            "compiler-gap:preamble:conditional-eligibility",
+            "compiler-gap:preamble:counteract",
+            "compiler-gap:preamble:restriction",
+            "compiler-gap:residual-prose",
+            "compiler-gap:target-eligibility",
+            "target-eligibility:Actor targeting has unsupported or incomplete eligibility rules.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-3/reblooded.json",
+      "name": "Reblooded",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": true,
+      "before": {
+        "pending": [
+          "preamble:ongoing-trigger"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:ongoing-trigger"
+          ]
+        }
+      },
+      "after": {
+        "pending": [],
+        "route": {
+          "supported": true,
+          "blockers": []
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-4/grasp-of-the-deep.json",
+      "name": "Grasp of the Deep",
+      "fields": [
+        "pending",
+        "route",
+        "outcomes"
+      ],
+      "routeBefore": false,
+      "routeAfter": true,
+      "before": {
+        "pending": [
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:residual-prose",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        },
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "success": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 0.5,
+              "sourceComponentIds": [
+                "1Yh5PCqtUHHVKkOd"
+              ]
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 1,
+              "sourceComponentIds": [
+                "1Yh5PCqtUHHVKkOd"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "grabbed",
+                "value": null,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:action+modifier:The target also becomes @UUID[Compendium.pf2e.conditionitems.Item.kWc1fhmv9LBiTuei]{Grabbed}, but it can attempt to @UUID[Compendium.pf2e.actionspf2e.Item.SkZAQRkLLkmBQNB9]{Escape} with an Escape DC equal to your spell DC."
+            ]
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 2,
+              "sourceComponentIds": [
+                "1Yh5PCqtUHHVKkOd"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "grabbed",
+                "value": null,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          }
+        }
+      },
+      "after": {
+        "pending": [],
+        "route": {
+          "supported": true,
+          "blockers": []
+        },
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "success": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 0.5,
+              "sourceComponentIds": [
+                "1Yh5PCqtUHHVKkOd"
+              ]
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 1,
+              "sourceComponentIds": [
+                "1Yh5PCqtUHHVKkOd"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "grabbed",
+                "value": null,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": [
+                  {
+                    "event": "escape",
+                    "dc": "spell"
+                  }
+                ],
+                "expirationMode": "event",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 2,
+              "sourceComponentIds": [
+                "1Yh5PCqtUHHVKkOd"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "grabbed",
+                "value": null,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": [
+                  {
+                    "event": "escape",
+                    "dc": "spell"
+                  }
+                ],
+                "expirationMode": "event",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          }
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-4/lifes-flowing-river.json",
+      "name": "Life's Flowing River",
+      "fields": [
+        "pending",
+        "route",
+        "outcomes"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "manual:conditional-effect",
+          "manual:forced-movement",
+          "manual:terrain",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:manual:forced-movement",
+            "compiler-gap:manual:terrain",
+            "compiler-gap:residual-prose",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        },
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:duration+timing:The creature ignores the river's effects until the start of its next turn.",
+              "residual:damage:If the creature is undead or a nindoru, it takes no damage."
+            ]
+          },
+          "success": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:duration:The creature treats all squares occupied by the river as difficult terrain until the start of its next turn.",
+              "residual:damage:If the creature is undead or a nindoru, it takes half damage."
+            ]
+          },
+          "failure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "prone",
+                "value": null,
+                "duration": {
+                  "mode": "unlimited",
+                  "value": null,
+                  "unit": null
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:damage:If the creature is undead or a nindoru, it takes full damage."
+            ]
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "prone",
+                "value": null,
+                "duration": {
+                  "mode": "unlimited",
+                  "value": null,
+                  "unit": null
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "guided::As failure, but the creature is pushed 20 feet along the river's path in the direction of flow.",
+              "residual:damage:If the creature is undead or a nindoru, it takes double mental damage."
+            ]
+          }
+        }
+      },
+      "after": {
+        "pending": [
+          "manual:conditional-effect",
+          "manual:forced-movement",
+          "manual:terrain",
+          "preamble:ongoing-trigger",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:manual:forced-movement",
+            "compiler-gap:manual:terrain",
+            "compiler-gap:preamble:ongoing-trigger",
+            "compiler-gap:residual-prose",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        },
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:duration+timing:The creature ignores the river's effects until the start of its next turn.",
+              "guided::If the creature is undead or a nindoru, it takes no damage."
+            ]
+          },
+          "success": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:duration:The creature treats all squares occupied by the river as difficult terrain until the start of its next turn.",
+              "residual:damage:If the creature is undead or a nindoru, it takes half damage."
+            ]
+          },
+          "failure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "prone",
+                "value": null,
+                "duration": {
+                  "mode": "unlimited",
+                  "value": null,
+                  "unit": null
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:damage:If the creature is undead or a nindoru, it takes full damage."
+            ]
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "prone",
+                "value": null,
+                "duration": {
+                  "mode": "unlimited",
+                  "value": null,
+                  "unit": null
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "guided::As failure, but the creature is pushed 20 feet along the river's path in the direction of flow.",
+              "residual:damage:If the creature is undead or a nindoru, it takes double mental damage."
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-4/living-terrain.json",
+      "name": "Living Terrain",
+      "fields": [
+        "pending",
+        "route",
+        "outcomes"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "preamble:ongoing-trigger",
+          "preamble:restriction",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:ongoing-trigger",
+            "compiler-gap:preamble:restriction",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        },
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:damage:The target takes no damage."
+            ]
+          },
+          "success": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 0.5,
+              "sourceComponentIds": [
+                "KibjMYdNorbqJpcM"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "clumsy",
+                "value": 1,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "source-turn",
+                  "offset": 1,
+                  "sourceText": "until the beginning of your next turn"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 1,
+              "sourceComponentIds": [
+                "KibjMYdNorbqJpcM"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "prone",
+                "value": null,
+                "duration": {
+                  "mode": "unlimited",
+                  "value": null,
+                  "unit": null
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              },
+              {
+                "slug": "clumsy",
+                "value": 1,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "source-turn",
+                  "offset": 1,
+                  "sourceText": "until the beginning of your next turn"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 2,
+              "sourceComponentIds": [
+                "KibjMYdNorbqJpcM"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "clumsy",
+                "value": 2,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "source-turn",
+                  "offset": 1,
+                  "sourceText": "until the beginning of your next turn"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              },
+              {
+                "slug": "prone",
+                "value": null,
+                "duration": {
+                  "mode": "unlimited",
+                  "value": null,
+                  "unit": null
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          }
+        }
+      },
+      "after": {
+        "pending": [
+          "preamble:ongoing-trigger",
+          "preamble:restriction"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:ongoing-trigger",
+            "compiler-gap:preamble:restriction",
+            "lifecycle:The save route cannot manage this lifecycle or controller."
+          ]
+        },
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "success": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 0.5,
+              "sourceComponentIds": [
+                "KibjMYdNorbqJpcM"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "clumsy",
+                "value": 1,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "source-turn",
+                  "offset": 1,
+                  "sourceText": "until the beginning of your next turn"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 1,
+              "sourceComponentIds": [
+                "KibjMYdNorbqJpcM"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "prone",
+                "value": null,
+                "duration": {
+                  "mode": "unlimited",
+                  "value": null,
+                  "unit": null
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              },
+              {
+                "slug": "clumsy",
+                "value": 1,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "source-turn",
+                  "offset": 1,
+                  "sourceText": "until the beginning of your next turn"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 2,
+              "sourceComponentIds": [
+                "KibjMYdNorbqJpcM"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "clumsy",
+                "value": 2,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "source-turn",
+                  "offset": 1,
+                  "sourceText": "until the beginning of your next turn"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              },
+              {
+                "slug": "prone",
+                "value": null,
+                "duration": {
+                  "mode": "unlimited",
+                  "value": null,
+                  "unit": null
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          }
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-4/luring-wail.json",
+      "name": "Luring Wail",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "preamble:additional-condition",
+          "preamble:modifier",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:additional-condition",
+            "compiler-gap:preamble:modifier",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "preamble:additional-condition",
+          "preamble:modifier",
+          "preamble:ongoing-trigger",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:additional-condition",
+            "compiler-gap:preamble:modifier",
+            "compiler-gap:preamble:ongoing-trigger",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-4/overflowing-sorrow.json",
+      "name": "Overflowing Sorrow",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "manual:conditional-effect",
+          "manual:counteract",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:manual:counteract",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "manual:conditional-effect",
+          "manual:counteract",
+          "preamble:ongoing-trigger",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:manual:counteract",
+            "compiler-gap:preamble:ongoing-trigger",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-4/planar-tether.json",
+      "name": "Planar Tether",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "item-duration-grammar",
+          "preamble:ongoing-trigger",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:item-duration-grammar",
+            "compiler-gap:preamble:ongoing-trigger",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "item-duration-grammar",
+          "preamble:counteract",
+          "preamble:ongoing-trigger",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:item-duration-grammar",
+            "compiler-gap:preamble:counteract",
+            "compiler-gap:preamble:ongoing-trigger",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-4/unsettling-perspective.json",
+      "name": "Unsettling Perspective",
+      "fields": [
+        "pending",
+        "route",
+        "outcomes"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "manual:conditional-effect",
+          "preamble:damage",
+          "preamble:ongoing-trigger",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:preamble:damage",
+            "compiler-gap:preamble:ongoing-trigger",
+            "compiler-gap:residual-prose",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        },
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:damage:The creature takes no damage."
+            ]
+          },
+          "success": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:damage:The creature takes half damage, and you gain a general sense of their position and importance within their society."
+            ]
+          },
+          "failure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:damage:The creature takes full damage, and you learn the creature's social status within their society as well as one of their connections to a leader in their society, if any exist."
+            ]
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "stunned",
+                "value": 1,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:damage:As failure, except the creature takes double damage and is @UUID[Compendium.pf2e.conditionitems.Item.dfCMdR4wnpbYNTix]{Stunned 1}.",
+              "residual::You can attempt a skill check to @UUID[Compendium.pf2e.actionspf2e.Item.1OagaWtBpVXExToo]{Recall Knowledge} about the creature the next time you Refocus to remember additional information that you may have learned but didn't have time to process in the moment."
+            ]
+          }
+        }
+      },
+      "after": {
+        "pending": [
+          "manual:conditional-effect",
+          "preamble:damage",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:preamble:damage",
+            "compiler-gap:residual-prose",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        },
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "success": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:damage:The creature takes half damage, and you gain a general sense of their position and importance within their society."
+            ]
+          },
+          "failure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:damage:The creature takes full damage, and you learn the creature's social status within their society as well as one of their connections to a leader in their society, if any exist."
+            ]
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "stunned",
+                "value": 1,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:damage:As failure, except the creature takes double damage and is @UUID[Compendium.pf2e.conditionitems.Item.dfCMdR4wnpbYNTix]{Stunned 1}.",
+              "residual::You can attempt a skill check to @UUID[Compendium.pf2e.actionspf2e.Item.1OagaWtBpVXExToo]{Recall Knowledge} about the creature the next time you Refocus to remember additional information that you may have learned but didn't have time to process in the moment."
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-4/vampiric-maiden.json",
+      "name": "Vampiric Maiden",
+      "fields": [
+        "outcomes"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "success": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 0.5,
+              "sourceComponentIds": [
+                "0",
+                "1"
+              ]
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 1,
+              "sourceComponentIds": [
+                "0",
+                "1"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "immobilized",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 round"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual::The target is briefly trapped within the vampiric maiden.",
+              "residual:action:The target takes full damage and is @UUID[Compendium.pf2e.conditionitems.Item.eIcWbB5o3pP6OIMe]{Immobilized} by the iron maiden for 1 round or until it uses an Interact action to extricate itself, whichever comes first."
+            ]
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 2,
+              "sourceComponentIds": [
+                "0",
+                "1"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "immobilized",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 round"
+                },
+                "whileCondition": null,
+                "endsWhen": [
+                  {
+                    "event": "escape",
+                    "dc": "spell"
+                  }
+                ],
+                "expirationMode": "first",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          }
+        }
+      },
+      "after": {
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "success": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 0.5,
+              "sourceComponentIds": [
+                "0",
+                "1"
+              ]
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 1,
+              "sourceComponentIds": [
+                "0",
+                "1"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "immobilized",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 round"
+                },
+                "whileCondition": null,
+                "endsWhen": [
+                  {
+                    "event": "action",
+                    "action": "interact"
+                  }
+                ],
+                "expirationMode": "first",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual::The target is briefly trapped within the vampiric maiden."
+            ]
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 2,
+              "sourceComponentIds": [
+                "0",
+                "1"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "immobilized",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 round"
+                },
+                "whileCondition": null,
+                "endsWhen": [
+                  {
+                    "event": "escape",
+                    "dc": "spell"
+                  }
+                ],
+                "expirationMode": "first",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          }
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-5/banishment.json",
+      "name": "Banishment",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "preamble:modifier",
+          "preamble:ongoing-trigger",
+          "residual-prose",
+          "target-eligibility"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:modifier",
+            "compiler-gap:preamble:ongoing-trigger",
+            "compiler-gap:residual-prose",
+            "compiler-gap:target-eligibility",
+            "target-eligibility:Actor targeting has unsupported or incomplete eligibility rules.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "preamble:modifier",
+          "residual-prose",
+          "target-eligibility"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:modifier",
+            "compiler-gap:residual-prose",
+            "compiler-gap:target-eligibility",
+            "target-eligibility:Actor targeting has unsupported or incomplete eligibility rules.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-5/pressure-zone.json",
+      "name": "Pressure Zone",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "condition-duration-scope",
+          "manual:conditional-effect",
+          "manual:gm-choice",
+          "manual:temporary-immunity",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:condition-duration-scope",
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:manual:gm-choice",
+            "compiler-gap:manual:temporary-immunity",
+            "compiler-gap:residual-prose",
+            "condition-composition:Condition values, lifetimes or dependencies are unsupported or ambiguous.",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "condition-duration-scope",
+          "manual:conditional-effect",
+          "manual:gm-choice",
+          "manual:temporary-immunity",
+          "preamble:ongoing-trigger",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:condition-duration-scope",
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:manual:gm-choice",
+            "compiler-gap:manual:temporary-immunity",
+            "compiler-gap:preamble:ongoing-trigger",
+            "compiler-gap:residual-prose",
+            "condition-composition:Condition values, lifetimes or dependencies are unsupported or ambiguous.",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-5/strange-geometry.json",
+      "name": "Strange Geometry",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "manual:conditional-effect",
+          "manual:forced-movement",
+          "manual:perception-or-illusion",
+          "manual:terrain",
+          "preamble:restriction",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:manual:forced-movement",
+            "compiler-gap:manual:perception-or-illusion",
+            "compiler-gap:manual:terrain",
+            "compiler-gap:preamble:restriction",
+            "compiler-gap:residual-prose",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "manual:conditional-effect",
+          "manual:forced-movement",
+          "manual:perception-or-illusion",
+          "manual:terrain",
+          "preamble:ongoing-trigger",
+          "preamble:restriction",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:manual:forced-movement",
+            "compiler-gap:manual:perception-or-illusion",
+            "compiler-gap:manual:terrain",
+            "compiler-gap:preamble:ongoing-trigger",
+            "compiler-gap:preamble:restriction",
+            "compiler-gap:residual-prose",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-5/tornadic-gale.json",
+      "name": "Tornadic Gale",
+      "fields": [
+        "pending",
+        "route",
+        "outcomes"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "manual:forced-movement",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:manual:forced-movement",
+            "compiler-gap:residual-prose",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        },
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:damage:The target takes no damage."
+            ]
+          },
+          "success": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 0.5,
+              "sourceComponentIds": [
+                "z1avSWNyT0b6Q8BK"
+              ]
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 1,
+              "sourceComponentIds": [
+                "z1avSWNyT0b6Q8BK"
+              ]
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "guided::The target takes full damage and is pushed 5 feet away from you."
+            ]
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 2,
+              "sourceComponentIds": [
+                "z1avSWNyT0b6Q8BK"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "prone",
+                "value": null,
+                "duration": {
+                  "mode": "unlimited",
+                  "value": null,
+                  "unit": null
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "guided::The target takes double damage, is pushed 10 feet away from you, and is knocked @UUID[Compendium.pf2e.conditionitems.Item.j91X7x0XSomq8d60]{Prone}."
+            ]
+          }
+        }
+      },
+      "after": {
+        "pending": [
+          "manual:forced-movement"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:manual:forced-movement",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        },
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "success": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 0.5,
+              "sourceComponentIds": [
+                "z1avSWNyT0b6Q8BK"
+              ]
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 1,
+              "sourceComponentIds": [
+                "z1avSWNyT0b6Q8BK"
+              ]
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "guided::The target takes full damage and is pushed 5 feet away from you."
+            ]
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 2,
+              "sourceComponentIds": [
+                "z1avSWNyT0b6Q8BK"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "prone",
+                "value": null,
+                "duration": {
+                  "mode": "unlimited",
+                  "value": null,
+                  "unit": null
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "guided::The target takes double damage, is pushed 10 feet away from you, and is knocked @UUID[Compendium.pf2e.conditionitems.Item.j91X7x0XSomq8d60]{Prone}."
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-5/whispers-of-a-dead-goddess.json",
+      "name": "Whispers of a Dead Goddess",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "condition-duration-scope",
+          "manual:conditional-effect",
+          "manual:temporary-immunity",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:condition-duration-scope",
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:manual:temporary-immunity",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "condition-duration-scope",
+          "manual:conditional-effect",
+          "manual:temporary-immunity",
+          "preamble:ongoing-trigger",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:condition-duration-scope",
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:manual:temporary-immunity",
+            "compiler-gap:preamble:ongoing-trigger",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-6/expunge-blood.json",
+      "name": "Expunge Blood",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "preamble:conditional-eligibility",
+          "preamble:modifier",
+          "preamble:ongoing-trigger"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:conditional-eligibility",
+            "compiler-gap:preamble:modifier",
+            "compiler-gap:preamble:ongoing-trigger"
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "preamble:modifier",
+          "preamble:ongoing-trigger"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:modifier",
+            "compiler-gap:preamble:ongoing-trigger"
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-7/attacked-from-within.json",
+      "name": "Attacked from Within",
+      "fields": [
+        "pending",
+        "route",
+        "outcomes"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "item-duration-grammar",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:item-duration-grammar",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        },
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:damage:The target takes no damage, with a brief sensation of pain followed by a pleasant memory."
+            ]
+          },
+          "success": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 0.5,
+              "sourceComponentIds": [
+                "nd3XNs3JZLTqgaDv"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "frightened",
+                "value": 1,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 1,
+              "sourceComponentIds": [
+                "nd3XNs3JZLTqgaDv"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "frightened",
+                "value": 2,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 2,
+              "sourceComponentIds": [
+                "nd3XNs3JZLTqgaDv"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "off-guard",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 round"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              },
+              {
+                "slug": "frightened",
+                "value": 2,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 round"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          }
+        }
+      },
+      "after": {
+        "pending": [
+          "item-duration-grammar"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:item-duration-grammar",
+            "lifecycle:The save route cannot manage this lifecycle or controller."
+          ]
+        },
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "success": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 0.5,
+              "sourceComponentIds": [
+                "nd3XNs3JZLTqgaDv"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "frightened",
+                "value": 1,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 1,
+              "sourceComponentIds": [
+                "nd3XNs3JZLTqgaDv"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "frightened",
+                "value": 2,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 2,
+              "sourceComponentIds": [
+                "nd3XNs3JZLTqgaDv"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "off-guard",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 round"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              },
+              {
+                "slug": "frightened",
+                "value": 2,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 round"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          }
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-7/eclipse-burst.json",
+      "name": "Eclipse Burst",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:residual-prose",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "preamble:counteract",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:counteract",
+            "compiler-gap:residual-prose",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-7/infinitesimal-collapse-field.json",
+      "name": "Infinitesimal Collapse Field",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:residual-prose",
+            "condition-composition:Condition values, lifetimes or dependencies are unsupported or ambiguous.",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "preamble:ongoing-trigger",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:ongoing-trigger",
+            "compiler-gap:residual-prose",
+            "condition-composition:Condition values, lifetimes or dependencies are unsupported or ambiguous.",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-7/maze-of-locked-doors.json",
+      "name": "Maze of Locked Doors",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "preamble:counteract",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:counteract",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-7/pollen-pods.json",
+      "name": "Pollen Pods",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": true,
+      "routeAfter": false,
+      "before": {
+        "pending": [],
+        "route": {
+          "supported": true,
+          "blockers": []
+        }
+      },
+      "after": {
+        "pending": [
+          "preamble:ongoing-trigger"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:ongoing-trigger"
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-7/warp-mind.json",
+      "name": "Warp Mind",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "preamble:conditional-eligibility",
+          "preamble:restriction",
+          "preamble:temporary-immunity",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:conditional-eligibility",
+            "compiler-gap:preamble:restriction",
+            "compiler-gap:preamble:temporary-immunity",
+            "compiler-gap:residual-prose",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "preamble:conditional-eligibility",
+          "preamble:counteract",
+          "preamble:restriction",
+          "preamble:temporary-immunity",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:conditional-eligibility",
+            "compiler-gap:preamble:counteract",
+            "compiler-gap:preamble:restriction",
+            "compiler-gap:preamble:temporary-immunity",
+            "compiler-gap:residual-prose",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-8/boil-blood.json",
+      "name": "Boil Blood",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": true,
+      "before": {
+        "pending": [
+          "preamble:conditional-eligibility"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:conditional-eligibility"
+          ]
+        }
+      },
+      "after": {
+        "pending": [],
+        "route": {
+          "supported": true,
+          "blockers": []
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-8/spirit-song.json",
+      "name": "Spirit Song",
+      "fields": [
+        "outcomes"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:damage:The creature takes no damage."
+            ]
+          },
+          "success": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 0.5,
+              "sourceComponentIds": [
+                "0"
+              ]
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:duration:The creature takes half damage and can't use reactions until the beginning of its turn."
+            ]
+          },
+          "failure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 1,
+              "sourceComponentIds": [
+                "0"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "stunned",
+                "value": 1,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:duration:The creature takes full damage, can't use reactions until the beginning of its turn, and is @UUID[Compendium.pf2e.conditionitems.Item.dfCMdR4wnpbYNTix]{Stunned 1}."
+            ]
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 2,
+              "sourceComponentIds": [
+                "0"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "stunned",
+                "value": 2,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:duration:The creature takes double damage, can't use reactions until the beginning of its turn, and is @UUID[Compendium.pf2e.conditionitems.Item.dfCMdR4wnpbYNTix]{Stunned 2}."
+            ]
+          }
+        }
+      },
+      "after": {
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "success": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 0.5,
+              "sourceComponentIds": [
+                "0"
+              ]
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:duration:The creature takes half damage and can't use reactions until the beginning of its turn."
+            ]
+          },
+          "failure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 1,
+              "sourceComponentIds": [
+                "0"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "stunned",
+                "value": 1,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:duration:The creature takes full damage, can't use reactions until the beginning of its turn, and is @UUID[Compendium.pf2e.conditionitems.Item.dfCMdR4wnpbYNTix]{Stunned 1}."
+            ]
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 2,
+              "sourceComponentIds": [
+                "0"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "stunned",
+                "value": 2,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:duration:The creature takes double damage, can't use reactions until the beginning of its turn, and is @UUID[Compendium.pf2e.conditionitems.Item.dfCMdR4wnpbYNTix]{Stunned 2}."
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-9/astral-labyrinth.json",
+      "name": "Astral Labyrinth",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "preamble:restriction",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:restriction",
+            "compiler-gap:residual-prose",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "preamble:counteract",
+          "preamble:restriction",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:counteract",
+            "compiler-gap:preamble:restriction",
+            "compiler-gap:residual-prose",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-9/trim-the-blight.json",
+      "name": "Trim the Blight",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "condition-duration-scope",
+          "preamble:ongoing-trigger",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:condition-duration-scope",
+            "compiler-gap:preamble:ongoing-trigger",
+            "compiler-gap:residual-prose",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "condition-duration-scope",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:condition-duration-scope",
+            "compiler-gap:residual-prose",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    }
+  ]
+}

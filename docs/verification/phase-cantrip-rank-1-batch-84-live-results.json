@@ -1,0 +1,66 @@
+{
+  "batch": "cantrip-rank-1-batch-84",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch84",
+    "passed": true,
+    "details": {
+      "total": 2,
+      "lost": [
+        1,
+        2,
+        4
+      ],
+      "persistent": [
+        [],
+        [
+          "1d4"
+        ],
+        [
+          "(2 * 1d4)"
+        ]
+      ],
+      "effects": 2,
+      "marked": [
+        null,
+        [
+          "savor-the-sting"
+        ],
+        [
+          "savor-the-sting"
+        ]
+      ],
+      "card": true,
+      "dataNote": true
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch84",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch83",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

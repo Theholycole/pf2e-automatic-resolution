@@ -1,0 +1,64 @@
+{
+  "batch": "cantrip-rank-1-batch-75",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch75",
+    "passed": true,
+    "details": {
+      "success": "1 rounds",
+      "failure": "2 rounds",
+      "damage": {
+        "formula": "4d8 mental",
+        "total": 13,
+        "lost": 13
+      },
+      "flavor": true
+    }
+  },
+  "runs": [
+    {
+      "n": "cr1Batch75",
+      "passed": false,
+      "note": "first run: behaviour correct (4d8 mental, 18 lost); the case wrongly expected no note on a success (Agitate's success is 1 round) and read the wrong chat message for the flavor"
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch51",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch16",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch75",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

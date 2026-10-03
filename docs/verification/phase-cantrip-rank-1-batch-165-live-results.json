@@ -1,0 +1,32 @@
+{
+  "batch": 165,
+  "date": "2026-09-28",
+  "world": "pftest",
+  "system": "8.5.0",
+  "core": "14.367",
+  "module": "0.8.2",
+  "results": [
+    {
+      "case": "cr1Batch165",
+      "passed": true,
+      "details": {
+        "wards": {
+          "sanctuary": {
+            "dc": 24,
+            "saved": 1,
+            "outcome": "barred",
+            "afterHostile": false
+          },
+          "tree": {
+            "hp": 10,
+            "firstLost": 0,
+            "afterFirst": 2,
+            "secondLost": 3,
+            "status": "ended",
+            "regionGone": true
+          }
+        }
+      }
+    }
+  ]
+}

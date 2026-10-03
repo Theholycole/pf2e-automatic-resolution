@@ -1,0 +1,26 @@
+{
+  "label": "rank4Batch112",
+  "passed": true,
+  "at": "2026-10-03T08:51:37.053Z",
+  "details": {
+    "batch112": {
+      "effect": {
+        "kind": "scene-cost",
+        "duration": {
+          "value": 10,
+          "unit": "minutes",
+          "expiry": "turn-start",
+          "sustained": false
+        },
+        "notes": true
+      },
+      "ended": {
+        "formula": "6d6 void",
+        "damage": 22,
+        "lost": 22,
+        "gone": true
+      },
+      "status": "applied"
+    }
+  }
+}

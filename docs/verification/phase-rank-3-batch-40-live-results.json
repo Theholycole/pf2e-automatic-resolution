@@ -1,0 +1,23 @@
+{
+  "label": "rank3Batch40",
+  "passed": true,
+  "at": "2026-10-02T16:49:03.536Z",
+  "details": {
+    "batch40": {
+      "notes": true,
+      "results": [
+        {
+          "statistic": "fortitude",
+          "blinded": true,
+          "dazzled": false
+        },
+        {
+          "statistic": "fortitude",
+          "blinded": false,
+          "dazzled": true
+        }
+      ],
+      "level": "guided"
+    }
+  }
+}

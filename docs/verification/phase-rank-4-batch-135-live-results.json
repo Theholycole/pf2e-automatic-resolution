@@ -1,0 +1,18 @@
+{
+  "label": "rank4Batch135",
+  "passed": true,
+  "at": "2026-10-03T12:58:52.032Z",
+  "details": {
+    "batch135": {
+      "kind": "portal-pair",
+      "caster": "free",
+      "strong": "passed",
+      "weak": "teleported",
+      "designatedLow": "Infiltrator's Tunnel: at rank 4 you can designate no other creatures.",
+      "high": {
+        "designated": 1,
+        "ally": "free"
+      }
+    }
+  }
+}

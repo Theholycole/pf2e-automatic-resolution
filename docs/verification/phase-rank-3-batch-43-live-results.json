@@ -1,0 +1,21 @@
+{
+  "label": "rank3Batch43",
+  "passed": true,
+  "at": "2026-10-02T17:29:16.552Z",
+  "details": {
+    "batch43": {
+      "self": {
+        "bearer": "caster",
+        "formula": "2d8 poison",
+        "total": 12,
+        "lost": 12
+      },
+      "companion": {
+        "bearer": "companion",
+        "formula": "3d8 poison",
+        "total": 14,
+        "lost": 14
+      }
+    }
+  }
+}

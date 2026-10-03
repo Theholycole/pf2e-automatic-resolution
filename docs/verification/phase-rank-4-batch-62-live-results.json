@@ -1,0 +1,39 @@
+{
+  "generatedAt": "2026-10-02T22:58:18.437Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "results": [
+    {
+      "label": "rank4Batch62",
+      "passed": true,
+      "at": "2026-10-02T22:58:06.167Z",
+      "details": {
+        "batch62": {
+          "curses": [
+            [
+              {
+                "duration": "10 minutes",
+                "count": 3,
+                "ignored": false
+              }
+            ],
+            [
+              {
+                "duration": "-1 unlimited",
+                "count": 3,
+                "ignored": false
+              }
+            ],
+            [
+              {
+                "duration": "-1 unlimited",
+                "count": 2,
+                "ignored": false
+              }
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}

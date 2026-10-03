@@ -1,0 +1,31 @@
+{
+  "label": "rank4Batch77",
+  "passed": true,
+  "at": "2026-10-03T00:03:58.201Z",
+  "details": {
+    "batch77": {
+      "results": {
+        "failure": {
+          "adjust": -2,
+          "fascinated": true,
+          "offGuard": false,
+          "lured": true
+        },
+        "criticalFailure": {
+          "adjust": 0,
+          "fascinated": true,
+          "offGuard": true,
+          "lured": true
+        }
+      },
+      "flagged": [
+        "Luring Wail: Fascinated (while in the area)"
+      ],
+      "afterLeaving": {
+        "fascinated": false,
+        "lured": false,
+        "otherStill": true
+      }
+    }
+  }
+}

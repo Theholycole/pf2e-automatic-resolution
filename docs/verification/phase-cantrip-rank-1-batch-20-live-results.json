@@ -1,0 +1,36 @@
+{
+  "batch": "cantrip-rank-1-batch-20",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch20",
+    "passed": true,
+    "at": "2026-09-27T13:12:48.065Z",
+    "details": {
+      "tame": {
+        "dog": [
+          "Attitude 1 minutes",
+          "Temporary immunity 24 hours"
+        ],
+        "person": [],
+        "personEligible": false,
+        "personReason": "requires the animal trait"
+      }
+    }
+  },
+  "regressions": [
+    {
+      "n": "cr1Batch11",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch5",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

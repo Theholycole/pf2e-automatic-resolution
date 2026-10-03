@@ -1,0 +1,89 @@
+{
+  "phase": "rank-2-batch-35",
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cleanup",
+      "passed": true,
+      "at": "2026-10-01T21:53:00.576Z",
+      "details": {
+        "actorsRemoved": 11,
+        "journalsRemoved": 4,
+        "regionsRemoved": 0,
+        "remainingFixtureActors": 0
+      }
+    },
+    {
+      "label": "rank2Batch35",
+      "passed": true,
+      "at": "2026-10-01T21:53:10.766Z",
+      "details": {
+        "batch35": {
+          "parrot": {
+            "now": [
+              {
+                "text": "The Parrot's Whisper: PFTEST P23 Affliction parrot failure's highest weakness: fire 5.",
+                "whisperGM": true
+              }
+            ],
+            "notes": [
+              [
+                "The Parrot's Whisper: Chatter"
+              ],
+              [
+                "The Parrot's Whisper: Highest weakness (start of caster's next turn)"
+              ]
+            ],
+            "later": [
+              "The Parrot's Whisper: PFTEST P23 Affliction parrot failure's highest weakness: fire 5.",
+              "The Parrot's Whisper: PFTEST P23 Affliction parrot success's highest weakness: fire 5."
+            ],
+            "slowNoteLeft": false
+          },
+          "map": {
+            "afterSuccess": 0,
+            "afterCritical": 1,
+            "duration": "1 days",
+            "rules": [
+              "RollOption",
+              "FlatModifier"
+            ],
+            "note": [
+              "24 hours"
+            ]
+          },
+          "metal": {
+            "atCast": 1,
+            "formula": "1d12 sonic",
+            "total": 2,
+            "lostFirst": 2,
+            "atSustain": 1,
+            "ended": "ended"
+          },
+          "bralani": {
+            "wrongCount": true,
+            "chosen": [
+              "enfeebled"
+            ],
+            "atCast": 0,
+            "trigger": {
+              "added": 1,
+              "refused": [
+                "not in the area"
+              ]
+            },
+            "formula": "2d6 slashing",
+            "total": 4,
+            "lost": 4,
+            "again": [
+              "already took this damage this round"
+            ],
+            "ended": "ended"
+          }
+        }
+      }
+    }
+  ]
+}

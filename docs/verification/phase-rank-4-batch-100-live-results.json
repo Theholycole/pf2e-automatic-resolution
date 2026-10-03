@@ -1,0 +1,46 @@
+{
+  "label": "rank4Batch100",
+  "passed": true,
+  "at": "2026-10-03T04:42:41.302Z",
+  "details": {
+    "batch100": {
+      "athletics": {
+        "note": true,
+        "rule": {
+          "key": "RollTwice",
+          "selector": [
+            "athletics"
+          ],
+          "keep": "lower",
+          "removeAfterRoll": true,
+          "slug": null,
+          "priority": 100,
+          "ignored": false,
+          "predicate": [],
+          "requiresEquipped": null,
+          "requiresInvestment": null
+        },
+        "duration": {
+          "value": 1,
+          "unit": "rounds",
+          "expiry": "turn-end",
+          "sustained": false
+        },
+        "dice": 2,
+        "afterRoll": false
+      },
+      "perception": {
+        "selector": [
+          "perception"
+        ],
+        "duration": {
+          "value": 1,
+          "unit": "rounds",
+          "expiry": "turn-end",
+          "sustained": false
+        }
+      },
+      "success": false
+    }
+  }
+}

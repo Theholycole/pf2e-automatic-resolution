@@ -1,0 +1,43 @@
+{
+  "label": "rank4Batch70",
+  "passed": true,
+  "at": "2026-10-02T23:24:41.054Z",
+  "details": {
+    "batch70": {
+      "foes": [
+        {
+          "immunity": [
+            "7 days true"
+          ],
+          "note": []
+        },
+        {
+          "immunity": [
+            "1 days true"
+          ],
+          "note": []
+        },
+        {
+          "immunity": [
+            "1 hours true"
+          ],
+          "note": [
+            "10 minutes"
+          ]
+        },
+        {
+          "immunity": [],
+          "note": [
+            "8 hours"
+          ]
+        }
+      ],
+      "again": [
+        false,
+        false,
+        false,
+        true
+      ]
+    }
+  }
+}

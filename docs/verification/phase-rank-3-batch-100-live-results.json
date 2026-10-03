@@ -1,0 +1,59 @@
+{
+  "label": "rank3Batch100",
+  "passed": true,
+  "at": "2026-10-03T06:28:07.976Z",
+  "details": {
+    "batch100": {
+      "din": {
+        "dc": 24,
+        "results": [
+          {
+            "actorUuid": "Actor.JRI3I69EiC7f5zIl",
+            "degree": 0
+          },
+          {
+            "actorUuid": "Actor.ZUu31J97E5YvwokU",
+            "degree": 3
+          }
+        ],
+        "deafened": true,
+        "duration": "1 minutes",
+        "immune": true
+      },
+      "dinAgain": [
+        {
+          "actorUuid": "Actor.ZUu31J97E5YvwokU",
+          "immune": true
+        }
+      ],
+      "gym": {
+        "results": [
+          {
+            "actorUuid": "Actor.JRI3I69EiC7f5zIl",
+            "degree": 0
+          },
+          {
+            "actorUuid": "Actor.XqPTaKDvUWyO1Iqr",
+            "degree": 0
+          }
+        ],
+        "cling": true,
+        "clingRounds": 10,
+        "short": "10 rounds",
+        "shortCling": true
+      },
+      "gymEnded": {
+        "cling": false,
+        "short": false
+      },
+      "steal": {
+        "actorUuid": "Actor.XqPTaKDvUWyO1Iqr",
+        "degree": 3,
+        "taken": true,
+        "total": 32,
+        "against": 10
+      },
+      "stealTwo": "Mad Monkeys: target the one creature the flagrant burglary is against."
+    }
+  }
+}

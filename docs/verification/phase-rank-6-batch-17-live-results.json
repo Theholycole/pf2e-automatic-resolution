@@ -1,0 +1,21 @@
+{
+ "label": "rank6Batch17",
+ "passed": true,
+ "at": "2026-10-03T20:25:23.411Z",
+ "details": {
+  "batch17": {
+   "time": {
+    "supported": true,
+    "lost": [
+     13,
+     54
+    ],
+    "sickened": [
+     0,
+     2
+    ],
+    "reminder": true
+   }
+  }
+ }
+}

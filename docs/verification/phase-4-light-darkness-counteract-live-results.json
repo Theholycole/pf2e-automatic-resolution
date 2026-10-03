@@ -1,0 +1,71 @@
+{
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "module": "0.8.2",
+  "uiCheck": {
+    "spell": "Chilling Darkness",
+    "clicked": "Counteract the light",
+    "entered": {
+      "name": "UI test light",
+      "dc": 1,
+      "rank": 1
+    },
+    "result": "Counteract check vs DC 1: critical success (rank 3 vs 1). GM to apply: UI test light is counteracted: end it."
+  },
+  "results": [
+    {
+      "label": "lightDarknessCounteract",
+      "passed": true,
+      "at": "2026-09-26T16:01:47.612Z",
+      "details": {
+        "moonburst": {
+          "button": true,
+          "easy": {
+            "countered": true,
+            "text": "Moonburst — counteract the darkness Counteract check vs DC 1: critical success (rank 7 vs 1). GM to apply: Test darkness is counteracted: end it."
+          },
+          "hard": {
+            "countered": false,
+            "text": "Moonburst — counteract the darkness Counteract check vs DC 80: critical failure (rank 7 vs 7). Test deep darkness is not counteracted."
+          },
+          "lost": [
+            31,
+            68
+          ],
+          "total": 31,
+          "conditions": [
+            [],
+            []
+          ],
+          "buttonAfter": false
+        },
+        "radiantBeam": {
+          "button": true,
+          "easy": {
+            "countered": true,
+            "text": "Radiant Beam — counteract the darkness Counteract check vs DC 1: critical success (rank 4 vs 1). GM to apply: Test darkness is counteracted: end it."
+          },
+          "hard": {
+            "countered": false,
+            "text": "Radiant Beam — counteract the darkness Counteract check vs DC 80: critical failure (rank 4 vs 4). Test deep darkness is not counteracted."
+          },
+          "lost": [
+            76
+          ],
+          "total": 38,
+          "conditions": [
+            [
+              "Radiant Beam: Dazzled"
+            ]
+          ],
+          "buttonAfter": false
+        },
+        "chillingDarkness": {
+          "button": true,
+          "countered": true
+        }
+      }
+    }
+  ]
+}

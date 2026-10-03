@@ -1,0 +1,86 @@
+{
+  "rank3Batch124": {
+    "label": "rank3Batch124",
+    "passed": true,
+    "at": "2026-10-03T14:07:02.484Z",
+    "details": {
+      "batch124": {
+        "secured": {
+          "hardness": 15,
+          "max": 52
+        },
+        "operate": {
+          "statuses": [
+            "misfortune",
+            "resisted"
+          ],
+          "degrees": [
+            0,
+            3
+          ],
+          "toggle": true,
+          "keep": "lower"
+        },
+        "fortune": {
+          "key": "RollTwice",
+          "selector": [
+            "saving-throw"
+          ],
+          "keep": "higher",
+          "removeAfterRoll": true,
+          "slug": null,
+          "priority": 100,
+          "ignored": false,
+          "predicate": [],
+          "requiresEquipped": null,
+          "requiresInvestment": null
+        },
+        "broken": true,
+        "hostility": {
+          "hours": 72,
+          "rule": {
+            "key": "FlatModifier",
+            "selector": [
+              "skill-check"
+            ],
+            "type": "status",
+            "value": -2,
+            "predicate": [
+              {
+                "or": [
+                  "action:command-an-animal",
+                  "action:demoralize"
+                ]
+              },
+              {
+                "or": [
+                  "target:trait:animal",
+                  "target:trait:fungus",
+                  "target:trait:plant"
+                ]
+              }
+            ],
+            "slug": null,
+            "priority": 100,
+            "ignored": false,
+            "requiresEquipped": null,
+            "requiresInvestment": null,
+            "force": false,
+            "hideIfDisabled": false,
+            "fromEquipment": true,
+            "critical": null,
+            "removeAfterRoll": false,
+            "battleForm": false
+          }
+        },
+        "area": true,
+        "daily": {
+          "status": "turned",
+          "degree": 0,
+          "minion": false
+        },
+        "curse": true
+      }
+    }
+  }
+}

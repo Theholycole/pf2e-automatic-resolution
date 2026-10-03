@@ -1,0 +1,27 @@
+{
+  "label": "rank4Batch27",
+  "passed": true,
+  "at": "2026-10-02T15:59:18.372Z",
+  "details": {
+    "batch27": {
+      "airlift": {
+        "note": true,
+        "effect": false,
+        "unwilling": true,
+        "heightened": true
+      },
+      "vision": {
+        "duration": "1 hours",
+        "save": true
+      },
+      "misty": {
+        "duration": "10 minutes",
+        "winds": true
+      },
+      "winds": {
+        "duration": "8 hours",
+        "options": true
+      }
+    }
+  }
+}

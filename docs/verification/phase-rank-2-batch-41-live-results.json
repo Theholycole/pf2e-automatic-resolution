@@ -1,0 +1,53 @@
+{
+  "phase": "rank-2-batch-41",
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cleanup",
+      "passed": true,
+      "at": "2026-10-01T22:28:31.728Z",
+      "details": {
+        "actorsRemoved": 0,
+        "journalsRemoved": 0,
+        "regionsRemoved": 0,
+        "remainingFixtureActors": 0
+      }
+    },
+    {
+      "label": "rank2Batch41",
+      "passed": true,
+      "at": "2026-10-01T22:28:32.217Z",
+      "details": {
+        "batch41": {
+          "wisp": {
+            "kind": "wisps",
+            "start": {
+              "name": "Spell Effect: Flame Wisp (3 wisps)",
+              "rules": []
+            },
+            "formula": "2d4 fire",
+            "lost": 3,
+            "total": 3,
+            "afterStrike": "Spell Effect: Flame Wisp (2 wisps)",
+            "regrown": "Spell Effect: Flame Wisp (3 wisps)",
+            "again": "Flame Wisp: already 3 wisps."
+          },
+          "armor": {
+            "kind": "stored-armor",
+            "acBefore": 14,
+            "stored": {
+              "inSlot": false,
+              "ac": 10,
+              "action": "Armor Up!"
+            },
+            "worn": true,
+            "acAfter": 14,
+            "effectLeft": false
+          }
+        }
+      }
+    }
+  ]
+}

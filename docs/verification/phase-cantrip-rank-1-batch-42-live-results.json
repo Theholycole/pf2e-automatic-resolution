@@ -1,0 +1,86 @@
+{
+  "batch": "cantrip-rank-1-batch-42",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch42",
+    "passed": true,
+    "details": {
+      "veilOfDreams": {
+        "mods": [
+          [
+            [
+              0,
+              10
+            ],
+            [
+              0,
+              10
+            ]
+          ],
+          [
+            [
+              0,
+              10
+            ],
+            [
+              -1,
+              9
+            ]
+          ],
+          [
+            [
+              0,
+              10
+            ],
+            [
+              -1,
+              9
+            ]
+          ]
+        ],
+        "effects": [
+          false,
+          true,
+          true
+        ],
+        "notes": [
+          [],
+          [],
+          [
+            "Concentrate actions"
+          ]
+        ],
+        "sustained": true,
+        "adjust": true
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch42",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "longTailBatch4",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "label": "rank3Batch56",
+  "passed": true,
+  "at": "2026-10-02T19:08:57.244Z",
+  "details": {
+    "batch56": {
+      "cast": {
+        "kind": "damaging-wall",
+        "status": "applied",
+        "deferred": true,
+        "formula": "3d10[fire]",
+        "button": true
+      },
+      "placed": {
+        "status": "placed",
+        "duration": 60,
+        "formula": "3d10[fire]",
+        "region": "Scene.pCgysuwHQ8wg9vST.Region.mScndzgGzQpUaBKM",
+        "lost": 13,
+        "reported": 13
+      },
+      "again": "refused"
+    }
+  }
+}

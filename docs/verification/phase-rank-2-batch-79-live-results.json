@@ -1,0 +1,60 @@
+{
+  "label": "rank2Batch79",
+  "passed": true,
+  "at": "2026-10-02T01:47:10.423Z",
+  "details": {
+    "batch79": {
+      "level": "automatic",
+      "refused": "Sweetest Solstice: at most 3 secondary casters.",
+      "success": {
+        "casters": 3,
+        "effects": [
+          true,
+          true,
+          true,
+          false
+        ],
+        "duration": {
+          "value": 30,
+          "unit": "days",
+          "expiry": "turn-start",
+          "sustained": false
+        },
+        "fear": [
+          "sweetest-solstace-fear:1"
+        ],
+        "emotion": []
+      },
+      "critical": {
+        "effects": [
+          true,
+          true
+        ],
+        "duration": 90,
+        "emotion": [
+          "sweetest-solstace-emotion:1"
+        ],
+        "fear": [
+          "sweetest-solstace-fear:1"
+        ],
+        "winter": true
+      },
+      "failure": {
+        "applied": 0
+      },
+      "criticalFailure": {
+        "caster": 4,
+        "helper": 4,
+        "afterReduce": 4,
+        "lockHours": 12,
+        "afterLock": 4,
+        "reducedAfter": 3
+      },
+      "card": {
+        "degree": "criticalFailure",
+        "poison": true,
+        "cost": true
+      }
+    }
+  }
+}

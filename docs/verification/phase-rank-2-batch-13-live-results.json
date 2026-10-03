@@ -1,0 +1,68 @@
+{
+  "batch": "rank-2-13",
+  "date": "2026-09-30",
+  "world": "pftest",
+  "system": "8.5.0",
+  "core": "14.367",
+  "module": "0.8.2",
+  "results": [
+    {
+      "case": "rank2Batch13",
+      "passed": true,
+      "details": {
+        "batch13": {
+          "blur": {
+            "concealed": true,
+            "effects": [
+              "Blur: Concealed 1 minutes",
+              "Spell Note: Blur 1 minutes"
+            ]
+          },
+          "arrow": [
+            {
+              "quickened": true,
+              "effects": [
+                "Loose Time's Arrow: Quickened 1 rounds",
+                "Spell Note: Loose Time's Arrow 1 rounds"
+              ]
+            },
+            {
+              "quickened": true,
+              "effects": [
+                "Loose Time's Arrow: Quickened 1 rounds",
+                "Spell Note: Loose Time's Arrow 1 rounds"
+              ]
+            }
+          ],
+          "blight": {
+            "eligible": [
+              [
+                "living",
+                true,
+                null
+              ],
+              [
+                "undead",
+                false,
+                "requires a living creature"
+              ]
+            ],
+            "question": "Does this describe the creature: a creature afflicted by a disease? If so, it gets a −2 circumstance penalty to its save.",
+            "terrain": true,
+            "answered": {
+              "status": "answered",
+              "value": -2,
+              "label": "Yes (−2)",
+              "userId": "rW96bfNVu9Z4WVK7"
+            },
+            "lost": {
+              "living": 2,
+              "undead": 0,
+              "total": 2
+            }
+          }
+        }
+      }
+    }
+  ]
+}

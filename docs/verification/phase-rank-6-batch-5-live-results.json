@@ -1,0 +1,35 @@
+{
+ "label": "rank6Batch5",
+ "passed": true,
+ "at": "2026-10-03T17:16:54.644Z",
+ "details": {
+  "batch5": {
+   "Spellsurge": {
+    "kind": "spell-note",
+    "note": true,
+    "conditions": []
+   },
+   "Planar Palace": {
+    "kind": "spell-note",
+    "note": true,
+    "conditions": []
+   },
+   "Ethereal Jaunt": {
+    "kind": "spell-note",
+    "note": true,
+    "conditions": []
+   },
+   "eyes": {
+    "kind": "spell-note",
+    "recipient": "source",
+    "note": true,
+    "invisible": false
+   },
+   "mislead": {
+    "kind": "condition-note",
+    "invisible": true,
+    "sustained": true
+   }
+  }
+ }
+}

@@ -1,0 +1,32 @@
+{
+  "label": "rank2Batch63",
+  "passed": true,
+  "at": "2026-10-02T00:16:15.454Z",
+  "details": {
+    "batch63": {
+      "rank2": {
+        "level": "automatic",
+        "effect": "Falsify Heat (Moderate)",
+        "duration": "8 hours",
+        "toggle": "falsify-heat-moderate",
+        "untoggled": [],
+        "toggled": [
+          2
+        ],
+        "note": true
+      },
+      "two": "Falsify Heat: target at most 1 creature or object.",
+      "dismissed": true,
+      "rank4": [
+        "Falsify Heat (Moderate)",
+        "Falsify Heat (Warm)"
+      ],
+      "touch": {
+        "status": "believed",
+        "degree": 0,
+        "whisper": "Falsify Heat: PFTEST P23 Affliction veil toucher believes the illusion on PFTEST P23 Affliction veil a.",
+        "stillActive": "active"
+      }
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "label": "rank5Batch67",
+  "passed": true,
+  "at": "2026-10-03T10:57:08.030Z",
+  "details": {
+    "batch67": {
+      "kind": "color-wall",
+      "green": {
+        "color": "Green",
+        "penalty": null,
+        "seconds": 600,
+        "borrowed": null,
+        "penaltyEffect": null,
+        "damage": 10,
+        "enfeebled": 1
+      },
+      "red": {
+        "color": "Red",
+        "penalty": {
+          "penalty": 2,
+          "type": "circumstance"
+        },
+        "seconds": 3600,
+        "borrowed": null,
+        "penaltyEffect": {
+          "key": "FlatModifier",
+          "selector": [
+            "saving-throw"
+          ],
+          "type": "circumstance",
+          "value": -2,
+          "slug": null,
+          "priority": 100,
+          "ignored": false,
+          "predicate": [],
+          "requiresEquipped": null,
+          "requiresInvestment": null,
+          "force": false,
+          "hideIfDisabled": false,
+          "fromEquipment": true,
+          "critical": null,
+          "removeAfterRoll": false,
+          "battleForm": false
+        },
+        "damage": 30
+      },
+      "violet": {
+        "color": "Violet",
+        "penalty": null,
+        "seconds": 3600,
+        "borrowed": null,
+        "penaltyEffect": null,
+        "damage": 0,
+        "slowed": 1
+      },
+      "blue": {
+        "color": "Blue",
+        "penalty": null,
+        "seconds": 3600,
+        "borrowed": "Petrify",
+        "penaltyEffect": null,
+        "damage": 0
+      }
+    }
+  }
+}

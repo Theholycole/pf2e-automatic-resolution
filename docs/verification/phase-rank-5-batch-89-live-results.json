@@ -1,0 +1,27 @@
+{
+  "label": "rank5Batch89",
+  "passed": true,
+  "at": "2026-10-03T12:41:43.530Z",
+  "details": {
+    "batch89": {
+      "kind": "mire-cloak",
+      "toggle": 1,
+      "first": {
+        "status": "triggered",
+        "damage": 12,
+        "sickened": 1,
+        "cloak": false,
+        "immunity": {
+          "value": 24,
+          "unit": "hours",
+          "expiry": "turn-start",
+          "sustained": false
+        }
+      },
+      "second": {
+        "status": "immune",
+        "cloak": true
+      }
+    }
+  }
+}

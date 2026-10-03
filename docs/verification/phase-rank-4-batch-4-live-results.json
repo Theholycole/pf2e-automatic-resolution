@@ -1,0 +1,56 @@
+{
+  "label": "rank4Batch4",
+  "passed": true,
+  "at": "2026-10-02T11:34:10.031Z",
+  "details": {
+    "batch4": {
+      "downpour": {
+        "level": "automatic",
+        "status": "applied",
+        "held": [
+          true,
+          true,
+          false
+        ],
+        "fire": [
+          10,
+          10,
+          0
+        ],
+        "concealed": [
+          true,
+          true,
+          false
+        ],
+        "afterLeave": {
+          "held": [
+            true,
+            false,
+            false
+          ],
+          "concealed": [
+            true,
+            false,
+            false
+          ]
+        },
+        "ended": [
+          false,
+          false,
+          false
+        ],
+        "rank6Fire": 14
+      },
+      "ground": {
+        "level": "automatic",
+        "held": [
+          true,
+          false,
+          false
+        ],
+        "selection": "undead",
+        "flag": "undead"
+      }
+    }
+  }
+}

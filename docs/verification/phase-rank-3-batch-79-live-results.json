@@ -1,0 +1,21 @@
+{
+  "label": "rank3Batch79",
+  "passed": true,
+  "at": "2026-10-03T02:29:15.536Z",
+  "details": {
+    "batch79r3": {
+      "effect": true,
+      "note": true,
+      "chosen": {
+        "formula": "3d8 mental",
+        "total": 6,
+        "lost": 6
+      },
+      "basic": {
+        "formula": "3d4 mental",
+        "total": 9,
+        "lost": 9
+      }
+    }
+  }
+}

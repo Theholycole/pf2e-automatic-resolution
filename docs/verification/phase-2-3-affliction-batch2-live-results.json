@@ -1,0 +1,651 @@
+{
+  "generated": "2026-09-25T21:09:40.682Z",
+  "handler": {
+    "id": "pseudo-afflictions",
+    "version": "0.5.1"
+  },
+  "note": "Second affliction batch; earlier abyssalPenalty failures were a predicate fix (PF2e drops the effect- prefix in self:effect options) and a harness comparison that ignored stage-1 Drained.",
+  "results": [
+    {
+      "label": "environment",
+      "passed": true,
+      "at": "2026-09-25T21:04:22.156Z",
+      "details": {
+        "foundry": "14.367",
+        "pf2e": "8.5.0",
+        "module": "0.8.2",
+        "world": "pftest",
+        "modules": [
+          "pf2e-automatic-resolution",
+          "pseudo-afflictions"
+        ]
+      }
+    },
+    {
+      "label": "damageGate",
+      "passed": true,
+      "at": "2026-09-25T21:04:23.623Z",
+      "details": {
+        "immune": {
+          "hp": 500,
+          "card": [
+            "Took no piercing damage — no save; the rest of the outcome does not apply"
+          ]
+        },
+        "normal": {
+          "hpLost": 10,
+          "gate": {
+            "damageType": "piercing",
+            "taken": 10,
+            "passed": true
+          }
+        }
+      }
+    },
+    {
+      "label": "goblinImmunity",
+      "passed": true,
+      "at": "2026-09-25T21:04:33.320Z",
+      "details": [
+        [
+          "Afflicted: Goblin Pox, stage 1 — immune (goblin trait); not afflicted"
+        ],
+        [
+          "Afflicted: Goblin Pox, stage 1 — handled by Pseudo Afflictions (Affliction Effect: Goblin Pox, stage 1) (goblin dogs are immune: GM check)"
+        ]
+      ]
+    },
+    {
+      "label": "blisterImmunity",
+      "passed": true,
+      "at": "2026-09-25T21:04:39.574Z",
+      "details": {
+        "immunity": "Blister Bomb: Immune to Blister Pox",
+        "labels": [
+          "Afflicted: Blister Pox, stage 1 — immune (Blister Bomb: Immune to Blister Pox); not afflicted"
+        ]
+      }
+    },
+    {
+      "label": "familyTwo",
+      "passed": true,
+      "at": "2026-09-25T21:04:52.732Z",
+      "details": [
+        {
+          "name": "Imp Sting",
+          "pickedUp": true,
+          "rows": [
+            {
+              "degree": "criticalSuccess",
+              "hpLost": 4,
+              "pa": [],
+              "ours": [],
+              "conditions": [],
+              "card": []
+            },
+            {
+              "degree": "success",
+              "hpLost": 10,
+              "pa": [],
+              "ours": [],
+              "conditions": [],
+              "card": []
+            },
+            {
+              "degree": "failure",
+              "hpLost": 4,
+              "pa": [
+                "Affliction Effect: Imp Sting@1"
+              ],
+              "ours": [],
+              "conditions": [
+                "clumsy1"
+              ],
+              "card": [
+                "Afflicted: Imp Venom, stage 1 — handled by Pseudo Afflictions (Affliction Effect: Imp Sting, stage 1)"
+              ]
+            },
+            {
+              "degree": "criticalFailure",
+              "hpLost": 4,
+              "pa": [
+                "Affliction Effect: Imp Sting@2"
+              ],
+              "ours": [],
+              "conditions": [
+                "clumsy1",
+                "slowed1"
+              ],
+              "card": [
+                "Afflicted: Imp Venom, stage 2 — handled by Pseudo Afflictions (Affliction Effect: Imp Sting, stage 2)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Wyvern Sting",
+          "pickedUp": true,
+          "rows": [
+            {
+              "degree": "criticalSuccess",
+              "hpLost": 4,
+              "pa": [],
+              "ours": [],
+              "conditions": [],
+              "card": []
+            },
+            {
+              "degree": "success",
+              "hpLost": 14,
+              "pa": [],
+              "ours": [],
+              "conditions": [],
+              "card": []
+            },
+            {
+              "degree": "failure",
+              "hpLost": 4,
+              "pa": [
+                "Affliction Effect: Wyvern Sting@1"
+              ],
+              "ours": [],
+              "conditions": [],
+              "card": [
+                "Afflicted: Wyvern Venom, stage 1 — handled by Pseudo Afflictions (Affliction Effect: Wyvern Sting, stage 1)"
+              ]
+            },
+            {
+              "degree": "criticalFailure",
+              "hpLost": 4,
+              "pa": [
+                "Affliction Effect: Wyvern Sting@2"
+              ],
+              "ours": [],
+              "conditions": [],
+              "card": [
+                "Afflicted: Wyvern Venom, stage 2 — handled by Pseudo Afflictions (Affliction Effect: Wyvern Sting, stage 2)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Leng Sting",
+          "pickedUp": true,
+          "rows": [
+            {
+              "degree": "criticalSuccess",
+              "hpLost": 9,
+              "pa": [],
+              "ours": [],
+              "conditions": [],
+              "card": []
+            },
+            {
+              "degree": "success",
+              "hpLost": 13,
+              "pa": [],
+              "ours": [],
+              "conditions": [],
+              "card": []
+            },
+            {
+              "degree": "failure",
+              "hpLost": 14,
+              "pa": [
+                "Affliction Effect: Leng Sting@1"
+              ],
+              "ours": [],
+              "conditions": [
+                "drained1"
+              ],
+              "card": [
+                "Afflicted: Leng Spider Venom, stage 1 — handled by Pseudo Afflictions (Affliction Effect: Leng Sting, stage 1)"
+              ]
+            },
+            {
+              "degree": "criticalFailure",
+              "hpLost": 19,
+              "pa": [
+                "Affliction Effect: Leng Sting@2"
+              ],
+              "ours": [],
+              "conditions": [
+                "drained2"
+              ],
+              "card": [
+                "Afflicted: Leng Spider Venom, stage 2 — handled by Pseudo Afflictions (Affliction Effect: Leng Sting, stage 2)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Linnorm Sting",
+          "pickedUp": true,
+          "rows": [
+            {
+              "degree": "criticalSuccess",
+              "hpLost": 18,
+              "pa": [],
+              "ours": [],
+              "conditions": [],
+              "card": []
+            },
+            {
+              "degree": "success",
+              "hpLost": 44,
+              "pa": [],
+              "ours": [],
+              "conditions": [],
+              "card": []
+            },
+            {
+              "degree": "failure",
+              "hpLost": 23,
+              "pa": [
+                "Affliction Effect: Linnorm Sting@1"
+              ],
+              "ours": [],
+              "conditions": [
+                "drained1"
+              ],
+              "card": [
+                "Afflicted: Tor Linnorm Venom, stage 1 — handled by Pseudo Afflictions (Affliction Effect: Linnorm Sting, stage 1)"
+              ]
+            },
+            {
+              "degree": "criticalFailure",
+              "hpLost": 28,
+              "pa": [
+                "Affliction Effect: Linnorm Sting@2"
+              ],
+              "ours": [],
+              "conditions": [
+                "drained2"
+              ],
+              "card": [
+                "Afflicted: Tor Linnorm Venom, stage 2 — handled by Pseudo Afflictions (Affliction Effect: Linnorm Sting, stage 2)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Swarming Wasp Stings",
+          "pickedUp": true,
+          "rows": [
+            {
+              "degree": "criticalSuccess",
+              "hpLost": 3,
+              "pa": [],
+              "ours": [],
+              "conditions": [],
+              "card": []
+            },
+            {
+              "degree": "success",
+              "hpLost": 11,
+              "pa": [],
+              "ours": [],
+              "conditions": [],
+              "card": []
+            },
+            {
+              "degree": "failure",
+              "hpLost": 3,
+              "pa": [
+                "Affliction Effect: Swarming Wasp Stings@1"
+              ],
+              "ours": [],
+              "conditions": [
+                "clumsy1"
+              ],
+              "card": [
+                "Afflicted: Swarming Wasp Venom, stage 1 — handled by Pseudo Afflictions (Affliction Effect: Swarming Wasp Stings, stage 1)"
+              ]
+            },
+            {
+              "degree": "criticalFailure",
+              "hpLost": 3,
+              "pa": [
+                "Affliction Effect: Swarming Wasp Stings@2"
+              ],
+              "ours": [],
+              "conditions": [
+                "clumsy2"
+              ],
+              "card": [
+                "Afflicted: Swarming Wasp Venom, stage 2 — handled by Pseudo Afflictions (Affliction Effect: Swarming Wasp Stings, stage 2)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Goblin Pox",
+          "pickedUp": true,
+          "rows": [
+            {
+              "degree": "criticalSuccess",
+              "hpLost": 0,
+              "pa": [],
+              "ours": [],
+              "conditions": [],
+              "card": []
+            },
+            {
+              "degree": "success",
+              "hpLost": 0,
+              "pa": [],
+              "ours": [
+                "Goblin Pox: Sickened 1"
+              ],
+              "conditions": [
+                "sickened1"
+              ],
+              "card": [
+                "Sickened 1"
+              ]
+            },
+            {
+              "degree": "failure",
+              "hpLost": 0,
+              "pa": [
+                "Affliction Effect: Goblin Pox@1"
+              ],
+              "ours": [],
+              "conditions": [
+                "sickened1"
+              ],
+              "card": [
+                "Afflicted: Goblin Pox, stage 1 — handled by Pseudo Afflictions (Affliction Effect: Goblin Pox, stage 1) (goblin dogs are immune: GM check)"
+              ]
+            },
+            {
+              "degree": "criticalFailure",
+              "hpLost": 0,
+              "pa": [
+                "Affliction Effect: Goblin Pox@2"
+              ],
+              "ours": [],
+              "conditions": [
+                "slowed1",
+                "sickened1"
+              ],
+              "card": [
+                "Afflicted: Goblin Pox, stage 2 — handled by Pseudo Afflictions (Affliction Effect: Goblin Pox, stage 2) (goblin dogs are immune: GM check)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Internal Insurrection",
+          "pickedUp": true,
+          "rows": [
+            {
+              "degree": "criticalSuccess",
+              "hpLost": 0,
+              "pa": [],
+              "ours": [],
+              "conditions": [],
+              "card": []
+            },
+            {
+              "degree": "success",
+              "hpLost": 0,
+              "pa": [],
+              "ours": [
+                "Internal Insurrection: Clumsy 1"
+              ],
+              "conditions": [
+                "clumsy1"
+              ],
+              "card": [
+                "Clumsy 1"
+              ]
+            },
+            {
+              "degree": "failure",
+              "hpLost": 0,
+              "pa": [
+                "Affliction Effect: Internal Insurrection@1"
+              ],
+              "ours": [],
+              "conditions": [
+                "clumsy1"
+              ],
+              "card": [
+                "Afflicted: Internal Insurrection, stage 1 — handled by Pseudo Afflictions (Affliction Effect: Internal Insurrection, stage 1)"
+              ]
+            },
+            {
+              "degree": "criticalFailure",
+              "hpLost": 0,
+              "pa": [
+                "Affliction Effect: Internal Insurrection@2"
+              ],
+              "ours": [],
+              "conditions": [
+                "clumsy2"
+              ],
+              "card": [
+                "Afflicted: Internal Insurrection, stage 2 — handled by Pseudo Afflictions (Affliction Effect: Internal Insurrection, stage 2)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Abyssal Plague",
+          "pickedUp": true,
+          "rows": [
+            {
+              "degree": "criticalSuccess",
+              "hpLost": 0,
+              "pa": [],
+              "ours": [],
+              "conditions": [],
+              "card": []
+            },
+            {
+              "degree": "success",
+              "hpLost": 10,
+              "pa": [],
+              "ours": [
+                "Abyssal Plague: Penalty against Abyssal Plague"
+              ],
+              "conditions": [],
+              "card": [
+                "-2 status to saves against Abyssal Plague (1 days or until contracted)"
+              ]
+            },
+            {
+              "degree": "failure",
+              "hpLost": 5,
+              "pa": [
+                "Affliction Effect: Abyssal Plague@1"
+              ],
+              "ours": [],
+              "conditions": [
+                "drained1"
+              ],
+              "card": [
+                "Afflicted: Abyssal Plague, stage 1 — handled by Pseudo Afflictions (Affliction Effect: Abyssal Plague, stage 1)"
+              ]
+            },
+            {
+              "degree": "criticalFailure",
+              "hpLost": 10,
+              "pa": [
+                "Affliction Effect: Abyssal Plague@2"
+              ],
+              "ours": [],
+              "conditions": [
+                "drained2"
+              ],
+              "card": [
+                "Afflicted: Abyssal Plague, stage 2 — handled by Pseudo Afflictions (Affliction Effect: Abyssal Plague, stage 2)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Blightburn Blast",
+          "pickedUp": true,
+          "rows": [
+            {
+              "degree": "criticalSuccess",
+              "hpLost": 0,
+              "pa": [],
+              "ours": [],
+              "conditions": [],
+              "card": []
+            },
+            {
+              "degree": "success",
+              "hpLost": 5,
+              "pa": [],
+              "ours": [],
+              "conditions": [],
+              "card": []
+            },
+            {
+              "degree": "failure",
+              "hpLost": 11,
+              "pa": [
+                "Affliction Effect: Blightburn Blast@1"
+              ],
+              "ours": [],
+              "conditions": [],
+              "card": [
+                "Afflicted: Blightburn Sickness, stage 1 — handled by Pseudo Afflictions (Affliction Effect: Blightburn Blast, stage 1)"
+              ]
+            },
+            {
+              "degree": "criticalFailure",
+              "hpLost": 22,
+              "pa": [
+                "Affliction Effect: Blightburn Blast@1"
+              ],
+              "ours": [],
+              "conditions": [],
+              "card": [
+                "Afflicted: Blightburn Sickness, stage 2 — handled by Pseudo Afflictions (Affliction Effect: Blightburn Blast, stage 1)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Blister Bomb",
+          "pickedUp": false,
+          "rows": [
+            {
+              "degree": "criticalSuccess",
+              "hpLost": 0,
+              "pa": [],
+              "ours": [
+                "Blister Bomb: Immune to Blister Pox"
+              ],
+              "conditions": [],
+              "card": [
+                "Immune to Blister Pox (7 days)"
+              ]
+            },
+            {
+              "degree": "success",
+              "hpLost": 0,
+              "pa": [],
+              "ours": [
+                "Blister Bomb: Sickened 2"
+              ],
+              "conditions": [
+                "sickened2"
+              ],
+              "card": [
+                "Sickened 2"
+              ]
+            },
+            {
+              "degree": "failure",
+              "hpLost": 0,
+              "pa": [],
+              "ours": [],
+              "conditions": [],
+              "card": [
+                "Afflicted: Blister Pox, stage 1 — Pseudo Afflictions did not pick up this spell; apply the affliction manually"
+              ]
+            },
+            {
+              "degree": "criticalFailure",
+              "hpLost": 0,
+              "pa": [],
+              "ours": [],
+              "conditions": [],
+              "card": [
+                "Afflicted: Blister Pox, stage 2 — Pseudo Afflictions did not pick up this spell; apply the affliction manually"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Bone Moth's Kiss",
+          "pickedUp": false,
+          "rows": [
+            {
+              "degree": "criticalSuccess",
+              "hpLost": 0,
+              "pa": [],
+              "ours": [],
+              "conditions": [],
+              "card": []
+            },
+            {
+              "degree": "success",
+              "hpLost": 0,
+              "pa": [],
+              "ours": [
+                "Bone Moth's Kiss: Sickened 1"
+              ],
+              "conditions": [
+                "sickened1"
+              ],
+              "card": [
+                "Sickened 1"
+              ]
+            },
+            {
+              "degree": "failure",
+              "hpLost": 0,
+              "pa": [],
+              "ours": [],
+              "conditions": [],
+              "card": [
+                "Afflicted: Bone Moth's Kiss, stage 1 — Pseudo Afflictions did not pick up this spell; apply the affliction manually"
+              ]
+            },
+            {
+              "degree": "criticalFailure",
+              "hpLost": 0,
+              "pa": [],
+              "ours": [],
+              "conditions": [],
+              "card": [
+                "Afflicted: Bone Moth's Kiss, stage 2 — Pseudo Afflictions did not pick up this spell; apply the affliction manually"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "abyssalPenalty",
+      "passed": true,
+      "at": "2026-09-25T21:09:23.978Z",
+      "details": {
+        "hpLost": 10,
+        "modifiers": {
+          "againstSpell": 8,
+          "plain": 10,
+          "afterContractAgainstSpell": 9,
+          "afterContractPlain": 9
+        }
+      }
+    }
+  ]
+}

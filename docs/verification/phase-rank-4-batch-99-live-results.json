@@ -1,0 +1,22 @@
+{
+  "label": "rank4Batch99",
+  "passed": true,
+  "at": "2026-10-03T03:30:49.219Z",
+  "details": {
+    "batch99": {
+      "a": {
+        "asked": true,
+        "slowed": 1
+      },
+      "b": {
+        "asked": true,
+        "restrained": true,
+        "slowed": 1
+      },
+      "aLeft": {
+        "slowed": 0
+      },
+      "radius": 10
+    }
+  }
+}

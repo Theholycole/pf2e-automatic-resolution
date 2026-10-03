@@ -1,0 +1,27 @@
+{
+  "label": "rank3Batch51",
+  "passed": true,
+  "at": "2026-10-02T18:37:50.907Z",
+  "details": {
+    "batch51": {
+      "hit": {
+        "formula": "2d10 slashing",
+        "total": 2,
+        "lost": 2,
+        "notes": true
+      },
+      "critical": {
+        "formula": "2d10 piercing",
+        "total": 3,
+        "lost": 6,
+        "notes": true
+      },
+      "heightened": {
+        "formula": "3d10 bludgeoning",
+        "total": 25,
+        "lost": 25,
+        "notes": true
+      }
+    }
+  }
+}

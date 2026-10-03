@@ -1,0 +1,21 @@
+{
+ "label": "rank7Batch9",
+ "passed": true,
+ "at": "2026-10-03T19:54:50.548Z",
+ "details": {
+  "batch9": {
+   "initial": 2,
+   "lost": [
+    40,
+    24
+   ],
+   "disbelief": [
+    "disbelieved",
+    "fooled"
+   ],
+   "turnStart": [
+    "dull"
+   ]
+  }
+ }
+}

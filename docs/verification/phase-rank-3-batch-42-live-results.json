@@ -1,0 +1,16 @@
+{
+  "label": "rank3Batch42",
+  "passed": true,
+  "at": "2026-10-02T16:54:52.120Z",
+  "details": {
+    "batch42": {
+      "trade": {
+        "kind": "spell-note",
+        "level": "automatic",
+        "card": true,
+        "save": true,
+        "heightened": true
+      }
+    }
+  }
+}

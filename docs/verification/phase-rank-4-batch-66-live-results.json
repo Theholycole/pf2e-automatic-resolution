@@ -1,0 +1,37 @@
+{
+  "generatedAt": "2026-10-02T23:11:02.626Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "results": [
+    {
+      "label": "rank4Batch66",
+      "passed": true,
+      "at": "2026-10-02T23:10:46.685Z",
+      "details": {
+        "batch66": {
+          "fascinated": [
+            true,
+            true
+          ],
+          "slow": {
+            "status": "failed",
+            "degree": 0,
+            "frightened": 2,
+            "floor": true
+          },
+          "sharp": {
+            "status": "understood",
+            "degree": 3,
+            "frightened": 3,
+            "floor": false
+          },
+          "after": [
+            false,
+            false
+          ],
+          "floorHeld": 1
+        }
+      }
+    }
+  ]
+}

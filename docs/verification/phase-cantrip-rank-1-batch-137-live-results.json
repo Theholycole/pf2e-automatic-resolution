@@ -1,0 +1,46 @@
+{
+  "batch": 137,
+  "spells": [
+    "Figment",
+    "Light",
+    "Read Aura",
+    "Fishing Spot"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch137",
+      "passed": true,
+      "at": "2026-09-28T20:36:51.826Z",
+      "details": {
+        "batch137": {
+          "figment": {
+            "caster": true
+          },
+          "light": {
+            "caster": true,
+            "brightBefore": 0,
+            "brightAfter": 20
+          },
+          "readAura": {
+            "caster": true
+          },
+          "fishingSpot": {
+            "eater": true,
+            "name": "Spell Effect: Fishing Spot (Dashing Dace)",
+            "selection": "dashing-dace",
+            "rolls": [
+              {
+                "total": 5,
+                "flavor": "Fishing Spot — dashing dace"
+              }
+            ],
+            "prompt": false
+          }
+        }
+      }
+    }
+  ]
+}

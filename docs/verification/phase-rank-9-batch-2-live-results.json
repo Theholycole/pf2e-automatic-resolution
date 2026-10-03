@@ -1,0 +1,44 @@
+{
+ "label": "rank9Batch2",
+ "passed": true,
+ "at": "2026-10-03T19:25:25.051Z",
+ "details": {
+  "batch2": {
+   "rituals": [
+    {
+     "kind": "spell-note",
+     "gmRitual": true,
+     "status": "applied",
+     "whispered": 1
+    },
+    {
+     "kind": "spell-note",
+     "gmRitual": true,
+     "status": "applied",
+     "whispered": 1
+    }
+   ],
+   "name": {
+    "supported": true,
+    "whispered": 1
+   },
+   "demand": {
+    "supported": true,
+    "whispered": 1,
+    "knows": 1,
+    "effects": [
+     [
+      "Telepathic demand|1 minutes"
+     ],
+     [
+      "Temporary immunity|1 days"
+     ],
+     [
+      "Telepathic demand|1 rounds",
+      "Temporary immunity|30 days"
+     ]
+    ]
+   }
+  }
+ }
+}

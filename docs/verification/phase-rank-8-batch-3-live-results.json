@@ -1,0 +1,18 @@
+{
+ "label": "rank8Batch3",
+ "passed": true,
+ "at": "2026-10-03T17:41:14.201Z",
+ "details": {
+  "batch3": {
+   "victim": {
+    "enfeebled": 2,
+    "stupefied": 2
+   },
+   "repeatable": true,
+   "spread": [
+    true,
+    true
+   ]
+  }
+ }
+}

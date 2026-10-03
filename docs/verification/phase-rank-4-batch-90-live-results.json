@@ -1,0 +1,31 @@
+{
+  "label": "rank4Batch90",
+  "passed": true,
+  "at": "2026-10-03T02:39:17.093Z",
+  "details": {
+    "batch90": {
+      "cast": {
+        "fatigued": true,
+        "note": true
+      },
+      "grant": {
+        "granter": "cascade",
+        "grantee": "restrict"
+      },
+      "held": true,
+      "boomTargets": [
+        "PFTEST P23 Affliction ymeri near"
+      ],
+      "boom": {
+        "formula": "7d6 fire",
+        "total": 20,
+        "nearLost": 20,
+        "markedLost": 0
+      },
+      "after": {
+        "status": "ended",
+        "fatigued": false
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "label": "rank3Batch108",
+  "passed": true,
+  "at": "2026-10-03T07:09:39.628Z",
+  "details": {
+    "batch108": {
+      "reminder": [
+        "Target a Large or smaller creature (from 8th rank, up to 5 creatures)."
+      ],
+      "success": false,
+      "failure": {
+        "note": true,
+        "needs": "success",
+        "duration": "1 minutes"
+      },
+      "firstTry": {
+        "status": "believed",
+        "kept": true
+      },
+      "secondTry": {
+        "status": "disbelieved",
+        "ended": true,
+        "kept": false,
+        "record": "ended"
+      }
+    }
+  }
+}

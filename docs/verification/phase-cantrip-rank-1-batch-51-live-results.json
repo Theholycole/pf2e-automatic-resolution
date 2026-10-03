@@ -1,0 +1,58 @@
+{
+  "batch": "cantrip-rank-1-batch-51",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch51",
+    "passed": true,
+    "details": {
+      "cycleOfRetribution": {
+        "notes": [
+          true,
+          true,
+          true
+        ],
+        "success": [
+          4,
+          false,
+          4
+        ],
+        "failure": [
+          2,
+          "refused: Cycle of Retribution: PFTEST P23 Affliction cycle f already took this damage this round."
+        ],
+        "criticalFailure": [
+          2,
+          2,
+          4
+        ],
+        "failureNextRound": 3,
+        "failureHp": 5
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch51",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch36",
+      "passed": true,
+      "note": "same session, the run before (the first cr1Batch51 attempt cut the refusal message short)"
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

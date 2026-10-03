@@ -1,0 +1,32 @@
+{
+  "batch": 105,
+  "spells": [
+    "Wildfire"
+  ],
+  "results": [
+    {
+      "label": "cr1Batch105",
+      "passed": true,
+      "at": "2026-09-28T01:20:56.456Z",
+      "details": {
+        "wildfire": {
+          "initial": 0,
+          "hazard": {
+            "amount": 2,
+            "squares": 3,
+            "lost": 6
+          },
+          "radiusBefore": 10,
+          "radiusAfter": 15,
+          "areaValue": 15,
+          "turnEnd": [
+            "turn-end"
+          ],
+          "persistent": [
+            "2 fire"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "label": "rank4Batch123",
+  "passed": true,
+  "at": "2026-10-03T09:43:53.701Z",
+  "details": {
+    "batch123": {
+      "hit": {
+        "formula": "(1d8 + 3d6) bludgeoning + 3d8 piercing",
+        "lost": 28,
+        "grabbed": true,
+        "crush": "3d6"
+      },
+      "crushed": 15,
+      "released": true,
+      "after": 0
+    }
+  }
+}

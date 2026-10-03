@@ -1,0 +1,52 @@
+{
+ "label": "rank8Batch5",
+ "passed": true,
+ "at": "2026-10-03T18:21:21.621Z",
+ "details": {
+  "batch5": {
+   "grief": {
+    "supported": true,
+    "lost": [
+     46,
+     92
+    ],
+    "frightened": [
+     [
+      3
+     ],
+     [
+      4
+     ]
+    ],
+    "effects": [
+     [
+      "Spell Effect: Canticle of Everlasting Grief (Failure)|7 days",
+      "Spell Effect: Canticle of Everlasting Grief (Critical Failure)|-1 unlimited"
+     ],
+     [
+      "Spell Effect: Canticle of Everlasting Grief (Critical Failure)|-1 unlimited"
+     ]
+    ],
+    "aura": true
+   },
+   "warp": {
+    "supported": true,
+    "confused": [
+     true,
+     true
+    ],
+    "effects": [
+     [
+      "Warp Mind: Confused (until its first action next turn)|-1 unlimited",
+      "Warp Mind: Temporary immunity|10 minutes"
+     ],
+     [
+      "Warp Mind: Confused|1 minutes",
+      "Warp Mind: Temporary immunity|10 minutes"
+     ]
+    ],
+    "reminder": true
+   }
+  }
+ }
+}

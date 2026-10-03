@@ -1,0 +1,19 @@
+{
+  "label": "rank4Batch42",
+  "passed": true,
+  "at": "2026-10-02T18:43:11.882Z",
+  "details": {
+    "batch42": {
+      "pieces": 16,
+      "notes": true,
+      "fatiguedBefore": true,
+      "soak": {
+        "total": 46,
+        "healed": 46,
+        "fatigued": false,
+        "left": 15
+      },
+      "rolled": "12d8 vitality"
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "label": "rank3Batch30",
+  "passed": true,
+  "at": "2026-10-02T14:00:08.960Z",
+  "details": {
+    "batch30": {
+      "conveyance": {
+        "kind": "spell-note",
+        "note": "1 hours"
+      },
+      "transfer": {
+        "supported": true,
+        "reminder": true,
+        "dazzled": true,
+        "timer": {
+          "value": 1,
+          "unit": "minutes",
+          "expiry": "turn-start",
+          "sustained": false
+        }
+      },
+      "imposition": {
+        "supported": true,
+        "note": "1 days"
+      },
+      "beacon": {
+        "kind": "spell-note",
+        "note": "1 rounds"
+      },
+      "magnet": {
+        "kind": "spell-note",
+        "note": "1 minutes"
+      },
+      "sense": {
+        "kind": "spell-note",
+        "note": "10 minutes"
+      },
+      "whirl3": {
+        "supported": true,
+        "sickened": [
+          1,
+          2
+        ],
+        "lost": [
+          35,
+          70
+        ]
+      },
+      "whirl1": {
+        "supported": true,
+        "sickened": [
+          0
+        ],
+        "lost": [
+          15
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "label": "rank4Batch107",
+  "passed": true,
+  "at": "2026-10-03T08:17:39.317Z",
+  "details": {
+    "batch107": {
+      "form": {
+        "res": 5,
+        "weak": 5,
+        "prone": true,
+        "size": "lg",
+        "sustained": true
+      },
+      "bite": {
+        "status": "bitten",
+        "basic": null
+      },
+      "formula": "4d6 piercing",
+      "again": "Sudden Swarm: Swarming Bites only once per turn."
+    }
+  }
+}

@@ -1,0 +1,338 @@
+{
+  "generatedAt": "2026-09-25T00:41:31.419Z",
+  "definition": "Executable shared-save routes before the degree-adjustment and timed-Stunned batch (degree-rider batch output, 83 routes; Synaptic Pulse excluded because only this batch's core accepts its unchanged plan).",
+  "supported": [
+    {
+      "id": "OJ91rm1FkJSlf3nk",
+      "name": "Ancient Dust"
+    },
+    {
+      "id": "thAHF1zxNplLCJPO",
+      "name": "Caustic Blast"
+    },
+    {
+      "id": "4gBIw4IDrSfFHik4",
+      "name": "Daze"
+    },
+    {
+      "id": "kBhaPuzLUSwS6vVf",
+      "name": "Electric Arc"
+    },
+    {
+      "id": "D7ZEhTNIDWDLC2J4",
+      "name": "Puff of Poison"
+    },
+    {
+      "id": "BqJAOPimCq5uCcEJ",
+      "name": "Shatter Mind"
+    },
+    {
+      "id": "9I8mp7RkjeXbkYfx",
+      "name": "Timber"
+    },
+    {
+      "id": "zHSp4PzoOE72DV4o",
+      "name": "Torturous Trauma"
+    },
+    {
+      "id": "kcelf6IHl3L9VXXg",
+      "name": "Vitality Lash"
+    },
+    {
+      "id": "mAMEt4FFbdqoRnkN",
+      "name": "Void Warp"
+    },
+    {
+      "id": "rnNGALRtsjspFTws",
+      "name": "Acidic Burst"
+    },
+    {
+      "id": "wJi0lq4yA5Mlj0MY",
+      "name": "All-Encompassing Hunger"
+    },
+    {
+      "id": "d2pi7laQkzlr3wrS",
+      "name": "Ancestral Touch"
+    },
+    {
+      "id": "Aap7nGpC7neTWm78",
+      "name": "Animal Allies"
+    },
+    {
+      "id": "NtzNCW32UlPdY2xS",
+      "name": "Ashen Wind"
+    },
+    {
+      "id": "pBevG6bSQOiyflev",
+      "name": "Befuddle"
+    },
+    {
+      "id": "y6rAdMK6EFlV6U0t",
+      "name": "Breathe Fire"
+    },
+    {
+      "id": "8TQiFzGf4feoHeH0",
+      "name": "Chilling Spray"
+    },
+    {
+      "id": "zul5cBTfr7NXHBZf",
+      "name": "Dazzling Flash"
+    },
+    {
+      "id": "J7Y7tl0bbdz7TcCc",
+      "name": "Enfeeble"
+    },
+    {
+      "id": "k34hDOfIIMAxNL4a",
+      "name": "Grim Tendrils"
+    },
+    {
+      "id": "XcMObj2p9nIBp53b",
+      "name": "Scramble Body"
+    },
+    {
+      "id": "hWtB81P2KGzGHKAJ",
+      "name": "Slime Spit"
+    },
+    {
+      "id": "mlNYROcFrUF8nFgk",
+      "name": "Spray of Stars"
+    },
+    {
+      "id": "ho1jSoYKrHUNnM90",
+      "name": "Tempest Surge"
+    },
+    {
+      "id": "EzB9i7R6aBRAtJCh",
+      "name": "Tempest Touch"
+    },
+    {
+      "id": "MmQiEc7aM9PDLO2J",
+      "name": "Touch of Obedience"
+    },
+    {
+      "id": "DnVTBGCsai6zqMwL",
+      "name": "Ulcerous Canker"
+    },
+    {
+      "id": "PaHxcqXihXkkXPsB",
+      "name": "Unraveling Blast"
+    },
+    {
+      "id": "QozxgBbcmktLKdBs",
+      "name": "Updraft"
+    },
+    {
+      "id": "1hLxZznnA2kvXlIt",
+      "name": "Cutting Insult"
+    },
+    {
+      "id": "fZPCv2VHuM2yPbC8",
+      "name": "Deafness"
+    },
+    {
+      "id": "3GXU3ugrwLv0P7AH",
+      "name": "Ignite Fireworks"
+    },
+    {
+      "id": "wzLkNU3AAqOSKFPR",
+      "name": "Noise Blast"
+    },
+    {
+      "id": "CQb8HtQ1BPeZmu9h",
+      "name": "Stupefy"
+    },
+    {
+      "id": "zK0e9d9DSnxC4eAD",
+      "name": "Sudden Bolt"
+    },
+    {
+      "id": "cB17yFc9456Pyfec",
+      "name": "Vomit Swarm"
+    },
+    {
+      "id": "nplNt08TvokZUxtR",
+      "name": "Agonizing Despair"
+    },
+    {
+      "id": "Q56HLIHVKY6bC5W3",
+      "name": "Blinding Beauty"
+    },
+    {
+      "id": "VosLNn2M8S7JH67D",
+      "name": "Blindness"
+    },
+    {
+      "id": "Z3kJty995FkrsZRb",
+      "name": "Combustion"
+    },
+    {
+      "id": "AUZPwEorddewm0x1",
+      "name": "Eagle's Cry"
+    },
+    {
+      "id": "kuZnUNrhXHRYQ2eM",
+      "name": "Eidolon's Wrath"
+    },
+    {
+      "id": "sxQZ6yqTn0czJxVd",
+      "name": "Fireball"
+    },
+    {
+      "id": "dgMauNKWeRIu8pMN",
+      "name": "Glass Sand"
+    },
+    {
+      "id": "alG1y2mnNZGRywad",
+      "name": "Gravity Wave"
+    },
+    {
+      "id": "aZg3amDcrXz3cLCz",
+      "name": "Horrific Visage"
+    },
+    {
+      "id": "9AAkVUCwF6WVNNY2",
+      "name": "Lightning Bolt"
+    },
+    {
+      "id": "2ZPqcM9wNoVnpwkK",
+      "name": "Magical Fetters"
+    },
+    {
+      "id": "DCQHaLrYXMI37dvW",
+      "name": "Paralyze"
+    },
+    {
+      "id": "E80SrXuBdZViPGiH",
+      "name": "Pulverizing Cascade"
+    },
+    {
+      "id": "Stjb9wvLn146TfW6",
+      "name": "Reblooded"
+    },
+    {
+      "id": "WsUwpfmhKrKwoIe3",
+      "name": "Slow"
+    },
+    {
+      "id": "LFSwMtQVP05EzlZe",
+      "name": "Thunderburst"
+    },
+    {
+      "id": "N1Z1oLPdBxaSgrEE",
+      "name": "Vampiric Feast"
+    },
+    {
+      "id": "Wi2HcreCfujKiCvW",
+      "name": "Whirling Flames"
+    },
+    {
+      "id": "vGMbpV7GWIFPNUaZ",
+      "name": "Bursting Bloom"
+    },
+    {
+      "id": "LiGbewa9pO0yjbsY",
+      "name": "Confusion"
+    },
+    {
+      "id": "hVU9msO9yGkxKZ3J",
+      "name": "Divine Wrath"
+    },
+    {
+      "id": "eexkxcqnkXazsGfK",
+      "name": "Enervation"
+    },
+    {
+      "id": "rwWtpZpkNYvypknx",
+      "name": "Grasp of the Deep"
+    },
+    {
+      "id": "qTzvVnAMWL05VitC",
+      "name": "Painful Vibrations"
+    },
+    {
+      "id": "tlcrVRqW1MSKJ5IC",
+      "name": "Phantasmal Killer"
+    },
+    {
+      "id": "Jmxru8zMdYMRuO5n",
+      "name": "Vision of Death"
+    },
+    {
+      "id": "FwW2asotQE8dH1WP",
+      "name": "Whispers of the Void"
+    },
+    {
+      "id": "OYOCWWefZPEfp8Nl",
+      "name": "Blazing Fissure"
+    },
+    {
+      "id": "3puDanGfpEt6jK5k",
+      "name": "Cone of Cold"
+    },
+    {
+      "id": "2YIr0S2Gt14PMMQp",
+      "name": "Grasping Grave"
+    },
+    {
+      "id": "9LHr9SuDLTicdbXs",
+      "name": "Hellfire Plume"
+    },
+    {
+      "id": "Y3qZrvZrqPuGJ2hk",
+      "name": "Shock and Awe"
+    },
+    {
+      "id": "3E1p58MNQMO4GAxt",
+      "name": "Stagnate Time"
+    },
+    {
+      "id": "Ifc2b6bNVdjKV7Si",
+      "name": "Stormburst"
+    },
+    {
+      "id": "72rjRm7jClesBokV",
+      "name": "Weight of the World"
+    },
+    {
+      "id": "7PnjDM52lb4LEqHR",
+      "name": "Arrow Salvo"
+    },
+    {
+      "id": "Vg4K3dTDswNQf4Bx",
+      "name": "Entreat the Many"
+    },
+    {
+      "id": "oCdcZ8EqoC1K0Drq",
+      "name": "Missed Cue"
+    },
+    {
+      "id": "PHVHBbdHeQRfjLmE",
+      "name": "Spirit Blast"
+    },
+    {
+      "id": "XGB77j7m0SLky8U1",
+      "name": "Utter Destruction"
+    },
+    {
+      "id": "fd31tAHSSGXyOxW6",
+      "name": "Vampiric Exsanguination"
+    },
+    {
+      "id": "n8eEXXAtguoErW0y",
+      "name": "Shadow's Web"
+    },
+    {
+      "id": "fBoiPXmcIO50OFFR",
+      "name": "Boil Blood"
+    },
+    {
+      "id": "PgLvO8UNHSj5f61m",
+      "name": "Devour Life"
+    },
+    {
+      "id": "rwbL3oBniZZeJc2f",
+      "name": "Stop Heart"
+    }
+  ]
+}

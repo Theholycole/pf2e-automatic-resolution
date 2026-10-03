@@ -1,0 +1,31 @@
+{
+  "label": "rank5Batch64",
+  "passed": true,
+  "at": "2026-10-03T05:42:44.738Z",
+  "details": {
+    "batch64": {
+      "cast": {
+        "kind": "rally-banner",
+        "bearer": true,
+        "near": true,
+        "enemy": false,
+        "note": true
+      },
+      "saves": {
+        "fear": true,
+        "plain": false
+      },
+      "transfer": {
+        "status": "transferred",
+        "bearerNote": false,
+        "nearNote": true,
+        "near": true
+      },
+      "ended": {
+        "bearer": false,
+        "near": false,
+        "note": false
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "label": "rank4Batch117",
+  "passed": true,
+  "at": "2026-10-03T09:12:10.338Z",
+  "details": {
+    "batch117": {
+      "kind": "rule-set",
+      "high": {
+        "name": "Variable Gravity (High gravity)",
+        "encumbered": true,
+        "selectors": [
+          "saving-throw",
+          "fortitude-dc",
+          "reflex-dc"
+        ],
+        "duration": {
+          "value": 5,
+          "unit": "minutes",
+          "expiry": "turn-start",
+          "sustained": false
+        }
+      },
+      "low": {
+        "name": "Variable Gravity (Low gravity)",
+        "rules": 0,
+        "encumbered": false,
+        "notes": true
+      },
+      "sixth": {
+        "value": 1,
+        "unit": "hours",
+        "expiry": "turn-start",
+        "sustained": false
+      }
+    }
+  }
+}

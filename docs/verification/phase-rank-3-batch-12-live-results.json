@@ -1,0 +1,36 @@
+{
+  "label": "rank3Batch12",
+  "passed": true,
+  "at": "2026-10-02T10:19:54.498Z",
+  "details": {
+    "batch12": {
+      "supported": true,
+      "repeatable": {
+        "window": "sustain",
+        "attacks": 11,
+        "actions": 1,
+        "onCast": true,
+        "sourceText": "You throw the blade when you Cast this Spell and the first time you Sustain this spell on subsequent turns, making a ranged spell attack against the AC of a creature within 20 feet."
+      },
+      "cast": {
+        "formula": "3d6 spirit",
+        "total": 7,
+        "lost": 7,
+        "notes": true
+      },
+      "sustain": {
+        "formula": "3d6 spirit",
+        "total": 13,
+        "lost": 26,
+        "notes": true
+      },
+      "heightened": {
+        "formula": "4d6 spirit",
+        "total": 15,
+        "lost": 15,
+        "notes": true
+      },
+      "button": "Resolve Spell Attack"
+    }
+  }
+}

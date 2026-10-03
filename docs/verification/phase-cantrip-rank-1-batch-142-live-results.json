@@ -1,0 +1,32 @@
+{
+  "batch": 142,
+  "spells": [
+    "Practice Makes Perfect"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch142",
+      "passed": true,
+      "at": "2026-09-28T22:00:56.973Z",
+      "details": {
+        "practiceMakesPerfect": {
+          "failed": {
+            "status": "applied",
+            "castInstanceId": "7vY9dxs2RmHh5FMe",
+            "skill": "athletics",
+            "rolled": "criticalFailure",
+            "total": 14,
+            "dc": 60,
+            "added": 2,
+            "newTotal": 16,
+            "degree": "criticalFailure"
+          },
+          "succeeded": "Practice Makes Perfect: PFTEST P23 Affliction practice ally's check (17 vs DC -20) didn't fail."
+        }
+      }
+    }
+  ]
+}

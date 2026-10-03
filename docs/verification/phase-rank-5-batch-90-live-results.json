@@ -1,0 +1,26 @@
+{
+  "label": "rank5Batch90",
+  "passed": true,
+  "at": "2026-10-03T12:45:17.950Z",
+  "details": {
+    "batch90": {
+      "kind": "ember-double",
+      "double": {
+        "ac": 10,
+        "hp": 50,
+        "cold": 10,
+        "prone": true,
+        "save": 1
+      },
+      "blast": 19,
+      "ended": {
+        "token": false,
+        "effect": false
+      },
+      "high": {
+        "hp": 70,
+        "damage": 20
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "generatedAt": "2026-10-02T22:26:02.497Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "results": [
+    {
+      "label": "rank5Batch39",
+      "passed": true,
+      "at": "2026-10-02T22:25:42.713Z",
+      "details": {
+        "batch39": {
+          "left": 2,
+          "first": {
+            "formula": "8d6 acid",
+            "total": 20,
+            "lost": [
+              10,
+              20
+            ]
+          },
+          "leftAfter": 0,
+          "third": "No blisters are left: the spell has ended."
+        }
+      }
+    }
+  ]
+}

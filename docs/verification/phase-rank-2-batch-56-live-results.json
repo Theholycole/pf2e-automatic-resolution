@@ -1,0 +1,34 @@
+{
+  "label": "rank2Batch56",
+  "passed": true,
+  "at": "2026-10-01T23:32:41.765Z",
+  "details": {
+    "batch56": {
+      "level": "automatic",
+      "self": {
+        "error": null,
+        "climb": 40
+      },
+      "companion": {
+        "error": null,
+        "climb": 35,
+        "duration": "10 minutes"
+      },
+      "bothAt2": {
+        "error": "Canopy Crawler: target yourself or your animal companion."
+      },
+      "stranger": {
+        "error": "Canopy Crawler: PFTEST P23 Affliction Crawler stranger isn't PFTEST P23 Affliction Canopy Crawler caster's animal companion.",
+        "held": false
+      },
+      "bothAt5": {
+        "error": null,
+        "climb": [
+          40,
+          35
+        ],
+        "duration": "1 hours"
+      }
+    }
+  }
+}

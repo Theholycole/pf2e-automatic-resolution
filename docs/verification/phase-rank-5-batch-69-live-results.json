@@ -1,0 +1,42 @@
+{
+  "label": "rank5Batch69",
+  "passed": true,
+  "at": "2026-10-03T11:10:11.457Z",
+  "details": {
+    "batch69": {
+      "kind": "ward",
+      "cast": {
+        "radius": 30,
+        "dice": 3,
+        "quickened": true,
+        "slowed": false
+      },
+      "strike": {
+        "status": "hit",
+        "degree": 3,
+        "total": 22,
+        "damage": 22,
+        "hp": 278
+      },
+      "refused": "Establish Ward: PFTEST P23 Affliction ward outside isn't within the ward.",
+      "outside": {
+        "quickened": false,
+        "slowed": 1
+      },
+      "strikeOutside": "Establish Ward: PFTEST P23 Affliction Establish Ward caster must be within the ward.",
+      "back": {
+        "quickened": true,
+        "slowed": false
+      },
+      "ended": {
+        "quickened": false,
+        "slowed": false,
+        "region": false
+      },
+      "high": {
+        "radius": 35,
+        "dice": 4
+      }
+    }
+  }
+}

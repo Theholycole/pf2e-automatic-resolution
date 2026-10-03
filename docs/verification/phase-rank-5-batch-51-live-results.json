@@ -1,0 +1,25 @@
+{
+  "label": "rank5Batch51",
+  "passed": true,
+  "at": "2026-10-03T01:07:01.644Z",
+  "details": {
+    "batch51": {
+      "results": {
+        "failure": {
+          "status": "answered",
+          "degree": 0,
+          "penalty": [],
+          "whispered": true
+        },
+        "criticalFailure": {
+          "status": "false-answer",
+          "degree": 3,
+          "penalty": [
+            "circumstance:-4"
+          ],
+          "whispered": true
+        }
+      }
+    }
+  }
+}

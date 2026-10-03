@@ -1,0 +1,35 @@
+{
+  "batch": "rank-2-19",
+  "date": "2026-09-30",
+  "world": "pftest",
+  "system": "8.5.0",
+  "core": "14.367",
+  "module": "0.8.2",
+  "results": [
+    {
+      "case": "rank2Batch19",
+      "passed": true,
+      "details": {
+        "batch19": {
+          "question": true,
+          "cast": {
+            "success": 1,
+            "failure": "0 rounds turn-end",
+            "failureStunned": false,
+            "critical": "4 rounds",
+            "criticalRecurring": {
+              "timing": "turn-end",
+              "mode": "reduce",
+              "statistic": "will"
+            }
+          },
+          "afterSave": {
+            "obligation": "PFTEST P23 Affliction urge critical: end-of-turn will save (Charitable Urge)",
+            "critical": "3 rounds"
+          },
+          "hookReminder": true
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "case": "rank2Batch20",
+  "date": "2026-09-30",
+  "world": "pftest",
+  "result": {
+    "label": "rank2Batch20",
+    "passed": true,
+    "at": "2026-10-01T00:13:02.787Z",
+    "details": {
+      "batch20": {
+        "question": true,
+        "blockedBeforeAnswer": true,
+        "result": [
+          {
+            "dazzled": true,
+            "blinded": false,
+            "lightBlindness": false,
+            "immune": true
+          },
+          {
+            "dazzled": false,
+            "blinded": true,
+            "lightBlindness": true,
+            "immune": true
+          },
+          {
+            "dazzled": false,
+            "blinded": false,
+            "lightBlindness": true,
+            "immune": true
+          }
+        ]
+      }
+    }
+  }
+}

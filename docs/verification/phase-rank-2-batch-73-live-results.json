@@ -1,0 +1,58 @@
+{
+  "label": "rank2Batch73",
+  "passed": true,
+  "at": "2026-10-02T01:13:48.585Z",
+  "details": {
+    "batch73": {
+      "eligible": [
+        [
+          "surge walker",
+          true
+        ],
+        [
+          "surge swimmer",
+          true
+        ],
+        [
+          "surge huge",
+          false
+        ]
+      ],
+      "first": {
+        "walker": {
+          "prone": true,
+          "hp": 500
+        },
+        "swimmer": {
+          "prone": true,
+          "hp": 493,
+          "pushNote": true
+        },
+        "degrees": [
+          [
+            "surge walker",
+            "failure",
+            "not-applicable"
+          ],
+          [
+            "surge swimmer",
+            "criticalFailure",
+            "applies"
+          ],
+          [
+            "surge huge",
+            null,
+            "pending"
+          ]
+        ]
+      },
+      "second": {
+        "targets": [
+          "surge later"
+        ],
+        "used": true,
+        "again": 1
+      }
+    }
+  }
+}

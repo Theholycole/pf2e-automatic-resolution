@@ -1,0 +1,50 @@
+{
+  "label": "rank4Batch34",
+  "passed": true,
+  "at": "2026-10-02T17:14:17.155Z",
+  "details": {
+    "batch34": {
+      "success4": {
+        "statistic": "reflex",
+        "hp": "10",
+        "duration": "1 minutes",
+        "willingNote": true
+      },
+      "failure5": {
+        "statistic": "reflex",
+        "hp": "55",
+        "duration": "1 minutes",
+        "willingNote": true
+      },
+      "eligibility": [
+        [
+          "PFTEST P23 Affliction dirge ghost",
+          true,
+          null
+        ],
+        [
+          "PFTEST P23 Affliction dirge living",
+          false,
+          "requires the incorporeal trait"
+        ]
+      ],
+      "dirge": {
+        "rolled": 20,
+        "lost": 20,
+        "iwr": [
+          [
+            {
+              "category": "resistance",
+              "type": "all damage",
+              "adjustment": 0,
+              "ignored": true
+            }
+          ]
+        ],
+        "semi": "1 minutes",
+        "livingHP": true,
+        "status": "completed"
+      }
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "label": "rank3Batch111",
+  "passed": true,
+  "at": "2026-10-03T07:27:21.132Z",
+  "details": {
+    "batch111": {
+      "stuck": {
+        "immobilized": true,
+        "speed": 15,
+        "note": true,
+        "effects": [
+          "Oneiric Mire: Immobilized (until Escape)",
+          "Oneiric Mire: Oneiric mire",
+          "Oneiric Mire: 10-foot Speed penalty"
+        ]
+      },
+      "free": {
+        "immobilized": false,
+        "speed": 25,
+        "note": false,
+        "effects": [
+          "Oneiric Mire: Temporary immunity"
+        ],
+        "immune": true
+      },
+      "entry": true,
+      "first": {
+        "status": "continues",
+        "still": true
+      },
+      "second": {
+        "status": "ended-for-creature",
+        "degree": 3,
+        "after": {
+          "immobilized": false,
+          "speed": 25,
+          "note": false,
+          "effects": [
+            "Oneiric Mire: Temporary immunity"
+          ]
+        },
+        "immune": true
+      }
+    }
+  }
+}

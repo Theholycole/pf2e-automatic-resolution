@@ -1,0 +1,31 @@
+{
+  "label": "rank2Batch74",
+  "passed": true,
+  "at": "2026-10-02T01:16:47.861Z",
+  "details": {
+    "batch74": {
+      "cast": {
+        "level": "automatic",
+        "radius": 15,
+        "region": true,
+        "shape": "circle"
+      },
+      "costs": {
+        "stone": 15,
+        "soil": 10
+      },
+      "followed": 1950,
+      "under": [
+        {
+          "name": "PFTEST P23 Affliction ward under",
+          "success": false,
+          "text": "ejected from the area toward the surface"
+        }
+      ],
+      "missed": {
+        "status": "ended",
+        "region": false
+      }
+    }
+  }
+}

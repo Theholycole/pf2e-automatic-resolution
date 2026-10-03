@@ -1,0 +1,20 @@
+{
+  "label": "rank5Batch58",
+  "passed": true,
+  "at": "2026-10-03T03:10:38.912Z",
+  "details": {
+    "batch58": {
+      "mine": {
+        "targets": 2,
+        "formula": "4d6 piercing + 4d6 fire",
+        "total": 31,
+        "lost": [
+          31,
+          31
+        ],
+        "minesLeft": 5,
+        "status": "active"
+      }
+    }
+  }
+}

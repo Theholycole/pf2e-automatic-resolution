@@ -1,0 +1,969 @@
+{
+  "generatedAt": "2026-09-26T20:04:34.954Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "world": "pftest",
+  "results": {
+    "rank1Batch1": {
+      "label": "rank1Batch1",
+      "passed": true,
+      "at": "2026-09-26T19:57:40.022Z",
+      "details": {
+        "antHaul": {
+          "effect": "Spell Effect: Ant Haul",
+          "duration": {
+            "value": 8,
+            "unit": "hours",
+            "expiry": "turn-start",
+            "sustained": false
+          },
+          "before": {
+            "encumberedAfter": 5,
+            "max": 10
+          },
+          "after": {
+            "encumberedAfter": 8,
+            "max": 16
+          }
+        },
+        "woodenFists": {
+          "effect": "Spell Effect: Wooden Fists",
+          "duration": {
+            "value": 1,
+            "unit": "minutes",
+            "expiry": "turn-start",
+            "sustained": false
+          },
+          "fist": {
+            "damage": "1d6 bludgeoning",
+            "traits": [
+              "agile",
+              "finesse",
+              "reach-10",
+              "unarmed"
+            ]
+          },
+          "heightened7": {
+            "value": 10,
+            "unit": "minutes",
+            "expiry": "turn-start",
+            "sustained": false
+          }
+        },
+        "brainDrain": {
+          "lost": 3,
+          "total": 3,
+          "reminder": true
+        },
+        "thunderstrike": {
+          "modifiers": [
+            9,
+            10,
+            9
+          ],
+          "clumsy": [
+            1,
+            0,
+            0
+          ],
+          "clumsyDuration": {
+            "value": 1,
+            "unit": "rounds",
+            "expiry": "turn-start",
+            "sustained": false
+          },
+          "lost": [
+            9,
+            9,
+            0
+          ],
+          "notes": [
+            [],
+            [
+              "Clumsy 1 not applied: the GM answered no."
+            ],
+            []
+          ]
+        },
+        "schadenfreude": {
+          "effect": "Spell Effect: Schadenfreude (Success)",
+          "duration": {
+            "value": 1,
+            "unit": "rounds",
+            "expiry": "turn-start",
+            "sustained": false
+          },
+          "perception": -1,
+          "stupefied": 1
+        },
+        "splitTheTongue": {
+          "lost": [
+            8,
+            16
+          ],
+          "total": 8,
+          "stupefied": [
+            1,
+            2
+          ],
+          "durations": [
+            {
+              "value": 2,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            {
+              "value": 3,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            }
+          ],
+          "rolled": [
+            [
+              {
+                "rolledDuration": "1d4",
+                "value": 2
+              }
+            ],
+            [
+              {
+                "rolledDuration": "1d4",
+                "value": 3
+              }
+            ]
+          ]
+        }
+      }
+    },
+    "regressions": {
+      "cleanup#0": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T19:58:24.550Z",
+        "details": {
+          "actorsRemoved": 16,
+          "journalsRemoved": 6,
+          "remainingFixtureActors": 0
+        }
+      },
+      "attackAdjustments#1": {
+        "label": "attackAdjustments",
+        "passed": true,
+        "at": "2026-09-26T19:58:43.329Z",
+        "details": {
+          "magnetic": {
+            "early": "Magnetic Acceleration: answer the GM question for PFTEST P23 Affliction magnet metal before rolling the attack.",
+            "modifiers": [
+              15,
+              14
+            ],
+            "total": 27,
+            "lost": [
+              27,
+              27
+            ],
+            "persistent": [
+              [],
+              []
+            ],
+            "extra": []
+          },
+          "shocking": {
+            "early": "Shocking Grasp: answer the GM question for PFTEST P23 Affliction grasp metal before rolling the attack.",
+            "modifiers": [
+              15,
+              14
+            ],
+            "total": 11,
+            "lost": [
+              22,
+              22
+            ],
+            "persistent": [
+              [
+                "(1d4 + 0) electricity"
+              ],
+              []
+            ],
+            "extra": [
+              0
+            ]
+          },
+          "phase": {
+            "early": "Phase Bolt: answer the GM question for PFTEST P23 Affliction phase shielded before rolling the attack.",
+            "modifiers": [
+              16,
+              14
+            ],
+            "total": 4,
+            "lost": [
+              4,
+              4
+            ],
+            "persistent": [
+              [],
+              []
+            ],
+            "extra": []
+          },
+          "boomerang": {
+            "content": "GM: This attack ignores the target's Concealed condition and ignores all cover except greater cover. Heightened (9th): it ignores cover completely. Leave the target's cover and concealment out of this at",
+            "early": null,
+            "modifiers": [
+              14
+            ],
+            "total": 37,
+            "lost": [
+              37
+            ],
+            "persistent": [
+              []
+            ],
+            "extra": []
+          }
+        }
+      },
+      "cleanup#2": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T19:59:00.672Z",
+        "details": {
+          "actorsRemoved": 11,
+          "journalsRemoved": 0,
+          "remainingFixtureActors": 0
+        }
+      },
+      "longTailBatch4#3": {
+        "label": "longTailBatch4",
+        "passed": true,
+        "at": "2026-09-26T19:59:13.875Z",
+        "details": {
+          "bloodRunsCold": {
+            "formulas": [
+              "0.5 * 1d6",
+              "1d6",
+              "2 * 1d6"
+            ],
+            "failureSlowed": {
+              "slowed": 1,
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              }
+            },
+            "criticalSlowed": {
+              "slowed": 1,
+              "effect": "Blood Runs Cold: Slowed 1 (while taking persistent cold damage)"
+            },
+            "afterRecovery": {
+              "slowed": 0,
+              "effect": false
+            }
+          },
+          "fungalInfestation": {
+            "formulas": [
+              "0.5 * 2d6",
+              "2d6",
+              "2 * 2d6"
+            ],
+            "successEffect": false,
+            "failure": {
+              "selection": 1,
+              "fire": 1,
+              "slashing": 1
+            },
+            "criticalFailure": {
+              "selection": 2,
+              "fire": 2,
+              "slashing": 2
+            },
+            "afterRecovery": {
+              "effect": false,
+              "fire": null
+            }
+          },
+          "bloodVendetta": {
+            "formulas": [
+              "2d6",
+              "2 * 2d6"
+            ],
+            "effects": [
+              "Spell Effect: Blood Vendetta (Failure)",
+              "Spell Effect: Blood Vendetta (Failure)"
+            ],
+            "piercing": [
+              1,
+              1
+            ],
+            "slashing": 1,
+            "afterRecovery": {
+              "effect": false,
+              "piercing": null
+            }
+          },
+          "blisteringInvective": {
+            "unansweredRefused": true,
+            "modifiers": [
+              10,
+              14
+            ],
+            "answers": [
+              "No",
+              "Yes (+4)"
+            ],
+            "formulas": [
+              "2d6",
+              "2 * 2d6"
+            ],
+            "frightened": [
+              1,
+              2
+            ]
+          },
+          "crescentScepter": {
+            "markerAtStart": {
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "initiative": 30
+            },
+            "triggered": [
+              {
+                "ended": false,
+                "status": "active"
+              },
+              {
+                "ended": false,
+                "status": "active"
+              }
+            ],
+            "frightened": [
+              1,
+              2
+            ],
+            "markerDuring": true,
+            "atCasterTurn": {
+              "marker": "removed",
+              "status": "ended"
+            }
+          }
+        }
+      },
+      "cleanup#4": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T19:59:47.637Z",
+        "details": {
+          "actorsRemoved": 17,
+          "journalsRemoved": 7,
+          "remainingFixtureActors": 0
+        }
+      },
+      "longTailBatch3#5": {
+        "label": "longTailBatch3",
+        "passed": true,
+        "at": "2026-09-26T20:00:08.529Z",
+        "details": {
+          "weird": {
+            "total": 62,
+            "lost": [
+              31,
+              62
+            ],
+            "conditions": [
+              [
+                "frightened 1"
+              ],
+              [
+                "frightened 2"
+              ]
+            ]
+          },
+          "attackedFromWithin": {
+            "lost": 148,
+            "total": 74,
+            "conditions": [
+              "frightened 2",
+              "off-guard"
+            ],
+            "offGuardDuration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            }
+          },
+          "wails": {
+            "drained": [
+              1,
+              4
+            ],
+            "overrides": [
+              [
+                {
+                  "rolled": "1d4",
+                  "value": 1
+                }
+              ],
+              []
+            ]
+          },
+          "leadenSteps": {
+            "failure": {
+              "effect": "Spell Effect: Leaden Steps (Failure)",
+              "selection": "failure",
+              "weakness": 2,
+              "encumbered": true,
+              "moduleEncumbered": 0
+            },
+            "success": {
+              "effect": "Spell Effect: Leaden Steps (Success)",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-end",
+                "sustained": false
+              },
+              "weakness": 2
+            },
+            "sustained": true,
+            "missed": {
+              "status": "ended",
+              "reason": "missed-sustain",
+              "effect": false,
+              "weakness": null
+            }
+          },
+          "animusMine": {
+            "marker": "Animus Mine (waiting for its trigger)",
+            "markerDuration": {
+              "value": 1,
+              "unit": "hours",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "lost": 22,
+            "total": 11,
+            "stunned": 1,
+            "ended": "ended",
+            "markerGone": true,
+            "gmNote": true
+          },
+          "banditsDoom": {
+            "first": "ended",
+            "firstReason": "superseded",
+            "second": "active",
+            "markers": 1
+          },
+          "fear": {
+            "start": {
+              "frightened": 3,
+              "fleeing": true
+            },
+            "afterRound": {
+              "frightened": 2,
+              "fleeing": false
+            }
+          }
+        }
+      },
+      "cleanup#6": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T20:00:46.356Z",
+        "details": {
+          "actorsRemoved": 16,
+          "journalsRemoved": 9,
+          "remainingFixtureActors": 0
+        }
+      },
+      "durationBuffs#7": {
+        "label": "durationBuffs",
+        "passed": true,
+        "at": "2026-09-26T20:01:06.092Z",
+        "details": [
+          {
+            "name": "Heroism",
+            "recipient": "target",
+            "effect": "Spell Effect: Heroism",
+            "duration": "10 minutes",
+            "rules": [
+              "FlatModifier"
+            ]
+          },
+          {
+            "name": "Fly",
+            "recipient": "target",
+            "effect": "Spell Effect: Fly",
+            "duration": "5 minutes",
+            "rules": [
+              "BaseSpeed"
+            ]
+          },
+          {
+            "name": "Shrink",
+            "recipient": "target",
+            "effect": "Spell Effect: Shrink",
+            "duration": "5 minutes",
+            "rules": [
+              "CreatureSize"
+            ]
+          },
+          {
+            "name": "Runic Body",
+            "recipient": "target",
+            "effect": "Spell Effect: Runic Body",
+            "duration": "1 minutes",
+            "rules": [
+              "ItemAlteration",
+              "ItemAlteration"
+            ]
+          },
+          {
+            "name": "Lashunta's Life Bubble",
+            "recipient": "target",
+            "effect": "Spell Effect: Lashunta's Life Bubble",
+            "duration": "8 hours",
+            "rules": [
+              "FlatModifier"
+            ]
+          },
+          {
+            "name": "Countless Eyes",
+            "recipient": "target",
+            "effect": "Spell Effect: Countless Eyes",
+            "duration": "1 minutes",
+            "rules": [
+              "RollOption",
+              "AdjustDegreeOfSuccess"
+            ]
+          },
+          {
+            "name": "Dragon Wings",
+            "recipient": "self",
+            "effect": "Spell Effect: Dragon Wings",
+            "duration": "1 minutes",
+            "rules": [
+              "BaseSpeed"
+            ]
+          },
+          {
+            "name": "Angelic Wings",
+            "recipient": "self",
+            "effect": "Spell Effect: Angelic Wings",
+            "duration": "3 rounds",
+            "rules": [
+              "BaseSpeed",
+              "TokenLight"
+            ]
+          },
+          {
+            "name": "Stormwind Flight",
+            "recipient": "self",
+            "effect": "Spell Effect: Stormwind Flight",
+            "duration": "1 minutes",
+            "rules": [
+              "BaseSpeed"
+            ]
+          },
+          {
+            "name": "Weapon Trance",
+            "recipient": "self",
+            "effect": "Spell Effect: Weapon Trance",
+            "duration": "1 minutes",
+            "rules": [
+              "ActiveEffectLike"
+            ]
+          },
+          {
+            "name": "Speaking Sky",
+            "recipient": "self",
+            "effect": "Spell Effect: Speaking Sky",
+            "duration": "1 rounds",
+            "rules": [
+              "Sense"
+            ]
+          },
+          {
+            "name": "Untwisting Iron Augmentation",
+            "recipient": "self",
+            "effect": "Spell Effect: Untwisting Iron Augmentation",
+            "duration": "1 minutes",
+            "rules": [
+              "AdjustStrike",
+              "AdjustStrike",
+              "ItemAlteration",
+              "FlatModifier",
+              "AdjustStrike"
+            ]
+          },
+          {
+            "name": "Word of Truth",
+            "recipient": "self",
+            "effect": "Spell Effect: Word of Truth",
+            "duration": "1 minutes",
+            "rules": [
+              "FlatModifier"
+            ]
+          }
+        ]
+      },
+      "cleanup#8": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T20:01:31.235Z",
+        "details": {
+          "actorsRemoved": 26,
+          "journalsRemoved": 13,
+          "remainingFixtureActors": 0
+        }
+      },
+      "heightenedDuration#9": {
+        "label": "heightenedDuration",
+        "passed": true,
+        "at": "2026-09-26T20:02:01.197Z",
+        "details": [
+          {
+            "name": "Fly",
+            "rank": 4,
+            "level": "automatic",
+            "effect": "Spell Effect: Fly",
+            "recipient": "PFTEST P23 Affliction Fly 4 recipient",
+            "duration": "5 minutes",
+            "expiry": "turn-start",
+            "remaining": 300,
+            "effectLevel": 4,
+            "override": null
+          },
+          {
+            "name": "Fly",
+            "rank": 7,
+            "level": "automatic",
+            "effect": "Spell Effect: Fly",
+            "recipient": "PFTEST P23 Affliction Fly 7 recipient",
+            "duration": "1 hours",
+            "expiry": "turn-start",
+            "remaining": 3600,
+            "effectLevel": 7,
+            "override": {
+              "value": 1,
+              "unit": "hours"
+            }
+          },
+          {
+            "name": "Tremorsense",
+            "rank": 2,
+            "level": "automatic",
+            "effect": "Spell Effect: Tremorsense",
+            "recipient": "PFTEST P23 Affliction Tremorsense caster",
+            "duration": "10 minutes",
+            "expiry": "turn-start",
+            "remaining": 600,
+            "effectLevel": 2,
+            "override": null
+          },
+          {
+            "name": "Tremorsense",
+            "rank": 3,
+            "level": "automatic",
+            "effect": "Spell Effect: Tremorsense",
+            "recipient": "PFTEST P23 Affliction Tremorsense caster",
+            "duration": "1 hours",
+            "expiry": "turn-start",
+            "remaining": 3600,
+            "effectLevel": 3,
+            "override": {
+              "value": 1,
+              "unit": "hours"
+            }
+          },
+          {
+            "name": "Tremorsense",
+            "rank": 5,
+            "level": "automatic",
+            "effect": "Spell Effect: Tremorsense",
+            "recipient": "PFTEST P23 Affliction Tremorsense caster",
+            "duration": "8 hours",
+            "expiry": "turn-start",
+            "remaining": 28800,
+            "effectLevel": 5,
+            "override": {
+              "value": 8,
+              "unit": "hours"
+            }
+          },
+          {
+            "name": "Juvenile Companion",
+            "rank": 2,
+            "level": "automatic",
+            "effect": "Spell Effect: Juvenile Companion",
+            "recipient": "PFTEST P23 Affliction Juvenile Companion 2 recipient",
+            "duration": "1 hours",
+            "expiry": "turn-start",
+            "remaining": 3600,
+            "effectLevel": 2,
+            "override": {
+              "value": 1,
+              "unit": "hours"
+            }
+          },
+          {
+            "name": "Gecko Grip",
+            "rank": 5,
+            "level": "automatic",
+            "effect": "Spell Effect: Gecko Grip",
+            "recipient": "PFTEST P23 Affliction Gecko Grip 5 recipient",
+            "duration": "1 hours",
+            "expiry": "turn-start",
+            "remaining": 3600,
+            "effectLevel": 5,
+            "override": {
+              "value": 1,
+              "unit": "hours"
+            }
+          },
+          {
+            "name": "Angelic Wings",
+            "rank": 5,
+            "level": "automatic",
+            "effect": "Spell Effect: Angelic Wings",
+            "recipient": "PFTEST P23 Affliction Angelic Wings caster",
+            "duration": "1 minutes",
+            "expiry": "turn-start",
+            "remaining": 60,
+            "effectLevel": 5,
+            "override": {
+              "value": 1,
+              "unit": "minutes"
+            }
+          },
+          {
+            "name": "Dragon Wings",
+            "rank": 8,
+            "level": "automatic",
+            "effect": "Spell Effect: Dragon Wings",
+            "recipient": "PFTEST P23 Affliction Dragon Wings caster",
+            "duration": "10 minutes",
+            "expiry": "turn-start",
+            "remaining": 600,
+            "effectLevel": 8,
+            "override": {
+              "value": 10,
+              "unit": "minutes"
+            }
+          },
+          {
+            "name": "Musical Accompaniment",
+            "rank": 2,
+            "level": "guided",
+            "effect": "Spell Effect: Musical Accompaniment",
+            "recipient": "PFTEST P23 Affliction Musical Accompaniment caster",
+            "duration": "10 minutes",
+            "expiry": "turn-start",
+            "remaining": 600,
+            "effectLevel": 2,
+            "override": {
+              "value": 10,
+              "unit": "minutes"
+            }
+          },
+          {
+            "name": "Deep Sight",
+            "rank": 7,
+            "level": "automatic",
+            "effect": "Spell Effect: Deep Sight",
+            "recipient": "PFTEST P23 Affliction Deep Sight caster",
+            "duration": "1 days",
+            "expiry": "turn-start",
+            "remaining": 86400,
+            "effectLevel": 7,
+            "override": {
+              "value": 1,
+              "unit": "days"
+            }
+          },
+          {
+            "name": "Tailwind",
+            "rank": 1,
+            "level": "automatic",
+            "effect": "Spell Effect: Tailwind",
+            "recipient": "PFTEST P23 Affliction Tailwind caster",
+            "duration": "1 hours",
+            "expiry": "turn-start",
+            "remaining": 3600,
+            "effectLevel": 1,
+            "override": null
+          },
+          {
+            "name": "Tailwind",
+            "rank": 2,
+            "level": "automatic",
+            "effect": "Spell Effect: Tailwind (8 hours)",
+            "recipient": "PFTEST P23 Affliction Tailwind caster",
+            "duration": "8 hours",
+            "expiry": "turn-start",
+            "remaining": 28800,
+            "effectLevel": 2,
+            "override": null
+          },
+          {
+            "name": "Wings of the Valkyrie",
+            "rank": 5,
+            "level": "guided",
+            "effect": "Spell Effect: Wings of the Valkyrie (Heightened)",
+            "recipient": "PFTEST P23 Affliction Wings of the Valkyrie caster",
+            "duration": "1 minutes",
+            "expiry": "turn-start",
+            "remaining": 60,
+            "effectLevel": 5,
+            "override": null
+          }
+        ]
+      },
+      "cleanup#10": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T20:02:41.671Z",
+        "details": {
+          "actorsRemoved": 28,
+          "journalsRemoved": 14,
+          "remainingFixtureActors": 0
+        }
+      },
+      "compact#11": {
+        "label": "compact",
+        "passed": true,
+        "at": "2026-09-26T20:03:13.584Z",
+        "details": {
+          "oneTime": {
+            "frightened": [
+              0,
+              1,
+              2
+            ]
+          },
+          "rainbow": {
+            "exposure": "Review PFTEST P23 Affliction rainbow foe's exposure (entered the area)",
+            "blinded": true,
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "ended": "ended"
+          }
+        }
+      },
+      "cleanup#12": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T20:03:28.100Z",
+        "details": {
+          "actorsRemoved": 6,
+          "journalsRemoved": 3,
+          "remainingFixtureActors": 0
+        }
+      },
+      "degreeChoiceAndRift#13": {
+        "label": "degreeChoiceAndRift",
+        "passed": true,
+        "at": "2026-09-26T20:03:35.708Z",
+        "details": {
+          "distractingDecoy": {
+            "failure": {
+              "selection": "failure",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "offGuardSources": 0,
+              "offGuard": true,
+              "attackPenalty": null,
+              "attackPenalties": [],
+              "moduleOffGuard": 0
+            },
+            "criticalFailure": {
+              "selection": "critical-failure",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "offGuardSources": 0,
+              "offGuard": true,
+              "attackPenalty": null,
+              "attackPenalties": [
+                -2
+              ]
+            },
+            "success": {
+              "effect": false,
+              "offGuard": false
+            }
+          },
+          "illOmen": {
+            "failure": {
+              "selection": "failure",
+              "rollTwice": [
+                {
+                  "keep": "lower"
+                }
+              ]
+            },
+            "criticalFailure": {
+              "selection": "critical-failure",
+              "rollTwice": [
+                {
+                  "keep": "lower",
+                  "removeAfterRoll": false
+                }
+              ]
+            }
+          },
+          "fiendishRift": {
+            "castResult": {
+              "formula": "7d6 spirit",
+              "total": 25,
+              "extra": 10,
+              "hpLost": 35,
+              "conditions": [
+                "grabbed"
+              ]
+            },
+            "sustainResult": {
+              "formula": "7d6 spirit",
+              "total": 31,
+              "extra": 10,
+              "hpLost": 20,
+              "conditions": [
+                "grabbed"
+              ]
+            },
+            "ended": "ended"
+          }
+        }
+      },
+      "cleanup#14": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T20:03:56.929Z",
+        "details": {
+          "actorsRemoved": 9,
+          "journalsRemoved": 4,
+          "remainingFixtureActors": 0
+        }
+      }
+    }
+  }
+}

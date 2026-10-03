@@ -1,0 +1,47 @@
+{
+  "batch": "cantrip-rank-1-batch-28",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch28",
+    "passed": true,
+    "details": {
+      "incendiaryAura": {
+        "effect": "Spell Effect: Incendiary Aura",
+        "auraRule": [
+          "Aura"
+        ],
+        "persistent": [
+          "2d4 fire"
+        ]
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch28",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch24",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

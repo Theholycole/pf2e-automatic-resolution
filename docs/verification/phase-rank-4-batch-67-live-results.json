@@ -1,0 +1,43 @@
+{
+  "generatedAt": "2026-10-02T23:14:36.657Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "results": [
+    {
+      "label": "rank4Batch67",
+      "passed": true,
+      "at": "2026-10-02T23:14:24.195Z",
+      "details": {
+        "batch67": {
+          "foes": [
+            {
+              "fire": 3,
+              "effect": [
+                "1 rounds turn-end"
+              ],
+              "death": []
+            },
+            {
+              "fire": 3,
+              "effect": [
+                "1 minutes turn-start"
+              ],
+              "death": [
+                true
+              ]
+            },
+            {
+              "fire": 3,
+              "effect": [
+                "-1 unlimited null"
+              ],
+              "death": [
+                true
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

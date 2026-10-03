@@ -1,0 +1,37 @@
+{
+  "label": "rank3Batch55",
+  "passed": true,
+  "at": "2026-10-02T19:04:37.587Z",
+  "details": {
+    "batch55": {
+      "one": {
+        "supported": true,
+        "formula": "3d6 spirit",
+        "total": 13,
+        "lost": 13,
+        "enfeebled": 0
+      },
+      "two": {
+        "supported": true,
+        "formula": "8d6 spirit",
+        "total": 31,
+        "lost": 62,
+        "enfeebled": 1
+      },
+      "three": {
+        "supported": true,
+        "formula": "6d6 spirit",
+        "total": 10,
+        "lost": 5,
+        "enfeebled": 1
+      },
+      "threeMiss": {
+        "supported": true,
+        "formula": null,
+        "total": null,
+        "lost": 0,
+        "enfeebled": 0
+      }
+    }
+  }
+}

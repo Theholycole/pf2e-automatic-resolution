@@ -1,0 +1,74 @@
+{
+  "batch": "cantrip-rank-1-batch-80",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch80",
+    "passed": true,
+    "details": {
+      "total": 10,
+      "lost": [
+        5,
+        10,
+        20
+      ],
+      "failure": {
+        "conditions": [
+          "off-guard"
+        ],
+        "speed": [
+          25,
+          15
+        ]
+      },
+      "critical": {
+        "conditions": [
+          "off-guard",
+          "immobilized"
+        ]
+      },
+      "extra": {
+        "formula": "2d6 bludgeoning",
+        "lost": 2,
+        "total": 2
+      },
+      "dataNote": true
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch80",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch43",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch75",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

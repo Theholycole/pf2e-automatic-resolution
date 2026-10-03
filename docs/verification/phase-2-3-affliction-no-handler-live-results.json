@@ -1,0 +1,30 @@
+{
+  "generated": "2026-09-25T21:38:26.080Z",
+  "note": "Pseudo Afflictions disabled in pftest for this run, then re-enabled.",
+  "result": {
+    "label": "noHandler",
+    "passed": true,
+    "at": "2026-09-25T21:37:42.456Z",
+    "details": {
+      "spiderSting": [
+        "Afflicted: Spider Venom, stage 2 — Pseudo Afflictions is not active; apply the affliction manually."
+      ],
+      "cordyceps": [
+        "Afflicted: Cordyceps Toxin, stage 1 (compelled behaviour: Lure) — Pseudo Afflictions is not active; apply the affliction manually. At stage 3: The creature moves toward an exposed location and attempts to get bystanders' attention, such as by gesticulating, Performing, or igniting light sources. The target is @UUID[Compendium.pf2e.conditionitems.Item.AJh5ex99aV6VTggg]{Off-Guard} while controlled in this way. This control might include risky behavior (such as climbing down a precarious cliff or weaving between armed foes), but it doesn't compel outright lethal actions (such as leaping off the top of that same cliff). If the behavior directly leads to harm (such as falling off the cliff) or hostile actions (such as being attacked by creatures that can now reach the descending creature), the target gains a +4 bonus to their next saving throw against the poison."
+      ],
+      "restorativeMoment": [
+        "doomed 1 → 0",
+        "drained: not present",
+        "GM: Pseudo Afflictions is unavailable: the target attempts one save against each affliction it has whose current stage lasts 1 day or less; apply each result (critical success −2 stages, success −1, failure +1, critical failure +2).",
+        "Restorative Moment: temporarily immune (1 day)"
+      ],
+      "restoration": [
+        "GM: Pseudo Afflictions is unavailable: reduce the stage of one poison affliction the target has by 1 (not below stage 1; it isn't cured); only once for the same exposure.",
+        "Restoration: benefited today (1 day)"
+      ],
+      "takeItsCourse": [
+        "GM: Pseudo Afflictions is unavailable: the target immediately attempts its next save against the chosen disease or poison affliction with a -2 status modifier; apply the stage change."
+      ]
+    }
+  }
+}

@@ -1,0 +1,161 @@
+{
+  "generatedAt": "2026-09-27T00:04:27.799Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "world": "pftest",
+  "results": {
+    "terrainBatch2": {
+      "label": "terrainBatch2",
+      "passed": true,
+      "at": "2026-09-26T23:58:00.406Z",
+      "details": {
+        "seaOfThought": {
+          "base": 25,
+          "during": {
+            "a": {
+              "speed": 15,
+              "penalty": 1
+            },
+            "b": {
+              "speed": 15,
+              "penalty": 1,
+              "prone": true,
+              "immobilized": false
+            }
+          },
+          "terrain": [
+            "modifyMovementCost"
+          ],
+          "afterLeaving": {
+            "speed": 25,
+            "penalty": 0
+          },
+          "afterEnd": {
+            "bPenalty": 0,
+            "bSpeed": 25,
+            "bProne": true,
+            "region": false
+          }
+        },
+        "entanglingFlora": {
+          "base": 25,
+          "during": {
+            "a": {
+              "speed": 15,
+              "penalty": 1
+            },
+            "b": {
+              "speed": 15,
+              "penalty": 1,
+              "prone": false,
+              "immobilized": true
+            }
+          },
+          "afterLeaving": {
+            "speed": 25,
+            "penalty": 0
+          },
+          "escape": {
+            "entries": [
+              "Entangling Flora: Immobilized (until Escape)",
+              "Entangling Flora: 10-foot Speed penalty"
+            ],
+            "bSpeed": 25,
+            "bPenalty": 0,
+            "bImmobilized": false
+          }
+        }
+      }
+    }
+  },
+  "regressions": {
+    "cleanup#0": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "lingering#1": {
+      "label": "lingering",
+      "passed": true
+    },
+    "cleanup#2": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "sustainDamage#3": {
+      "label": "sustainDamage",
+      "passed": true
+    },
+    "cleanup#4": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "attackRowRules#5": {
+      "label": "attackRowRules",
+      "passed": true
+    },
+    "cleanup#6": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "compact#7": {
+      "label": "compact",
+      "passed": true
+    },
+    "cleanup#8": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "cantripBatch1#9": {
+      "label": "cantripBatch1",
+      "passed": true
+    },
+    "cleanup#10": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "cantripBatch2#11": {
+      "label": "cantripBatch2",
+      "passed": true
+    },
+    "cleanup#12": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "terrainBatch1#13": {
+      "label": "terrainBatch1",
+      "passed": true
+    },
+    "cleanup#14": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "escape:cleanup#e0": {
+      "label": "escape:cleanup",
+      "passed": true
+    },
+    "escape:degrees#e1": {
+      "label": "escape:degrees",
+      "passed": true
+    },
+    "escape:ranks#e2": {
+      "label": "escape:ranks",
+      "passed": true
+    },
+    "escape:escape#e3": {
+      "label": "escape:escape",
+      "passed": true
+    },
+    "escape:multiple#e4": {
+      "label": "escape:multiple",
+      "passed": true
+    },
+    "escape:timer#e5": {
+      "label": "escape:timer",
+      "passed": true
+    },
+    "escape:cleanup#e6": {
+      "label": "escape:cleanup",
+      "passed": true
+    }
+  }
+}

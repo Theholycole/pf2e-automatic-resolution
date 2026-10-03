@@ -1,0 +1,40 @@
+{
+  "generatedAt": "2026-10-02T22:22:48.713Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "results": [
+    {
+      "label": "rank5Batch38",
+      "passed": true,
+      "at": "2026-10-02T22:22:36.097Z",
+      "details": {
+        "batch38": {
+          "fail": {
+            "dazzled": true,
+            "enfeebled": 1,
+            "immobilized": false,
+            "persistent": [
+              [
+                "fire",
+                "2d10"
+              ]
+            ],
+            "escape": true
+          },
+          "crit": {
+            "dazzled": true,
+            "enfeebled": 2,
+            "immobilized": true,
+            "persistent": [
+              [
+                "fire",
+                "2d10"
+              ]
+            ],
+            "escape": true
+          }
+        }
+      }
+    }
+  ]
+}

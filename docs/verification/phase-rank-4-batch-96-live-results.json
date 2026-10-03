@@ -1,0 +1,20 @@
+{
+  "label": "rank4Batch96",
+  "passed": true,
+  "at": "2026-10-03T03:16:36.289Z",
+  "details": {
+    "batch96": {
+      "concealed": true,
+      "exposed": true,
+      "crossing": {
+        "formula": "4d6 spirit",
+        "total": 11,
+        "lost": 11
+      },
+      "after": {
+        "status": "ended",
+        "concealed": false
+      }
+    }
+  }
+}

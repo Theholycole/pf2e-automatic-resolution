@@ -1,0 +1,40 @@
+{
+  "case": "rank2Batch31",
+  "date": "2026-10-01",
+  "world": "pftest",
+  "result": {
+    "label": "rank2Batch31",
+    "passed": true,
+    "at": "2026-10-01T21:00:05.495Z",
+    "details": {
+      "batch31": {
+        "final": {
+          "select": true,
+          "refused": "refused",
+          "formula": "8d6 cold",
+          "total": 29,
+          "lost": [
+            29,
+            14
+          ],
+          "minionDead": true
+        },
+        "barrage": {
+          "reminder": true,
+          "question": true,
+          "formula": "2d10 piercing",
+          "total": 16,
+          "lost": [
+            0,
+            16
+          ],
+          "armor": [
+            "1 1 rounds",
+            "1 1 rounds",
+            null
+          ]
+        }
+      }
+    }
+  }
+}

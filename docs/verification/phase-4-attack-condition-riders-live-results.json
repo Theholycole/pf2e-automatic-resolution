@@ -1,0 +1,93 @@
+{
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "module": "0.8.2",
+  "results": [
+    {
+      "label": "attackConditionRiders",
+      "passed": true,
+      "at": "2026-09-26T14:37:15.916Z",
+      "details": {
+        "inkshot": {
+          "crit": {
+            "lost": 6,
+            "total": 3,
+            "dazzled": {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            }
+          },
+          "hit": {
+            "lost": 7,
+            "total": 7,
+            "dazzled": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            }
+          },
+          "miss": {
+            "lost": 0,
+            "effects": 0
+          }
+        },
+        "brineDragonBile": {
+          "hit": {
+            "persistent": [
+              "2d6 acid"
+            ],
+            "lost": 0
+          },
+          "crit": {
+            "persistent": [
+              "2 * 2d6 acid"
+            ],
+            "lost": 0
+          }
+        },
+        "blindingFoam": {
+          "lost": 24,
+          "total": 24,
+          "persistent": [
+            "1d6 acid"
+          ],
+          "blinded": {
+            "name": "Blinding Foam: Blinded (while taking persistent acid damage)",
+            "duration": {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "persistentLink": {
+              "damageType": "acid"
+            }
+          },
+          "reminder": true,
+          "afterRemoval": {
+            "blinded": false,
+            "effects": []
+          }
+        },
+        "incapacitation": {
+          "high": {
+            "degree": "failure",
+            "total": 22,
+            "natural": 8,
+            "expected": "failure"
+          },
+          "low": {
+            "degree": "criticalSuccess",
+            "total": 34,
+            "natural": 20,
+            "expected": "criticalSuccess"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "label": "rank5Batch43",
+  "passed": true,
+  "at": "2026-10-03T00:10:00.672Z",
+  "details": {
+    "batch43": {
+      "foes": [
+        {
+          "effect": [
+            "1 rounds"
+          ],
+          "fire": 7,
+          "dAc": 0,
+          "dWill": -1,
+          "dLand": -10,
+          "note": [
+            "7"
+          ]
+        },
+        {
+          "effect": [
+            "1 minutes"
+          ],
+          "fire": 7,
+          "dAc": -1,
+          "dWill": -1,
+          "dLand": -10,
+          "note": [
+            "7"
+          ]
+        },
+        {
+          "effect": [
+            "1 minutes"
+          ],
+          "fire": 5,
+          "dAc": 0,
+          "dWill": -1,
+          "dLand": -10,
+          "note": [
+            "5"
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "batch": 123,
+  "spells": [
+    "Wish Market"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch123",
+      "passed": true,
+      "at": "2026-09-28T09:50:30.815Z",
+      "details": {
+        "wishMarket": {
+          "price": 3,
+          "priceSkills": [
+            "crafting",
+            "thievery"
+          ],
+          "bonus": 2,
+          "cast": {
+            "perception": 2,
+            "nature": 2,
+            "diplomacy": 0,
+            "society": 0,
+            "deception": 0,
+            "stealth": 0,
+            "crafting": -2,
+            "thievery": -2,
+            "arcana": 0,
+            "medicine": 0
+          },
+          "suppressed": {
+            "perception": 2,
+            "nature": 2,
+            "diplomacy": 0,
+            "society": 0,
+            "deception": 0,
+            "stealth": 0,
+            "crafting": 0,
+            "thievery": 0,
+            "arcana": 0,
+            "medicine": 0
+          },
+          "button": "Sustain: Haggle with the merchant",
+          "marker": "1 rounds wish-market-price-suppressed",
+          "stillEnabled": true,
+          "afterMarkerRemoved": -2
+        }
+      }
+    }
+  ]
+}

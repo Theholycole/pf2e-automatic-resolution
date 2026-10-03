@@ -1,0 +1,30 @@
+{
+  "label": "rank3Batch24",
+  "passed": true,
+  "at": "2026-10-02T12:38:30.962Z",
+  "details": {
+    "batch24": {
+      "Subjugate Undead eligible": false,
+      "subjugate": {
+        "supported": true,
+        "note": true,
+        "duration": "1 minutes",
+        "minion": true,
+        "owned": false,
+        "highRefused": true
+      },
+      "Sudden Recollection eligible": true,
+      "Sudden Recollection": {
+        "supported": true,
+        "note": true,
+        "unit": "unlimited"
+      },
+      "Rewrite Memory eligible": true,
+      "Rewrite Memory": {
+        "supported": true,
+        "note": true,
+        "unit": "unlimited"
+      }
+    }
+  }
+}

@@ -36,7 +36,7 @@ export function inferPostDamageTerminal(text) {
 
 const MANUAL_SEMANTICS = Object.freeze([
     ["forced-movement", /\b(?:pushed?|pulled?|moved?)\b[^.!?]*(?:feet|square)|\bteleport(?:ed|ation)?\b/i],
-    ["action-restriction", /\b(?:can't|cannot) use (?:actions?|reactions?)|\bmust use (?:all|its|their|the first) actions?\b/i],
+    ["action-restriction", /\b(?:can't|cannot) (?:use (?:(?:concentrate|manipulate) )?(?:actions?|reactions?)|(?:Stand|Stride|Step|Fly|Escape)\b)|\bmust use (?:all|its|their|the first) actions?\b/i],
     ["gm-choice", /\b(?:as determined by the gm|gm's discretion|you choose|of your choice|choose one)\b/i],
     ["secondary-save", /\b(?:must|has to) (?:also )?(?:attempt|make|succeed at) (?:an? )?(?:additional )?(?:(?:fortitude|reflex|will)|@Check\[(?:fortitude|reflex|will))[^.!?]*(?:save|saving throw)\b/i],
     ["temporary-immunity", /\btemporarily immune\b/i],

@@ -1,0 +1,50 @@
+{
+  "batch": "cantrip-rank-1-batch-25",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch25",
+    "passed": true,
+    "details": {
+      "deathsCall": {
+        "modifier": 0,
+        "living": 3,
+        "afterDelete": 0,
+        "undead": 6,
+        "effect": {
+          "value": 1,
+          "unit": "minutes",
+          "expiry": "turn-start",
+          "sustained": false
+        }
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch25",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch22",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

@@ -1,0 +1,164 @@
+{
+  "generatedAt": "2026-09-26T22:22:28.914Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "world": "pftest",
+  "results": {
+    "rank1Batch8": {
+      "label": "rank1Batch8",
+      "passed": true,
+      "at": "2026-09-26T22:17:01.560Z",
+      "details": {
+        "circleOfWeakness": {
+          "initial": 3,
+          "record": "fire",
+          "shown": [
+            "fire",
+            "fire",
+            "fire"
+          ],
+          "success": {
+            "effect": "Spell Effect: Circle of Weakness (Fire) (Success)",
+            "energyType": "fire",
+            "weakness": [
+              1
+            ],
+            "immobilized": false,
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-start"
+            }
+          },
+          "failure": {
+            "effect": "Spell Effect: Circle of Weakness (Fire) (Failure)",
+            "energyType": "fire",
+            "weakness": [
+              2
+            ],
+            "immobilized": false,
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-start"
+            }
+          },
+          "criticalFailure": {
+            "effect": "Spell Effect: Circle of Weakness (Fire) (Critical Failure)",
+            "energyType": "fire",
+            "weakness": [
+              2
+            ],
+            "immobilized": true,
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-start"
+            }
+          },
+          "afterEscape": {
+            "effect": "Spell Effect: Circle of Weakness (Fire) (Critical Failure)",
+            "energyType": "fire",
+            "weakness": [
+              2
+            ],
+            "immobilized": false,
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-start"
+            }
+          },
+          "sustain": {
+            "exposed": 3,
+            "choice": "fire"
+          }
+        },
+        "astralRain": {
+          "maximumAt": null,
+          "atCast": 1,
+          "formula": "4d4 piercing",
+          "types": [
+            "piercing"
+          ],
+          "total": 11,
+          "hpLost": 11,
+          "entered": [
+            "Review PFTEST P23 Affliction rain walker's exposure (entered the area)"
+          ],
+          "status": {
+            "beforeCasterTurn": "active",
+            "atCasterTurn": "ended",
+            "reason": "duration"
+          }
+        }
+      }
+    }
+  },
+  "regressions": {
+    "cleanup#0": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "cleanup#1": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "lingering#2": {
+      "label": "lingering",
+      "passed": true
+    },
+    "cleanup#3": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "degreeChoiceAndRift#4": {
+      "label": "degreeChoiceAndRift",
+      "passed": true
+    },
+    "cleanup#5": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "songbird#6": {
+      "label": "songbird",
+      "passed": true
+    },
+    "cleanup#7": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "enemies#8": {
+      "label": "enemies",
+      "passed": true
+    },
+    "cleanup#9": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "longTailBatch2#10": {
+      "label": "longTailBatch2",
+      "passed": true
+    },
+    "cleanup#11": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "longTailBatch4#12": {
+      "label": "longTailBatch4",
+      "passed": true
+    },
+    "cleanup#13": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "rank1Batch7#14": {
+      "label": "rank1Batch7",
+      "passed": true
+    },
+    "cleanup#15": {
+      "label": "cleanup",
+      "passed": true
+    }
+  }
+}

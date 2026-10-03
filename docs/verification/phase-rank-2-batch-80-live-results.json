@@ -1,0 +1,55 @@
+{
+  "label": "rank2Batch80",
+  "passed": true,
+  "at": "2026-10-02T01:51:30.141Z",
+  "details": {
+    "batch80": {
+      "level": "automatic",
+      "refused": "Rite of Cleansing Flame: target the creatures within the area first.",
+      "success": {
+        "cured": [
+          "Frightened 2",
+          "PFTEST foe dread"
+        ],
+        "left": [
+          "PFTEST friend courage",
+          "PFTEST plain"
+        ],
+        "frightened": false,
+        "casterEffects": 0
+      },
+      "critical": {
+        "effects": 2,
+        "days": 30,
+        "bonus": [
+          1
+        ]
+      },
+      "failure": {
+        "caster": [
+          "cold:5",
+          "unholy:5"
+        ],
+        "helper": [
+          "cold:5",
+          "unholy:5"
+        ]
+      },
+      "criticalFailure": {
+        "saves": [
+          0,
+          3
+        ],
+        "caster": 1,
+        "helper": 0,
+        "afterReduce": 1,
+        "curse": true,
+        "weak": [
+          "cold:5",
+          "unholy:5"
+        ],
+        "afterCurse": 0
+      }
+    }
+  }
+}

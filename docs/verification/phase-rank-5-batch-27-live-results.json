@@ -1,0 +1,33 @@
+{
+  "label": "rank5Batch27",
+  "passed": true,
+  "at": "2026-10-02T19:50:44.415Z",
+  "details": {
+    "batch27": {
+      "failure": {
+        "formula": "10d6 piercing",
+        "total": 26,
+        "lost": 26,
+        "immobilized": true,
+        "offGuard": false,
+        "note": true
+      },
+      "critical": {
+        "formula": "10d6 piercing",
+        "total": 34,
+        "lost": 68,
+        "immobilized": true,
+        "offGuard": true,
+        "note": true
+      },
+      "success": {
+        "formula": "10d6 piercing",
+        "total": 38,
+        "lost": 19,
+        "immobilized": false,
+        "offGuard": false,
+        "note": false
+      }
+    }
+  }
+}

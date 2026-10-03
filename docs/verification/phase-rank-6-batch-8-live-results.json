@@ -1,0 +1,34 @@
+{
+ "label": "rank6Batch8",
+ "passed": true,
+ "at": "2026-10-03T18:26:27.628Z",
+ "details": {
+  "batch8": {
+   "necrotize": {
+    "supported": true,
+    "rolled": "joints",
+    "lost": [
+     38,
+     76
+    ],
+    "parts": [
+     [
+      "joints|1 minutes"
+     ],
+     [
+      "joints|1 minutes",
+      "muscles|1 minutes"
+     ]
+    ],
+    "clumsy": [
+     1,
+     1
+    ],
+    "enfeebled": [
+     0,
+     1
+    ]
+   }
+  }
+ }
+}

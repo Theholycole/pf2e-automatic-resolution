@@ -1,0 +1,35 @@
+{
+  "label": "rank3Batch13",
+  "passed": true,
+  "at": "2026-10-02T10:48:00.520Z",
+  "details": {
+    "batch13": {
+      "persistence": {
+        "level": "automatic",
+        "bonus": 2,
+        "note": true,
+        "afterSave": {
+          "effect": false,
+          "bonus": 0
+        }
+      },
+      "cloak": {
+        "level": "automatic",
+        "effect": true,
+        "rules": [
+          "Aura",
+          "FlatModifier",
+          "FlatModifier"
+        ],
+        "note": true
+      },
+      "repel": {
+        "level": "automatic",
+        "ac": 2,
+        "immune": true,
+        "afterAttack": 0,
+        "again": "Repel Metal: PFTEST P23 Affliction repel guarded is temporarily immune to it."
+      }
+    }
+  }
+}

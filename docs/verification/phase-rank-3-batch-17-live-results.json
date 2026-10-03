@@ -1,0 +1,24 @@
+{
+  "label": "rank3Batch17",
+  "passed": true,
+  "at": "2026-10-02T11:06:24.019Z",
+  "details": {
+    "batch17": {
+      "cry": {
+        "supported": true,
+        "immune": false,
+        "again": "refused",
+        "confused": true,
+        "recurring": true,
+        "selfAttack": true
+      },
+      "feast": {
+        "supported": true,
+        "lost": 11,
+        "healed": 5,
+        "afterSuccess": 0,
+        "temp": 0
+      }
+    }
+  }
+}

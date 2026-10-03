@@ -1,0 +1,17 @@
+{
+ "label": "rank6Batch9",
+ "passed": true,
+ "at": "2026-10-03T18:43:31.673Z",
+ "details": {
+  "batch9": {
+   "notes": 2,
+   "exposed": true,
+   "omen": {
+    "formula": "80 mental",
+    "total": 80,
+    "lost": 80
+   },
+   "status": "ended"
+  }
+ }
+}

@@ -1,0 +1,27 @@
+{
+  "label": "rank3Batch113",
+  "passed": true,
+  "at": "2026-10-03T07:39:23.325Z",
+  "details": {
+    "batch113": {
+      "modes": [
+        "fireworks",
+        "smoke-cloud"
+      ],
+      "fireworks": {
+        "blinded": true,
+        "sickened": 0,
+        "immune": true,
+        "status": "active",
+        "secondObligations": 0
+      },
+      "smoke": {
+        "blinded": false,
+        "sickened": 1,
+        "immune": true,
+        "status": "active",
+        "secondObligations": 0
+      }
+    }
+  }
+}

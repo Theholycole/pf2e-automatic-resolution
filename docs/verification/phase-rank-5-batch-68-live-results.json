@@ -1,0 +1,38 @@
+{
+  "label": "rank5Batch68",
+  "passed": true,
+  "at": "2026-10-03T11:01:28.324Z",
+  "details": {
+    "batch68": {
+      "kind": "flash-cloak",
+      "cast": {
+        "effect": true,
+        "duration": {
+          "value": 1,
+          "unit": "minutes",
+          "expiry": "turn-start",
+          "sustained": false
+        }
+      },
+      "dazzled": {
+        "near": true,
+        "far": false,
+        "wearer": false
+      },
+      "movedAway": false,
+      "hit": {
+        "blinded": true,
+        "immunity": {
+          "value": 0,
+          "unit": "rounds",
+          "expiry": "turn-end",
+          "sustained": false
+        }
+      },
+      "again": {
+        "eligible": false,
+        "reason": "immune to this spell according to PF2e"
+      }
+    }
+  }
+}

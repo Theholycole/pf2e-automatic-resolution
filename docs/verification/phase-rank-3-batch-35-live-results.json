@@ -1,0 +1,18 @@
+{
+  "label": "rank3Batch35",
+  "passed": true,
+  "at": "2026-10-02T15:36:43.200Z",
+  "details": {
+    "batch35": {
+      "friend": {
+        "eligible": false,
+        "reason": "an ally of the caster"
+      },
+      "foe": {
+        "frightened": 2,
+        "note": true
+      },
+      "level": "guided"
+    }
+  }
+}

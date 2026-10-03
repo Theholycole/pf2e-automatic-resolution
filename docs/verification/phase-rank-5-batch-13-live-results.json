@@ -1,0 +1,24 @@
+{
+  "label": "rank5Batch13",
+  "passed": true,
+  "at": "2026-10-02T16:13:47.147Z",
+  "details": {
+    "batch13": {
+      "toxic": {
+        "concealed": true,
+        "notes": 2,
+        "event": "turn-start",
+        "formula": "6d8 poison",
+        "lost": 30
+      },
+      "fog": {
+        "concealed": true,
+        "exposed": "exposed",
+        "formula": "10d6 fire",
+        "lost": 36,
+        "status": "ended",
+        "concealedAfter": false
+      }
+    }
+  }
+}

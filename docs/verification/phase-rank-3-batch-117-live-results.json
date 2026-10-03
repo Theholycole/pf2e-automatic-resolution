@@ -1,0 +1,19 @@
+{
+  "label": "rank3Batch117",
+  "passed": true,
+  "at": "2026-10-03T07:55:02.020Z",
+  "details": {
+    "batch117": {
+      "cast": {
+        "status": "applied",
+        "seconds": 3600,
+        "ward": true,
+        "other": true,
+        "far": false
+      },
+      "aligned": 1,
+      "controlling": 3,
+      "ended": true
+    }
+  }
+}

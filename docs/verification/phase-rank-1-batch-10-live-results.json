@@ -1,0 +1,118 @@
+{
+  "generatedAt": "2026-09-26T22:54:25.255Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "world": "pftest",
+  "results": {
+    "rank1Batch10": {
+      "label": "rank1Batch10",
+      "passed": true,
+      "at": "2026-09-26T22:49:57.890Z",
+      "details": {
+        "forceBolt": {
+          "kind": "direct-damage",
+          "refused": "Force Bolt: target exactly 1 creature.",
+          "hit": {
+            "formula": "1d4 + 1 force",
+            "total": 4
+          },
+          "plainLost": 12,
+          "resisted": {
+            "formula": "1d4 + 1 force",
+            "total": 4,
+            "lost": 2
+          },
+          "heightened": {
+            "formula": "2d4 + 2 force",
+            "total": 8
+          }
+        },
+        "rejuvenatingFlames": {
+          "modes": {
+            "ally": "ally",
+            "enemy": null,
+            "neutralQuestion": "Is this creature an enemy of the caster? The spell affects only enemies."
+          },
+          "allyRoll": {
+            "formula": "1d4",
+            "total": 1
+          },
+          "allyHp": 301,
+          "allyEffect": 1,
+          "allyFortitude": 11,
+          "enemyLost": 2,
+          "damageTotal": 2,
+          "enemyEffect": false,
+          "neutralLost": 0,
+          "allyResult": "applied"
+        }
+      }
+    }
+  },
+  "regressions": {
+    "cleanup#0": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "cleanup#1": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "directHealing#2": {
+      "label": "directHealing",
+      "passed": true
+    },
+    "cleanup#3": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "healOrHarm#4": {
+      "label": "healOrHarm",
+      "passed": true
+    },
+    "cleanup#5": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "phrasings#6": {
+      "label": "phrasings",
+      "passed": true
+    },
+    "cleanup#7": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "enemies#8": {
+      "label": "enemies",
+      "passed": true
+    },
+    "cleanup#9": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "durationBuffs#10": {
+      "label": "durationBuffs",
+      "passed": true
+    },
+    "cleanup#11": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "energyByCreature#12": {
+      "label": "energyByCreature",
+      "passed": true
+    },
+    "cleanup#13": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "rank1Batch9#14": {
+      "label": "rank1Batch9",
+      "passed": true
+    },
+    "cleanup#15": {
+      "label": "cleanup",
+      "passed": true
+    }
+  }
+}

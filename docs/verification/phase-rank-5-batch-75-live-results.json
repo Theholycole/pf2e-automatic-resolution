@@ -1,0 +1,26 @@
+{
+  "label": "rank5Batch75",
+  "passed": true,
+  "at": "2026-10-03T11:43:50.367Z",
+  "details": {
+    "batch75": {
+      "kind": "rewrite-fate",
+      "initiative": 1,
+      "reroll": {
+        "status": "rerolled",
+        "add": 2,
+        "oldTotal": 24,
+        "total": 24,
+        "fresh": {
+          "formula": "1d20 + 10 + 2",
+          "total": 17
+        },
+        "outcome": "criticalFailure"
+      },
+      "recast": {
+        "first": false,
+        "second": true
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "label": "rank4Batch115",
+  "passed": true,
+  "at": "2026-10-03T09:04:46.997Z",
+  "details": {
+    "batch115": {
+      "resistance": 15,
+      "first": {
+        "lost": 15,
+        "stored": 15,
+        "rules": 0
+      },
+      "second": {
+        "lost": 10,
+        "stored": 15
+      },
+      "release": {
+        "status": "hit",
+        "degree": 3,
+        "lost": 30,
+        "gone": true
+      },
+      "low": 10
+    }
+  }
+}

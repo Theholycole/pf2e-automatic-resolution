@@ -1,0 +1,46 @@
+{
+  "label": "rank4Batch134",
+  "passed": true,
+  "at": "2026-10-03T10:42:55.692Z",
+  "details": {
+    "batch134": {
+      "kind": "spell-steal",
+      "graft": {
+        "duration": {
+          "value": 3,
+          "unit": "rounds",
+          "expiry": "turn-start",
+          "sustained": false
+        }
+      },
+      "self": {
+        "status": "stolen",
+        "how": "self",
+        "degree": 3,
+        "onFoe": false,
+        "duration": {
+          "value": 1,
+          "unit": "minutes",
+          "expiry": "turn-start",
+          "sustained": false
+        },
+        "shadow": true
+      },
+      "again": "Umbral Graft: a spell was already stolen.",
+      "recastEnded": true,
+      "store": {
+        "status": "stolen",
+        "how": "store",
+        "counteract": 3,
+        "name": "Umbral Graft: Heroism (stored)"
+      },
+      "card": true,
+      "transfer": {
+        "status": "transferred",
+        "holds": true,
+        "level": 6,
+        "storedGone": true
+      }
+    }
+  }
+}

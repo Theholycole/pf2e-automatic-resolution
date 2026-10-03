@@ -1,0 +1,70 @@
+{
+  "batch": 125,
+  "spells": [
+    "Trickster's Mirrors"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch125",
+      "passed": true,
+      "at": "2026-09-28T10:01:03.162Z",
+      "details": {
+        "tricksterMirrors": {
+          "start": "Trickster's Mirrors (mirrors: 1)",
+          "sustains": [
+            2,
+            3,
+            3
+          ],
+          "rolls": [
+            [
+              "hits-image",
+              2,
+              2
+            ],
+            [
+              "hits-you",
+              1,
+              2
+            ],
+            [
+              "hits-image",
+              4,
+              1
+            ],
+            [
+              "hits-image",
+              4,
+              0
+            ]
+          ],
+          "farMiss": {
+            "status": "broken",
+            "count": 1,
+            "distance": 30,
+            "cardId": null
+          },
+          "nearMiss": {
+            "status": "broken",
+            "count": 0,
+            "distance": 5,
+            "card": true
+          },
+          "save": {
+            "target": "PFTEST P23 Affliction mirror near",
+            "formula": "1d4 mental",
+            "total": 2,
+            "lost": 2
+          },
+          "area": 0,
+          "empty": "hits-you",
+          "name": "Trickster's Mirrors (mirrors: 0)",
+          "stillActive": true
+        }
+      }
+    }
+  ]
+}

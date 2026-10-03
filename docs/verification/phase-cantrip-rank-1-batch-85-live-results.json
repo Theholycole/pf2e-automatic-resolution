@@ -1,0 +1,77 @@
+{
+  "batch": "cantrip-rank-1-batch-85",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch85",
+    "passed": true,
+    "details": {
+      "total": 3,
+      "lost": [
+        3,
+        3,
+        3
+      ],
+      "sickened": [
+        null,
+        1,
+        2
+      ],
+      "persistent": [
+        [],
+        [
+          "1d4"
+        ],
+        [
+          "1d4"
+        ]
+      ],
+      "tagged": [
+        [],
+        [
+          "sickened"
+        ],
+        [
+          "sickened"
+        ]
+      ],
+      "afterRecovery": {
+        "failure": {
+          "sickened": false,
+          "persistent": 0
+        },
+        "critical": {
+          "persistent": 1
+        }
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch85",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch84",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

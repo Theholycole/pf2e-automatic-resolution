@@ -1,0 +1,22 @@
+{
+ "label": "rank6Batch14",
+ "passed": true,
+ "at": "2026-10-03T20:09:20.392Z",
+ "details": {
+  "batch14": {
+   "claim": {
+    "supported": true,
+    "success": [
+     1,
+     true
+    ],
+    "controlled": true,
+    "effects": [
+     "Controlled (end-of-turn save)|10 minutes",
+     "Claimed|10 minutes"
+    ],
+    "reminder": true
+   }
+  }
+ }
+}

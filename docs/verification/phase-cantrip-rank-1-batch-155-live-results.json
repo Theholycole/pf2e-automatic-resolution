@@ -1,0 +1,34 @@
+{
+  "batch": 155,
+  "spells": [
+    "Pact Broker",
+    "Savor the Sting"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch155",
+      "passed": true,
+      "at": "2026-09-28T23:54:38.772Z",
+      "details": {
+        "scopeCorrections": {
+          "pact": {
+            "penalty": true,
+            "casterSig": true,
+            "friendSig": true,
+            "foeSig": false,
+            "againstCaster": true,
+            "againstOther": false
+          },
+          "savor": {
+            "mark": true,
+            "persistent": 1,
+            "afterRecovery": false
+          }
+        }
+      }
+    }
+  ]
+}

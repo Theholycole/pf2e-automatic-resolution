@@ -1,0 +1,55 @@
+{
+  "batch": 101,
+  "spells": [
+    "Garden of Healing"
+  ],
+  "results": [
+    {
+      "label": "cr1Batch101",
+      "passed": true,
+      "at": "2026-09-28T00:39:31.053Z",
+      "details": {
+        "gardenOfHealing": {
+          "formula": "2d4",
+          "cast": [
+            8,
+            8,
+            8,
+            0,
+            0
+          ],
+          "sustain": [
+            5,
+            5,
+            5,
+            0,
+            0
+          ],
+          "again": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "effects": [
+            [
+              "10 minutes"
+            ],
+            [
+              "10 minutes"
+            ],
+            [
+              "10 minutes"
+            ],
+            [],
+            [
+              "10 minutes"
+            ]
+          ],
+          "status": "ended"
+        }
+      }
+    }
+  ]
+}

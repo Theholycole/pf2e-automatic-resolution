@@ -1,0 +1,83 @@
+{
+  "phase": "rank-2-batch-44",
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cleanup",
+      "passed": true,
+      "at": "2026-10-01T22:40:40.121Z",
+      "details": {
+        "actorsRemoved": 0,
+        "journalsRemoved": 0,
+        "regionsRemoved": 0,
+        "remainingFixtureActors": 0
+      }
+    },
+    {
+      "label": "rank2Batch44",
+      "passed": true,
+      "at": "2026-10-01T22:40:40.791Z",
+      "details": {
+        "batch44": {
+          "rows": {
+            "success": {
+              "initial": true,
+              "dc": 20,
+              "degree": "success",
+              "effects": [
+                {
+                  "name": "Albatross Curse: Stupefied 1",
+                  "duration": "1 rounds",
+                  "removeAfterRoll": null
+                }
+              ],
+              "stupefied": 1
+            },
+            "failure": {
+              "initial": true,
+              "dc": 20,
+              "degree": "failure",
+              "effects": [
+                {
+                  "name": "Spell Effect: Albatross Curse (Failure)",
+                  "duration": "1 minutes",
+                  "removeAfterRoll": true
+                }
+              ],
+              "stupefied": 0
+            },
+            "criticalFailure": {
+              "initial": true,
+              "dc": 20,
+              "degree": "criticalFailure",
+              "effects": [
+                {
+                  "name": "Spell Effect: Albatross Curse (Critical Failure)",
+                  "duration": "1 hours",
+                  "removeAfterRoll": true
+                }
+              ],
+              "stupefied": 0
+            },
+            "rolled": {
+              "initial": true,
+              "dc": 20,
+              "degree": "failure",
+              "effects": [
+                {
+                  "name": "Spell Effect: Albatross Curse (Failure)",
+                  "duration": "1 minutes",
+                  "removeAfterRoll": true
+                }
+              ],
+              "stupefied": 0
+            }
+          },
+          "kind": "deferred-save"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,345 @@
+{
+  "summary": {
+    "compared": 1994,
+    "changed": 2,
+    "newlyExecutable": [
+      "Torturous Trauma",
+      "Vomit Swarm"
+    ],
+    "noLongerExecutable": []
+  },
+  "changes": [
+    {
+      "id": "spells/spells/cantrip/torturous-trauma.json",
+      "name": "Torturous Trauma",
+      "fields": [
+        "pending",
+        "route",
+        "outcomes"
+      ],
+      "routeBefore": false,
+      "routeAfter": true,
+      "before": {
+        "pending": [
+          "description-effects",
+          "description-lifecycle",
+          "description-target-predicates"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "basic-save-composition:Basic-save riders have not been completely compiled.",
+            "compiler-gap:description-effects",
+            "compiler-gap:description-lifecycle",
+            "compiler-gap:description-target-predicates",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        },
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "success": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 0.5,
+              "sourceComponentIds": [
+                "Xf082AUJaiQvTqg7"
+              ]
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 1,
+              "sourceComponentIds": [
+                "Xf082AUJaiQvTqg7"
+              ]
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 2,
+              "sourceComponentIds": [
+                "Xf082AUJaiQvTqg7"
+              ]
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          }
+        }
+      },
+      "after": {
+        "pending": [],
+        "route": {
+          "supported": true,
+          "blockers": []
+        },
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "success": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 0.5,
+              "sourceComponentIds": [
+                "Xf082AUJaiQvTqg7"
+              ]
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 1,
+              "sourceComponentIds": [
+                "Xf082AUJaiQvTqg7"
+              ]
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 2,
+              "sourceComponentIds": [
+                "Xf082AUJaiQvTqg7"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "fatigued",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "source-turn",
+                  "offset": 1,
+                  "sourceText": "until the start of your next turn"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          }
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-2/vomit-swarm.json",
+      "name": "Vomit Swarm",
+      "fields": [
+        "pending",
+        "route",
+        "outcomes"
+      ],
+      "routeBefore": false,
+      "routeAfter": true,
+      "before": {
+        "pending": [
+          "description-effects",
+          "description-lifecycle",
+          "description-target-predicates"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "basic-save-composition:Basic-save riders have not been completely compiled.",
+            "compiler-gap:description-effects",
+            "compiler-gap:description-lifecycle",
+            "compiler-gap:description-target-predicates",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        },
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "success": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 0.5,
+              "sourceComponentIds": [
+                "0"
+              ]
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 1,
+              "sourceComponentIds": [
+                "0"
+              ]
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 2,
+              "sourceComponentIds": [
+                "0"
+              ]
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          }
+        }
+      },
+      "after": {
+        "pending": [],
+        "route": {
+          "supported": true,
+          "blockers": []
+        },
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "success": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 0.5,
+              "sourceComponentIds": [
+                "0"
+              ]
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 1,
+              "sourceComponentIds": [
+                "0"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "sickened",
+                "value": 1,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "shared",
+              "multiplier": 2,
+              "sourceComponentIds": [
+                "0"
+              ]
+            },
+            "effects": [
+              {
+                "slug": "sickened",
+                "value": 1,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,610 @@
+{
+  "generatedAt": "2026-09-26T19:40:07.880Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "world": "pftest",
+  "results": {
+    "longTailBatch4": {
+      "label": "longTailBatch4",
+      "passed": true,
+      "at": "2026-09-26T19:34:54.383Z",
+      "details": {
+        "bloodRunsCold": {
+          "formulas": [
+            "0.5 * 1d6",
+            "1d6",
+            "2 * 1d6"
+          ],
+          "failureSlowed": {
+            "slowed": 1,
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            }
+          },
+          "criticalSlowed": {
+            "slowed": 1,
+            "effect": "Blood Runs Cold: Slowed 1 (while taking persistent cold damage)"
+          },
+          "afterRecovery": {
+            "slowed": 0,
+            "effect": false
+          }
+        },
+        "fungalInfestation": {
+          "formulas": [
+            "0.5 * 2d6",
+            "2d6",
+            "2 * 2d6"
+          ],
+          "successEffect": false,
+          "failure": {
+            "selection": 1,
+            "fire": 1,
+            "slashing": 1
+          },
+          "criticalFailure": {
+            "selection": 2,
+            "fire": 2,
+            "slashing": 2
+          },
+          "afterRecovery": {
+            "effect": false,
+            "fire": null
+          }
+        },
+        "bloodVendetta": {
+          "formulas": [
+            "2d6",
+            "2 * 2d6"
+          ],
+          "effects": [
+            "Spell Effect: Blood Vendetta (Failure)",
+            "Spell Effect: Blood Vendetta (Failure)"
+          ],
+          "piercing": [
+            1,
+            1
+          ],
+          "slashing": 1,
+          "afterRecovery": {
+            "effect": false,
+            "piercing": null
+          }
+        },
+        "blisteringInvective": {
+          "unansweredRefused": true,
+          "modifiers": [
+            10,
+            14
+          ],
+          "answers": [
+            "No",
+            "Yes (+4)"
+          ],
+          "formulas": [
+            "2d6",
+            "2 * 2d6"
+          ],
+          "frightened": [
+            1,
+            2
+          ]
+        },
+        "crescentScepter": {
+          "markerAtStart": {
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "initiative": 30
+          },
+          "triggered": [
+            {
+              "ended": false,
+              "status": "active"
+            },
+            {
+              "ended": false,
+              "status": "active"
+            }
+          ],
+          "frightened": [
+            1,
+            2
+          ],
+          "markerDuring": true,
+          "atCasterTurn": {
+            "marker": "removed",
+            "status": "ended"
+          }
+        }
+      }
+    },
+    "regressions": {
+      "cleanup#0": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T19:35:55.383Z",
+        "details": {
+          "actorsRemoved": 17,
+          "journalsRemoved": 7,
+          "remainingFixtureActors": 0
+        }
+      },
+      "persistentLinked#1": {
+        "label": "persistentLinked",
+        "passed": true,
+        "at": "2026-09-26T19:36:15.733Z",
+        "details": {
+          "stickyFire": {
+            "before": {
+              "persistent": [
+                "1d8"
+              ],
+              "enfeebled": 1,
+              "linked": [
+                "Sticky Fire: Enfeebled 1 (while taking persistent fire damage)"
+              ]
+            },
+            "after": {
+              "enfeebled": 0,
+              "linked": 0
+            },
+            "immune": {
+              "persistent": 0,
+              "enfeebled": 0,
+              "notes": [
+                "Enfeebled 1 not applied: the creature isn't taking persistent fire damage."
+              ]
+            }
+          },
+          "widowsBite": {
+            "persistent": [
+              "2 * 3d4"
+            ],
+            "enfeebled": 1,
+            "afterEnfeebled": 0,
+            "afterLinked": 0
+          },
+          "chargedJavelin": {
+            "persistent": 1,
+            "effect": "Spell Effect: Charged Javelin",
+            "linked": 1,
+            "afterEffect": 0
+          }
+        }
+      },
+      "cleanup#2": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T19:36:31.215Z",
+        "details": {
+          "actorsRemoved": 7,
+          "journalsRemoved": 3,
+          "remainingFixtureActors": 0
+        }
+      },
+      "attackAdjustments#3": {
+        "label": "attackAdjustments",
+        "passed": true,
+        "at": "2026-09-26T19:36:39.845Z",
+        "details": {
+          "magnetic": {
+            "early": "Magnetic Acceleration: answer the GM question for PFTEST P23 Affliction magnet metal before rolling the attack.",
+            "modifiers": [
+              15,
+              14
+            ],
+            "total": 30,
+            "lost": [
+              30,
+              30
+            ],
+            "persistent": [
+              [],
+              []
+            ],
+            "extra": []
+          },
+          "shocking": {
+            "early": "Shocking Grasp: answer the GM question for PFTEST P23 Affliction grasp metal before rolling the attack.",
+            "modifiers": [
+              15,
+              14
+            ],
+            "total": 14,
+            "lost": [
+              28,
+              28
+            ],
+            "persistent": [
+              [
+                "(1d4 + 0) electricity"
+              ],
+              []
+            ],
+            "extra": [
+              0
+            ]
+          },
+          "phase": {
+            "early": "Phase Bolt: answer the GM question for PFTEST P23 Affliction phase shielded before rolling the attack.",
+            "modifiers": [
+              16,
+              14
+            ],
+            "total": 5,
+            "lost": [
+              5,
+              5
+            ],
+            "persistent": [
+              [],
+              []
+            ],
+            "extra": []
+          },
+          "boomerang": {
+            "content": "GM: This attack ignores the target's Concealed condition and ignores all cover except greater cover. Heightened (9th): it ignores cover completely. Leave the target's cover and concealment out of this at",
+            "early": null,
+            "modifiers": [
+              14
+            ],
+            "total": 34,
+            "lost": [
+              34
+            ],
+            "persistent": [
+              []
+            ],
+            "extra": []
+          }
+        }
+      },
+      "cleanup#4": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T19:36:57.853Z",
+        "details": {
+          "actorsRemoved": 11,
+          "journalsRemoved": 0,
+          "remainingFixtureActors": 0
+        }
+      },
+      "attackComponents#5": {
+        "label": "attackComponents",
+        "passed": true,
+        "at": "2026-09-26T19:37:10.928Z",
+        "details": {
+          "liveWire": {
+            "formula": "1d4 slashing + 1d4 electricity",
+            "total": 4,
+            "byType": {
+              "slashing": 2,
+              "electricity": 2
+            },
+            "lost": [
+              8,
+              4,
+              2,
+              0
+            ],
+            "persistent": [
+              [
+                "1d4 electricity"
+              ],
+              [],
+              [],
+              []
+            ],
+            "extra": []
+          },
+          "purifyingIcicle": {
+            "formula": "2d6 piercing + 1d6 cold",
+            "total": 13,
+            "byType": {
+              "piercing": 8,
+              "cold": 5
+            },
+            "lost": [
+              28,
+              13
+            ],
+            "persistent": [
+              [],
+              []
+            ],
+            "extra": [
+              {
+                "trait": "undead",
+                "total": 1
+              }
+            ],
+            "speedEffect": "Purifying Icicle: 10-foot Speed penalty"
+          },
+          "gougingClaw": {
+            "formula": "2d6 piercing + 2 bleed",
+            "total": 5,
+            "byType": {
+              "piercing": 5,
+              "persistent bleed": 0
+            },
+            "lost": [
+              10,
+              5
+            ],
+            "persistent": [
+              [
+                "2 * 2 bleed"
+              ],
+              [
+                "2 bleed"
+              ]
+            ],
+            "extra": []
+          }
+        }
+      },
+      "cleanup#6": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T19:37:27.723Z",
+        "details": {
+          "actorsRemoved": 11,
+          "journalsRemoved": 1,
+          "remainingFixtureActors": 0
+        }
+      },
+      "compact#7": {
+        "label": "compact",
+        "passed": true,
+        "at": "2026-09-26T19:37:40.892Z",
+        "details": {
+          "oneTime": {
+            "frightened": [
+              0,
+              1,
+              2
+            ]
+          },
+          "rainbow": {
+            "exposure": "Review PFTEST P23 Affliction rainbow foe's exposure (entered the area)",
+            "blinded": true,
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "ended": "ended"
+          }
+        }
+      },
+      "cleanup#8": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T19:37:55.550Z",
+        "details": {
+          "actorsRemoved": 6,
+          "journalsRemoved": 3,
+          "remainingFixtureActors": 0
+        }
+      },
+      "longTailBatch3#9": {
+        "label": "longTailBatch3",
+        "passed": true,
+        "at": "2026-09-26T19:38:03.261Z",
+        "details": {
+          "weird": {
+            "total": 56,
+            "lost": [
+              28,
+              56
+            ],
+            "conditions": [
+              [
+                "frightened 1"
+              ],
+              [
+                "frightened 2"
+              ]
+            ]
+          },
+          "attackedFromWithin": {
+            "lost": 124,
+            "total": 62,
+            "conditions": [
+              "frightened 2",
+              "off-guard"
+            ],
+            "offGuardDuration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            }
+          },
+          "wails": {
+            "drained": [
+              1,
+              4
+            ],
+            "overrides": [
+              [
+                {
+                  "rolled": "1d4",
+                  "value": 1
+                }
+              ],
+              []
+            ]
+          },
+          "leadenSteps": {
+            "failure": {
+              "effect": "Spell Effect: Leaden Steps (Failure)",
+              "selection": "failure",
+              "weakness": 2,
+              "encumbered": true,
+              "moduleEncumbered": 0
+            },
+            "success": {
+              "effect": "Spell Effect: Leaden Steps (Success)",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-end",
+                "sustained": false
+              },
+              "weakness": 2
+            },
+            "sustained": true,
+            "missed": {
+              "status": "ended",
+              "reason": "missed-sustain",
+              "effect": false,
+              "weakness": null
+            }
+          },
+          "animusMine": {
+            "marker": "Animus Mine (waiting for its trigger)",
+            "markerDuration": {
+              "value": 1,
+              "unit": "hours",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "lost": 36,
+            "total": 18,
+            "stunned": 1,
+            "ended": "ended",
+            "markerGone": true,
+            "gmNote": true
+          },
+          "banditsDoom": {
+            "first": "ended",
+            "firstReason": "superseded",
+            "second": "active",
+            "markers": 1
+          },
+          "fear": {
+            "start": {
+              "frightened": 3,
+              "fleeing": true
+            },
+            "afterRound": {
+              "frightened": 2,
+              "fleeing": false
+            }
+          }
+        }
+      },
+      "cleanup#10": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T19:38:41.247Z",
+        "details": {
+          "actorsRemoved": 16,
+          "journalsRemoved": 9,
+          "remainingFixtureActors": 0
+        }
+      },
+      "degreeChoiceAndRift#11": {
+        "label": "degreeChoiceAndRift",
+        "passed": true,
+        "at": "2026-09-26T19:39:00.982Z",
+        "details": {
+          "distractingDecoy": {
+            "failure": {
+              "selection": "failure",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "offGuardSources": 0,
+              "offGuard": true,
+              "attackPenalty": null,
+              "attackPenalties": [],
+              "moduleOffGuard": 0
+            },
+            "criticalFailure": {
+              "selection": "critical-failure",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "offGuardSources": 0,
+              "offGuard": true,
+              "attackPenalty": null,
+              "attackPenalties": [
+                -2
+              ]
+            },
+            "success": {
+              "effect": false,
+              "offGuard": false
+            }
+          },
+          "illOmen": {
+            "failure": {
+              "selection": "failure",
+              "rollTwice": [
+                {
+                  "keep": "lower"
+                }
+              ]
+            },
+            "criticalFailure": {
+              "selection": "critical-failure",
+              "rollTwice": [
+                {
+                  "keep": "lower",
+                  "removeAfterRoll": false
+                }
+              ]
+            }
+          },
+          "fiendishRift": {
+            "castResult": {
+              "formula": "7d6 spirit",
+              "total": 18,
+              "extra": 10,
+              "hpLost": 28,
+              "conditions": [
+                "grabbed"
+              ]
+            },
+            "sustainResult": {
+              "formula": "7d6 spirit",
+              "total": 18,
+              "extra": 10,
+              "hpLost": 14,
+              "conditions": [
+                "grabbed"
+              ]
+            },
+            "ended": "ended"
+          }
+        }
+      },
+      "cleanup#12": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T19:39:22.666Z",
+        "details": {
+          "actorsRemoved": 9,
+          "journalsRemoved": 4,
+          "remainingFixtureActors": 0
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,252 @@
+{
+  "generatedAt": "2026-09-25T00:19:43.365Z",
+  "scope": "Disposable pftest GM fixtures; Foundry 14.367 / PF2e 8.5.0; only this module active; automatic expired-Effect removal on. Save degrees are real rolls corrected to explicit provisional degrees; damage and HP changes are PF2e receipts. Casters are level 2r-1 so PF2e resolves the base rank.",
+  "attempts": [
+    {
+      "label": "environment",
+      "passed": true,
+      "at": "2026-09-25T00:14:34.353Z",
+      "error": null
+    },
+    {
+      "label": "feast",
+      "passed": false,
+      "at": null,
+      "error": "success: caster temp HP 3, got 0"
+    },
+    {
+      "label": "stacking",
+      "passed": false,
+      "at": null,
+      "error": "Higher new temp HP replaces lower"
+    },
+    {
+      "label": "feast",
+      "passed": true,
+      "at": "2026-09-25T00:16:10.280Z",
+      "error": null
+    },
+    {
+      "label": "stacking",
+      "passed": true,
+      "at": "2026-09-25T00:16:40.282Z",
+      "error": null
+    },
+    {
+      "label": "expiry",
+      "passed": true,
+      "at": "2026-09-25T00:17:04.831Z",
+      "error": null
+    },
+    {
+      "label": "exsanguination",
+      "passed": true,
+      "at": "2026-09-25T00:17:29.247Z",
+      "error": null
+    },
+    {
+      "label": "devour",
+      "passed": false,
+      "at": null,
+      "error": "Cannot read properties of undefined (reading 'name')"
+    },
+    {
+      "label": "devour",
+      "passed": true,
+      "at": "2026-09-25T00:18:46.240Z",
+      "error": null
+    },
+    {
+      "label": "hunger",
+      "passed": true,
+      "at": "2026-09-25T00:18:59.820Z",
+      "error": null
+    },
+    {
+      "label": "vision",
+      "passed": true,
+      "at": "2026-09-25T00:19:08.337Z",
+      "error": null
+    },
+    {
+      "label": "refusal",
+      "passed": true,
+      "at": "2026-09-25T00:19:18.170Z",
+      "error": null
+    }
+  ],
+  "cases": [
+    {
+      "label": "environment",
+      "passed": true,
+      "at": "2026-09-25T00:14:34.353Z",
+      "details": {
+        "foundry": "14.367",
+        "pf2e": "8.5.0",
+        "module": "0.8.2",
+        "world": "pftest",
+        "modules": [
+          "pf2e-automatic-resolution"
+        ],
+        "removal": true
+      }
+    },
+    {
+      "label": "feast",
+      "passed": true,
+      "at": "2026-09-25T00:16:10.280Z",
+      "details": [
+        {
+          "degree": "criticalSuccess",
+          "resist": 0,
+          "damage": 0,
+          "temp": 0
+        },
+        {
+          "degree": "success",
+          "resist": 0,
+          "damage": 10,
+          "temp": 5
+        },
+        {
+          "degree": "failure",
+          "resist": 0,
+          "damage": 20,
+          "temp": 10
+        },
+        {
+          "degree": "criticalFailure",
+          "resist": 0,
+          "damage": 32,
+          "temp": 16
+        },
+        {
+          "degree": "failure",
+          "resist": 5,
+          "damage": 15,
+          "temp": 7
+        }
+      ]
+    },
+    {
+      "label": "stacking",
+      "passed": true,
+      "at": "2026-09-25T00:16:40.282Z",
+      "details": {
+        "kept": {
+          "kind": "temp-hp",
+          "base": 60,
+          "amount": 30,
+          "healing": 0,
+          "temporaryHP": 0,
+          "status": "kept-existing",
+          "existingTemporaryHP": 200
+        },
+        "replaced": 19
+      }
+    },
+    {
+      "label": "expiry",
+      "passed": true,
+      "at": "2026-09-25T00:17:04.831Z",
+      "details": {
+        "granted": 18
+      }
+    },
+    {
+      "label": "exsanguination",
+      "passed": true,
+      "at": "2026-09-25T00:17:29.247Z",
+      "details": {
+        "damages": [
+          47,
+          84
+        ],
+        "expected": 42
+      }
+    },
+    {
+      "label": "devour",
+      "passed": true,
+      "at": "2026-09-25T00:18:46.240Z",
+      "details": [
+        {
+          "label": "wounded caster",
+          "damage": 60,
+          "amount": 30,
+          "healed": 30,
+          "temp": 0,
+          "dead": false
+        },
+        {
+          "label": "full caster",
+          "damage": 60,
+          "amount": 30,
+          "healed": 0,
+          "temp": 30,
+          "dead": true
+        },
+        {
+          "label": "sturdy",
+          "damage": 30,
+          "amount": 15,
+          "healed": 0,
+          "temp": 15,
+          "dead": false
+        }
+      ]
+    },
+    {
+      "label": "hunger",
+      "passed": true,
+      "at": "2026-09-25T00:18:59.820Z",
+      "details": [
+        {
+          "label": "kill",
+          "damage": 10,
+          "killed": true,
+          "temp": 10
+        },
+        {
+          "label": "survive",
+          "damage": 6,
+          "killed": false,
+          "temp": 0
+        }
+      ]
+    },
+    {
+      "label": "vision",
+      "passed": true,
+      "at": "2026-09-25T00:19:08.337Z",
+      "details": [
+        {
+          "label": "killed",
+          "dead": true,
+          "hp": 0,
+          "frightened": 4
+        },
+        {
+          "label": "survives",
+          "dead": false,
+          "hp": 420,
+          "frightened": 4
+        },
+        {
+          "label": "already down",
+          "dead": false,
+          "hp": 0,
+          "frightened": 2
+        }
+      ]
+    },
+    {
+      "label": "refusal",
+      "passed": true,
+      "at": "2026-09-25T00:19:18.170Z",
+      "details": {
+        "error": "Vampiric Feast: this caster benefit is computed from exactly one target. Exclude extra targets before applying."
+      }
+    }
+  ]
+}

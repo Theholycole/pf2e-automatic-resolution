@@ -1,0 +1,21 @@
+{
+  "label": "rank4Batch31",
+  "passed": true,
+  "at": "2026-10-02T16:31:48.866Z",
+  "details": {
+    "batch31": {
+      "cast": {
+        "kind": "rebound-barrier",
+        "level": "automatic",
+        "resistance": 12,
+        "damage": 6,
+        "attackerLost": 6,
+        "rule": "[{\"key\":\"Resistance\",\"type\":[\"slashing\"],\"value\":12,\"slug\":null,\"priority\":100,\"ignored\":false,\"predicate\":[],\"requiresEquipped\":null,\"requiresInvestment\":null,\"mode\":\"add\",\"exceptions\":[],\"override\":false,\"doubleVs\":[]}]"
+      },
+      "strike": {
+        "lost": 8,
+        "effectAfter": false
+      }
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "phase": "rank-2-batch-42",
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cleanup",
+      "passed": true,
+      "at": "2026-10-01T22:32:09.682Z",
+      "details": {
+        "actorsRemoved": 0,
+        "journalsRemoved": 0,
+        "regionsRemoved": 0,
+        "remainingFixtureActors": 0
+      }
+    },
+    {
+      "label": "rank2Batch42",
+      "passed": true,
+      "at": "2026-10-01T22:32:10.343Z",
+      "details": {
+        "batch42": {
+          "vision": {
+            "level": "automatic",
+            "status": "applied",
+            "effect": true,
+            "reveal": "Vision of Weakness: PFTEST P23 Affliction vision foe: weaknesses fire 5, cold 3; lowest save fortitude and reflex and will.",
+            "lowest": [
+              "fortitude",
+              "reflex",
+              "will"
+            ],
+            "immune": true,
+            "again": "Vision of Weakness: PFTEST P23 Affliction vision foe is temporarily immune to it."
+          },
+          "spirit": {
+            "2": {
+              "level": "automatic",
+              "duration": "10 minutes",
+              "rules": [
+                "FlatModifier",
+                "RollOption"
+              ],
+              "toggle": "spirit-sense"
+            },
+            "6": {
+              "level": "automatic",
+              "duration": "1 days",
+              "rules": [
+                "FlatModifier",
+                "RollOption"
+              ],
+              "toggle": "spirit-sense"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

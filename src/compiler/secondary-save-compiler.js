@@ -65,7 +65,16 @@ function branchOutcome(text, { conditionalScopeClaimed = true, lifecycle = null 
     };
 }
 
+// Links ("@UUID[Compendium.pf2e.conditionitems.Item.…]{Prone}") contain dots; they're masked so a branch isn't cut
+// at the link's first dot.
 function extractBranchText(source, kind) {
+    const links = [];
+    const masked = String(source ?? "").replace(/@UUID\[[^\]]+\](?:\{[^}]*\})?/g, link => `@@${links.push(link) - 1}@@`);
+    const branch = extractMaskedBranchText(masked, kind);
+    return branch == null ? null : branch.replace(/@@(\d+)@@/g, (_, index) => links[Number(index)]);
+}
+
+function extractMaskedBranchText(source, kind) {
     const patterns = kind === "criticalFailure" ? [
         /\bif (?:it|the target|the creature) critically fails,?\s*([^.;]+(?:[.;]|$))/i,
         /\bon a critical failure,\s*([^.;]+(?:[.;]|$))/i
@@ -73,7 +82,7 @@ function extractBranchText(source, kind) {
         /\bif (?:it|the target|the creature) fails(?: the (?:second )?save)?,?\s*([^.;]+(?:[.;]|$))/i,
         /\bon a failure,?\s*([^.;]+(?:[.;]|$))/i,
         /\bon a failed save,?\s*([^.;]+(?:[.;]|$))/i,
-        /\bor\s+((?:be|become|die|lose|the action)[^.;]*(?:[.;]|$))/i
+        /\bor\s+((?:be|become|die|lose|fall|the action)[^.;]*(?:[.;]|$))/i
     ] : [
         /\b(?:on|with) a successful (?:Fortitude|Reflex|Will) (?:save|saving throw),?\s*([\s\S]+?)(?=\bif (?:it|the target|the creature) fails\b|$)/i,
         /\ba successful save,?\s*([^.;]+(?:[.;]|$))/i,

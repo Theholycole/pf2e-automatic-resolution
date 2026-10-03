@@ -1,0 +1,42 @@
+{
+  "batch": "cantrip-rank-1-batch-89",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch89",
+    "passed": true,
+    "details": {
+      "card": true,
+      "effects": 0,
+      "refused": "Putrefy Food and Drink: at rank 2 and above its heightened rules aren't automated (“You can target an alchemical elixir "
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch89",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch14",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "label": "rank3Batch8",
+  "passed": true,
+  "at": "2026-10-02T09:56:55.374Z",
+  "details": {
+    "batch8": {
+      "casterTarget": "ineligible: ",
+      "base": {
+        "supported": true,
+        "formula": "6d4 bludgeoning",
+        "total": 15,
+        "pushes": 2,
+        "spared": true,
+        "area": true,
+        "lostA": 15,
+        "lostB": 30
+      },
+      "heightened": {
+        "supported": true,
+        "formula": "7d4 bludgeoning",
+        "total": 15,
+        "pushes": 0,
+        "spared": true,
+        "area": true,
+        "lost": 7
+      }
+    }
+  }
+}

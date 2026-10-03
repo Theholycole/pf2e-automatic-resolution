@@ -1,0 +1,60 @@
+{
+  "batch": "cantrip-rank-1-batch-30",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch30",
+    "passed": true,
+    "details": {
+      "lifeLink": {
+        "healed": 1,
+        "healTotal": 1,
+        "before": [
+          500,
+          471
+        ],
+        "after": [
+          497,
+          474
+        ],
+        "moved": 3,
+        "again": "Life Link: already shared this round for PFTEST P23 Affliction life friend."
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch30",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch27",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "durationBuffs",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

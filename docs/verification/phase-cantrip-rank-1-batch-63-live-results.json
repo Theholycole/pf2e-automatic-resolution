@@ -1,0 +1,61 @@
+{
+  "batch": "cantrip-rank-1-batch-63",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch63",
+    "passed": true,
+    "details": {
+      "hit": {
+        "result": "applied",
+        "lost": 4,
+        "total": 4,
+        "movement": true,
+        "dataNote": true,
+        "effect": {
+          "rules": [
+            "swim-speed:10:circumstance",
+            "ac:2:circumstance"
+          ],
+          "duration": "1 rounds turn-start"
+        }
+      },
+      "miss": {
+        "result": "applied",
+        "lost": 0,
+        "total": null,
+        "movement": true,
+        "dataNote": true,
+        "effect": true
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch63",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "casterEffects",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

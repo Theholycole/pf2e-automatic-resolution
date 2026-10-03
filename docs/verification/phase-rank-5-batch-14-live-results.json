@@ -1,0 +1,24 @@
+{
+  "label": "rank5Batch14",
+  "passed": true,
+  "at": "2026-10-02T16:41:47.665Z",
+  "details": {
+    "batch14": {
+      "atCast": {
+        "concealed": true,
+        "quickened": false
+      },
+      "casterTurn": {
+        "runnerQuickened": false,
+        "casterQuickened": false
+      },
+      "runnerTurn": {
+        "quickened": true,
+        "note": true,
+        "duration": "0 rounds turn-end"
+      },
+      "kind": "concealing-area",
+      "castId": "mUGq8rRQM4ejogsi"
+    }
+  }
+}

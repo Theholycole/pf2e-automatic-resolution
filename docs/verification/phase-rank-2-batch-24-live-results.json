@@ -1,0 +1,60 @@
+{
+  "case": "rank2Batch24",
+  "date": "2026-09-30",
+  "world": "pftest",
+  "result": {
+    "label": "rank2Batch24",
+    "passed": true,
+    "at": "2026-10-01T01:04:42.124Z",
+    "details": {
+      "batch24": {
+        "messenger": {
+          "kind": "spell-note",
+          "duration": "24 hours"
+        },
+        "mount": {
+          "kind": "spell-note",
+          "holder": "mount rider",
+          "duration": "8 hours"
+        },
+        "carrier": {
+          "kind": "spell-note",
+          "duration": "1 minutes"
+        },
+        "waterproof": {
+          "kind": "spell-note",
+          "duration": "-1 unlimited"
+        },
+        "waterproofBase": "1 hours",
+        "facade": "-1 unlimited",
+        "slough": {
+          "kind": "spell-note",
+          "duration": "1 hours",
+          "rules": 0
+        },
+        "victuals": {
+          "button": true,
+          "label": true,
+          "countered": true,
+          "result": true
+        },
+        "pave": {
+          "kind": "spell-note",
+          "button": true,
+          "countered": true,
+          "result": true
+        },
+        "mist": {
+          "kind": "concealing-area",
+          "status": "applied",
+          "insideConcealed": true,
+          "outsideConcealed": false,
+          "dismissal": "Dismiss",
+          "afterLeaving": false,
+          "ended": "ended",
+          "regionLeft": false
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "label": "rank3Batch119",
+  "passed": true,
+  "at": "2026-10-03T13:14:22.872Z",
+  "details": {
+    "batch119": {
+      "restCF": {
+        "primary": 1,
+        "helper": 1,
+        "duration": {
+          "value": 168,
+          "unit": "hours",
+          "expiry": "turn-start",
+          "sustained": false
+        }
+      },
+      "restCS": "<p>Attempts to communicate with the dead creature, return it to life, turn it into an undead, or otherwise disturb its afterlife fail unless the effect's counteract rank is at least 2 higher than that of rest eternal or originates from an artifact or a deity. (an effect needs a counteract rank of at least 6)</p>",
+      "portal": {
+        "stupefied": 1,
+        "helper": 0
+      },
+      "portalS": 2,
+      "prison": {
+        "trapped": true,
+        "stupefied": 2
+      },
+      "prisonHigh": "Labyrinthine Prison: at rank 3 the target can be at most level 8.",
+      "rations": {
+        "eater": 2,
+        "ghoul": 0
+      },
+      "drain": {
+        "helperLost": 53,
+        "primaryLost": 0
+      }
+    }
+  }
+}

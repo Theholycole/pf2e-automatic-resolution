@@ -1,0 +1,434 @@
+{
+  "generated": "2026-09-25T20:49:38.163Z",
+  "handler": {
+    "id": "pseudo-afflictions",
+    "version": "0.5.1"
+  },
+  "results": [
+    {
+      "label": "environment",
+      "passed": true,
+      "at": "2026-09-25T20:46:03.359Z",
+      "details": {
+        "foundry": "14.367",
+        "pf2e": "8.5.0",
+        "module": "0.8.2",
+        "world": "pftest",
+        "modules": [
+          "pf2e-automatic-resolution",
+          "pseudo-afflictions"
+        ]
+      }
+    },
+    {
+      "label": "environment",
+      "passed": true,
+      "at": "2026-09-25T20:46:43.904Z",
+      "details": {
+        "foundry": "14.367",
+        "pf2e": "8.5.0",
+        "module": "0.8.2",
+        "world": "pftest",
+        "modules": [
+          "pf2e-automatic-resolution",
+          "pseudo-afflictions"
+        ]
+      }
+    },
+    {
+      "label": "family",
+      "passed": true,
+      "at": "2026-09-25T20:46:44.847Z",
+      "details": [
+        {
+          "name": "Spider Sting",
+          "pickedUp": true,
+          "rows": [
+            {
+              "degree": "criticalSuccess",
+              "hpLost": 4,
+              "pa": [],
+              "markers": 0,
+              "conditions": [],
+              "card": []
+            },
+            {
+              "degree": "success",
+              "hpLost": 8,
+              "pa": [],
+              "markers": 0,
+              "conditions": [],
+              "card": []
+            },
+            {
+              "degree": "failure",
+              "hpLost": 4,
+              "pa": [
+                {
+                  "name": "Affliction Effect: Spider Sting",
+                  "stage": 1,
+                  "dc": 24
+                }
+              ],
+              "markers": 0,
+              "conditions": [
+                "enfeebled1"
+              ],
+              "card": [
+                "Afflicted: Spider Venom, stage 1 — handled by Pseudo Afflictions (Affliction Effect: Spider Sting, stage 1)"
+              ]
+            },
+            {
+              "degree": "criticalFailure",
+              "hpLost": 4,
+              "pa": [
+                {
+                  "name": "Affliction Effect: Spider Sting",
+                  "stage": 2,
+                  "dc": 24
+                }
+              ],
+              "markers": 0,
+              "conditions": [
+                "enfeebled2"
+              ],
+              "card": [
+                "Afflicted: Spider Venom, stage 2 — handled by Pseudo Afflictions (Affliction Effect: Spider Sting, stage 2)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Purple Worm Sting",
+          "pickedUp": true,
+          "rows": [
+            {
+              "degree": "criticalSuccess",
+              "hpLost": 11,
+              "pa": [],
+              "markers": 0,
+              "conditions": [],
+              "card": []
+            },
+            {
+              "degree": "success",
+              "hpLost": 24,
+              "pa": [],
+              "markers": 0,
+              "conditions": [],
+              "card": []
+            },
+            {
+              "degree": "failure",
+              "hpLost": 11,
+              "pa": [
+                {
+                  "name": "Affliction Effect: Purple Worm Sting",
+                  "stage": 1,
+                  "dc": 24
+                }
+              ],
+              "markers": 0,
+              "conditions": [
+                "enfeebled2"
+              ],
+              "card": [
+                "Afflicted: Purple Worm Venom, stage 1 — handled by Pseudo Afflictions (Affliction Effect: Purple Worm Sting, stage 1)"
+              ]
+            },
+            {
+              "degree": "criticalFailure",
+              "hpLost": 11,
+              "pa": [
+                {
+                  "name": "Affliction Effect: Purple Worm Sting",
+                  "stage": 2,
+                  "dc": 24
+                }
+              ],
+              "markers": 0,
+              "conditions": [
+                "enfeebled2"
+              ],
+              "card": [
+                "Afflicted: Purple Worm Venom, stage 2 — handled by Pseudo Afflictions (Affliction Effect: Purple Worm Sting, stage 2)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Divine Plagues",
+          "pickedUp": true,
+          "rows": [
+            {
+              "degree": "criticalSuccess",
+              "hpLost": 0,
+              "pa": [],
+              "markers": 0,
+              "conditions": [],
+              "card": []
+            },
+            {
+              "degree": "success",
+              "hpLost": 0,
+              "pa": [],
+              "markers": 0,
+              "conditions": [],
+              "card": []
+            },
+            {
+              "degree": "failure",
+              "hpLost": 0,
+              "pa": [
+                {
+                  "name": "Affliction Effect: Divine Plagues",
+                  "stage": 1,
+                  "dc": 24
+                }
+              ],
+              "markers": 0,
+              "conditions": [
+                "clumsy1",
+                "stupefied1",
+                "enfeebled1"
+              ],
+              "card": [
+                "Afflicted: Divine Plague, stage 1 — handled by Pseudo Afflictions (Affliction Effect: Divine Plagues, stage 1)"
+              ]
+            },
+            {
+              "degree": "criticalFailure",
+              "hpLost": 0,
+              "pa": [
+                {
+                  "name": "Affliction Effect: Divine Plagues",
+                  "stage": 2,
+                  "dc": 24
+                }
+              ],
+              "markers": 0,
+              "conditions": [
+                "slowed1",
+                "enfeebled1",
+                "clumsy1",
+                "stupefied1"
+              ],
+              "card": [
+                "Afflicted: Divine Plague, stage 2 — handled by Pseudo Afflictions (Affliction Effect: Divine Plagues, stage 2)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Crimson Breath",
+          "pickedUp": true,
+          "rows": [
+            {
+              "degree": "criticalSuccess",
+              "hpLost": 0,
+              "pa": [],
+              "markers": 0,
+              "conditions": [],
+              "card": []
+            },
+            {
+              "degree": "success",
+              "hpLost": 31,
+              "pa": [],
+              "markers": 0,
+              "conditions": [],
+              "card": []
+            },
+            {
+              "degree": "failure",
+              "hpLost": 5,
+              "pa": [
+                {
+                  "name": "Affliction Effect: Crimson Breath",
+                  "stage": 1,
+                  "dc": 24
+                }
+              ],
+              "markers": 0,
+              "conditions": [
+                "drained1"
+              ],
+              "card": [
+                "Afflicted: Breath of the Mantis God, stage 1 — handled by Pseudo Afflictions (Affliction Effect: Crimson Breath, stage 1)"
+              ]
+            },
+            {
+              "degree": "criticalFailure",
+              "hpLost": 5,
+              "pa": [
+                {
+                  "name": "Affliction Effect: Crimson Breath",
+                  "stage": 2,
+                  "dc": 24
+                }
+              ],
+              "markers": 0,
+              "conditions": [
+                "drained1"
+              ],
+              "card": [
+                "Afflicted: Breath of the Mantis God, stage 2 — handled by Pseudo Afflictions (Affliction Effect: Crimson Breath, stage 2)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Blood Chestnuts",
+          "pickedUp": false,
+          "rows": [
+            {
+              "degree": "criticalSuccess",
+              "hpLost": 0,
+              "pa": [],
+              "markers": 0,
+              "conditions": [],
+              "card": []
+            },
+            {
+              "degree": "success",
+              "hpLost": 5,
+              "pa": [],
+              "markers": 0,
+              "conditions": [],
+              "card": []
+            },
+            {
+              "degree": "failure",
+              "hpLost": 11,
+              "pa": [],
+              "markers": 0,
+              "conditions": [],
+              "card": [
+                "Afflicted: Draining Growth, stage 1 — Pseudo Afflictions did not pick up this spell; apply the affliction manually"
+              ]
+            },
+            {
+              "degree": "criticalFailure",
+              "hpLost": 22,
+              "pa": [],
+              "markers": 0,
+              "conditions": [],
+              "card": [
+                "Afflicted: Draining Growth, stage 2 — Pseudo Afflictions did not pick up this spell; apply the affliction manually"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Blinding Bottle",
+          "pickedUp": false,
+          "rows": [
+            {
+              "degree": "criticalSuccess",
+              "hpLost": 0,
+              "pa": [],
+              "markers": 0,
+              "conditions": [],
+              "card": []
+            },
+            {
+              "degree": "success",
+              "hpLost": 8,
+              "pa": [],
+              "markers": 0,
+              "conditions": [],
+              "card": []
+            },
+            {
+              "degree": "failure",
+              "hpLost": 0,
+              "pa": [],
+              "markers": 0,
+              "conditions": [],
+              "card": [
+                "Afflicted: Blinding Poison, stage 1 — Pseudo Afflictions did not pick up this spell; apply the affliction manually"
+              ]
+            },
+            {
+              "degree": "criticalFailure",
+              "hpLost": 0,
+              "pa": [],
+              "markers": 0,
+              "conditions": [],
+              "card": [
+                "Afflicted: Blinding Poison, stage 2 — Pseudo Afflictions did not pick up this spell; apply the affliction manually"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Advanced Scurvy",
+          "pickedUp": false,
+          "rows": [
+            {
+              "degree": "criticalSuccess",
+              "hpLost": 0,
+              "pa": [],
+              "markers": 0,
+              "conditions": [],
+              "card": []
+            },
+            {
+              "degree": "success",
+              "hpLost": 0,
+              "pa": [],
+              "markers": 0,
+              "conditions": [
+                "enfeebled1"
+              ],
+              "card": []
+            },
+            {
+              "degree": "failure",
+              "hpLost": 0,
+              "pa": [],
+              "markers": 0,
+              "conditions": [],
+              "card": [
+                "Afflicted: Advanced Scurvy, stage 1 — Pseudo Afflictions did not pick up this spell; apply the affliction manually"
+              ]
+            },
+            {
+              "degree": "criticalFailure",
+              "hpLost": 0,
+              "pa": [],
+              "markers": 0,
+              "conditions": [],
+              "card": [
+                "Afflicted: Advanced Scurvy, stage 2 — Pseudo Afflictions did not pick up this spell; apply the affliction manually"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "repeatedPoison",
+      "passed": true,
+      "at": "2026-09-25T20:48:03.375Z",
+      "details": {
+        "effects": [
+          {
+            "name": "Affliction Effect: Spider Sting",
+            "stage": 2
+          }
+        ]
+      }
+    },
+    {
+      "label": "cleanup",
+      "passed": true,
+      "at": "2026-09-25T20:48:26.677Z",
+      "details": {
+        "actorsRemoved": 62,
+        "journalsRemoved": 1,
+        "remainingFixtureActors": 12
+      }
+    }
+  ]
+}

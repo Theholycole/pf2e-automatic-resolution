@@ -1,0 +1,40 @@
+{
+ "label": "rank7Batch4",
+ "passed": true,
+ "at": "2026-10-03T17:31:24.456Z",
+ "details": {
+  "batch4": {
+   "prism": {
+    "types": [
+     "acid:10",
+     "electricity:10",
+     "fire:10",
+     "force:10",
+     "mental:10",
+     "poison:10",
+     "sonic:10"
+    ],
+    "light": true
+   },
+   "prismAttacker": {
+    "blinded": true,
+    "dazzled": false
+   },
+   "apex": {
+    "level": "automatic",
+    "size": "huge",
+    "reach": 15,
+    "temp": 30,
+    "land": [
+     25,
+     35
+    ],
+    "fly": [
+     30,
+     40
+    ],
+    "darkvision": true
+   }
+  }
+ }
+}

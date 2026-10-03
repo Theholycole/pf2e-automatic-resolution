@@ -1,0 +1,67 @@
+{
+  "rank3Batch123": {
+    "label": "rank3Batch123",
+    "passed": true,
+    "at": "2026-10-03T14:01:35.599Z",
+    "details": {
+      "batch123": {
+        "shot": {
+          "hours": 1,
+          "results": [
+            "afflicted",
+            "resisted"
+          ],
+          "strongDegree": "success",
+          "weak": {
+            "stages": 6,
+            "onset": true,
+            "dc": 24,
+            "startStage": 3,
+            "virulent": true,
+            "badge": 1
+          }
+        },
+        "again": "already",
+        "stageOne": 2,
+        "backfire": {
+          "status": "afflicted",
+          "degree": "criticalFailure",
+          "startStage": 4
+        },
+        "hive": {
+          "hp": 10,
+          "resistance": 5,
+          "size": "tiny"
+        },
+        "infestDays": "120 hours",
+        "hunger": {
+          "status": "afflicted",
+          "dc": 20,
+          "onset": {
+            "expiry": "turn-end",
+            "sustained": false,
+            "unit": "hours",
+            "value": "1d6"
+          },
+          "stages": 6
+        },
+        "arthropod": [
+          "attack-roll:1",
+          "skill-check:1",
+          "saving-throw:1",
+          "perception:1"
+        ],
+        "hiveGone": "1 hours",
+        "cleanedHive": true,
+        "deadly": {
+          "count": 5,
+          "stage3": [
+            "unconscious"
+          ],
+          "stage4": "Character is dead"
+        },
+        "selfExposed": "resisted"
+      }
+    }
+  }
+}

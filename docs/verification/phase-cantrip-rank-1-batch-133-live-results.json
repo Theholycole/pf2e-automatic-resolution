@@ -1,0 +1,59 @@
+{
+  "batch": 133,
+  "spells": [
+    "Bit of Luck",
+    "Wash Your Luck",
+    "Cutting Eye",
+    "Share Vision",
+    "Sweet Dream",
+    "Read the Air"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch133",
+      "passed": true,
+      "at": "2026-09-28T20:14:28.284Z",
+      "details": {
+        "batch133": {
+          "bitOfLuck": {
+            "effect": true,
+            "immune": true,
+            "again": "Bit of Luck: PFTEST P23 Affliction luck ally is temporarily immune."
+          },
+          "washYourLuck": {
+            "effect": true,
+            "immuneBefore": false,
+            "immuneAfterUse": true,
+            "again": "Wash Your Luck: PFTEST P23 Affliction Wash Your Luck caster is temporarily immune."
+          },
+          "cuttingEye": {
+            "picked": "Armor Class",
+            "effect": true,
+            "selection": "ac"
+          },
+          "shareVision": {
+            "target": true,
+            "caster": true
+          },
+          "sweetDream": {
+            "picked": "Dream of Insight",
+            "effect": true,
+            "unconscious": true,
+            "caster": false
+          },
+          "readTheAir": {
+            "effect": true,
+            "reminder": true
+          }
+        },
+        "washYourLuckRollProbe": {
+          "note": "PF2e's own Spell Effect: Wash Your Luck with its fortune toggle on is deleted by PF2e after a check roll",
+          "deletedAfterRoll": true
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "label": "rank4Batch28",
+  "passed": true,
+  "at": "2026-10-02T16:18:47.915Z",
+  "details": {
+    "batch28": {
+      "concealed": [
+        true,
+        true
+      ],
+      "metal": {
+        "formula": "5d10 slashing",
+        "persistent": [
+          "1d4 slashing"
+        ]
+      },
+      "radius": 25,
+      "regionFeet": 25,
+      "flesh": {
+        "formula": "5d10 slashing",
+        "persistent": []
+      },
+      "radiusAfterFlesh": 25
+    }
+  }
+}

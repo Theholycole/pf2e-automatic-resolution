@@ -1,0 +1,40 @@
+{
+  "rank6Batch2": {
+    "label": "rank6Batch2",
+    "passed": true,
+    "at": "2026-10-03T15:33:21.942Z",
+    "details": {
+      "batch2": {
+        "fury": {
+          "adjust": [
+            "applies",
+            "not-applicable"
+          ],
+          "cover": 1,
+          "storm": true
+        },
+        "orchestra": {
+          "events": [
+            "sustain"
+          ],
+          "initial": true,
+          "sustained": true
+        },
+        "fogPlan": {
+          "events": [
+            "turn-start"
+          ],
+          "concealment": true,
+          "clumsy": [
+            "clumsy1"
+          ],
+          "speedRule": -10
+        },
+        "fog": {
+          "clumsy": 1,
+          "speedPenalty": true
+        }
+      }
+    }
+  }
+}

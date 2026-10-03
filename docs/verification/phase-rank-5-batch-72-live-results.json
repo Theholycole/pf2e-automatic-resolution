@@ -1,0 +1,32 @@
+{
+  "label": "rank5Batch72",
+  "passed": true,
+  "at": "2026-10-03T11:28:36.705Z",
+  "details": {
+    "batch72": {
+      "kind": "frenzy",
+      "low": {
+        "effects": 2,
+        "tempHP": 5,
+        "silver": 5,
+        "selector": "all-speeds",
+        "fly": 10,
+        "strikes": 2
+      },
+      "end": {
+        "strong": [
+          "ended",
+          false
+        ],
+        "weak": [
+          "kept",
+          true
+        ]
+      },
+      "high": {
+        "tempHP": 10,
+        "fangs": "3d8 piercing"
+      }
+    }
+  }
+}

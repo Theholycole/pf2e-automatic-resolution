@@ -1,0 +1,28 @@
+{
+  "label": "rank2Batch72",
+  "passed": true,
+  "at": "2026-10-02T01:08:47.921Z",
+  "details": {
+    "batch72": {
+      "level": "automatic",
+      "one": {
+        "hit": true,
+        "formula": "1d6",
+        "up": 10,
+        "back": 10,
+        "fallen": 5,
+        "x": 2200,
+        "prone": true,
+        "mythic": 8
+      },
+      "three": {
+        "hit": true,
+        "formula": "3d6",
+        "up": 50,
+        "back": 40,
+        "fallen": 25,
+        "x": 2200
+      }
+    }
+  }
+}

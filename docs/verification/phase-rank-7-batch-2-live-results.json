@@ -1,0 +1,66 @@
+{
+ "label": "rank7Batch2",
+ "passed": true,
+ "at": "2026-10-03T16:30:28.011Z",
+ "details": {
+  "batch2": {
+   "clockwork": {
+    "lost": 464,
+    "persistent": [
+     "fire"
+    ]
+   },
+   "suddenReminder": true,
+   "sudden": {
+    "lost": [
+     468,
+     536
+    ],
+    "prone": [
+     false,
+     true
+    ]
+   },
+   "flurry": {
+    "eligible": [
+     true,
+     false
+    ],
+    "reminder": true,
+    "lost": [
+     66,
+     0
+    ]
+   },
+   "decayBlocked": "Accelerated Decomposition: Caster: choose the condition (success) before finalizing.",
+   "decay": {
+    "drained": 1,
+    "clumsy": false,
+    "enfeebled": false,
+    "lost": 421
+   },
+   "blink": 1,
+   "terrorQuestion": [
+    "pending",
+    "pending"
+   ],
+   "terror": {
+    "paralyzed": [
+     true,
+     true
+    ],
+    "frightened": 2,
+    "adjust": [
+     "applies",
+     "not-applicable"
+    ]
+   },
+   "eclipse": {
+    "lost": [
+     443,
+     428
+    ]
+   }
+  }
+ }
+}

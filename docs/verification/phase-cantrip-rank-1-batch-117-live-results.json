@@ -1,0 +1,45 @@
+{
+  "batch": 117,
+  "spells": [
+    "Redistribute Potential"
+  ],
+  "results": [
+    {
+      "label": "cr1Batch117",
+      "passed": true,
+      "at": "2026-09-28T02:35:50.858Z",
+      "details": {
+        "redistributePotential": {
+          "refusedBeforeSquares": true,
+          "total": 14,
+          "lost": [
+            14,
+            14
+          ],
+          "swapped": [
+            null,
+            "cold → fire"
+          ],
+          "conditions": [
+            [
+              "clumsy1"
+            ],
+            [
+              "enfeebled1"
+            ]
+          ]
+        }
+      }
+    }
+  ],
+  "regressions": [
+    {
+      "c": "energyByCreature",
+      "passed": true
+    },
+    {
+      "c": "cr1Batch116",
+      "passed": true
+    }
+  ]
+}

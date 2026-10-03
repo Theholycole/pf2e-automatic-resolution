@@ -1,0 +1,42 @@
+{
+  "label": "rank2Batch55",
+  "passed": true,
+  "at": "2026-10-01T23:28:38.948Z",
+  "details": {
+    "batch55": {
+      "cast": {
+        "kind": "area-boon",
+        "level": "automatic",
+        "amount": 20,
+        "stayers": 2,
+        "held": [
+          true,
+          true
+        ],
+        "toggle": true
+      },
+      "afterLeave": [
+        true,
+        false
+      ],
+      "end": {
+        "hp": [
+          25,
+          5
+        ],
+        "held": [
+          false,
+          false
+        ],
+        "region": false
+      }
+    }
+  },
+  "medicineToggleProbe": {
+    "before": [],
+    "after": [
+      2
+    ],
+    "note": "PF2e's medicine modifier (+2) applies only once the module's benefit-creature toggle is on, with a living target"
+  }
+}

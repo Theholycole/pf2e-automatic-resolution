@@ -1,0 +1,25 @@
+{
+  "label": "rank3Batch105",
+  "passed": true,
+  "at": "2026-10-03T06:51:53.593Z",
+  "details": {
+    "batch105": {
+      "r3": {
+        "weakness": 5,
+        "healFormula": "1d10 + 1d4 + 4",
+        "note": true,
+        "touch": "1d6 spirit",
+        "lost": 2,
+        "total": 2
+      },
+      "r6": {
+        "weakness": 10,
+        "healFormula": "1d10 + 2d4 + 4",
+        "note": true,
+        "touch": "2d6 spirit",
+        "lost": 10,
+        "total": 10
+      }
+    }
+  }
+}

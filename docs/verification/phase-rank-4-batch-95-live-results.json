@@ -1,0 +1,33 @@
+{
+  "label": "rank4Batch95",
+  "passed": true,
+  "at": "2026-10-03T03:03:41.053Z",
+  "details": {
+    "batch95": {
+      "child": {
+        "exists": true,
+        "excludeCaster": true,
+        "formula": "4d6"
+      },
+      "farExposed": true,
+      "farFailure": {
+        "forced": {
+          "kind": "pull",
+          "distance": 10,
+          "upTo": false,
+          "optional": false,
+          "direction": "center",
+          "sourceText": "The creature moves 10 feet toward the center."
+        },
+        "lost": 0
+      },
+      "near": {
+        "lost": 11
+      },
+      "after": {
+        "main": "ended",
+        "child": "ended"
+      }
+    }
+  }
+}

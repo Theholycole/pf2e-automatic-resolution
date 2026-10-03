@@ -1,0 +1,70 @@
+{
+  "generated": "2026-09-26T02:38:47.502Z",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "sustainedConditions": {
+    "label": "sustainedConditions",
+    "passed": true,
+    "at": "2026-09-26T02:36:02.485Z",
+    "details": {
+      "windfall": {
+        "asked": true,
+        "afterSustained": {
+          "status": "active",
+          "encumbered": true
+        },
+        "askedAgain": true,
+        "missed": {
+          "status": "ended",
+          "reason": "missed-sustain",
+          "encumbered": false
+        }
+      },
+      "overload": {
+        "stupefied": [
+          2,
+          0
+        ],
+        "expired": {
+          "status": "ended",
+          "reason": "maximum-duration",
+          "stupefied": 0
+        }
+      }
+    }
+  },
+  "regressions": {
+    "riderHarness": [
+      {
+        "label": "torturousTrauma",
+        "passed": true,
+        "at": "2026-09-26T02:37:13.427Z"
+      },
+      {
+        "label": "vomitSwarm",
+        "passed": true,
+        "at": "2026-09-26T02:37:29.708Z"
+      },
+      {
+        "label": "timedStunned",
+        "passed": true,
+        "at": "2026-09-26T02:37:47.716Z"
+      },
+      {
+        "label": "grittyWheeze",
+        "passed": true,
+        "at": "2026-09-26T02:38:01.855Z"
+      },
+      {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T02:38:05.568Z"
+      }
+    ]
+  },
+  "cleanup": {
+    "fixtures": 0,
+    "riderFixtures": 0,
+    "combats": 0
+  }
+}

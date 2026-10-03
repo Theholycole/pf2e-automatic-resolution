@@ -1,0 +1,29 @@
+{
+  "generatedAt": "2026-10-02T21:18:34.064Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "results": [
+    {
+      "label": "rank5Batch32",
+      "passed": true,
+      "at": "2026-10-02T21:18:18.839Z",
+      "details": {
+        "batch32": {
+          "formula": "10d6 fire",
+          "total": 31,
+          "immune": {
+            "rolled": "failure",
+            "degree": "success",
+            "swapped": "fire → untyped (immune to fire)"
+          },
+          "halved": "fire resistance 12 → 6",
+          "lost": [
+            25,
+            15,
+            31
+          ]
+        }
+      }
+    }
+  ]
+}

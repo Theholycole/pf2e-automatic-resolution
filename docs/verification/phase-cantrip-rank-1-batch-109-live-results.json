@@ -1,0 +1,83 @@
+{
+  "batch": 109,
+  "spells": [
+    "Life Tap"
+  ],
+  "results": [
+    {
+      "label": "cr1Batch109",
+      "passed": true,
+      "at": "2026-09-28T01:46:47.665Z",
+      "details": {
+        "lifeTap": {
+          "lost": 6,
+          "drained": [
+            "1 minutes"
+          ],
+          "conditions": [
+            "drained2"
+          ],
+          "healed": 12,
+          "allyGained": 12,
+          "lock": [
+            "10 minutes"
+          ],
+          "reminder": true,
+          "secondRefused": true
+        }
+      }
+    },
+    {
+      "label": "thrallSpells",
+      "passed": true,
+      "at": "2026-09-28T01:47:32.187Z",
+      "details": {
+        "bombFarVictim": "Necrotic Bomb: PFTEST P23 Affliction bomb far is more than 10 feet from the thrall.",
+        "bombThrallOutOfRange": "Necrotic Bomb: the thrall PFTEST P23 Affliction bomb distant thrall is more than 30 feet from the caster.",
+        "necroticBomb": {
+          "targets": [
+            "bomb near"
+          ],
+          "total": 7,
+          "lost": [
+            7
+          ],
+          "thrallLost": 0,
+          "reminder": true,
+          "thrall": "bomb thrall"
+        },
+        "boneSpear": {
+          "targets": [
+            "spear one",
+            "spear two"
+          ],
+          "total": 8,
+          "lost": [
+            8,
+            4
+          ],
+          "thrallLost": 0,
+          "reminder": true,
+          "thrall": "spear thrall"
+        },
+        "deadWeightTwo": "Dead Weight: the thrall reaches 1 creature.",
+        "deadWeight": {
+          "targets": [
+            "weight one"
+          ],
+          "total": null,
+          "lost": [
+            0
+          ],
+          "thrallLost": 0,
+          "reminder": true,
+          "thrall": "weight thrall",
+          "conditions": [
+            "off-guard",
+            "slowed 1"
+          ]
+        }
+      }
+    }
+  ]
+}

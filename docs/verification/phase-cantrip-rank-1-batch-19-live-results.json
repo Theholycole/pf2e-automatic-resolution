@@ -1,0 +1,80 @@
+{
+  "batch": "cantrip-rank-1-batch-19",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch19",
+    "passed": true,
+    "details": {
+      "sleep": {
+        "success": {
+          "effects": [
+            "Perception penalty 1 rounds"
+          ],
+          "perception": [
+            0,
+            -1
+          ]
+        },
+        "failure": {
+          "unconscious": true,
+          "effects": [
+            "Unconscious 1 minutes",
+            "Wakes up 1 minutes"
+          ]
+        },
+        "criticalFailure": {
+          "unconscious": true,
+          "effects": [
+            "Unconscious 1 hours",
+            "Wakes up 1 hours"
+          ]
+        }
+      },
+      "rank4": "Sleep: at rank 4 and above its heightened rules aren't automated (“The creatures fall unconscious for 1 round on a failure or 1 minute on a critical failure. They fall prone and release what they're holding, and they can't atte”). Resolve it by hand."
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch19",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch6",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch16",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "rank3Batch1",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

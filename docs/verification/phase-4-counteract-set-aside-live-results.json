@@ -1,0 +1,84 @@
+{
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "module": "0.8.2",
+  "pseudoAfflictions": "0.5.1",
+  "pf2eRemoveExpiredEffects": true,
+  "results": [
+    {
+      "label": "counteractSetAside",
+      "passed": true,
+      "at": "2026-09-26T15:40:28.818Z",
+      "details": {
+        "delay": [
+          "You don't need to have identified the name of the specific affliction, but you do need to be aware of it; for instance, you couldn't delay an ingested poison during its onset period unless you were aware of the poison",
+          "Regained 16 HP (3d8 vitality = 16)",
+          "Affliction Effect: Spider Sting (stage 2): counteract check vs DC 1: critical success (rank 3 vs 1)",
+          "Affliction Effect: Spider Sting (stage 2) suspended for 1 hour (it returns afterwards)",
+          "Delay Affliction: temporarily immune (1 day)"
+        ],
+        "delayRestored": {
+          "suspended": {
+            "afflictions": 0,
+            "marker": {
+              "value": 1,
+              "unit": "hours",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "healed": 16,
+            "immune": true
+          },
+          "restored": {
+            "name": "Affliction Effect: Spider Sting",
+            "stage": 2
+          },
+          "markers": 0
+        },
+        "delayEarly": {
+          "restored": 1,
+          "markers": 0
+        },
+        "soundCounteract": [
+          "This spell can't counteract or suppress curses, diseases, or conditions that are part of the target's normal state.",
+          "Test blinding effect: counteract check vs DC 1: critical success (rank 2 vs 1)",
+          "Test blinding effect counteracted"
+        ],
+        "soundNear": [
+          "This spell can't counteract or suppress curses, diseases, or conditions that are part of the target's normal state.",
+          "Test strong blinding effect: counteract check vs DC 1: critical success (rank 2 vs 7)",
+          "Test strong blinding effect suppressed until the start of PFTEST P23 Affliction Sound Body caster's next turn (its duration paused)"
+        ],
+        "soundNearState": {
+          "critical": true,
+          "suppressedState": {
+            "effect": false,
+            "blinded": false,
+            "marker": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            }
+          },
+          "returned": {
+            "startShift": 7,
+            "blinded": true
+          }
+        },
+        "soundDisease": null,
+        "stardust": [
+          "Regained 16 HP (16 = 16)",
+          "Test possession: counteract check vs DC 1: critical success (rank 2 vs 1)",
+          "Test possession counteracted",
+          "The possessing entity is cast out and can't possess the target again for 1 week."
+        ],
+        "stardustPlain": [
+          "Regained 16 HP (16 = 16)",
+          "Nothing on PFTEST P23 Affliction stardust plain for Luminous Stardust Healing to counteract."
+        ]
+      }
+    }
+  ]
+}

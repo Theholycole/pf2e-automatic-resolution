@@ -1,0 +1,46 @@
+{
+  "generatedAt": "2026-10-02T22:32:48.627Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "results": [
+    {
+      "label": "rank3Batch66",
+      "passed": true,
+      "at": "2026-10-02T22:32:29.761Z",
+      "details": {
+        "batch66": {
+          "controls": [
+            [
+              true,
+              false
+            ],
+            [
+              true,
+              true
+            ],
+            [
+              false,
+              true
+            ]
+          ],
+          "fail": {
+            "formula": "3d10 mental",
+            "total": 4,
+            "lost": 4
+          },
+          "crit": {
+            "formula": "2 * 3d10 mental",
+            "total": 30,
+            "lost": 30
+          },
+          "massage": {
+            "status": "ended",
+            "degree": 3,
+            "ended": true
+          },
+          "status": "ended"
+        }
+      }
+    }
+  ]
+}

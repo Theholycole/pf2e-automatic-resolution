@@ -1,0 +1,57 @@
+{
+  "label": "rank3Batch95",
+  "passed": true,
+  "at": "2026-10-03T06:06:44.378Z",
+  "details": {
+    "batch95": {
+      "cast": {
+        "concealed": true,
+        "snag": {
+          "value": 2,
+          "dc": 7,
+          "type": "circumstance",
+          "label": "A melee attack missed on the concealed flat check (target the attacker)",
+          "spell": "Whirling Scarves",
+          "castInstanceId": "uIylKAwD1GuefOCz"
+        },
+        "dc7": true,
+        "button": true
+      },
+      "snag": {
+        "status": "applied",
+        "value": 2,
+        "untilNext": true,
+        "rule": {
+          "key": "FlatModifier",
+          "selector": [
+            "attack-roll"
+          ],
+          "type": "circumstance",
+          "value": -2,
+          "predicate": [
+            "item:id:pKcvtBOyEBMAA8Dl"
+          ],
+          "label": "Whirling Scarves",
+          "slug": null,
+          "priority": 100,
+          "ignored": false,
+          "requiresEquipped": null,
+          "requiresInvestment": null,
+          "force": false,
+          "hideIfDisabled": false,
+          "fromEquipment": true,
+          "critical": null,
+          "removeAfterRoll": false,
+          "battleForm": false
+        }
+      },
+      "rolls": {
+        "claw": "1d20 + 8",
+        "jaws": "1d20 + 10"
+      },
+      "foeTurn": true,
+      "afterFoeTurn": false,
+      "ended": false
+    }
+  }
+}

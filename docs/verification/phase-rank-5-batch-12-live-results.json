@@ -1,0 +1,35 @@
+{
+  "label": "rank5Batch12",
+  "passed": true,
+  "at": "2026-10-02T16:08:46.927Z",
+  "details": {
+    "batch12": {
+      "supported": true,
+      "repeatable": {
+        "window": "sustain",
+        "attacks": 11,
+        "actions": 1,
+        "onCast": true,
+        "sourceText": "On subsequent rounds, the first time you Sustain the Spell each round, you can call another lightning bolt within the area."
+      },
+      "cast": {
+        "formula": "4d12 electricity",
+        "total": 31,
+        "lost": 31,
+        "notes": true
+      },
+      "sustain": {
+        "formula": "4d12 electricity",
+        "total": 23,
+        "lost": 46,
+        "notes": true
+      },
+      "heightened": {
+        "formula": "5d12 electricity",
+        "total": 35,
+        "lost": 35,
+        "notes": true
+      }
+    }
+  }
+}

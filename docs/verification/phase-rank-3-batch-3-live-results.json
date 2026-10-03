@@ -1,0 +1,43 @@
+{
+  "label": "rank3Batch3",
+  "passed": true,
+  "at": "2026-10-02T09:26:12.044Z",
+  "details": {
+    "batch3": {
+      "level": "automatic",
+      "refused": "Personal Blizzard: target exactly 1 creature.",
+      "criticalSuccess": {
+        "degree": "criticalSuccess",
+        "lost": 0
+      },
+      "criticalFailure": {
+        "degree": "criticalFailure",
+        "formula": "2d6 cold + 2d6 persistent cold",
+        "direct": 10,
+        "lost": 10,
+        "concealed": true,
+        "persistent": "2d6 cold",
+        "record": "active",
+        "sustained": true,
+        "ended": {
+          "concealed": false,
+          "persistent": false
+        }
+      },
+      "success": {
+        "formula": "1d6 + 1 cold",
+        "lost": 5,
+        "total": 5,
+        "record": false,
+        "concealed": false
+      },
+      "failure": {
+        "formula": "(1d6 + 1) cold + (1d6 + 1) persistent cold",
+        "lost": 3,
+        "total": 3,
+        "persistent": "(1d6 + 1)",
+        "concealed": true
+      }
+    }
+  }
+}

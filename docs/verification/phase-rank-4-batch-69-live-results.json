@@ -1,0 +1,47 @@
+{
+  "label": "rank4Batch69",
+  "passed": true,
+  "at": "2026-10-02T23:21:03.916Z",
+  "details": {
+    "batch69": {
+      "foes": [
+        {
+          "stupefied": 0,
+          "fascinated": false,
+          "timed": [],
+          "note": []
+        },
+        {
+          "stupefied": 1,
+          "fascinated": false,
+          "timed": [
+            "Vision of Beauty: Stupefied 1:1 rounds"
+          ],
+          "note": []
+        },
+        {
+          "stupefied": 1,
+          "fascinated": true,
+          "timed": [
+            "Vision of Beauty: Fascinated:2 rounds",
+            "Vision of Beauty: Stupefied 1:1 rounds"
+          ],
+          "note": [
+            "1 rounds turn-end"
+          ]
+        },
+        {
+          "stupefied": 2,
+          "fascinated": true,
+          "timed": [
+            "Vision of Beauty: Fascinated:1 minutes",
+            "Vision of Beauty: Stupefied 2:1 rounds"
+          ],
+          "note": [
+            "1 rounds turn-end"
+          ]
+        }
+      ]
+    }
+  }
+}

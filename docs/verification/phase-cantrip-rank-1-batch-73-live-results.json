@@ -1,0 +1,49 @@
+{
+  "batch": "cantrip-rank-1-batch-73",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch73",
+    "passed": true,
+    "details": {
+      "marker": "Gift of the Anemos (waiting for its trigger)",
+      "note": true,
+      "sustained": true,
+      "failed": true,
+      "succeeded": false,
+      "afterTriggers": "active",
+      "missed": {
+        "status": "ended",
+        "reason": "missed-sustain"
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch73",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "longTailBatch3",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

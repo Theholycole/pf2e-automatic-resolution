@@ -1,0 +1,60 @@
+{
+  "batch": "cantrip-rank-1-batch-65",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch65",
+    "passed": true,
+    "details": {
+      "offered": [
+        "Untamed Claws",
+        "Untamed Jaws"
+      ],
+      "selection": "untamed-jaws",
+      "strikes": [
+        "jaws",
+        "basic-unarmed"
+      ],
+      "duration": "1 minutes",
+      "levelNote": true,
+      "actionsNote": true
+    }
+  },
+  "runs": [
+    {
+      "n": "cr1Batch65",
+      "passed": false,
+      "note": "first run with an NPC caster: PF2e builds a Strike rule only for characters; the case now uses a character"
+    },
+    {
+      "n": "cr1Batch65",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "rank2Batch2",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch33",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

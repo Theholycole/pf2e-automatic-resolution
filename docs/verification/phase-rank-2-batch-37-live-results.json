@@ -1,0 +1,69 @@
+{
+  "phase": "rank-2-batch-37",
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cleanup",
+      "passed": true,
+      "at": "2026-10-01T22:08:43.077Z",
+      "details": {
+        "actorsRemoved": 0,
+        "journalsRemoved": 0,
+        "regionsRemoved": 0,
+        "remainingFixtureActors": 0
+      }
+    },
+    {
+      "label": "rank2Batch37",
+      "passed": true,
+      "at": "2026-10-01T22:08:43.743Z",
+      "details": {
+        "batch37": {
+          "first": {
+            "eligible": [
+              true,
+              false
+            ],
+            "reasons": [
+              null,
+              "more than 15 feet from the tree"
+            ],
+            "formula": "3d8 slashing",
+            "total": 14,
+            "lost": 14
+          },
+          "tree": {
+            "count": 1,
+            "ac": 24,
+            "hp": 30,
+            "fort": 14,
+            "size": "med",
+            "tokens": 1,
+            "owner": 0
+          },
+          "second": {
+            "eligible": [
+              true,
+              false
+            ],
+            "reasons": [
+              null,
+              "more than 15 feet from the tree"
+            ],
+            "formula": "3d8 bludgeoning",
+            "total": 10,
+            "lost": 20
+          },
+          "treesAfterSecond": 1,
+          "effect": "1 minutes",
+          "afterEnd": {
+            "actors": 0,
+            "tokens": 0
+          }
+        }
+      }
+    }
+  ]
+}

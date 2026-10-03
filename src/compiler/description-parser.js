@@ -1,6 +1,7 @@
 import { DEGREES } from "./constants.js";
 import { extractNativeSpellEffectLinks } from "./native-spell-effect-compiler.js";
 import { normalizeSlug } from "./normalize.js";
+import { listLifetimeFor, parseConditionLists } from "./condition-list-lifetime.js";
 
 const DEGREE_HEADING = /<strong\b[^>]*>\s*(Critical\s+Success|Critical\s+Failure|Success|Failure)\s*<\/strong>/gi;
 const CONDITION_REFERENCE = /@UUID\[Compendium\.pf2e\.conditionitems\.Item\.([^\]]+)\](?:\{([^}]+)\})?/gi;
@@ -34,6 +35,23 @@ export function htmlToPlainText(html) {
         .replace(/ *\n */g, "\n")
         .replace(/\n{2,}/g, "\n")
         .trim();
+}
+
+/** HTML as one line of plain text. */
+export function plainText(html) {
+    return htmlToPlainText(html).replace(/\s+/g, " ").trim();
+}
+
+/** A stated duration ("10 minutes", "1 hour"; rounds too when allowed) in seconds, or null. */
+export function durationSeconds(text, { rounds = false } = {}) {
+    const match = /^(\d+) (round|minute|hour)s?$/i.exec(String(text ?? "").trim());
+    if (!match || (!rounds && /round/i.test(match[2]))) return null;
+    return Number(match[1]) * { round: 6, minute: 60, hour: 3600 }[match[2].toLowerCase()];
+}
+
+/** Plain text split into sentences (a sentence may start with an @-link). */
+export function splitSentences(text) {
+    return text.split(/(?<=[.!?])\s+(?=[A-Z@])/).map(sentence => sentence.trim()).filter(Boolean);
 }
 
 export function stripHeighteningHTML(html) {
@@ -98,12 +116,17 @@ function conditionValue(label) {
     return match ? Number(match[1]) : null;
 }
 
+// Attitudes (PF2e files them with the conditions) aren't conditions the module applies: an attitude change is the GM's to play,
+// so it becomes a note Effect (user decision), never a condition.
+const ATTITUDES = new Set(["hostile", "unfriendly", "indifferent", "friendly", "helpful"]);
+
 export function extractConditionReferences(html) {
     const references = [];
     for (const match of String(html ?? "").matchAll(CONDITION_REFERENCE)) {
         const reference = match[1].trim();
         const label = (match[2] ?? reference).trim();
         const name = label.replace(/\s+\d+\s*$/, "").trim() || reference;
+        if (ATTITUDES.has(normalizeSlug(name))) continue;
         references.push({
             kind: "condition",
             slug: normalizeSlug(name),
@@ -204,11 +227,28 @@ function sentenceBounds(text, start, end) {
     return { left, right };
 }
 
+// A repeated predicate starts a new condition clause. A duration after that
+// predicate belongs to the later condition, while a simple "A and B for ..."
+// construction keeps the shared duration.
+export function conditionClauseBounds(text, start, end) {
+    const source = String(text ?? "");
+    const sentence = sentenceBounds(source, start, end);
+    const offset = sentence.left + 1;
+    const boundaries = [...source.slice(offset, sentence.right)
+        .matchAll(/(?:,\s*)?\band\s+(?:is|are|becomes?|gains?|become|gain)\b/gi)]
+        .map(match => offset + (match.index ?? 0));
+    return {
+        start: boundaries.filter(index => index < start).at(-1) ?? offset,
+        end: boundaries.find(index => index >= end) ?? sentence.right
+    };
+}
+
 function extractTextConditionReferences(text, catalog) {
     const references = [];
     for (const entry of catalog ?? []) {
         const name = entry.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-        const pattern = new RegExp(`\\b(?:is|becomes?|become|gains?|be)\\s+(?:also\\s+)?${name}(?:\\s+(\\d+))?\\b`, "gi");
+        // ("… awakens Fatigued, …": Nightmare's.)
+        const pattern = new RegExp(`\\b(?:is|becomes?|become|gains?|be|awakens)\\s+(?:also\\s+)?${name}(?:\\s+(\\d+))?\\b`, "gi");
         for (const match of String(text ?? "").matchAll(pattern)) {
             references.push({
                 kind: "condition",
@@ -224,25 +264,86 @@ function extractTextConditionReferences(text, catalog) {
             });
         }
     }
+    // An unlinked affirmative prone predicate is a condition grant. Prone has
+    // no timed expiry, since the target can Stand to remove it.
+    const pronePredicates = [
+        /\band (?:is|are) forced to (?:its|their) knees, (becoming prone)(?=[.!?]|$)/gi,
+        // ("The target falls prone and is encumbered for 1 round.": Prone, then the row's other condition.)
+        /\b(?:the target|the creature|it|they) (falls prone)(?=[.!?]|$| and (?:is|takes)\b)/gi,
+        /\band (falls prone)(?=[.!?]|$)/gi,
+        /\b(?:is|are) (knocked prone)(?=[,;.!?]|$)/gi
+    ];
+    for (const pattern of pronePredicates) for (const match of String(text ?? "").matchAll(pattern)) {
+        const index = (match.index ?? 0) + match[0].indexOf(match[1]);
+        references.push({
+            kind: "condition", slug: "prone", name: "Prone", value: null,
+            duration: { mode: "unlimited", value: null, unit: null },
+            source: "description-text", reference: null, raw: match[1],
+            index, end: index + match[1].length
+        });
+    }
     return references;
 }
 
 export function extractScopedConditionReferences(html, catalog = []) {
     const plain = htmlToPlainText(html);
     const linked = extractConditionReferences(plain);
-    const references = [...linked, ...extractTextConditionReferences(plain, catalog)]
+    const listItems = parseConditionLists(plain);
+    const textReferences = extractTextConditionReferences(plain, catalog);
+    // A plain condition continuing a coordinated grant ("Stunned 1, and
+    // enfeebled 2") is a grant even when no verb directly precedes it.
+    const listReferences = listItems
+        .filter(item => !item.raw.startsWith("@UUID")
+            && ![...linked, ...textReferences].some(reference => listLifetimeFor(reference, [item])))
+        .map(item => ({
+            kind: "condition",
+            slug: normalizeSlug(item.slug),
+            name: item.slug.replace(/(^|-)([a-z])/g, (_match, separator, letter) => `${separator}${letter.toUpperCase()}`),
+            value: item.value,
+            duration: null,
+            source: "description-list",
+            reference: null,
+            raw: item.raw,
+            index: item.index,
+            end: item.end
+        }));
+    const references = [...linked, ...textReferences, ...listReferences]
         .filter((entry, index, all) => all.findIndex(candidate =>
             candidate.slug === entry.slug && candidate.value === entry.value
         ) === index);
     const durations = extractDurationCandidates(plain);
 
     return references.map(reference => {
-        const { left, right } = sentenceBounds(plain, reference.index, reference.end);
+        const item = listLifetimeFor(reference, listItems);
+        // Only a written (own or shared) lifetime, or the self-limiting valued
+        // Stunned rule, is authoritative. Otherwise keep the clause heuristics.
+        if (item && (item.lifetime || (item.slug === "stunned" && item.value != null) || item.slug === "prone")) {
+            const lifetime = item.lifetime;
+            return {
+                ...reference,
+                // Prone without its own timer lasts until the creature Stands.
+                duration: lifetime?.duration ?? (item.slug === "prone" ? { mode: "unlimited", value: null, unit: null } : null),
+                lifetimeProof: {
+                    listIndex: item.listIndex,
+                    text: lifetime?.text ?? null,
+                    shared: !!lifetime && !item.ownLifetime,
+                    escape: lifetime?.escape === true,
+                    escapeDC: lifetime?.escapeDC ?? null,
+                    actionEnd: lifetime?.actionEnd ?? null,
+                    spellEnds: lifetime?.spellEnds === true
+                }
+            };
+        }
+        const { end } = conditionClauseBounds(plain, reference.index, reference.end);
+        // "frightened 3 and fleeing for 1 round": a self-limiting Frightened or Sickened doesn't take a timer written
+        // after another condition of the same list (that timer is the later condition's).
+        const selfLimiting = ["frightened", "sickened"].includes(reference.slug) && reference.value != null;
         const candidates = durations
-            .filter(candidate => candidate.index >= reference.end && candidate.end <= right)
+            .filter(candidate => candidate.index >= reference.end && candidate.end <= end)
+            .filter(candidate => !selfLimiting || !references.some(other => other !== reference && other.index >= reference.end && other.end <= candidate.index))
             .sort((a, b) => distanceBetween(reference.index, reference.end, a.index, a.end)
                 - distanceBetween(reference.index, reference.end, b.index, b.end));
-        return { ...reference, duration: candidates[0]?.duration ?? null };
+        return { ...reference, duration: candidates[0]?.duration ?? reference.duration ?? null };
     });
 }
 
@@ -298,10 +399,21 @@ export function extractPersistentDamageExpressions(source) {
     return expressions;
 }
 
-export function inferDamageMultiplier(text) {
-    const plain = String(text ?? "");
+export function inferDamageMultiplier(text, components = []) {
+    // "you regain Hit Points equal to half the damage the target takes" measures a benefit, not the row's damage.
+    const plain = String(text ?? "").replace(/\bequal to (?:half )?(?:the )?(?:[a-z]+ )?damage\b[^.;]*/gi, "");
     if (/\b(?:unaffected|no damage)\b/i.test(plain)) return 0;
     if (/\bhalf (?:the )?damage\b/i.test(plain)) return 0.5;
+    const typedHalf = /^\s*(?:the (?:target|creature)|it|they) takes? half the ([a-z][a-z-]*) damage\.?\s*$/i.exec(plain);
+    if (typedHalf && components.length === 1
+        && components[0].type?.toLowerCase() === typedHalf[1].toLowerCase()
+        && components[0].kinds?.includes("damage")
+        && !components[0].category) return 0.5;
+    // "The target takes half the force damage and half the healing reduction." / "… the full force damage and …": the spell's one entry,
+    // named by its type.
+    const typed = /\btakes? (half|the full) (?:the )?([a-z][a-z-]*) damage\b/i.exec(plain);
+    if (typed && components.length === 1 && components[0].type?.toLowerCase() === typed[2].toLowerCase() && components[0].kinds?.includes("damage") && !components[0].category)
+        return typed[1].toLowerCase() === "half" ? 0.5 : 1;
     if (/\b(?:full|normal) damage\b/i.test(plain)) return 1;
     if (/\b(?:double|twice) (?:the )?damage\b/i.test(plain)) return 2;
     return null;

@@ -1,0 +1,26 @@
+{
+ "label": "rank8Batch6",
+ "passed": true,
+ "at": "2026-10-03T18:39:46.210Z",
+ "details": {
+  "batch6": {
+   "song": {
+    "supported": true,
+    "total": 58,
+    "lost": [
+     29,
+     116
+    ],
+    "stunned": [
+     0,
+     2
+    ],
+    "notes": [
+     true,
+     true
+    ],
+    "reminder": true
+   }
+  }
+ }
+}

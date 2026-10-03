@@ -1,0 +1,53 @@
+{
+  "label": "rank2Batch81",
+  "passed": true,
+  "at": "2026-10-02T01:55:35.417Z",
+  "details": {
+    "batch81": {
+      "level": "automatic",
+      "refused": "Inveigle: PFTEST P23 Affliction inveigle big is above level 4.",
+      "willing": {
+        "helpful": true,
+        "days": 365,
+        "record": "active",
+        "dismissable": true,
+        "button": true,
+        "end": {
+          "ended": true,
+          "status": "ended",
+          "helpful": false
+        }
+      },
+      "resisted": {
+        "negate": 3,
+        "helpful": false,
+        "record": false
+      },
+      "charmed": {
+        "negate": 0,
+        "helpful": true,
+        "end": {
+          "ended": true,
+          "penalty": [
+            "status:-4"
+          ],
+          "helpful": false
+        }
+      },
+      "hostile": {
+        "hostile": true,
+        "record": false,
+        "button": false
+      },
+      "failure": {
+        "applied": 0,
+        "hostile": false
+      },
+      "heightened": {
+        "helpful": true,
+        "days": 7,
+        "notes": true
+      }
+    }
+  }
+}

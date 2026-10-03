@@ -1,0 +1,29 @@
+{
+  "label": "rank4Batch17",
+  "passed": true,
+  "at": "2026-10-02T14:17:14.543Z",
+  "details": {
+    "batch17": {
+      "beacon": {
+        "kind": "healing",
+        "healed": [
+          23,
+          22,
+          4,
+          13
+        ],
+        "remaining": 0,
+        "fifth": "Vital Beacon: the food has all been eaten."
+      },
+      "well": {
+        "kind": "healing",
+        "healed": [
+          20,
+          21
+        ],
+        "remaining": 3,
+        "card": true
+      }
+    }
+  }
+}

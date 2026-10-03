@@ -1,0 +1,91 @@
+{
+  "label": "rank5Batch5",
+  "passed": true,
+  "at": "2026-10-02T11:28:04.191Z",
+  "details": {
+    "batch5": {
+      "air": {
+        "supported": true,
+        "success": [
+          {
+            "selection": "success",
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-end",
+              "sustained": false
+            }
+          }
+        ],
+        "failure": [
+          {
+            "selection": "failure",
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-end",
+              "sustained": false
+            }
+          }
+        ],
+        "criticalFailure": [
+          {
+            "selection": "failure",
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-end",
+              "sustained": false
+            }
+          }
+        ],
+        "attack": [
+          null,
+          null
+        ],
+        "immobilized": true,
+        "successImmobilized": false
+      },
+      "earth": {
+        "supported": true,
+        "fall": 2,
+        "grounded": true,
+        "successGrounded": false
+      },
+      "shard": {
+        "supported": true,
+        "persistent": [
+          "5"
+        ],
+        "note": true,
+        "acRule": [
+          {
+            "key": "FlatModifier",
+            "selector": [
+              "ac"
+            ],
+            "type": "status",
+            "value": -1,
+            "label": "Warshard Shot",
+            "slug": null,
+            "priority": 100,
+            "ignored": false,
+            "predicate": [],
+            "requiresEquipped": null,
+            "requiresInvestment": null,
+            "force": false,
+            "hideIfDisabled": false,
+            "fromEquipment": true,
+            "critical": null,
+            "removeAfterRoll": false,
+            "battleForm": false
+          }
+        ],
+        "afterRecovery": {
+          "note": false,
+          "acDelta": 1
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "label": "rank4Batch124",
+  "passed": true,
+  "at": "2026-10-03T09:48:11.194Z",
+  "details": {
+    "batch124": {
+      "cast": {
+        "heal": "1d6",
+        "value": 1
+      },
+      "living": {
+        "healed": 3,
+        "speed": true
+      },
+      "flyer": {
+        "healed": 0
+      },
+      "undead": 1
+    }
+  }
+}

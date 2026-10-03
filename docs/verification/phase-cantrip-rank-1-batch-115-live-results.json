@@ -1,0 +1,30 @@
+{
+  "batch": 115,
+  "spells": [
+    "Exchange Image"
+  ],
+  "results": [
+    {
+      "label": "cr1Batch115",
+      "passed": true,
+      "at": "2026-09-28T02:27:33.738Z",
+      "details": {
+        "exchangeImage": {
+          "beastEligible": false,
+          "target": [
+            "1 hours"
+          ],
+          "caster": [
+            "1 hours"
+          ],
+          "reminder": true,
+          "dismissed": "ended",
+          "after": [
+            0,
+            0
+          ]
+        }
+      }
+    }
+  ]
+}

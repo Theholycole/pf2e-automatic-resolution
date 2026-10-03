@@ -1,0 +1,125 @@
+{
+  "batch": "cantrip-rank-1-batch-10",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch10",
+    "passed": true,
+    "details": {
+      "bitingWords": {
+        "labels": [
+          "Attack Again (2 of 3)",
+          "Attack Again (3 of 3)",
+          "Attacks Used"
+        ],
+        "disabled": true,
+        "sameTurn": 1,
+        "foeTurn": 1,
+        "afterAll": 3,
+        "window": {
+          "combatId": "P9eDn7JNujmvSRpt",
+          "endsAt": 18886,
+          "attacks": [
+            {
+              "round": 1,
+              "turn": 0
+            },
+            {
+              "round": 2,
+              "turn": 0
+            },
+            {
+              "round": 3,
+              "turn": 0
+            }
+          ]
+        },
+        "damage": [
+          {
+            "total": 4,
+            "lost": [
+              4
+            ]
+          },
+          {
+            "total": 2,
+            "lost": [
+              4
+            ]
+          },
+          {
+            "total": null,
+            "lost": []
+          }
+        ]
+      },
+      "camelSpit": {
+        "dazzled": true,
+        "persistent": [
+          "1 acid"
+        ],
+        "total": 3,
+        "lost": [
+          6,
+          0
+        ]
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cr1Batch10",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "repeatAndFollowUp",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "spellAttack",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "attackRowRules",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch3",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch9",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "hazardRegions": 0
+  }
+}

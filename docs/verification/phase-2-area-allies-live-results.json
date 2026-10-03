@@ -1,0 +1,32 @@
+{
+  "generated": "2026-09-25T22:28:29.125Z",
+  "note": "Tokens on one row at 5 ft/100 px. First runs gave the Effect to the \"enemy\" because every fixture was hostile (PF2e alliance); the runtime now uses PF2e isAllyOf.",
+  "result": {
+    "Courageous Anthem": {
+      "radius": 60,
+      "includeSelf": true,
+      "caster": true,
+      "near10": true,
+      "mid50": true,
+      "far70": false,
+      "enemy5": false,
+      "alliances": [
+        "party",
+        "opposition"
+      ]
+    },
+    "Valiant Anthem": {
+      "radius": 30,
+      "includeSelf": false,
+      "caster": false,
+      "near10": true,
+      "mid50": false,
+      "far70": false,
+      "enemy5": false,
+      "alliances": [
+        "party",
+        "opposition"
+      ]
+    }
+  }
+}

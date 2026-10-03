@@ -1,0 +1,26 @@
+{
+  "label": "rank3Batch20",
+  "passed": true,
+  "at": "2026-10-02T12:02:02.974Z",
+  "details": {
+    "batch20": {
+      "atCast": 0,
+      "exposed": true,
+      "dazzled": true,
+      "farExposed": false,
+      "companionExposed": false,
+      "torrent": {
+        "supported": true,
+        "five": true,
+        "ten": true,
+        "objects": true
+      },
+      "quake": {
+        "supported": true,
+        "asked": 1,
+        "prone": true,
+        "choice": true
+      }
+    }
+  }
+}

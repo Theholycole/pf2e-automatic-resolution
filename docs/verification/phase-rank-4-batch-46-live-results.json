@@ -1,0 +1,35 @@
+{
+  "label": "rank4Batch46",
+  "passed": true,
+  "at": "2026-10-02T20:34:24.232Z",
+  "details": {
+    "batch46": {
+      "results": [
+        {
+          "persistent": [
+            "floor(6d4/2) cold"
+          ],
+          "immobilized": false,
+          "offGuard": false,
+          "note": false
+        },
+        {
+          "persistent": [
+            "6d4 cold"
+          ],
+          "immobilized": true,
+          "offGuard": false,
+          "note": true
+        },
+        {
+          "persistent": [
+            "(2 * 6d4) cold"
+          ],
+          "immobilized": true,
+          "offGuard": true,
+          "note": true
+        }
+      ]
+    }
+  }
+}

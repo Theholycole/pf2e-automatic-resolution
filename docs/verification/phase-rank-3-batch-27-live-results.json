@@ -1,0 +1,52 @@
+{
+  "label": "rank3Batch27",
+  "passed": true,
+  "at": "2026-10-02T13:20:57.452Z",
+  "details": {
+    "batch27": {
+      "echo": {
+        "supported": true,
+        "lost": 39,
+        "reminder": true
+      },
+      "dive": {
+        "supported": true,
+        "lost": 18,
+        "reminder": true
+      },
+      "fungal": {
+        "supported": true,
+        "sickened": [
+          1,
+          2
+        ],
+        "asked": true
+      },
+      "inhale": {
+        "supported": true,
+        "rolled": "criticalSuccess",
+        "effective": "success",
+        "worse": true,
+        "airNotes": [],
+        "plainNotes": [
+          "1 rounds",
+          "1 rounds"
+        ],
+        "plainEffects": [
+          "Powerful Inhalation: Failed save: <p><strong>GM / player:</strong> The creature can't speak above a raspy whisper.",
+          "Powerful Inhalation: Critical failure: <p><strong>GM / player:</strong> The creature can't speak or use abilities that "
+        ],
+        "lost": [
+          9,
+          38
+        ],
+        "status": "completed",
+        "applied": [
+          "applied",
+          "applied"
+        ],
+        "err": null
+      }
+    }
+  }
+}

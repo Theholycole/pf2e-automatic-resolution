@@ -1,0 +1,25 @@
+{
+  "label": "rank3Batch107",
+  "passed": true,
+  "at": "2026-10-03T07:04:36.172Z",
+  "details": {
+    "batch107": {
+      "plan": {
+        "kind": "save",
+        "crit": "(max(0,@item.level -1))d4[persistent,bleed]"
+      },
+      "stuck": {
+        "immobilized": true,
+        "speed": 15,
+        "bleed": [
+          "3d4 bleed"
+        ]
+      },
+      "slowed": {
+        "immobilized": false,
+        "speed": 15,
+        "bleed": []
+      }
+    }
+  }
+}

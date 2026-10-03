@@ -3,7 +3,8 @@ import { htmlToPlainText, stripHeighteningHTML } from "./description-parser.js";
 export const DISMISS_ACTION_UUID = "Compendium.pf2e.actionspf2e.Item.Dismiss";
 
 function dismissalSentence(html) {
-    const text = htmlToPlainText(stripHeighteningHTML(html));
+    // (Links hold dots: "You can @UUID[Compendium.pf2e.actionspf2e.Item.…]{Dismiss} the spell as a free action." reads by its label.)
+    const text = htmlToPlainText(stripHeighteningHTML(html)).replace(/@UUID\[[^\]]+\]\{([^}]+)\}/g, "$1");
     return (text.match(/[^.!?]*(?:\bDismiss\b)[^.!?]*[.!?]?/gi) ?? [])[0]?.trim() ?? null;
 }
 
@@ -23,7 +24,9 @@ function actionFor(sentence) {
         cost: { type: freeAction ? "free-action" : "action", value: freeAction ? 0 : 1 },
         traits: ["concentrate"]
     };
-    if (freeAction) {
+    // A triggered free action only when the sentence states the trigger ("… when you take fire damage"); "You can Dismiss the spell as a free
+    // action." is untriggered.
+    if (freeAction && /\b(?:when|whenever|after|if)\b|\btakes?\s+[a-z]+\s+damage\b/i.test(sentence)) {
         const damageType = sentence.match(/\btakes?\s+([a-z]+)\s+damage\b/i)?.[1]?.toLowerCase() ?? null;
         action.trigger = {
             event: "damage-taken",

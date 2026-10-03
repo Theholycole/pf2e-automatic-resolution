@@ -1,0 +1,25 @@
+{
+  "label": "rank4Batch14",
+  "passed": true,
+  "at": "2026-10-02T13:52:31.717Z",
+  "details": {
+    "batch14": {
+      "font": {
+        "level": "automatic",
+        "held": [
+          true,
+          false
+        ],
+        "caster": false,
+        "bonus": 1,
+        "button": true,
+        "countered": true,
+        "ended": [
+          false,
+          false
+        ],
+        "bonus8": 2
+      }
+    }
+  }
+}

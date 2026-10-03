@@ -1,0 +1,40 @@
+{
+  "label": "rank3Batch6",
+  "passed": true,
+  "at": "2026-10-02T09:45:24.909Z",
+  "details": {
+    "batch6": {
+      "cast": {
+        "dazzled": true,
+        "seekerDazzled": false,
+        "initial": [
+          "victim"
+        ],
+        "degree": "criticalFailure",
+        "fascinated": true,
+        "effect": "Hypnotize: Fascinated (while the area lasts)",
+        "reactionsNote": true
+      },
+      "turnEnd": 0,
+      "gmAction": {
+        "added": [
+          "seeker"
+        ],
+        "refused": [
+          "already fascinated"
+        ],
+        "label": "Review PFTEST P23 Affliction hypnotize seeker's exposure (used Seek or Interact on the area)",
+        "degree": "criticalSuccess",
+        "fascinated": false
+      },
+      "left": {
+        "dazzled": false,
+        "fascinated": true
+      },
+      "ended": {
+        "status": "ended",
+        "fascinated": false
+      }
+    }
+  }
+}

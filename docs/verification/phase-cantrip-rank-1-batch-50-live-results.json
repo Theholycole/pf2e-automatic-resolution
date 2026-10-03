@@ -1,0 +1,49 @@
+{
+  "batch": "cantrip-rank-1-batch-50",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch50",
+    "passed": true,
+    "details": {
+      "undeathsBlessing": {
+        "notes": [
+          [
+            "Heal and harm halved 1 rounds"
+          ],
+          [
+            "Treated as undead 1 minutes"
+          ]
+        ],
+        "reminder": true
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch50",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch46",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

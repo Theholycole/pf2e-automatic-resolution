@@ -1,0 +1,76 @@
+{
+  "batch": "cantrip-rank-1-batch-88",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch88",
+    "passed": true,
+    "details": {
+      "terrain": [
+        {
+          "type": "modifyMovementCost",
+          "walk": 2
+        }
+      ],
+      "land": [
+        25,
+        15,
+        10
+      ],
+      "offGuard": [
+        false,
+        true,
+        true
+      ],
+      "leaveFlag": [
+        false,
+        true,
+        true
+      ],
+      "names": [
+        null,
+        "Spell Effect: Swampcall (Failure)",
+        "Spell Effect: Swampcall (Critical Failure)"
+      ],
+      "afterLeaving": {
+        "failure": false,
+        "critical": true
+      }
+    }
+  },
+  "heightenedVariantArea": {
+    "castRank": 3,
+    "area": {
+      "type": "burst",
+      "value": 20
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch88",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch84",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

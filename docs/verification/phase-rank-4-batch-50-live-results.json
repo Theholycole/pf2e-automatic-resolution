@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-10-02T21:29:16.596Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "results": [
+    {
+      "label": "rank4Batch50",
+      "passed": true,
+      "at": "2026-10-02T21:28:57.314Z",
+      "details": {
+        "batch50": {
+          "terrain": true,
+          "notes": 2,
+          "exposed": true,
+          "failure": {
+            "formula": "6d6 poison",
+            "total": 30,
+            "lost": 30,
+            "fatigued": true
+          }
+        }
+      }
+    }
+  ]
+}

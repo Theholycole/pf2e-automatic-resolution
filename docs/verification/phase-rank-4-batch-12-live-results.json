@@ -1,0 +1,28 @@
+{
+  "label": "rank4Batch12",
+  "passed": true,
+  "at": "2026-10-02T13:31:12.169Z",
+  "details": {
+    "batch12": {
+      "freedom": {
+        "supported": true,
+        "labels": [
+          "Grabbed suppressed for 1 round (it returns afterwards, its own duration paused)",
+          "PFTEST P23 Affliction Freedom held breaks free from the grab."
+        ],
+        "grabbed": false,
+        "frightened": 2,
+        "marker": "1 rounds",
+        "restored": true
+      },
+      "worker": {
+        "supported": true,
+        "labels": [
+          "Fatigued suppressed for 1 minute (it returns afterwards, its own duration paused)"
+        ],
+        "fatigued": false,
+        "marker": "1 minutes"
+      }
+    }
+  }
+}

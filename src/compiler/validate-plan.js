@@ -1,11 +1,14 @@
 import { AUTOMATION_LEVELS, DEGREES } from "./constants.js";
 import { NATIVE_SPELL_EFFECT_UUID_PREFIX } from "./native-spell-effect-compiler.js";
 import { DISMISS_ACTION_UUID } from "./effect-termination-compiler.js";
+import { inspectCompiledNativeOutcomeEffect } from "../../scripts/native-outcome-effects.js";
+import { inspectGeneratedSpeedProof } from '../../scripts/generated-outcome-modifier.js';
 
 const VALID_MULTIPLIERS = new Set([0, 0.5, 1, 2]);
 const VALID_OUTCOME_DAMAGE_MODES = new Set(["none", "shared", "formulas", "mixed"]);
 const VALID_DURATION_MODES = new Set([
     "instantaneous",
+    "outcome",
     "fixed",
     "sustained",
     "turn-boundary",
@@ -14,7 +17,7 @@ const VALID_DURATION_MODES = new Set([
     "choice",
     "text"
 ]);
-const VALID_NATIVE_EFFECT_RECIPIENTS = new Set(["source", "target", "manual", "rank-dependent"]);
+const VALID_NATIVE_EFFECT_RECIPIENTS = new Set(["source", "target", "manual", "rank-dependent", "area-allies"]);
 const VALID_CONCRETE_RECIPIENTS = new Set(["source", "target"]);
 
 function validRankRange(range) {
@@ -71,6 +74,14 @@ function validateNativeEffect(effect, path, add) {
     if (effect?.resolutionStatus === "unresolved") {
         add("NATIVE_SPELL_EFFECT_UNRESOLVED", "The native spell effect did not resolve in the supplied catalog.", `${path}.uuid`);
     }
+    if (effect?.outcomeRule) {
+        const rule = effect.outcomeRule;
+        if (!['success', 'failure', 'criticalFailure', ...(['persistent-linked-effect', 'degree-choice', 'option-speed-effect'].includes(rule.kind) ? ['criticalSuccess'] : [])].includes(rule.degree)
+            || effect.degrees?.length !== 1 || effect.degrees[0] !== rule.degree
+            || !inspectCompiledNativeOutcomeEffect(effect, {degree: rule.degree}).supported) {
+            add('NATIVE_OUTCOME_RULE_INVALID', 'A native outcome Effect needs an exact target and a proof (degree Speed penalty, text modifiers, or persistent link).', `${path}.outcomeRule`);
+        }
+    }
 }
 
 export function validateAbilityPlan(plan) {
@@ -102,8 +113,22 @@ export function validateAbilityPlan(plan) {
         add("ACTOR_TARGET_CONSTRAINTS_INVALID", "Targeting requires a normalized Actor eligibility contract.", "$.targeting.actorConstraints");
     } else {
         for (const [index, predicate] of actorConstraints.predicates.entries()) {
-            const valid = predicate?.kind === "living-creature"
-                || (predicate?.kind === "trait" && predicate.present === true && !!predicate.slug);
+            const valid = predicate?.kind === "living-creature" || predicate?.kind === "hp-zero"
+                || (predicate?.kind === "not-immune-damage" && /^[a-z]+$/.test(predicate.damageType ?? ""))
+                || predicate?.kind === "undead-or-void-healing"
+                || predicate?.kind === "not-undead-or-void-healing"
+                || predicate?.kind === "enemy-of-caster"
+                || predicate?.kind === "non-ally-of-caster"
+                || predicate?.kind === "not-familiar"
+                || predicate?.kind === "land-speed-above-caster"
+                || (predicate?.kind === "size-at-most" && ["tiny", "sm", "med", "lg", "huge"].includes(predicate.size)
+                    && Object.entries(predicate.byRank ?? {}).every(([rank, size]) => /^\d+$/.test(rank) && ["tiny", "sm", "med", "lg", "huge"].includes(size)))
+                || (predicate?.kind === "trait" && typeof predicate.present === "boolean" && !!predicate.slug)
+                || predicate?.kind === "not-caster"
+                || predicate?.kind === "living-or-undead"
+                || (predicate?.kind === "persistent-damage" && /^[a-z]+$/.test(predicate.damageType ?? ""))
+                || (predicate?.kind === "condition" && /^[a-z-]+$/.test(predicate.slug ?? ""))
+                || (predicate?.kind === "gm-confirmed" && typeof predicate.question === "string" && predicate.question.length > 0);
             if (!valid) add("ACTOR_TARGET_PREDICATE_INVALID", "The Actor target predicate is not recognized.", `$.targeting.actorConstraints.predicates.${index}`);
         }
     }
@@ -121,6 +146,16 @@ export function validateAbilityPlan(plan) {
             if (outcome.damage?.mode === "shared" && !VALID_MULTIPLIERS.has(outcome.damage.multiplier)) {
                 add("DAMAGE_MULTIPLIER_INVALID", `Invalid basic-save multiplier for ${degree}.`, `$.resolution.outcomes.${degree}.damage.multiplier`);
             }
+            const componentOverrides = outcome.damage?.componentMultipliers;
+            if (componentOverrides) {
+                const selected = new Set(outcome.damage.sourceComponentIds ?? []);
+                if (outcome.damage.mode !== 'shared' || Array.isArray(componentOverrides)
+                    || typeof componentOverrides !== 'object'
+                    || Object.entries(componentOverrides).some(([id, multiplier]) =>
+                        !selected.has(id) || ![0.5, 1, 2].includes(multiplier))) {
+                    add('COMPONENT_MULTIPLIERS_INVALID', 'Component multiplier overrides must name selected components with supported values.', `$.resolution.outcomes.${degree}.damage.componentMultipliers`);
+                }
+            }
             if (!VALID_OUTCOME_DAMAGE_MODES.has(outcome.damage?.mode)) {
                 add("OUTCOME_DAMAGE_MODE_INVALID", `Invalid outcome damage mode for ${degree}.`, `$.resolution.outcomes.${degree}.damage.mode`);
             }
@@ -129,7 +164,9 @@ export function validateAbilityPlan(plan) {
                 add("MIXED_DAMAGE_MULTIPLIER_INVALID", `Invalid mixed shared-damage multiplier for ${degree}.`, `$.resolution.outcomes.${degree}.damage.shared.multiplier`);
             }
             if (["formulas", "mixed"].includes(outcome.damage?.mode)) {
-                if (outcome.damage.rollScope !== "outcome" || !Array.isArray(outcome.damage.formulas)
+                const combined = outcome.damage.rollScope === 'combined'
+                    && plan.compilerEvidence?.inlinePersistentDamage?.kind === 'inline-persistent-plus-structured';
+                if ((!combined && outcome.damage.rollScope !== "outcome") || !Array.isArray(outcome.damage.formulas)
                     || outcome.damage.formulas.length === 0) {
                     add("OUTCOME_DAMAGE_FORMULAS_REQUIRED", `Outcome-specific damage for ${degree} requires one or more outcome-scoped formulas.`, `$.resolution.outcomes.${degree}.damage`);
                 }
@@ -162,6 +199,57 @@ export function validateAbilityPlan(plan) {
                     add("LINKED_CONDITION_SELF_REFERENCE", "A linked condition cannot depend on itself.", `$.resolution.outcomes.${degree}.effects.${index}.whileCondition`);
                 }
             }
+        }
+        const componentProof = plan.compilerEvidence?.componentSelectiveDamage;
+        const componentCount = componentProof?.kind === 'attack-component-rows' ? plan.resolution.sharedDamage?.components?.length ?? 0
+            : componentProof?.kind === 'persistent-only-degree-rows' ? 1 : 2;
+        const loneEntry = ['attack-component-rows', 'persistent-only-degree-rows'].includes(componentProof?.kind) && plan.resolution.sharedDamage?.components?.[0]?.category === 'persistent';
+        if (componentProof && (!['two-component-initial-persistent', 'attack-component-rows', 'persistent-only-degree-rows'].includes(componentProof.kind)
+            || !Array.isArray(componentProof.componentIds) || componentProof.componentIds.length !== componentCount
+            // An attack's lone entry is read as a list only when it's persistent.
+            || componentCount < (loneEntry ? 1 : 2)
+            || new Set(componentProof.componentIds).size !== componentCount
+            || componentProof.componentIds.some(id => !plan.resolution.sharedDamage?.components?.some(component => component.id === id))
+            || DEGREES.some(degree => {
+                // A mixed row (shared damage plus an inline roll) selects entries within its shared part.
+                const shared = damage => damage?.mode === 'mixed' ? damage.shared : damage;
+                if (componentProof.byDegree?.[degree]?.mode !== plan.resolution.outcomes[degree]?.damage?.mode) return true;
+                const claimed = shared(componentProof.byDegree?.[degree]);
+                const actual = shared(plan.resolution.outcomes[degree]?.damage);
+                const sameOverrides = Object.entries(claimed?.componentMultipliers ?? {}).length
+                    === Object.entries(actual?.componentMultipliers ?? {}).length
+                    && Object.entries(claimed?.componentMultipliers ?? {}).every(([id, value]) =>
+                        actual?.componentMultipliers?.[id] === value);
+                return componentProof.sourceText?.[degree] !== plan.resolution.outcomes[degree]?.rawText
+                    || claimed?.mode !== actual?.mode || claimed?.multiplier !== actual?.multiplier
+                    || !Array.isArray(claimed?.sourceComponentIds)
+                    || claimed.sourceComponentIds.length !== actual?.sourceComponentIds?.length
+                    || claimed.sourceComponentIds.some((id, index) => id !== actual.sourceComponentIds[index])
+                    || !sameOverrides;
+            }))) {
+            add('COMPONENT_SELECTION_PROOF_INVALID', 'Component selection requires exact degree text and structured component IDs.', '$.compilerEvidence.componentSelectiveDamage');
+        }
+        const inlineProof = plan.compilerEvidence?.inlinePersistentDamage;
+        if (inlineProof && (inlineProof.kind !== 'inline-persistent-plus-structured'
+            || inlineProof.persistentType !== 'bleed'
+            || !Array.isArray(inlineProof.directComponentIds)
+            || ![1, 2].includes(inlineProof.directComponentIds.length)
+            || new Set(inlineProof.directComponentIds).size !== inlineProof.directComponentIds.length
+            || JSON.stringify(inlineProof.directComponents) !== JSON.stringify(
+                plan.resolution.sharedDamage?.components?.map(component =>
+                    ({id: component.id, formula: component.formula, type: component.type})))
+            || inlineProof.directComponentIds.some(id => !plan.resolution.sharedDamage?.components?.some(component =>
+                component.id === id && component.category == null && component.kinds?.length === 1
+                && component.kinds[0] === 'damage'))
+            || !/^\((?:@item\.(?:rank|level)|[1-9]\d*\*ceil\(@item\.(?:rank|level)\/[1-9]\d*\)-\d+)\)\[bleed\]$/i.test(inlineProof.sourceFormula)
+            || DEGREES.some(degree => inlineProof.sourceText?.[degree] !== plan.resolution.outcomes[degree]?.rawText
+                || JSON.stringify(inlineProof.byDegree?.[degree]) !== JSON.stringify(plan.resolution.outcomes[degree]?.damage)))) {
+            add('INLINE_PERSISTENT_PROOF_INVALID', 'Inline persistent damage requires exact source, component, and degree proof.', '$.compilerEvidence.inlinePersistentDamage');
+        }
+        const speedProof = inspectGeneratedSpeedProof(plan.compilerEvidence?.generatedSpeedPenalties,
+            plan.resolution.outcomes,{lifecycle:plan.lifecycle});
+        if (!speedProof.supported) {
+            add('GENERATED_SPEED_PROOF_INVALID', speedProof.reason, '$.compilerEvidence.generatedSpeedPenalties');
         }
     }
 
@@ -398,8 +486,10 @@ export function validateAbilityPlan(plan) {
         }
         const cost = termination.action?.cost;
         if (!((cost?.type === "action" && cost.value === 1)
-            || (cost?.type === "free-action" && cost.value === 0 && termination.action?.trigger?.event))) {
-            add("NATIVE_EFFECT_TERMINATION_COST_INVALID", "Dismiss must be a one-action activity or an explicitly triggered free action.", `${path}.action.cost`);
+            || (cost?.type === "free-action" && cost.value === 0 && termination.action?.trigger?.event)
+            // "You can Dismiss the spell as a free action.": an untriggered free action, stated in its sentence.
+            || (cost?.type === "free-action" && cost.value === 0 && termination.action?.trigger == null && /\bDismiss the spell as a free action\.$/.test(String(termination.sourceText ?? ""))))) {
+            add("NATIVE_EFFECT_TERMINATION_COST_INVALID", "Dismiss must be a one-action activity, an explicitly triggered free action, or a stated free action.", `${path}.action.cost`);
         }
         if (!plan.lifecycle?.termination?.transitionIds?.includes(termination.id)) {
             add("LIFECYCLE_TERMINATION_LINK_INVALID", "A native Effect termination must appear in the lifecycle transition list.", path);

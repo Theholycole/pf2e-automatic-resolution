@@ -1,0 +1,41 @@
+{
+  "generatedAt": "2026-10-02T22:49:09.696Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "results": [
+    {
+      "label": "rank4Batch60",
+      "passed": true,
+      "at": "2026-10-02T22:48:57.514Z",
+      "details": {
+        "batch60": {
+          "effects": [
+            [
+              "10 minutes"
+            ],
+            [
+              "-1 unlimited"
+            ],
+            [
+              "-1 unlimited"
+            ]
+          ],
+          "options": [
+            [],
+            [
+              "sages-curse-result:failure"
+            ],
+            [
+              "sages-curse-result:critical-failure"
+            ]
+          ],
+          "notes": [
+            1,
+            1,
+            1
+          ]
+        }
+      }
+    }
+  ]
+}

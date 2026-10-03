@@ -1,0 +1,51 @@
+{
+  "batch": 153,
+  "spells": [
+    "Reinforce Eidolon",
+    "Sting of the Sea",
+    "Hand of the Apprentice",
+    "Swampcall"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch153",
+      "passed": true,
+      "at": "2026-09-28T23:45:14.931Z",
+      "details": {
+        "textCorrections": {
+          "reinforce": {
+            "status": "applied",
+            "resistance": 1
+          },
+          "sting": {
+            "types": [
+              "untyped"
+            ]
+          },
+          "hand": {
+            "abilities": [
+              "cha"
+            ]
+          },
+          "swampcall": {
+            "atCast": true,
+            "bound": {
+              "combatId": "fyhEgs2tMnBpS8AP",
+              "actorUuid": "Actor.ILUAZujetc8eyrzb",
+              "startedAt": {
+                "round": 1,
+                "turn": 0
+              },
+              "seen": false
+            },
+            "duringItsTurn": true,
+            "afterItsTurn": false
+          }
+        }
+      }
+    }
+  ]
+}

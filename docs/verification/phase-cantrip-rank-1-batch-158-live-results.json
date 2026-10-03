@@ -1,0 +1,45 @@
+{
+  "batch": 158,
+  "spells": [
+    "Fashionista",
+    "Groom Companion",
+    "Root Reading"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch158",
+      "passed": true,
+      "at": "2026-09-29T00:57:07.495Z",
+      "details": {
+        "bonusEffects": {
+          "fashionista": {
+            "duration": "1 hours",
+            "diversion": [
+              3
+            ],
+            "lie": []
+          },
+          "groom": {
+            "refused": "Groom Companion: PFTEST P23 Affliction ungroomed isn't your companion or eidolon.",
+            "performance": [
+              1
+            ]
+          },
+          "root": {
+            "seek": [
+              1
+            ],
+            "track": [
+              1
+            ],
+            "trackAfter": false,
+            "seekStays": true
+          }
+        }
+      }
+    }
+  ]
+}

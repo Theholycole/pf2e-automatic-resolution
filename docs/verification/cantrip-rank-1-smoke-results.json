@@ -1,0 +1,471 @@
+{
+ "date": "2026-09-30",
+ "world": "pftest",
+ "tool": "tools/cantrip-rank-1-smoke.mjs",
+ "total": 506,
+ "counts": {
+  "ok": 435,
+  "refused": 11,
+  "no-button": 37,
+  "error": 23
+ },
+ "noButton": {
+  "variantCard": [
+   "Concordant Choir",
+   "Gouging Claw",
+   "Gravitational Pull",
+   "Harm",
+   "Heal Animal",
+   "Heal Companion",
+   "Horizon Thunder Sphere",
+   "Kinetic Ram",
+   "Lay on Hands",
+   "Telekinetic Projectile",
+   "Touch of the Void"
+  ],
+  "notFound": [
+   "Allegro",
+   "Blood Infusion",
+   "Bone Spear",
+   "Dead Weight",
+   "Deathly Scream",
+   "Defended by Spirits",
+   "Extradimensional Cover",
+   "Fact Check",
+   "Fated Healing",
+   "Forbidding Ward",
+   "Foresee the Path",
+   "Groom Companion",
+   "Liberating Command",
+   "Life Tap",
+   "Mending",
+   "Necromancer's Generosity",
+   "Necrotic Bomb",
+   "Omnidirectional Scan",
+   "Practice Makes Perfect",
+   "Protect Companion",
+   "Protector's Sacrifice",
+   "Share Burden",
+   "Song of the Soul",
+   "Stabilize",
+   "Unbroken Panoply",
+   "Unfetter Eidolon"
+  ]
+ },
+ "error": {
+  "timedOut": [
+   "Beseech the Sphinx",
+   "Blood Ward",
+   "Conductive Weapon",
+   "Entreat Spirit",
+   "Funeral Flames",
+   "Object Memory",
+   "Pocket Library",
+   "Precious Gleam",
+   "Runic Weapon",
+   "Serrate",
+   "Shillelagh",
+   "Untamed Shift",
+   "Weapon Surge"
+  ],
+  "gmQuestion": [
+   "Charm",
+   "Charming Touch",
+   "Phase Bolt",
+   "Shocking Grasp",
+   "Thunderstrike",
+   "Wilding Word"
+  ],
+  "other": {
+   "Acid Splash": "the spell attack against the (splash) caster returned no degree of success; the ally's save was changed mid-dialog",
+   "Corpse Bloom": "Corpse Bloom's areas can't overlap (the stubbed placement put both areas on the enemy)",
+   "Home Among Mulberry Leaves": "asks for the caster's PF2e Strike first (the NPC fixture has none)",
+   "Pest Form": "battle forms need a character actor (the fixture is an NPC)"
+  }
+ },
+ "refused": {
+  "Cackle": "no sustained spell to Sustain",
+  "Dimensional Assault": "no melee Strike that meets the requirement",
+  "Elemental Toss": "no elemental bloodline choice",
+  "Flurry of Claws": "no draconic bloodline choice",
+  "Hand of the Apprentice": "holds no melee weapon",
+  "Perfected Mind": "no module-resolved mental effect on the caster",
+  "Share Lore": "not trained in a Lore",
+  "Shielding Strike": "no melee Strike",
+  "Shooting Star": "no ranged Strike",
+  "Sky Laughs at Waves": "no melee Strike",
+  "Spinning Staff": "no melee Strike"
+ },
+ "note": "Every spell not listed was 'ok': its card's module button resolved it with no error. The page's upload was refused at the end of the run, so this file was written from the results read back from the page.",
+ "retriage": {
+  "date": "2026-09-30",
+  "note": "The 60 flagged spells re-run with the fixed smoke tool (card copies, variants, PF2e prompts, GM questions, retries keeping the spell, a character caster with weapons where needed) and the two runtime fixes. Raw runs: cantrip-rank-1-smoke-rerun-*.json.",
+  "counts": {
+   "ok": 43,
+   "refused": 16,
+   "designed-manual-step": 1
+  },
+  "results": {
+   "Concordant Choir": {
+    "name": "Concordant Choir",
+    "status": "ok",
+    "detail": "save card finalized",
+    "caster": "npc"
+   },
+   "Gouging Claw": {
+    "name": "Gouging Claw",
+    "status": "ok",
+    "detail": "save card finalized",
+    "caster": "npc"
+   },
+   "Gravitational Pull": {
+    "name": "Gravitational Pull",
+    "status": "ok",
+    "detail": "save card finalized",
+    "caster": "npc"
+   },
+   "Harm": {
+    "name": "Harm",
+    "status": "ok",
+    "detail": "save card finalized",
+    "caster": "npc"
+   },
+   "Heal Animal": {
+    "name": "Heal Animal",
+    "status": "refused",
+    "detail": "Heal Animal: select the creature to heal before resolving.",
+    "caster": "npc"
+   },
+   "Heal Companion": {
+    "name": "Heal Companion",
+    "status": "ok",
+    "detail": "Native Effect Resolved",
+    "caster": "npc"
+   },
+   "Horizon Thunder Sphere": {
+    "name": "Horizon Thunder Sphere",
+    "status": "ok",
+    "detail": "save card finalized",
+    "caster": "npc"
+   },
+   "Kinetic Ram": {
+    "name": "Kinetic Ram",
+    "status": "ok",
+    "detail": "save card finalized",
+    "caster": "npc"
+   },
+   "Lay on Hands": {
+    "name": "Lay on Hands",
+    "status": "ok",
+    "detail": "Native Effect Resolved",
+    "caster": "npc"
+   },
+   "Telekinetic Projectile": {
+    "name": "Telekinetic Projectile",
+    "status": "ok",
+    "detail": "save card finalized",
+    "caster": "npc"
+   },
+   "Touch of the Void": {
+    "name": "Touch of the Void",
+    "status": "refused",
+    "detail": "Touch of the Void (Healing): select at least one target token before resolving this Effect.",
+    "caster": "npc"
+   },
+   "Allegro": {
+    "name": "Allegro",
+    "status": "ok",
+    "detail": "Native Effect Resolved",
+    "caster": "npc"
+   },
+   "Blood Infusion": {
+    "name": "Blood Infusion",
+    "status": "ok",
+    "detail": "save card finalized",
+    "caster": "npc"
+   },
+   "Bone Spear": {
+    "name": "Bone Spear",
+    "status": "ok",
+    "detail": "save card finalized",
+    "caster": "npc"
+   },
+   "Dead Weight": {
+    "name": "Dead Weight",
+    "status": "ok",
+    "detail": "save card finalized",
+    "caster": "npc"
+   },
+   "Deathly Scream": {
+    "name": "Deathly Scream",
+    "status": "ok",
+    "detail": "save card finalized",
+    "caster": "npc"
+   },
+   "Defended by Spirits": {
+    "name": "Defended by Spirits",
+    "status": "ok",
+    "detail": "Native Effect Resolved",
+    "caster": "npc"
+   },
+   "Extradimensional Cover": {
+    "name": "Extradimensional Cover",
+    "status": "refused",
+    "detail": "Extradimensional Cover: the square must be empty or occupied by you or an ally (PFTEST Smoke enemy is there).",
+    "caster": "npc"
+   },
+   "Fact Check": {
+    "name": "Fact Check",
+    "status": "refused",
+    "detail": "Fact Check: no Recall Knowledge check by you or an ally within 30 feet to check.",
+    "caster": "npc"
+   },
+   "Fated Healing": {
+    "name": "Fated Healing",
+    "status": "ok",
+    "detail": "Native Effect Resolved",
+    "caster": "npc"
+   },
+   "Forbidding Ward": {
+    "name": "Forbidding Ward",
+    "status": "ok",
+    "detail": "Native Effect Resolved",
+    "caster": "npc"
+   },
+   "Foresee the Path": {
+    "name": "Foresee the Path",
+    "status": "ok",
+    "detail": "Native Effect Resolved",
+    "caster": "npc"
+   },
+   "Groom Companion": {
+    "name": "Groom Companion",
+    "status": "refused",
+    "detail": "Groom Companion: target your companion or eidolon.",
+    "caster": "npc"
+   },
+   "Liberating Command": {
+    "name": "Liberating Command",
+    "status": "refused",
+    "detail": "Liberating Command: target 1 creature.",
+    "caster": "npc"
+   },
+   "Life Tap": {
+    "name": "Life Tap",
+    "status": "ok",
+    "detail": "save card finalized",
+    "caster": "npc"
+   },
+   "Mending": {
+    "name": "Mending",
+    "status": "refused",
+    "detail": "Mending: PFTEST Smoke enemy has no damaged item it can mend at rank 1.",
+    "caster": "npc"
+   },
+   "Necromancer's Generosity": {
+    "name": "Necromancer's Generosity",
+    "status": "refused",
+    "detail": "Necromancer's Generosity: select at least one target token before resolving this Effect.",
+    "caster": "npc"
+   },
+   "Necrotic Bomb": {
+    "name": "Necrotic Bomb",
+    "status": "ok",
+    "detail": "save card finalized",
+    "caster": "npc"
+   },
+   "Omnidirectional Scan": {
+    "name": "Omnidirectional Scan",
+    "status": "ok",
+    "detail": "Native Effect Resolved",
+    "caster": "npc"
+   },
+   "Practice Makes Perfect": {
+    "name": "Practice Makes Perfect",
+    "status": "refused",
+    "detail": "Practice Makes Perfect: target the creature whose skill check failed.",
+    "caster": "npc"
+   },
+   "Protect Companion": {
+    "name": "Protect Companion",
+    "status": "refused",
+    "detail": "Protect Companion: target your eidolon or 1 minion under your control.",
+    "caster": "npc"
+   },
+   "Protector's Sacrifice": {
+    "name": "Protector's Sacrifice",
+    "status": "refused",
+    "detail": "Protector's Sacrifice: PFTEST Smoke ally hasn't taken damage to react to.",
+    "caster": "npc"
+   },
+   "Share Burden": {
+    "name": "Share Burden",
+    "status": "ok",
+    "detail": "Native Effect Resolved",
+    "caster": "npc"
+   },
+   "Song of the Soul": {
+    "name": "Song of the Soul",
+    "status": "refused",
+    "detail": "Song of the Soul: select at least one target token before resolving this Effect.",
+    "caster": "npc"
+   },
+   "Stabilize": {
+    "name": "Stabilize",
+    "status": "refused",
+    "detail": "Stabilize: target exactly 1 dying creature.",
+    "caster": "npc"
+   },
+   "Unbroken Panoply": {
+    "name": "Unbroken Panoply",
+    "status": "ok",
+    "detail": "Native Effect Resolved",
+    "caster": "character"
+   },
+   "Unfetter Eidolon": {
+    "name": "Unfetter Eidolon",
+    "status": "refused",
+    "detail": "Unfetter Eidolon: target your eidolon.",
+    "caster": "npc"
+   },
+   "Beseech the Sphinx": {
+    "name": "Beseech the Sphinx",
+    "status": "ok",
+    "detail": "Native Effect Resolved",
+    "caster": "npc"
+   },
+   "Blood Ward": {
+    "name": "Blood Ward",
+    "status": "ok",
+    "detail": "Native Effect Resolved",
+    "caster": "npc"
+   },
+   "Conductive Weapon": {
+    "name": "Conductive Weapon",
+    "status": "ok",
+    "detail": "Native Effect Resolved",
+    "caster": "character"
+   },
+   "Entreat Spirit": {
+    "name": "Entreat Spirit",
+    "status": "ok",
+    "detail": "Native Effect Resolved",
+    "caster": "npc"
+   },
+   "Funeral Flames": {
+    "name": "Funeral Flames",
+    "status": "ok",
+    "detail": "Native Effect Resolved",
+    "caster": "character"
+   },
+   "Object Memory": {
+    "name": "Object Memory",
+    "status": "ok",
+    "detail": "Native Effect Resolved",
+    "caster": "character"
+   },
+   "Pocket Library": {
+    "name": "Pocket Library",
+    "status": "refused",
+    "detail": "Pocket Library: PF2e's Spell Effect: Pocket Library has no option open to PFTEST Smoke caster (it needs trained in Arcana, or trained in Crafting, or trained in Medicine, or trained in Nature, or trained in Occultism, or trained in Religion, or trained in Society).",
+    "caster": "npc"
+   },
+   "Precious Gleam": {
+    "name": "Precious Gleam",
+    "status": "ok",
+    "detail": "Native Effect Resolved",
+    "caster": "character"
+   },
+   "Runic Weapon": {
+    "name": "Runic Weapon",
+    "status": "ok",
+    "detail": "Native Effect Resolved",
+    "caster": "character"
+   },
+   "Serrate": {
+    "name": "Serrate",
+    "status": "ok",
+    "detail": "Native Effect Resolved",
+    "caster": "character"
+   },
+   "Shillelagh": {
+    "name": "Shillelagh",
+    "status": "ok",
+    "detail": "Native Effect Resolved",
+    "caster": "character"
+   },
+   "Untamed Shift": {
+    "name": "Untamed Shift",
+    "status": "refused",
+    "detail": "Untamed Shift: PF2e's Spell Effect: Untamed Shift has no option open to PFTEST Smoke caster (it needs the Untamed Form feat, or the Insect Shape feat, or the Elemental Shape feat, or the Plant Shape feat, or the Soaring Shape feat).",
+    "caster": "npc"
+   },
+   "Weapon Surge": {
+    "name": "Weapon Surge",
+    "status": "ok",
+    "detail": "Native Effect Resolved",
+    "caster": "character"
+   },
+   "Charm": {
+    "name": "Charm",
+    "status": "ok",
+    "detail": "save card finalized",
+    "caster": "npc"
+   },
+   "Charming Touch": {
+    "name": "Charming Touch",
+    "status": "ok",
+    "detail": "save card finalized",
+    "caster": "npc"
+   },
+   "Phase Bolt": {
+    "name": "Phase Bolt",
+    "status": "ok",
+    "detail": "save card finalized",
+    "caster": "npc"
+   },
+   "Shocking Grasp": {
+    "name": "Shocking Grasp",
+    "status": "ok",
+    "detail": "save card finalized",
+    "caster": "npc"
+   },
+   "Thunderstrike": {
+    "name": "Thunderstrike",
+    "status": "ok",
+    "detail": "save card finalized",
+    "caster": "npc"
+   },
+   "Wilding Word": {
+    "name": "Wilding Word",
+    "status": "ok",
+    "detail": "save card finalized",
+    "caster": "npc"
+   },
+   "Acid Splash": {
+    "name": "Acid Splash",
+    "status": "ok",
+    "detail": "save card finalized",
+    "caster": "npc"
+   },
+   "Corpse Bloom": {
+    "name": "Corpse Bloom",
+    "status": "ok",
+    "detail": "Place Lingering Area",
+    "caster": "npc"
+   },
+   "Home Among Mulberry Leaves": {
+    "name": "Home Among Mulberry Leaves",
+    "status": "error",
+    "detail": "rollSave: Home Among Mulberry Leaves: make PFTEST Smoke caster's Strike against PFTEST Smoke enemy with PF2e first (with PFTEST Smoke enemy targeted), then read its result.",
+    "caster": "character"
+   },
+   "Pest Form": {
+    "name": "Pest Form",
+    "status": "ok",
+    "detail": "Choose and Apply Form",
+    "caster": "character"
+   }
+  }
+ }
+}

@@ -1,0 +1,98 @@
+{
+  "generatedAt": "2026-09-25T00:41:13.968Z",
+  "scope": "Disposable pftest GM fixtures; Foundry 14.367 / PF2e 8.5.0; only this module active. Save degrees are real rolls corrected to explicit provisional degrees; GM confirmation answers set per target before rolling.",
+  "attempts": [
+    {
+      "label": "environment",
+      "passed": true,
+      "at": "2026-09-25T00:40:28.814Z",
+      "error": null
+    },
+    {
+      "label": "torturousTrauma",
+      "passed": true,
+      "at": "2026-09-25T00:40:29.282Z",
+      "error": null
+    },
+    {
+      "label": "vomitSwarm",
+      "passed": true,
+      "at": "2026-09-25T00:40:33.886Z",
+      "error": null
+    }
+  ],
+  "cases": [
+    {
+      "label": "environment",
+      "passed": true,
+      "at": "2026-09-25T00:40:28.814Z",
+      "details": {
+        "foundry": "14.367",
+        "pf2e": "8.5.0",
+        "module": "0.8.2",
+        "world": "pftest",
+        "modules": [
+          "pf2e-automatic-resolution"
+        ]
+      }
+    },
+    {
+      "label": "torturousTrauma",
+      "passed": true,
+      "at": "2026-09-25T00:40:29.282Z",
+      "details": [
+        {
+          "degree": "criticalSuccess",
+          "hpLost": 0,
+          "fatigued": false
+        },
+        {
+          "degree": "success",
+          "hpLost": 2,
+          "fatigued": false
+        },
+        {
+          "degree": "failure",
+          "hpLost": 4,
+          "fatigued": false
+        },
+        {
+          "degree": "criticalFailure",
+          "hpLost": 8,
+          "fatigued": true
+        }
+      ]
+    },
+    {
+      "label": "vomitSwarm",
+      "passed": true,
+      "at": "2026-09-25T00:40:33.886Z",
+      "details": {
+        "out": [
+          {
+            "degree": "criticalSuccess",
+            "sickened": 0,
+            "hpLost": 0
+          },
+          {
+            "degree": "success",
+            "sickened": 0,
+            "hpLost": 6
+          },
+          {
+            "degree": "failure",
+            "sickened": 1,
+            "hpLost": 12
+          },
+          {
+            "degree": "criticalFailure",
+            "sickened": 1,
+            "hpLost": 24
+          }
+        ],
+        "retch": true,
+        "cardId": "UyGydSa4YMcOzyoc"
+      }
+    }
+  ]
+}

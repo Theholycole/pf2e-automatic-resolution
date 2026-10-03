@@ -1,0 +1,14 @@
+{
+ "label": "rank10Batch1",
+ "passed": true,
+ "at": "2026-10-03T17:54:17.799Z",
+ "details": {
+  "batch1": {
+   "hero": {
+    "kind": "healing",
+    "healed": 40,
+    "notes": true
+   }
+  }
+ }
+}

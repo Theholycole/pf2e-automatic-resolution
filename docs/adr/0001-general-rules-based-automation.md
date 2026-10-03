@@ -1,0 +1,9 @@
+# General rules-based spell automation
+
+Accepted by the user on 2026-09-22 when resuming the implementation handoff: spell automation must use general rules without per-spell implementations. The current hybrid of a shared compiler and individually coded spell workflows does not satisfy that requirement. Coverage expansion must therefore develop reusable mechanics and compose them from spell data, rather than add named-spell adapters.
+
+Native structured spell data, linked native Effects and recognized rules-text structures supply the inputs. A spell's name, slug, source UUID or a fingerprint of its entire description must not select an implementation of its mechanics. Source identity remains valid for provenance, document lookup, cast ownership, immunity scope and coverage evidence. Native spell-specific content is input data; moving handwritten spell behavior into a registry or JSON table does not make the implementation general.
+
+Extend the existing normalized ability plan and shared execution/lifecycle modules. Recognized custom spells must receive the same workflow as official spells with equivalent mechanics. Unsupported or ambiguous mechanics remain explicit gaps under the existing coverage contract; this decision does not promise understanding of arbitrary prose or authorize silently ignoring unrecognized rules.
+
+Existing spell-specific workflows are migration debt. Replace them with verified general mechanisms while preserving active casts and previously verified behavior. The migration sequence is documented in [the architecture assessment](../planning/general-rules-migration.md); its proposed implementation details are distinct from the user's accepted architectural requirement. Phase 2–3 remains the product priority, and Phase 6 remains deferred. No runtime migration or new support is established by this decision record.

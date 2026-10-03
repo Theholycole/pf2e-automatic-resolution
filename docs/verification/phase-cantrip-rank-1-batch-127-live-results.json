@@ -1,0 +1,29 @@
+{
+  "batch": 127,
+  "spells": [
+    "Grease"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch127",
+      "passed": true,
+      "at": "2026-09-28T10:08:39.436Z",
+      "details": {
+        "grease": {
+          "statistic": "reflex",
+          "prone": [
+            false,
+            true,
+            true
+          ],
+          "acrobatics": true,
+          "balance": true,
+          "object": true
+        }
+      }
+    }
+  ]
+}

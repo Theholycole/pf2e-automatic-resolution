@@ -1,0 +1,18 @@
+{
+  "label": "rank5Batch15",
+  "passed": true,
+  "at": "2026-10-02T16:45:34.170Z",
+  "details": {
+    "batch15": {
+      "terrain": true,
+      "event": "turn-end",
+      "statistic": "will",
+      "slowed": {
+        "value": 1,
+        "duration": "1 rounds"
+      },
+      "notes": true,
+      "dismissible": true
+    }
+  }
+}

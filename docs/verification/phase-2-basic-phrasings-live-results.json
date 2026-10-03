@@ -1,0 +1,24 @@
+{
+  "generated": "2026-09-25T22:33:22.365Z",
+  "result": {
+    "label": "phrasings",
+    "passed": true,
+    "at": "2026-09-25T22:32:29.466Z",
+    "details": {
+      "shockwave": {
+        "grounded": {
+          "prone": true,
+          "hpLost": 3
+        },
+        "flier": "immune"
+      },
+      "eradicateUndeath": {
+        "undeadHpLost": 15,
+        "living": false
+      },
+      "crashingWave": {
+        "hpLost": 13
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "label": "rank5Batch24",
+  "passed": true,
+  "at": "2026-10-02T19:22:26.955Z",
+  "details": {
+    "batch24": {
+      "kind": "save",
+      "eligible": [
+        true,
+        true,
+        false
+      ],
+      "water": {
+        "value": 1,
+        "duration": 1
+      },
+      "water2": {
+        "value": 2,
+        "duration": 1
+      },
+      "dry": {
+        "value": 0,
+        "duration": null
+      },
+      "note": true
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "label": "rank4Batch39",
+  "passed": true,
+  "at": "2026-10-02T18:11:41.961Z",
+  "details": {
+    "batch39": {
+      "burstNote": true,
+      "formula": "6d8 slashing",
+      "total": 32,
+      "lost": 64,
+      "bleed": "(1d8 + 5 - 4)",
+      "caster": {
+        "result": {
+          "formula": "1d4 slashing",
+          "total": 1,
+          "damage": 1
+        },
+        "lost": 1
+      }
+    }
+  }
+}

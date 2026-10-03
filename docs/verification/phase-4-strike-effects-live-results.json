@@ -1,0 +1,41 @@
+{
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "strikeEffects",
+      "passed": true,
+      "at": "2026-09-26T13:35:09.978Z",
+      "details": {
+        "forceFling": {
+          "effects": [
+            "Effect: Force Fling"
+          ],
+          "damage": "1d6 force"
+        },
+        "innerUpheaval": {
+          "effects": [
+            "Spell Effect: Inner Upheaval (Force)"
+          ],
+          "attackModifiers": [
+            "Modifier 20 untyped",
+            "Inner Upheaval 1 status"
+          ],
+          "damage": "1d6 slashing + 1d6 force"
+        },
+        "fulminatingImpact": {
+          "beforeStrike": [
+            "Spell Effect: Fulminating Impact (Initial Strike)"
+          ],
+          "firstDamage": "1d6 slashing + 1d6 electricity + 1d6 sonic",
+          "afterStrike": [
+            "Spell Effect: Fulminating Impact"
+          ],
+          "secondDamage": "1d6 slashing + 1 electricity + 1 sonic"
+        },
+        "chatButton": "Resolve Strike Spell (Force Fling spell card)"
+      }
+    }
+  ]
+}

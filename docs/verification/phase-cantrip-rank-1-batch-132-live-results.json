@@ -1,0 +1,59 @@
+{
+  "batch": 132,
+  "spells": [
+    "Call to Arms",
+    "Cinder Gaze",
+    "Entropic Wheel",
+    "Gravity Weapon",
+    "Healer's Blessing",
+    "Loremaster's Etude",
+    "Phase Familiar"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch132",
+      "passed": true,
+      "at": "2026-09-28T20:06:15.463Z",
+      "details": {
+        "statedEffects": {
+          "callToArms": {
+            "near": true,
+            "nearTemp": 1,
+            "far": false,
+            "caster": false
+          },
+          "cinderGaze": {
+            "present": true,
+            "badge": 3
+          },
+          "entropicWheel": {
+            "present": true,
+            "badge": 1
+          },
+          "gravityWeapon": {
+            "present": true
+          },
+          "healersBlessing": {
+            "present": true,
+            "caster": false
+          },
+          "loremastersEtude": {
+            "present": true,
+            "rules": [
+              "RollTwice"
+            ]
+          },
+          "phaseFamiliar": {
+            "present": true,
+            "resistance": [
+              "all-damage:5"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

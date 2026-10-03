@@ -1,0 +1,55 @@
+{
+  "batch": 161,
+  "spells": [
+    "Shielding Strike",
+    "Spinning Staff",
+    "Dimensional Assault",
+    "Sky Laughs at Waves",
+    "Shooting Star"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch161",
+      "passed": true,
+      "at": "2026-09-29T01:14:59.405Z",
+      "details": {
+        "strikeSpells": {
+          "shielding": {
+            "raised": "Steel Shield",
+            "shieldRaised": true,
+            "weapons": [
+              "Staff",
+              "Steel Shield",
+              "Unarmed Attack"
+            ]
+          },
+          "spinning": {
+            "weapons": [
+              "Staff"
+            ],
+            "buttons": [
+              "Strike 1: Staff",
+              "Strike 2: Staff"
+            ],
+            "map": [
+              "0",
+              "-5"
+            ]
+          },
+          "sky": {
+            "refused": "Sky Laughs at Waves: PFTEST P23 Affliction strike caster has no melee Strike that meets the spell's requirement."
+          },
+          "star": {
+            "weapons": [
+              "Shortbow"
+            ],
+            "notes": true
+          }
+        }
+      }
+    }
+  ]
+}

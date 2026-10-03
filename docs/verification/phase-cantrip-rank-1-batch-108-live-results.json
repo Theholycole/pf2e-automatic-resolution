@@ -1,0 +1,37 @@
+{
+  "batch": 108,
+  "spells": [
+    "Thrall Charge"
+  ],
+  "results": [
+    {
+      "label": "cr1Batch108",
+      "passed": true,
+      "at": "2026-09-28T01:42:08.544Z",
+      "details": {
+        "thrallCharge": {
+          "rank1": {
+            "dice": "1d6",
+            "destroy": false,
+            "rules": [
+              "DamageDice:1"
+            ],
+            "formula": "1d6 + 1d4 slashing",
+            "after": 0
+          },
+          "rank2": {
+            "dice": "2d6",
+            "destroy": true,
+            "rules": [
+              "DamageDice:2",
+              "FlatModifier:2"
+            ],
+            "formula": "2d6 + 1d4 + 2 slashing",
+            "after": 0
+          },
+          "noTarget": true
+        }
+      }
+    }
+  ]
+}

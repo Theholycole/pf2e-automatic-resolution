@@ -1,0 +1,124 @@
+{
+  "batch": "cantrip-rank-1-batch-32",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch32",
+    "passed": true,
+    "details": {
+      "rows": {
+        "asked": [
+          [
+            "pending",
+            "pending"
+          ],
+          [
+            "pending",
+            "pending"
+          ],
+          [
+            "pending",
+            "pending"
+          ]
+        ],
+        "effects": [
+          [
+            "Checks and DCs penalty 1 rounds"
+          ],
+          [
+            "Checks and DCs penalty 1 minutes"
+          ],
+          [
+            "Checks and DCs penalty 1 minutes",
+            "Dazzled 1 minutes"
+          ]
+        ],
+        "fortitude": [
+          [
+            10,
+            9
+          ],
+          [
+            10,
+            9
+          ],
+          [
+            10,
+            8
+          ]
+        ],
+        "athletics": [
+          [
+            0,
+            -1
+          ],
+          [
+            0,
+            -1
+          ],
+          [
+            0,
+            -2
+          ]
+        ],
+        "dazzled": [
+          false,
+          false,
+          true
+        ]
+      },
+      "shift": [
+        {
+          "rolled": "failure",
+          "effective": "criticalFailure",
+          "rule": "applies"
+        },
+        {
+          "rolled": "criticalSuccess",
+          "effective": "success",
+          "rule": "applies"
+        },
+        {
+          "rolled": "failure",
+          "effective": "failure",
+          "rule": "not-applicable"
+        }
+      ]
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch32",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "drought",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch19",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

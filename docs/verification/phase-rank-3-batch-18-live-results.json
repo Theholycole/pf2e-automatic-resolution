@@ -1,0 +1,31 @@
+{
+  "label": "rank3Batch18",
+  "passed": true,
+  "at": "2026-10-02T11:39:01.968Z",
+  "details": {
+    "batch18": {
+      "passage": {
+        "level": "automatic",
+        "held": [
+          true,
+          false
+        ],
+        "toggle": true,
+        "resistance": "ternary(gte(@item.level,8),15,ternary(gte(@item.level,5),10,5))",
+        "sustained": true
+      },
+      "blossoms": {
+        "level": "automatic",
+        "held": [
+          true,
+          false
+        ],
+        "adjust": true,
+        "atCast": 1,
+        "persistent": 1,
+        "atCasterTurn": 2,
+        "atOtherTurn": 2
+      }
+    }
+  }
+}

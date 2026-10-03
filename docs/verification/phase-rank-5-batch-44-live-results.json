@@ -1,0 +1,33 @@
+{
+  "label": "rank5Batch44",
+  "passed": true,
+  "at": "2026-10-03T00:13:45.119Z",
+  "details": {
+    "batch44": {
+      "steps": [
+        {
+          "degree": "failure",
+          "during": 1,
+          "afterTurn": 0,
+          "expired": true,
+          "turnEffects": 0
+        },
+        {
+          "degree": "success",
+          "during": 0,
+          "afterTurn": 0,
+          "expired": true,
+          "turnEffects": 0
+        }
+      ],
+      "note": [
+        "1 minutes"
+      ],
+      "worst": {
+        "slowed": 1,
+        "note": true
+      },
+      "startSlowed": 0
+    }
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "batch": "cantrip-rank-1-batch-82",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch82",
+    "passed": true,
+    "details": {
+      "total": 4,
+      "formula": "1d4 spirit",
+      "lost": [
+        2,
+        4,
+        8
+      ],
+      "dazzled": [
+        null,
+        "1 rounds",
+        "1 rounds"
+      ],
+      "note": {
+        "duration": "1 minutes",
+        "sustained": true,
+        "teleport": true,
+        "heightened": false
+      },
+      "card": true,
+      "rank3": {
+        "formula": "3d4 spirit",
+        "dazzled": "2 rounds",
+        "heightened": true
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch82",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch80",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch71",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

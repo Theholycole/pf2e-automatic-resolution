@@ -1,0 +1,28 @@
+{
+  "batch": "rank-2-5",
+  "date": "2026-09-30",
+  "world": "pftest",
+  "system": "8.5.0",
+  "core": "14.367",
+  "module": "0.8.2",
+  "results": [
+    {
+      "case": "rank2Batch5",
+      "passed": true,
+      "details": {
+        "targetLines": {
+          "lock": {
+            "note": "4 rounds"
+          },
+          "whispers": {
+            "friendEligible": false,
+            "friendReason": "an ally of the caster, not an enemy",
+            "foeEligible": true,
+            "foeStupefied": 2,
+            "friendStupefied": false
+          }
+        }
+      }
+    }
+  ]
+}

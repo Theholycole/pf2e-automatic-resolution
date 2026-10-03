@@ -1,0 +1,27 @@
+{
+ "label": "rank6Batch18",
+ "passed": true,
+ "at": "2026-10-03T20:33:30.606Z",
+ "details": {
+  "batch18": {
+   "afterFirstSustain": 20,
+   "round1": [
+    {
+     "who": "living",
+     "formula": "8d8 void",
+     "swapped": null
+    },
+    {
+     "who": "construct",
+     "formula": "8d8 void",
+     "swapped": "void → force"
+    }
+   ],
+   "livingLost": 34,
+   "golemLost": 24,
+   "finalRadius": 40,
+   "regionRadius": 40,
+   "lastFormula": "8d12 void"
+  }
+ }
+}

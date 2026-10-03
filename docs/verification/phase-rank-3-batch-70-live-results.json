@@ -1,0 +1,41 @@
+{
+  "label": "rank3Batch70",
+  "passed": true,
+  "at": "2026-10-03T00:49:56.494Z",
+  "details": {
+    "batch70r3": {
+      "casts": [
+        {
+          "rank": 4,
+          "answer": "yes",
+          "degree": "failure",
+          "asked": "yes",
+          "formula": "8d8 mental",
+          "lost": 36,
+          "stupefied": 1,
+          "note": false
+        },
+        {
+          "rank": 3,
+          "answer": "no",
+          "degree": "failure",
+          "asked": "no",
+          "formula": "6d6 mental",
+          "lost": 26,
+          "stupefied": 0,
+          "note": false
+        },
+        {
+          "rank": 3,
+          "answer": "no",
+          "degree": "criticalFailure",
+          "asked": "no",
+          "formula": "6d6 mental",
+          "lost": 42,
+          "stupefied": 1,
+          "note": true
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "label": "rank2Batch77",
+  "passed": true,
+  "at": "2026-10-02T01:30:49.578Z",
+  "details": {
+    "batch77": {
+      "level": "automatic",
+      "tree": {
+        "ac": 20,
+        "size": "lg",
+        "plant": true,
+        "immobilized": true,
+        "reflex": "failure"
+      },
+      "dismissed": {
+        "effect": false,
+        "size": "med",
+        "immobilized": false
+      },
+      "merge": {
+        "blinded": true,
+        "immobilized": true
+      },
+      "expel": {
+        "damage": 40,
+        "lost": 40,
+        "status": "ended",
+        "blinded": false
+      }
+    }
+  }
+}

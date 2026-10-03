@@ -1,0 +1,49 @@
+{
+  "batch": "cantrip-rank-1-batch-92",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch92",
+    "passed": true,
+    "details": {
+      "weakness": [
+        [],
+        [
+          3
+        ]
+      ],
+      "reminder": true,
+      "rank3": [
+        6
+      ]
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch92",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch91",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "module": "0.8.2",
+  "pseudoAfflictions": "0.5.1",
+  "empowerModifierOnRoll": [
+    [
+      "base",
+      14,
+      "untyped"
+    ],
+    [
+      "care-empower",
+      1,
+      "circumstance"
+    ]
+  ],
+  "results": [
+    {
+      "label": "counteractMany",
+      "passed": true,
+      "at": "2026-09-26T15:47:38.366Z",
+      "details": {
+        "clearMind": [
+          "This spell can't counteract or suppress conditions that are part of curses, diseases, or a natural state of the target.",
+          "Test frightening effect: counteract check vs DC 1: critical success (rank 2 vs 1)",
+          "Test frightening effect counteracted"
+        ],
+        "sureFooting": [
+          "This spell can't counteract or suppress curses, diseases, or conditions that are part of the target's normal state.",
+          "Test grabbing effect: counteract check vs DC 1: critical success (rank 2 vs 1)",
+          "Test grabbing effect counteracted"
+        ],
+        "flamesCurseRefused": "Cleansing Flames: choose one eligible effect to counteract.",
+        "flames": [
+          "PFTEST P23 Affliction flames enfeebled becomes drained 1 to grant +1 circumstance",
+          "Test enfeeblement: counteract check vs DC 1: critical success (rank 5 vs 1)",
+          "Test enfeeblement counteracted"
+        ],
+        "flamesState": {
+          "drained": 1,
+          "plainGone": true,
+          "curseKept": true
+        },
+        "flamesPoison": {
+          "grants": [
+            "enfeebled"
+          ],
+          "result": [
+            "Affliction Effect: Spider Sting (stage 2): counteract check vs DC 1: critical success (rank 5 vs 1)",
+            "Affliction Effect: Spider Sting (stage 2) counteracted (cured)"
+          ],
+          "error": null,
+          "cured": true
+        },
+        "balladHeal": [
+          "PFTEST P23 Affliction Soothing Ballad caster: Regained 32 HP (7d8 = 32)",
+          "PFTEST P23 Affliction ballad ally A: Regained 32 HP (7d8 = 32)",
+          "PFTEST P23 Affliction ballad ally B: Regained 32 HP (7d8 = 32)"
+        ],
+        "balladFear": [
+          "PFTEST P23 Affliction ballad ally A: Test fear A: counteract check vs DC 1: critical success (rank 7 vs 1)",
+          "PFTEST P23 Affliction ballad ally A: Test fear A counteracted",
+          "PFTEST P23 Affliction ballad ally B: Test fear B: counteract check vs DC 1: critical success (rank 7 vs 1)",
+          "PFTEST P23 Affliction ballad ally B: Test fear B counteracted"
+        ],
+        "balladState": {
+          "gains": [
+            32,
+            32,
+            32
+          ],
+          "fearsGone": [
+            true,
+            true
+          ]
+        }
+      }
+    }
+  ]
+}

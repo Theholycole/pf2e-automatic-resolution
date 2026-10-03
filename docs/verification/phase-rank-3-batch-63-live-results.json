@@ -1,0 +1,48 @@
+{
+  "generatedAt": "2026-10-02T21:53:47.252Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "results": [
+    {
+      "label": "rank3Batch63",
+      "passed": true,
+      "at": "2026-10-02T21:53:28.632Z",
+      "details": {
+        "batch63": {
+          "questions": [
+            "trait",
+            "pending",
+            "pending"
+          ],
+          "formula": "6d6 poison",
+          "total": 17,
+          "plant": {
+            "lost": 17,
+            "persistent": [
+              [
+                "poison",
+                "1d4"
+              ]
+            ],
+            "sickened": 2
+          },
+          "plain": {
+            "lost": 17,
+            "persistent": [],
+            "sickened": 0
+          },
+          "averse": {
+            "lost": 34,
+            "persistent": [
+              [
+                "poison",
+                "1d8"
+              ]
+            ],
+            "sickened": 3
+          }
+        }
+      }
+    }
+  ]
+}

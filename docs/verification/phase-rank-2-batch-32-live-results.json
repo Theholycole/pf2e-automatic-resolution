@@ -1,0 +1,36 @@
+{
+  "case": "rank2Batch32",
+  "date": "2026-10-01",
+  "world": "pftest",
+  "result": {
+    "label": "rank2Batch32",
+    "passed": true,
+    "at": "2026-10-01T21:09:24.659Z",
+    "details": {
+      "batch32": {
+        "sky": {
+          "statistic": "reflex",
+          "eligible": [
+            true,
+            false
+          ],
+          "formula": "2d10 electricity",
+          "total": 2,
+          "lost": 2,
+          "dazzled": false
+        },
+        "sovereign": {
+          "statistic": "will",
+          "eligible": [
+            true,
+            false
+          ],
+          "formula": "2d10 mental",
+          "total": 11,
+          "lost": 22,
+          "dazzled": true
+        }
+      }
+    }
+  }
+}

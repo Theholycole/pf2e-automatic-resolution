@@ -1,0 +1,107 @@
+{
+  "phase": "rank-2-batch-36",
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cleanup",
+      "passed": true,
+      "at": "2026-10-01T22:03:08.795Z",
+      "details": {
+        "actorsRemoved": 11,
+        "journalsRemoved": 3,
+        "regionsRemoved": 0,
+        "remainingFixtureActors": 0
+      }
+    },
+    {
+      "label": "rank2Batch36",
+      "passed": true,
+      "at": "2026-10-01T22:03:20.218Z",
+      "details": {
+        "batch36": {
+          "feast": {
+            "fatigued": [
+              true,
+              true
+            ],
+            "fatigueDuration": [
+              "7 days"
+            ],
+            "notes": [
+              [
+                "7 days"
+              ],
+              [
+                "7 days"
+              ]
+            ],
+            "immune": true,
+            "hungryDay": {
+              "formula": "2d4",
+              "lost": 5
+            },
+            "starvingDay": {
+              "formula": "4d4",
+              "lost": 7
+            },
+            "notesAfter": [
+              true,
+              true
+            ]
+          },
+          "treasure": {
+            "before": {
+              "fascinated": [
+                true,
+                true
+              ],
+              "notes": [
+                [
+                  "Phantasmal Treasure: Disbelieve the illusion"
+                ],
+                [
+                  "Phantasmal Treasure: Disbelieve the illusion",
+                  "Phantasmal Treasure: Focused on the treasure"
+                ]
+              ]
+            },
+            "dc": 5,
+            "result": "disbelieved",
+            "ended": true,
+            "status": "ended",
+            "after": [
+              false,
+              false
+            ]
+          },
+          "shadow": {
+            "eligible": [
+              true,
+              false,
+              false
+            ],
+            "note": true,
+            "duration": "1 minutes",
+            "rules": [
+              "Resistance:physical:8",
+              "Immunity:precision:",
+              "BaseSpeed:fly:10"
+            ],
+            "ownership": 3,
+            "minion": true,
+            "resistance": [
+              "physical 8"
+            ],
+            "fly": 10,
+            "after": {
+              "ownership": -1,
+              "minion": false
+            }
+          }
+        }
+      }
+    }
+  ]
+}

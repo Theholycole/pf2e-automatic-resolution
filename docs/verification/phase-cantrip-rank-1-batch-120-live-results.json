@@ -1,0 +1,29 @@
+{
+  "batch": 120,
+  "spells": [
+    "Cloak of Shadow",
+    "Delay Consequence",
+    "Manifest Will"
+  ],
+  "results": [
+    {
+      "label": "cr1Batch120",
+      "passed": true,
+      "at": "2026-09-28T09:30:55.665Z",
+      "details": {
+        "notes": {
+          "cloak": [
+            "1 minutes"
+          ],
+          "delay": [
+            "1 rounds"
+          ],
+          "will": [
+            "Aura: Manifest Will",
+            "Spell Note: Manifest Will (area)"
+          ]
+        }
+      }
+    }
+  ]
+}

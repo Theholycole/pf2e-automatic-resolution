@@ -1,0 +1,47 @@
+{
+  "label": "rank2Batch58",
+  "passed": true,
+  "at": "2026-10-01T23:43:59.653Z",
+  "details": {
+    "batch58": {
+      "rank2": {
+        "sameTurn": 3,
+        "foeTurn": 4,
+        "label": "Attack (1 action) — 5",
+        "hit": {
+          "formula": "1d6 fire + 1d6 spirit",
+          "total": 7,
+          "lost": [
+            7
+          ]
+        },
+        "crit": {
+          "total": 10,
+          "lost": [
+            20
+          ]
+        },
+        "persistentAt2": 0
+      },
+      "rank4": {
+        "formula": "2d6 fire + 1d6 spirit",
+        "persistent": [
+          "1d6 spirit"
+        ]
+      },
+      "afterDuration": {
+        "made": 0,
+        "label": "Attacks Used"
+      }
+    }
+  },
+  "modifierProbe": {
+    "casterChaMod": 4,
+    "attribute": "cha",
+    "formula": "1d6 fire + (1d6 + 4) spirit",
+    "total": 13,
+    "lost": [
+      13
+    ]
+  }
+}

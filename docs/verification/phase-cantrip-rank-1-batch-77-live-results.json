@@ -1,0 +1,52 @@
+{
+  "batch": "cantrip-rank-1-batch-77",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch77",
+    "passed": true,
+    "details": {
+      "main": "1 minutes",
+      "saveBonus": 1,
+      "control": true,
+      "offered": null,
+      "granted": "granted",
+      "resistance": "1 rounds",
+      "spells": 1
+    },
+    "note": "PF2e's rank ChoiceSet offered one valid rank for the 1st-level caster and chose it without a prompt"
+  },
+  "runs": [
+    {
+      "n": "cr1Batch77",
+      "passed": false,
+      "note": "first run: the live description links the resistance Effect by id, and the compiler matched the link by its name-style UUID; now matched by the link's label"
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch77",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch29",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "label": "rank3Batch28",
+  "passed": true,
+  "at": "2026-10-02T13:31:01.975Z",
+  "details": {
+    "batch28": {
+      "turtle": {
+        "kind": "spell-note",
+        "error": null,
+        "note": "7 days"
+      },
+      "wings": {
+        "kind": "spell-note",
+        "error": null,
+        "before": 0,
+        "fly": 20,
+        "note": "1 hours"
+      },
+      "transcribe": {
+        "kind": "spell-note",
+        "error": null,
+        "note": "8 hours",
+        "rules": 0
+      }
+    }
+  }
+}

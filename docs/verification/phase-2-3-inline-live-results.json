@@ -1,0 +1,123 @@
+{
+  "date": "2026-09-24",
+  "environment": {
+    "world": "pftest",
+    "foundry": "14.367",
+    "pf2e": "8.5.0",
+    "module": "0.8.2 working tree",
+    "activeModules": [
+      "pf2e-automatic-resolution"
+    ],
+    "removeEffects": true
+  },
+  "evidenceSource": "Observed native verification macro reports through the Foundry UI; complete attempt history retained in PFTEST \u2014 Ongoing verification macro flags, phase23InlineVerification.",
+  "checks": [
+    {
+      "label": "all-degrees",
+      "passed": true,
+      "at": "2026-09-24T21:58:40.402Z",
+      "outcomes": 12,
+      "cards": [
+        "dOk6HgMLwksgY1e3",
+        "6pBMnbDkNm3uDgcp",
+        "SQUTLlcWQ4j2wghp"
+      ]
+    },
+    {
+      "label": "all-ranks",
+      "passed": true,
+      "at": "2026-09-24T21:59:00.350Z",
+      "casts": 25,
+      "ranks": {
+        "Grim Tendrils": [
+          1,
+          10
+        ],
+        "Ulcerous Canker": [
+          1,
+          10
+        ],
+        "Missed Cue": [
+          6,
+          10
+        ]
+      }
+    },
+    {
+      "label": "iwr-eligibility",
+      "passed": true,
+      "at": "2026-09-24T21:59:46.184Z",
+      "cards": [
+        "27pDNiVPcKZ5URdC",
+        "6HlQgL6EDiufqSRJ"
+      ]
+    },
+    {
+      "label": "linked-turn-recovery",
+      "passed": true,
+      "at": "2026-09-24T21:46:27.330Z",
+      "card": "2tATVfWU3cwMC2jm"
+    },
+    {
+      "label": "linked-reload",
+      "passed": true,
+      "at": "2026-09-24T21:47:14.413Z",
+      "cards": [
+        "Ktp1GD3T5kCQWGLN",
+        "UgiJyPghDglkgITn"
+      ],
+      "hpUnchanged": 369,
+      "unrelatedRetained": {
+        "frightened": 5,
+        "slowed": 3
+      }
+    },
+    {
+      "label": "combined-preflight",
+      "passed": true,
+      "at": "2026-09-24T22:00:14.185Z",
+      "card": "HbI29QKDhRYJizLL",
+      "hp": [
+        500,
+        500
+      ],
+      "status": "collecting",
+      "expectedError": "The native inline bleed instance is missing or ambiguous."
+    },
+    {
+      "label": "native-serialization",
+      "passed": true,
+      "at": "2026-09-24T21:58:26.251Z",
+      "cases": 6,
+      "zeroDirectNativeTotals": {
+        "multiplier1": 1,
+        "multiplier2": 0
+      }
+    },
+    {
+      "label": "first-cleanup",
+      "passed": true,
+      "actorsRemoved": 64,
+      "journalsRemoved": 9
+    }
+  ],
+  "resolvedFailures": [
+    "Preflight harness used a non-public API; now seeds evaluated native rolls for deliberate corruption.",
+    "Combined roll serialized localized display text; now emits canonical native expressions with whole-instance flavors.",
+    "Exact serialized-formula comparison rejected harmless native parenthesis normalization; now validates parsed types and persistence."
+  ],
+  "automatedTests": {
+    "passed": 195,
+    "failed": 0,
+    "skipped": 0
+  },
+  "finalCleanup": {
+    "passed": true,
+    "at": "2026-09-24T22:00:28.922Z",
+    "actorsRemoved": 64,
+    "journalsRemoved": 6,
+    "remainingFixtureActors": 0,
+    "totalActorsRemoved": 128,
+    "totalJournalsRemoved": 15
+  }
+}

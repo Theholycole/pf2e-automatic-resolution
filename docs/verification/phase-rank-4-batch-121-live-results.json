@@ -1,0 +1,21 @@
+{
+  "label": "rank4Batch121",
+  "passed": true,
+  "at": "2026-10-03T09:34:25.616Z",
+  "details": {
+    "batch121": {
+      "creature": {
+        "formula": "10d6",
+        "lost": 43,
+        "persistent": "2d6"
+      },
+      "item": {
+        "degree": "criticalFailure",
+        "dealt": 14,
+        "rolled": 7,
+        "rusting": true
+      },
+      "rust": 4
+    }
+  }
+}

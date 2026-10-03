@@ -1,0 +1,54 @@
+{
+  "batch": "cantrip-rank-1-batch-21",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch21",
+    "passed": true,
+    "details": {
+      "geniesVeil": {
+        "during": true,
+        "afterFoeTurn": false,
+        "effects": []
+      },
+      "glowingTrail": [
+        "Spell Note: Glowing Trail 1 hours"
+      ]
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch21",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch15",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch6",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

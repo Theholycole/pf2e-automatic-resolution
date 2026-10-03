@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-10-02T21:56:30.746Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "results": [
+    {
+      "label": "rank5Batch35",
+      "passed": true,
+      "at": "2026-10-02T21:56:14.202Z",
+      "details": {
+        "batch35": {
+          "formula": "6d6 void",
+          "lost": [
+            22,
+            11
+          ],
+          "button": true,
+          "amount": 22,
+          "caster": 122,
+          "ally": 122
+        }
+      }
+    }
+  ]
+}

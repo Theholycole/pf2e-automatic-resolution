@@ -1,0 +1,27 @@
+{
+  "label": "rank3Batch9",
+  "passed": true,
+  "at": "2026-10-02T10:00:40.339Z",
+  "details": {
+    "batch9": {
+      "supported": true,
+      "full": {
+        "formula": "3d4 void",
+        "total": 8,
+        "lost": 8,
+        "temp": 8,
+        "effect": "1 minutes"
+      },
+      "low": {
+        "formula": "3d4 void",
+        "total": 10,
+        "lost": null,
+        "temp": 3,
+        "hp": 0
+      },
+      "undead": {
+        "eligible": false
+      }
+    }
+  }
+}

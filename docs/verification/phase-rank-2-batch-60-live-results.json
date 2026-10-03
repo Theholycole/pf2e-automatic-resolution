@@ -1,0 +1,49 @@
+{
+  "label": "rank2Batch60",
+  "passed": true,
+  "at": "2026-10-01T23:54:31.008Z",
+  "details": {
+    "batch60": {
+      "eligible2": [
+        [
+          "pit medium",
+          true
+        ],
+        [
+          "pit small",
+          true
+        ],
+        [
+          "pit large",
+          false
+        ]
+      ],
+      "medium": {
+        "prone": true,
+        "hp": 500
+      },
+      "small": {
+        "prone": true,
+        "hp": 498
+      },
+      "reminders": [
+        "save-or-skill",
+        "surroundings"
+      ],
+      "eligible8": [
+        [
+          "pit medium",
+          true
+        ],
+        [
+          "pit small",
+          true
+        ],
+        [
+          "pit large",
+          true
+        ]
+      ]
+    }
+  }
+}

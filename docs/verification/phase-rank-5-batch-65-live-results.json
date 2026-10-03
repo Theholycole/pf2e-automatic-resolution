@@ -1,0 +1,23 @@
+{
+  "label": "rank5Batch65",
+  "passed": true,
+  "at": "2026-10-03T05:47:08.755Z",
+  "details": {
+    "batch65": {
+      "cast": {
+        "name": "Spellmaster's Ward (2 runes)",
+        "formula": "2d6 + (6 - 5)"
+      },
+      "spell": {
+        "hp": 188,
+        "prevented": 18,
+        "ward": false,
+        "card": "Spellmaster's Ward: 2 runes (11, 7) prevent 18 of the spell's 30 damage; 0 left."
+      },
+      "plain": {
+        "hp": 190,
+        "runes": 3
+      }
+    }
+  }
+}

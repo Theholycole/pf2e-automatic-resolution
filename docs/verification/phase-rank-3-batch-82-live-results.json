@@ -1,0 +1,54 @@
+{
+  "label": "rank3Batch82",
+  "passed": true,
+  "at": "2026-10-03T03:37:41.414Z",
+  "details": {
+    "batch82": {
+      "cast": [
+        {
+          "enfeebled": 2,
+          "slowed": 0,
+          "afflictions": []
+        },
+        {
+          "enfeebled": 2,
+          "slowed": 0,
+          "afflictions": [
+            {
+              "name": "Affliction Effect: Mycological Malady",
+              "stage": 1
+            }
+          ]
+        },
+        {
+          "enfeebled": 2,
+          "slowed": 1,
+          "afflictions": [
+            {
+              "name": "Affliction Effect: Mycological Malady",
+              "stage": 2
+            }
+          ]
+        }
+      ],
+      "record": 3,
+      "ended": [
+        {
+          "enfeebled": 0,
+          "slowed": 0,
+          "afflictions": []
+        },
+        {
+          "enfeebled": 0,
+          "slowed": 0,
+          "afflictions": []
+        },
+        {
+          "enfeebled": 0,
+          "slowed": 0,
+          "afflictions": []
+        }
+      ]
+    }
+  }
+}

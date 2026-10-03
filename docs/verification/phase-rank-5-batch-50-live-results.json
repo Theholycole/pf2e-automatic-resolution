@@ -1,0 +1,21 @@
+{
+  "label": "rank5Batch50",
+  "passed": true,
+  "at": "2026-10-03T00:56:37.968Z",
+  "details": {
+    "batch50": {
+      "wolf": {
+        "unfriendly": true,
+        "confused": true,
+        "immune": true
+      },
+      "chainCard": true,
+      "ally": {
+        "unfriendly": false,
+        "immune": true
+      },
+      "reused": "These saves were already started.",
+      "wolfAgain": false
+    }
+  }
+}

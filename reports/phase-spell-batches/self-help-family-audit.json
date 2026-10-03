@@ -1,0 +1,4377 @@
+{
+  "generatedAt": "2026-10-03T21:22:34.808Z",
+  "baseline": "2026-09-25T00:20:20.245Z",
+  "scope": "All source-derived members of 3 overlapping families; excludes rituals and the deferred Phase 9 review list. Every member was recompiled under a detached name/ID. Route assessment is not live execution.",
+  "uniqueMembers": 129,
+  "executableSharedSaves": 547,
+  "newlySupported": [
+    {
+      "id": "gISYsBFby1TiXfBt",
+      "name": "Acid Splash"
+    },
+    {
+      "id": "BItahht2hEHvR9Bt",
+      "name": "Buzzing Bites"
+    },
+    {
+      "id": "ViqzVEprQVzCXZ9f",
+      "name": "Dancing Blade"
+    },
+    {
+      "id": "qwZBXN6zBoB9BHXE",
+      "name": "Divine Lance"
+    },
+    {
+      "id": "IxhGEKl63R4QBvkj",
+      "name": "Frostbite"
+    },
+    {
+      "id": "dDiOnjcsBFbAvP6t",
+      "name": "Gale Blast"
+    },
+    {
+      "id": "b5BQbwmuBhgPXTyi",
+      "name": "Haunting Hymn"
+    },
+    {
+      "id": "6DfLZBl8wKIV03Iq",
+      "name": "Ignition"
+    },
+    {
+      "id": "sUr5KCpeE6AXfvPp",
+      "name": "Imaginary Weapon"
+    },
+    {
+      "id": "PesUKf0lIt5zRofj",
+      "name": "Information Overload"
+    },
+    {
+      "id": "Vbj8bTQ1nwrOBbYF",
+      "name": "Live Wire"
+    },
+    {
+      "id": "iYRDFxeVpJ5KIjmr",
+      "name": "Needle Darts"
+    },
+    {
+      "id": "5gophZ4AOKW4VW27",
+      "name": "Phase Bolt"
+    },
+    {
+      "id": "gYjPm7YwGtEa1oxh",
+      "name": "Ray of Frost"
+    },
+    {
+      "id": "bZMwSGc9t5K7uxZV",
+      "name": "Redistribute Potential"
+    },
+    {
+      "id": "VNv96dJPi0WXKSFN",
+      "name": "Scrounger's Glee"
+    },
+    {
+      "id": "cE7PRAX8Up7fmYef",
+      "name": "Shroud of Night"
+    },
+    {
+      "id": "1Yoipc5jNcMehtEW",
+      "name": "Slashing Gust"
+    },
+    {
+      "id": "yp4w9SG4RuqRM8KD",
+      "name": "Spirit Object"
+    },
+    {
+      "id": "eSL5hVT9gXrnRLtd",
+      "name": "Spout"
+    },
+    {
+      "id": "s7ILzY2xh1tc9U1v",
+      "name": "Tame"
+    },
+    {
+      "id": "uZK2BYzPnxUBnDjr",
+      "name": "Tangle Vine"
+    },
+    {
+      "id": "yyz029C9eqfY38PT",
+      "name": "Telekinetic Rend"
+    },
+    {
+      "id": "zHSp4PzoOE72DV4o",
+      "name": "Torturous Trauma"
+    },
+    {
+      "id": "4U2ZV1v38D0y2CRl",
+      "name": "Trade Death for Life"
+    },
+    {
+      "id": "GdN5YQE47gd79k7X",
+      "name": "Wilding Word"
+    },
+    {
+      "id": "uToa7ksKAzmEpkKC",
+      "name": "Admonishing Ray"
+    },
+    {
+      "id": "r8g7oSumKOHDqJsd",
+      "name": "Agitate"
+    },
+    {
+      "id": "fprqWKUc0jnMIyGU",
+      "name": "Airburst"
+    },
+    {
+      "id": "YSLaCdfIQ2xXzvHd",
+      "name": "Appeal to Authority"
+    },
+    {
+      "id": "ZeftDoh0nFAXBAWY",
+      "name": "Appearance of Wealth"
+    },
+    {
+      "id": "6wLY5LnehCo3tHlr",
+      "name": "Aqueous Blast"
+    },
+    {
+      "id": "dQ7LrD2HxJoCzi2M",
+      "name": "Barbed Spear"
+    },
+    {
+      "id": "yafsV0ni7rFgqJBj",
+      "name": "Biting Words"
+    },
+    {
+      "id": "tFWa3ouvMC5Zz3P0",
+      "name": "Blood Infusion"
+    },
+    {
+      "id": "4JXxqBXigKECcpTm",
+      "name": "Bone Spear"
+    },
+    {
+      "id": "DNvfKfDSs9DstDfT",
+      "name": "Booming Blast"
+    },
+    {
+      "id": "k2QrUk7jWMAWozMh",
+      "name": "Brain Drain"
+    },
+    {
+      "id": "8lZhUreL1bRk1v4Z",
+      "name": "Briny Bolt"
+    },
+    {
+      "id": "xGFAGlonNySXrunq",
+      "name": "Buffeting Winds"
+    },
+    {
+      "id": "BH3sUerzMb2bWnv1",
+      "name": "Call of the Grave"
+    },
+    {
+      "id": "Hycyiw9xVzoIY4Dy",
+      "name": "Camel Spit"
+    },
+    {
+      "id": "vZSWzkw0uF4iFWSM",
+      "name": "Celestial Accord"
+    },
+    {
+      "id": "g1eY1vN44mgluE33",
+      "name": "Charged Javelin"
+    },
+    {
+      "id": "vLA0q0WOK2YPuJs6",
+      "name": "Charm"
+    },
+    {
+      "id": "KMFRKzNCq7hVNH7H",
+      "name": "Charming Push"
+    },
+    {
+      "id": "ut9IhJ9jSZSHDUop",
+      "name": "Charming Touch"
+    },
+    {
+      "id": "JkyUu62rLxcNT4K9",
+      "name": "Chastising Retort"
+    },
+    {
+      "id": "XhgMx9WC6NfXd9RP",
+      "name": "Clouded Focus"
+    },
+    {
+      "id": "aIHY2DArKFweIrpf",
+      "name": "Command"
+    },
+    {
+      "id": "xTpp8dHZsNMDm75B",
+      "name": "Creative Splash"
+    },
+    {
+      "id": "AiWtiVmyasyL42J8",
+      "name": "Crushing Ground"
+    },
+    {
+      "id": "0H1ozccQGGFLUwFI",
+      "name": "Cry of Destruction"
+    },
+    {
+      "id": "9uSBfK8EUVBrcNYx",
+      "name": "Curse of Recoil"
+    },
+    {
+      "id": "m2i7N8tnqar3gZDZ",
+      "name": "Cycle of Retribution"
+    },
+    {
+      "id": "zul5cBTfr7NXHBZf",
+      "name": "Dazzling Flash"
+    },
+    {
+      "id": "4kQMFyRKj5Gv13zl",
+      "name": "Dead Weight"
+    },
+    {
+      "id": "aIPa7Yp4vGeKIKNG",
+      "name": "Deathly Scream"
+    },
+    {
+      "id": "AzTFMy9E9HQcLNRg",
+      "name": "Debilitating Terror"
+    },
+    {
+      "id": "f9m9DayyGy3meqUX",
+      "name": "Dehydrate"
+    },
+    {
+      "id": "rerNA6YZsdxuJYt3",
+      "name": "Déjà Vu"
+    },
+    {
+      "id": "z8bHh8KVttslQIU9",
+      "name": "Distracting Decoy"
+    },
+    {
+      "id": "NkeLctXo9FLGnDhi",
+      "name": "Divine Plagues"
+    },
+    {
+      "id": "UKsIOWmMx4hSpafl",
+      "name": "Dizzying Colors"
+    },
+    {
+      "id": "jsWthW1Qy6tg3SwD",
+      "name": "Draw Ire"
+    },
+    {
+      "id": "rVhHaWqUsVUO4GuY",
+      "name": "Eject Soul"
+    },
+    {
+      "id": "0JUOgbbFCapp3HlW",
+      "name": "Elemental Toss"
+    },
+    {
+      "id": "oPVyu2a0K3aTVIR8",
+      "name": "Elysian Whimsy"
+    },
+    {
+      "id": "Z2oSFY2fT8zLkK4P",
+      "name": "Equal Footing"
+    },
+    {
+      "id": "znMvKqcRDilIVMwA",
+      "name": "Exchange Image"
+    },
+    {
+      "id": "IkS3lDGUpIOMug7v",
+      "name": "Faerie Dust"
+    },
+    {
+      "id": "4koZzrnMXhhosn0D",
+      "name": "Fear"
+    },
+    {
+      "id": "oJKZi8OQgmVXHOc0",
+      "name": "Fire Ray"
+    },
+    {
+      "id": "WV2aMNN9DO5ZBjSv",
+      "name": "Flense"
+    },
+    {
+      "id": "b6AQvzs8EotmlK56",
+      "name": "Flourishing Flora"
+    },
+    {
+      "id": "K8vvrOgW4bGakXxm",
+      "name": "Flurry of Claws"
+    },
+    {
+      "id": "BQMEaeJiEFC1nepg",
+      "name": "Forced Mercy"
+    },
+    {
+      "id": "k43PIYwuQqjeJ3S3",
+      "name": "Forced Quiet"
+    },
+    {
+      "id": "FTR8m4qrhYzTRyrD",
+      "name": "Forge"
+    },
+    {
+      "id": "SdXFiQ4Py8761sNO",
+      "name": "Glutton's Jaws"
+    },
+    {
+      "id": "zJQnkKEKbJqGB3iB",
+      "name": "Goblin Pox"
+    },
+    {
+      "id": "cQgPIohUja0DUiRL",
+      "name": "Grasping Vine"
+    },
+    {
+      "id": "Wu0xFpewMKRK3HG8",
+      "name": "Grease"
+    },
+    {
+      "id": "s8gTmnNMg4H4bHEF",
+      "name": "Gritty Wheeze"
+    },
+    {
+      "id": "1B8BLEQBQn9aEMoY",
+      "name": "Heart's Hook"
+    },
+    {
+      "id": "wSK0wtn8iHShYT9y",
+      "name": "Hippocampus Retreat"
+    },
+    {
+      "id": "k6f5nvSv0XIhbiHj",
+      "name": "Hollow Heart"
+    },
+    {
+      "id": "JIphJbkWHndtFk72",
+      "name": "Home Among Mulberry Leaves"
+    },
+    {
+      "id": "pRKaEXnjGJXbPHPC",
+      "name": "Hurtling Stone"
+    },
+    {
+      "id": "jfVCuOpzC6mUrf6f",
+      "name": "Hydraulic Push"
+    },
+    {
+      "id": "Dj44lViYKvOJ8a53",
+      "name": "Ignite Ambition"
+    },
+    {
+      "id": "6ZIKB0151LUR19Rw",
+      "name": "Ill Omen"
+    },
+    {
+      "id": "MiTFNcqCI9f34A2V",
+      "name": "Inkshot"
+    },
+    {
+      "id": "kvm68hVtmADiIvN4",
+      "name": "Jealous Hex"
+    },
+    {
+      "id": "T90ij2uu6ZaBaSXV",
+      "name": "Lament"
+    },
+    {
+      "id": "2tHYKoVc5YhSewDO",
+      "name": "Leaden Steps"
+    },
+    {
+      "id": "fgmxDC2PH2TEYGKG",
+      "name": "Life Tap"
+    },
+    {
+      "id": "6GjJtLJnwC18Y0aZ",
+      "name": "Lift Nature's Caul"
+    },
+    {
+      "id": "iohRnd4gUCmJlh54",
+      "name": "Lose the Path"
+    },
+    {
+      "id": "SuBtUJiU6DbSJYIw",
+      "name": "Moonbeam"
+    },
+    {
+      "id": "cg1l2AxBenLU6JFE",
+      "name": "Necrotic Bomb"
+    },
+    {
+      "id": "ro0omoBKiJiMuDRa",
+      "name": "Overselling Flourish"
+    },
+    {
+      "id": "mFHQ2u4LWiejqKQG",
+      "name": "Overstuff"
+    },
+    {
+      "id": "7CUgqHunmHfW2lC5",
+      "name": "Parch"
+    },
+    {
+      "id": "zdb8cjOIDVKYMWdr",
+      "name": "Penumbral Shroud"
+    },
+    {
+      "id": "kJKSLfCgqxmN2FY8",
+      "name": "Personal Rain Cloud"
+    },
+    {
+      "id": "R8bqnYiThB6MYTxD",
+      "name": "Phantom Pain"
+    },
+    {
+      "id": "0qDJm5z3QVtkb3aD",
+      "name": "Propelling Air Stream"
+    },
+    {
+      "id": "Rn2LkoSq1XhLsODV",
+      "name": "Pummeling Rubble"
+    },
+    {
+      "id": "9Ga1AOQdHKYXUY4O",
+      "name": "Purifying Icicle"
+    },
+    {
+      "id": "myC2EIrsjmB8xosi",
+      "name": "Pushing Gust"
+    },
+    {
+      "id": "IeVP2xkNJf5kVAig",
+      "name": "Pyroclastic Truth"
+    },
+    {
+      "id": "hYK4ByCVN1ALc5gR",
+      "name": "Rainbow's End"
+    },
+    {
+      "id": "lZx8jZfKrMEtyGY0",
+      "name": "Rejuvenating Flames"
+    },
+    {
+      "id": "rVRyA7UQog633nTe",
+      "name": "Sacred Beasts"
+    },
+    {
+      "id": "xn0V2HDrmDWNzPEt",
+      "name": "Savor the Sting"
+    },
+    {
+      "id": "8E97SA9KAWCNdXfO",
+      "name": "Schadenfreude"
+    },
+    {
+      "id": "5QD75UbyB5EiG3yz",
+      "name": "Scorching Blast"
+    },
+    {
+      "id": "r3NeUnsgt9mS03Sn",
+      "name": "Shocking Grasp"
+    },
+    {
+      "id": "dgCH2E0gMLMUgyFl",
+      "name": "Shockwave"
+    },
+    {
+      "id": "ZrRhweQ7KQ0wKN3m",
+      "name": "Signal Skyrocket"
+    },
+    {
+      "id": "o4lRVTwSxnOOn5vl",
+      "name": "Sleep"
+    },
+    {
+      "id": "hWtB81P2KGzGHKAJ",
+      "name": "Slime Spit"
+    },
+    {
+      "id": "W6QlRwQLPoBSw6PZ",
+      "name": "Snowball"
+    },
+    {
+      "id": "D6T17BdazhNy3KPm",
+      "name": "Soul Siphon"
+    },
+    {
+      "id": "DYdvMZ8G2LiSLVWw",
+      "name": "Spider Sting"
+    },
+    {
+      "id": "lXxP1ziyf4ozkpmv",
+      "name": "Split the Tongue"
+    },
+    {
+      "id": "X8PSYw6WC2ePYSXd",
+      "name": "Stumbling Curse"
+    },
+    {
+      "id": "UbHK19RYbxRXWgWX",
+      "name": "Temporal Distortion"
+    },
+    {
+      "id": "MVrxZarUTnJxAUN8",
+      "name": "Tether"
+    },
+    {
+      "id": "3DY4vbXj0BYSWA7z",
+      "name": "Threefold Limb"
+    },
+    {
+      "id": "r82rqcm0MmGaBFkM",
+      "name": "Thunderous Strike"
+    },
+    {
+      "id": "zDJS8E66UI0himqV",
+      "name": "Thunderstrike"
+    },
+    {
+      "id": "iAnpxrLaBU4V6Sej",
+      "name": "Tidal Surge"
+    },
+    {
+      "id": "GYI4xloAgkm6tTrT",
+      "name": "Touch of Undeath"
+    },
+    {
+      "id": "eCwsj7wGQK1uBwiH",
+      "name": "Turbulent Tide"
+    },
+    {
+      "id": "FedTjedva2rYk33r",
+      "name": "Undeath's Blessing"
+    },
+    {
+      "id": "KR8WgdazifDBjDkW",
+      "name": "Unexpected Windfall"
+    },
+    {
+      "id": "NNoKWiWKqJkdD2ln",
+      "name": "Veil of Dreams"
+    },
+    {
+      "id": "8uVMoiYDzhzWJEZ2",
+      "name": "Vengeful Glare"
+    },
+    {
+      "id": "LegaamqrflbArbWN",
+      "name": "Vindicator's Mark"
+    },
+    {
+      "id": "DU5daB09xwfE1y38",
+      "name": "Waking Nightmare"
+    },
+    {
+      "id": "eyKkLp8V55ydA64J",
+      "name": "Weaken Earth"
+    },
+    {
+      "id": "DeNz6eAUlE0IE9U3",
+      "name": "Winter Bolt"
+    },
+    {
+      "id": "7tp97g0UCJ9wOrd5",
+      "name": "Withering Grasp"
+    },
+    {
+      "id": "Yrek2Yd4k3DPC2zV",
+      "name": "Zenith Star"
+    },
+    {
+      "id": "f8hRqLJaxBVhF1u0",
+      "name": "Acid Arrow"
+    },
+    {
+      "id": "9h9YCncqah6VNsKf",
+      "name": "Acid Grip"
+    },
+    {
+      "id": "XEhzFKNTSARsofav",
+      "name": "Advanced Scurvy"
+    },
+    {
+      "id": "T7N0LrYOLk3SwrFW",
+      "name": "Avenging Wildwood"
+    },
+    {
+      "id": "lrFKkzgz80B5vTBb",
+      "name": "Binding Muzzle"
+    },
+    {
+      "id": "NacrNSvfODxpZena",
+      "name": "Blazing Blade"
+    },
+    {
+      "id": "hoR6w8BqX2F35Tdx",
+      "name": "Blistering Invective"
+    },
+    {
+      "id": "Oj36W4SwlVBMMdiX",
+      "name": "Blood Runs Cold"
+    },
+    {
+      "id": "TaaMEYdZXQXF0Sks",
+      "name": "Blood Vendetta"
+    },
+    {
+      "id": "S708JF3E0kuhuRzG",
+      "name": "Bone Spray"
+    },
+    {
+      "id": "yfaTZv8nCsS4GtrA",
+      "name": "Bony Barrage"
+    },
+    {
+      "id": "Y8cSjhU33oUqccxJ",
+      "name": "Brand the Impenitent"
+    },
+    {
+      "id": "eidmNlfl2DUVIclc",
+      "name": "Brine Dragon Bile"
+    },
+    {
+      "id": "b515AZlB0sridKSq",
+      "name": "Calm"
+    },
+    {
+      "id": "UirEIHILQgip87qv",
+      "name": "Charitable Urge"
+    },
+    {
+      "id": "dLdRqT6UxTKlsPgp",
+      "name": "Death Knell"
+    },
+    {
+      "id": "PnZQsPSYFtTQFiU1",
+      "name": "Dimensional Drop"
+    },
+    {
+      "id": "NWIDE4XKtL3Nb4pO",
+      "name": "Disintegrating Puddle"
+    },
+    {
+      "id": "NVeN6RrFu12HnTne",
+      "name": "Draw Blood"
+    },
+    {
+      "id": "aXoh6OQAL57lgh0a",
+      "name": "Expeditious Excavation"
+    },
+    {
+      "id": "v89KwyaBd6g5rWVS",
+      "name": "Exploding Earth"
+    },
+    {
+      "id": "vctIUOOgSmxAF0KG",
+      "name": "Fear the Sun"
+    },
+    {
+      "id": "siU9xRlqWXeKT0mH",
+      "name": "Feast of Ashes"
+    },
+    {
+      "id": "Ru9v8U9IRk3LtWx8",
+      "name": "Feral Shades"
+    },
+    {
+      "id": "x0rWq0wS06dns4G2",
+      "name": "Final Sacrifice"
+    },
+    {
+      "id": "cnRltZAjU9aCklqz",
+      "name": "Frog Tongue"
+    },
+    {
+      "id": "g90j3T60ScfWQZaf",
+      "name": "Frozen Lungs"
+    },
+    {
+      "id": "3VxVbZqIRvpKkg3O",
+      "name": "Fungal Infestation"
+    },
+    {
+      "id": "JhRuR7Jj3ViShpq7",
+      "name": "Ghoulish Cravings"
+    },
+    {
+      "id": "v4KzRPol5XQOOmk0",
+      "name": "Heat Metal"
+    },
+    {
+      "id": "LrRyNA2bo5UwBxud",
+      "name": "Horrifying Blood Loss"
+    },
+    {
+      "id": "oryfsRK27jAUnziw",
+      "name": "Imp Sting"
+    },
+    {
+      "id": "c6CXH7WTxtS4D1Fi",
+      "name": "Imprinting Hand"
+    },
+    {
+      "id": "AsKLseOo8hwv5Jha",
+      "name": "Invoke the Crimson Oath"
+    },
+    {
+      "id": "tlSE7Ly8vi1Dgddv",
+      "name": "Laughing Fit"
+    },
+    {
+      "id": "qFO9HgplrShoaAPY",
+      "name": "Lock Item"
+    },
+    {
+      "id": "O1ZLfeOJpHbG9G6B",
+      "name": "Manifestation of Spirits"
+    },
+    {
+      "id": "PEGECeEtEmXEzwBT",
+      "name": "Mental Map"
+    },
+    {
+      "id": "KT0AR9yfSV3Cq8A4",
+      "name": "Murder of Crows"
+    },
+    {
+      "id": "Cbwhd4m7qrRoRjot",
+      "name": "Osseous Cage"
+    },
+    {
+      "id": "Mkbq9xlAUxHUHyR2",
+      "name": "Paranoia"
+    },
+    {
+      "id": "L0GoJpHxSD0wRY5k",
+      "name": "Phantasmal Treasure"
+    },
+    {
+      "id": "xnh2NBOGs4hcH9B3",
+      "name": "Pyrefowl Rebuke"
+    },
+    {
+      "id": "02J0rDTk37KN2sjt",
+      "name": "Quench"
+    },
+    {
+      "id": "lqxh1qgJG5ujSHXI",
+      "name": "Retrieving Hook"
+    },
+    {
+      "id": "0qaqksrGGDj74HXE",
+      "name": "Revealing Light"
+    },
+    {
+      "id": "cf7Jkm39uEjUFtHt",
+      "name": "Sea Surge"
+    },
+    {
+      "id": "4Gl3WSUqYjVVIsOg",
+      "name": "Shadow Zombie"
+    },
+    {
+      "id": "yuhhRjqBzFgkKYrq",
+      "name": "Shining Starlight Attack"
+    },
+    {
+      "id": "RGBZrVRIEDb2G48h",
+      "name": "Soothing Mist"
+    },
+    {
+      "id": "WPu3UE3kTXSLqO40",
+      "name": "Spiritual Armament"
+    },
+    {
+      "id": "Fq9yCbqI2RDt6Orw",
+      "name": "Spiritual Weapon"
+    },
+    {
+      "id": "Bc6QqTmFV4q7G7L0",
+      "name": "Splinter Volley"
+    },
+    {
+      "id": "Vseo7VIy8mzINUES",
+      "name": "Sticky Fire"
+    },
+    {
+      "id": "XFtO4BBI22Uox2QP",
+      "name": "Sudden Blight"
+    },
+    {
+      "id": "pMTltbI3S3UIuFaR",
+      "name": "Sun Blade"
+    },
+    {
+      "id": "4Sg6ZngswhphxiBD",
+      "name": "Swallow Light"
+    },
+    {
+      "id": "avT46uIH3xYJPSv4",
+      "name": "Teeth to Terror"
+    },
+    {
+      "id": "8NK5HtDxM3Qktu8H",
+      "name": "The Parrot's Whisper"
+    },
+    {
+      "id": "gC3oEJ4WByq1LRO8",
+      "name": "Unrelenting Gravity"
+    },
+    {
+      "id": "h6VoHgPC0JCTVzgP",
+      "name": "Vicious Jealousy"
+    },
+    {
+      "id": "cB17yFc9456Pyfec",
+      "name": "Vomit Swarm"
+    },
+    {
+      "id": "kIwA7kwp5E0AC3yM",
+      "name": "Warrior's Regret"
+    },
+    {
+      "id": "GF7mOra8KPTW5Ggb",
+      "name": "With Friends like These"
+    },
+    {
+      "id": "H4oF5szC7aogqtvw",
+      "name": "Worm's Repast"
+    },
+    {
+      "id": "qhJfRnkCRrMI4G1O",
+      "name": "Aberrant Whispers"
+    },
+    {
+      "id": "L1JnU3RepQiWxysc",
+      "name": "Annunciation of the Outer Gate"
+    },
+    {
+      "id": "1INVZLR5tMzSPZVZ",
+      "name": "Begone"
+    },
+    {
+      "id": "3mQkAjexj6hhAnkR",
+      "name": "Behold the Weave"
+    },
+    {
+      "id": "YuCBhE9tGgN8G2zU",
+      "name": "Blastback"
+    },
+    {
+      "id": "KEkPxx7Sm6Xf4W3s",
+      "name": "Blazing Dive"
+    },
+    {
+      "id": "3qx1axryNbl97ker",
+      "name": "Blister Bomb"
+    },
+    {
+      "id": "CXpOlv2ZZq2jVbRX",
+      "name": "Blood in the Water"
+    },
+    {
+      "id": "MavAJJo6jhQfdBXW",
+      "name": "Bone Moth's Kiss"
+    },
+    {
+      "id": "11pQoPJpSH2jp7h6",
+      "name": "Bonewall Bulwark"
+    },
+    {
+      "id": "mriIWoSDtJTJIBjX",
+      "name": "Caster's Imposition"
+    },
+    {
+      "id": "guHLRnTL1OBUYh0V",
+      "name": "Censure Falsehoods"
+    },
+    {
+      "id": "sRfSBHWHdbIa0aGc",
+      "name": "Chilling Darkness"
+    },
+    {
+      "id": "ZIk1EYbG6l4JuUkO",
+      "name": "Coral Scourge"
+    },
+    {
+      "id": "ADwX87fWrpB8cQ5Q",
+      "name": "Cordyceps Command"
+    },
+    {
+      "id": "T4QKmtYPeCgYxVGe",
+      "name": "Crashing Wave"
+    },
+    {
+      "id": "3x6eUCm17n6ROzUa",
+      "name": "Crisis of Faith"
+    },
+    {
+      "id": "zVfTMpkXJDRESkl5",
+      "name": "Croak Voice"
+    },
+    {
+      "id": "10siFBMF4pIDhVmf",
+      "name": "Cup of Dust"
+    },
+    {
+      "id": "B3eLlbaPxOYHcs1o",
+      "name": "Curse of Lost Time"
+    },
+    {
+      "id": "Llx0xKvtu8S4z6TI",
+      "name": "Day's Weight"
+    },
+    {
+      "id": "612RGV93By661ST3",
+      "name": "Defensive Prescience"
+    },
+    {
+      "id": "jSJz4vx0fXPHa3d6",
+      "name": "Disruptive Transfer"
+    },
+    {
+      "id": "JHntYF0SbaWKq7wR",
+      "name": "Distracting Chatter"
+    },
+    {
+      "id": "1xM9muPRa8hiyJtI",
+      "name": "Dive and Breach"
+    },
+    {
+      "id": "JcobNl4iE9HmMYtE",
+      "name": "Dragon Breath"
+    },
+    {
+      "id": "cqdmSmQnM0q6wbWG",
+      "name": "Drain Life"
+    },
+    {
+      "id": "gPvtmKMRpg9I9D7H",
+      "name": "Earthbind"
+    },
+    {
+      "id": "LpMeT0CW1OEKdaQL",
+      "name": "Echo Jump"
+    },
+    {
+      "id": "IihxWhRfpsBgQ5jS",
+      "name": "Enthrall"
+    },
+    {
+      "id": "GurWFDj4IjKv73kL",
+      "name": "Excise Lexicon"
+    },
+    {
+      "id": "1OiPVy1wuoXi6LR5",
+      "name": "Firework Blast"
+    },
+    {
+      "id": "H481wmQUtEUhxHzi",
+      "name": "Fungal Exhalation"
+    },
+    {
+      "id": "YZiPAxdZFYXu6BvA",
+      "name": "Garden of Stone"
+    },
+    {
+      "id": "06pzGkKTyPE3tHR8",
+      "name": "Gravity Well"
+    },
+    {
+      "id": "PVXqMko4yGgw90uo",
+      "name": "Heart's Desire"
+    },
+    {
+      "id": "z0ffligcrkVtKZd6",
+      "name": "Hedge Prison"
+    },
+    {
+      "id": "DyiD239dNS7RIxZE",
+      "name": "Holy Light"
+    },
+    {
+      "id": "rfFZKfeCSweFv7P3",
+      "name": "Impending Doom"
+    },
+    {
+      "id": "OTd17oXwJH9qb1cS",
+      "name": "Incendiary Ashes"
+    },
+    {
+      "id": "oYBIs8MICYkFwtXD",
+      "name": "Infectious Ennui"
+    },
+    {
+      "id": "82gDiXTKsCmdIF6Q",
+      "name": "Invoke the Harrow"
+    },
+    {
+      "id": "sbTxe4CGP4tn6y51",
+      "name": "Lashing Rope"
+    },
+    {
+      "id": "MUJe5G1zdR20Iq4y",
+      "name": "Lightning Lasso"
+    },
+    {
+      "id": "Tx8OqkBFA2QlaldW",
+      "name": "Magnetic Acceleration"
+    },
+    {
+      "id": "vhMCd15ZwNJn0zen",
+      "name": "Malicious Shadow"
+    },
+    {
+      "id": "KHnhPHL4x1AQHfbC",
+      "name": "Mind Reading"
+    },
+    {
+      "id": "mtlyAyf30JnIvxVn",
+      "name": "Moonlight Ray"
+    },
+    {
+      "id": "V4jrHiaMh4XuANOP",
+      "name": "Mycological Malady"
+    },
+    {
+      "id": "3A3ueS9Q0s3U8KXE",
+      "name": "Noxious Metals"
+    },
+    {
+      "id": "08Or2bBJuQTV2MAN",
+      "name": "Overload Connection"
+    },
+    {
+      "id": "LJHrndGJRmLdxgXD",
+      "name": "Overwhelming Memory"
+    },
+    {
+      "id": "iG1USiSRXMjCDGAr",
+      "name": "Percussive Impact"
+    },
+    {
+      "id": "Pwq6T7xpfAJXV5aj",
+      "name": "Phantom Prison"
+    },
+    {
+      "id": "v4QHuVOhFD1JMAqu",
+      "name": "Powerful Inhalation"
+    },
+    {
+      "id": "Stjb9wvLn146TfW6",
+      "name": "Reblooded"
+    },
+    {
+      "id": "Y89dDWlECxG2vIeH",
+      "name": "Rend Magic"
+    },
+    {
+      "id": "WjgDgSDng1MS8g17",
+      "name": "Restraining Chains"
+    },
+    {
+      "id": "czO0wbT1i320gcu9",
+      "name": "Roaring Applause"
+    },
+    {
+      "id": "HHGUBGle4OjoxvNR",
+      "name": "Sculpt Sound"
+    },
+    {
+      "id": "8cuqRFB3mWBOgy61",
+      "name": "Shadow Projectile"
+    },
+    {
+      "id": "lONs4r14LEBZRLLw",
+      "name": "Shift Blame"
+    },
+    {
+      "id": "SxRVCc1Q2MtVuPMo",
+      "name": "Sign of Conviction"
+    },
+    {
+      "id": "aFBnqTbrjhw0v08g",
+      "name": "Skyglass Prison"
+    },
+    {
+      "id": "wzwmvdBjqRSSvfG7",
+      "name": "Spectral Blade"
+    },
+    {
+      "id": "0chL1b4OFIZxpN3v",
+      "name": "Steal Shadow"
+    },
+    {
+      "id": "ECApRjIIxD0JogOa",
+      "name": "Stone Lance"
+    },
+    {
+      "id": "Cd6Crl4wpQaMSYrF",
+      "name": "Subjugate Undead"
+    },
+    {
+      "id": "h5cMTygLpjY3IEF0",
+      "name": "Sudden Recollection"
+    },
+    {
+      "id": "s0i3S4fg2XDQX4a7",
+      "name": "Threatening Mimicry"
+    },
+    {
+      "id": "ytboJsyZEbE1MLeV",
+      "name": "Unbreaking Wave Advance"
+    },
+    {
+      "id": "EFLXGyIz2HZVSmll",
+      "name": "Unravel Knowledge"
+    },
+    {
+      "id": "IV76q50T2pZemxAl",
+      "name": "Weapon Tide"
+    },
+    {
+      "id": "6JDq5d8w11ZuH4Ta",
+      "name": "Widow’s Bite"
+    },
+    {
+      "id": "IT1aaqDBAISlHDUV",
+      "name": "Achaekek's Clutch"
+    },
+    {
+      "id": "7tR29sQt35NfIWqN",
+      "name": "Anathematic Reprisal"
+    },
+    {
+      "id": "bCZP8N2C41gF10G2",
+      "name": "Anchoring Air"
+    },
+    {
+      "id": "LX4pCagYLpc9hEji",
+      "name": "Aromatic Lure"
+    },
+    {
+      "id": "VuPDHoVEPLbMfCJC",
+      "name": "Bestial Curse"
+    },
+    {
+      "id": "HTzrWoYokIEqxD9t",
+      "name": "Blood Chestnuts"
+    },
+    {
+      "id": "VXUrO8TwRqBpNzdU",
+      "name": "Bloodspray Curse"
+    },
+    {
+      "id": "S1Msrwi990FE7uMO",
+      "name": "Call The Blood"
+    },
+    {
+      "id": "REBo9wSxDDx7Qdcc",
+      "name": "Call the Ten"
+    },
+    {
+      "id": "CVvkveEH7lonSTZd",
+      "name": "Channel Arrogance"
+    },
+    {
+      "id": "4y2DMq9DV5HvmnxC",
+      "name": "Chroma Leach"
+    },
+    {
+      "id": "S7ylpCJyq0CYkux9",
+      "name": "Clownish Curse"
+    },
+    {
+      "id": "4DaHIgtMBTyxebY3",
+      "name": "Commanding Lash"
+    },
+    {
+      "id": "53Kw9WQtvrEtABEu",
+      "name": "Compel True Name"
+    },
+    {
+      "id": "VGK9s6LCMMS027zP",
+      "name": "Confront Selves"
+    },
+    {
+      "id": "qJQADktwD0x8kLAy",
+      "name": "Containment"
+    },
+    {
+      "id": "h7RtKSKGViNtD5o4",
+      "name": "Coral Eruption"
+    },
+    {
+      "id": "elusjGnE5zuDBqoe",
+      "name": "Crystallized Vapors"
+    },
+    {
+      "id": "oiUhJbJ3YCKF62Fu",
+      "name": "Darkened Eyes"
+    },
+    {
+      "id": "dARE6VfJ3Uoq5M53",
+      "name": "Daydreamer's Curse"
+    },
+    {
+      "id": "ik0bjmAJse9PSECL",
+      "name": "Deathless March"
+    },
+    {
+      "id": "VmqdVWCb8zAUCW8S",
+      "name": "Debilitating Dichotomy"
+    },
+    {
+      "id": "J8pL8yTshga8QOk8",
+      "name": "Delusional Pride"
+    },
+    {
+      "id": "FCfd1zUrqPaLEtau",
+      "name": "Dirge of Remembrance"
+    },
+    {
+      "id": "n7OgbKme4hNwxVwQ",
+      "name": "Draw the Lightning"
+    },
+    {
+      "id": "PztLrElcZfLwRnEq",
+      "name": "Dreamer's Call"
+    },
+    {
+      "id": "MLdMUOdwSKegOGlo",
+      "name": "Dull Ambition"
+    },
+    {
+      "id": "11haL5O9KMpY5Fv7",
+      "name": "Entangle Fate"
+    },
+    {
+      "id": "J5MNC4xq3CHH31qT",
+      "name": "Eradicate Undeath"
+    },
+    {
+      "id": "i7u6gAdNcyIyyo3h",
+      "name": "Favorable Review"
+    },
+    {
+      "id": "0qA4MfMkFklOz2Lk",
+      "name": "Fearful Feast"
+    },
+    {
+      "id": "6nTBr5XNuKOuPM5m",
+      "name": "Foul Miasma"
+    },
+    {
+      "id": "v2KE1ueuO5EjvF78",
+      "name": "Freezing Touch"
+    },
+    {
+      "id": "IKBjimvThvQIu2sO",
+      "name": "Friends to Foes"
+    },
+    {
+      "id": "rwWtpZpkNYvypknx",
+      "name": "Grasp of the Deep"
+    },
+    {
+      "id": "DZ9bzXYqMjAK9TzC",
+      "name": "Holy Cascade"
+    },
+    {
+      "id": "nm9Tdyb9Z59m14ZF",
+      "name": "Hot Air"
+    },
+    {
+      "id": "Y3G6Y6EDgCY0s3fq",
+      "name": "Hydraulic Torrent"
+    },
+    {
+      "id": "kHyjQbibRGPNCixx",
+      "name": "Ice Storm"
+    },
+    {
+      "id": "sUvTGELaggrBSgGm",
+      "name": "Implement of Destruction"
+    },
+    {
+      "id": "fMnjP4hpNRV9EfVM",
+      "name": "Inevitable Destination"
+    },
+    {
+      "id": "mUz3wqbMQ5JQ06M5",
+      "name": "Infectious Melody"
+    },
+    {
+      "id": "RbORUmnwlB8b3mNf",
+      "name": "Internal Insurrection"
+    },
+    {
+      "id": "mer4V7vWdTs1oLbG",
+      "name": "Isolation"
+    },
+    {
+      "id": "FHfrCABOmGVaEpPx",
+      "name": "Life-Draining Roots"
+    },
+    {
+      "id": "cBUuG1yJHGeKffpg",
+      "name": "Localized Quake"
+    },
+    {
+      "id": "Tl1QAqre7H0sQEXt",
+      "name": "Mantis's Grasp"
+    },
+    {
+      "id": "ma3sndEAZdz0Cy2H",
+      "name": "Mercurial Stride"
+    },
+    {
+      "id": "BWvGBx51RevizICD",
+      "name": "Mutilate"
+    },
+    {
+      "id": "Uqj344bezBq3ESdq",
+      "name": "Nightmare"
+    },
+    {
+      "id": "CPNlhDQP3aDmLzB3",
+      "name": "Ordained Purpose"
+    },
+    {
+      "id": "KSAEhNfZyXMO7Z7V",
+      "name": "Outcast's Curse"
+    },
+    {
+      "id": "ksLCg62cLOojw3gN",
+      "name": "Planar Tether"
+    },
+    {
+      "id": "5LGDygjRxURUOKGR",
+      "name": "Radiant Beam"
+    },
+    {
+      "id": "Pmhlv3fzPTuIhTrT",
+      "name": "Ranage's Circle"
+    },
+    {
+      "id": "nrW6lGV4xDMqLS3P",
+      "name": "Remember the Lost"
+    },
+    {
+      "id": "SSsUC7rZo0CwayPn",
+      "name": "Retributive Pain"
+    },
+    {
+      "id": "FhOaQDTSnsY7tiam",
+      "name": "Rewrite Memory"
+    },
+    {
+      "id": "FSu6ZKxr3xdS75wq",
+      "name": "Roar of the Dragon"
+    },
+    {
+      "id": "APDrC83QljsyHenB",
+      "name": "Sage's Curse"
+    },
+    {
+      "id": "gfKhtVsXF3HKSdmY",
+      "name": "Seal Fate"
+    },
+    {
+      "id": "AZKN2gnZSw2IHsQc",
+      "name": "Shadow Strike"
+    },
+    {
+      "id": "9j35xXKVVtHCh1Pe",
+      "name": "Shaken Confidence"
+    },
+    {
+      "id": "McnPlLFvKtQVXNcG",
+      "name": "Shape Stone"
+    },
+    {
+      "id": "skvgOWNTitLehL0b",
+      "name": "Shared Nightmare"
+    },
+    {
+      "id": "Jli9WBjQZ2MmKJ8y",
+      "name": "Spiritual Anamnesis"
+    },
+    {
+      "id": "cOwSsSXRsBaXUvlr",
+      "name": "Stasis"
+    },
+    {
+      "id": "5LrQIlimsPXK2xAG",
+      "name": "Steal Voice"
+    },
+    {
+      "id": "qwlh6aDgi86U3Q7H",
+      "name": "Suggestion"
+    },
+    {
+      "id": "LVwmAH5NGvTuuQSU",
+      "name": "Swarming Wasp Stings"
+    },
+    {
+      "id": "FM3SmEW8N1FCRjqt",
+      "name": "Talking Corpse"
+    },
+    {
+      "id": "1NLMPmyCB2MBoCuR",
+      "name": "Tortoise and the Hare"
+    },
+    {
+      "id": "ZhLYJlOZzUB1OKoe",
+      "name": "Trickster's Twin"
+    },
+    {
+      "id": "iAmHJbFN3lOoOkNG",
+      "name": "Unsettling Knowledge"
+    },
+    {
+      "id": "5H4jsbHODdkGhJI7",
+      "name": "Unsettling Perspective"
+    },
+    {
+      "id": "07xYlmGX32XtHGEt",
+      "name": "Vampiric Maiden"
+    },
+    {
+      "id": "jqb52wy7A0Eqwuzx",
+      "name": "Vision of Beauty"
+    },
+    {
+      "id": "OmhnoYOzFhrp6rXv",
+      "name": "Waking Dream"
+    },
+    {
+      "id": "8M03UxGXjYyDFAoy",
+      "name": "Weapon Storm"
+    },
+    {
+      "id": "TRpUjBNPQz3Eshaq",
+      "name": "Weaponize Secret"
+    },
+    {
+      "id": "6gEKZaGdH842RF3J",
+      "name": "Ymeri's Mark"
+    },
+    {
+      "id": "vJuaxTd6q11OjGqA",
+      "name": "Abyssal Plague"
+    },
+    {
+      "id": "bay4AfSu2iIozNNW",
+      "name": "Banishment"
+    },
+    {
+      "id": "3ygqSJYWZM1UV76Z",
+      "name": "Blinding Bottle"
+    },
+    {
+      "id": "7uL4XhHpxZpgNJPh",
+      "name": "Blinding Foam"
+    },
+    {
+      "id": "59NR1hA2jPSgg2sW",
+      "name": "Blister"
+    },
+    {
+      "id": "ES6FkwXXqYr4ujQH",
+      "name": "Blood Feast"
+    },
+    {
+      "id": "94eJHyFPNM1Z3TZp",
+      "name": "Blood-Feasting Breath"
+    },
+    {
+      "id": "zPVJI8Jltt3ERkaU",
+      "name": "Boomerang Shot"
+    },
+    {
+      "id": "yil09OX5uMCs3Z8v",
+      "name": "Calcium Rain"
+    },
+    {
+      "id": "crF4g9jRN1y84MSD",
+      "name": "Chthonian Wrath"
+    },
+    {
+      "id": "I7oklLZy4aTHIdc3",
+      "name": "Confusing Cry"
+    },
+    {
+      "id": "zfn5RqAdF63neqpP",
+      "name": "Control Water"
+    },
+    {
+      "id": "i5h9VQ1T6MLInINM",
+      "name": "Crucible of Iron"
+    },
+    {
+      "id": "nQS4vPm5zprqkzFZ",
+      "name": "Curse of Death"
+    },
+    {
+      "id": "A16eFTRh82xIjMu8",
+      "name": "Divine Immolation"
+    },
+    {
+      "id": "Qlp8G3knwLGhAxQ0",
+      "name": "Elemental Blast"
+    },
+    {
+      "id": "E3X2RbzWHCdz7gsk",
+      "name": "Flame Strike"
+    },
+    {
+      "id": "ZClfmMoKG3E926Uq",
+      "name": "Flames of Ego"
+    },
+    {
+      "id": "zCLyETFoPqCQXLVy",
+      "name": "Flowing Strike"
+    },
+    {
+      "id": "i88Vi47PDDoP6gQv",
+      "name": "Geyser"
+    },
+    {
+      "id": "ZyREiMaul0VhDYh3",
+      "name": "Glacial Heart"
+    },
+    {
+      "id": "LecsGlwWvnfyOeec",
+      "name": "Glacial Skewer"
+    },
+    {
+      "id": "mcck9womUsTf07nP",
+      "name": "Glossolalia"
+    },
+    {
+      "id": "d9sBzPOXX3KT8uTu",
+      "name": "Grisly Growths"
+    },
+    {
+      "id": "U58aQWJ47VrI36yP",
+      "name": "Hallucination"
+    },
+    {
+      "id": "oXeEbcUdgJGWHGEJ",
+      "name": "Impaling Spike"
+    },
+    {
+      "id": "8THDHP0UC7SgOYYF",
+      "name": "Inevitable Disaster"
+    },
+    {
+      "id": "SE3MddYAUyPKABuF",
+      "name": "Infectious Comedy"
+    },
+    {
+      "id": "JyT346VmGtRLsDnV",
+      "name": "Lightning Storm"
+    },
+    {
+      "id": "z2mfh3oPnfYqXflY",
+      "name": "Mariner's Curse"
+    },
+    {
+      "id": "9BnhadUO8FMLmeZ3",
+      "name": "Mind Probe"
+    },
+    {
+      "id": "PcmFpaHPCReNp1BD",
+      "name": "Over the Coals"
+    },
+    {
+      "id": "cGGEi67G1RStR9cD",
+      "name": "Pack Breaker"
+    },
+    {
+      "id": "EiE1A8TCeJGVzzV2",
+      "name": "Pulverizing Wake"
+    },
+    {
+      "id": "TLqMFgCewxuricJw",
+      "name": "Repelling Pulse"
+    },
+    {
+      "id": "9bOqFkewRz7Z3HZ5",
+      "name": "Scouring Pulse"
+    },
+    {
+      "id": "IqJ9URobmJ9L9UBG",
+      "name": "Shadow Blast"
+    },
+    {
+      "id": "nDgrpbKICpjUz372",
+      "name": "Spiked Carapace"
+    },
+    {
+      "id": "Y1YysjZ40ft0aLFN",
+      "name": "Spiritual Torrent"
+    },
+    {
+      "id": "zoY0fQYTF1NzezTg",
+      "name": "Steal the Sky"
+    },
+    {
+      "id": "GP3wewkQXEPrLxYj",
+      "name": "Subconscious Suggestion"
+    },
+    {
+      "id": "BilnTGuXrof9Dt9D",
+      "name": "Synaptic Pulse"
+    },
+    {
+      "id": "OAt2ZEns1gIOCgrn",
+      "name": "Synesthesia"
+    },
+    {
+      "id": "nsWSe5ssxAPn0j8t",
+      "name": "Tornadic Gale"
+    },
+    {
+      "id": "ALuvl9GYawnsZZCx",
+      "name": "Unfolding Wind Buffet"
+    },
+    {
+      "id": "9o5aG5025ZczjkPb",
+      "name": "Untwisting Iron Roots"
+    },
+    {
+      "id": "VMABZdZyplCKTAAP",
+      "name": "Vindicator's Judgment"
+    },
+    {
+      "id": "3SzuMGusGKg8nw5A",
+      "name": "Warshard Shot"
+    },
+    {
+      "id": "GaRQlC9Yw1BGKHfN",
+      "name": "Wave of Despair"
+    },
+    {
+      "id": "B3tbO85GBpzQ3u8l",
+      "name": "Wish-Twisted Form"
+    },
+    {
+      "id": "IoHxAkK0uGqrgtWl",
+      "name": "Wyvern Sting"
+    },
+    {
+      "id": "x2LALaHXO7644GQA",
+      "name": "You're Mine"
+    },
+    {
+      "id": "rqoWAxQv4RWbwyAr",
+      "name": "Accelerated Decomposition"
+    },
+    {
+      "id": "OdqM06M0wDUqZWiR",
+      "name": "Cast into Time"
+    },
+    {
+      "id": "FyOgUkq71LNC143w",
+      "name": "Catch Your Name"
+    },
+    {
+      "id": "TDNlDWbYb58Y55Da",
+      "name": "Chain Lightning"
+    },
+    {
+      "id": "GzN9bG6cKZ96YC6l",
+      "name": "Claim Undead"
+    },
+    {
+      "id": "ExQk8AwDphmckEmZ",
+      "name": "Crimson Breath"
+    },
+    {
+      "id": "OsOhx3TGIZ7AhD0P",
+      "name": "Dominate"
+    },
+    {
+      "id": "ZvB9sV7NLdpDeoTw",
+      "name": "Explosive Barrage"
+    },
+    {
+      "id": "R5r4vtmlvOA8hDiF",
+      "name": "Frost Pillar"
+    },
+    {
+      "id": "EX6gTy8s4wNyhOnl",
+      "name": "Heinous Future"
+    },
+    {
+      "id": "2hMy9ROM2dOZB8Jq",
+      "name": "Lignify"
+    },
+    {
+      "id": "MT8usUfwudDVUm5H",
+      "name": "Manifold Lives"
+    },
+    {
+      "id": "6lO6uMQxbqmYho0e",
+      "name": "Necrotize"
+    },
+    {
+      "id": "5BbU1V6wGSGbrmRD",
+      "name": "Never Mind"
+    },
+    {
+      "id": "HreHc5elibW9hVK8",
+      "name": "Pain of Ages"
+    },
+    {
+      "id": "znv4ECL7ZtuiagtA",
+      "name": "Petrify"
+    },
+    {
+      "id": "0XP2XOxT9VSiXFDr",
+      "name": "Phantasmal Calamity"
+    },
+    {
+      "id": "uhEjKSFdEhXzszh6",
+      "name": "Poltergeist's Fury"
+    },
+    {
+      "id": "ayRXv0wQH00TTNZe",
+      "name": "Purple Worm Sting"
+    },
+    {
+      "id": "8Umt1AzYfFbC4fui",
+      "name": "Spellwrack"
+    },
+    {
+      "id": "qGWORxQ0aSsH2taf",
+      "name": "Suffocate"
+    },
+    {
+      "id": "B4p4cD9Q71mHTpOP",
+      "name": "Attacked from Within"
+    },
+    {
+      "id": "EgkypvUZIZkx1UlQ",
+      "name": "Blightburn Blast"
+    },
+    {
+      "id": "1VOjUKd1pacI67RZ",
+      "name": "Curse of the Spirit Orchestra"
+    },
+    {
+      "id": "3ZNuJm5LDA8GkFsH",
+      "name": "Defy the Gods"
+    },
+    {
+      "id": "sX2o0HH4RjJDAZ8C",
+      "name": "Divine Decree"
+    },
+    {
+      "id": "0jadeyQIItIuRgeH",
+      "name": "Eclipse Burst"
+    },
+    {
+      "id": "Z9OrRXKgAPv6Hn5l",
+      "name": "Execute"
+    },
+    {
+      "id": "vFkz0gVBUT2gGnm1",
+      "name": "Frigid Flurry"
+    },
+    {
+      "id": "gMbrNFKz9NP3TR4s",
+      "name": "Inexhaustible Cynicism"
+    },
+    {
+      "id": "QVMjPfXlpnmeuWKS",
+      "name": "Leng Sting"
+    },
+    {
+      "id": "Shiuhdb2nO6Qgk3k",
+      "name": "Moonburst"
+    },
+    {
+      "id": "a3aQxCpoj1q1NQxC",
+      "name": "Sunburst"
+    },
+    {
+      "id": "uc4I1diSSX6XYzb3",
+      "name": "Telekinetic Bombardment"
+    },
+    {
+      "id": "8kJbiBEjMWG4VUjs",
+      "name": "Warp Mind"
+    },
+    {
+      "id": "C2GYCH3TtUFqPfdX",
+      "name": "Arctic Rift"
+    },
+    {
+      "id": "fBoiPXmcIO50OFFR",
+      "name": "Boil Blood"
+    },
+    {
+      "id": "qlxM7Ik3uUeUIOcv",
+      "name": "Canticle of Everlasting Grief"
+    },
+    {
+      "id": "M0jQlpQYUr0pp2Sv",
+      "name": "Desiccate"
+    },
+    {
+      "id": "it4wx2mDIJDlZGqS",
+      "name": "Divine Armageddon"
+    },
+    {
+      "id": "TvZiwZRianfTSbEg",
+      "name": "Hypnopompic Terrors"
+    },
+    {
+      "id": "BKIet436snMNcnez",
+      "name": "Polar Ray"
+    },
+    {
+      "id": "Ht35SDf9PDStJfoC",
+      "name": "Spirit Song"
+    },
+    {
+      "id": "MS60WhVifb45qORJ",
+      "name": "Spiritual Epidemic"
+    },
+    {
+      "id": "2DFtBRLyYMPrimp7",
+      "name": "Sudden Transposition"
+    },
+    {
+      "id": "Jvyy6oVIQsD34MHB",
+      "name": "Uncontrollable Dance"
+    },
+    {
+      "id": "MFPvs0ARxtThYPFq",
+      "name": "Dimensional Excision"
+    },
+    {
+      "id": "ZMY58Yk5hnyfeE3q",
+      "name": "Linnorm Sting"
+    },
+    {
+      "id": "MJx7DmjsWYzDZ3a4",
+      "name": "Phantasmagoria"
+    },
+    {
+      "id": "ItZgGznUBhgWBwFG",
+      "name": "Telepathic Demand"
+    },
+    {
+      "id": "XjNROFtWnwovhCsq",
+      "name": "Unfolding Wind Crash"
+    },
+    {
+      "id": "hq57j7Nif1zuQ2Ab",
+      "name": "Unspeakable Shadow"
+    },
+    {
+      "id": "FEsuyf203wTNE2et",
+      "name": "Wails of the Damned"
+    },
+    {
+      "id": "qDjeG6dxT4aEEC6J",
+      "name": "Weird"
+    }
+  ],
+  "regressions": [],
+  "families": [
+    {
+      "id": "self-help-ending",
+      "title": "Conditions ended by the creature’s own Interact action or Escape",
+      "definition": "Descriptions where the affected creature ends a condition or effect with an Interact action or an Escape.",
+      "members": [
+        {
+          "id": "7uL4XhHpxZpgNJPh",
+          "name": "Blinding Foam",
+          "phase": 4,
+          "sourceFile": "spells/spells/rank-5/blinding-foam.json",
+          "families": [
+            "self-help-ending"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "8lZhUreL1bRk1v4Z",
+          "name": "Briny Bolt",
+          "phase": 4,
+          "sourceFile": "spells/spells/rank-1/briny-bolt.json",
+          "families": [
+            "self-help-ending"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [
+            "Interact ending"
+          ],
+          "blockers": []
+        },
+        {
+          "id": "SE0fbgBj7atuukdv",
+          "name": "Cloak of Shadow",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-1/cloak-of-shadow.json",
+          "families": [
+            "self-help-ending"
+          ],
+          "route": "note",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "primary-save"
+          ]
+        },
+        {
+          "id": "LmGCKwk2yYhrDVjE",
+          "name": "Comet Charge",
+          "phase": 7,
+          "sourceFile": "spells/spells/rank-7/comet-charge.json",
+          "families": [
+            "self-help-ending"
+          ],
+          "route": "disabled",
+          "enabledRoute": false,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "no-primary-save",
+            "description-semantics",
+            "primary-save"
+          ]
+        },
+        {
+          "id": "nPb8DDs4rZpBLWIb",
+          "name": "Cradle Aloft",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-1/cradle-aloft.json",
+          "families": [
+            "self-help-ending"
+          ],
+          "route": "note",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "primary-save"
+          ]
+        },
+        {
+          "id": "zVfTMpkXJDRESkl5",
+          "name": "Croak Voice",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-3/croak-voice.json",
+          "families": [
+            "self-help-ending"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "zul5cBTfr7NXHBZf",
+          "name": "Dazzling Flash",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-1/dazzling-flash.json",
+          "families": [
+            "self-help-ending"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [
+            "Interact ending"
+          ],
+          "blockers": []
+        },
+        {
+          "id": "mtxMpGWpwwWSbySj",
+          "name": "For Love, For Lightning",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-6/for-love-for-lightning.json",
+          "families": [
+            "self-help-ending"
+          ],
+          "route": "effect",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "primary-save"
+          ]
+        },
+        {
+          "id": "v2KE1ueuO5EjvF78",
+          "name": "Freezing Touch",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-4/freezing-touch.json",
+          "families": [
+            "self-help-ending"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [
+            "Escape ending"
+          ],
+          "blockers": []
+        },
+        {
+          "id": "qFO9HgplrShoaAPY",
+          "name": "Lock Item",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-2/lock-item.json",
+          "families": [
+            "self-help-ending"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "D6BcAoWFxHYTKwVZ",
+          "name": "Morass of Ages",
+          "phase": 7,
+          "sourceFile": "spells/spells/rank-4/morass-of-ages.json",
+          "families": [
+            "self-help-ending",
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [
+            "Escape ending"
+          ],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "hWtB81P2KGzGHKAJ",
+          "name": "Slime Spit",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-1/slime-spit.json",
+          "families": [
+            "self-help-ending"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [
+            "Interact ending"
+          ],
+          "blockers": []
+        },
+        {
+          "id": "pQ3NIzZXeIIcU81C",
+          "name": "Spirit Veil",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-3/spirit-veil.json",
+          "families": [
+            "self-help-ending"
+          ],
+          "route": "effect",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "primary-save"
+          ]
+        },
+        {
+          "id": "uZK2BYzPnxUBnDjr",
+          "name": "Tangle Vine",
+          "phase": 4,
+          "sourceFile": "spells/spells/cantrip/tangle-vine.json",
+          "families": [
+            "self-help-ending"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "2wT21v3NjLXdmE5W",
+          "name": "Trickster's Feathers",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-4/tricksters-feathers.json",
+          "families": [
+            "self-help-ending"
+          ],
+          "route": "note",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "primary-save"
+          ]
+        },
+        {
+          "id": "07xYlmGX32XtHGEt",
+          "name": "Vampiric Maiden",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-4/vampiric-maiden.json",
+          "families": [
+            "self-help-ending"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [
+            "Interact ending",
+            "Escape ending"
+          ],
+          "blockers": []
+        },
+        {
+          "id": "tvUfRH7q4NSvTFTx",
+          "name": "Vanish Weapon",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-2/vanish-weapon.json",
+          "families": [
+            "self-help-ending"
+          ],
+          "route": "effect",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "primary-save"
+          ]
+        },
+        {
+          "id": "DeNz6eAUlE0IE9U3",
+          "name": "Winter Bolt",
+          "phase": 4,
+          "sourceFile": "spells/spells/rank-1/winter-bolt.json",
+          "families": [
+            "self-help-ending"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        }
+      ]
+    },
+    {
+      "id": "state-immunity",
+      "title": "Creature-state immunity",
+      "definition": "Descriptions making creatures without blood, organs, breath or similar states immune or unaffected.",
+      "members": [
+        {
+          "id": "fBoiPXmcIO50OFFR",
+          "name": "Boil Blood",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-8/boil-blood.json",
+          "families": [
+            "state-immunity"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [
+            "GM-confirmed eligibility"
+          ],
+          "blockers": []
+        },
+        {
+          "id": "ZZTLWMXijRDgE66m",
+          "name": "Expunge Blood",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-6/expunge-blood.json",
+          "families": [
+            "state-immunity",
+            "preamble-trigger"
+          ],
+          "route": "disabled",
+          "enabledRoute": false,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [
+            "GM-confirmed eligibility"
+          ],
+          "blockers": [
+            "preamble:ongoing-trigger",
+            "preamble:modifier"
+          ]
+        },
+        {
+          "id": "H481wmQUtEUhxHzi",
+          "name": "Fungal Exhalation",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-3/fungal-exhalation.json",
+          "families": [
+            "state-immunity"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [
+            "GM-confirmed eligibility"
+          ],
+          "blockers": []
+        },
+        {
+          "id": "zHSp4PzoOE72DV4o",
+          "name": "Torturous Trauma",
+          "phase": 2,
+          "sourceFile": "spells/spells/cantrip/torturous-trauma.json",
+          "families": [
+            "state-immunity"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [
+            "GM-confirmed eligibility"
+          ],
+          "blockers": []
+        },
+        {
+          "id": "kk7JKox6MdGAWmCH",
+          "name": "Vacuum",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-7/vacuum.json",
+          "families": [
+            "state-immunity",
+            "preamble-trigger"
+          ],
+          "route": "disabled",
+          "enabledRoute": false,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "residual-prose",
+            "sustain-effect",
+            "preamble:conditional-eligibility",
+            "preamble:ongoing-trigger",
+            "preamble:modifier",
+            "preamble:degree-adjustment",
+            "unaccounted-prose"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "preamble-trigger",
+      "title": "Save preambles with while, entering or counteract",
+      "definition": "Save spells whose rules before the degree table mention while, entering an area, or counteracting.",
+      "members": [
+        {
+          "id": "5JGSo1tgDEehqbWm",
+          "name": "Antlion Trap",
+          "phase": 7,
+          "sourceFile": "spells/spells/rank-3/antlion-trap.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [
+            "Escape ending"
+          ],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "ZeftDoh0nFAXBAWY",
+          "name": "Appearance of Wealth",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-1/appearance-of-wealth.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [
+            "Interact ending",
+            "GM-confirmed eligibility"
+          ],
+          "blockers": []
+        },
+        {
+          "id": "oUDNCArkQTdhllxD",
+          "name": "Aqueous Orb",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-3/aqueous-orb.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "KY2xyMavZHAoG69D",
+          "name": "Arcane Explosion",
+          "phase": 7,
+          "sourceFile": "spells/spells/rank-9/arcane-explosion.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "disabled",
+          "enabledRoute": false,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "description-effects",
+            "description-target-predicates",
+            "description-lifecycle",
+            "native-spell-effect-scope",
+            "dismissal",
+            "basic-save-composition",
+            "unaccounted-prose"
+          ]
+        },
+        {
+          "id": "KG7amdeXWc7MjGXe",
+          "name": "Asterism",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-4/asterism.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "BI4iwu3nApyIG0zY",
+          "name": "Astral Labyrinth",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-9/astral-labyrinth.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "disabled",
+          "enabledRoute": false,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "residual-prose",
+            "preamble:counteract",
+            "preamble:restriction",
+            "unaccounted-prose"
+          ]
+        },
+        {
+          "id": "nUSi2B7RhIKjaiXQ",
+          "name": "Astral Rain",
+          "phase": 3,
+          "sourceFile": "spells/spells/cantrip/astral-rain.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "ZMvplR106Jxl7B15",
+          "name": "Awaken Entropy",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-6/awaken-entropy.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "7ZinJNzxq0XF0oMx",
+          "name": "Bane",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-1/bane.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "bay4AfSu2iIozNNW",
+          "name": "Banishment",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-5/banishment.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [
+            "GM-confirmed eligibility"
+          ],
+          "blockers": []
+        },
+        {
+          "id": "m34WOIGZCEg1h76G",
+          "name": "Blanket of Stars",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-6/blanket-of-stars.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "disabled",
+          "enabledRoute": false,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "preamble:ongoing-trigger",
+            "preamble:modifier",
+            "preamble:additional-condition"
+          ]
+        },
+        {
+          "id": "NacrNSvfODxpZena",
+          "name": "Blazing Blade",
+          "phase": 4,
+          "sourceFile": "spells/spells/rank-2/blazing-blade.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "CXpOlv2ZZq2jVbRX",
+          "name": "Blood in the Water",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-3/blood-in-the-water.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [
+            "GM-confirmed eligibility"
+          ],
+          "blockers": []
+        },
+        {
+          "id": "mAdxOQUA2cHgKViU",
+          "name": "Bramble Bush",
+          "phase": 7,
+          "sourceFile": "spells/spells/cantrip/bramble-bush.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "VUUWjeapcyLZabVA",
+          "name": "Bridge of Vines",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-4/bridge-of-vines.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [
+            "Escape ending"
+          ],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "xGFAGlonNySXrunq",
+          "name": "Buffeting Winds",
+          "phase": 7,
+          "sourceFile": "spells/spells/rank-1/buffeting-winds.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "kWDt0JcKPgX6MvdD",
+          "name": "Burning Blossoms",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-8/burning-blossoms.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "disabled",
+          "enabledRoute": false,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "manual:conditional-effect",
+            "manual:attitude-or-hostility",
+            "residual-prose",
+            "preamble:ongoing-trigger",
+            "preamble:additional-condition",
+            "area-paragraph",
+            "unused-shared-damage",
+            "unaccounted-prose",
+            "manual-mechanic",
+            "condition-composition"
+          ]
+        },
+        {
+          "id": "rillrYLb7V2mRyU7",
+          "name": "Call of the Quenching",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-7/call-of-the-quenching.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "disabled",
+          "enabledRoute": false,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "description-effects",
+            "description-target-predicates",
+            "description-lifecycle",
+            "area-paragraph",
+            "basic-save-composition",
+            "unaccounted-prose"
+          ]
+        },
+        {
+          "id": "jJphHQlENHFlSElH",
+          "name": "Captivating Adoration",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-4/captivating-adoration.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "24JgGrYx7ixgP4kn",
+          "name": "Carrion Mire",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-2/carrion-mire.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "uEyfLoFQsRKBRIcB",
+          "name": "Confusing Colors",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-8/confusing-colors.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "eob29LrDMH2IoeAj",
+          "name": "Conjured Clockwork",
+          "phase": 7,
+          "sourceFile": "spells/spells/rank-4/conjured-clockwork.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "HMTloW1hvRFJ5Z2D",
+          "name": "Consuming Darkness",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-5/consuming-darkness.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [
+            "Escape ending"
+          ],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "ADwX87fWrpB8cQ5Q",
+          "name": "Cordyceps Command",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-3/cordyceps-command.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "zf2OwwvIwu8JHoY2",
+          "name": "Corpse Bloom",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-1/corpse-bloom.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "BlfOg9Ceymgjstjm",
+          "name": "Corrosive Muck",
+          "phase": 7,
+          "sourceFile": "spells/spells/rank-5/corrosive-muck.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "B3eLlbaPxOYHcs1o",
+          "name": "Curse of Lost Time",
+          "phase": 4,
+          "sourceFile": "spells/spells/rank-3/curse-of-lost-time.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "IDkEuq5jLEDhJ31C",
+          "name": "Cyclone Rondo",
+          "phase": 7,
+          "sourceFile": "spells/spells/rank-3/cyclone-rondo.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "sFwoKj0TsacsmoWj",
+          "name": "Darklight",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-7/darklight.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "disabled",
+          "enabledRoute": false,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "description-effects",
+            "description-target-predicates",
+            "description-lifecycle",
+            "basic-save-composition",
+            "unaccounted-prose"
+          ]
+        },
+        {
+          "id": "aIPa7Yp4vGeKIKNG",
+          "name": "Deathly Scream",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-1/deathly-scream.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "wjJW9hWY5CkkMvY5",
+          "name": "Diamond Dust",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-4/diamond-dust.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "NWIDE4XKtL3Nb4pO",
+          "name": "Disintegrating Puddle",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-2/disintegrating-puddle.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "z8bHh8KVttslQIU9",
+          "name": "Distracting Decoy",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-1/distracting-decoy.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "1xM9muPRa8hiyJtI",
+          "name": "Dive and Breach",
+          "phase": 7,
+          "sourceFile": "spells/spells/rank-3/dive-and-breach.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "nsQvjNyg4Whw2mek",
+          "name": "Divine Aura",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-8/divine-aura.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "iMmexY6ZosLS4I5R",
+          "name": "Door to Beyond",
+          "phase": 7,
+          "sourceFile": "spells/spells/rank-4/door-to-beyond.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "Q6cvsLytYffpeN3g",
+          "name": "Dread Mosquito Storm",
+          "phase": 6,
+          "sourceFile": "spells/spells/rank-9/dread-mosquito-storm.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "disabled",
+          "enabledRoute": false,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "affliction-handoff:lifecycle",
+            "residual-prose",
+            "preamble:ongoing-trigger",
+            "delegated-capability",
+            "unaccounted-prose"
+          ]
+        },
+        {
+          "id": "0jadeyQIItIuRgeH",
+          "name": "Eclipse Burst",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-7/eclipse-burst.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "rVhHaWqUsVUO4GuY",
+          "name": "Eject Soul",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-1/eject-soul.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [
+            "GM-confirmed eligibility"
+          ],
+          "blockers": []
+        },
+        {
+          "id": "oPVyu2a0K3aTVIR8",
+          "name": "Elysian Whimsy",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-1/elysian-whimsy.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "GurWFDj4IjKv73kL",
+          "name": "Excise Lexicon",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-3/excise-lexicon.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "ZZTLWMXijRDgE66m",
+          "name": "Expunge Blood",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-6/expunge-blood.json",
+          "families": [
+            "state-immunity",
+            "preamble-trigger"
+          ],
+          "route": "disabled",
+          "enabledRoute": false,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [
+            "GM-confirmed eligibility"
+          ],
+          "blockers": [
+            "preamble:ongoing-trigger",
+            "preamble:modifier"
+          ]
+        },
+        {
+          "id": "6s0UW4bujggma9TC",
+          "name": "Fabricated Truth",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-10/fabricated-truth.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "disabled",
+          "enabledRoute": false,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "residual-prose",
+            "preamble:counteract",
+            "preamble:restriction",
+            "item-duration-grammar",
+            "lifecycle",
+            "unaccounted-prose"
+          ]
+        },
+        {
+          "id": "kuoYff1csM5eAcAP",
+          "name": "Fire Seeds",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-6/fire-seeds.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "disabled",
+          "enabledRoute": false,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "description-effects",
+            "description-target-predicates",
+            "description-lifecycle",
+            "basic-save-composition",
+            "unaccounted-prose"
+          ]
+        },
+        {
+          "id": "IKBjimvThvQIu2sO",
+          "name": "Friends to Foes",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-4/friends-to-foes.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "vFkz0gVBUT2gGnm1",
+          "name": "Frigid Flurry",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-7/frigid-flurry.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "cnRltZAjU9aCklqz",
+          "name": "Frog Tongue",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-2/frog-tongue.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [
+            "Escape ending"
+          ],
+          "blockers": []
+        },
+        {
+          "id": "g8QqHpv2CWDwmIm1",
+          "name": "Gust of Wind",
+          "phase": 7,
+          "sourceFile": "spells/spells/rank-1/gust-of-wind.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "4bFxUA59xeq6Snhw",
+          "name": "Hallowed Ground",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-1/hallowed-ground.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "K2WpC3FFoHrqX9Q5",
+          "name": "Hypnotize",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-3/hypnotize.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "I2fwPslQth0DTPQD",
+          "name": "Incendiary Fog",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-5/incendiary-fog.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "29tJyuEfFP43lMcM",
+          "name": "Infinitesimal Collapse Field",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-7/infinitesimal-collapse-field.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "disabled",
+          "enabledRoute": false,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "residual-prose",
+            "preamble:ongoing-trigger",
+            "leave-area-lifetime",
+            "unaccounted-prose"
+          ]
+        },
+        {
+          "id": "eSEmqOBuywoJ6tYd",
+          "name": "Inner Radiance Torrent",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-2/inner-radiance-torrent.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "description-effects",
+            "description-target-predicates",
+            "description-lifecycle",
+            "basic-save-composition",
+            "unaccounted-prose"
+          ]
+        },
+        {
+          "id": "vuehhQN8gPSpqcEK",
+          "name": "Instant Minefield",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-5/instant-minefield.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "T90ij2uu6ZaBaSXV",
+          "name": "Lament",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-1/lament.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "CgekONDD5jIxL8oM",
+          "name": "Life's Flowing River",
+          "phase": 7,
+          "sourceFile": "spells/spells/rank-4/lifes-flowing-river.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "6GjJtLJnwC18Y0aZ",
+          "name": "Lift Nature's Caul",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-1/lift-natures-caul.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "ygZHabZRS1ypucaw",
+          "name": "Living Terrain",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-4/living-terrain.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "Lr737SofpsFtLpEo",
+          "name": "Luring Wail",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-4/luring-wail.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "AdZ2rWJStZ5unxzq",
+          "name": "Malediction",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-1/malediction.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "vhMCd15ZwNJn0zen",
+          "name": "Malicious Shadow",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-3/malicious-shadow.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "qOeBQyC1z7OScHvP",
+          "name": "Maze of Locked Doors",
+          "phase": 7,
+          "sourceFile": "spells/spells/rank-7/maze-of-locked-doors.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "disabled",
+          "enabledRoute": false,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "preamble:counteract"
+          ]
+        },
+        {
+          "id": "PEGECeEtEmXEzwBT",
+          "name": "Mental Map",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-2/mental-map.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "D6BcAoWFxHYTKwVZ",
+          "name": "Morass of Ages",
+          "phase": 7,
+          "sourceFile": "spells/spells/rank-4/morass-of-ages.json",
+          "families": [
+            "self-help-ending",
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [
+            "Escape ending"
+          ],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "SAmyaiVKTDrUNjot",
+          "name": "Nymph's Grace",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-1/nymphs-grace.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "87zLUuTMmZ9zc7gH",
+          "name": "Oneiric Mire",
+          "phase": 7,
+          "sourceFile": "spells/spells/rank-3/oneiric-mire.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [
+            "Escape ending"
+          ],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "eCniO6INHNfc9Svr",
+          "name": "Overflowing Sorrow",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-4/overflowing-sorrow.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "x1YwD1E9LW8upBj6",
+          "name": "Patron's Protector",
+          "phase": 5,
+          "sourceFile": "spells/spells/rank-6/patrons-protector.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "disabled",
+          "enabledRoute": false,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "description-effects",
+            "description-target-predicates",
+            "description-lifecycle",
+            "basic-save-composition",
+            "lifecycle",
+            "unaccounted-prose"
+          ]
+        },
+        {
+          "id": "D31YX7zvRBvenTAz",
+          "name": "Petal Storm",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-4/petal-storm.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "Um0aaJotqMKGmAlR",
+          "name": "Pied Piping",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-10/pied-piping.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "disabled",
+          "enabledRoute": false,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "residual-prose",
+            "preamble:temporary-immunity",
+            "preamble:conditional-eligibility",
+            "preamble:ongoing-trigger",
+            "preamble:modifier",
+            "unaccounted-prose"
+          ]
+        },
+        {
+          "id": "A125k5hYixepbzNb",
+          "name": "Planar Collision",
+          "phase": 7,
+          "sourceFile": "spells/spells/rank-10/planar-collision.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "disabled",
+          "enabledRoute": false,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "description-effects",
+            "description-target-predicates",
+            "description-lifecycle",
+            "basic-save-composition",
+            "unaccounted-prose"
+          ]
+        },
+        {
+          "id": "ksLCg62cLOojw3gN",
+          "name": "Planar Tether",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-4/planar-tether.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "2uEuYmlyx1R7zQeH",
+          "name": "Pollen Pods",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-7/pollen-pods.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": true,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "wU6hNzK8Yfqdmc8m",
+          "name": "Possession",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-7/possession.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "disabled",
+          "enabledRoute": false,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "manual:conditional-effect",
+            "residual-prose",
+            "preamble:ongoing-trigger",
+            "preamble:ends-early",
+            "preamble:additional-condition",
+            "preamble:restriction",
+            "preamble:degree-adjustment",
+            "unaccounted-prose",
+            "manual-mechanic"
+          ]
+        },
+        {
+          "id": "e4c73RBCQAZdYxau",
+          "name": "Pressure Zone",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-5/pressure-zone.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "IeVP2xkNJf5kVAig",
+          "name": "Pyroclastic Truth",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-1/pyroclastic-truth.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "02J0rDTk37KN2sjt",
+          "name": "Quench",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-2/quench.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "5LGDygjRxURUOKGR",
+          "name": "Radiant Beam",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-4/radiant-beam.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "Stjb9wvLn146TfW6",
+          "name": "Reblooded",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-3/reblooded.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "yrZA4k2VAqEP8xx7",
+          "name": "Repulsion",
+          "phase": 7,
+          "sourceFile": "spells/spells/rank-6/repulsion.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "disabled",
+          "enabledRoute": false,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "manual:terrain",
+            "residual-prose",
+            "preamble:ongoing-trigger",
+            "unaccounted-prose",
+            "manual-mechanic"
+          ]
+        },
+        {
+          "id": "aewxsale5xWEPKLk",
+          "name": "Ring of Truth",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-3/ring-of-truth.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "9bOqFkewRz7Z3HZ5",
+          "name": "Scouring Pulse",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-5/scouring-pulse.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "HGmBY8KjgLV97nUp",
+          "name": "Scouring Sand",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-1/scouring-sand.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [
+            "Interact ending"
+          ],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "VNv96dJPi0WXKSFN",
+          "name": "Scrounger's Glee",
+          "phase": 3,
+          "sourceFile": "spells/spells/cantrip/scroungers-glee.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "cf7Jkm39uEjUFtHt",
+          "name": "Sea Surge",
+          "phase": 7,
+          "sourceFile": "spells/spells/rank-2/sea-surge.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "4Gl3WSUqYjVVIsOg",
+          "name": "Shadow Zombie",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-2/shadow-zombie.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "HcIAQZjNXHemoXSU",
+          "name": "Shifting Sand",
+          "phase": 7,
+          "sourceFile": "spells/spells/rank-3/shifting-sand.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [
+            "Escape ending"
+          ],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "CzMCiFbgLj1irnP4",
+          "name": "Songbird's Call",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-4/songbirds-call.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "MS60WhVifb45qORJ",
+          "name": "Spiritual Epidemic",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-8/spiritual-epidemic.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "Bc6QqTmFV4q7G7L0",
+          "name": "Splinter Volley",
+          "phase": 4,
+          "sourceFile": "spells/spells/rank-2/splinter-volley.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "m4Mc5XbdML92BKOE",
+          "name": "Strange Geometry",
+          "phase": 7,
+          "sourceFile": "spells/spells/rank-5/strange-geometry.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "XFtO4BBI22Uox2QP",
+          "name": "Sudden Blight",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-2/sudden-blight.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "4Sg6ZngswhphxiBD",
+          "name": "Swallow Light",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-2/swallow-light.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "avT46uIH3xYJPSv4",
+          "name": "Teeth to Terror",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-2/teeth-to-terror.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [
+            "GM-confirmed eligibility"
+          ],
+          "blockers": []
+        },
+        {
+          "id": "MVrxZarUTnJxAUN8",
+          "name": "Tether",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-1/tether.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [
+            "Escape ending"
+          ],
+          "blockers": []
+        },
+        {
+          "id": "8NK5HtDxM3Qktu8H",
+          "name": "The Parrot's Whisper",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-2/the-parrots-whisper.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "V05lB4VsSMiMMsZJ",
+          "name": "The Queen's Rainbow",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-2/the-queens-rainbow.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "A7NXFVgENRVtYoe3",
+          "name": "Trim the Blight",
+          "phase": 7,
+          "sourceFile": "spells/spells/rank-9/trim-the-blight.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "disabled",
+          "enabledRoute": false,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "condition-duration-scope",
+            "residual-prose",
+            "preamble:terrain",
+            "preamble:gm-adjudication",
+            "preamble:recipient-qualifier",
+            "unaccounted-prose"
+          ]
+        },
+        {
+          "id": "b4cst3WNzl4X7Bdr",
+          "name": "Unbounded Sphere",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-4/unbounded-sphere.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "Jvyy6oVIQsD34MHB",
+          "name": "Uncontrollable Dance",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-8/uncontrollable-dance.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "5H4jsbHODdkGhJI7",
+          "name": "Unsettling Perspective",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-4/unsettling-perspective.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "kk7JKox6MdGAWmCH",
+          "name": "Vacuum",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-7/vacuum.json",
+          "families": [
+            "state-immunity",
+            "preamble-trigger"
+          ],
+          "route": "disabled",
+          "enabledRoute": false,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "residual-prose",
+            "sustain-effect",
+            "preamble:conditional-eligibility",
+            "preamble:ongoing-trigger",
+            "preamble:modifier",
+            "preamble:degree-adjustment",
+            "unaccounted-prose"
+          ]
+        },
+        {
+          "id": "VbP3EPkHDvDKX3eM",
+          "name": "Veil of Broken Reality",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-10/veil-of-broken-reality.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "disabled",
+          "enabledRoute": false,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "residual-prose",
+            "preamble:temporary-immunity",
+            "preamble:conditional-eligibility",
+            "preamble:ongoing-trigger",
+            "area-paragraph",
+            "unaccounted-prose"
+          ]
+        },
+        {
+          "id": "RQjSQVZRG497cJhX",
+          "name": "Vibrant Pattern",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-6/vibrant-pattern.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "tPtTKe0X1dDwoDmQ",
+          "name": "Vibrant Vibrato",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-7/vibrant-vibrato.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "disabled",
+          "enabledRoute": false,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "manual:conditional-effect",
+            "residual-prose",
+            "sustain-effect",
+            "preamble:ongoing-trigger",
+            "preamble:restriction",
+            "unused-shared-damage",
+            "unaccounted-prose",
+            "manual-mechanic"
+          ]
+        },
+        {
+          "id": "jBGAYmR0BkkbpJvG",
+          "name": "Visions of Danger",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-7/visions-of-danger.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        },
+        {
+          "id": "8kJbiBEjMWG4VUjs",
+          "name": "Warp Mind",
+          "phase": 2,
+          "sourceFile": "spells/spells/rank-7/warp-mind.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [
+            "Interact ending"
+          ],
+          "blockers": []
+        },
+        {
+          "id": "TRpUjBNPQz3Eshaq",
+          "name": "Weaponize Secret",
+          "phase": 4,
+          "sourceFile": "spells/spells/rank-4/weaponize-secret.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": []
+        },
+        {
+          "id": "VehkHHGxQH1jGolN",
+          "name": "Whispers of a Dead Goddess",
+          "phase": 3,
+          "sourceFile": "spells/spells/rank-5/whispers-of-a-dead-goddess.json",
+          "families": [
+            "preamble-trigger"
+          ],
+          "route": "ongoing",
+          "enabledRoute": true,
+          "sharedSave": false,
+          "previousSharedSave": false,
+          "detail": [],
+          "blockers": [
+            "lingering-area"
+          ]
+        }
+      ]
+    }
+  ],
+  "blockerCounts": [
+    [
+      "lingering-area",
+      45
+    ],
+    [
+      "unaccounted-prose",
+      19
+    ],
+    [
+      "residual-prose",
+      12
+    ],
+    [
+      "preamble:ongoing-trigger",
+      11
+    ],
+    [
+      "description-effects",
+      7
+    ],
+    [
+      "description-target-predicates",
+      7
+    ],
+    [
+      "description-lifecycle",
+      7
+    ],
+    [
+      "basic-save-composition",
+      7
+    ],
+    [
+      "primary-save",
+      7
+    ],
+    [
+      "preamble:restriction",
+      4
+    ],
+    [
+      "preamble:modifier",
+      4
+    ],
+    [
+      "manual-mechanic",
+      4
+    ],
+    [
+      "preamble:counteract",
+      3
+    ],
+    [
+      "preamble:additional-condition",
+      3
+    ],
+    [
+      "manual:conditional-effect",
+      3
+    ],
+    [
+      "area-paragraph",
+      3
+    ],
+    [
+      "preamble:conditional-eligibility",
+      3
+    ],
+    [
+      "unused-shared-damage",
+      2
+    ],
+    [
+      "lifecycle",
+      2
+    ],
+    [
+      "preamble:temporary-immunity",
+      2
+    ],
+    [
+      "preamble:degree-adjustment",
+      2
+    ],
+    [
+      "sustain-effect",
+      2
+    ],
+    [
+      "native-spell-effect-scope",
+      1
+    ],
+    [
+      "dismissal",
+      1
+    ],
+    [
+      "manual:attitude-or-hostility",
+      1
+    ],
+    [
+      "condition-composition",
+      1
+    ],
+    [
+      "no-primary-save",
+      1
+    ],
+    [
+      "description-semantics",
+      1
+    ],
+    [
+      "affliction-handoff:lifecycle",
+      1
+    ],
+    [
+      "delegated-capability",
+      1
+    ],
+    [
+      "item-duration-grammar",
+      1
+    ],
+    [
+      "leave-area-lifetime",
+      1
+    ],
+    [
+      "preamble:ends-early",
+      1
+    ],
+    [
+      "manual:terrain",
+      1
+    ],
+    [
+      "condition-duration-scope",
+      1
+    ],
+    [
+      "preamble:terrain",
+      1
+    ],
+    [
+      "preamble:gm-adjudication",
+      1
+    ],
+    [
+      "preamble:recipient-qualifier",
+      1
+    ]
+  ]
+}

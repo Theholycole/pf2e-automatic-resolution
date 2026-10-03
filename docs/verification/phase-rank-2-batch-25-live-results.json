@@ -1,0 +1,67 @@
+{
+  "case": "rank2Batch25",
+  "date": "2026-10-01",
+  "world": "pftest",
+  "result": {
+    "label": "rank2Batch25",
+    "passed": true,
+    "at": "2026-10-01T08:53:39.223Z",
+    "details": {
+      "batch25": {
+        "confetti": {
+          "kind": "concealing-area",
+          "radius": 15,
+          "concealed": true,
+          "toggle": true,
+          "penalty": -2,
+          "withToggle": [
+            -2
+          ],
+          "withoutToggle": [],
+          "afterEnd": false
+        },
+        "lament": {
+          "kind": "against-caster-area",
+          "foe": true,
+          "ally": false,
+          "far": false,
+          "neutral": false,
+          "unsure": [
+            "PFTEST P23 Affliction lament neutral"
+          ],
+          "rule": "[[[\"ac\"],-2,\"off-guard\",[\"origin:signature:426363c6-a823-537d-ad4c-58b06751604d\"]]]",
+          "signature": "origin:signature:426363c6-a823-537d-ad4c-58b06751604d",
+          "duration": "1 rounds turn-start @50",
+          "nextTurn": {
+            "round": 2,
+            "turn": 0,
+            "present": false,
+            "expired": null
+          }
+        },
+        "darkness": {
+          "kind": "darkness-area",
+          "behaviors": [
+            "adjustDarknessLevel:0:1"
+          ],
+          "rankNote": true,
+          "darkvisionNote": true,
+          "ended": "ended",
+          "regionLeft": false
+        }
+      }
+    }
+  },
+  "offGuardPredicateProbe": {
+    "casterStrikeDC": 18,
+    "casterDCModifiers": [
+      "base:10",
+      "off-guard:-2"
+    ],
+    "otherStrikeDC": 20,
+    "otherDCModifiers": [
+      "base:10"
+    ],
+    "foeAC": 20
+  }
+}

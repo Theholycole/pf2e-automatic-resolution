@@ -1,0 +1,18 @@
+{
+  "label": "rank4Batch120",
+  "passed": true,
+  "at": "2026-10-03T09:28:19.362Z",
+  "details": {
+    "batch120": {
+      "cast": {
+        "degree": "criticalFailure",
+        "seconds": 86400,
+        "formula": "3d6"
+      },
+      "holderTurn": 14,
+      "otherTurn": 15,
+      "walkerTurn": 15,
+      "holderLater": 0
+    }
+  }
+}

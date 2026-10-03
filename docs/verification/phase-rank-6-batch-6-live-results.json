@@ -1,0 +1,29 @@
+{
+ "label": "rank6Batch6",
+ "passed": true,
+ "at": "2026-10-03T17:25:01.129Z",
+ "details": {
+  "batch6": {
+   "zeal": {
+    "level": "automatic",
+    "temp": [
+     18,
+     18
+    ],
+    "will": "ternary(gte(@item.level,9),3,2)",
+    "level9": 9,
+    "note": true
+   },
+   "guard": {
+    "level": "automatic",
+    "resist": 11,
+    "effect": true
+   },
+   "fusillade": {
+    "level": "automatic",
+    "effect": true,
+    "note": true
+   }
+  }
+ }
+}

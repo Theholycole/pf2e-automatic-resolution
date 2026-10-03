@@ -1,0 +1,109 @@
+{
+  "batch": "cantrip-rank-1-batch-9",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch9",
+    "passed": true,
+    "details": {
+      "placed": {
+        "afterMiss": 0,
+        "regions": 1,
+        "name": "Fire Ray: catches fire",
+        "targetInside": true,
+        "bystanderInside": false,
+        "card": "Area: the ground in PFTEST P23 Affliction ray target's space catches fire: 1d6 fire damage (no save) to each creature that ends its turn there. The module placed a region there and deals the damage itself."
+      },
+      "bystander": {
+        "lost": 4,
+        "region": 1
+      },
+      "target": {
+        "lost": 2,
+        "regions": 0,
+        "record": [
+          {
+            "status": "ended",
+            "reason": "duration"
+          }
+        ]
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "lingering",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "sustainArea",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "terrainBatch1",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "terrainBatch2",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "spellAttack",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch3",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch7",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch9",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "hazardRegions": 0
+  }
+}

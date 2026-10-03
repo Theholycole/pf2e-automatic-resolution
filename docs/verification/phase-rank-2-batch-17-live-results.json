@@ -1,0 +1,70 @@
+{
+  "batch": "rank-2-17",
+  "date": "2026-09-30",
+  "world": "pftest",
+  "system": "8.5.0",
+  "core": "14.367",
+  "module": "0.8.2",
+  "results": [
+    {
+      "case": "rank2Batch17",
+      "passed": true,
+      "details": {
+        "batch17": {
+          "lungs": {
+            "2": [
+              {
+                "formula": "1 cold",
+                "lost": 1
+              },
+              {
+                "formula": "1d8 cold",
+                "lost": 3
+              }
+            ],
+            "4": [
+              {
+                "formula": "1 cold",
+                "lost": 1
+              },
+              {
+                "formula": "2d8 cold",
+                "lost": 12
+              }
+            ]
+          },
+          "cravings": [
+            {
+              "sickened": 2,
+              "floor": "Can't reduce Sickened below 1 until it consumes some raw meat (GM: delete this Effect then).  If the creature doesn't have access to raw meat, it can take a bite out of a corpse within reach as an Interact action."
+            },
+            {
+              "sickened": 2,
+              "floor": "Can't reduce Sickened below 2 until it consumes raw meat (GM: delete this Effect then).  If the creature doesn't have access to raw meat, it can take a bite out of a corpse within reach as an Interact action."
+            },
+            {
+              "afterDecrease": 1
+            },
+            {
+              "afterEating": 0
+            }
+          ],
+          "hand": [
+            {
+              "lost": 6,
+              "note": "6"
+            },
+            {
+              "lost": 12,
+              "note": "12"
+            },
+            {
+              "lost": 24,
+              "note": "24"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

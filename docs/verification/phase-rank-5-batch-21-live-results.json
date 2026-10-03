@@ -1,0 +1,31 @@
+{
+  "label": "rank5Batch21",
+  "passed": true,
+  "at": "2026-10-02T18:09:00.884Z",
+  "details": {
+    "batch21": {
+      "actions": {
+        "formula": "6d10 mental",
+        "lost": [
+          68
+        ],
+        "total": 34,
+        "push": true
+      },
+      "rounds": {
+        "eligible": [
+          false,
+          true
+        ],
+        "formula": "8d10 mental",
+        "lost": [
+          0,
+          39
+        ],
+        "total": 39,
+        "push": true,
+        "gated": false
+      }
+    }
+  }
+}

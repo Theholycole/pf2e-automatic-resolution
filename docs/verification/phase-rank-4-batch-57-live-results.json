@@ -1,0 +1,38 @@
+{
+  "generatedAt": "2026-10-02T22:41:00.641Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "results": [
+    {
+      "label": "rank4Batch57",
+      "passed": true,
+      "at": "2026-10-02T22:40:48.481Z",
+      "details": {
+        "batch57": {
+          "effects": [
+            [
+              "10 minutes"
+            ],
+            [
+              "-1 unlimited"
+            ],
+            [
+              "-1 unlimited"
+            ]
+          ],
+          "notes": [
+            [
+              "one"
+            ],
+            [
+              "one"
+            ],
+            [
+              "two"
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}

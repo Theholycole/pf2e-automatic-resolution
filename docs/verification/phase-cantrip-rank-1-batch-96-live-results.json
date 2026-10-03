@@ -1,0 +1,63 @@
+{
+  "batch": "cantrip-rank-1-batch-96",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch96",
+    "passed": true,
+    "details": {
+      "immuneBefore": true,
+      "formula": "1d12 void + 1d4 persistent void",
+      "total": 2,
+      "lost": [
+        2,
+        4
+      ],
+      "persistent": [
+        [
+          "1d4"
+        ],
+        [
+          "2 * 1d4"
+        ]
+      ],
+      "bypass": [
+        1,
+        0
+      ],
+      "immuneDuring": false,
+      "after": {
+        "bypass": 0,
+        "immune": true
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch96",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch85",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

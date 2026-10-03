@@ -1,0 +1,21 @@
+{
+  "label": "rank3Batch45",
+  "passed": true,
+  "at": "2026-10-02T17:58:06.639Z",
+  "details": {
+    "batch45": {
+      "save": {
+        "statistic": "reflex",
+        "formula": "5d6 fire",
+        "total": 13,
+        "lost": 13
+      },
+      "marker": true,
+      "touch": {
+        "formula": "5 fire",
+        "lost": 5
+      },
+      "markerAfterEnd": false
+    }
+  }
+}

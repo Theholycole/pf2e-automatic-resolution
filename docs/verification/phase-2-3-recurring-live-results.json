@@ -1,0 +1,423 @@
+{
+  "generatedAt": "2026-09-25T00:05:33.818Z",
+  "scope": "Disposable pftest GM fixtures; Foundry 14.367 / PF2e 8.5.0; only this module active; automatic expired-Effect removal on. Real combats and turn advances drive end-of-turn boundaries. Save degrees are real rolls corrected to explicit provisional degrees so each branch runs; verifyUi used a genuine PF2e Will save rolled from the Ongoing spells panel control; dismissUi clicked the panel Dismiss control. Fixture casts use renamed custom copies (the official Paralyze slug still routes to its dedicated adapter).",
+  "attempts": [
+    {
+      "label": "environment",
+      "passed": true,
+      "at": "2026-09-24T23:53:17.301Z",
+      "error": null
+    },
+    {
+      "label": "degrees",
+      "passed": true,
+      "at": "2026-09-24T23:53:17.925Z",
+      "error": null
+    },
+    {
+      "label": "endMode",
+      "passed": true,
+      "at": "2026-09-24T23:53:52.710Z",
+      "error": null
+    },
+    {
+      "label": "reduceMode",
+      "passed": false,
+      "at": null,
+      "error": "Custom recurring spell — end-of-turn save: saves are locked after finalization begins."
+    },
+    {
+      "label": "jump",
+      "passed": true,
+      "at": "2026-09-24T23:54:52.505Z",
+      "error": null
+    },
+    {
+      "label": "reduceMode",
+      "passed": true,
+      "at": "2026-09-24T23:56:31.060Z",
+      "error": null
+    },
+    {
+      "label": "reduceMode",
+      "passed": true,
+      "at": "2026-09-24T23:57:43.793Z",
+      "error": null
+    },
+    {
+      "label": "prepareReload",
+      "passed": true,
+      "at": "2026-09-24T23:58:29.550Z",
+      "error": null
+    },
+    {
+      "label": "reload",
+      "passed": true,
+      "at": "2026-09-24T23:59:12.463Z",
+      "error": null
+    },
+    {
+      "label": "prepareUi",
+      "passed": true,
+      "at": "2026-09-24T23:59:29.765Z",
+      "error": null
+    },
+    {
+      "label": "verifyUi",
+      "passed": true,
+      "at": "2026-09-25T00:00:04.670Z",
+      "error": null
+    },
+    {
+      "label": "environment",
+      "passed": true,
+      "at": "2026-09-25T00:00:13.334Z",
+      "error": null
+    },
+    {
+      "label": "degrees",
+      "passed": true,
+      "at": "2026-09-25T00:00:13.933Z",
+      "error": null
+    },
+    {
+      "label": "endMode",
+      "passed": true,
+      "at": "2026-09-25T00:00:21.525Z",
+      "error": null
+    },
+    {
+      "label": "jump",
+      "passed": true,
+      "at": "2026-09-25T00:00:36.829Z",
+      "error": null
+    },
+    {
+      "label": "cleanup",
+      "passed": true,
+      "at": "2026-09-25T00:01:04.201Z",
+      "error": null
+    },
+    {
+      "label": "dismiss",
+      "passed": true,
+      "at": "2026-09-25T00:04:59.935Z",
+      "error": null
+    }
+  ],
+  "cases": [
+    {
+      "label": "environment",
+      "passed": true,
+      "at": "2026-09-25T00:00:13.334Z",
+      "details": {
+        "foundry": "14.367",
+        "pf2e": "8.5.0",
+        "module": "0.8.2",
+        "world": "pftest",
+        "modules": [
+          "pf2e-automatic-resolution"
+        ],
+        "removal": true
+      }
+    },
+    {
+      "label": "degrees",
+      "passed": true,
+      "at": "2026-09-25T00:00:13.933Z",
+      "details": [
+        {
+          "name": "Confusion",
+          "degree": "criticalSuccess",
+          "conditions": [],
+          "durations": []
+        },
+        {
+          "name": "Confusion",
+          "degree": "success",
+          "conditions": [
+            [
+              "stunned",
+              1,
+              null
+            ]
+          ],
+          "durations": [
+            {
+              "value": -1,
+              "unit": "unlimited",
+              "expiry": null,
+              "sustained": false
+            }
+          ]
+        },
+        {
+          "name": "Confusion",
+          "degree": "failure",
+          "conditions": [
+            [
+              "confused",
+              null,
+              "end"
+            ]
+          ],
+          "durations": [
+            {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            }
+          ]
+        },
+        {
+          "name": "Confusion",
+          "degree": "criticalFailure",
+          "conditions": [
+            [
+              "confused",
+              null,
+              null
+            ]
+          ],
+          "durations": [
+            {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            }
+          ]
+        },
+        {
+          "name": "Paralyze",
+          "degree": "criticalSuccess",
+          "conditions": [],
+          "durations": []
+        },
+        {
+          "name": "Paralyze",
+          "degree": "success",
+          "conditions": [
+            [
+              "stunned",
+              1,
+              null
+            ]
+          ],
+          "durations": [
+            {
+              "value": -1,
+              "unit": "unlimited",
+              "expiry": null,
+              "sustained": false
+            }
+          ]
+        },
+        {
+          "name": "Paralyze",
+          "degree": "failure",
+          "conditions": [
+            [
+              "paralyzed",
+              null,
+              null
+            ]
+          ],
+          "durations": [
+            {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            }
+          ]
+        },
+        {
+          "name": "Paralyze",
+          "degree": "criticalFailure",
+          "conditions": [
+            [
+              "paralyzed",
+              null,
+              "reduce"
+            ]
+          ],
+          "durations": [
+            {
+              "value": 4,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "endMode",
+      "passed": true,
+      "at": "2026-09-25T00:00:21.525Z",
+      "details": {
+        "castId": "vdOEKCFkBm5j1kKG",
+        "journalStatus": "active",
+        "entries": [
+          {
+            "status": "ended",
+            "reason": "recurring-save"
+          },
+          {
+            "status": "active",
+            "reason": null
+          }
+        ],
+        "obligations": [
+          {
+            "status": "completed",
+            "degree": "failure"
+          },
+          {
+            "status": "completed",
+            "degree": "success"
+          }
+        ]
+      }
+    },
+    {
+      "label": "reduceMode",
+      "passed": true,
+      "at": "2026-09-24T23:57:43.793Z",
+      "details": {
+        "castId": "lr8cBICWXFh2YLAS",
+        "trail": [
+          {
+            "round": 1,
+            "degree": "failure",
+            "rounds": 4
+          },
+          {
+            "round": 1,
+            "degree": "criticalSuccess",
+            "ended": true
+          },
+          {
+            "round": 2,
+            "degree": "success",
+            "rounds": 3
+          },
+          {
+            "expired": [
+              "expired",
+              "recurring-save"
+            ]
+          }
+        ],
+        "cards": 4,
+        "obligations": [
+          {
+            "status": "completed",
+            "degree": "failure",
+            "reason": null
+          },
+          {
+            "status": "completed",
+            "degree": "criticalSuccess",
+            "reason": null
+          },
+          {
+            "status": "completed",
+            "degree": "success",
+            "reason": null
+          },
+          {
+            "status": "skipped",
+            "degree": null,
+            "reason": "effect-ended"
+          }
+        ]
+      }
+    },
+    {
+      "label": "jump",
+      "passed": true,
+      "at": "2026-09-25T00:00:36.829Z",
+      "details": {
+        "status": "review",
+        "reason": "Turn order changed. Review missed end-of-turn saves; none were rolled or replayed."
+      }
+    },
+    {
+      "label": "prepareReload",
+      "passed": true,
+      "at": "2026-09-24T23:58:29.550Z",
+      "details": {
+        "actorId": "V5nLQcX2soktnydF",
+        "castId": "mV7HIWlHGwZa5Yun",
+        "cardId": "D1YLFbPXoQZMU6kX",
+        "combatId": "khfOvYUxFvkLyKoh"
+      }
+    },
+    {
+      "label": "reload",
+      "passed": true,
+      "at": "2026-09-24T23:59:12.463Z",
+      "details": {
+        "actorId": "V5nLQcX2soktnydF",
+        "castId": "mV7HIWlHGwZa5Yun",
+        "cardId": "D1YLFbPXoQZMU6kX",
+        "combatId": "khfOvYUxFvkLyKoh"
+      }
+    },
+    {
+      "label": "prepareUi",
+      "passed": true,
+      "at": "2026-09-24T23:59:29.765Z",
+      "details": {
+        "actorId": "kcW9r7Ww3QPEP7bF",
+        "cardId": "f4nCaX1IQJ4ErRKo",
+        "combatId": "acRGb4YIUqZs8IBy"
+      }
+    },
+    {
+      "label": "verifyUi",
+      "passed": true,
+      "at": "2026-09-25T00:00:04.670Z",
+      "details": {
+        "degree": "success",
+        "total": 25,
+        "natural": 15,
+        "confusedAfter": false
+      }
+    },
+    {
+      "label": "cleanup",
+      "passed": true,
+      "at": "2026-09-25T00:01:04.201Z",
+      "details": {
+        "actorsRemoved": 44,
+        "journalsRemoved": 13,
+        "remainingFixtureActors": 0
+      }
+    },
+    {
+      "label": "dismiss",
+      "passed": true,
+      "at": "2026-09-25T00:04:59.935Z",
+      "details": {
+        "status": "ended",
+        "endReason": "dismissed",
+        "otherCast": "active"
+      }
+    },
+    {
+      "label": "dismissUi",
+      "passed": true,
+      "at": "2026-09-25T00:05:33.818Z",
+      "details": {
+        "control": "Dismiss Custom recurring spell — 1 action",
+        "clickedInPanel": true,
+        "result": "second cast ended with reason dismissed; its Confused removed"
+      }
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "batch": "cantrip-rank-1-batch-15",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch15",
+    "passed": true,
+    "details": {
+      "allegro": {
+        "refused": "Allegro: target an ally (1 ally).",
+        "atCast": {
+          "quickened": true,
+          "effects": [
+            "Allegro: Quickened",
+            "Spell Note: Allegro"
+          ]
+        },
+        "onAllyTurn": true,
+        "afterRound": false
+      },
+      "suddenShift": {
+        "concealed": true,
+        "effects": [
+          "Spell Note: Sudden Shift",
+          "Sudden Shift: Concealed"
+        ]
+      },
+      "invisibleItem": [
+        "Spell Note: Invisible Item (area) 1 hours"
+      ]
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch15",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch14",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch12",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

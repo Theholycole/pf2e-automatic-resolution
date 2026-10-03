@@ -1,0 +1,37 @@
+{
+  "label": "rank3Batch89",
+  "passed": true,
+  "at": "2026-10-03T05:14:47.258Z",
+  "details": {
+    "batch89": {
+      "one": {
+        "status": "applied",
+        "ally": [
+          10
+        ],
+        "hp": 10
+      },
+      "two": {
+        "ally": [
+          13
+        ],
+        "friend": [
+          13
+        ]
+      },
+      "three": {
+        "caster": [
+          5
+        ],
+        "ally": [
+          5
+        ],
+        "foe": [],
+        "far": [],
+        "formula": "2d8 mental",
+        "total": 9,
+        "lost": 9
+      }
+    }
+  }
+}

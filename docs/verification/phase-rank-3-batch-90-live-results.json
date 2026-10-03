@@ -1,0 +1,41 @@
+{
+  "label": "rank3Batch90",
+  "passed": true,
+  "at": "2026-10-03T05:21:51.209Z",
+  "details": {
+    "batch90": {
+      "hit": {
+        "formula": "8d6 piercing",
+        "total": 24,
+        "lost": 24,
+        "penalty": -10,
+        "duration": {
+          "value": 1,
+          "unit": "minutes",
+          "expiry": "turn-start",
+          "sustained": false
+        },
+        "immobilized": false
+      },
+      "hitEscape": {
+        "result": "Ended by Escape; 4 persistent bleed damage",
+        "penalty": false,
+        "bleed": [
+          "4bleed"
+        ]
+      },
+      "crit": {
+        "penalty": true,
+        "immobilized": true
+      },
+      "critEscape": {
+        "result": "Ended by Escape; 4 persistent bleed damage",
+        "penalty": false,
+        "immobilized": false,
+        "bleed": [
+          "4bleed"
+        ]
+      }
+    }
+  }
+}

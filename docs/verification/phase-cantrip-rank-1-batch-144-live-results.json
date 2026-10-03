@@ -1,0 +1,45 @@
+{
+  "batch": 144,
+  "spells": [
+    "Flashy Disappearance"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch144",
+      "passed": true,
+      "at": "2026-09-28T22:14:42.357Z",
+      "details": {
+        "flashyDisappearance": {
+          "hide": {
+            "effect": true,
+            "invisible": true,
+            "after": {
+              "effect": false,
+              "invisible": false,
+              "hidden": true
+            },
+            "text": "Flashy Disappearance — Hide 21: PFTEST P23 Affliction flashy foe (DC 10): Hidden. The invisibility ends.",
+            "total": 21,
+            "dc": 10,
+            "bonus": 1,
+            "foeLine": true,
+            "observers": 1
+          },
+          "none": {
+            "effect": true,
+            "invisible": true,
+            "after": {
+              "effect": false,
+              "invisible": false,
+              "hidden": false
+            },
+            "text": "Flashy Disappearance — no cover or concealment: the invisibility ends and the caster is Observed."
+          }
+        }
+      }
+    }
+  ]
+}

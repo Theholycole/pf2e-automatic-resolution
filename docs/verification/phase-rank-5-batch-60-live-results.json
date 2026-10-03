@@ -1,0 +1,100 @@
+{
+  "label": "rank5Batch60",
+  "passed": true,
+  "at": "2026-10-03T03:43:57.836Z",
+  "details": {
+    "batch60": {
+      "cast": [
+        {
+          "immune": [
+            "1 days"
+          ],
+          "afflictions": []
+        },
+        {
+          "immune": [
+            "1 days"
+          ],
+          "afflictions": [
+            {
+              "stage": 1,
+              "max": 1,
+              "damage": "{4d6[void]}"
+            }
+          ]
+        },
+        {
+          "immune": [
+            "1 days"
+          ],
+          "afflictions": [
+            {
+              "stage": 1,
+              "max": 4,
+              "damage": "{4d6[void]}"
+            }
+          ]
+        },
+        {
+          "immune": [
+            "1 days"
+          ],
+          "afflictions": [
+            {
+              "stage": 2,
+              "max": 4,
+              "damage": "{4d6[void]}"
+            }
+          ]
+        }
+      ],
+      "cappedAfterIncrease": 1,
+      "again": {
+        "labels": [
+          "Afflicted: Curse of Death, stage 2 — immune (Curse of Death: Immune to Curse of Death); not afflicted",
+          "Immune to Curse of Death (1 days)"
+        ],
+        "stage": 1
+      },
+      "ended": [
+        {
+          "immune": [
+            "1 days"
+          ],
+          "afflictions": []
+        },
+        {
+          "immune": [
+            "1 days"
+          ],
+          "afflictions": []
+        },
+        {
+          "immune": [
+            "1 days",
+            "1 days"
+          ],
+          "afflictions": []
+        },
+        {
+          "immune": [
+            "1 days"
+          ],
+          "afflictions": []
+        }
+      ],
+      "heightened": {
+        "immune": [
+          "1 days"
+        ],
+        "afflictions": [
+          {
+            "stage": 1,
+            "max": 4,
+            "damage": "{5d6[void]}"
+          }
+        ]
+      }
+    }
+  }
+}

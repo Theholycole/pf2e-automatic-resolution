@@ -1,0 +1,43 @@
+{
+  "batch": "cantrip-rank-1-batch-29",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch29",
+    "passed": true,
+    "details": {
+      "echoingWeapon": {
+        "refused": "Echoing Weapon: choose how many Strikes hit (1–4).",
+        "total": 3,
+        "lost": 3
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch29",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch28",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

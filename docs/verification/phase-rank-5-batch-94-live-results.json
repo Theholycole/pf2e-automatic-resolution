@@ -1,0 +1,110 @@
+{
+  "rank5Batch94": {
+    "label": "rank5Batch94",
+    "passed": true,
+    "at": "2026-10-03T14:51:01.397Z",
+    "details": {
+      "batch94": {
+        "chainsCheck": "reflex",
+        "chained": {
+          "clumsy": 1,
+          "held": true
+        },
+        "chainEscape": 2,
+        "chainFreed": {
+          "clumsy": 0,
+          "held": false
+        },
+        "maw": {
+          "degree": "criticalFailure",
+          "rounds": 3,
+          "sated": true,
+          "ate": {
+            "ally": true,
+            "died": true,
+            "healed": 23,
+            "gained": 23,
+            "dying": 4
+          },
+          "again": "Ravening Maw: PFTEST P23 Affliction fallen's body has already been cannibalized.",
+          "starve": {
+            "damage": 12,
+            "lost": 12
+          }
+        },
+        "tempest": {
+          "rolled": 13,
+          "resist": 13,
+          "weak": 13,
+          "plain": 8,
+          "corrections": [
+            [
+              "thrall",
+              0
+            ],
+            [
+              "chained",
+              0
+            ],
+            [
+              "hungry",
+              0
+            ],
+            [
+              "sated",
+              0
+            ],
+            [
+              "fallen",
+              0
+            ],
+            [
+              "resist",
+              5
+            ],
+            [
+              "weak",
+              -5
+            ],
+            [
+              "plain",
+              0
+            ]
+          ],
+          "caster": false,
+          "primedGone": true
+        },
+        "thrall": {
+          "hp": 40,
+          "size": "huge",
+          "saveDegree": 1,
+          "dice": 2,
+          "immune": "bleed,death-effects,disease,mental,poison"
+        },
+        "strikes": [
+          {
+            "hit": true,
+            "held": "restrained by the thrall",
+            "saveDegree": 0
+          },
+          {
+            "hit": true,
+            "held": null,
+            "saveDegree": 3
+          }
+        ],
+        "v1": {
+          "restrained": true,
+          "lost": 16
+        },
+        "v1Escape": 1,
+        "v1Free": true,
+        "thrallGone": true,
+        "noteRitual": {
+          "status": "applied",
+          "effect": true
+        }
+      }
+    }
+  }
+}

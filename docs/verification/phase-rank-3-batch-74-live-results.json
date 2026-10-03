@@ -1,0 +1,27 @@
+{
+  "label": "rank3Batch74",
+  "passed": true,
+  "at": "2026-10-03T01:22:54.048Z",
+  "details": {
+    "batch74r3": {
+      "casts": [
+        {
+          "rank": 3,
+          "degree": "failure",
+          "formula": "3d10 piercing",
+          "total": 18,
+          "lost": 18,
+          "reminder": true
+        },
+        {
+          "rank": 5,
+          "degree": "criticalFailure",
+          "formula": "5d10 piercing",
+          "total": 34,
+          "lost": 68,
+          "reminder": true
+        }
+      ]
+    }
+  }
+}

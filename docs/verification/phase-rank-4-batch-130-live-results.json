@@ -1,0 +1,24 @@
+{
+  "label": "rank4Batch130",
+  "passed": true,
+  "at": "2026-10-03T10:20:25.573Z",
+  "details": {
+    "batch130": {
+      "hero": {
+        "ac": 25,
+        "will": 15,
+        "hp": 120
+      },
+      "strike": {
+        "formula": "5d6 + 6 mental",
+        "lost": 29
+      },
+      "again": "The protagonist acts once a round.",
+      "heroGone": true,
+      "ally": {
+        "temp": 12,
+        "granted": 12
+      }
+    }
+  }
+}

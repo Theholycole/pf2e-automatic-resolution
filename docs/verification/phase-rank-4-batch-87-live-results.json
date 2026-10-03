@@ -1,0 +1,24 @@
+{
+  "label": "rank4Batch87",
+  "passed": true,
+  "at": "2026-10-03T02:20:15.727Z",
+  "details": {
+    "batch87": {
+      "first": {
+        "formula": "2d6 slashing",
+        "extra": "2d6 bleed",
+        "lost": 6,
+        "total": 6,
+        "bleed": [
+          "2d6"
+        ]
+      },
+      "sameRound": "refused",
+      "nextRound": {
+        "formula": "2d6 piercing",
+        "lost": 10,
+        "total": 10
+      }
+    }
+  }
+}

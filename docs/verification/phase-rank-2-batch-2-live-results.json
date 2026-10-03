@@ -1,0 +1,85 @@
+{
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "rank2Batch2",
+    "passed": true,
+    "at": "2026-09-27T00:33:33.118Z",
+    "details": {
+      "inscrutableMask": {
+        "level": "automatic",
+        "effect": true,
+        "before": {
+          "demoralize": 0,
+          "plain": 0
+        },
+        "after": {
+          "demoralize": 1,
+          "plain": 0
+        }
+      },
+      "spiritOfTheBeast": {
+        "level": "prompted",
+        "offered": [
+          "Aspect of Might",
+          "Aspect of Swiftness",
+          "Aspect of Insight"
+        ],
+        "effect": [
+          "Spell Effect: Spirit of the Beast (Aspect of Might)"
+        ],
+        "before": {
+          "athletics": 0,
+          "demoralize": 0,
+          "plain": 0
+        },
+        "after": {
+          "athletics": 1,
+          "demoralize": 1,
+          "plain": 0
+        },
+        "caster": false
+      },
+      "animalFeature": {
+        "level": "prompted",
+        "offered": [
+          "Cat Eyes",
+          "Claw",
+          "Jaws"
+        ],
+        "effect": [
+          "Spell Effect: Animal Feature (Claw)"
+        ],
+        "claw": {
+          "damage": "1d6 + 1 slashing",
+          "traits": [
+            "agile",
+            "finesse",
+            "magical",
+            "unarmed"
+          ]
+        }
+      }
+    }
+  },
+  "regressions": {
+    "terrainBatch1": true,
+    "durationBuffs": true,
+    "reactionBuffs": true,
+    "heightenedDuration": true,
+    "rank1Batch1": true,
+    "cantripBatch2": true
+  },
+  "cleanup": {
+    "label": "cleanup",
+    "passed": true,
+    "at": "2026-09-27T00:39:24.566Z",
+    "details": {
+      "actorsRemoved": 0,
+      "journalsRemoved": 0,
+      "remainingFixtureActors": 0
+    }
+  },
+  "combats": 0
+}

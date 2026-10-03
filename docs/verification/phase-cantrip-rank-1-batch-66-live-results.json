@@ -1,0 +1,47 @@
+{
+  "batch": "cantrip-rank-1-batch-66",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch66",
+    "passed": true,
+    "details": {
+      "effect": "1 rounds turn-start",
+      "raised": true,
+      "trigger": "An enemy makes an attack against an ally in your champion's aura (even if it misses).",
+      "hit": {
+        "total": 1,
+        "formula": "1d4 spirit",
+        "lost": 1
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch66",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch62",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

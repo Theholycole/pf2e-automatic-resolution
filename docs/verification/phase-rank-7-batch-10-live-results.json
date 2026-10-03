@@ -1,0 +1,28 @@
+{
+ "label": "rank7Batch10",
+ "passed": true,
+ "at": "2026-10-03T20:02:00.643Z",
+ "details": {
+  "batch10": {
+   "firstRound": [
+    "calm",
+    "weak"
+   ],
+   "calmImmune": true,
+   "weak": {
+    "stupefied": 4,
+    "fascinated": true,
+    "entranced": true
+   },
+   "secondRound": [
+    "weak"
+   ],
+   "focus": {
+    "added": [
+     "far"
+    ],
+    "refused": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,24 @@
+{
+  "label": "rank4Batch2",
+  "passed": true,
+  "at": "2026-10-02T10:35:12.281Z",
+  "details": {
+    "batch2": {
+      "atCast": 0,
+      "note": true,
+      "first": {
+        "formula": null,
+        "total": 0,
+        "lost": 23,
+        "offGuard": true
+      },
+      "second": {
+        "formula": null,
+        "total": 0,
+        "lost": 0,
+        "offGuard": false
+      },
+      "ended": "ended"
+    }
+  }
+}

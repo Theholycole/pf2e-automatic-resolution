@@ -1,0 +1,32 @@
+{
+  "label": "rank5Batch2",
+  "passed": true,
+  "at": "2026-10-02T10:42:59.425Z",
+  "details": {
+    "batch2": {
+      "supported": true,
+      "criticalSuccess": [],
+      "success": [
+        {
+          "duration": "1 rounds",
+          "unintelligible": true,
+          "incantations": false
+        }
+      ],
+      "failure": [
+        {
+          "duration": "1 rounds",
+          "unintelligible": true,
+          "incantations": true
+        }
+      ],
+      "criticalFailure": [
+        {
+          "duration": "1 minutes",
+          "unintelligible": true,
+          "incantations": true
+        }
+      ]
+    }
+  }
+}

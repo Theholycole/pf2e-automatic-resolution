@@ -1,0 +1,45 @@
+{
+  "batch": "cantrip-rank-1-batch-52",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch52",
+    "passed": true,
+    "details": {
+      "telekineticRend": {
+        "total": 5,
+        "formula": "2d6",
+        "slashing": true,
+        "lost": [
+          5,
+          0
+        ],
+        "note": true
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch52",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "rank1Batch8",
+      "passed": true,
+      "note": "same session, the run before (the first cr1Batch52 attempt used a 1st-level caster; the card refused to roll rank 3 damage at PF2e rank 1)"
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

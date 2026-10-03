@@ -1,0 +1,94 @@
+{
+  "batch": 111,
+  "spells": [
+    "Threefold Limb"
+  ],
+  "results": [
+    {
+      "label": "cr1Batch111",
+      "passed": true,
+      "at": "2026-09-28T02:01:54.578Z",
+      "details": {
+        "threefoldLimb": {
+          "ice": {
+            "formula": "2d6 cold",
+            "total": 7,
+            "lost": 7,
+            "effects": [
+              "Spell Effect: Threefold Limb (Ice)"
+            ],
+            "reposition": true
+          },
+          "water": {
+            "formula": "2d6 bludgeoning",
+            "total": 6,
+            "lost": 6,
+            "effects": [],
+            "reposition": true
+          },
+          "steam": {
+            "formula": "2d6 fire",
+            "total": 3,
+            "lost": 6,
+            "effects": [
+              "Threefold Limb: Steam: all creatures concealed to it"
+            ],
+            "reposition": true
+          },
+          "miss": {
+            "formula": null,
+            "total": null,
+            "lost": 0,
+            "effects": [],
+            "reposition": true
+          }
+        }
+      }
+    },
+    {
+      "label": "cr1Batch94",
+      "passed": true,
+      "at": "2026-09-28T02:02:26.348Z",
+      "details": {
+        "cacti": {
+          "formula": "2d4 piercing",
+          "total": 6,
+          "lost": [
+            12,
+            3
+          ],
+          "extras": [
+            [
+              "persistent 1 bleed"
+            ],
+            []
+          ]
+        },
+        "fruits": {
+          "formula": "2d4 bludgeoning",
+          "total": 8,
+          "lost": [
+            16
+          ],
+          "extras": [
+            [
+              "clumsy 1"
+            ]
+          ]
+        },
+        "roots": {
+          "formula": "2d4 bludgeoning",
+          "total": 3,
+          "lost": [
+            6
+          ],
+          "extras": [
+            [
+              "prone"
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}

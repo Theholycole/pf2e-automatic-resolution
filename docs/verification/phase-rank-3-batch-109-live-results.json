@@ -1,0 +1,23 @@
+{
+  "label": "rank3Batch109",
+  "passed": true,
+  "at": "2026-10-03T07:14:51.311Z",
+  "details": {
+    "batch109": {
+      "decl": {
+        "terrain": 2,
+        "notes": 3,
+        "growth": 30
+      },
+      "formula": "3d4 bludgeoning",
+      "total": 6,
+      "lost": 6,
+      "growth": {
+        "first": 20,
+        "capped": 30,
+        "again": "at-maximum",
+        "regionFeet": 30
+      }
+    }
+  }
+}

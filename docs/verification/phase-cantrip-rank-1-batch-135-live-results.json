@@ -1,0 +1,40 @@
+{
+  "batch": 135,
+  "spells": [
+    "Magic Stone",
+    "Object Memory",
+    "Untamed Form",
+    "Muscle Barrier"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch135",
+      "passed": true,
+      "at": "2026-09-28T20:22:45.079Z",
+      "details": {
+        "batch135": {
+          "magicStone": {
+            "caster": true
+          },
+          "objectMemory": {
+            "picked": [],
+            "caster": true,
+            "selection": "3xcUABW3c3887zXn"
+          },
+          "untamedForm": {
+            "picked": [],
+            "caster": true
+          },
+          "muscleBarrier": {
+            "ally": true,
+            "temp": 10,
+            "caster": false
+          }
+        }
+      }
+    }
+  ]
+}

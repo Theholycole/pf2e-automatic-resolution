@@ -1,0 +1,27 @@
+{
+  "label": "rank5Batch91",
+  "passed": true,
+  "at": "2026-10-03T12:51:01.668Z",
+  "details": {
+    "batch91": {
+      "kind": "gore-field",
+      "cast": {
+        "thrall": 0,
+        "amount": 10,
+        "centre": [
+          20,
+          8
+        ]
+      },
+      "start": {
+        "bleed": "10",
+        "far": false
+      },
+      "end": {
+        "drained": 2,
+        "thralls": true
+      },
+      "sixth": 12
+    }
+  }
+}

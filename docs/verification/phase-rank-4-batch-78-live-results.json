@@ -1,0 +1,53 @@
+{
+  "label": "rank4Batch78",
+  "passed": true,
+  "at": "2026-10-03T00:18:09.679Z",
+  "details": {
+    "batch78": {
+      "casts": [
+        {
+          "degree": "criticalSuccess",
+          "casterConfused": true,
+          "casterEffect": [
+            "1 rounds"
+          ],
+          "targetConfused": false,
+          "targetTimed": [],
+          "note": [],
+          "card": true
+        },
+        {
+          "degree": "success",
+          "casterConfused": false,
+          "casterEffect": [],
+          "targetConfused": false,
+          "targetTimed": [],
+          "note": [],
+          "card": false
+        },
+        {
+          "degree": "failure",
+          "casterConfused": false,
+          "casterEffect": [],
+          "targetConfused": false,
+          "targetTimed": [],
+          "note": [
+            "1 minutes"
+          ],
+          "card": false
+        },
+        {
+          "degree": "criticalFailure",
+          "casterConfused": false,
+          "casterEffect": [],
+          "targetConfused": true,
+          "targetTimed": [
+            "1 minutes"
+          ],
+          "note": [],
+          "card": false
+        }
+      ]
+    }
+  }
+}

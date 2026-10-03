@@ -1,0 +1,97 @@
+{
+  "label": "rank5Batch66",
+  "passed": true,
+  "at": "2026-10-03T10:50:04.151Z",
+  "details": {
+    "batch66": {
+      "kind": "boast",
+      "cast": {
+        "status": "applied",
+        "results": [
+          {
+            "name": "PFTEST P23 Affliction boast weak",
+            "degree": 3,
+            "frightened": 2
+          },
+          {
+            "name": "PFTEST P23 Affliction boast strong",
+            "degree": 0,
+            "frightened": 0
+          }
+        ],
+        "boasted": true
+      },
+      "weak": {
+        "frightened": 2,
+        "rule": {
+          "key": "FlatModifier",
+          "selector": [
+            "strike-attack-roll"
+          ],
+          "predicate": [
+            "item:melee"
+          ],
+          "type": "circumstance",
+          "value": -1,
+          "slug": null,
+          "priority": 100,
+          "ignored": false,
+          "requiresEquipped": null,
+          "requiresInvestment": null,
+          "force": false,
+          "hideIfDisabled": false,
+          "fromEquipment": true,
+          "critical": null,
+          "removeAfterRoll": false,
+          "battleForm": false
+        }
+      },
+      "strong": {
+        "frightened": 0,
+        "rules": 0
+      },
+      "far": {
+        "frightened": 0,
+        "rules": 0
+      },
+      "ally": {
+        "frightened": 0,
+        "rules": 0
+      },
+      "caster": {
+        "rule": {
+          "key": "FlatModifier",
+          "selector": [
+            "strike-attack-roll"
+          ],
+          "predicate": [
+            "item:melee"
+          ],
+          "type": "status",
+          "value": 1,
+          "slug": null,
+          "priority": 100,
+          "ignored": false,
+          "requiresEquipped": null,
+          "requiresInvestment": null,
+          "force": false,
+          "hideIfDisabled": false,
+          "fromEquipment": true,
+          "critical": null,
+          "removeAfterRoll": false,
+          "battleForm": false
+        },
+        "duration": {
+          "value": 1,
+          "unit": "minutes",
+          "expiry": "turn-start",
+          "sustained": false
+        }
+      },
+      "high": {
+        "penalty": -2,
+        "bonus": 2
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "label": "rank4Batch8",
+  "passed": true,
+  "at": "2026-10-02T12:28:07.425Z",
+  "details": {
+    "batch8": {
+      "shroud": {
+        "kind": "condition-note",
+        "invisible": true,
+        "timer": "10 minutes"
+      },
+      "life": {
+        "level": "automatic",
+        "effect": true,
+        "reaction": true,
+        "error": null
+      },
+      "watch": {
+        "level": "automatic",
+        "effect": true,
+        "effectLevel": 6,
+        "reaction": true,
+        "error": null
+      }
+    }
+  }
+}

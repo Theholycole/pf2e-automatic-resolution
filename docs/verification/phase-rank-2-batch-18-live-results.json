@@ -1,0 +1,41 @@
+{
+  "batch": "rank-2-18",
+  "date": "2026-09-30",
+  "world": "pftest",
+  "system": "8.5.0",
+  "core": "14.367",
+  "module": "0.8.2",
+  "results": [
+    {
+      "case": "rank2Batch18",
+      "passed": true,
+      "details": {
+        "batch18": {
+          "cast": [
+            {
+              "sickened": 1,
+              "notes": []
+            },
+            {
+              "sickened": 2,
+              "notes": [
+                "With Friends like These: No allies"
+              ]
+            },
+            {
+              "sickened": 2,
+              "notes": [
+                "With Friends like These: Movement",
+                "With Friends like These: No allies"
+              ]
+            }
+          ],
+          "afterSickenedEnds": {
+            "sickened": 0,
+            "notes": []
+          }
+        }
+      }
+    }
+  ]
+}

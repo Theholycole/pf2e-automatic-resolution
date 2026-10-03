@@ -1,0 +1,30 @@
+{
+  "label": "rank3Batch91",
+  "passed": true,
+  "at": "2026-10-03T05:35:11.513Z",
+  "details": {
+    "batch91": {
+      "card": {
+        "kind": "spell-strike",
+        "buttons": 2,
+        "offGuardButton": true
+      },
+      "plain": {
+        "dc": 5,
+        "outcome": "criticalSuccess",
+        "dazzled": true,
+        "offGuardLeft": false
+      },
+      "magic": {
+        "dc": 3,
+        "outcome": "criticalSuccess",
+        "offGuardLeft": false
+      },
+      "miss": {
+        "dc": 60,
+        "outcome": "criticalFailure",
+        "dazzled": false
+      }
+    }
+  }
+}

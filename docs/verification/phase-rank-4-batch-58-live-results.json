@@ -1,0 +1,35 @@
+{
+  "generatedAt": "2026-10-02T22:43:38.856Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "results": [
+    {
+      "label": "rank4Batch58",
+      "passed": true,
+      "at": "2026-10-02T22:43:22.349Z",
+      "details": {
+        "batch58": {
+          "before": [
+            [
+              "mental",
+              "(1d6 + 5 - 4)"
+            ]
+          ],
+          "fail": {
+            "formula": "9d6 mental",
+            "lost": 31,
+            "persistentEnded": 0,
+            "ended": true
+          },
+          "crit": {
+            "formula": "9d6 mental",
+            "lost": 40,
+            "persistentEnded": 1,
+            "ended": true
+          },
+          "after": []
+        }
+      }
+    }
+  ]
+}

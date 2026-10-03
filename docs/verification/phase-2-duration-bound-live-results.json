@@ -1,0 +1,143 @@
+{
+  "generated": "2026-09-25T21:49:02.249Z",
+  "results": [
+    {
+      "label": "durationBuffs",
+      "passed": true,
+      "at": "2026-09-25T21:47:33.092Z",
+      "details": [
+        {
+          "name": "Heroism",
+          "recipient": "target",
+          "effect": "Spell Effect: Heroism",
+          "duration": "10 minutes",
+          "rules": [
+            "FlatModifier"
+          ]
+        },
+        {
+          "name": "Fly",
+          "recipient": "target",
+          "effect": "Spell Effect: Fly",
+          "duration": "5 minutes",
+          "rules": [
+            "BaseSpeed"
+          ]
+        },
+        {
+          "name": "Shrink",
+          "recipient": "target",
+          "effect": "Spell Effect: Shrink",
+          "duration": "5 minutes",
+          "rules": [
+            "CreatureSize"
+          ]
+        },
+        {
+          "name": "Runic Body",
+          "recipient": "target",
+          "effect": "Spell Effect: Runic Body",
+          "duration": "1 minutes",
+          "rules": [
+            "ItemAlteration",
+            "ItemAlteration"
+          ]
+        },
+        {
+          "name": "Lashunta's Life Bubble",
+          "recipient": "target",
+          "effect": "Spell Effect: Lashunta's Life Bubble",
+          "duration": "8 hours",
+          "rules": [
+            "FlatModifier"
+          ]
+        },
+        {
+          "name": "Countless Eyes",
+          "recipient": "target",
+          "effect": "Spell Effect: Countless Eyes",
+          "duration": "1 minutes",
+          "rules": [
+            "RollOption",
+            "AdjustDegreeOfSuccess"
+          ]
+        },
+        {
+          "name": "Dragon Wings",
+          "recipient": "self",
+          "effect": "Spell Effect: Dragon Wings",
+          "duration": "1 minutes",
+          "rules": [
+            "BaseSpeed"
+          ]
+        },
+        {
+          "name": "Angelic Wings",
+          "recipient": "self",
+          "effect": "Spell Effect: Angelic Wings",
+          "duration": "3 rounds",
+          "rules": [
+            "BaseSpeed",
+            "TokenLight"
+          ]
+        },
+        {
+          "name": "Stormwind Flight",
+          "recipient": "self",
+          "effect": "Spell Effect: Stormwind Flight",
+          "duration": "1 minutes",
+          "rules": [
+            "BaseSpeed"
+          ]
+        },
+        {
+          "name": "Weapon Trance",
+          "recipient": "self",
+          "effect": "Spell Effect: Weapon Trance",
+          "duration": "1 minutes",
+          "rules": [
+            "ActiveEffectLike"
+          ]
+        },
+        {
+          "name": "Speaking Sky",
+          "recipient": "self",
+          "effect": "Spell Effect: Speaking Sky",
+          "duration": "1 rounds",
+          "rules": [
+            "Sense"
+          ]
+        },
+        {
+          "name": "Untwisting Iron Augmentation",
+          "recipient": "self",
+          "effect": "Spell Effect: Untwisting Iron Augmentation",
+          "duration": "1 minutes",
+          "rules": [
+            "AdjustStrike",
+            "AdjustStrike",
+            "ItemAlteration",
+            "FlatModifier",
+            "AdjustStrike"
+          ]
+        },
+        {
+          "name": "Word of Truth",
+          "recipient": "self",
+          "effect": "Spell Effect: Word of Truth",
+          "duration": "1 minutes",
+          "rules": [
+            "FlatModifier"
+          ]
+        }
+      ]
+    }
+  ],
+  "manual": {
+    "spell": "Resist Energy",
+    "choice": "Fire (PF2e ChoiceSet prompt, real click)",
+    "effect": "Spell Effect: Resist Energy (Fire)",
+    "resistance": "fire 5",
+    "status": "applied"
+  }
+}

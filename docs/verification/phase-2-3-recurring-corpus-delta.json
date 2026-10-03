@@ -1,0 +1,2075 @@
+{
+  "summary": {
+    "compared": 1994,
+    "changed": 30,
+    "newlyExecutable": [
+      "Paralyze",
+      "Confusion"
+    ],
+    "noLongerExecutable": []
+  },
+  "changes": [
+    {
+      "id": "spells/spells/rank-1/dehydrate.json",
+      "name": "Dehydrate",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:residual-prose",
+            "shared-damage:Shared damage contains an unsupported roll mode or category.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "preamble:degree-adjustment",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:degree-adjustment",
+            "compiler-gap:residual-prose",
+            "shared-damage:Shared damage contains an unsupported roll mode or category.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-1/eject-soul.json",
+      "name": "Eject Soul",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "residual-prose",
+          "target-eligibility"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:residual-prose",
+            "compiler-gap:target-eligibility",
+            "condition-composition:Condition values, lifetimes or dependencies are unsupported or ambiguous.",
+            "target-eligibility:Actor targeting has unsupported or incomplete eligibility rules.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "preamble:degree-adjustment",
+          "residual-prose",
+          "target-eligibility"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:degree-adjustment",
+            "compiler-gap:residual-prose",
+            "compiler-gap:target-eligibility",
+            "condition-composition:Condition values, lifetimes or dependencies are unsupported or ambiguous.",
+            "target-eligibility:Actor targeting has unsupported or incomplete eligibility rules.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-1/exchange-image.json",
+      "name": "Exchange Image",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "item-duration-grammar",
+          "preamble:additional-condition",
+          "residual-prose",
+          "target-eligibility"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:item-duration-grammar",
+            "compiler-gap:preamble:additional-condition",
+            "compiler-gap:residual-prose",
+            "compiler-gap:target-eligibility",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "target-eligibility:Actor targeting has unsupported or incomplete eligibility rules.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "dismissal",
+          "item-duration-grammar",
+          "preamble:additional-condition",
+          "residual-prose",
+          "target-eligibility"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:dismissal",
+            "compiler-gap:item-duration-grammar",
+            "compiler-gap:preamble:additional-condition",
+            "compiler-gap:residual-prose",
+            "compiler-gap:target-eligibility",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "target-eligibility:Actor targeting has unsupported or incomplete eligibility rules.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-1/gritty-wheeze.json",
+      "name": "Gritty Wheeze",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:residual-prose",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "preamble:degree-adjustment",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:degree-adjustment",
+            "compiler-gap:residual-prose",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-1/zenith-star.json",
+      "name": "Zenith Star",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "manual:conditional-effect",
+          "manual:perception-or-illusion",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:manual:perception-or-illusion",
+            "compiler-gap:residual-prose",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "dismissal",
+          "manual:conditional-effect",
+          "manual:perception-or-illusion",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:dismissal",
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:manual:perception-or-illusion",
+            "compiler-gap:residual-prose",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-2/breath-of-drought.json",
+      "name": "Breath of Drought",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "preamble:conditional-eligibility",
+          "preamble:ongoing-trigger"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:conditional-eligibility",
+            "compiler-gap:preamble:ongoing-trigger",
+            "lifecycle:The save route cannot manage this lifecycle or controller."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "preamble:conditional-eligibility",
+          "preamble:degree-adjustment",
+          "preamble:ongoing-trigger"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:conditional-eligibility",
+            "compiler-gap:preamble:degree-adjustment",
+            "compiler-gap:preamble:ongoing-trigger",
+            "lifecycle:The save route cannot manage this lifecycle or controller."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-2/charitable-urge.json",
+      "name": "Charitable Urge",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "item-duration-grammar",
+          "manual:conditional-effect",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:item-duration-grammar",
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:residual-prose",
+            "condition-composition:Condition values, lifetimes or dependencies are unsupported or ambiguous.",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "manual:conditional-effect",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:residual-prose",
+            "condition-composition:Condition values, lifetimes or dependencies are unsupported or ambiguous.",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-2/heat-metal.json",
+      "name": "Heat Metal",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "target-eligibility"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:target-eligibility",
+            "shared-damage:Shared damage contains an unsupported roll mode or category.",
+            "target-eligibility:Actor targeting has unsupported or incomplete eligibility rules."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "preamble:degree-adjustment",
+          "target-eligibility"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:degree-adjustment",
+            "compiler-gap:target-eligibility",
+            "shared-damage:Shared damage contains an unsupported roll mode or category.",
+            "target-eligibility:Actor targeting has unsupported or incomplete eligibility rules."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-2/veil-of-spirits.json",
+      "name": "Veil of Spirits",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "condition-duration-scope",
+          "preamble:conditional-eligibility",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:condition-duration-scope",
+            "compiler-gap:preamble:conditional-eligibility",
+            "compiler-gap:residual-prose",
+            "native-effect-composition:degree selection proof is missing",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "condition-duration-scope",
+          "dismissal",
+          "preamble:conditional-eligibility",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:condition-duration-scope",
+            "compiler-gap:dismissal",
+            "compiler-gap:preamble:conditional-eligibility",
+            "compiler-gap:residual-prose",
+            "native-effect-composition:degree selection proof is missing",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-3/paralyze.json",
+      "name": "Paralyze",
+      "fields": [
+        "pending",
+        "route",
+        "outcomes"
+      ],
+      "routeBefore": false,
+      "routeAfter": true,
+      "before": {
+        "pending": [
+          "item-duration-grammar",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:item-duration-grammar",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        },
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "success": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "stunned",
+                "value": 1,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "paralyzed",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 round"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "paralyzed",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 4,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "effect-start",
+                  "sourceText": "for 4 rounds"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:save+duration+timing:At the end of each of its turns, it can attempt a new Will save to reduce the remaining duration by 1 round, or end it entirely on a critical success."
+            ]
+          }
+        }
+      },
+      "after": {
+        "pending": [],
+        "route": {
+          "supported": true,
+          "blockers": []
+        },
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "success": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "stunned",
+                "value": 1,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "paralyzed",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 round"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "paralyzed",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 4,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "effect-start",
+                  "sourceText": "for 4 rounds"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": "reduce"
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          }
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-3/sculpt-sound.json",
+      "name": "Sculpt Sound",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "preamble:restriction",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:restriction",
+            "compiler-gap:residual-prose",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "dismissal",
+          "preamble:restriction",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:dismissal",
+            "compiler-gap:preamble:restriction",
+            "compiler-gap:residual-prose",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-3/skyglass-prison.json",
+      "name": "Skyglass Prison",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "preamble:conditional-eligibility",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:conditional-eligibility",
+            "compiler-gap:residual-prose",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "dismissal",
+          "preamble:conditional-eligibility",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:dismissal",
+            "compiler-gap:preamble:conditional-eligibility",
+            "compiler-gap:residual-prose",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-4/bridge-of-vines.json",
+      "name": "Bridge of Vines",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "manual:terrain",
+          "preamble:conditional-eligibility",
+          "preamble:ongoing-trigger"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:manual:terrain",
+            "compiler-gap:preamble:conditional-eligibility",
+            "compiler-gap:preamble:ongoing-trigger",
+            "condition-composition:Condition values, lifetimes or dependencies are unsupported or ambiguous.",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "dismissal",
+          "manual:terrain",
+          "preamble:conditional-eligibility",
+          "preamble:ongoing-trigger"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:dismissal",
+            "compiler-gap:manual:terrain",
+            "compiler-gap:preamble:conditional-eligibility",
+            "compiler-gap:preamble:ongoing-trigger",
+            "condition-composition:Condition values, lifetimes or dependencies are unsupported or ambiguous.",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-4/channel-arrogance.json",
+      "name": "Channel Arrogance",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "condition-duration-scope",
+          "preamble:restriction",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:condition-duration-scope",
+            "compiler-gap:preamble:restriction",
+            "compiler-gap:residual-prose",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "condition-duration-scope",
+          "preamble:degree-adjustment",
+          "preamble:restriction",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:condition-duration-scope",
+            "compiler-gap:preamble:degree-adjustment",
+            "compiler-gap:preamble:restriction",
+            "compiler-gap:residual-prose",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-4/confusion.json",
+      "name": "Confusion",
+      "fields": [
+        "pending",
+        "route",
+        "outcomes"
+      ],
+      "routeBefore": false,
+      "routeAfter": true,
+      "before": {
+        "pending": [
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:residual-prose",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        },
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "success": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "stunned",
+                "value": 1,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "confused",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "minutes",
+                  "expiry": null,
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 minute"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:save+timing:It can attempt a new save at the end of each of its turns to end the confusion."
+            ]
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "confused",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "minutes",
+                  "expiry": null,
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 minute"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:save+timing:The target is Confused for 1 minute, with no save to end early."
+            ]
+          }
+        }
+      },
+      "after": {
+        "pending": [],
+        "route": {
+          "supported": true,
+          "blockers": []
+        },
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "success": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "stunned",
+                "value": 1,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "confused",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "minutes",
+                  "expiry": null,
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 minute"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": "end"
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "confused",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "minutes",
+                  "expiry": null,
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 minute"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          }
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-4/rust-cloud.json",
+      "name": "Rust Cloud",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "description-effects",
+          "description-lifecycle",
+          "description-target-predicates"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "basic-save-composition:Basic-save riders have not been completely compiled.",
+            "compiler-gap:description-effects",
+            "compiler-gap:description-lifecycle",
+            "compiler-gap:description-target-predicates",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "description-effects",
+          "description-lifecycle",
+          "description-target-predicates",
+          "dismissal"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "basic-save-composition:Basic-save riders have not been completely compiled.",
+            "compiler-gap:description-effects",
+            "compiler-gap:description-lifecycle",
+            "compiler-gap:description-target-predicates",
+            "compiler-gap:dismissal",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-4/spiritual-anamnesis.json",
+      "name": "Spiritual Anamnesis",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "item-duration-grammar"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:item-duration-grammar",
+            "lifecycle:The save route cannot manage this lifecycle or controller."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "preamble:degree-adjustment"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:degree-adjustment"
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-4/stasis.json",
+      "name": "Stasis",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "item-duration-grammar",
+          "manual:conditional-effect",
+          "residual-prose",
+          "target-eligibility"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:item-duration-grammar",
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:residual-prose",
+            "compiler-gap:target-eligibility",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "target-eligibility:Actor targeting has unsupported or incomplete eligibility rules.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "manual:conditional-effect",
+          "residual-prose",
+          "target-eligibility"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:residual-prose",
+            "compiler-gap:target-eligibility",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "target-eligibility:Actor targeting has unsupported or incomplete eligibility rules.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-4/waking-dream.json",
+      "name": "Waking Dream",
+      "fields": [
+        "route",
+        "outcomes"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:condition-duration-scope",
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        },
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "success": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "concealed",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 round"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "confused",
+                "value": null,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual::In addition to the creatures present, the target might also attack wildly at thin air, attempting to fend off the dreams.",
+              "residual:save+timing:It can attempt a new save at the end of each of its turns to end the confusion.",
+              "residual:duration:Even if the confused effect ends early, the target treats all other creatures as concealed for 1 round."
+            ]
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "confused",
+                "value": null,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:save+timing:As failure, but the target gets no save to end the effect early."
+            ]
+          }
+        }
+      },
+      "after": {
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:condition-duration-scope",
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:residual-prose",
+            "condition-composition:Condition values, lifetimes or dependencies are unsupported or ambiguous.",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        },
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "success": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "concealed",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "rounds",
+                  "expiry": "turn-start",
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 round"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "confused",
+                "value": null,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": "end"
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual::In addition to the creatures present, the target might also attack wildly at thin air, attempting to fend off the dreams.",
+              "residual:duration:Even if the confused effect ends early, the target treats all other creatures as concealed for 1 round."
+            ]
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "confused",
+                "value": null,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          }
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-4/ymeris-mark.json",
+      "name": "Ymeri's Mark",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "description-effects",
+          "description-lifecycle",
+          "description-target-predicates",
+          "item-duration-grammar",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "basic-save-composition:Basic-save riders have not been completely compiled.",
+            "compiler-gap:description-effects",
+            "compiler-gap:description-lifecycle",
+            "compiler-gap:description-target-predicates",
+            "compiler-gap:item-duration-grammar",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "description-effects",
+          "description-lifecycle",
+          "description-target-predicates",
+          "dismissal",
+          "item-duration-grammar",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "basic-save-composition:Basic-save riders have not been completely compiled.",
+            "compiler-gap:description-effects",
+            "compiler-gap:description-lifecycle",
+            "compiler-gap:description-target-predicates",
+            "compiler-gap:dismissal",
+            "compiler-gap:item-duration-grammar",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-5/confusing-cry.json",
+      "name": "Confusing Cry",
+      "fields": [
+        "outcomes"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:duration+modifier:The target is unaffected and immune to this spell for 1 minute."
+            ]
+          },
+          "success": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "stunned",
+                "value": 1,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "confused",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "minutes",
+                  "expiry": null,
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 minute"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:save+timing:It can attempt a new save at the end of each of its turns to end the confusion."
+            ]
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "confused",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "minutes",
+                  "expiry": null,
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 minute"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:action:This Strike doesn't give the creature a flat check to recover from the confusion."
+            ]
+          }
+        }
+      },
+      "after": {
+        "outcomes": {
+          "criticalSuccess": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:duration+modifier:The target is unaffected and immune to this spell for 1 minute."
+            ]
+          },
+          "success": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "stunned",
+                "value": 1,
+                "duration": null,
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": null,
+                "recurringSave": null
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "failure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "confused",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "minutes",
+                  "expiry": null,
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 minute"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": "end"
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": []
+          },
+          "criticalFailure": {
+            "damage": {
+              "mode": "none",
+              "multiplier": 0,
+              "sourceComponentIds": []
+            },
+            "effects": [
+              {
+                "slug": "confused",
+                "value": null,
+                "duration": {
+                  "mode": "fixed",
+                  "value": 1,
+                  "unit": "minutes",
+                  "expiry": null,
+                  "anchor": "effect-start",
+                  "sourceText": "for 1 minute"
+                },
+                "whileCondition": null,
+                "endsWhen": null,
+                "expirationMode": "duration",
+                "recurringSave": "end"
+              }
+            ],
+            "modifiers": [],
+            "nativeEffects": [],
+            "followUps": 0,
+            "residual": [
+              "residual:action:This Strike doesn't give the creature a flat check to recover from the confusion."
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-5/synesthesia.json",
+      "name": "Synesthesia",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "item-duration-grammar",
+          "preamble:additional-condition",
+          "preamble:modifier",
+          "preamble:ongoing-trigger",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:item-duration-grammar",
+            "compiler-gap:preamble:additional-condition",
+            "compiler-gap:preamble:modifier",
+            "compiler-gap:preamble:ongoing-trigger",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "native-effect-composition:degree selection proof is missing",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "preamble:additional-condition",
+          "preamble:modifier",
+          "preamble:ongoing-trigger",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:additional-condition",
+            "compiler-gap:preamble:modifier",
+            "compiler-gap:preamble:ongoing-trigger",
+            "compiler-gap:residual-prose",
+            "native-effect-composition:degree selection proof is missing",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-6/temporal-ward.json",
+      "name": "Temporal Ward",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "manual:conditional-effect",
+          "residual-prose",
+          "target-eligibility"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:residual-prose",
+            "compiler-gap:target-eligibility",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "target-eligibility:Actor targeting has unsupported or incomplete eligibility rules.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "dismissal",
+          "manual:conditional-effect",
+          "residual-prose",
+          "target-eligibility"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:dismissal",
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:residual-prose",
+            "compiler-gap:target-eligibility",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "target-eligibility:Actor targeting has unsupported or incomplete eligibility rules.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-7/possession.json",
+      "name": "Possession",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "manual:conditional-effect",
+          "preamble:additional-condition",
+          "preamble:ongoing-trigger",
+          "preamble:restriction",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:preamble:additional-condition",
+            "compiler-gap:preamble:ongoing-trigger",
+            "compiler-gap:preamble:restriction",
+            "compiler-gap:residual-prose",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "manual:conditional-effect",
+          "preamble:additional-condition",
+          "preamble:degree-adjustment",
+          "preamble:ongoing-trigger",
+          "preamble:restriction",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:preamble:additional-condition",
+            "compiler-gap:preamble:degree-adjustment",
+            "compiler-gap:preamble:ongoing-trigger",
+            "compiler-gap:preamble:restriction",
+            "compiler-gap:residual-prose",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-7/vacuum.json",
+      "name": "Vacuum",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "preamble:conditional-eligibility",
+          "preamble:modifier",
+          "preamble:ongoing-trigger",
+          "preamble:restriction",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:conditional-eligibility",
+            "compiler-gap:preamble:modifier",
+            "compiler-gap:preamble:ongoing-trigger",
+            "compiler-gap:preamble:restriction",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "preamble:conditional-eligibility",
+          "preamble:degree-adjustment",
+          "preamble:modifier",
+          "preamble:ongoing-trigger",
+          "preamble:restriction",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:conditional-eligibility",
+            "compiler-gap:preamble:degree-adjustment",
+            "compiler-gap:preamble:modifier",
+            "compiler-gap:preamble:ongoing-trigger",
+            "compiler-gap:preamble:restriction",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-8/canticle-of-everlasting-grief.json",
+      "name": "Canticle of Everlasting Grief",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "condition-duration-scope",
+          "item-duration-grammar",
+          "preamble:restriction",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:condition-duration-scope",
+            "compiler-gap:item-duration-grammar",
+            "compiler-gap:preamble:restriction",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "native-effect-composition:degree selection proof is missing",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "condition-duration-scope",
+          "item-duration-grammar",
+          "preamble:degree-adjustment",
+          "preamble:restriction",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:condition-duration-scope",
+            "compiler-gap:item-duration-grammar",
+            "compiler-gap:preamble:degree-adjustment",
+            "compiler-gap:preamble:restriction",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "native-effect-composition:degree selection proof is missing",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-8/hypnopompic-terrors.json",
+      "name": "Hypnopompic Terrors",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:residual-prose",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "preamble:degree-adjustment",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:degree-adjustment",
+            "compiler-gap:residual-prose",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-8/undermine-reality.json",
+      "name": "Undermine Reality",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "item-duration-grammar",
+          "preamble:ongoing-trigger",
+          "preamble:restriction",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:item-duration-grammar",
+            "compiler-gap:preamble:ongoing-trigger",
+            "compiler-gap:preamble:restriction",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "item-duration-grammar",
+          "preamble:degree-adjustment",
+          "preamble:ongoing-trigger",
+          "preamble:restriction",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:item-duration-grammar",
+            "compiler-gap:preamble:degree-adjustment",
+            "compiler-gap:preamble:ongoing-trigger",
+            "compiler-gap:preamble:restriction",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-9/arcane-explosion.json",
+      "name": "Arcane Explosion",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "description-effects",
+          "description-lifecycle",
+          "description-target-predicates",
+          "native-spell-effect-scope"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "basic-save-composition:Basic-save riders have not been completely compiled.",
+            "compiler-gap:description-effects",
+            "compiler-gap:description-lifecycle",
+            "compiler-gap:description-target-predicates",
+            "compiler-gap:native-spell-effect-scope",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "description-effects",
+          "description-lifecycle",
+          "description-target-predicates",
+          "dismissal",
+          "native-spell-effect-scope"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "basic-save-composition:Basic-save riders have not been completely compiled.",
+            "compiler-gap:description-effects",
+            "compiler-gap:description-lifecycle",
+            "compiler-gap:description-target-predicates",
+            "compiler-gap:dismissal",
+            "compiler-gap:native-spell-effect-scope",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-9/undertaker.json",
+      "name": "Undertaker",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "manual:conditional-effect",
+          "manual:terrain",
+          "preamble:modifier",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:manual:terrain",
+            "compiler-gap:preamble:modifier",
+            "compiler-gap:residual-prose",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "manual:conditional-effect",
+          "manual:terrain",
+          "preamble:degree-adjustment",
+          "preamble:modifier",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:manual:conditional-effect",
+            "compiler-gap:manual:terrain",
+            "compiler-gap:preamble:degree-adjustment",
+            "compiler-gap:preamble:modifier",
+            "compiler-gap:residual-prose",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    }
+  ]
+}

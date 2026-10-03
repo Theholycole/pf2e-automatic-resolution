@@ -1,0 +1,70 @@
+{
+  "rank6Batch1": {
+    "label": "rank6Batch1",
+    "passed": true,
+    "at": "2026-10-03T15:24:02.322Z",
+    "details": {
+      "batch1": {
+        "gap": "Chain Lightning: each target must be within 30 feet of the one before it (target them in the chain's order).",
+        "chain": {
+          "excluded": [
+            false,
+            false,
+            true
+          ],
+          "cLost": 0,
+          "aLost": 32
+        },
+        "blade": {
+          "initial": true,
+          "events": [
+            "turn-end"
+          ],
+          "gmAction": "tried to pass through the wall",
+          "crossed": "exposed"
+        },
+        "barrage": {
+          "deafened": true,
+          "reminder": true
+        },
+        "vortex": {
+          "events": [
+            "sustain"
+          ],
+          "once": true,
+          "fly": [
+            "fly"
+          ],
+          "gmAction": true,
+          "behavior": {
+            "walk": 1,
+            "fly": 2,
+            "swim": 1,
+            "burrow": 1,
+            "deploy": 1,
+            "travel": 1,
+            "drive": 1,
+            "jump": 1,
+            "crawl": 1,
+            "climb": 1,
+            "blink": 1,
+            "displace": 1
+          }
+        },
+        "love": {
+          "sustained": true,
+          "minutes": 1,
+          "arcCard": true,
+          "damage": null,
+          "statistic": "reflex"
+        },
+        "bolt": {
+          "status": "applied",
+          "escapeRule": true,
+          "card": true,
+          "fly": 60
+        }
+      }
+    }
+  }
+}

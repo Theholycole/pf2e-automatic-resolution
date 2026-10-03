@@ -1,0 +1,30 @@
+{
+  "label": "rank3Batch102",
+  "passed": true,
+  "at": "2026-10-03T06:38:53.612Z",
+  "details": {
+    "batch102": {
+      "longRefused": "Thief of Fortune: choose one eligible effect to counteract.",
+      "labels": [
+        "You gain the effect only if you'd be a valid target for that spell.",
+        "Dismissing it ends your copy of the effect (delete it).",
+        "Test buff short: counteract check vs DC 1: critical success (rank 3 vs 1)",
+        "Test buff short siphoned: PFTEST P23 Affliction Thief of Fortune caster gains it too (Test buff short); both last 5 more rounds"
+      ],
+      "siphon": {
+        "allyKeeps": true,
+        "allyRounds": 5,
+        "copy": "Test buff short",
+        "copyRounds": 5,
+        "acGain": 1
+      },
+      "failLabels": [
+        "You gain the effect only if you'd be a valid target for that spell.",
+        "Dismissing it ends your copy of the effect (delete it).",
+        "Test buff again: counteract check vs DC 80: critical failure (rank 3 vs 1)",
+        "Test buff again not counteracted"
+      ],
+      "failCopies": 1
+    }
+  }
+}

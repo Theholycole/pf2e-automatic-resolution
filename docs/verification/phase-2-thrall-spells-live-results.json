@@ -1,0 +1,256 @@
+{
+  "generatedAt": "2026-09-26T17:38:01.600Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "world": "pftest",
+  "results": {
+    "thrallSpells": {
+      "label": "thrallSpells",
+      "passed": true,
+      "at": "2026-09-26T17:32:27.636Z",
+      "details": {
+        "bombFarVictim": "Necrotic Bomb: PFTEST P23 Affliction bomb far is more than 10 feet from the thrall.",
+        "bombThrallOutOfRange": "Necrotic Bomb: the thrall PFTEST P23 Affliction bomb distant thrall is more than 30 feet from the caster.",
+        "necroticBomb": {
+          "targets": [
+            "bomb near"
+          ],
+          "total": 12,
+          "lost": [
+            12
+          ],
+          "thrallLost": 0,
+          "reminder": true,
+          "thrall": "bomb thrall"
+        },
+        "boneSpear": {
+          "targets": [
+            "spear one",
+            "spear two"
+          ],
+          "total": 8,
+          "lost": [
+            8,
+            4
+          ],
+          "thrallLost": 0,
+          "reminder": true,
+          "thrall": "spear thrall"
+        },
+        "deadWeightTwo": "Dead Weight: the thrall reaches 1 creature.",
+        "deadWeight": {
+          "targets": [
+            "weight one"
+          ],
+          "total": null,
+          "lost": [
+            0
+          ],
+          "thrallLost": 0,
+          "reminder": true,
+          "thrall": "weight thrall",
+          "conditions": [
+            "off-guard",
+            "slowed 1"
+          ]
+        },
+        "uiThrallChoice": {
+          "prepareSavesButton": "Prepare Saves — Save DC 24 basic Fortitude",
+          "dialogOptions": [
+            "bomb thrall",
+            "bomb near"
+          ],
+          "chose": "bomb thrall",
+          "cardTargets": [
+            "bomb near"
+          ],
+          "cardThrall": "bomb thrall",
+          "reminder": true
+        }
+      }
+    },
+    "rayCounteract": {
+      "label": "rayCounteract",
+      "passed": true,
+      "at": "2026-09-26T17:33:51.706Z",
+      "details": {
+        "reminder": true,
+        "formulas": [
+          "9d6 cold",
+          "9d6 spirit"
+        ],
+        "totals": [
+          39,
+          30
+        ],
+        "lost": [
+          138,
+          39
+        ]
+      }
+    },
+    "forcedMovement": {
+      "label": "forcedMovement",
+      "passed": true,
+      "at": "2026-09-26T17:34:07.906Z",
+      "details": {
+        "pull": {
+          "note": "PFTEST P23 Affliction Shadow Strike target is pulled up to 20 feet toward the caster. Move the token; the module doesn't.",
+          "lost": 30,
+          "total": 15,
+          "moved": false
+        },
+        "push": {
+          "note": "PFTEST P23 Affliction Hurtling Stone target can be pushed up to 5 feet (the caster's choice). Move the token; the module doesn't.",
+          "lost": 18,
+          "total": 18,
+          "moved": false
+        },
+        "miss": {
+          "note": null,
+          "lost": 0,
+          "total": null,
+          "moved": false
+        }
+      }
+    },
+    "energyByCreature": {
+      "label": "energyByCreature",
+      "passed": true,
+      "at": "2026-09-26T17:34:36.628Z",
+      "details": {
+        "executeVoid": {
+          "rows": [
+            {
+              "eligible": true,
+              "reason": null
+            },
+            {
+              "eligible": false,
+              "reason": "undead and void-healing creatures take the vitality variant"
+            }
+          ],
+          "total": 70,
+          "lost": [
+            70,
+            0
+          ],
+          "swapped": [
+            null,
+            null
+          ]
+        },
+        "executeVitality": {
+          "rows": [
+            {
+              "eligible": true,
+              "reason": null
+            }
+          ],
+          "total": 70,
+          "lost": [
+            70
+          ],
+          "swapped": [
+            null
+          ]
+        },
+        "divineArmageddon": {
+          "rows": [
+            {
+              "eligible": true,
+              "reason": null
+            },
+            {
+              "eligible": true,
+              "reason": null
+            }
+          ],
+          "total": 60,
+          "lost": [
+            60,
+            60
+          ],
+          "swapped": [
+            null,
+            "void → vitality"
+          ]
+        }
+      }
+    },
+    "bloodlineDamage": {
+      "label": "bloodlineDamage",
+      "passed": true,
+      "at": "2026-09-26T17:35:02.174Z",
+      "details": {
+        "dragonBreath": {
+          "formula": "9d6 spirit",
+          "total": 37,
+          "lost": [
+            37,
+            37
+          ],
+          "attackNumbers": [
+            null,
+            null
+          ],
+          "reminder": false
+        },
+        "elementalBlast": {
+          "formula": "8d6 fire",
+          "total": 23,
+          "lost": [
+            11
+          ],
+          "attackNumbers": [
+            null
+          ],
+          "reminder": true,
+          "traits": [
+            "concentrate",
+            "focus",
+            "manipulate",
+            "sorcerer",
+            "fire"
+          ]
+        },
+        "elementalToss": {
+          "formula": "5d8 fire",
+          "total": 26,
+          "lost": [
+            52
+          ],
+          "attackNumbers": [
+            1
+          ],
+          "reminder": false
+        },
+        "flurryOfClaws": {
+          "formula": "5d8 slashing + 5d4 spirit",
+          "total": 30,
+          "lost": [
+            30,
+            60
+          ],
+          "attackNumbers": [
+            1,
+            1
+          ],
+          "reminder": false,
+          "farRefused": "Flurry of Claws: PFTEST P23 Affliction claws far and PFTEST P23 Affliction claws one are more than 10 feet from each other."
+        },
+        "noBloodline": "Dragon Breath: PFTEST P23 Affliction Dragon Breath caster has no draconic bloodline choice in PF2e, so PF2e can't give this spell its damage type."
+      }
+    },
+    "cleanup": {
+      "label": "cleanup",
+      "passed": true,
+      "at": "2026-09-26T17:35:38.939Z",
+      "details": {
+        "actorsRemoved": 38,
+        "journalsRemoved": 1,
+        "remainingFixtureActors": 0
+      }
+    }
+  }
+}

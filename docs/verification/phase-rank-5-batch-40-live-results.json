@@ -1,0 +1,51 @@
+{
+  "label": "rank5Batch40",
+  "passed": true,
+  "at": "2026-10-02T23:46:12.248Z",
+  "details": {
+    "batch40": {
+      "foes": [
+        {
+          "effect": [
+            "1 rounds"
+          ],
+          "clumsy": 3,
+          "stunned": 0,
+          "land": 15,
+          "note": [
+            "1 rounds"
+          ]
+        },
+        {
+          "effect": [
+            "1 minutes"
+          ],
+          "clumsy": 3,
+          "stunned": 2,
+          "land": 15,
+          "note": [
+            "1 minutes"
+          ]
+        },
+        {
+          "effect": [
+            "1 minutes"
+          ],
+          "clumsy": 3,
+          "stunned": 0,
+          "land": 15,
+          "note": [
+            "1 minutes"
+          ]
+        },
+        {
+          "effect": [],
+          "clumsy": 0,
+          "stunned": 0,
+          "land": 25,
+          "note": []
+        }
+      ]
+    }
+  }
+}

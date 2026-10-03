@@ -1,0 +1,3668 @@
+{
+  "at": "2026-10-03T21:23:49.559Z",
+  "passed": true,
+  "uniqueMembers": 306,
+  "baselineSharedSaves": 66,
+  "newlySupported": [
+    "Acid Splash",
+    "Buzzing Bites",
+    "Dancing Blade",
+    "Divine Lance",
+    "Frostbite",
+    "Gale Blast",
+    "Haunting Hymn",
+    "Ignition",
+    "Imaginary Weapon",
+    "Information Overload",
+    "Live Wire",
+    "Needle Darts",
+    "Phase Bolt",
+    "Ray of Frost",
+    "Redistribute Potential",
+    "Scrounger's Glee",
+    "Shroud of Night",
+    "Slashing Gust",
+    "Spirit Object",
+    "Spout",
+    "Tame",
+    "Tangle Vine",
+    "Telekinetic Rend",
+    "Torturous Trauma",
+    "Trade Death for Life",
+    "Wilding Word",
+    "Admonishing Ray",
+    "Agitate",
+    "Airburst",
+    "All-Encompassing Hunger",
+    "Appeal to Authority",
+    "Appearance of Wealth",
+    "Aqueous Blast",
+    "Barbed Spear",
+    "Biting Words",
+    "Blood Infusion",
+    "Bone Spear",
+    "Booming Blast",
+    "Brain Drain",
+    "Briny Bolt",
+    "Buffeting Winds",
+    "Call of the Grave",
+    "Camel Spit",
+    "Celestial Accord",
+    "Charged Javelin",
+    "Charm",
+    "Charming Push",
+    "Charming Touch",
+    "Chastising Retort",
+    "Chilling Spray",
+    "Clouded Focus",
+    "Command",
+    "Creative Splash",
+    "Crushing Ground",
+    "Cry of Destruction",
+    "Curse of Recoil",
+    "Cycle of Retribution",
+    "Dazzling Flash",
+    "Dead Weight",
+    "Deathly Scream",
+    "Debilitating Terror",
+    "Dehydrate",
+    "Déjà Vu",
+    "Distracting Decoy",
+    "Divine Plagues",
+    "Dizzying Colors",
+    "Draw Ire",
+    "Eject Soul",
+    "Elemental Toss",
+    "Elysian Whimsy",
+    "Equal Footing",
+    "Exchange Image",
+    "Faerie Dust",
+    "Fear",
+    "Fire Ray",
+    "Flense",
+    "Flourishing Flora",
+    "Flurry of Claws",
+    "Forced Mercy",
+    "Forced Quiet",
+    "Forge",
+    "Glutton's Jaws",
+    "Goblin Pox",
+    "Grasping Vine",
+    "Grease",
+    "Gritty Wheeze",
+    "Heart's Hook",
+    "Hippocampus Retreat",
+    "Hollow Heart",
+    "Home Among Mulberry Leaves",
+    "Hurtling Stone",
+    "Hydraulic Push",
+    "Ignite Ambition",
+    "Ill Omen",
+    "Inkshot",
+    "Jealous Hex",
+    "Lament",
+    "Leaden Steps",
+    "Life Tap",
+    "Lift Nature's Caul",
+    "Lose the Path",
+    "Moonbeam",
+    "Necrotic Bomb",
+    "Overselling Flourish",
+    "Overstuff",
+    "Parch",
+    "Penumbral Shroud",
+    "Personal Rain Cloud",
+    "Phantom Pain",
+    "Propelling Air Stream",
+    "Pummeling Rubble",
+    "Purifying Icicle",
+    "Pushing Gust",
+    "Pyroclastic Truth",
+    "Rainbow's End",
+    "Rejuvenating Flames",
+    "Sacred Beasts",
+    "Savor the Sting",
+    "Schadenfreude",
+    "Scorching Blast",
+    "Shocking Grasp",
+    "Shockwave",
+    "Signal Skyrocket",
+    "Sleep",
+    "Slime Spit",
+    "Snowball",
+    "Soul Siphon",
+    "Spider Sting",
+    "Split the Tongue",
+    "Stumbling Curse",
+    "Temporal Distortion",
+    "Tether",
+    "Threefold Limb",
+    "Thunderous Strike",
+    "Thunderstrike",
+    "Tidal Surge",
+    "Touch of Undeath",
+    "Turbulent Tide",
+    "Undeath's Blessing",
+    "Unexpected Windfall",
+    "Veil of Dreams",
+    "Vengeful Glare",
+    "Vindicator's Mark",
+    "Waking Nightmare",
+    "Weaken Earth",
+    "Winter Bolt",
+    "Withering Grasp",
+    "Zenith Star",
+    "Acid Arrow",
+    "Acid Grip",
+    "Advanced Scurvy",
+    "Avenging Wildwood",
+    "Binding Muzzle",
+    "Blazing Blade",
+    "Blistering Invective",
+    "Blood Runs Cold",
+    "Blood Vendetta",
+    "Bone Spray",
+    "Bony Barrage",
+    "Brand the Impenitent",
+    "Brine Dragon Bile",
+    "Calm",
+    "Charitable Urge",
+    "Death Knell",
+    "Dimensional Drop",
+    "Disintegrating Puddle",
+    "Draw Blood",
+    "Expeditious Excavation",
+    "Exploding Earth",
+    "Fear the Sun",
+    "Feast of Ashes",
+    "Feral Shades",
+    "Final Sacrifice",
+    "Frog Tongue",
+    "Frozen Lungs",
+    "Fungal Infestation",
+    "Ghoulish Cravings",
+    "Heat Metal",
+    "Horrifying Blood Loss",
+    "Imp Sting",
+    "Imprinting Hand",
+    "Invoke the Crimson Oath",
+    "Laughing Fit",
+    "Lock Item",
+    "Manifestation of Spirits",
+    "Mental Map",
+    "Murder of Crows",
+    "Osseous Cage",
+    "Paranoia",
+    "Phantasmal Treasure",
+    "Pyrefowl Rebuke",
+    "Quench",
+    "Retrieving Hook",
+    "Revealing Light",
+    "Sea Surge",
+    "Shadow Zombie",
+    "Shining Starlight Attack",
+    "Soothing Mist",
+    "Spiritual Armament",
+    "Spiritual Weapon",
+    "Splinter Volley",
+    "Sticky Fire",
+    "Sudden Blight",
+    "Sun Blade",
+    "Swallow Light",
+    "Teeth to Terror",
+    "The Parrot's Whisper",
+    "Unrelenting Gravity",
+    "Vicious Jealousy",
+    "Vomit Swarm",
+    "Warrior's Regret",
+    "With Friends like These",
+    "Worm's Repast",
+    "Aberrant Whispers",
+    "Annunciation of the Outer Gate",
+    "Begone",
+    "Behold the Weave",
+    "Blastback",
+    "Blazing Dive",
+    "Blister Bomb",
+    "Blood in the Water",
+    "Bone Moth's Kiss",
+    "Bonewall Bulwark",
+    "Caster's Imposition",
+    "Censure Falsehoods",
+    "Chilling Darkness",
+    "Coral Scourge",
+    "Cordyceps Command",
+    "Crashing Wave",
+    "Crisis of Faith",
+    "Croak Voice",
+    "Cup of Dust",
+    "Curse of Lost Time",
+    "Day's Weight",
+    "Defensive Prescience",
+    "Disruptive Transfer",
+    "Distracting Chatter",
+    "Dive and Breach",
+    "Dragon Breath",
+    "Drain Life",
+    "Earthbind",
+    "Echo Jump",
+    "Enthrall",
+    "Excise Lexicon",
+    "Firework Blast",
+    "Fungal Exhalation",
+    "Garden of Stone",
+    "Gravity Well",
+    "Heart's Desire",
+    "Hedge Prison",
+    "Holy Light",
+    "Impending Doom",
+    "Incendiary Ashes",
+    "Infectious Ennui",
+    "Invoke the Harrow",
+    "Lashing Rope",
+    "Lightning Lasso",
+    "Magical Fetters",
+    "Magnetic Acceleration",
+    "Malicious Shadow",
+    "Mind Reading",
+    "Moonlight Ray",
+    "Mycological Malady",
+    "Noxious Metals",
+    "Overload Connection",
+    "Overwhelming Memory",
+    "Paralyze",
+    "Percussive Impact",
+    "Phantom Prison",
+    "Powerful Inhalation",
+    "Reblooded",
+    "Rend Magic",
+    "Restraining Chains",
+    "Roaring Applause",
+    "Sculpt Sound",
+    "Shadow Projectile",
+    "Shift Blame",
+    "Sign of Conviction",
+    "Skyglass Prison",
+    "Spectral Blade",
+    "Steal Shadow",
+    "Stone Lance",
+    "Subjugate Undead",
+    "Sudden Recollection",
+    "Threatening Mimicry",
+    "Unbreaking Wave Advance",
+    "Unravel Knowledge",
+    "Vampiric Feast",
+    "Weapon Tide",
+    "Widow’s Bite",
+    "Achaekek's Clutch",
+    "Anathematic Reprisal",
+    "Anchoring Air",
+    "Aromatic Lure",
+    "Bestial Curse",
+    "Blood Chestnuts",
+    "Bloodspray Curse",
+    "Call The Blood",
+    "Call the Ten",
+    "Channel Arrogance",
+    "Chroma Leach",
+    "Clownish Curse",
+    "Commanding Lash",
+    "Compel True Name",
+    "Confront Selves",
+    "Confusion",
+    "Containment",
+    "Coral Eruption",
+    "Crystallized Vapors",
+    "Darkened Eyes",
+    "Daydreamer's Curse",
+    "Deathless March",
+    "Debilitating Dichotomy",
+    "Delusional Pride",
+    "Dirge of Remembrance",
+    "Draw the Lightning",
+    "Dreamer's Call",
+    "Dull Ambition",
+    "Entangle Fate",
+    "Eradicate Undeath",
+    "Favorable Review",
+    "Fearful Feast",
+    "Foul Miasma",
+    "Freezing Touch",
+    "Friends to Foes",
+    "Grasp of the Deep",
+    "Holy Cascade",
+    "Hot Air",
+    "Hydraulic Torrent",
+    "Ice Storm",
+    "Implement of Destruction",
+    "Inevitable Destination",
+    "Infectious Melody",
+    "Internal Insurrection",
+    "Isolation",
+    "Life-Draining Roots",
+    "Localized Quake",
+    "Mantis's Grasp",
+    "Mercurial Stride",
+    "Mutilate",
+    "Nightmare",
+    "Ordained Purpose",
+    "Outcast's Curse",
+    "Planar Tether",
+    "Radiant Beam",
+    "Ranage's Circle",
+    "Remember the Lost",
+    "Retributive Pain",
+    "Rewrite Memory",
+    "Roar of the Dragon",
+    "Sage's Curse",
+    "Seal Fate",
+    "Shadow Strike",
+    "Shaken Confidence",
+    "Shape Stone",
+    "Shared Nightmare",
+    "Spiritual Anamnesis",
+    "Stasis",
+    "Steal Voice",
+    "Suggestion",
+    "Swarming Wasp Stings",
+    "Talking Corpse",
+    "Tortoise and the Hare",
+    "Trickster's Twin",
+    "Unsettling Knowledge",
+    "Unsettling Perspective",
+    "Vampiric Maiden",
+    "Vision of Beauty",
+    "Vision of Death",
+    "Waking Dream",
+    "Weapon Storm",
+    "Weaponize Secret",
+    "Ymeri's Mark",
+    "Abyssal Plague",
+    "Banishment",
+    "Blinding Bottle",
+    "Blinding Foam",
+    "Blister",
+    "Blood Feast",
+    "Blood-Feasting Breath",
+    "Boomerang Shot",
+    "Calcium Rain",
+    "Chthonian Wrath",
+    "Confusing Cry",
+    "Control Water",
+    "Crucible of Iron",
+    "Curse of Death",
+    "Divine Immolation",
+    "Elemental Blast",
+    "Flame Strike",
+    "Flames of Ego",
+    "Flowing Strike",
+    "Geyser",
+    "Glacial Heart",
+    "Glacial Skewer",
+    "Glossolalia",
+    "Grasping Grave",
+    "Grisly Growths",
+    "Hallucination",
+    "Impaling Spike",
+    "Inevitable Disaster",
+    "Infectious Comedy",
+    "Lightning Storm",
+    "Mariner's Curse",
+    "Mind Probe",
+    "Over the Coals",
+    "Pack Breaker",
+    "Pulverizing Wake",
+    "Repelling Pulse",
+    "Scouring Pulse",
+    "Shadow Blast",
+    "Spiked Carapace",
+    "Spiritual Torrent",
+    "Steal the Sky",
+    "Subconscious Suggestion",
+    "Synaptic Pulse",
+    "Synesthesia",
+    "Tornadic Gale",
+    "Unfolding Wind Buffet",
+    "Untwisting Iron Roots",
+    "Vindicator's Judgment",
+    "Warshard Shot",
+    "Wave of Despair",
+    "Wish-Twisted Form",
+    "Wyvern Sting",
+    "You're Mine",
+    "Accelerated Decomposition",
+    "Cast into Time",
+    "Catch Your Name",
+    "Chain Lightning",
+    "Claim Undead",
+    "Crimson Breath",
+    "Dominate",
+    "Explosive Barrage",
+    "Frost Pillar",
+    "Heinous Future",
+    "Lignify",
+    "Manifold Lives",
+    "Necrotize",
+    "Never Mind",
+    "Pain of Ages",
+    "Petrify",
+    "Phantasmal Calamity",
+    "Poltergeist's Fury",
+    "Purple Worm Sting",
+    "Spellwrack",
+    "Suffocate",
+    "Vampiric Exsanguination",
+    "Attacked from Within",
+    "Blightburn Blast",
+    "Curse of the Spirit Orchestra",
+    "Defy the Gods",
+    "Divine Decree",
+    "Eclipse Burst",
+    "Execute",
+    "Frigid Flurry",
+    "Inexhaustible Cynicism",
+    "Leng Sting",
+    "Moonburst",
+    "Shadow's Web",
+    "Sunburst",
+    "Telekinetic Bombardment",
+    "Warp Mind",
+    "Arctic Rift",
+    "Boil Blood",
+    "Canticle of Everlasting Grief",
+    "Desiccate",
+    "Devour Life",
+    "Divine Armageddon",
+    "Hypnopompic Terrors",
+    "Polar Ray",
+    "Spirit Song",
+    "Spiritual Epidemic",
+    "Sudden Transposition",
+    "Uncontrollable Dance",
+    "Dimensional Excision",
+    "Linnorm Sting",
+    "Phantasmagoria",
+    "Telepathic Demand",
+    "Unfolding Wind Crash",
+    "Unspeakable Shadow",
+    "Wails of the Damned",
+    "Weird"
+  ],
+  "familyResults": [
+    {
+      "id": "speed-penalty",
+      "total": 45,
+      "passed": 45
+    },
+    {
+      "id": "damage-condition",
+      "total": 145,
+      "passed": 145
+    },
+    {
+      "id": "timed-condition",
+      "total": 195,
+      "passed": 195
+    },
+    {
+      "id": "inherited-duration",
+      "total": 14,
+      "passed": 14
+    }
+  ],
+  "members": [
+    {
+      "id": "9h9YCncqah6VNsKf",
+      "name": "Acid Grip",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "rVANhQgB8Uqi9PTl",
+      "name": "Animate Rope",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "8TQiFzGf4feoHeH0",
+      "name": "Chilling Spray",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "MraZBLJ4Be3ogmWL",
+      "name": "Clinging Ice",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "LmGCKwk2yYhrDVjE",
+      "name": "Comet Charge",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "HMTloW1hvRFJ5Z2D",
+      "name": "Consuming Darkness",
+      "families": [
+        "speed-penalty",
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "AiWtiVmyasyL42J8",
+      "name": "Crushing Ground",
+      "families": [
+        "speed-penalty",
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "oPVyu2a0K3aTVIR8",
+      "name": "Elysian Whimsy",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "J6vNvrUT3b1hx2iA",
+      "name": "Entangling Flora",
+      "families": [
+        "speed-penalty",
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "Z2oSFY2fT8zLkK4P",
+      "name": "Equal Footing",
+      "families": [
+        "speed-penalty",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "nOVSmPZsCm1C1sI3",
+      "name": "Frozen Fog",
+      "families": [
+        "speed-penalty",
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "2YIr0S2Gt14PMMQp",
+      "name": "Grasping Grave",
+      "families": [
+        "speed-penalty",
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "oGV6YdpZLIG4G4gH",
+      "name": "Impaling Briars",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "WRP8TDf36hqHyGv1",
+      "name": "Incarnate Kaiju",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "fMnjP4hpNRV9EfVM",
+      "name": "Inevitable Destination",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "2ZPqcM9wNoVnpwkK",
+      "name": "Magical Fetters",
+      "families": [
+        "speed-penalty",
+        "timed-condition",
+        "inherited-duration"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "IqBfoUaWDennHYoZ",
+      "name": "Manifest Will",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "Tc5NLaMu71vrGTJQ",
+      "name": "Nature's Enmity",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "6lO6uMQxbqmYho0e",
+      "name": "Necrotize",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "87zLUuTMmZ9zc7gH",
+      "name": "Oneiric Mire",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "mFHQ2u4LWiejqKQG",
+      "name": "Overstuff",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "fRqHDOWmgcUTeT03",
+      "name": "Pest Swarm",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "9Ga1AOQdHKYXUY4O",
+      "name": "Purifying Icicle",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "g1dDUKsIrdlpdqy9",
+      "name": "Ravenous Darkness",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "gYjPm7YwGtEa1oxh",
+      "name": "Ray of Frost",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "m815cJACTzePdZAG",
+      "name": "Remake Physiology",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "I2IgZu4Rd2dz0J6v",
+      "name": "Sawtooth Terrain",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "tSosbMsftXcRaQgT",
+      "name": "Sea of Thought",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "W6QlRwQLPoBSw6PZ",
+      "name": "Snowball",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "ECApRjIIxD0JogOa",
+      "name": "Stone Lance",
+      "families": [
+        "speed-penalty",
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "kVNo3ga0lwLKPrem",
+      "name": "Summon Elemental Herald",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "lbrWMnS2pecKaSVB",
+      "name": "Swampcall",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "OAt2ZEns1gIOCgrn",
+      "name": "Synesthesia",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "uZK2BYzPnxUBnDjr",
+      "name": "Tangle Vine",
+      "families": [
+        "speed-penalty",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "JbAcSLu62TU1OgNF",
+      "name": "Tangling Creepers",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "EzB9i7R6aBRAtJCh",
+      "name": "Tempest Touch",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "MVrxZarUTnJxAUN8",
+      "name": "Tether",
+      "families": [
+        "speed-penalty",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "3DY4vbXj0BYSWA7z",
+      "name": "Threefold Limb",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "aqRYNoSvxsVfqglH",
+      "name": "Unfettered Movement",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "bVtkBJvGLP69qVGI",
+      "name": "Unfettered Pack",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "HEuvZAjD1q0J8Y5i",
+      "name": "Unholy Army",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "gwOYh5zMVZB0HNcT",
+      "name": "Unimpeded Stride",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "O7ZEqWjwdKyo2CUv",
+      "name": "Volcanic Eruption",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "9s5tqqXNzcoKamWx",
+      "name": "Web",
+      "families": [
+        "speed-penalty"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "B3tbO85GBpzQ3u8l",
+      "name": "Wish-Twisted Form",
+      "families": [
+        "speed-penalty",
+        "inherited-duration"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "rqoWAxQv4RWbwyAr",
+      "name": "Accelerated Decomposition",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "nplNt08TvokZUxtR",
+      "name": "Agonizing Despair",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "7tR29sQt35NfIWqN",
+      "name": "Anathematic Reprisal",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "d2pi7laQkzlr3wrS",
+      "name": "Ancestral Touch",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "Z4X5whSqSvgiiJ05",
+      "name": "Ancestral Winds",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "fWU7Qjp1JiX9g6eg",
+      "name": "Animus Mine",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "6wLY5LnehCo3tHlr",
+      "name": "Aqueous Blast",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "C2GYCH3TtUFqPfdX",
+      "name": "Arctic Rift",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "7PnjDM52lb4LEqHR",
+      "name": "Arrow Salvo",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "23cv1p49NFd0Onng",
+      "name": "Ash Cloud",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "B4p4cD9Q71mHTpOP",
+      "name": "Attacked from Within",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "N9KjnGyVMKgqKcCw",
+      "name": "Bandit's Doom",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "dQ7LrD2HxJoCzi2M",
+      "name": "Barbed Spear",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "OYOCWWefZPEfp8Nl",
+      "name": "Blazing Fissure",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "7uL4XhHpxZpgNJPh",
+      "name": "Blinding Foam",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "fBoiPXmcIO50OFFR",
+      "name": "Boil Blood",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "zdNUbHqqZzjA07oM",
+      "name": "Boneshaker",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "8lZhUreL1bRk1v4Z",
+      "name": "Briny Bolt",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "kWDt0JcKPgX6MvdD",
+      "name": "Burning Blossoms",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "vGMbpV7GWIFPNUaZ",
+      "name": "Bursting Bloom",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "BItahht2hEHvR9Bt",
+      "name": "Buzzing Bites",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "Hycyiw9xVzoIY4Dy",
+      "name": "Camel Spit",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "OdqM06M0wDUqZWiR",
+      "name": "Cast into Time",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "CVvkveEH7lonSTZd",
+      "name": "Channel Arrogance",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "JkyUu62rLxcNT4K9",
+      "name": "Chastising Retort",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "VGK9s6LCMMS027zP",
+      "name": "Confront Selves",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "zf2OwwvIwu8JHoY2",
+      "name": "Corpse Bloom",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "3x6eUCm17n6ROzUa",
+      "name": "Crisis of Faith",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "1hLxZznnA2kvXlIt",
+      "name": "Cutting Insult",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "4gBIw4IDrSfFHik4",
+      "name": "Daze",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "aIPa7Yp4vGeKIKNG",
+      "name": "Deathly Scream",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "VmqdVWCb8zAUCW8S",
+      "name": "Debilitating Dichotomy",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "sX2o0HH4RjJDAZ8C",
+      "name": "Divine Decree",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "hVU9msO9yGkxKZ3J",
+      "name": "Divine Wrath",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "AUZPwEorddewm0x1",
+      "name": "Eagle's Cry",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "0jadeyQIItIuRgeH",
+      "name": "Eclipse Burst",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "Vg4K3dTDswNQf4Bx",
+      "name": "Entreat the Many",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "ZvB9sV7NLdpDeoTw",
+      "name": "Explosive Barrage",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "ReUoodsqUYSTwSgE",
+      "name": "Fateful Condemnation",
+      "families": [
+        "damage-condition",
+        "inherited-duration"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "0qA4MfMkFklOz2Lk",
+      "name": "Fearful Feast",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "siU9xRlqWXeKT0mH",
+      "name": "Feast of Ashes",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "oQXM2XeIDGOmFuZr",
+      "name": "Fiendish Rift",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "b6AQvzs8EotmlK56",
+      "name": "Flourishing Flora",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "9AZEObUdLI2fwmPl",
+      "name": "Freezing Rain",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "IKBjimvThvQIu2sO",
+      "name": "Friends to Foes",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "cnRltZAjU9aCklqz",
+      "name": "Frog Tongue",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "H481wmQUtEUhxHzi",
+      "name": "Fungal Exhalation",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "kvZCQz4NoMAfjvif",
+      "name": "Gasping Marsh",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "ZyREiMaul0VhDYh3",
+      "name": "Glacial Heart",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "LecsGlwWvnfyOeec",
+      "name": "Glacial Skewer",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "rwWtpZpkNYvypknx",
+      "name": "Grasp of the Deep",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "alG1y2mnNZGRywad",
+      "name": "Gravity Wave",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "s8gTmnNMg4H4bHEF",
+      "name": "Gritty Wheeze",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "g8QqHpv2CWDwmIm1",
+      "name": "Gust of Wind",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "b5BQbwmuBhgPXTyi",
+      "name": "Haunting Hymn",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "TvZiwZRianfTSbEg",
+      "name": "Hypnopompic Terrors",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "3GXU3ugrwLv0P7AH",
+      "name": "Ignite Fireworks",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "oXeEbcUdgJGWHGEJ",
+      "name": "Impaling Spike",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "xh6hPMDx2n4OaBU7",
+      "name": "Indolent Haze",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "MiTFNcqCI9f34A2V",
+      "name": "Inkshot",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "hghGRzOSzEl4UXdS",
+      "name": "Invoke Spirits",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "CgekONDD5jIxL8oM",
+      "name": "Life's Flowing River",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "MUJe5G1zdR20Iq4y",
+      "name": "Lightning Lasso",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "ygZHabZRS1ypucaw",
+      "name": "Living Terrain",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "cBUuG1yJHGeKffpg",
+      "name": "Localized Quake",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "MT8usUfwudDVUm5H",
+      "name": "Manifold Lives",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "Tl1QAqre7H0sQEXt",
+      "name": "Mantis's Grasp",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "oCdcZ8EqoC1K0Drq",
+      "name": "Missed Cue",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "SuBtUJiU6DbSJYIw",
+      "name": "Moonbeam",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "Shiuhdb2nO6Qgk3k",
+      "name": "Moonburst",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "KT0AR9yfSV3Cq8A4",
+      "name": "Murder of Crows",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "wzLkNU3AAqOSKFPR",
+      "name": "Noise Blast",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "1meVElIu1CEVYWkv",
+      "name": "Noxious Vapors",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "HreHc5elibW9hVK8",
+      "name": "Pain of Ages",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "qTzvVnAMWL05VitC",
+      "name": "Painful Vibrations",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "iG1USiSRXMjCDGAr",
+      "name": "Percussive Impact",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "MJx7DmjsWYzDZ3a4",
+      "name": "Phantasmagoria",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "R8bqnYiThB6MYTxD",
+      "name": "Phantom Pain",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "BKIet436snMNcnez",
+      "name": "Polar Ray",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "2uEuYmlyx1R7zQeH",
+      "name": "Pollen Pods",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "xnh2NBOGs4hcH9B3",
+      "name": "Pyrefowl Rebuke",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "5LGDygjRxURUOKGR",
+      "name": "Radiant Beam",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "hYK4ByCVN1ALc5gR",
+      "name": "Rainbow's End",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "bZMwSGc9t5K7uxZV",
+      "name": "Redistribute Potential",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "nrW6lGV4xDMqLS3P",
+      "name": "Remember the Lost",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "TLqMFgCewxuricJw",
+      "name": "Repelling Pulse",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "Popa5umI3H33levx",
+      "name": "Rime Slick",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "gBJtUhewnihlqxm7",
+      "name": "Rose's Thorns",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "cf7Jkm39uEjUFtHt",
+      "name": "Sea Surge",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "DOBs5ALM1titPYxe",
+      "name": "Seize Identity",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "8cuqRFB3mWBOgy61",
+      "name": "Shadow Projectile",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "n8eEXXAtguoErW0y",
+      "name": "Shadow's Web",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "yuhhRjqBzFgkKYrq",
+      "name": "Shining Starlight Attack",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "dgCH2E0gMLMUgyFl",
+      "name": "Shockwave",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "ZrRhweQ7KQ0wKN3m",
+      "name": "Signal Skyrocket",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "aFBnqTbrjhw0v08g",
+      "name": "Skyglass Prison",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "hWtB81P2KGzGHKAJ",
+      "name": "Slime Spit",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "D6T17BdazhNy3KPm",
+      "name": "Soul Siphon",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "Ht35SDf9PDStJfoC",
+      "name": "Spirit Song",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "lXxP1ziyf4ozkpmv",
+      "name": "Split the Tongue",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "eSL5hVT9gXrnRLtd",
+      "name": "Spout",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "mlNYROcFrUF8nFgk",
+      "name": "Spray of Stars",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "0chL1b4OFIZxpN3v",
+      "name": "Steal Shadow",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "Vseo7VIy8mzINUES",
+      "name": "Sticky Fire",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "bAxjHBi37CVwInfU",
+      "name": "Stifling Stillness",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "rwbL3oBniZZeJc2f",
+      "name": "Stop Heart",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "Ifc2b6bNVdjKV7Si",
+      "name": "Stormburst",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "2DFtBRLyYMPrimp7",
+      "name": "Sudden Transposition",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "qGWORxQ0aSsH2taf",
+      "name": "Suffocate",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "a3aQxCpoj1q1NQxC",
+      "name": "Sunburst",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "avT46uIH3xYJPSv4",
+      "name": "Teeth to Terror",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "uc4I1diSSX6XYzb3",
+      "name": "Telekinetic Bombardment",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "ho1jSoYKrHUNnM90",
+      "name": "Tempest Surge",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "LFSwMtQVP05EzlZe",
+      "name": "Thunderburst",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "r82rqcm0MmGaBFkM",
+      "name": "Thunderous Strike",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "zDJS8E66UI0himqV",
+      "name": "Thunderstrike",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "9I8mp7RkjeXbkYfx",
+      "name": "Timber",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "nsWSe5ssxAPn0j8t",
+      "name": "Tornadic Gale",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "zHSp4PzoOE72DV4o",
+      "name": "Torturous Trauma",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "A7NXFVgENRVtYoe3",
+      "name": "Trim the Blight",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "XjNROFtWnwovhCsq",
+      "name": "Unfolding Wind Crash",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "89kInqMRs63Cx8E3",
+      "name": "Unravel Existence",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "PaHxcqXihXkkXPsB",
+      "name": "Unraveling Blast",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "5H4jsbHODdkGhJI7",
+      "name": "Unsettling Perspective",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "9o5aG5025ZczjkPb",
+      "name": "Untwisting Iron Roots",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "QozxgBbcmktLKdBs",
+      "name": "Updraft",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "XGB77j7m0SLky8U1",
+      "name": "Utter Destruction",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "07xYlmGX32XtHGEt",
+      "name": "Vampiric Maiden",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "tPtTKe0X1dDwoDmQ",
+      "name": "Vibrant Vibrato",
+      "families": [
+        "damage-condition",
+        "inherited-duration"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "Jmxru8zMdYMRuO5n",
+      "name": "Vision of Death",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "kcelf6IHl3L9VXXg",
+      "name": "Vitality Lash",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "g2V4ID0pl1ZGAxZj",
+      "name": "Vitrifying Blast",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "mAMEt4FFbdqoRnkN",
+      "name": "Void Warp",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "cB17yFc9456Pyfec",
+      "name": "Vomit Swarm",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "FEsuyf203wTNE2et",
+      "name": "Wails of the Damned",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "72rjRm7jClesBokV",
+      "name": "Weight of the World",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "qDjeG6dxT4aEEC6J",
+      "name": "Weird",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "6JDq5d8w11ZuH4Ta",
+      "name": "Widow’s Bite",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "H4oF5szC7aogqtvw",
+      "name": "Worm's Repast",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "6gEKZaGdH842RF3J",
+      "name": "Ymeri's Mark",
+      "families": [
+        "damage-condition",
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "XEhzFKNTSARsofav",
+      "name": "Advanced Scurvy",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "XB65dUQipPCTNNIY",
+      "name": "Amalgamizing Leap",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "bCZP8N2C41gF10G2",
+      "name": "Anchoring Air",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "LX4pCagYLpc9hEji",
+      "name": "Aromatic Lure",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "VuPDHoVEPLbMfCJC",
+      "name": "Bestial Curse",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "m34WOIGZCEg1h76G",
+      "name": "Blanket of Stars",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "Q56HLIHVKY6bC5W3",
+      "name": "Blinding Beauty",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "NhGXgmI3AjkkwnPk",
+      "name": "Blinding Fury",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "VosLNn2M8S7JH67D",
+      "name": "Blindness",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "Oj36W4SwlVBMMdiX",
+      "name": "Blood Runs Cold",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "L13n9NKvfGLApse1",
+      "name": "Calcification",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "jJphHQlENHFlSElH",
+      "name": "Captivating Adoration",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "4y2DMq9DV5HvmnxC",
+      "name": "Chroma Leach",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "fwPNYmpOyzRehEY4",
+      "name": "Circle of Weakness",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "GzN9bG6cKZ96YC6l",
+      "name": "Claim Undead",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "uEyfLoFQsRKBRIcB",
+      "name": "Confusing Colors",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "I7oklLZy4aTHIdc3",
+      "name": "Confusing Cry",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "LiGbewa9pO0yjbsY",
+      "name": "Confusion",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "zfn5RqAdF63neqpP",
+      "name": "Control Water",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "xTpp8dHZsNMDm75B",
+      "name": "Creative Splash",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "i5h9VQ1T6MLInINM",
+      "name": "Crucible of Iron",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "10siFBMF4pIDhVmf",
+      "name": "Cup of Dust",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "B3eLlbaPxOYHcs1o",
+      "name": "Curse of Lost Time",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "9uSBfK8EUVBrcNYx",
+      "name": "Curse of Recoil",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "oiUhJbJ3YCKF62Fu",
+      "name": "Darkened Eyes",
+      "families": [
+        "timed-condition",
+        "inherited-duration"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "Llx0xKvtu8S4z6TI",
+      "name": "Day's Weight",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "zul5cBTfr7NXHBZf",
+      "name": "Dazzling Flash",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "fZPCv2VHuM2yPbC8",
+      "name": "Deafness",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "ik0bjmAJse9PSECL",
+      "name": "Deathless March",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "3ZNuJm5LDA8GkFsH",
+      "name": "Defy the Gods",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "jSJz4vx0fXPHa3d6",
+      "name": "Disruptive Transfer",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "JHntYF0SbaWKq7wR",
+      "name": "Distracting Chatter",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "z8bHh8KVttslQIU9",
+      "name": "Distracting Decoy",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "nsQvjNyg4Whw2mek",
+      "name": "Divine Aura",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "T5Mt4jXFuh14uREv",
+      "name": "Divinity Leech",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "UKsIOWmMx4hSpafl",
+      "name": "Dizzying Colors",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "OsOhx3TGIZ7AhD0P",
+      "name": "Dominate",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "PztLrElcZfLwRnEq",
+      "name": "Dreamer's Call",
+      "families": [
+        "timed-condition",
+        "inherited-duration"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "rVhHaWqUsVUO4GuY",
+      "name": "Eject Soul",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "J7Y7tl0bbdz7TcCc",
+      "name": "Enfeeble",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "11haL5O9KMpY5Fv7",
+      "name": "Entangle Fate",
+      "families": [
+        "timed-condition",
+        "inherited-duration"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "Vw2CNwlRRKABsuZi",
+      "name": "Entrancing Eyes",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "ZZTLWMXijRDgE66m",
+      "name": "Expunge Blood",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "vm9O7ne48NM72yrJ",
+      "name": "Falling Sky",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "4koZzrnMXhhosn0D",
+      "name": "Fear",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "vctIUOOgSmxAF0KG",
+      "name": "Fear the Sun",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "ZClfmMoKG3E926Uq",
+      "name": "Flames of Ego",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "v2KE1ueuO5EjvF78",
+      "name": "Freezing Touch",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "x2Gf3lt64eoMocMd",
+      "name": "Gift of the Anemos",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "Vt4DwrWIgo5vcyex",
+      "name": "Gleaming Pet",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "91ZbBll8M7IXQ4yw",
+      "name": "Gluttonous Growth",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "cQgPIohUja0DUiRL",
+      "name": "Grasping Vine",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "EAkuu0qgr2Hi2xGk",
+      "name": "Haunting Spirit",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "PVXqMko4yGgw90uo",
+      "name": "Heart's Desire",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "EX6gTy8s4wNyhOnl",
+      "name": "Heinous Future",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "JIphJbkWHndtFk72",
+      "name": "Home Among Mulberry Leaves",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "wTtStmTk5SjFE1sh",
+      "name": "Horizon's Veil",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "oYBIs8MICYkFwtXD",
+      "name": "Infectious Ennui",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "RbORUmnwlB8b3mNf",
+      "name": "Internal Insurrection",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "kvm68hVtmADiIvN4",
+      "name": "Jealous Hex",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "2tHYKoVc5YhSewDO",
+      "name": "Leaden Steps",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "fgmxDC2PH2TEYGKG",
+      "name": "Life Tap",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "6GjJtLJnwC18Y0aZ",
+      "name": "Lift Nature's Caul",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "2hMy9ROM2dOZB8Jq",
+      "name": "Lignify",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "Lr737SofpsFtLpEo",
+      "name": "Luring Wail",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "O1ZLfeOJpHbG9G6B",
+      "name": "Manifestation of Spirits",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "xCfOskoogDf9LBlD",
+      "name": "Mushroom Patch",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "V4jrHiaMh4XuANOP",
+      "name": "Mycological Malady",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "5BbU1V6wGSGbrmRD",
+      "name": "Never Mind",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "SAmyaiVKTDrUNjot",
+      "name": "Nymph's Grace",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "ro0omoBKiJiMuDRa",
+      "name": "Overselling Flourish",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "LJHrndGJRmLdxgXD",
+      "name": "Overwhelming Memory",
+      "families": [
+        "timed-condition",
+        "inherited-duration"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "cGGEi67G1RStR9cD",
+      "name": "Pack Breaker",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "DCQHaLrYXMI37dvW",
+      "name": "Paralyze",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "7CUgqHunmHfW2lC5",
+      "name": "Parch",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "znv4ECL7ZtuiagtA",
+      "name": "Petrify",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "L0GoJpHxSD0wRY5k",
+      "name": "Phantasmal Treasure",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "e4c73RBCQAZdYxau",
+      "name": "Pressure Zone",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "mBYqtWpvOT4oBm4Q",
+      "name": "Puppet Strings",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "TUbXnR4RAuYzRx1u",
+      "name": "Pyrotechnics",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "nXoc5YbcynmhZcQs",
+      "name": "Radiant Globe",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "KktHf7zIAWOr499h",
+      "name": "Ranger's Bramble",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "Stjb9wvLn146TfW6",
+      "name": "Reblooded",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "lqxh1qgJG5ujSHXI",
+      "name": "Retrieving Hook",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "FSu6ZKxr3xdS75wq",
+      "name": "Roar of the Dragon",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "8E97SA9KAWCNdXfO",
+      "name": "Schadenfreude",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "HGmBY8KjgLV97nUp",
+      "name": "Scouring Sand",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "HHGUBGle4OjoxvNR",
+      "name": "Sculpt Sound",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "skvgOWNTitLehL0b",
+      "name": "Shared Nightmare",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "o4lRVTwSxnOOn5vl",
+      "name": "Sleep",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "WsUwpfmhKrKwoIe3",
+      "name": "Slow",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "Jli9WBjQZ2MmKJ8y",
+      "name": "Spiritual Anamnesis",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "MS60WhVifb45qORJ",
+      "name": "Spiritual Epidemic",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "jyYBuGRfpkZz2kxs",
+      "name": "Sting of the Sea",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "CQb8HtQ1BPeZmu9h",
+      "name": "Stupefy",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "BilnTGuXrof9Dt9D",
+      "name": "Synaptic Pulse",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "UbHK19RYbxRXWgWX",
+      "name": "Temporal Distortion",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "kLxJx7BECVgHh2vb",
+      "name": "Temporal Ward",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "yZpWaJzm7kUjKvlQ",
+      "name": "Temporary Possession",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "V05lB4VsSMiMMsZJ",
+      "name": "The Queen's Rainbow",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "a0MfDnUa33oWM74s",
+      "name": "Tomorrow's Dawn",
+      "families": [
+        "timed-condition",
+        "inherited-duration"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "1NLMPmyCB2MBoCuR",
+      "name": "Tortoise and the Hare",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "MmQiEc7aM9PDLO2J",
+      "name": "Touch of Obedience",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "Jvyy6oVIQsD34MHB",
+      "name": "Uncontrollable Dance",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "KR8WgdazifDBjDkW",
+      "name": "Unexpected Windfall",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "FmNDwqMEjeTEGPrY",
+      "name": "Unfathomable Song",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "gC3oEJ4WByq1LRO8",
+      "name": "Unrelenting Gravity",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "iAmHJbFN3lOoOkNG",
+      "name": "Unsettling Knowledge",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "lQbfgAu9uVJQC7x4",
+      "name": "Veil of Spirits",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "RQjSQVZRG497cJhX",
+      "name": "Vibrant Pattern",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "jqb52wy7A0Eqwuzx",
+      "name": "Vision of Beauty",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "DU5daB09xwfE1y38",
+      "name": "Waking Nightmare",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "8kJbiBEjMWG4VUjs",
+      "name": "Warp Mind",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "GaRQlC9Yw1BGKHfN",
+      "name": "Wave of Despair",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "x2LALaHXO7644GQA",
+      "name": "You're Mine",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "Yrek2Yd4k3DPC2zV",
+      "name": "Zenith Star",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "vZSWzkw0uF4iFWSM",
+      "name": "Celestial Accord",
+      "families": [
+        "inherited-duration"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "mcck9womUsTf07nP",
+      "name": "Glossolalia",
+      "families": [
+        "inherited-duration"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "fH7LQX5yaRf9zBOm",
+      "name": "Incarnate Ancient Specter",
+      "families": [
+        "inherited-duration"
+      ],
+      "supported": false,
+      "detachedSupported": false,
+      "passed": true
+    },
+    {
+      "id": "KHnhPHL4x1AQHfbC",
+      "name": "Mind Reading",
+      "families": [
+        "inherited-duration"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "VMABZdZyplCKTAAP",
+      "name": "Vindicator's Judgment",
+      "families": [
+        "inherited-duration"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    }
+  ]
+}

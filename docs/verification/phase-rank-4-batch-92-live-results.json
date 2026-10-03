@@ -1,0 +1,18 @@
+{
+  "label": "rank4Batch92",
+  "passed": true,
+  "at": "2026-10-03T02:51:31.907Z",
+  "details": {
+    "batch92": {
+      "confirmation": "pending",
+      "cast": {
+        "formula": "5d12 electricity",
+        "total": 36,
+        "lost": 36,
+        "effect": true,
+        "weapon": "q0hcHSaPDa4bHVEY",
+        "dagger": "q0hcHSaPDa4bHVEY"
+      }
+    }
+  }
+}

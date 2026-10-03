@@ -1,0 +1,66 @@
+{
+  "batch": 116,
+  "spells": [
+    "Flense"
+  ],
+  "results": [
+    {
+      "label": "cr1Batch116",
+      "passed": true,
+      "at": "2026-09-28T02:32:01.426Z",
+      "details": {
+        "flense": {
+          "living": {
+            "refusedBeforeConfirm": true,
+            "variant": null,
+            "total": 9,
+            "lost": 18,
+            "persistent": [
+              "1d4 bleed"
+            ],
+            "enfeebled": null
+          },
+          "undead": {
+            "refusedBeforeConfirm": true,
+            "variant": "undead",
+            "total": 7,
+            "lost": 14,
+            "persistent": [],
+            "enfeebled": 1
+          }
+        }
+      }
+    },
+    {
+      "label": "spellAttack",
+      "passed": true,
+      "at": "2026-09-28T02:32:24.109Z",
+      "details": {
+        "lance": {
+          "rolled": {
+            "degree": "success",
+            "total": 26,
+            "natural": 12
+          },
+          "damage": {
+            "formula": "2d4 spirit",
+            "total": 5
+          },
+          "hpLost": 10
+        },
+        "crows": {
+          "hpLost": 20,
+          "dazzled": true
+        },
+        "miss": 0,
+        "snowball": {
+          "hpLost": 4,
+          "effect": "Snowball: 10-foot Speed penalty",
+          "rules": [
+            "FlatModifier:all-speeds:-10"
+          ]
+        }
+      }
+    }
+  ]
+}

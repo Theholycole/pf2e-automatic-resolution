@@ -1,0 +1,61 @@
+{
+  "case": "rank2Batch28",
+  "date": "2026-10-01",
+  "world": "pftest",
+  "result": {
+    "label": "rank2Batch28",
+    "passed": true,
+    "at": "2026-10-01T20:41:16.851Z",
+    "details": {
+      "batch28": {
+        "sunBoth": {
+          "questions": true,
+          "formula": "2d6 fire",
+          "total": 9,
+          "extras": [
+            [
+              "unholy",
+              "{(3 - 1)d6[spirit]}",
+              9
+            ],
+            [
+              "undead",
+              "{(3 - 1)d6[vitality]}",
+              9
+            ]
+          ],
+          "lost": 27
+        },
+        "sunPlain": {
+          "questions": true,
+          "formula": "2d4 fire",
+          "total": 5,
+          "extras": [
+            [
+              "unholy",
+              null,
+              null
+            ],
+            [
+              "undead",
+              null,
+              null
+            ]
+          ],
+          "lost": 5
+        },
+        "blood": {
+          "formula": "6d4 piercing + 3 bleed",
+          "lost": 14,
+          "total": 14,
+          "persistent": [
+            "3 bleed"
+          ],
+          "note": "1 minutes",
+          "healed": 3,
+          "gained": 3
+        }
+      }
+    }
+  }
+}

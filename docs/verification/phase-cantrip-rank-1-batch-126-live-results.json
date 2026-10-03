@@ -1,0 +1,100 @@
+{
+  "batch": 126,
+  "spells": [
+    "Stick On"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch126",
+      "passed": true,
+      "at": "2026-09-28T10:05:24.061Z",
+      "details": {
+        "stickOn": {
+          "refused": "Stick On: target the one creature you touch (an object is yours to handle).",
+          "small": {
+            "relation": "smaller",
+            "dc": 24,
+            "target": {
+              "immobilized": true,
+              "effects": [
+                "Stick On: stuck to PFTEST P23 Affliction Stick On caster"
+              ]
+            },
+            "caster": {
+              "immobilized": false,
+              "effects": []
+            },
+            "escaped": true,
+            "after": {
+              "target": {
+                "immobilized": false,
+                "effects": []
+              },
+              "caster": {
+                "immobilized": false,
+                "effects": []
+              },
+              "active": false
+            }
+          },
+          "same": {
+            "relation": "same",
+            "target": {
+              "immobilized": false,
+              "effects": [
+                "Stick On: stuck to PFTEST P23 Affliction Stick On caster"
+              ]
+            },
+            "caster": {
+              "immobilized": false,
+              "effects": [
+                "Stick On: stuck to PFTEST P23 Affliction stick same"
+              ]
+            },
+            "after": {
+              "target": {
+                "immobilized": false,
+                "effects": []
+              },
+              "caster": {
+                "immobilized": false,
+                "effects": []
+              },
+              "active": false
+            }
+          },
+          "large": {
+            "relation": "larger",
+            "target": {
+              "immobilized": false,
+              "effects": [
+                "Stick On: stuck to PFTEST P23 Affliction Stick On caster"
+              ]
+            },
+            "caster": {
+              "immobilized": true,
+              "effects": [
+                "Stick On: stuck to PFTEST P23 Affliction stick large"
+              ]
+            },
+            "escaped": true,
+            "after": {
+              "target": {
+                "immobilized": false,
+                "effects": []
+              },
+              "caster": {
+                "immobilized": false,
+                "effects": []
+              },
+              "active": false
+            }
+          }
+        }
+      }
+    }
+  ]
+}

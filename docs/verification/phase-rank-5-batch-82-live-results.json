@@ -1,0 +1,29 @@
+{
+  "label": "rank5Batch82",
+  "passed": true,
+  "at": "2026-10-03T12:12:58.803Z",
+  "details": {
+    "batch82": {
+      "kind": "blink-strike",
+      "hit": {
+        "degree": 3,
+        "formula": "(2 * 1d8) slashing + (2 * 2d8) force",
+        "damage": 22,
+        "adjacent": true,
+        "effect": false
+      },
+      "miss": {
+        "degree": 0,
+        "victim": "caster",
+        "formula": "1d8 force",
+        "fighterLost": 4,
+        "foeLost": 0
+      },
+      "range": "Blink Charge: PFTEST P23 Affliction blink foe isn't within 60 feet.",
+      "high": {
+        "degree": 0,
+        "formula": "2d8 force"
+      }
+    }
+  }
+}

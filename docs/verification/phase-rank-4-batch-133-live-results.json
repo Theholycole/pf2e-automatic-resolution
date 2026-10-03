@@ -1,0 +1,17 @@
+{
+  "label": "rank4Batch133",
+  "passed": true,
+  "at": "2026-10-03T10:36:21.583Z",
+  "details": {
+    "batch133": {
+      "ally": {
+        "holds": true,
+        "dice": 2
+      },
+      "neutralHoldsAtCast": false,
+      "neutral": true,
+      "evil": true,
+      "reclassified": true
+    }
+  }
+}

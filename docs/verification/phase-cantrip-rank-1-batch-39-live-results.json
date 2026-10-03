@@ -1,0 +1,56 @@
+{
+  "batch": "cantrip-rank-1-batch-39",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch39",
+    "passed": true,
+    "details": {
+      "weaponSurge": {
+        "offered": [
+          "Club",
+          "Longsword"
+        ],
+        "selection": true,
+        "sword": {
+          "attack": [
+            "status:1"
+          ],
+          "dice": [
+            "1d6:spirit"
+          ]
+        },
+        "club": {
+          "attack": [],
+          "dice": []
+        },
+        "duration": "{\"value\":1,\"unit\":\"rounds\",\"expiry\":\"turn-start\",\"sustained\":false}",
+        "note": true
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch39",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch2",
+      "passed": true,
+      "note": "same session, the run before (with the first cr1Batch39 attempt, whose harness read NPC Strikes and failed)"
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

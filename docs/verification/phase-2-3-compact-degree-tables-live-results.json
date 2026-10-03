@@ -1,0 +1,50 @@
+{
+  "generated": "2026-09-26T00:50:07.114Z",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "compact": {
+    "label": "compact",
+    "passed": true,
+    "at": "2026-09-26T00:46:31.828Z",
+    "details": {
+      "oneTime": {
+        "frightened": [
+          0,
+          1,
+          2
+        ]
+      },
+      "rainbow": {
+        "exposure": "Review PFTEST P23 Affliction rainbow foe's exposure (entered the area)",
+        "blinded": true,
+        "duration": {
+          "value": 1,
+          "unit": "rounds",
+          "expiry": "turn-start",
+          "sustained": false
+        },
+        "ended": "ended"
+      }
+    }
+  },
+  "regressions": {
+    "breathOfDrought": {
+      "passed": true,
+      "at": "2026-09-26T00:47:20.995Z"
+    },
+    "homebrewSustainArea": {
+      "passed": true,
+      "at": "2026-09-26T00:47:59.844Z"
+    },
+    "petalStorm": {
+      "passed": true,
+      "at": "2026-09-26T00:49:24.404Z"
+    }
+  },
+  "note": "An earlier Petal Storm run failed only because two harness runs overlapped; it passed when rerun alone.",
+  "cleanup": {
+    "fixtures": 0,
+    "combats": 0,
+    "testRegions": 0
+  }
+}

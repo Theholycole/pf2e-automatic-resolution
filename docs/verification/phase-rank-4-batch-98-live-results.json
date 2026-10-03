@@ -1,0 +1,20 @@
+{
+  "label": "rank4Batch98",
+  "passed": true,
+  "at": "2026-10-03T03:27:39.645Z",
+  "details": {
+    "batch98": {
+      "exposed": true,
+      "inside": {
+        "note": true,
+        "perceptionDrop": 1
+      },
+      "left": {
+        "note": false
+      },
+      "back": {
+        "asked": false
+      }
+    }
+  }
+}

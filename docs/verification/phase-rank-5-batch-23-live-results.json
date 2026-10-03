@@ -1,0 +1,16 @@
+{
+  "label": "rank5Batch23",
+  "passed": true,
+  "at": "2026-10-02T18:51:19.080Z",
+  "details": {
+    "batch23": {
+      "choice": true,
+      "formula": "5d6 fire + 5d6 piercing",
+      "total": 30,
+      "lost": [
+        30,
+        15
+      ]
+    }
+  }
+}

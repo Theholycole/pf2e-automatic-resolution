@@ -1,0 +1,16 @@
+{
+ "label": "rank7Batch11",
+ "passed": true,
+ "at": "2026-10-03T20:22:40.307Z",
+ "details": {
+  "batch11": {
+   "cynic": {
+    "supported": true,
+    "note": "1 minutes",
+    "formula": "6d6 mental",
+    "lost": 27,
+    "untouched": 0
+   }
+  }
+ }
+}

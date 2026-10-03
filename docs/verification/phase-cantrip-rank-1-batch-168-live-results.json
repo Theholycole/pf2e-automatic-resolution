@@ -1,0 +1,54 @@
+{
+  "batch": 168,
+  "date": "2026-09-28",
+  "world": "pftest",
+  "system": "8.5.0",
+  "core": "14.367",
+  "module": "0.8.2",
+  "results": [
+    {
+      "case": "cr1Batch168",
+      "passed": true,
+      "details": {
+        "items": {
+          "instrument": {
+            "name": "Musical Instrument (Handheld)",
+            "held": "held",
+            "replaced": {
+              "items": [
+                "Musical Instrument (Virtuoso handheld)"
+              ],
+              "effects": 1
+            },
+            "removed": true
+          },
+          "arms": {
+            "offered": 101,
+            "name": "Club (Arms of Nature)",
+            "potency": 1,
+            "striking": 1,
+            "held": "held",
+            "strike": true,
+            "bonus": 1,
+            "heavyRefused": true,
+            "removed": true
+          },
+          "mending": {
+            "item": "Buckler",
+            "before": 1,
+            "after": 6,
+            "max": 6,
+            "brokenBefore": true,
+            "brokenAfter": false,
+            "repaired": true,
+            "steelRank1Refused": true,
+            "steelRank2": [
+              5,
+              15
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+ "label": "rank6Batch19",
+ "passed": true,
+ "at": "2026-10-03T20:40:34.652Z",
+ "details": {
+  "batch19": {
+   "crit": {
+    "total": 33,
+    "lost": 66,
+    "bleed": "1d8|bleed",
+    "immobilized": true
+   },
+   "terrain": true,
+   "squares": 10,
+   "radius": 25
+  }
+ }
+}

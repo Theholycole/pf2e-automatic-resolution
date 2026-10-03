@@ -1,0 +1,52 @@
+{
+  "batch": 166,
+  "date": "2026-09-28",
+  "world": "pftest",
+  "system": "8.5.0",
+  "core": "14.367",
+  "module": "0.8.2",
+  "results": [
+    {
+      "case": "cr1Batch166",
+      "passed": true,
+      "details": {
+        "summons": {
+          "list": {
+            "offered": 41,
+            "allLevelMinus1": true,
+            "max": -1,
+            "name": "Angry Fox",
+            "level": -1,
+            "traits": true,
+            "adjacent": true,
+            "disposition": true,
+            "dispositions": [
+              1,
+              1,
+              true
+            ],
+            "linked": true,
+            "sustained": true,
+            "ownerMatches": true,
+            "removed": true
+          },
+          "rank2": {
+            "level": 1,
+            "max": 1,
+            "refused": true,
+            "removed": true
+          },
+          "servitor": {
+            "traits": true,
+            "removed": true
+          },
+          "minion": {
+            "name": "Phantasmal Minion",
+            "minutes": 10,
+            "removed": true
+          }
+        }
+      }
+    }
+  ]
+}

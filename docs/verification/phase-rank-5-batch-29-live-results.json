@@ -1,0 +1,17 @@
+{
+  "label": "rank5Batch29",
+  "passed": true,
+  "at": "2026-10-02T20:52:23.064Z",
+  "details": {
+    "batch29": {
+      "atCast": 0,
+      "exposed": true,
+      "failure": {
+        "formula": "5d6 cold",
+        "total": 16,
+        "lost": 16,
+        "slowed": 1
+      }
+    }
+  }
+}

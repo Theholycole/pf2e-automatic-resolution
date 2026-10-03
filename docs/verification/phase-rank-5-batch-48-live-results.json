@@ -1,0 +1,19 @@
+{
+  "label": "rank5Batch48",
+  "passed": true,
+  "at": "2026-10-03T00:40:46.121Z",
+  "details": {
+    "batch48": {
+      "radius0": 10,
+      "exposed": true,
+      "failure": {
+        "formula": "3d6 void",
+        "lost": 5,
+        "speedDrop": 10
+      },
+      "radius1": 15,
+      "regionRadius": 2.5,
+      "afterLeaving": 0
+    }
+  }
+}

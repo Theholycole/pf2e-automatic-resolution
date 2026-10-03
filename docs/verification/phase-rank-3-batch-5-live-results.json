@@ -1,0 +1,49 @@
+{
+  "label": "rank3Batch5",
+  "passed": true,
+  "at": "2026-10-02T09:38:14.618Z",
+  "details": {
+    "batch5": {
+      "one": {
+        "supported": true,
+        "area": 15,
+        "formula": "2d6 force",
+        "total": 3,
+        "lost": 3,
+        "reminder": "pushed 5 feet"
+      },
+      "two": {
+        "supported": true,
+        "area": 30,
+        "formula": "3d6 force",
+        "total": 16,
+        "lost": 16,
+        "reminder": "pushed 5 feet"
+      },
+      "three": {
+        "supported": true,
+        "area": 60,
+        "formula": "4d6 force",
+        "total": 9,
+        "lost": 18,
+        "reminder": "pushed 10 feet"
+      },
+      "oneH": {
+        "supported": true,
+        "area": 15,
+        "formula": "3d6 force",
+        "total": 11,
+        "lost": 11,
+        "reminder": "pushed 5 feet"
+      },
+      "twoH": {
+        "supported": true,
+        "area": 30,
+        "formula": "5d6 force",
+        "total": 18,
+        "lost": 9,
+        "reminder": null
+      }
+    }
+  }
+}

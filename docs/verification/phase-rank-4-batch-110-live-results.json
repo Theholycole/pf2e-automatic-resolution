@@ -1,0 +1,53 @@
+{
+  "label": "rank4Batch110",
+  "passed": true,
+  "at": "2026-10-03T08:43:26.328Z",
+  "details": {
+    "batch110": {
+      "kind": "incarnate",
+      "choices": [
+        "cockroaches:arrive/depart",
+        "mosquitoes:arrive/depart",
+        "pigeons:arrive/depart",
+        "rats:arrive/depart",
+        "skunks:arrive/depart",
+        "spiders:arrive/arrive-exposure/depart"
+      ],
+      "arrive": {
+        "formula": "3d6 piercing",
+        "lost": 4
+      },
+      "venom": {
+        "dc": 24,
+        "handoff": "Violin Spider Venom",
+        "result": [
+          "Afflicted: Violin Spider Venom, stage 1 — Pseudo Afflictions did not pick up this spell; apply the affliction manually."
+        ],
+        "pa": 0
+      },
+      "depart": {
+        "speedRule": [
+          [
+            [
+              "all-speeds"
+            ],
+            -20
+          ]
+        ],
+        "escapeDC": 24,
+        "minutes": 1
+      },
+      "again": "Pest Swarm: its Depart has been resolved.",
+      "rats": {
+        "lost": 5,
+        "prone": true,
+        "formula": "2d6 bludgeoning"
+      },
+      "terrain": {
+        "placed": "placed",
+        "behaviour": true,
+        "seconds": 6
+      }
+    }
+  }
+}

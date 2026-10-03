@@ -1,0 +1,84 @@
+{
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch1",
+    "passed": true,
+    "at": "2026-09-27T01:13:57.119Z",
+    "details": {
+      "deathlyScreamFar": "Deathly Scream: PFTEST P23 Affliction scream far is more than 5 feet from the thrall.",
+      "deathlyScream": {
+        "far": "Deathly Scream: PFTEST P23 Affliction scream far is more than 5 feet from the thrall.",
+        "lost": 6,
+        "total": 3,
+        "frightened": 2
+      },
+      "oversellingFlourish": {
+        "failure": [
+          true,
+          true
+        ],
+        "critical": [
+          true,
+          true
+        ],
+        "note": true
+      },
+      "curseOfRecoil": {
+        "success": {
+          "offGuard": true,
+          "effect": null
+        },
+        "failure": {
+          "offGuard": true,
+          "effect": "Spell Effect: Curse of Recoil (Failure)",
+          "duration": {
+            "value": -1,
+            "unit": "unlimited",
+            "expiry": null,
+            "sustained": false
+          }
+        },
+        "critical": {
+          "offGuard": true,
+          "effect": "Spell Effect: Curse of Recoil (Critical Failure)",
+          "duration": {
+            "value": 1,
+            "unit": "rounds",
+            "expiry": "turn-start",
+            "sustained": false
+          }
+        },
+        "dataNote": true
+      },
+      "hauntingHymn": {
+        "deafened": [
+          false,
+          true
+        ],
+        "lost": [
+          7,
+          14
+        ],
+        "total": 7,
+        "duration": [
+          "Deafened:1 minutes"
+        ]
+      }
+    }
+  },
+  "regressions": {
+    "thrallSpells": true,
+    "rank1Batch1": true,
+    "rank2Batch1": true,
+    "sustainedConditions": true,
+    "phrasings": true
+  },
+  "cleanup": {
+    "actorsRemoved": 8,
+    "journalsRemoved": 1,
+    "remainingFixtureActors": 0
+  },
+  "combats": 0
+}

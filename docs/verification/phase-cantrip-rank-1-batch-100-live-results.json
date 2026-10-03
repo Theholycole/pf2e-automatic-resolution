@@ -1,0 +1,71 @@
+{
+  "batch": "cantrip-rank-1-batch-100",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch100",
+    "passed": true,
+    "details": {
+      "results": {
+        "failer": {
+          "degree": "failure",
+          "total": 3,
+          "lost": 3,
+          "persistent": [
+            "1 fire"
+          ]
+        },
+        "saver": {
+          "degree": "success",
+          "total": 3,
+          "lost": 1,
+          "persistent": []
+        },
+        "later": {
+          "degree": "criticalFailure",
+          "total": 8,
+          "lost": 16,
+          "persistent": [
+            "(2 * 1) fire"
+          ]
+        }
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch100",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch99",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch88",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

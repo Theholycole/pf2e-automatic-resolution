@@ -1,0 +1,27 @@
+{
+  "generatedAt": "2026-10-02T22:19:47.832Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "results": [
+    {
+      "label": "rank4Batch55",
+      "passed": true,
+      "at": "2026-10-02T22:19:32.316Z",
+      "details": {
+        "batch55": {
+          "formula": "6d12 slashing",
+          "total": 29,
+          "lost": [
+            29,
+            58,
+            14
+          ],
+          "reminders": [
+            "area-choice",
+            "weapon-critical-specialization"
+          ]
+        }
+      }
+    }
+  ]
+}

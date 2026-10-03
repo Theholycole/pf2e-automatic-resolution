@@ -1,0 +1,30 @@
+{
+  "generatedAt": "2026-10-02T21:41:28.663Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "results": [
+    {
+      "label": "rank4Batch53",
+      "passed": true,
+      "at": "2026-10-02T21:41:03.894Z",
+      "details": {
+        "batch53": {
+          "casterExposed": false,
+          "cast": {
+            "formula": "8d6 void",
+            "total": 37,
+            "lost": 37
+          },
+          "tempAfterCast": 0,
+          "sustain": {
+            "formula": "3d6 void",
+            "total": 14,
+            "lost": 14
+          },
+          "temp": 7,
+          "tempEffect": true
+        }
+      }
+    }
+  ]
+}

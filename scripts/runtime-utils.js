@@ -6,6 +6,16 @@ export function escapeHTML(value) {
     })[character]);
 }
 
+/**
+ * A modifyMovementCost behavior's difficulties for terrain that hinders the listed movement types. Terrain on the ground also applies to PF2e's
+ * "travel" action (how a creature moves outside combat), which Foundry costs separately from "walk"; fly-only terrain stays fly-only.
+ */
+export function terrainDifficulties(movement, difficulty) {
+    const types = [...movement];
+    if (types.includes("walk") && !types.includes("travel")) types.push("travel");
+    return Object.fromEntries(types.map(type => [type, difficulty]));
+}
+
 export function clone(value) {
     return foundry.utils.deepClone(value);
 }
@@ -35,4 +45,15 @@ export async function confirmAction({ title, content, label }) {
         modal: true
     });
     return result === true;
+}
+
+/**
+ * A spell at its cast rank. PF2e applies fixed-level heightening data (Dehydrate's 4d6 at 3rd) only when it loads that rank, so a spell
+ * already at the cast rank is loaded too when it has such levels up to that rank.
+ */
+export function spellAtCastRank(item, castRank) {
+    if (typeof item?.loadVariant !== "function" || !Number.isFinite(Number(castRank))) return item;
+    const fixedLevels = item.system?.heightening?.type === "fixed" && Object.keys(item.system.heightening.levels ?? {}).some(rank => Number(rank) <= Number(castRank));
+    if (Number(item.rank) === Number(castRank) && !fixedLevels) return item;
+    try { return item.loadVariant({ castRank: Number(castRank) }) ?? item; } catch { return item; }
 }

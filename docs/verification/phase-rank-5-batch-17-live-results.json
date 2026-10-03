@@ -1,0 +1,49 @@
+{
+  "label": "rank5Batch17",
+  "passed": true,
+  "at": "2026-10-02T17:21:30.060Z",
+  "details": {
+    "batch17": {
+      "gugCritical": {
+        "question": true,
+        "formula": "14d6 piercing",
+        "results": [
+          [
+            "shared",
+            "2 * 14d6 piercing",
+            94,
+            94
+          ],
+          [
+            "outcome",
+            "(@item.rank - 4)d8[bleed]",
+            0,
+            0
+          ]
+        ],
+        "lost": 94,
+        "temp": 47,
+        "duration": "1 minutes",
+        "bleed": "2d8",
+        "status": "completed"
+      },
+      "plainHit": {
+        "question": true,
+        "formula": "14d6 piercing",
+        "results": [
+          [
+            "shared",
+            "14d6 piercing",
+            50,
+            50
+          ]
+        ],
+        "lost": 50,
+        "temp": 25,
+        "duration": "1 minutes",
+        "bleed": null,
+        "status": "completed"
+      }
+    }
+  }
+}

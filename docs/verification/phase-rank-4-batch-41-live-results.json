@@ -1,0 +1,46 @@
+{
+  "label": "rank4Batch41",
+  "passed": true,
+  "at": "2026-10-02T18:31:38.051Z",
+  "details": {
+    "batch41": {
+      "eligible": [
+        true,
+        true,
+        true,
+        false
+      ],
+      "question": true,
+      "rows": [
+        {
+          "rolled": "failure",
+          "final": "criticalFailure",
+          "expected": "criticalFailure"
+        },
+        {
+          "rolled": "success",
+          "final": "criticalSuccess",
+          "expected": "criticalSuccess"
+        },
+        {
+          "rolled": "failure",
+          "final": "failure",
+          "expected": "failure"
+        }
+      ],
+      "total": 7,
+      "lost": [
+        14,
+        0,
+        7,
+        0
+      ],
+      "compelled": [
+        true,
+        false,
+        true,
+        false
+      ]
+    }
+  }
+}

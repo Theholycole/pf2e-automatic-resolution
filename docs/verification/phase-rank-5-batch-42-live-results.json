@@ -1,0 +1,19 @@
+{
+  "label": "rank5Batch42",
+  "passed": true,
+  "at": "2026-10-03T00:06:33.135Z",
+  "details": {
+    "batch42": {
+      "foes": [
+        [
+          "unlimited 1 minute"
+        ],
+        [],
+        [
+          "unlimited 1 hour"
+        ],
+        []
+      ]
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "batch": "rank-2-3",
+  "date": "2026-09-30",
+  "world": "pftest",
+  "system": "8.5.0",
+  "core": "14.367",
+  "module": "0.8.2",
+  "results": [
+    {
+      "case": "rank2Batch3",
+      "passed": true,
+      "details": {
+        "degreeDurations": {
+          "light": {
+            "plain": {
+              "dazzled": true,
+              "concealed": false,
+              "note": "1 minutes"
+            },
+            "ghost": {
+              "dazzled": true,
+              "concealed": true,
+              "note": "1 minutes"
+            },
+            "plainAfterEnd": {
+              "dazzled": false
+            }
+          },
+          "brand": {
+            "duration": "unlimited",
+            "acOff": 0,
+            "acOn": -1
+          },
+          "shroud": {
+            "note": "10 minutes",
+            "withLight": [
+              1
+            ],
+            "without": []
+          }
+        }
+      }
+    }
+  ]
+}

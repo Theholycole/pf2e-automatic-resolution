@@ -1,0 +1,125 @@
+{
+  "rank3Batch122": {
+    "label": "rank3Batch122",
+    "passed": true,
+    "at": "2026-10-03T13:47:48.227Z",
+    "details": {
+      "batch122": {
+        "brewCS": {
+          "name": "Spell Effect: Fortifying Brew (Critical Success)",
+          "temp": [
+            20,
+            20
+          ],
+          "selection": {
+            "heroesFeast": "critical-success"
+          },
+          "diseaseBonus": true,
+          "buttons": [
+            3,
+            3
+          ]
+        },
+        "counteract": {
+          "gone": true,
+          "skill": "crafting",
+          "enfeebled": 0,
+          "results": [
+            "This spell can't counteract or suppress curses, diseases, or conditions that are part of the target's normal state.",
+            "Test weakness: counteract check vs DC 1: success (rank 4 vs 1)",
+            "Test weakness counteracted"
+          ]
+        },
+        "brewS": {
+          "temp": 12,
+          "selection": {
+            "heroesFeast": "success"
+          }
+        },
+        "brewCF": {
+          "primary": 4,
+          "a": 4,
+          "b": 4
+        },
+        "teaCS": {
+          "temp": 12,
+          "emotion": [
+            "item:trait:emotion"
+          ],
+          "endurance": true,
+          "buttons": [
+            3,
+            3
+          ]
+        },
+        "teaS": {
+          "temp": 10,
+          "bonus": false,
+          "endurance": true,
+          "second": "Winter's Breath: PFTEST P23 Affliction ritual drinker b already chose Environmental Endurance."
+        },
+        "teaCF": {
+          "primary": 3,
+          "a": 3,
+          "b": 3
+        }
+      }
+    }
+  },
+  "rank3Batch121": {
+    "label": "rank3Batch121",
+    "passed": true,
+    "at": "2026-10-03T13:48:38.541Z",
+    "details": {
+      "batch121": {
+        "portraitCS": {
+          "enfeebled": 4,
+          "hours": 8760
+        },
+        "portraitStrong": {
+          "enfeebled": 0,
+          "applied": 0,
+          "degree": "criticalSuccess"
+        },
+        "portraitCF": {
+          "helper": 4,
+          "primary": 4,
+          "primaryExpected": 4
+        },
+        "geasBig": "Geas: at rank 3 the target can be at most level 6.",
+        "geasMark": true,
+        "strain": {
+          "first": 1,
+          "second": 2,
+          "reduced": 2,
+          "removed": 2,
+          "ended": 0
+        },
+        "geasCS": {
+          "toggle": true,
+          "selector": [
+            "skill-check"
+          ]
+        },
+        "unwillingWeak": {
+          "value": 168,
+          "unit": "hours",
+          "expiry": "turn-start",
+          "sustained": false
+        },
+        "unwillingStrong": {
+          "marked": false,
+          "applied": 0
+        },
+        "geasCF": true
+      }
+    }
+  },
+  "rank3Batch120": {
+    "label": "rank3Batch120",
+    "passed": false,
+    "error": "Rank 3 batch 120: {\"door\":{\"lost\":63,\"rolled\":63,\"helper\":1,\"rolls\":2},\"doorPulled\":2,\"cord\":{\"toggle\":true,\"value\":4},\"astral\":{\"doomed\":1,\"dying\":1,\"hp\":0,\"helperDoomed\":1,\"helperDying\":1},\"expel\":[\"memories removed\"],\"expelCF\":{\"value\":720,\"unit\":\"hours\",\"expiry\":\"turn-start\",\"sustained\":false},\"garden\":{\"primary\":true,\"helper\":true},\"spirit\":-2,\"spiritNone\":0,\"rune\":{\"subject\":26,\"helper\":26,\"hits\":3,\"multipliers\":[1,1,1]}}",
+    "stack": "Error: Rank 3 batch 120: {\"door\":{\"lost\":63,\"rolled\":63,\"helper\":1,\"rolls\":2},\"doorPulled\":2,\"cord\":{\"toggle\":true,\"value\":4},\"astral\":{\"doomed\":1,\"dying\":1,\"hp\":0,\"helperDoomed\":1,\"helperDying\":1},\"expel\":[\"memories removed\"],\"expelCF\":{\"value\":720,\"unit\":\"hours\",\"expiry\":\"turn-start\",\"sustained\":false},\"garden\":{\"primary\":true,\"helper\":true},\"spirit\":-2,\"spiritNone\":0,\"rune\":{\"subject\":26,\"helper\":26,\"hits\":3,\"multipliers\":[1,1,1]}}\n    at assert (http://localhost:30000/modules/pf2e-automatic-resolution/tools/phase23-affliction-verification.mjs?v=1791035257344:4:56)\n    at Object.rank3Batch120 (http://localhost:30000/modules/pf2e-automatic-resolution/tools/phase23-affliction-verification.mjs?v=1791035257344:5171:9)\n    at async Object.record (http://localhost:30000/modules/pf2e-automatic-resolution/tools/phase23-affliction-verification.mjs?v=1791035257344:55:85)\n    at async Module.runCase (http://localhost:30000/modules/pf2e-automatic-resolution/tools/phase23-affliction-verification.mjs?v=1791035257344:26724:12)\n    at async <anonymous>:1:147"
+  },
+  "done": true
+}

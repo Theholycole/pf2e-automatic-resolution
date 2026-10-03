@@ -1,0 +1,30 @@
+{
+  "label": "rank4Batch80",
+  "passed": true,
+  "at": "2026-10-03T00:46:33.524Z",
+  "details": {
+    "batch80": {
+      "foes": [
+        {
+          "clumsy": 1,
+          "immobilized": false,
+          "restrained": false,
+          "escapable": 0
+        },
+        {
+          "clumsy": 2,
+          "immobilized": true,
+          "restrained": false,
+          "escapable": 1
+        },
+        {
+          "clumsy": 2,
+          "immobilized": true,
+          "restrained": true,
+          "escapable": 1
+        }
+      ],
+      "afterMoving": 0
+    }
+  }
+}

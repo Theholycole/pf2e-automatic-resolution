@@ -1,0 +1,40 @@
+{
+ "label": "rank9Batch5",
+ "passed": true,
+ "at": "2026-10-03T20:52:40.193Z",
+ "details": {
+  "batch5": {
+   "cast": [
+    {
+     "who": "near",
+     "formula": "14d6 void"
+    }
+   ],
+   "obl": [
+    [
+     "membership",
+     "lingering:turn-end:5GIYkTk93Jr04RlT:1:2:Actor.V7x0",
+     "turn-end",
+     true
+    ]
+   ],
+   "turn1": [
+    {
+     "who": "near",
+     "formula": "6d6 void"
+    }
+   ],
+   "grown": {
+    "radius": 50,
+    "formula": "7d6[void]"
+   },
+   "twice": "refused",
+   "turn2": [
+    {
+     "who": "far",
+     "formula": "7d6 void"
+    }
+   ]
+  }
+ }
+}

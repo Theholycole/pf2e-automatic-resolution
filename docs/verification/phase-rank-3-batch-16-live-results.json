@@ -1,0 +1,27 @@
+{
+  "label": "rank3Batch16",
+  "passed": true,
+  "at": "2026-10-02T11:01:00.680Z",
+  "details": {
+    "batch16": {
+      "favor": {
+        "level": "automatic",
+        "temp": 12,
+        "rank4": 16
+      },
+      "dividend": {
+        "level": "automatic",
+        "rules": [
+          "FlatModifier"
+        ],
+        "note": true
+      },
+      "know": {
+        "level": "automatic",
+        "rules": [
+          "RollTwice"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "batch": "cantrip-rank-1-batch-36",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch36",
+    "passed": true,
+    "details": {
+      "wildingWord": {
+        "atCast": {
+          "asked": [
+            "pending",
+            "pending",
+            "pending"
+          ],
+          "notes": [
+            [
+              "Penalty against the caster 1 minutes"
+            ],
+            [
+              "Penalty against the caster 1 minutes",
+              "Sickened when it damages you 1 minutes"
+            ],
+            [
+              "Penalty against the caster 1 minutes",
+              "Sickened when it damages you 1 minutes"
+            ]
+          ],
+          "sickened": [
+            false,
+            false,
+            false
+          ],
+          "texts": [
+            null,
+            "1",
+            "2"
+          ]
+        },
+        "afterMissed": [
+          [],
+          [],
+          []
+        ]
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch36",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch6",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

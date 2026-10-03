@@ -1,0 +1,48 @@
+{
+  "batch": "cantrip-rank-1-batch-49",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch49",
+    "passed": true,
+    "details": {
+      "loseThePath": [
+        [
+          "Temporary immunity 1 hours"
+        ],
+        [
+          "Temporary immunity 1 hours",
+          "This Stride 1 rounds"
+        ],
+        [
+          "Temporary immunity 1 hours",
+          "This Stride 1 rounds"
+        ]
+      ]
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch49",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch16",
+      "passed": true,
+      "note": "same session, the run before (the first cr1Batch49 attempt expected another sort order)"
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

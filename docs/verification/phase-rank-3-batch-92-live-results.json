@@ -1,0 +1,22 @@
+{
+  "label": "rank3Batch92",
+  "passed": true,
+  "at": "2026-10-03T05:39:05.820Z",
+  "details": {
+    "batch92": {
+      "first": {
+        "kind": "martyr-redirect",
+        "rest": 11,
+        "allyHp": 1,
+        "casterLost": 11,
+        "allyWounded": 1,
+        "casterWounded": 1
+      },
+      "refused": "Martyr's Intervention: PFTEST P23 Affliction Martyr's Intervention caster is wounded (the requirement).",
+      "second": {
+        "allyHp": 1,
+        "allyWounded": 2
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "label": "rank4Batch3",
+  "passed": true,
+  "at": "2026-10-02T10:39:59.390Z",
+  "details": {
+    "batch3": {
+      "atCast": 0,
+      "exposure": {
+        "added": 1,
+        "label": "Review PFTEST P23 Affliction sphere outsider's exposure (tried to enter or leave the area)"
+      },
+      "note": true,
+      "sustained": true,
+      "ended": "ended"
+    }
+  }
+}

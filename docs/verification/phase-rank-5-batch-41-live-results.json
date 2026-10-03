@@ -1,0 +1,35 @@
+{
+  "label": "rank5Batch41",
+  "passed": true,
+  "at": "2026-10-02T23:54:12.205Z",
+  "details": {
+    "batch41": {
+      "casts": [
+        {
+          "degree": "criticalFailure",
+          "rank": 8,
+          "note": "1 hours",
+          "knows": false,
+          "penalty": {
+            "value": -4,
+            "type": "circumstance"
+          },
+          "disbelief": {
+            "status": "disbelieved",
+            "ended": true,
+            "modifier": [
+              "circumstance:-4"
+            ]
+          }
+        },
+        {
+          "degree": "success",
+          "rank": 5,
+          "note": "1 hours",
+          "knows": true,
+          "penalty": null
+        }
+      ]
+    }
+  }
+}

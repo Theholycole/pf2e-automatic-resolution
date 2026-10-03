@@ -1,0 +1,72 @@
+{
+  "batch": 106,
+  "spells": [
+    "Mushroom Patch"
+  ],
+  "results": [
+    {
+      "label": "cr1Batch106",
+      "passed": true,
+      "at": "2026-09-28T01:26:22.012Z",
+      "details": {
+        "mushroomPatch": {
+          "terrain": true,
+          "afterCast": {
+            "saver": [
+              "dazzled"
+            ],
+            "critter": [
+              "dazzled",
+              "slowed"
+            ]
+          },
+          "controls": [
+            "outside-action"
+          ],
+          "afterAction": [],
+          "events": [
+            "saver:initial",
+            "critter:initial",
+            "critter:round-start",
+            "critter:round-start"
+          ]
+        }
+      }
+    },
+    {
+      "label": "cr1Batch102",
+      "passed": true,
+      "at": "2026-09-28T01:27:11.948Z",
+      "details": {
+        "scouringSand": {
+          "afterCast": {
+            "crit": [
+              "blinded"
+            ],
+            "fail": [
+              "dazzled"
+            ]
+          },
+          "card": {
+            "terrain": true,
+            "counteract": true,
+            "immune": true
+          },
+          "controls": [
+            "interact",
+            "next"
+          ],
+          "afterNextAction": [
+            "dazzled"
+          ],
+          "turnEnd": [
+            "turn-end"
+          ],
+          "later": [
+            "dazzled"
+          ]
+        }
+      }
+    }
+  ]
+}

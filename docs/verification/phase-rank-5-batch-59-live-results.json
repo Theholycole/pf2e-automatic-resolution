@@ -1,0 +1,18 @@
+{
+  "label": "rank5Batch59",
+  "passed": true,
+  "at": "2026-10-03T03:24:45.614Z",
+  "details": {
+    "batch59": {
+      "grounded": {
+        "lost": 40,
+        "prone": true,
+        "note": true
+      },
+      "aloft": {
+        "lost": 0,
+        "prone": false
+      }
+    }
+  }
+}

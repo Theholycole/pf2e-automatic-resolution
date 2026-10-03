@@ -1,0 +1,31 @@
+{
+  "label": "rank4Batch106",
+  "passed": true,
+  "at": "2026-10-03T08:14:29.887Z",
+  "details": {
+    "batch106": {
+      "modes": [
+        "fire-ants",
+        "fireflies"
+      ],
+      "exposed": [
+        "beside",
+        "target"
+      ],
+      "results": {
+        "target": {
+          "formula": "3d6 piercing + 2d6 persistent fire",
+          "push": 5
+        },
+        "beside": {
+          "formula": "3d6 piercing + 2d6 persistent fire",
+          "push": 5
+        }
+      },
+      "persistent": [
+        "2d6 fire"
+      ],
+      "sustained": 2
+    }
+  }
+}

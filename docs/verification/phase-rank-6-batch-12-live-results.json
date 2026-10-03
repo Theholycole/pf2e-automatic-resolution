@@ -1,0 +1,21 @@
+{
+ "label": "rank6Batch12",
+ "passed": true,
+ "at": "2026-10-03T19:44:42.072Z",
+ "details": {
+  "batch12": {
+   "boots": {
+    "kind": "spell-note",
+    "note": "1 days"
+   },
+   "crusade": {
+    "kind": "spell-note",
+    "notes": [
+     "10 minutes",
+     "10 minutes"
+    ],
+    "tiers": true
+   }
+  }
+ }
+}

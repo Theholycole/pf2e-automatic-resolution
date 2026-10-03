@@ -1,0 +1,33 @@
+{
+  "label": "rank4Batch85",
+  "passed": true,
+  "at": "2026-10-03T02:07:37.590Z",
+  "details": {
+    "batch85": {
+      "radius": 15,
+      "casterExposed": false,
+      "start": [
+        {
+          "asked": true,
+          "fascinated": true,
+          "immune": true
+        },
+        {
+          "asked": true,
+          "fascinated": true,
+          "immune": true
+        }
+      ],
+      "walker": {
+        "asked": true,
+        "fascinated": true
+      },
+      "leftArea": {
+        "fascinated": false
+      },
+      "returned": {
+        "asked": false
+      }
+    }
+  }
+}

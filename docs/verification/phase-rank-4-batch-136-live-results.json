@@ -1,0 +1,48 @@
+{
+  "rank4Batch136": {
+    "label": "rank4Batch136",
+    "passed": true,
+    "at": "2026-10-03T14:22:31.829Z",
+    "details": {
+      "batch136": {
+        "shadow": {
+          "kind": "stance-strike",
+          "strike": {
+            "traits": "agile,grapple,reach,unarmed",
+            "damage": {
+              "dice": 1,
+              "die": "d4",
+              "damageType": "void",
+              "persistent": null,
+              "modifier": 0
+            },
+            "group": "brawling"
+          },
+          "dcRaise": 2,
+          "grapple": [
+            "action:grapple"
+          ]
+        },
+        "winds": {
+          "ended": 1,
+          "shadowGone": true,
+          "strike": {
+            "range": 30,
+            "ranged": true,
+            "traits": "agile,nonlethal,propulsive,unarmed",
+            "damage": {
+              "dice": 1,
+              "die": "d6",
+              "damageType": "bludgeoning",
+              "persistent": null,
+              "modifier": 0
+            }
+          },
+          "toggle": true,
+          "note": "wind-crash-attack",
+          "acRaise": 2
+        }
+      }
+    }
+  }
+}

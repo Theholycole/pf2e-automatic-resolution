@@ -1,0 +1,33 @@
+{
+  "label": "rank5Batch8",
+  "passed": true,
+  "at": "2026-10-02T13:38:12.805Z",
+  "details": {
+    "batch8": {
+      "rip2": {
+        "supported": true,
+        "lost": 39,
+        "drained": 1
+      },
+      "rip3": {
+        "supported": true,
+        "eligible": [
+          true,
+          false
+        ],
+        "drained": 1
+      },
+      "torrentLiving": {
+        "supported": true,
+        "lost": 40,
+        "swapped": null
+      },
+      "torrentUndead": {
+        "casterUndead": true,
+        "lost": 32,
+        "swapped": "vitality → void",
+        "card": true
+      }
+    }
+  }
+}

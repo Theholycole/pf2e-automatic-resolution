@@ -1,0 +1,27 @@
+{
+  "label": "rank2Batch67",
+  "passed": true,
+  "at": "2026-10-02T00:50:00.185Z",
+  "details": {
+    "batch67": {
+      "cast": {
+        "level": "automatic",
+        "voidHealing": true,
+        "aura": 30,
+        "light": 30,
+        "undeadLost": 1,
+        "farLost": 0
+      },
+      "sunlight": {
+        "card": true,
+        "degree": "criticalFailure",
+        "slowed": true
+      },
+      "fire": 5,
+      "sustain": {
+        "lost": 1,
+        "cards": 2
+      }
+    }
+  }
+}

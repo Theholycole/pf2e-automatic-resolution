@@ -1,0 +1,73 @@
+{
+  "batch": "cantrip-rank-1-batch-59",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch59",
+    "passed": true,
+    "details": {
+      "preciousGleam": {
+        "offered": [
+          [
+            "Club",
+            "Longsword"
+          ],
+          [
+            "Cold Iron",
+            "Silver"
+          ]
+        ],
+        "onCaster": false,
+        "selections": {
+          "weapon": "tZF7mAfBQrXU7AB5",
+          "preciousMaterial": "silver"
+        },
+        "sword": {
+          "dice": [
+            "1d6:precision"
+          ]
+        },
+        "materialAdjustments": 1,
+        "club": {
+          "dice": []
+        },
+        "duration": "{\"value\":1,\"unit\":\"rounds\",\"expiry\":\"turn-start\",\"sustained\":false}",
+        "everyHitNote": true,
+        "steelNote": true
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch59",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch39",
+      "passed": true,
+      "note": "earlier run in this batch"
+    },
+    {
+      "n": "rank1Batch1",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

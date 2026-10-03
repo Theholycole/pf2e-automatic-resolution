@@ -1,0 +1,57 @@
+{
+  "label": "rank4Batch73",
+  "passed": true,
+  "at": "2026-10-02T23:35:36.778Z",
+  "details": {
+    "batch73": {
+      "dc": 24,
+      "foes": [
+        {
+          "notes": [],
+          "speedRule": [],
+          "land": 25,
+          "prone": false,
+          "escapeHigh": 0,
+          "escapeLow": 0,
+          "escapeDc": null
+        },
+        {
+          "notes": [
+            "Hampered footsteps:1 rounds turn-end"
+          ],
+          "speedRule": [
+            "circumstance:-10"
+          ],
+          "land": 15,
+          "prone": false,
+          "escapeHigh": 0,
+          "escapeLow": 0,
+          "escapeDc": null
+        },
+        {
+          "notes": [
+            "Tethered:2 rounds turn-start"
+          ],
+          "speedRule": [],
+          "land": 25,
+          "prone": false,
+          "escapeHigh": 1,
+          "escapeLow": 0,
+          "escapeDc": 24
+        },
+        {
+          "notes": [
+            "Tethered:2 rounds turn-start"
+          ],
+          "speedRule": [],
+          "land": 25,
+          "prone": true,
+          "escapeHigh": 1,
+          "escapeLow": 0,
+          "escapeDc": 24
+        }
+      ],
+      "pull": true
+    }
+  }
+}

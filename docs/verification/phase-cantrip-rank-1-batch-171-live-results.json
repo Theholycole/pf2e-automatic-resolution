@@ -1,0 +1,64 @@
+{
+  "batch": 171,
+  "date": "2026-09-28",
+  "world": "pftest",
+  "system": "8.5.0",
+  "core": "14.367",
+  "module": "0.8.2",
+  "results": [
+    {
+      "case": "cr1Batch171",
+      "passed": true,
+      "details": {
+        "sceneFeatures": {
+          "shrubs1": {
+            "cover": "lesser",
+            "terrain": false,
+            "behaviors": 0,
+            "minutes": 1,
+            "unit": "minutes",
+            "removed": true
+          },
+          "shrubs3": {
+            "cover": "standard",
+            "terrain": true,
+            "difficulty": 2,
+            "minutes": 10
+          },
+          "house": {
+            "walls": 1,
+            "c": [
+              800,
+              1050,
+              1000,
+              1050
+            ],
+            "move": 20,
+            "sight": 0,
+            "rounds": 1,
+            "unit": "rounds",
+            "hardness": true,
+            "removed": true
+          },
+          "cage": {
+            "walls": 4,
+            "move": true,
+            "sight": true,
+            "light": [
+              1400,
+              1400,
+              20,
+              40
+            ],
+            "replaced": {
+              "walls": 4,
+              "oldGone": true,
+              "effects": 1
+            },
+            "removed": true
+          }
+        }
+      }
+    }
+  ]
+}

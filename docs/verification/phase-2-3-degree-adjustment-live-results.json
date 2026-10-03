@@ -1,0 +1,186 @@
+{
+  "generated": "2026-09-25T10:51:29.833Z",
+  "realClick": {
+    "answer": "applies",
+    "rolled": "criticalFailure",
+    "effective": "criticalFailure",
+    "finalizeEnabledAfterRoll": true
+  },
+  "results": [
+    {
+      "label": "timedStunned",
+      "passed": true,
+      "at": "2026-09-25T10:44:24.498Z",
+      "details": [
+        {
+          "name": "Synaptic Pulse",
+          "effect": "Synaptic Pulse: Stunned (can't act for 1 round)",
+          "remainingConditions": []
+        },
+        {
+          "name": "Pain of Ages",
+          "effect": "Pain of Ages: Stunned (can't act for 1 round)",
+          "remainingConditions": []
+        },
+        {
+          "name": "Dizzying Colors",
+          "effect": "Dizzying Colors: Stunned (can't act for 1 round)",
+          "remainingConditions": [
+            "blinded"
+          ]
+        },
+        {
+          "valued": 2,
+          "recovery": "stunned-actions"
+        }
+      ]
+    },
+    {
+      "label": "cleanup",
+      "passed": true,
+      "at": "2026-09-25T10:48:55.725Z",
+      "details": {
+        "actorsRemoved": 8,
+        "journalsRemoved": 4,
+        "remainingFixtureActors": 0
+      }
+    },
+    {
+      "label": "cleanup",
+      "passed": true,
+      "at": "2026-09-25T10:49:23.919Z",
+      "details": {
+        "actorsRemoved": 6,
+        "journalsRemoved": 0,
+        "remainingFixtureActors": 0
+      }
+    },
+    {
+      "label": "grittyWheeze",
+      "passed": true,
+      "at": "2026-09-25T10:49:34.254Z",
+      "details": {
+        "plant": {
+          "rolled": "success",
+          "effective": "failure",
+          "dazzled": true
+        },
+        "humanoid": {
+          "rolled": "criticalFailure",
+          "effective": "criticalFailure",
+          "dazzled": true
+        },
+        "cardNote": true
+      }
+    },
+    {
+      "label": "spiritualAnamnesis",
+      "passed": true,
+      "at": "2026-09-25T10:49:39.814Z",
+      "details": {
+        "blockedBefore": {
+          "ready": false,
+          "reason": "GM must confirm 2 degree adjustments: Does this apply: undead and creatures that have lived a previous life (such as celestials, fiends, monitors, and many other extraplanar creatures)?"
+        },
+        "targets": [
+          {
+            "answer": "applies",
+            "rolled": "success",
+            "effective": "success",
+            "slowed": true,
+            "stunned": 0
+          },
+          {
+            "answer": "not-applicable",
+            "rolled": "success",
+            "effective": "success",
+            "slowed": true,
+            "stunned": 0
+          }
+        ]
+      }
+    },
+    {
+      "label": "spiritualAnamnesis",
+      "passed": true,
+      "at": "2026-09-25T10:50:37.567Z",
+      "details": {
+        "blockedBefore": {
+          "ready": false,
+          "reason": "GM must confirm 2 degree adjustments: Does this apply: undead and creatures that have lived a previous life (such as celestials, fiends, monitors, and many other extraplanar creatures)?"
+        },
+        "targets": [
+          {
+            "answer": "applies",
+            "rolled": "criticalFailure",
+            "effective": "criticalFailure",
+            "slowed": true,
+            "slowedActive": false,
+            "stunned": 3
+          },
+          {
+            "answer": "not-applicable",
+            "rolled": "failure",
+            "effective": "failure",
+            "slowed": true,
+            "slowedActive": true,
+            "stunned": 0
+          }
+        ]
+      }
+    },
+    {
+      "label": "spiritualAnamnesis",
+      "passed": true,
+      "at": "2026-09-25T10:50:41.739Z",
+      "details": {
+        "blockedBefore": {
+          "ready": false,
+          "reason": "GM must confirm 2 degree adjustments: Does this apply: undead and creatures that have lived a previous life (such as celestials, fiends, monitors, and many other extraplanar creatures)?"
+        },
+        "targets": [
+          {
+            "answer": "applies",
+            "rolled": "failure",
+            "effective": "criticalFailure",
+            "slowed": true,
+            "slowedActive": false,
+            "stunned": 3
+          },
+          {
+            "answer": "not-applicable",
+            "rolled": "success",
+            "effective": "success",
+            "slowed": true,
+            "slowedActive": true,
+            "stunned": 0
+          }
+        ]
+      }
+    },
+    {
+      "label": "environment",
+      "passed": true,
+      "at": "2026-09-25T10:51:11.996Z",
+      "details": {
+        "foundry": "14.367",
+        "pf2e": "8.5.0",
+        "module": "0.8.2",
+        "world": "pftest",
+        "modules": [
+          "pf2e-automatic-resolution"
+        ]
+      }
+    },
+    {
+      "label": "cleanup",
+      "passed": true,
+      "at": "2026-09-25T10:51:12.681Z",
+      "details": {
+        "actorsRemoved": 15,
+        "journalsRemoved": 5,
+        "remainingFixtureActors": 0
+      }
+    }
+  ]
+}

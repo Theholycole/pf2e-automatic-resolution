@@ -1,0 +1,45 @@
+{
+  "label": "rank4Batch84",
+  "passed": true,
+  "at": "2026-10-03T01:46:39.415Z",
+  "details": {
+    "batch84": {
+      "casts": [
+        {
+          "rank": 5,
+          "shared": "8d6 mental",
+          "sharedTotal": 34,
+          "larger": "8d10 mental",
+          "largerTotal": 41,
+          "foes": [
+            {
+              "lost": 41,
+              "frightened": 0
+            },
+            {
+              "lost": 34,
+              "frightened": 0
+            },
+            {
+              "lost": 82,
+              "frightened": 1
+            }
+          ]
+        },
+        {
+          "rank": 4,
+          "shared": "6d6 mental",
+          "sharedTotal": 25,
+          "larger": "6d10 mental",
+          "largerTotal": 35,
+          "foes": [
+            {
+              "lost": 35,
+              "frightened": 0
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "batch": "cantrip-rank-1-batch-8",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch8",
+    "passed": true,
+    "at": "2026-09-27T11:36:16.143Z",
+    "details": {
+      "sanctuary": {
+        "target": {
+          "name": "Spell Note: Sanctuary",
+          "rules": 0,
+          "duration": {
+            "value": 1,
+            "unit": "minutes",
+            "sustained": false
+          },
+          "area": false,
+          "text": 712
+        },
+        "caster": false,
+        "refused": "Sanctuary: target at most 1 creature (1 creature).",
+        "card": "<h3>Sanctuary — note</h3><p>Note Effect on <strong>PFTEST P23 Affliction sanctuary target</strong> (1 minute).</p><p><em>The module doesn't enforce this spell's rules; resolve them at the table.</em></p>"
+      },
+      "wallOfShrubs": {
+        "caster": {
+          "name": "Spell Note: Wall of Shrubs (area)",
+          "rules": 0,
+          "duration": {
+            "value": 1,
+            "unit": "minutes",
+            "sustained": false
+          },
+          "area": true,
+          "text": 398
+        },
+        "card": "<h3>Wall of Shrubs — note</h3><p><strong>GM:</strong> mark Wall of Shrubs's area on the map; the module doesn't track it.</p><p>Note Effect on <strong>PFTEST P23 Affliction Wall of Shrubs caster</strong> (1 minute).</p><p><em>The module doesn't enforce this spell's rules; resolve them at the table.</em></p>"
+      },
+      "summonAnimal": {
+        "name": "Spell Note: Summon Animal",
+        "rules": 0,
+        "duration": {
+          "value": 1,
+          "unit": "minutes",
+          "sustained": true
+        },
+        "area": false,
+        "text": 332
+      },
+      "shareLore": {
+        "name": "Spell Note: Share Lore",
+        "rules": 0,
+        "duration": {
+          "value": 1,
+          "unit": "hours",
+          "sustained": false
+        },
+        "area": false,
+        "text": 384,
+        "all": true,
+        "heightened": true
+      },
+      "sigil": {
+        "name": "Spell Note: Sigil (area)",
+        "rules": 0,
+        "duration": {
+          "value": -1,
+          "unit": "unlimited",
+          "sustained": false
+        },
+        "area": true,
+        "text": 663
+      },
+      "detectMagic": {
+        "effect": false,
+        "created": 0,
+        "card": "<h3>Detect Magic — note</h3><p>Instantaneous: nothing to track.</p><p><em>The module doesn't enforce this spell's rules; resolve them at the table.</em></p>"
+      }
+    }
+  },
+  "regressions": [
+    {
+      "n": "rank1Batch6",
+      "passed": true
+    },
+    {
+      "n": "rank1Batch10",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch6",
+      "passed": true
+    },
+    {
+      "n": "foodHealing",
+      "passed": true
+    }
+  ],
+  "cleanup": {
+    "passed": true,
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

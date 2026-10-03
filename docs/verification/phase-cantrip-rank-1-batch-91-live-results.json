@@ -1,0 +1,47 @@
+{
+  "batch": "cantrip-rank-1-batch-91",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch91",
+    "passed": true,
+    "details": {
+      "yes": {
+        "refusedFirst": true,
+        "formula": "1d4 fire + 1 persistent fire",
+        "total": 3,
+        "lost": 3,
+        "persistent": [
+          "1 fire"
+        ]
+      },
+      "no": {
+        "refusedFirst": true,
+        "formula": "1d4 cold",
+        "total": 1,
+        "lost": 1,
+        "persistent": []
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch91",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

@@ -1,0 +1,2090 @@
+{
+  "baseline": "PF2e 8.5.0",
+  "releaseCommit": "3601a90ce232134c590d9641df9b62a7254aee6d",
+  "status": "Milestone membership settled by evidence and explicit user decisions: 43 included; 123 excluded (including Recall Past Life by provisional project ruling); Aspirational State skipped as one unverified exception.",
+  "counts": {
+    "included": 43,
+    "excluded": 123,
+    "skipped": 1,
+    "unresolved": 0
+  },
+  "rituals": [
+    {
+      "id": "me5E8UvbBrHe3dZh",
+      "name": "Amity Cycle",
+      "relativePath": "spells/rituals/amity-cycle.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Performance grants social bonuses and temporary HP; backlash blocks emotion bonuses.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/amity-cycle.json"
+      ],
+      "sourceGitBlobSha1": "f63471162218727ca9affeb6d5ba80f35119ab7b"
+    },
+    {
+      "id": "joEruBVz31Uxczzq",
+      "name": "Angelic Messenger",
+      "relativePath": "spells/rituals/angelic-messenger.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Planar travel outcomes have no saves; hazardous destination alone does not qualify.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/angelic-messenger.json"
+      ],
+      "sourceGitBlobSha1": "67679d345bafc74ad9a1eaf0bd5cb65e6189f884"
+    },
+    {
+      "id": "X0t0gr7S7CeCt2Q5",
+      "name": "Anima Invocation (Modified)",
+      "relativePath": "spells/rituals/anima-invocation-modified.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Save bonuses, resistance, Strike benefits and doomed backlash do not require saves.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/anima-invocation-modified.json"
+      ],
+      "sourceGitBlobSha1": "4b496e908c3633387c8549a52a2c7da5787bfef4"
+    },
+    {
+      "id": "sLzPzk7DJnfuORJ0",
+      "name": "Animate Object",
+      "relativePath": "spells/rituals/animate-object.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Creature creation only; independent construct abilities and hostile attacks excluded.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/animate-object.json"
+      ],
+      "sourceGitBlobSha1": "21be68ba77b4fd8b600a9c0e71df5662f86c3c62"
+    },
+    {
+      "id": "LmtwcpYmrJfhGIZY",
+      "name": "Antimagic Artifice",
+      "relativePath": "spells/rituals/antimagic-artifice.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Antimagic suppression and fixed, irreducible stupefied backlash; no saving throw.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/antimagic-artifice.json"
+      ],
+      "sourceGitBlobSha1": "0e325084fd4d3b5c3aae6acaea52aef1e9301e1e"
+    },
+    {
+      "id": "dL3A7H4LlRH26Imo",
+      "name": "Arcane Weaving",
+      "relativePath": "spells/rituals/arcane-weaving.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Repertoire exchange and fixed stupefied backlash; later spellcasting excluded.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/arcane-weaving.json"
+      ],
+      "sourceGitBlobSha1": "6f1b5e5251aa6cd2b16a4010b61d403447990251"
+    },
+    {
+      "id": "WfImUYSXyW3YdyY9",
+      "name": "Army of Shadows",
+      "relativePath": "spells/rituals/army-of-shadows.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Light counteraction and fixed blindness backlash; counteract checks are not saves.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/army-of-shadows.json"
+      ],
+      "sourceGitBlobSha1": "31464cc60c848e16c809ee0deade9cb23798a72d"
+    },
+    {
+      "id": "QqMlN9VSHfD2v4Qv",
+      "name": "Ash-Strewn Ending",
+      "relativePath": "spells/rituals/ash-strewn-ending.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Grants bonuses/penalties against death effects and recovery checks, not saving throws caused by ritual.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/ash-strewn-ending.json"
+      ],
+      "sourceGitBlobSha1": "be4fdb566698c054171eb20ea2274412b4f98c42"
+    },
+    {
+      "id": "NeyyAPwa639WjYGG",
+      "name": "Asmodean Wager",
+      "relativePath": "spells/rituals/asmodean-wager.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "All bettors must participate willingly; life stake explicitly has no save. Promise stake imports Geas, whose willing application has no save and whose sickened cannot be removed by recovery saves. Ninth rank merely allows unwilling targets in ordinary Geas; Wager forbids coerced participants.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/asmodean-wager.json",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/geas.json"
+      ],
+      "sourceGitBlobSha1": "27574385cb16fb61e0ddcb6b403255c0c700a0c2"
+    },
+    {
+      "id": "wrm1zIiLyFD1Is6h",
+      "name": "Aspirational State",
+      "relativePath": "spells/rituals/aspirational-state.json",
+      "status": "skipped",
+      "basis": "user-approved-unverified-exception",
+      "reason": "User confirmed they do not have the missing source and explicitly instructed: no. skip that. Aspiration Points rules on page 7 of PFS #2-22 Excising Ruination (PZOPFS0222E) remain unavailable. Omitted from this milestone by accepted exception, not classified as rule-proven excluded.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/aspirational-state.json"
+      ],
+      "sourceGitBlobSha1": "a8f3c060a582cb3616a8652a0ebba486ffa6cb21",
+      "decision": {
+        "authority": "user",
+        "date": "2026-09-19",
+        "sourceVerified": false,
+        "revisitWhen": "The Aspiration Points rules become available and the user restores this item to scope."
+      }
+    },
+    {
+      "id": "4Cntq9odgW6xMpAs",
+      "name": "Astral Projection",
+      "relativePath": "spells/rituals/astral-projection.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "Astral-form death requires Fortitude save to avoid actual death.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/astral-projection.json"
+      ],
+      "sourceGitBlobSha1": "676d273e5e84ca381b96ce5b856a37053c33de8e"
+    },
+    {
+      "id": "7Fd4lxozd11MQ55N",
+      "name": "Atone",
+      "relativePath": "spells/rituals/atone.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Atonement restores abilities or expels target from faith, no save.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/atone.json"
+      ],
+      "sourceGitBlobSha1": "3b10ab17b4047a9ef032c136c782c84c572e5147"
+    },
+    {
+      "id": "B4dDkYsHFo1H0CIF",
+      "name": "Awaken Animal",
+      "relativePath": "spells/rituals/awaken-animal.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Intelligence awakening and creature attitude changes; independent creature abilities excluded.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/awaken-animal.json"
+      ],
+      "sourceGitBlobSha1": "e9170ed8fda2b7e54430fc77719feb6f3206a79e"
+    },
+    {
+      "id": "6P2fzrYkaiiptxlY",
+      "name": "Awaken Curse",
+      "relativePath": "spells/rituals/awaken-curse.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "Awakened curse leaps to nearby targets on counteraction, explicitly requiring initial curse saves.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/awaken-curse.json"
+      ],
+      "sourceGitBlobSha1": "1cf8fa1c609babbd15ff141e1def34c9ddbbbedc"
+    },
+    {
+      "id": "9lz67JCNCLDfIEy3",
+      "name": "Awaken Object",
+      "relativePath": "spells/rituals/awaken-object.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Object awareness or trapped intellect in unconscious body; later Animate Object is separate ritual.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/awaken-object.json"
+      ],
+      "sourceGitBlobSha1": "13e28154269b62d2ed5a97097762ef4d2fa2740e"
+    },
+    {
+      "id": "AkF4yFcSCdhoULyZ",
+      "name": "Awaken Portal",
+      "relativePath": "spells/rituals/awaken-portal.json",
+      "status": "included",
+      "basis": "referenced-effect",
+      "reason": "Can awaken Teleportation Circle, whose active portal forces unwilling entrants to attempt Will saves, repeated at turn end.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/awaken-portal.json",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/teleportation-circle.json"
+      ],
+      "sourceGitBlobSha1": "e1f5cbea2e2c4907d066600aaa8b4f04c3e6caa5"
+    },
+    {
+      "id": "s0SerOrkkUd7SAH9",
+      "name": "Bacchanalia",
+      "relativePath": "spells/rituals/bacchanalia.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Celebrants fascinated with ordinary hostile-action ending; no saving throw specified.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/bacchanalia.json"
+      ],
+      "sourceGitBlobSha1": "83cceee6925e5a9f9a3067e47e62e91542d2df8e"
+    },
+    {
+      "id": "q9QGc0PJMFWxFOCz",
+      "name": "Band of Heroes",
+      "relativePath": "spells/rituals/band-of-heroes.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Mythic Aid bonuses or loss of points; recovery checks are not saves.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/band-of-heroes.json"
+      ],
+      "sourceGitBlobSha1": "8e35fadec121d4b2d3188641a99d88e944efe78c"
+    },
+    {
+      "id": "bRW61IbjaFea0wcv",
+      "name": "Bathe in Blood",
+      "relativePath": "spells/rituals/bathe-in-blood.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Rejuvenation or automatic death; no save.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/bathe-in-blood.json"
+      ],
+      "sourceGitBlobSha1": "659c6d9a767e226e868894af07271b48790364fe"
+    },
+    {
+      "id": "DPjhtfAjFQVQwZH2",
+      "name": "Beckon the Blasphemous Brethren",
+      "relativePath": "spells/rituals/beckon-the-blasphemous-brethren.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Summons venedaemon; its service or hostile actions are independent creature abilities.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/beckon-the-blasphemous-brethren.json"
+      ],
+      "sourceGitBlobSha1": "657e615cc9a497b4caba5bc3c2cdc5ade107d257"
+    },
+    {
+      "id": "2ykmAVKrsAWcazcC",
+      "name": "Binding Circle",
+      "relativePath": "spells/rituals/binding-circle.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "Unwilling extraplanar creature attempts Will save to remain on home plane.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/binding-circle.json"
+      ],
+      "sourceGitBlobSha1": "0385bdfa38319ea89d63d3b6928a00a46870cff2"
+    },
+    {
+      "id": "7yWXx3qC4eFNHhxD",
+      "name": "Blight",
+      "relativePath": "spells/rituals/blight.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Crop alteration/counteraction and GM-directed plant changes; no concrete save effect.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/blight.json"
+      ],
+      "sourceGitBlobSha1": "79e89927432de5726364200ea5de5e28b172e32e"
+    },
+    {
+      "id": "LEMfFL551YB120RN",
+      "name": "Blunt the Final Blade",
+      "relativePath": "spells/rituals/blunt-the-final-blade.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Soul liberation and save bonus; critical failure releases attacking gray death, an independent created creature.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/blunt-the-final-blade.json"
+      ],
+      "sourceGitBlobSha1": "cdac06276676d62ff8ee158b3aeede63aed873be"
+    },
+    {
+      "id": "aYn7Xgrz4vIMNeIc",
+      "name": "Bonding Meal",
+      "relativePath": "spells/rituals/bonding-meal.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Memory sharing and social-check adjustments; no save.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/bonding-meal.json"
+      ],
+      "sourceGitBlobSha1": "be8e89075f28b78a12e7d3ede4cf7225639b3743"
+    },
+    {
+      "id": "mlK8r1P2eszyfkGz",
+      "name": "Borrow Time",
+      "relativePath": "spells/rituals/borrow-time.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Time suspension, repayment and aging; no save.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/borrow-time.json"
+      ],
+      "sourceGitBlobSha1": "6c7afbf554eb301e65f2bb0cca8bd837e995a467"
+    },
+    {
+      "id": "SnBc7Gl5VormWzS1",
+      "name": "Bountiful Oasis",
+      "relativePath": "spells/rituals/bountiful-oasis.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Unspecified sickening water and disease exposure do not establish a mechanical condition or required save; general environmental and GM-imposed consequences alone do not qualify.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/bountiful-oasis.json"
+      ],
+      "sourceGitBlobSha1": "7c504c829a5566c95bccfafe2fbd82481dba8a65"
+    },
+    {
+      "id": "wneYzMFUWreyqWHD",
+      "name": "Butterfly Bender",
+      "relativePath": "spells/rituals/butterfly-bender.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Destiny-driven story outcomes, items, contacts and skill modifiers; intoxication description does not define poison saves.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/butterfly-bender.json"
+      ],
+      "sourceGitBlobSha1": "2e4cac5c412c49e25c1f09426f3edb8f29f582de"
+    },
+    {
+      "id": "gsYEuWv04XTDxe91",
+      "name": "Call Spirit",
+      "relativePath": "spells/rituals/call-spirit.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "Unwilling spirit attempts Will save to resist call.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/call-spirit.json"
+      ],
+      "sourceGitBlobSha1": "d0e82a519afe923e074348ac7d87db99bdcf36b3"
+    },
+    {
+      "id": "9WMEO6JEcAulgUv3",
+      "name": "City of Sin",
+      "relativePath": "spells/rituals/city-of-sin.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Save modifiers and behavioral alteration, without a save against ritual.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/city-of-sin.json"
+      ],
+      "sourceGitBlobSha1": "3176a9317e2052de5b065a18b0809777ec9c2e1f"
+    },
+    {
+      "id": "pZr1xrCpaSu6qrXU",
+      "name": "Clone",
+      "relativePath": "spells/rituals/clone.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Clone creation and fixed post-revival conditions; no saves.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/clone.json"
+      ],
+      "sourceGitBlobSha1": "d1b4f68ae89237760dcb752811a5354a08f38742"
+    },
+    {
+      "id": "LN7bFOw8PFs5Q5rD",
+      "name": "Cloudborne Haven",
+      "relativePath": "spells/rituals/cloudborne-haven.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Falling-structure consequences are general environmental handling; no explicit ritual save identified.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/cloudborne-haven.json"
+      ],
+      "sourceGitBlobSha1": "07df55629bce3bde7e1054506af47032b9eae4bd"
+    },
+    {
+      "id": "hp6Q64dl7xbdn4gQ",
+      "name": "Collective Memories",
+      "relativePath": "spells/rituals/collective-memories.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Information gathering or one-week unresponsiveness; no save.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/collective-memories.json"
+      ],
+      "sourceGitBlobSha1": "85d026aa89c0bfaa7dc026d34c18e234ed042e62"
+    },
+    {
+      "id": "7DN13ILADW2N9Z1t",
+      "name": "Commune",
+      "relativePath": "spells/rituals/commune.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Information and fixed stupefied backlash; no save.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/commune.json"
+      ],
+      "sourceGitBlobSha1": "b32637644d445c0e2ac44baa402d409481d7c8a5"
+    },
+    {
+      "id": "zIAvj7V6BTuQMAIi",
+      "name": "Commune with Corazal",
+      "relativePath": "spells/rituals/commune-with-corazal.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Information, granted navigation spell, drained/stupefied and recovery flat check; flat check not save.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/commune-with-corazal.json"
+      ],
+      "sourceGitBlobSha1": "db7d40b797790dd3042d7e4f1f859004a37b6695"
+    },
+    {
+      "id": "oND3oFBjxrhyVvyG",
+      "name": "Community Repair",
+      "relativePath": "spells/rituals/community-repair.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Repair and save/speed bonuses or penalties; no required save.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/community-repair.json"
+      ],
+      "sourceGitBlobSha1": "dce4fb6ddeb4fa03e6bb5f3804b68aa2fbe1d021"
+    },
+    {
+      "id": "ehd9PtifLMwjk4ep",
+      "name": "Concealment's Curtain",
+      "relativePath": "spells/rituals/concealments-curtain.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Vision suppression, blindness and direct heightened damage lack saves; cited cleansing spells are remedies, not produced effects.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/concealments-curtain.json"
+      ],
+      "sourceGitBlobSha1": "bb79a190b9a2e32d8c287465a1550e8a551159b5"
+    },
+    {
+      "id": "dobuPIfpDHjIq8DP",
+      "name": "Confound the Eye and Confuse the Mind",
+      "relativePath": "spells/rituals/confound-the-eye-and-confuse-the-mind.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "Recognizing disguised spell explicitly requires Will save.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/confound-the-eye-and-confuse-the-mind.json"
+      ],
+      "sourceGitBlobSha1": "68897be72428e3ebe5360c27cc1a0c955537c9f4"
+    },
+    {
+      "id": "Dbd5W6G8U2vzWolN",
+      "name": "Consecrate",
+      "relativePath": "spells/rituals/consecrate.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Bonuses/penalties; heightened Planar Seal only counteracts teleportation, no save.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/consecrate.json",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/spells/rank-7/planar-seal.json"
+      ],
+      "sourceGitBlobSha1": "ffd3d54904504cb77bff8117840d4a76d85daf38"
+    },
+    {
+      "id": "Pp88ueeq4AlkaL6g",
+      "name": "Construct Mindscape",
+      "relativePath": "spells/rituals/construct-mindscape.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Remastered Mindscape Statistics and its Finite, Metamorphic, and Subjective Gravity traits establish no saving throw. Ritual creation/entry and veiling impose no specified save; possible environmental consequences and optional GM inventions remain outside the accepted inclusion policy.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/construct-mindscape.json",
+        "https://2e.aonprd.com/Rituals.aspx?ID=231",
+        "https://2e.aonprd.com/Rules.aspx?ID=3513",
+        "https://2e.aonprd.com/Traits.aspx?ID=603",
+        "https://2e.aonprd.com/Traits.aspx?ID=649",
+        "https://2e.aonprd.com/Traits.aspx?ID=705"
+      ],
+      "sourceGitBlobSha1": "5423dd860ba33db13ffc981c4d233eda24944700"
+    },
+    {
+      "id": "9vDmTCHyAWdWWPIs",
+      "name": "Contact Friends",
+      "relativePath": "spells/rituals/contact-friends.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Information and fixed stupefied backlash; no save.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/contact-friends.json"
+      ],
+      "sourceGitBlobSha1": "ceb82b560e62b8e591de121e3424308965819d40"
+    },
+    {
+      "id": "XkDCzMIyc0YOjw05",
+      "name": "Control Weather",
+      "relativePath": "spells/rituals/control-weather.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "General weather hazards do not qualify the ritual; no explicit ritual save identified.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/control-weather.json",
+        "https://2e.aonprd.com/Rules.aspx?ID=994"
+      ],
+      "sourceGitBlobSha1": "b5d0f1aaea7ef82ad4172be68b578a42887f959c"
+    },
+    {
+      "id": "WRmh1aKEo0dI0NJs",
+      "name": "Corpse Communion",
+      "relativePath": "spells/rituals/corpse-communion.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Unspecified GM-discretion affliction exposure does not establish a required ritual save.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/corpse-communion.json"
+      ],
+      "sourceGitBlobSha1": "797a573c30ec78980c3359f3ba4f67fc0cf9f5bc"
+    },
+    {
+      "id": "ZwwIUavMbEwcZz35",
+      "name": "Create Demiplane",
+      "relativePath": "spells/rituals/create-demiplane.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Planar traits can cause eventual drowning or suffocation saves, but these are excluded general environmental consequences.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/create-demiplane.json",
+        "https://2e.aonprd.com/Rules.aspx?ID=2263",
+        "https://2e.aonprd.com/Rules.aspx?ID=3014"
+      ],
+      "sourceGitBlobSha1": "6db708d3fc5bf5d92ecebb33924350d7fd809cf3"
+    },
+    {
+      "id": "6nPc5CPRUbSSRDP1",
+      "name": "Create Mycoguardian",
+      "relativePath": "spells/rituals/create-mycoguardian.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Fungus creation; independent created-creature abilities excluded.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/create-mycoguardian.json"
+      ],
+      "sourceGitBlobSha1": "b7edea9465bbcd69ab07ebe3033cf4722f90f666"
+    },
+    {
+      "id": "NCUXsaj2yFxOVhrK",
+      "name": "Create Skinstitch",
+      "relativePath": "spells/rituals/create-skinstitch.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Construct creation; independent created-creature abilities excluded.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/create-skinstitch.json"
+      ],
+      "sourceGitBlobSha1": "3abdbaa58074432acc0c995c8ab534cf4d0f3cf4"
+    },
+    {
+      "id": "c3b6LdLlQDPngNIb",
+      "name": "Create Undead",
+      "relativePath": "spells/rituals/create-undead.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Undead creation; independent created-creature abilities excluded.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/create-undead.json"
+      ],
+      "sourceGitBlobSha1": "e7a0f3203f151b9bf236ccb5b3c5097067003eab"
+    },
+    {
+      "id": "CGB3a9gJU5S8gjKk",
+      "name": "Curse of Calamity",
+      "relativePath": "spells/rituals/curse-of-calamity.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Fortune penalties and GM-adjudicated accidents; no concrete saving throw or inherited effect.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/curse-of-calamity.json"
+      ],
+      "sourceGitBlobSha1": "e1da7d193ae454e94d7f97abe094b350c69d98dd"
+    },
+    {
+      "id": "Vpohy4XH1DaH95hT",
+      "name": "Daemonic Pact",
+      "relativePath": "spells/rituals/daemonic-pact.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Daemon service and drained backlash; independent creature abilities excluded.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/daemonic-pact.json"
+      ],
+      "sourceGitBlobSha1": "e2a5054bfda348b24aa5ea8af0d65db2a1f9292c"
+    },
+    {
+      "id": "tsKnoBuBbKMXkiz5",
+      "name": "Demonic Pact",
+      "relativePath": "spells/rituals/demonic-pact.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Demon service/hostility; independent creature abilities excluded.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/demonic-pact.json"
+      ],
+      "sourceGitBlobSha1": "72a6e44881d73a5bc09a345af7c7f60cd99b0f4f"
+    },
+    {
+      "id": "dQGn0eAyvYMDdj0h",
+      "name": "Destroy Mindscape",
+      "relativePath": "spells/rituals/destroy-mindscape.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Mindscape destruction, displacement and drained; unspecified separate escape challenges are not ritual saves.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/destroy-mindscape.json"
+      ],
+      "sourceGitBlobSha1": "fa296f76afa33fda24064076115bae10bcef99c3"
+    },
+    {
+      "id": "30BBep9U4BDV0EgQ",
+      "name": "Diabolic Pact",
+      "relativePath": "spells/rituals/diabolic-pact.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Devil service and patron displeasure; independent creature abilities excluded.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/diabolic-pact.json"
+      ],
+      "sourceGitBlobSha1": "420203993aad43817f83a2af5db92df772b48dc5"
+    },
+    {
+      "id": "D8cWhrzcsd43OlIX",
+      "name": "Div Pact",
+      "relativePath": "spells/rituals/div-pact.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Div service or suppression of innate spells; independent abilities excluded.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/div-pact.json"
+      ],
+      "sourceGitBlobSha1": "9cec6a7c14510c2585b9990df420fe00d3060b5e"
+    },
+    {
+      "id": "xKHq2Eisapixvj6q",
+      "name": "Divine Keystone",
+      "relativePath": "spells/rituals/divine-keystone.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Undead ward/invisibility or undead regeneration; no save.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/divine-keystone.json"
+      ],
+      "sourceGitBlobSha1": "bda8468097e659225ce41555958113b7477c573d"
+    },
+    {
+      "id": "Jte2jlX59a1yQPp8",
+      "name": "Drain Planar Connection",
+      "relativePath": "spells/rituals/drain-planar-connection.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "Failure and critical failure force DC26 basic Reflex save against force backlash.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/drain-planar-connection.json"
+      ],
+      "sourceGitBlobSha1": "d6ba8be1005213d8923b1a92514790cc31a1258e"
+    },
+    {
+      "id": "1QMjWGq1DPOQr4VL",
+      "name": "Dread Ambience",
+      "relativePath": "spells/rituals/dread-ambience.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Save penalties only; no ritual-caused saving throw.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/dread-ambience.json"
+      ],
+      "sourceGitBlobSha1": "a9e3d76a42d22733599bf356c4af5c3a1fee6b49"
+    },
+    {
+      "id": "rOwOLlfVgLMg1FND",
+      "name": "Elemental Sentinel",
+      "relativePath": "spells/rituals/elemental-sentinel.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Sentinel sensing/reporting only, not offensive elemental abilities.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/elemental-sentinel.json"
+      ],
+      "sourceGitBlobSha1": "dc7e62abb24222027c63fd9f7e11a37d6885adf1"
+    },
+    {
+      "id": "5NReCnDFFuThEAHB",
+      "name": "Elemental Servitor",
+      "relativePath": "spells/rituals/elemental-servitor.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Calls a servitor; any subsequent creature attacks or abilities are independent, and unspecified divine displeasure supplies no mandated save.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/elemental-servitor.json"
+      ],
+      "sourceGitBlobSha1": "9de41da544e466d5e820d44eb571b292df934d61"
+    },
+    {
+      "id": "HBxsMKXzZM0HviEE",
+      "name": "Embodied Font",
+      "relativePath": "spells/rituals/embodied-font.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Restores body and resources; failure imposes fixed-duration clumsy, drained, doomed, and enfeebled without a save or recovery save.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/embodied-font.json"
+      ],
+      "sourceGitBlobSha1": "1e4bffc2853df304106ff07097d4483953b8fcfd"
+    },
+    {
+      "id": "XnpRRUVAVoY6z88H",
+      "name": "Empower Ley Line",
+      "relativePath": "spells/rituals/empower-ley-line.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Enhances a ley line and inherits its backlash on critical failure. All five published sample backlashes have no save (conditions, persistent damage, blink displacement, casting cost). Custom backlash is not a baseline qualifying rule.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/empower-ley-line.json",
+        "https://2e.aonprd.com/Rules.aspx?ID=1531",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/actions/subsystems/ley-lines/tap-ley-line.json"
+      ],
+      "sourceGitBlobSha1": "07bf7c77e3a431474dfcbcb249ae2981a090a866"
+    },
+    {
+      "id": "BNkgZi1bcQcVmBHp",
+      "name": "Encroaching Woods",
+      "relativePath": "spells/rituals/encroaching-woods.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Moves and conceals a forest; critical failure directly petrifies as wood without a save; counteraction is not a saving throw.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/encroaching-woods.json"
+      ],
+      "sourceGitBlobSha1": "b8cbf22dfd979012fe06842ad8c00d331262b953"
+    },
+    {
+      "id": "Do0pe0gn8OFdCOnN",
+      "name": "Entreat Thunderbird",
+      "relativePath": "spells/rituals/entreat-thunderbird.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Changes thunderbird attitude; no save in any result.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/entreat-thunderbird.json"
+      ],
+      "sourceGitBlobSha1": "d6dfc98fe927a0a15f42da7715f6aa699979a3e3"
+    },
+    {
+      "id": "1aXX52MnVbBvT9S7",
+      "name": "Establish Nexus",
+      "relativePath": "spells/rituals/establish-nexus.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Creates nexus; critical failure inherits ley-line backlashes. None of the five published sample backlashes requires a save. Custom lines require separate assessment.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/establish-nexus.json",
+        "https://2e.aonprd.com/Rules.aspx?ID=1531",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/actions/subsystems/ley-lines/tap-ley-line.json"
+      ],
+      "sourceGitBlobSha1": "c61c09fc22f6ab7998b60431cdb2ecab53092e16"
+    },
+    {
+      "id": "hdzyDrRdHSse88XM",
+      "name": "Extract Brain",
+      "relativePath": "spells/rituals/extract-brain.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Removes brain, with mandatory body death and possible hostile entity; no saving throw, including heightened golem options.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/extract-brain.json"
+      ],
+      "sourceGitBlobSha1": "b8c58209c0ab3f37f177b8c5c3a5cc1c1e5de559"
+    },
+    {
+      "id": "nA0XlPsnMNrQMpio",
+      "name": "Fantastic Facade",
+      "relativePath": "spells/rituals/fantastic-facade.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Disbelief uses non-save checks by default. A GM substitution of a save alone does not qualify the ritual.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/fantastic-facade.json",
+        "https://2e.aonprd.com/Rules.aspx?ID=2221",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/spells/rank-1/illusory-disguise.json"
+      ],
+      "sourceGitBlobSha1": "d047f8f6f611f1c6ee314b1530c7c0a331da01d7"
+    },
+    {
+      "id": "bS3DW0MptpnZl5Zr",
+      "name": "Feast of Supplication",
+      "relativePath": "spells/rituals/feast-of-supplication.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Cooking contest adjusts patron requests and attitudes; no save or recovery-save condition.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/feast-of-supplication.json"
+      ],
+      "sourceGitBlobSha1": "19216bf8c57acdc5622cb52c0169eed30525b710"
+    },
+    {
+      "id": "GzlVI3qYdCtUigLz",
+      "name": "Fey Abeyance",
+      "relativePath": "spells/rituals/fey-abeyance.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Cold iron ward and bell squares deal nonlethal mental damage without a save; mischievous fey encounter on failure is independent.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/fey-abeyance.json"
+      ],
+      "sourceGitBlobSha1": "57e2ba40d485b69058f132d541513d563916fbf6"
+    },
+    {
+      "id": "QGfVFyQhoalZbE9s",
+      "name": "Footholds and Foothills",
+      "relativePath": "spells/rituals/footholds-and-foothills.json",
+      "status": "included",
+      "basis": "referenced-effect",
+      "reason": "Remove mode explicitly offers Grab an Edge to creatures on destroyed terrain. That referenced action permits an Acrobatics check or Reflex save, so a legal ritual-resolution choice is save-bearing.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/footholds-and-foothills.json",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/actions/basic/grab-an-edge.json"
+      ],
+      "sourceGitBlobSha1": "bdc3164f5298be3a5ae7ba4b24457fbf809adc96"
+    },
+    {
+      "id": "FKtPRWcs4zhwn9N1",
+      "name": "Form of the Sandpoint Devil",
+      "relativePath": "spells/rituals/form-of-the-sandpoint-devil.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Grants transformation and separately activated Accursed Breath; generated creatures on failure act independently. No ritual-imposed save apart from excluded independent later abilities.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/form-of-the-sandpoint-devil.json"
+      ],
+      "sourceGitBlobSha1": "1b872dc6aeefe583540e18d005168d0e5ea21418"
+    },
+    {
+      "id": "yRf59eFtZ50cGlem",
+      "name": "Fortifying Brew",
+      "relativePath": "spells/rituals/fortifying-brew.json",
+      "status": "included",
+      "basis": "condition-recovery",
+      "reason": "Critical failure imposes sickened 4 and prohibits reduction for 12 hours. After that lock expires normal sickened Fortitude recovery applies; restorative referenced spells counteract rather than force saves.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/fortifying-brew.json",
+        "https://2e.aonprd.com/Conditions.aspx?ID=91",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/spells/rank-2/cleanse-affliction.json",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/spells/rank-2/clear-mind.json",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/spells/rank-2/sound-body.json"
+      ],
+      "sourceGitBlobSha1": "1688f87f0903303e9fc633f9d3e7c20e78627aba"
+    },
+    {
+      "id": "4ddJSjC9Zz5DX0oG",
+      "name": "Freedom",
+      "relativePath": "spells/rituals/freedom.json",
+      "status": "included",
+      "basis": "referenced-effect",
+      "reason": "Critical failure applies the target imprisonment/stasis magic to casters. For an Imprisonment Chains target, the inherited effect requires later Will saves by creatures approaching or freeing those imprisoned.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/freedom.json",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/imprisonment.json"
+      ],
+      "sourceGitBlobSha1": "3c24bd48dfc343a16003203957823ebc93a30fde"
+    },
+    {
+      "id": "nEXkk85BQu1cREa4",
+      "name": "Garden of Death",
+      "relativePath": "spells/rituals/garden-of-death.json",
+      "status": "included",
+      "basis": "referenced-effect",
+      "reason": "Critical failure explicitly inflicts bites by the most poisonous local creature on each caster; this is the ritual outcome, not independently chosen later monster activity. A legal viper bite exposes to venom with Fortitude saves. Exact local creature/poison is GM input; affliction progression delegated.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/garden-of-death.json",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/pathfinder-monster-core/viper.json"
+      ],
+      "sourceGitBlobSha1": "e3d54feab1b39eb78e74b0b1293baf271f856e7a"
+    },
+    {
+      "id": "nzbnTqHgNKiGZkrZ",
+      "name": "Gathering Call",
+      "relativePath": "spells/rituals/gathering-call.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Voluntary sanctuary return or misdirected planar travel; no saving throw.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/gathering-call.json"
+      ],
+      "sourceGitBlobSha1": "0d37d9ead268b0799b6e2e2ed72461317a6b9072"
+    },
+    {
+      "id": "Q690d3mw3TUrKX7E",
+      "name": "Geas",
+      "relativePath": "spells/rituals/geas.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "Rank 5 and higher allow unwilling targets and explicitly grant Will saves. Its sickened condition cannot be reduced except by compliance, so that is not a separate recovery-save path.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/geas.json"
+      ],
+      "sourceGitBlobSha1": "9bb42bdd2292042dc2cc2fa537e0d1ae3c0e1e32"
+    },
+    {
+      "id": "ZWsZGtBfdW1Cj5C2",
+      "name": "Glance of the Divine",
+      "relativePath": "spells/rituals/glance-of-the-divine.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Sanctification or separately granted Domain Initiate feat; no save as ritual result. Later granted spellcasting is excluded.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/glance-of-the-divine.json"
+      ],
+      "sourceGitBlobSha1": "3d0f55a6b5734793222939867fd7a5fb0a858a7f"
+    },
+    {
+      "id": "yrsgOdj5oqp7lEQY",
+      "name": "Gnaw at the Moon",
+      "relativePath": "spells/rituals/gnaw-at-the-moon.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Vision benefits or drained for 24 hours; no saving throw.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/gnaw-at-the-moon.json"
+      ],
+      "sourceGitBlobSha1": "77d682d1be956c99f6a7deff75a74f66b601c246"
+    },
+    {
+      "id": "3ipOKanMLnJrPwbr",
+      "name": "Guardian's Aegis",
+      "relativePath": "spells/rituals/guardians-aegis.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Damage sharing and awareness; no save. Mention of poison preserves an independent incoming attack effect rather than creating a new exposure.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/guardians-aegis.json"
+      ],
+      "sourceGitBlobSha1": "9b7d6873a3496e5cdfb5339be107dd79a653477f"
+    },
+    {
+      "id": "NQk8Cabhhw7jXkg0",
+      "name": "Halt Death",
+      "relativePath": "spells/rituals/halt-death.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Save bonuses and altered recovery checks; dying recovery is a flat check, not a save. Doomed backlash has fixed duration without a recovery save.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/halt-death.json"
+      ],
+      "sourceGitBlobSha1": "c66967b93bdea3af22794c632eb85fa9210c2de1"
+    },
+    {
+      "id": "ofAQyLtLEGnOIs3N",
+      "name": "Harrowing",
+      "relativePath": "spells/rituals/harrowing.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Optional fortune rerolls of independently occurring checks, including saves; ritual itself does not require a saving throw.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/harrowing.json"
+      ],
+      "sourceGitBlobSha1": "b1ab740e7bdf2cd1ba6d817e962f9190e0692860"
+    },
+    {
+      "id": "6fN8ePYatRCW1yck",
+      "name": "Haven in the Ether",
+      "relativePath": "spells/rituals/haven-in-the-ether.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Creates planar haven; pest encounter on failure is independent creature activity, with no ritual-imposed save.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/haven-in-the-ether.json"
+      ],
+      "sourceGitBlobSha1": "cabe3170f8af1728926923eb5562e628a7797f13"
+    },
+    {
+      "id": "dZV8nZUKRhGIr6g9",
+      "name": "Heartbond",
+      "relativePath": "spells/rituals/heartbond.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Communication bond and telepathy; fixed-duration clumsy/stupefied backlash, with no save. Referenced telepathy grants communication only.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/heartbond.json",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/spells/rank-4/telepathy.json"
+      ],
+      "sourceGitBlobSha1": "9302b73e76b33f959b33b28cc1199e6729e3523d"
+    },
+    {
+      "id": "M6HsK7W6JMkJXeog",
+      "name": "Ideal Mimicry",
+      "relativePath": "spells/rituals/ideal-mimicry.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Doll interaction directly deals mental damage, including reflected failure damage, with no save at any heightened rank.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/ideal-mimicry.json"
+      ],
+      "sourceGitBlobSha1": "488947abbe80db25f92c3e4aa686f9818233cf8b"
+    },
+    {
+      "id": "2CNqkt2s2IYkVnv6",
+      "name": "Imprisonment",
+      "relativePath": "spells/rituals/imprisonment.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "Chains form explicitly requires Will saves from other creatures attempting to approach, harm chains, or free prisoner; critical failure can create the same effect on casters.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/imprisonment.json"
+      ],
+      "sourceGitBlobSha1": "fa2a515d7577884bda8297495bc19e0922e6c2e7"
+    },
+    {
+      "id": "DcUGLLyaa9tHH1kN",
+      "name": "Incarnate Ancestry",
+      "relativePath": "spells/rituals/incarnate-ancestry.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Ancestry change with clumsy/stupefied fixed periods; no save or sickened recovery.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/incarnate-ancestry.json"
+      ],
+      "sourceGitBlobSha1": "887270af8fd19d61315e599144a45e270564498a"
+    },
+    {
+      "id": "5pwK2FZX6QwgtfqX",
+      "name": "Inveigle",
+      "relativePath": "spells/rituals/inveigle.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "Unwilling targets attempt Will to negate; later requests against nature/interests permit Will to end the ritual.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/inveigle.json"
+      ],
+      "sourceGitBlobSha1": "9aee90b69e121383aa889b9a149dbbea078cc36e"
+    },
+    {
+      "id": "nxnGKgcVii5KTwtM",
+      "name": "Kaiju Ward",
+      "relativePath": "spells/rituals/kaiju-ward.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Structure AC, Hardness, resistance, and HP adjustments; no creature save.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/kaiju-ward.json"
+      ],
+      "sourceGitBlobSha1": "cb78ec8adba71b665afb1d02eb21b314fc9d0cf8"
+    },
+    {
+      "id": "WRRbNyGam4ytTRgr",
+      "name": "Labyrinthine Prison",
+      "relativePath": "spells/rituals/labyrinthine-prison.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "Unwilling target explicitly attempts Will to resist imprisonment; subsequent escape is skill/Perception, not a save.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/labyrinthine-prison.json"
+      ],
+      "sourceGitBlobSha1": "33e768dd5c59fd015f30027e6a97dec3064e1edb"
+    },
+    {
+      "id": "INEAWirvb8c1eAFD",
+      "name": "Last Night's Vigil",
+      "relativePath": "spells/rituals/last-nights-vigil.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Healing and affliction-stage reduction; does not impose an affliction or trigger a save. Fatigued backlash expires after 24 hours.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/last-nights-vigil.json"
+      ],
+      "sourceGitBlobSha1": "8ea3110349b5bd87f86e3c9097a27244e863d695"
+    },
+    {
+      "id": "qBSyP5csMVmaOWCF",
+      "name": "Loyalty's Ward",
+      "relativePath": "spells/rituals/loyaltys-ward.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "Trapped creatures explicitly attempt Will saves to leave, with retry interval dependent on ritual degree.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/loyaltys-ward.json"
+      ],
+      "sourceGitBlobSha1": "28261377cd360e4244cf01bfd9ee1af0682f34a0"
+    },
+    {
+      "id": "MkHshwYy2UOeEHRR",
+      "name": "Lucky Month",
+      "relativePath": "spells/rituals/lucky-month.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Fortune/misfortune modifies separately occurring saves or skill checks; no ritual-created saving throw.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/lucky-month.json"
+      ],
+      "sourceGitBlobSha1": "c03adcfcb8183fb0592fd77e4af8376a9db20bcd"
+    },
+    {
+      "id": "RWwiFnjxoJXn7H6D",
+      "name": "Mind Swap",
+      "relativePath": "spells/rituals/mind-swap.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Mind exchange and fixed stupefied backlash; no saving throw, including permanent heightened form.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/mind-swap.json"
+      ],
+      "sourceGitBlobSha1": "e4fc9db12c3814b8822c35dc153d6b60b95b0ae7"
+    },
+    {
+      "id": "8MAHUK6jphbME4BR",
+      "name": "Mindscape Door",
+      "relativePath": "spells/rituals/mindscape-door.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "Critical-failure option inflicts mental damage with basic Will DC26, or DC40 at rank8.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/mindscape-door.json"
+      ],
+      "sourceGitBlobSha1": "148948aaede21dd76aaf55a312af90e2dc9755ff"
+    },
+    {
+      "id": "VJgSQBYwXGDbMmiW",
+      "name": "Mindscape Shift",
+      "relativePath": "spells/rituals/mindscape-shift.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "GM-only description explicitly gives basic Will DC26 against mental-feedback critical failure. Value field is empty but gm field is authoritative local text.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/mindscape-shift.json"
+      ],
+      "sourceGitBlobSha1": "1cd00c08ea417f3c19e2c93f2d1abdc6716659db"
+    },
+    {
+      "id": "dNpIc5k1aCI3bHIg",
+      "name": "Mosquito Blight",
+      "relativePath": "spells/rituals/mosquito-blight.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "Area exposure and critical-failure exposure to Witch's Hunger disease explicitly use Fortitude saving throws; progression remains delegated.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/mosquito-blight.json"
+      ],
+      "sourceGitBlobSha1": "ada815db53f1c9023351f455dc9230d3c70febed"
+    },
+    {
+      "id": "qVXraYXlTjissCaG",
+      "name": "Mother's Blessing",
+      "relativePath": "spells/rituals/mothers-blessing.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Purifies eggs, with hatch/failure/destruction results; no saving throw.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/mothers-blessing.json"
+      ],
+      "sourceGitBlobSha1": "6da08c05f64835605c33473b7bd2b4a2176aa6b7"
+    },
+    {
+      "id": "jOWQ5wPd4xvSkjI5",
+      "name": "Mystic Carriage",
+      "relativePath": "spells/rituals/mystic-carriage.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Creates a carriage with a Fortitude statistic, not a forced creature save; horse attack on critical failure is independent.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/mystic-carriage.json"
+      ],
+      "sourceGitBlobSha1": "043a3f1dc6ea5c7de11cb8ebe63f21061a9ad370"
+    },
+    {
+      "id": "QIjc7Zyej0P3b9v5",
+      "name": "Oblivious Expulsion",
+      "relativePath": "spells/rituals/oblivious-expulsion.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "Unwilling target explicitly attempts Will to negate memory removal.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/oblivious-expulsion.json"
+      ],
+      "sourceGitBlobSha1": "069e2cae3e1be24c7d111851f789b9d37cc78145"
+    },
+    {
+      "id": "6WZgtQ2Iw9CTbv2c",
+      "name": "Ocean's Roar",
+      "relativePath": "spells/rituals/oceans-roar.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Flood and drowning consequences are general environmental handling; independently acting created creatures also do not qualify the ritual.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/oceans-roar.json",
+        "https://2e.aonprd.com/Rules.aspx?ID=2665",
+        "https://2e.aonprd.com/Rules.aspx?ID=2263"
+      ],
+      "sourceGitBlobSha1": "64adf41ddb2985863cf47d65bf2ac6d5f7e702cc"
+    },
+    {
+      "id": "bOf5WuLh6ZJloi7F",
+      "name": "Oil-Slicked Walls",
+      "relativePath": "spells/rituals/oil-slicked-walls.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "Critical failure explicitly gives each caster choice of Reflex save or Balance check on first movement each encounter for one week.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/oil-slicked-walls.json"
+      ],
+      "sourceGitBlobSha1": "b46c12dc5486293d41bf440b4532941e9193c103"
+    },
+    {
+      "id": "PvkEzzCaDT07DcJb",
+      "name": "Open the Wall of Ghosts",
+      "relativePath": "spells/rituals/open-the-wall-of-ghosts.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "GM-only description opens passage and gives AC/save bonuses; failure spawns independent ghost attackers. Consecrate is historical development, not inheritance of its outcome rules.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/open-the-wall-of-ghosts.json"
+      ],
+      "sourceGitBlobSha1": "58df85ba00847a1f8f4a4fd9cd8a24449cea1d0c"
+    },
+    {
+      "id": "u3G7KX1qpFJlSeWm",
+      "name": "Owb Pact",
+      "relativePath": "spells/rituals/owb-pact.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Calls owb, with direct doomed 2 backlash; no saving throw or recovery save.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/owb-pact.json"
+      ],
+      "sourceGitBlobSha1": "fcf209ed2ce97a6a0a7023a48922857c7aed328b"
+    },
+    {
+      "id": "7ymYZ89WNBqGxWuh",
+      "name": "Peer Into the Past",
+      "relativePath": "spells/rituals/peer-into-the-past.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Recreates scene; critical failure makes scene creatures hostile, but their later abilities are independent; no disbelief check or mandated save in the ritual.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/peer-into-the-past.json"
+      ],
+      "sourceGitBlobSha1": "a41e1aa37bd9abae4585010c963838c56ebd568f"
+    },
+    {
+      "id": "kExRMPVI07iIFCaa",
+      "name": "Perfection of Essence",
+      "relativePath": "spells/rituals/perfection-of-essence.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "Completion requires poison with explicit Fortitude DC43; failures alter first save and virulence. Affliction progression remains delegated.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/perfection-of-essence.json"
+      ],
+      "sourceGitBlobSha1": "c31833b366fc62cc09dc3b06e6f7e86d4f439980"
+    },
+    {
+      "id": "uuoPmbjEtqzWZs0v",
+      "name": "Phantasmal Custodians",
+      "relativePath": "spells/rituals/phantasmal-custodians.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Referenced Phantasmal Minion summons a creature; hostile minions make Strikes, no save-producing ritual outcome.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/phantasmal-custodians.json",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/spells/rank-1/phantasmal-minion.json"
+      ],
+      "sourceGitBlobSha1": "fbd0d6f59dbc17be8ed5426e36b9de2f411490b5"
+    },
+    {
+      "id": "oOFilBgsXTVIbJpN",
+      "name": "Phantom Ship",
+      "relativePath": "spells/rituals/phantom-ship.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Falling into water can eventually cause drowning saves, but these are excluded general environmental consequences.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/phantom-ship.json",
+        "https://2e.aonprd.com/Rules.aspx?ID=2263"
+      ],
+      "sourceGitBlobSha1": "f32065cbbd33c545dc144ce1ab08916ead3834ab"
+    },
+    {
+      "id": "NjN6md0KpdelWpu7",
+      "name": "Plague Shot",
+      "relativePath": "spells/rituals/plague-shot.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "Ammunition impact exposes creatures to Siege Sickness (Fortitude DC24); critical failure directly exposes casters' area. This is a ritual payload trigger, with progression delegated.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/plague-shot.json"
+      ],
+      "sourceGitBlobSha1": "621ca63b3ce6de44dfc2a9089ce0e2001115e98d"
+    },
+    {
+      "id": "HmKajQS0DP23bipp",
+      "name": "Planar Displacement",
+      "relativePath": "spells/rituals/planar-displacement.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Planar transport/misdirection/travel lock; no save.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/planar-displacement.json"
+      ],
+      "sourceGitBlobSha1": "21138c41c73c4d6957c0b930cf1404c691391c7c"
+    },
+    {
+      "id": "vgy00hnqxN9VoeoF",
+      "name": "Planar Servitor",
+      "relativePath": "spells/rituals/planar-servitor.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Calls divine servitor; unspecified displeasure and independent later attacks do not mandate saving throws.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/planar-servitor.json"
+      ],
+      "sourceGitBlobSha1": "48ce66e73e30fbd4685842f6a0d5cf720828fbb1"
+    },
+    {
+      "id": "ZhJ8d9Uk4lwIx86b",
+      "name": "Plant Growth",
+      "relativePath": "spells/rituals/plant-growth.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Crop growth or counteraction of Blight; counteract is not a save. Unspecified botanical alteration supplies no mandatory saving throw.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/plant-growth.json"
+      ],
+      "sourceGitBlobSha1": "2e411f2c2447e8a39c0a69f1d9e10d15a1930eb3"
+    },
+    {
+      "id": "Z60JRD78wT3afOEJ",
+      "name": "Portrait of Spite",
+      "relativePath": "spells/rituals/portrait-of-spite.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "Target explicitly makes Will against the chosen curse condition, with degree-specific condition values.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/portrait-of-spite.json"
+      ],
+      "sourceGitBlobSha1": "bbf301ca5ea41ca2950c3e6c36693933fea75ffd"
+    },
+    {
+      "id": "otdzpPYzWMJt76Rh",
+      "name": "Power of the Beasts",
+      "relativePath": "spells/rituals/power-of-the-beasts.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Grants Titan Wrestler after proof; critical failure sickened lasts one week and cannot be reduced during that entire fixed duration, so no recovery-save window.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/power-of-the-beasts.json",
+        "https://2e.aonprd.com/Conditions.aspx?ID=91"
+      ],
+      "sourceGitBlobSha1": "5ac5159050d0be926be30b73c6595c41c3b77921"
+    },
+    {
+      "id": "pZc8ZwtsyWnxUUW0",
+      "name": "Primal Call",
+      "relativePath": "spells/rituals/primal-call.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Inherits Planar Servitor with different creature selection; no ritual save. Creature abilities remain independent.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/primal-call.json",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/planar-servitor.json"
+      ],
+      "sourceGitBlobSha1": "89c3611954503218c696acfa9658f3df10315898"
+    },
+    {
+      "id": "66xBcxqzYcpbItBU",
+      "name": "Purify Soul Path",
+      "relativePath": "spells/rituals/purify-soul-path.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Removes soulforged corruption after atonement/quest; no saving throw.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/purify-soul-path.json"
+      ],
+      "sourceGitBlobSha1": "201b914d704abc1ba85d81b6b779513b8207d1af"
+    },
+    {
+      "id": "ZVdKM0HkgpWykrqf",
+      "name": "Purify Tanglebriar",
+      "relativePath": "spells/rituals/purify-tanglebriar.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "Critical failure forces DC38 basic Fortitude save against void backlash.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/purify-tanglebriar.json"
+      ],
+      "sourceGitBlobSha1": "d6f95d0b9f767102f39ea6e8cfd2756facf970b1"
+    },
+    {
+      "id": "nuE9qsY2HfPFEgAo",
+      "name": "Raga of Remembrance",
+      "relativePath": "spells/rituals/raga-of-remembrance.json",
+      "status": "included",
+      "basis": "referenced-effect",
+      "reason": "Critical failure afflicts casters with named many-eyed blight; Kothogaz source defines Fortitude DC44 and stages. Affliction progression remains delegated.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/raga-of-remembrance.json",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/lost-omens-bestiary/monsters-of-myth/kothogaz-dance-of-disharmony.json"
+      ],
+      "sourceGitBlobSha1": "ae5e1c27f5572db21cf0a37b7317920ae72dc1da"
+    },
+    {
+      "id": "fr1AGcQo7WuvLvUi",
+      "name": "Raise Runelord",
+      "relativePath": "spells/rituals/raise-runelord.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Creates a risen runelord or hostile psychopomps; independent creatures and their abilities excluded.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/raise-runelord.json"
+      ],
+      "sourceGitBlobSha1": "fcf916afb90f29dce81fc5d76eda6309e9d45dd5"
+    },
+    {
+      "id": "ksJFGSGlNpUhwcsp",
+      "name": "Ransack the Night",
+      "relativePath": "spells/rituals/ransack-the-night.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Concealment only; its flat checks are not saving throws.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/ransack-the-night.json"
+      ],
+      "sourceGitBlobSha1": "6a42a2dea2035db13367ecf0958ed8bdf3100331"
+    },
+    {
+      "id": "u3pdkfmy0AWICdoM",
+      "name": "Ravenous Reanimation",
+      "relativePath": "spells/rituals/ravenous-reanimation.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Caster automatically dies and transforms into ravener or husk; no save.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/ravenous-reanimation.json"
+      ],
+      "sourceGitBlobSha1": "2dc727c3ff9884fa0fda94ca45c83efea36acd4e"
+    },
+    {
+      "id": "bqx1tJeOZq1Ufhcc",
+      "name": "Recall Past Life",
+      "relativePath": "spells/rituals/recall-past-life.json",
+      "status": "excluded",
+      "basis": "user-ruling-pending-clarification",
+      "reason": "Explicit user project ruling: exclude pending authoritative clarification of saves for the immediately possessed dead target. Baseline and Paizo remaster errata confirm the possession wording but do not settle the save-result branch. This is a provisional scope ruling, not proof that no saving throw exists.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/recall-past-life.json",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/bestiary-family-ability-glossary/ghost/ghost-malevolent-possession.json",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/spells/rank-7/possession.json",
+        "https://2e.aonprd.com/Rituals.aspx?ID=228",
+        "https://paizo.com/pathfinder/faq"
+      ],
+      "sourceGitBlobSha1": "e427af673079c1ad9afa765041e5a569fe6c6f2b",
+      "decision": {
+        "authority": "user",
+        "date": "2026-09-19",
+        "revisitWhen": "Authoritative clarification establishes saves for the ritual-produced possession."
+      }
+    },
+    {
+      "id": "FQZaQXiKtHdVjSc5",
+      "name": "Regale the Lost Ones",
+      "relativePath": "spells/rituals/regale-the-lost-ones.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Haunt difficulty and undead frightened/elite alterations; no saves caused by ritual.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/regale-the-lost-ones.json"
+      ],
+      "sourceGitBlobSha1": "daa6f99fe87855ecd5da6880245d3c39ccd24320"
+    },
+    {
+      "id": "gIVaSCrLhhBzGHQY",
+      "name": "Reincarnate",
+      "relativePath": "spells/rituals/reincarnate.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Reincarnation, fixed irreducible conditions, or animal imprisonment; no saves.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/reincarnate.json"
+      ],
+      "sourceGitBlobSha1": "3cef0e87662f8b60124d981eca4f36c51dc3e337"
+    },
+    {
+      "id": "2LsiiZZIZEKD23VQ",
+      "name": "Reinforced Rations",
+      "relativePath": "spells/rituals/reinforced-rations.json",
+      "status": "included",
+      "basis": "condition-recovery",
+      "reason": "Critical failure applies sickened 2, prohibits reduction for 24 hours but does not end condition then; Fortitude recovery allowed afterward under normal Sickened rules.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/reinforced-rations.json",
+        "https://2e.aonprd.com/Conditions.aspx?ID=91"
+      ],
+      "sourceGitBlobSha1": "1c189432f67f7c568226ba12420dd68605105557"
+    },
+    {
+      "id": "pib9AhtUlVclvm02",
+      "name": "Release the Ego to Restore the Soul",
+      "relativePath": "spells/rituals/release-the-ego-to-restore-the-soul.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Counteract checks while performing or fatigue; counteract checks not saves.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/release-the-ego-to-restore-the-soul.json"
+      ],
+      "sourceGitBlobSha1": "802ea50bb4e1fcabe87f6411fc3a4244b3ed50c5"
+    },
+    {
+      "id": "RGmPRCBFcWVUoiZz",
+      "name": "Resolute Obliteration",
+      "relativePath": "spells/rituals/resolute-obliteration.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Object damage and caster backlash are automatic; no save.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/resolute-obliteration.json"
+      ],
+      "sourceGitBlobSha1": "291bf0696da2743da17eb4ea075005b628f46f9f"
+    },
+    {
+      "id": "MTNlvZ0A9xY5sOg1",
+      "name": "Rest Eternal",
+      "relativePath": "spells/rituals/rest-eternal.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "Unwilling spirit attempts Will save to resist sequestering.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/rest-eternal.json"
+      ],
+      "sourceGitBlobSha1": "39a7e4aa99c78b82cc3254d8c0506b02597c2d98"
+    },
+    {
+      "id": "kqhPt9344UkcGVYO",
+      "name": "Resurrect",
+      "relativePath": "spells/rituals/resurrect.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Resurrection, fixed conditions, or vague GM-directed possession/undead disaster; no concrete invoked save mechanics.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/resurrect.json"
+      ],
+      "sourceGitBlobSha1": "28d0e1736f964b9beedcfb8b027f2991bdec8c80"
+    },
+    {
+      "id": "D4Rxud1DBr52Dmdo",
+      "name": "Retreat Among the Rains",
+      "relativePath": "spells/rituals/retreat-among-the-rains.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Retraining or fatigue/starvation damage without saving throw.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/retreat-among-the-rains.json"
+      ],
+      "sourceGitBlobSha1": "f6ec07420c75e64f491e060dc00edfd1e63f7757"
+    },
+    {
+      "id": "KwDyrUIlnOrpdxYi",
+      "name": "Rite of Cleansing Flame",
+      "relativePath": "spells/rituals/rite-of-cleansing-flame.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "Critical failure explicitly requires DC17 Fortitude save to avoid permanent drained.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/rite-of-cleansing-flame.json"
+      ],
+      "sourceGitBlobSha1": "df943e422f8a295e2dbb8b7d1885efad340a4622"
+    },
+    {
+      "id": "w00PBRjENqJa7Vxu",
+      "name": "Rite of Repatriation",
+      "relativePath": "spells/rituals/rite-of-repatriation.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Item restoration and counteraction as Dispel Magic/Cleanse Affliction; no required saves.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/rite-of-repatriation.json",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/spells/rank-2/dispel-magic.json",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/spells/rank-2/cleanse-affliction.json"
+      ],
+      "sourceGitBlobSha1": "fdb215501f9c264b4c81387c002f3bb1586a5acc"
+    },
+    {
+      "id": "fLiowSDQXo3vCQDh",
+      "name": "Rite of the Red Star",
+      "relativePath": "spells/rituals/rite-of-the-red-star.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "Portal use on success and casting failures require DC36 Fortitude saves.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/rite-of-the-red-star.json"
+      ],
+      "sourceGitBlobSha1": "520440eeb193f448442f3ef2cfd77f55f4cc2fa4"
+    },
+    {
+      "id": "RgVlYrn5mu8wNHK4",
+      "name": "Rolling Boulders",
+      "relativePath": "spells/rituals/rolling-boulders.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Difficult terrain, cover or automatic rock damage; no save.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/rolling-boulders.json"
+      ],
+      "sourceGitBlobSha1": "4eede6bc56e72489b86dc10b862a7ae3430903d6"
+    },
+    {
+      "id": "o0l57UfBm9ScEUMW",
+      "name": "Rune Trap",
+      "relativePath": "spells/rituals/rune-trap.json",
+      "status": "included",
+      "basis": "referenced-effect",
+      "reason": "Stores and releases a hostile spell when triggered. Legal save spells (e.g. Fireball) retain their saving throws, unlike independently granted spellcasting.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/rune-trap.json",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/spells/rank-3/fireball.json"
+      ],
+      "sourceGitBlobSha1": "1d42d625dea21d2e929bb9c4d455d157a77c49d5"
+    },
+    {
+      "id": "90CYsk0cB2V6dRPQ",
+      "name": "Sculpt Appearance",
+      "relativePath": "spells/rituals/sculpt-appearance.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Cosmetic transformation and social-check penalties; no saves.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/sculpt-appearance.json"
+      ],
+      "sourceGitBlobSha1": "3ae60b987bd7aad4c913bc7a01429ec802323dac"
+    },
+    {
+      "id": "a9og2ZYfr8kAeltU",
+      "name": "Secure Siege Weapons",
+      "relativePath": "spells/rituals/secure-siege-weapons.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "Enemy weapon operation or movement triggers DC20 Will save; distinct from benefit to saves against siege attacks.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/secure-siege-weapons.json"
+      ],
+      "sourceGitBlobSha1": "64b7c720589cace8fb2734ae74b54180448eac3a"
+    },
+    {
+      "id": "opXqASAY37ltENB8",
+      "name": "Seed of Mercy",
+      "relativePath": "spells/rituals/seed-of-mercy.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Toughness/healing benefits or independent summoned demon; no save.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/seed-of-mercy.json"
+      ],
+      "sourceGitBlobSha1": "4cd981837f31d928593fbc1d71c43c1cfdb30ff3"
+    },
+    {
+      "id": "jh6d9n4VQTeOewEU",
+      "name": "Separation",
+      "relativePath": "spells/rituals/separation.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "Unwilling targets attempt Will saves to resist separation.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/separation.json"
+      ],
+      "sourceGitBlobSha1": "5f182646f765ab43e9364f637a4ea7b681b53159"
+    },
+    {
+      "id": "h5UqEdeqK8iTcU0J",
+      "name": "Shadow Double",
+      "relativePath": "spells/rituals/shadow-double.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Disbelief explicitly uses Perception against secondary caster Deception DC; apparent critical-save successes are illusory narration, not actual saves. No real special abilities.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/shadow-double.json"
+      ],
+      "sourceGitBlobSha1": "0d2177bfd429af246304962720129390c796db04"
+    },
+    {
+      "id": "7c3wzL3jj3E8zRsT",
+      "name": "Shroud of the Provinces",
+      "relativePath": "spells/rituals/shroud-of-the-provinces.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Concealment/light/sound alteration and narrative urge to leave; no save or referenced fear spell.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/shroud-of-the-provinces.json"
+      ],
+      "sourceGitBlobSha1": "5ab6dee84a2094843ab51494856691bf3d18c2f0"
+    },
+    {
+      "id": "sYd3hqv2ZQqa0PSc",
+      "name": "Sky Signs",
+      "relativePath": "spells/rituals/sky-signs.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Sky message or reversed message; no save.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/sky-signs.json"
+      ],
+      "sourceGitBlobSha1": "55e0017f99d167d25e7a38109a06b3ba674e918e"
+    },
+    {
+      "id": "bTFWSpHEvXq8IK37",
+      "name": "Sleepless Season",
+      "relativePath": "spells/rituals/sleepless-season.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "Each living target attempts Fortitude save to resist sleeplessness curse.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/sleepless-season.json"
+      ],
+      "sourceGitBlobSha1": "ffdcbe5630b808224271213e315399bf2674fa1a"
+    },
+    {
+      "id": "HYXyMFsH0K80etBI",
+      "name": "Song of Silver",
+      "relativePath": "spells/rituals/song-of-silver.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Teleport counteraction and save bonuses; separately granted Breath of Life excluded from qualification, fixed stupefied backlash.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/song-of-silver.json"
+      ],
+      "sourceGitBlobSha1": "c5757bf89e65db6eadc814c171510caf38f4111d"
+    },
+    {
+      "id": "Y9w4TYnb8cXU4UKY",
+      "name": "Split Shadow",
+      "relativePath": "spells/rituals/split-shadow.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Creates shadow double or greater shadow; later creature abilities are independent, with no ritual-imposed saving throw.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/split-shadow.json"
+      ],
+      "sourceGitBlobSha1": "b8ca800904deab6e6264031aef20beb19cddcaea"
+    },
+    {
+      "id": "rsYeiz2V2KeEfjpr",
+      "name": "Sprawling Tunnels",
+      "relativePath": "spells/rituals/sprawling-tunnels.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Creates tunnels with Perception/Survival checks; critical failure spawns elemental attackers whose later abilities are independent.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/sprawling-tunnels.json"
+      ],
+      "sourceGitBlobSha1": "c30a46c16e2c909441bbf990f3f64851d5d24b45"
+    },
+    {
+      "id": "29AyhknPKiDBcy8s",
+      "name": "Statuette",
+      "relativePath": "spells/rituals/statuette.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Shrinks objects using Shrink Item variant; restoration harmlessly pushes creatures or contains them. No saving throw.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/statuette.json",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/spells/rank-3/shrink-item.json"
+      ],
+      "sourceGitBlobSha1": "d00a5420fc749f1d2119baaf8f146651061cac4b"
+    },
+    {
+      "id": "RqUpZmKtfnDEKkcf",
+      "name": "Still Life Storage",
+      "relativePath": "spells/rituals/still-life-storage.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Stores objects in a painting; identification uses Crafting/Occultism/Perception and failure breaks objects, with no creature save.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/still-life-storage.json"
+      ],
+      "sourceGitBlobSha1": "cbf02033da9eda65fa429bd3b3f4f1ea8952518f"
+    },
+    {
+      "id": "aVqsE5OedOwdHQvF",
+      "name": "Summerland Spell",
+      "relativePath": "spells/rituals/summerland-spell.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Weather moderation with automatic drained curse on casters; curse ends by counteraction, not a recovery save.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/summerland-spell.json"
+      ],
+      "sourceGitBlobSha1": "fb2edd69e159d805178071209a010f81d048c79b"
+    },
+    {
+      "id": "6TKGaQm4PfEMkeRd",
+      "name": "Supreme Connection",
+      "relativePath": "spells/rituals/supreme-connection.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Question-answering divination, social bonuses, and automatic damage/drained backlash; no save.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/supreme-connection.json"
+      ],
+      "sourceGitBlobSha1": "47dac414c33a89a19fddf5b15bfe48f95463d103"
+    },
+    {
+      "id": "wAJ8mXPYbyAg0qWX",
+      "name": "Sweetest Solstice",
+      "relativePath": "spells/rituals/sweetest-solstice.json",
+      "status": "included",
+      "basis": "condition-recovery",
+      "reason": "Critical failure imposes sickened 4, prohibiting reduction for 12 hours. Once that temporary lock ends, ordinary sickened Fortitude recovery applies; unspecified town food poisoning is not needed to establish qualification.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/sweetest-solstice.json",
+        "https://2e.aonprd.com/Conditions.aspx?ID=91"
+      ],
+      "sourceGitBlobSha1": "c682545f602f40ae975bed9888ccca740c4d8717"
+    },
+    {
+      "id": "32NpJbPblay77K6v",
+      "name": "Tattoo Whispers",
+      "relativePath": "spells/rituals/tattoo-whispers.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Tattoo communication and fixed-duration stupefied backlash; no saving throw.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/tattoo-whispers.json"
+      ],
+      "sourceGitBlobSha1": "5dffb37be1824bbc6bdc6f9cbb5a235cc950ebb3"
+    },
+    {
+      "id": "5ZW1w9f4gWlSIuWA",
+      "name": "Teleportation Circle",
+      "relativePath": "spells/rituals/teleportation-circle.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "Unwilling creature explicitly makes Will to resist teleportation and repeats at end of each turn remaining in circle.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/teleportation-circle.json"
+      ],
+      "sourceGitBlobSha1": "72275a7f8a6cec82efbfdb19d130d5008547086e"
+    },
+    {
+      "id": "yUM5OYeMY8971b2S",
+      "name": "Terminate Bloodline",
+      "relativePath": "spells/rituals/terminate-bloodline.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "Conscious initial target attempts Fortitude; family-contact exposure and affliction progression also explicitly require Fortitude. Progression remains delegated.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/terminate-bloodline.json"
+      ],
+      "sourceGitBlobSha1": "4c00f52120b70130a4707ce1c1f8f9386e6d2fe5"
+    },
+    {
+      "id": "5xf9wK9xyAeGFPw7",
+      "name": "The Unseeing Blade Master",
+      "relativePath": "spells/rituals/the-unseeing-blade-master.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Grants Blind-Fight after challenge; broken sword or fixed-duration blinded backlash without saves.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/the-unseeing-blade-master.json"
+      ],
+      "sourceGitBlobSha1": "84a20d2f5b3bcb06384a921dff7f494df9216791"
+    },
+    {
+      "id": "3DB3F2hIx2dMbX8n",
+      "name": "The World's a Stage",
+      "relativePath": "spells/rituals/the-worlds-a-stage.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Gives skill rerolls or doomed for one month; no saving throw or recovery-save condition.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/the-worlds-a-stage.json"
+      ],
+      "sourceGitBlobSha1": "3fb0a87679dd2c541eb301fba09bd79e0e9779de"
+    },
+    {
+      "id": "8Lk9K3tRnV68MQPW",
+      "name": "Transmigrate",
+      "relativePath": "spells/rituals/transmigrate.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "GM-only description includes rank4 basic Fortitude DC24 against critical-failure fire damage. Rank5 replaces ritual outcome rules, but rank4 suffices to qualify the catalog entry.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/transmigrate.json"
+      ],
+      "sourceGitBlobSha1": "44410e3cd7447ba28dd2c952c42ae6ba165decfb"
+    },
+    {
+      "id": "XhfsRLfQjN3ed1zI",
+      "name": "Unbearable Cacophony",
+      "relativePath": "spells/rituals/unbearable-cacophony.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "Sounds in ritual area explicitly deal sonic damage with basic Fortitude against ritual DC.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/unbearable-cacophony.json"
+      ],
+      "sourceGitBlobSha1": "977b5c79ba9aa46feb7903769aa6a7680de0deb1"
+    },
+    {
+      "id": "bmz35f9k1ydHOOli",
+      "name": "Uncouple Memory",
+      "relativePath": "spells/rituals/uncouple-memory.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Memory switching uses an explicitly specified flat check, not a saving throw.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/uncouple-memory.json"
+      ],
+      "sourceGitBlobSha1": "9d2ba0e83b9f78862adce8038611259ef43a51cd"
+    },
+    {
+      "id": "TYydobaLN4U7Ol3M",
+      "name": "Unfettered Mark",
+      "relativePath": "spells/rituals/unfettered-mark.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Escape tattoo grants teleportation, water movement/breathing, and electricity resistance. Backlash drained/fatigued removed only by reentering water; no saving throw in referenced spells or ritual.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/unfettered-mark.json",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/spells/rank-6/teleport.json",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/spells/rank-2/water-walk.json",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/spells/rank-2/water-breathing.json"
+      ],
+      "sourceGitBlobSha1": "78f6d781b6745a8c5183836806cd4d5eee88f7b3"
+    },
+    {
+      "id": "M7leucozfgQXW0eV",
+      "name": "Unsealing of Secrets",
+      "relativePath": "spells/rituals/unsealing-of-secrets.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Spirit answers a question or lies; no saving throw.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/unsealing-of-secrets.json"
+      ],
+      "sourceGitBlobSha1": "c94f3b55531ba3e1b6a89c355ccac7cb96eb4dac"
+    },
+    {
+      "id": "bK7EZFCxZgDcko6D",
+      "name": "Unseen Heralds",
+      "relativePath": "spells/rituals/unseen-heralds.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Embed Message-like illusion mouths transmit speech; critical failure prevents rest. Referenced spell is obviously illusory, with no disbelief provision or save.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/unseen-heralds.json",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/spells/rank-2/embed-message.json"
+      ],
+      "sourceGitBlobSha1": "2efafb7401d01792993cf3be43e69323c2364935"
+    },
+    {
+      "id": "KkimKrhDxEJVm6TH",
+      "name": "Vital Singularity",
+      "relativePath": "spells/rituals/vital-singularity.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Shares HP loss with willing companions and imposes clumsy on failure; death effect has no saving throw.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/vital-singularity.json"
+      ],
+      "sourceGitBlobSha1": "d7e711bce40a0c530c8a772d90151363ac0e3aa0"
+    },
+    {
+      "id": "NjK0kWRC6FYsPwXC",
+      "name": "Void Harvest",
+      "relativePath": "spells/rituals/void-harvest.json",
+      "status": "included",
+      "basis": "direct-save",
+      "reason": "First daily damage to living creature in area explicitly triggers Will save or doomed increase.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/void-harvest.json"
+      ],
+      "sourceGitBlobSha1": "93cfc11ac3d66ed6ea9d161917a14a1450c8066f"
+    },
+    {
+      "id": "Er9XNUlL0wB0PM36",
+      "name": "Ward Domain",
+      "relativePath": "spells/rituals/ward-domain.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Referenced illusion disbelief does not establish a required save; optional GM substitution alone does not qualify the ritual.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/ward-domain.json",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/spells/rank-1/illusory-object.json",
+        "https://2e.aonprd.com/Rules.aspx?ID=2221"
+      ],
+      "sourceGitBlobSha1": "cd9df0dc08ddd89b0dd47a3ddee7ea205906e51b"
+    },
+    {
+      "id": "zaZieDHguhahmM2z",
+      "name": "Waters of Prediction",
+      "relativePath": "spells/rituals/waters-of-prediction.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Shows possible future scene or misleading vision, with no saving throw.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/waters-of-prediction.json"
+      ],
+      "sourceGitBlobSha1": "40b526cded193f52e254a8af565179072a78e8bd"
+    },
+    {
+      "id": "BBw5oGFvoQc3gg52",
+      "name": "Wild Allegiance",
+      "relativePath": "spells/rituals/wild-allegiance.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Grants Animal Empathy after nonviolent deeds; unspecified divine displeasure/animal attack is independent and no ritual saving throw is specified.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/wild-allegiance.json"
+      ],
+      "sourceGitBlobSha1": "6ff4fd216d2bd26ad12bc8f44b00661b0699f07d"
+    },
+    {
+      "id": "5y3RlXMDPovOmrhp",
+      "name": "Wild Feast",
+      "relativePath": "spells/rituals/wild-feast.json",
+      "status": "included",
+      "basis": "referenced-effect",
+      "reason": "Critical failure directly imposes ghoul Forbidden Cravings curse. Referenced curse has Will saving throw and staged progression; affliction progression remains delegated.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/wild-feast.json",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/bestiary-family-ability-glossary/ghoul/ghoul-ghoul-whispers.json"
+      ],
+      "sourceGitBlobSha1": "b516c78f2ec9095f5c47f1209f7272d5ee862016"
+    },
+    {
+      "id": "oYxxcgszpT242sEi",
+      "name": "Winter's Breath",
+      "relativePath": "spells/rituals/winters-breath.json",
+      "status": "included",
+      "basis": "condition-recovery",
+      "reason": "Critical failure imposes sickened 3, prohibiting reduction for 12 hours; after that lock ordinary sickened Fortitude recovery applies. Referenced restorative spells use counteraction rather than saves.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/winters-breath.json",
+        "https://2e.aonprd.com/Conditions.aspx?ID=91",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/spells/rank-2/clear-mind.json",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/spells/rank-2/environmental-endurance.json",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/spells/rank-2/sound-body.json",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/spells/rank-2/sure-footing.json"
+      ],
+      "sourceGitBlobSha1": "703923b0543560adc4dbd1076d2249926d4ef9ce"
+    },
+    {
+      "id": "6dDtGIUerazSHIOu",
+      "name": "Wish",
+      "relativePath": "spells/rituals/wish.json",
+      "status": "included",
+      "basis": "referenced-effect",
+      "reason": "Explicitly permits a wish to cast a chosen spell or ritual as the ritual outcome. A legal choice such as Fireball requires a Reflex save. This qualifies concrete inherited spell resolution, not invented mechanics for narrative reality changes.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/wish.json",
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/spells/rank-3/fireball.json"
+      ],
+      "sourceGitBlobSha1": "27ec27ad588a443f941b8363c67b9d22b5e25abf"
+    },
+    {
+      "id": "bODHqeXoEc8GVU6a",
+      "name": "World in Shadow",
+      "relativePath": "spells/rituals/world-in-shadow.json",
+      "status": "excluded",
+      "basis": "no-qualifying-save",
+      "reason": "Changes lighting or limits casters' vision; no saving throw or recovery-save condition.",
+      "sources": [
+        "/run/media/theholycole/Bigger Local Disk/PF2e Notes/pf2e/spells/rituals/world-in-shadow.json"
+      ],
+      "sourceGitBlobSha1": "025e3d32e9e6e685e3a43cf66b5d7e89ae0aaaf1"
+    }
+  ],
+  "milestoneScope": {
+    "includedRitualDenominator": 43,
+    "ruleVerifiedExcluded": 122,
+    "userRulingExcluded": 1,
+    "userApprovedUnverifiedSkipped": 1,
+    "runtimeCoverageVerified": false
+  }
+}

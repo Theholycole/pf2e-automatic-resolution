@@ -1,0 +1,220 @@
+{
+  "rank3Batch126": {
+    "label": "rank3Batch126",
+    "passed": true,
+    "at": "2026-10-03T15:06:10.269Z",
+    "details": {
+      "batch126": {
+        "create": {
+          "count": 2,
+          "hp": 1,
+          "speed": 15,
+          "ac": 0,
+          "size": "sm",
+          "immune": "bleed,death-effects,disease,mental,poison",
+          "save": 1,
+          "strikeBonus": 14,
+          "spellAttack": 14,
+          "traits": "mindless,undead"
+        },
+        "zeroRemoved": true,
+        "endRemoved": true,
+        "command": {
+          "count": 1,
+          "command": true
+        },
+        "tendrils": {
+          "count": 3,
+          "speed": 0,
+          "immune": true,
+          "reach": true,
+          "centres": 3
+        },
+        "bombThrallGone": true,
+        "horde": {
+          "radius": 20,
+          "thrallsLeft": 0
+        },
+        "bindThrallGone": true,
+        "bind": {
+          "holder": true,
+          "critThrall": true,
+          "adjacent": true,
+          "status": "applied"
+        }
+      }
+    }
+  },
+  "rank5Batch91": {
+    "label": "rank5Batch91",
+    "passed": true,
+    "at": "2026-10-03T15:06:51.218Z",
+    "details": {
+      "batch91": {
+        "kind": "gore-field",
+        "cast": {
+          "thrall": 0,
+          "amount": 10,
+          "centre": [
+            20,
+            8
+          ]
+        },
+        "start": {
+          "bleed": "10",
+          "far": false
+        },
+        "end": {
+          "drained": 2,
+          "thralls": true
+        },
+        "sixth": 12
+      }
+    }
+  },
+  "done": true,
+  "rank3Batch81": {
+    "label": "rank3Batch81",
+    "passed": true,
+    "at": "2026-10-03T15:07:26.366Z",
+    "details": {
+      "batch81r3": {
+        "nearExposed": true,
+        "near": {
+          "formula": "1d12 bludgeoning",
+          "total": 8,
+          "lost": 8
+        },
+        "farExposed": false
+      }
+    }
+  },
+  "rank3Batch109": {
+    "label": "rank3Batch109",
+    "passed": true,
+    "at": "2026-10-03T15:07:53.646Z",
+    "details": {
+      "batch109": {
+        "decl": {
+          "terrain": 2,
+          "notes": 3,
+          "growth": 30
+        },
+        "formula": "3d4 bludgeoning",
+        "total": 7,
+        "lost": 7,
+        "growth": {
+          "first": 20,
+          "capped": 30,
+          "again": "at-maximum",
+          "regionFeet": 30
+        }
+      }
+    }
+  },
+  "rank5Batch94": {
+    "label": "rank5Batch94",
+    "passed": true,
+    "at": "2026-10-03T15:08:18.302Z",
+    "details": {
+      "batch94": {
+        "chainsCheck": "reflex",
+        "chained": {
+          "clumsy": 1,
+          "held": true
+        },
+        "chainEscape": 2,
+        "chainFreed": {
+          "clumsy": 0,
+          "held": false
+        },
+        "maw": {
+          "degree": "criticalFailure",
+          "rounds": 3,
+          "sated": true,
+          "ate": {
+            "ally": true,
+            "died": true,
+            "healed": 15,
+            "gained": 15,
+            "dying": 4
+          },
+          "again": "Ravening Maw: PFTEST P23 Affliction fallen's body has already been cannibalized.",
+          "starve": {
+            "damage": 15,
+            "lost": 15
+          }
+        },
+        "tempest": {
+          "rolled": 7,
+          "resist": 7,
+          "weak": 7,
+          "plain": 2,
+          "corrections": [
+            [
+              "chained",
+              0
+            ],
+            [
+              "hungry",
+              0
+            ],
+            [
+              "sated",
+              0
+            ],
+            [
+              "fallen",
+              0
+            ],
+            [
+              "resist",
+              5
+            ],
+            [
+              "weak",
+              -5
+            ],
+            [
+              "plain",
+              0
+            ]
+          ],
+          "caster": false,
+          "primedGone": true
+        },
+        "thrall": {
+          "hp": 40,
+          "size": "huge",
+          "saveDegree": 1,
+          "dice": 2,
+          "immune": "bleed,death-effects,disease,mental,poison"
+        },
+        "strikes": [
+          {
+            "hit": true,
+            "held": "restrained by the thrall",
+            "saveDegree": 0
+          },
+          {
+            "hit": true,
+            "held": null,
+            "saveDegree": 3
+          }
+        ],
+        "v1": {
+          "restrained": true,
+          "lost": 12
+        },
+        "v1Escape": 1,
+        "v1Free": true,
+        "thrallGone": true,
+        "noteRitual": {
+          "status": "applied",
+          "effect": true
+        }
+      }
+    }
+  },
+  "done2": true
+}

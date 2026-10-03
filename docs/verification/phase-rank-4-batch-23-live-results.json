@@ -1,0 +1,29 @@
+{
+  "label": "rank4Batch23",
+  "passed": true,
+  "at": "2026-10-02T15:15:18.622Z",
+  "details": {
+    "batch23": {
+      "bind": {
+        "kind": "effect",
+        "level": "automatic",
+        "effect": true,
+        "fortitude": 2,
+        "note": true
+      },
+      "fortissimo": {
+        "kind": "spellshape-effect",
+        "level": "automatic",
+        "dc": 10,
+        "willDC": 10,
+        "anthem": true,
+        "boost": 3,
+        "applied": "Courageous Anthem"
+      },
+      "refund": {
+        "focus": 1,
+        "boost": false
+      }
+    }
+  }
+}

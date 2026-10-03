@@ -1,0 +1,200 @@
+{
+  "generatedAt": "2026-09-26T17:25:17.544Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "world": "pftest",
+  "results": {
+    "messaging": {
+      "label": "messaging",
+      "passed": true,
+      "at": "2026-09-26T17:21:01.865Z",
+      "details": {
+        "messageFar": "Message: PFTEST P23 Affliction message far is more than 120 feet away.",
+        "message": {
+          "status": "sent",
+          "whisper": [
+            true
+          ],
+          "text": "Meet me by the gate",
+          "reply": {
+            "status": "replied",
+            "text": "On my way"
+          },
+          "replied": "On my way",
+          "again": "Message: PFTEST P23 Affliction message near has already replied.",
+          "card": true
+        },
+        "replyOutOfRange": "Message: PFTEST P23 Affliction message near must be within 120 feet of PFTEST P23 Affliction Message caster to reply.",
+        "deadline": {
+          "combatId": "KUX8Z1ydxezodqwF",
+          "round": 1,
+          "turn": 1
+        },
+        "lateReply": "Message: the reply had to come by the end of PFTEST P23 Affliction message near's next turn.",
+        "sendingTooLong": "Sending: 26 words; the spell allows 25 or fewer.",
+        "sendingLongReply": "Sending: 26 words; the spell allows 25 or fewer.",
+        "sending": {
+          "status": "sent",
+          "words": 25,
+          "replyWords": 25
+        },
+        "dreamTwoAtRank3": "Dream Message: at rank 3 the spell reaches 1 creature.",
+        "dream": {
+          "status": "pending",
+          "cards": 2,
+          "pendingBefore": true,
+          "delivered": [
+            true,
+            false
+          ],
+          "ends": true,
+          "again": "There is no dream message waiting here."
+        },
+        "uiClickThrough": {
+          "spellCardButton": "Send Message",
+          "dialog": true,
+          "sentText": "The ship leaves at dawn",
+          "target": "sending friend (targeted token)",
+          "spellCardMarked": true,
+          "replyButtonRendered": true,
+          "dreamDeliverButtonForGM": true
+        }
+      }
+    },
+    "foodHealing": {
+      "label": "foodHealing",
+      "passed": true,
+      "at": "2026-09-26T17:22:26.833Z",
+      "details": {
+        "cornucopia": {
+          "pieces": 3,
+          "ate": 2,
+          "total": 13,
+          "before": {
+            "hp": 300,
+            "dying": 0,
+            "wounded": 0
+          },
+          "after": {
+            "hp": 313,
+            "dying": 0,
+            "wounded": 0
+          },
+          "left": 1,
+          "undeadRefused": "Cornucopia: PFTEST P23 Affliction cornucopia undead isn't healed by vitality energy.",
+          "tooMany": "Cornucopia: only 1 piece left.",
+          "card": true,
+          "rolls": [
+            8,
+            5
+          ]
+        },
+        "naturesBounty": {
+          "total": 35,
+          "after": {
+            "hp": 35,
+            "dying": 0,
+            "wounded": 1
+          },
+          "nourished": true,
+          "again": "Nature's Bounty: the food has all been eaten.",
+          "withered": "Nature's Bounty: the food has withered away."
+        }
+      }
+    },
+    "directHealing": {
+      "label": "directHealing",
+      "passed": true,
+      "at": "2026-09-26T17:22:47.702Z",
+      "details": {
+        "companion": {
+          "formula": "1d10 + 8",
+          "total": 16,
+          "gained": 16
+        },
+        "soothe": {
+          "total": 11,
+          "effect": "Spell Effect: Soothe"
+        },
+        "refusals": [
+          "Heal Animal: PFTEST P23 Affliction not an animal can't be healed by this spell (requires the animal trait).",
+          "Heal Animal: PFTEST P23 Affliction undead hound can't be healed by this spell (requires a living creature)."
+        ]
+      }
+    },
+    "bloodlineDamage": {
+      "label": "bloodlineDamage",
+      "passed": true,
+      "at": "2026-09-26T17:23:08.047Z",
+      "details": {
+        "dragonBreath": {
+          "formula": "9d6 spirit",
+          "total": 36,
+          "lost": [
+            36,
+            36
+          ],
+          "attackNumbers": [
+            null,
+            null
+          ],
+          "reminder": false
+        },
+        "elementalBlast": {
+          "formula": "8d6 fire",
+          "total": 39,
+          "lost": [
+            19
+          ],
+          "attackNumbers": [
+            null
+          ],
+          "reminder": true,
+          "traits": [
+            "concentrate",
+            "focus",
+            "manipulate",
+            "sorcerer",
+            "fire"
+          ]
+        },
+        "elementalToss": {
+          "formula": "5d8 fire",
+          "total": 10,
+          "lost": [
+            20
+          ],
+          "attackNumbers": [
+            1
+          ],
+          "reminder": false
+        },
+        "flurryOfClaws": {
+          "formula": "5d8 slashing + 5d4 spirit",
+          "total": 37,
+          "lost": [
+            37,
+            74
+          ],
+          "attackNumbers": [
+            1,
+            1
+          ],
+          "reminder": false,
+          "farRefused": "Flurry of Claws: PFTEST P23 Affliction claws far and PFTEST P23 Affliction claws one are more than 10 feet from each other."
+        },
+        "noBloodline": "Dragon Breath: PFTEST P23 Affliction Dragon Breath caster has no draconic bloodline choice in PF2e, so PF2e can't give this spell its damage type."
+      }
+    },
+    "cleanup": {
+      "label": "cleanup",
+      "passed": true,
+      "at": "2026-09-26T17:23:39.669Z",
+      "details": {
+        "actorsRemoved": 31,
+        "journalsRemoved": 1,
+        "remainingFixtureActors": 0
+      }
+    }
+  }
+}

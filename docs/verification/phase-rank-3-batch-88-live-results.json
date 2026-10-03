@@ -1,0 +1,22 @@
+{
+  "label": "rank3Batch88",
+  "passed": true,
+  "at": "2026-10-03T04:58:19.038Z",
+  "details": {
+    "batch88": {
+      "cast": {
+        "asked": true,
+        "prone": true,
+        "lost": 0,
+        "terrain": true
+      },
+      "sustain": {
+        "asked": true,
+        "formula": "5d6",
+        "total": 21,
+        "lost": 21,
+        "prone": false
+      }
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "batch": "cantrip-rank-1-batch-26",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch26",
+    "passed": true,
+    "details": {
+      "fatedHealing": {
+        "refused": "Fated Healing: target exactly 2 creatures.",
+        "beforeAEnds": [
+          480,
+          480
+        ],
+        "afterA": [
+          481,
+          480
+        ],
+        "afterB": [
+          481,
+          483
+        ],
+        "records": [
+          "Fated Healing (PFTEST P23 Affliction fated a): active",
+          "Fated Healing (PFTEST P23 Affliction fated b): active"
+        ]
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch26",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch9",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "lingering",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

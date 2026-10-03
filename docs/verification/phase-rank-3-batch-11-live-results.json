@@ -1,0 +1,26 @@
+{
+  "label": "rank3Batch11",
+  "passed": true,
+  "at": "2026-10-02T10:07:47.006Z",
+  "details": {
+    "batch11": {
+      "supported": true,
+      "criticalFailure": {
+        "willing": true,
+        "stupefied": 2,
+        "duration": "1 minutes"
+      },
+      "record": {
+        "status": "active",
+        "dismissal": true
+      },
+      "afterDismiss": {
+        "status": "ended",
+        "stupefied": 0
+      },
+      "success": {
+        "stupefied": false
+      }
+    }
+  }
+}

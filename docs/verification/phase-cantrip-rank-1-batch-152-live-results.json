@@ -1,0 +1,52 @@
+{
+  "batch": 152,
+  "spells": [
+    "Sure Strike",
+    "Serrate",
+    "Weapon Surge",
+    "Precious Gleam",
+    "Funeral Flames",
+    "Bit of Luck"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch152",
+      "passed": true,
+      "at": "2026-09-28T23:39:02.237Z",
+      "details": {
+        "usedUp": {
+          "sureStrike": {
+            "before": true,
+            "after": false,
+            "immune": true
+          },
+          "serrateCast": "ok",
+          "serrate": "1 rounds turn-start",
+          "weaponSurge": {
+            "before": true,
+            "afterAttack": true,
+            "afterDamage": false
+          },
+          "gleamCast": "ok",
+          "preciousGleam": {
+            "before": true,
+            "afterAttack": true,
+            "afterDamage": false
+          },
+          "funeralFlames": {
+            "plain": true,
+            "persistent": true,
+            "after": false
+          },
+          "bitOfLuck": {
+            "before": true,
+            "after": false
+          }
+        }
+      }
+    }
+  ]
+}

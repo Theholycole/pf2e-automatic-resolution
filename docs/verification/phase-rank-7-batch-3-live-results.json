@@ -1,0 +1,28 @@
+{
+ "label": "rank7Batch3",
+ "passed": true,
+ "at": "2026-10-03T17:11:31.052Z",
+ "details": {
+  "batch3": {
+   "depths": {
+    "events": [],
+    "initial": true,
+    "gm": "was moved through by the vortex",
+    "once": true,
+    "move": true
+   },
+   "maskEffect": true,
+   "mask": {
+    "frightened": 2,
+    "immune": {
+     "value": 1,
+     "unit": "rounds",
+     "expiry": "turn-end",
+     "sustained": false
+    },
+    "wasted": true
+   },
+   "maskAgain": "immune"
+  }
+ }
+}

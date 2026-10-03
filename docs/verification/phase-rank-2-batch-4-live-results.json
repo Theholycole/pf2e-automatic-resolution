@@ -1,0 +1,41 @@
+{
+  "batch": "rank-2-4",
+  "date": "2026-09-30",
+  "world": "pftest",
+  "system": "8.5.0",
+  "core": "14.367",
+  "module": "0.8.2",
+  "results": [
+    {
+      "case": "rank2Batch4",
+      "passed": true,
+      "details": {
+        "forcedMovement": {
+          "bone": {
+            "threeSuccess": {
+              "prone": false,
+              "note": true,
+              "avoid": true
+            },
+            "threeCritical": {
+              "prone": true,
+              "enfeebled": 2,
+              "note": true,
+              "hazard": true
+            },
+            "twoFailure": {
+              "enfeebled": 1,
+              "note": false
+            }
+          },
+          "hook": {
+            "failureNote": true,
+            "criticalNote": true,
+            "criticalOffGuard": true,
+            "failureOffGuard": false
+          }
+        }
+      }
+    }
+  ]
+}

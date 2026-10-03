@@ -1,0 +1,37 @@
+{
+  "label": "rank4Batch43",
+  "passed": true,
+  "at": "2026-10-02T19:18:03.017Z",
+  "details": {
+    "batch43": {
+      "failure": {
+        "slowed": 1,
+        "slowedFor": {
+          "value": 3,
+          "unit": "rounds",
+          "expiry": "turn-start",
+          "sustained": false
+        },
+        "toFoe": "Tortoise and the Hare: the other target can't be the foe.",
+        "granted": "granted",
+        "again": "refused",
+        "quickened": true,
+        "note": true
+      },
+      "success": {
+        "slowed": 1,
+        "slowedFor": {
+          "value": 1,
+          "unit": "rounds",
+          "expiry": "turn-start",
+          "sustained": false
+        },
+        "toFoe": "Tortoise and the Hare: the foe's result grants the other target nothing.",
+        "granted": "Tortoise and the Hare: the foe's result grants the other target nothing.",
+        "again": "Tortoise and the Hare: the foe's result grants the other target nothing.",
+        "quickened": false,
+        "note": false
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "label": "rank4Batch7",
+  "passed": true,
+  "at": "2026-10-02T12:20:24.684Z",
+  "details": {
+    "batch7": {
+      "glimmer": {
+        "kind": "spell-note",
+        "perception": 2,
+        "will": 2,
+        "error": null,
+        "nonAnimalRefused": true
+      },
+      "lines": {
+        "kind": "spell-note",
+        "card": true,
+        "effect": false
+      },
+      "word": {
+        "kind": "spell-note",
+        "unit": "unlimited"
+      },
+      "empathy": {
+        "kind": "spell-note",
+        "error": null,
+        "note": true
+      }
+    }
+  }
+}

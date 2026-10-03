@@ -1,0 +1,23 @@
+{
+  "label": "rank3Batch87",
+  "passed": true,
+  "at": "2026-10-03T04:38:07.801Z",
+  "details": {
+    "batch87": {
+      "liar": {
+        "asked": true,
+        "note": true,
+        "deception": -2
+      },
+      "honest": {
+        "asked": true,
+        "note": true,
+        "deception": -2
+      },
+      "liarLeft": {
+        "note": false,
+        "deception": 0
+      }
+    }
+  }
+}

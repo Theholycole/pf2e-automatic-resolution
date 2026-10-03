@@ -1,0 +1,112 @@
+{
+  "phase": "rank-2-batch-34",
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cleanup",
+      "passed": true,
+      "at": "2026-10-01T21:36:10.835Z",
+      "details": {
+        "actorsRemoved": 0,
+        "journalsRemoved": 0,
+        "regionsRemoved": 0,
+        "remainingFixtureActors": 0
+      }
+    },
+    {
+      "label": "rank2Batch34",
+      "passed": true,
+      "at": "2026-10-01T21:36:11.487Z",
+      "details": {
+        "batch34": {
+          "worm": {
+            "formula": "6d6 piercing",
+            "total": 20,
+            "living": {
+              "lost": 20,
+              "persistent": [
+                "2d6"
+              ],
+              "offGuard": true,
+              "slowed": 0
+            },
+            "zombie": {
+              "lost": 40,
+              "persistent": [
+                "(2d6 + 3d6)"
+              ],
+              "offGuard": true,
+              "slowed": 1
+            },
+            "skeleton": {
+              "lost": 20,
+              "persistent": [
+                "2d6"
+              ],
+              "offGuard": true,
+              "slowed": 0
+            },
+            "zombieAfter": {
+              "offGuard": false,
+              "slowed": 0
+            }
+          },
+          "regret": {
+            "lostAtCast": [
+              0,
+              0
+            ],
+            "notes": [
+              true,
+              true
+            ],
+            "success3": {
+              "formula": "6d8 mental",
+              "lost": 26,
+              "ended": true,
+              "noteLeft": false
+            },
+            "failure1": {
+              "formula": "2d8 mental",
+              "lost": 9,
+              "ended": false,
+              "noteLeft": true
+            },
+            "failure0": {
+              "formula": null,
+              "lost": 0,
+              "ended": true,
+              "noteLeft": false
+            }
+          },
+          "pyre": {
+            "formula": "2d6 fire",
+            "total": 6,
+            "lost": 12,
+            "dazzled": true,
+            "fly": true
+          },
+          "quench": {
+            "eligible": [
+              true,
+              false
+            ],
+            "formula": "6d8",
+            "total": 20,
+            "lost": [
+              20,
+              0
+            ],
+            "surroundings": true,
+            "counteract": {
+              "countered": true,
+              "degree": 3
+            }
+          }
+        }
+      }
+    }
+  ]
+}

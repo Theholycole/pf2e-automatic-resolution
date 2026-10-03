@@ -1,0 +1,62 @@
+{
+ "label": "rank6Batch3",
+ "passed": true,
+ "at": "2026-10-03T16:08:22.628Z",
+ "details": {
+  "batch3": {
+   "des": {
+    "eligible": [
+     true,
+     true,
+     false
+    ],
+    "confirm": [
+     "pending",
+     "pending",
+     null
+    ],
+    "adjust": [
+     "applies",
+     "not-applicable",
+     "not-applicable"
+    ]
+   },
+   "wind": {
+    "area": {
+     "type": "emanation",
+     "value": 20
+    },
+    "reminder": true,
+    "prone": true,
+    "lost": 520
+   },
+   "void": {
+    "livingOnly": true,
+    "living": true,
+    "undead": false
+   },
+   "life": {
+    "kind": "hazard-area",
+    "formula": "1d10",
+    "healed": 7,
+    "harmed": 1
+   },
+   "stone": {
+    "before": true,
+    "after": false
+   },
+   "haste": {
+    "quickened": true,
+    "effect": [
+     "1 minutes",
+     "1 minutes"
+    ]
+   },
+   "army": {
+    "kind": "incarnate",
+    "lost": 30,
+    "bleed": true
+   }
+  }
+ }
+}

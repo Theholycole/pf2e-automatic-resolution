@@ -1,0 +1,86 @@
+{
+  "generated": "2026-09-25T23:33:08.229Z",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "songbird": [
+    {
+      "label": "songbird",
+      "passed": true,
+      "at": "2026-09-25T23:31:19.724Z",
+      "details": {
+        "atCast": {
+          "caster": true,
+          "ally": true,
+          "enemy": false
+        },
+        "entered": {
+          "concealed": true,
+          "exposure": true
+        },
+        "sustainAsked": true,
+        "sustained": true,
+        "stillActive": true,
+        "status": "ended",
+        "endReason": "missed-sustain"
+      }
+    },
+    {
+      "label": "songbird",
+      "passed": true,
+      "at": "2026-09-25T23:32:06.700Z",
+      "details": {
+        "atCast": {
+          "caster": true,
+          "ally": true,
+          "enemy": false
+        },
+        "entered": {
+          "concealed": true,
+          "exposure": true
+        },
+        "sustainAsked": true,
+        "sustained": true,
+        "stillActive": true,
+        "status": "ended",
+        "endReason": "missed-sustain"
+      }
+    }
+  ],
+  "remainingConcealmentEffectsAfterCleanup": 0,
+  "regressions": {
+    "lingering": {
+      "label": "lingering",
+      "passed": true,
+      "at": "2026-09-25T23:23:08.847Z",
+      "details": {
+        "turnStart": [
+          "Review PFTEST P23 Affliction petal inside's exposure (started its turn in the area)"
+        ],
+        "exposures": [
+          "Review PFTEST P23 Affliction petal inside's exposure (started its turn in the area)",
+          "Review PFTEST P23 Affliction petal outside's exposure (entered the area)"
+        ],
+        "damage": 2,
+        "ended": "ended"
+      }
+    },
+    "durationBuffs": {
+      "passed": true,
+      "at": "2026-09-25T23:23:39.919Z"
+    },
+    "reactionBuffs": {
+      "passed": true,
+      "at": "2026-09-25T23:26:53.592Z"
+    },
+    "customAura": {
+      "label": "custom-aura",
+      "passed": true,
+      "at": "2026-09-25T23:28:03.360Z"
+    },
+    "flameBless": {
+      "label": "flame-bless",
+      "passed": true,
+      "at": "2026-09-25T23:28:40.222Z"
+    }
+  }
+}

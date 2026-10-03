@@ -1,0 +1,58 @@
+{
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "rank3Batch2",
+    "passed": true,
+    "at": "2026-09-27T00:58:30.890Z",
+    "details": {
+      "repellingPulse": {
+        "rank5": [
+          "GM: PFTEST P23 Affliction pulse failure 5 is pushed 10 feet away from the caster. Move the token; the module doesn't.",
+          "GM: PFTEST P23 Affliction pulse crit 5 is pushed 20 feet away from the caster. Move the token; the module doesn't."
+        ],
+        "rank7": [
+          "GM: PFTEST P23 Affliction pulse failure 7 is pushed 15 feet away from the caster. Move the token; the module doesn't.",
+          "GM: PFTEST P23 Affliction pulse crit 7 is pushed 25 feet away from the caster. Move the token; the module doesn't."
+        ],
+        "prone": [
+          false,
+          true,
+          false,
+          true
+        ],
+        "lost5": [
+          35,
+          70
+        ],
+        "total5": 35
+      },
+      "tornadicGale": {
+        "reminders": [
+          "GM: Before the saves: All Medium or smaller creatures that are adjacent to the line are pulled to the nearest unoccupied space within the line. Move them; the module doesn't.",
+          "GM: PFTEST P23 Affliction gale failure is pushed 5 feet away from the caster. Move the token; the module doesn't.",
+          "GM: PFTEST P23 Affliction gale crit is pushed 10 feet away from the caster. Move the token; the module doesn't."
+        ],
+        "pull": true,
+        "prone": [
+          false,
+          true
+        ]
+      }
+    }
+  },
+  "regressions": {
+    "rank3Batch2": true,
+    "rank3Batch1": true,
+    "cantripBatch1": true,
+    "attackRowRules": true,
+    "longTailBatch2": true
+  },
+  "cleanup": {
+    "actorsRemoved": 16,
+    "journalsRemoved": 5,
+    "remainingFixtureActors": 0
+  },
+  "combats": 0
+}

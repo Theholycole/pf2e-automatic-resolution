@@ -1,0 +1,29 @@
+{
+  "label": "rank4Batch30",
+  "passed": true,
+  "at": "2026-10-02T16:28:24.250Z",
+  "details": {
+    "batch30": {
+      "metals": {
+        "level": "automatic",
+        "effect": true,
+        "offered": [
+          [
+            "Cold Iron",
+            "Copper",
+            "Gold",
+            "Iron",
+            "Silver",
+            "Steel"
+          ]
+        ],
+        "selections": {
+          "material": "cold-iron",
+          "item": "geAGFBzJCdkkVvD8"
+        },
+        "material": "cold-iron",
+        "note": true
+      }
+    }
+  }
+}

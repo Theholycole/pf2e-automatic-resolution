@@ -1,0 +1,22 @@
+{
+  "label": "rank4Batch114",
+  "passed": true,
+  "at": "2026-10-03T09:01:06.833Z",
+  "details": {
+    "batch114": {
+      "kind": "effect-note",
+      "level": "automatic",
+      "ally": {
+        "effect": true,
+        "deception": 4,
+        "will": 4
+      },
+      "caster": true,
+      "recast": {
+        "ally": false,
+        "caster": 1,
+        "notes": 1
+      }
+    }
+  }
+}

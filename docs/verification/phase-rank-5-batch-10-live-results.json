@@ -1,0 +1,33 @@
+{
+  "label": "rank5Batch10",
+  "passed": true,
+  "at": "2026-10-02T14:37:36.120Z",
+  "details": {
+    "batch10": {
+      "revel": {
+        "kind": "incarnate",
+        "buttons": 2,
+        "stupefied": 2,
+        "clumsy": 2,
+        "rollTwice": true,
+        "again": "Incarnate Faerie Revelers: its Depart has been resolved."
+      },
+      "giant": {
+        "kind": "incarnate",
+        "prone": true,
+        "clumsy": 1,
+        "lost": [
+          21,
+          10
+        ]
+      },
+      "minuet": {
+        "kind": "incarnate",
+        "buttons": 1,
+        "lost": 8,
+        "offGuard": true,
+        "darkness": true
+      }
+    }
+  }
+}

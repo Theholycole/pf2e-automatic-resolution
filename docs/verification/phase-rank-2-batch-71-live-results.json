@@ -1,0 +1,34 @@
+{
+  "label": "rank2Batch71",
+  "passed": true,
+  "at": "2026-10-02T01:05:00.961Z",
+  "details": {
+    "batch71": {
+      "level": "automatic",
+      "rank2": {
+        "name": "Longsword (Blazing Armory)",
+        "carry": "held",
+        "runes": [
+          1,
+          1,
+          []
+        ],
+        "traits": [
+          "magical"
+        ],
+        "formula": "2d8 + 2 fire"
+      },
+      "two": "Blazing Armory: target at most 1 creature.",
+      "removed": true,
+      "rank4": {
+        "a": "held",
+        "b": "dropped",
+        "property": [
+          "flaming"
+        ],
+        "formula": "2d8 + 1d6 + 2 fire"
+      },
+      "touch": 1
+    }
+  }
+}

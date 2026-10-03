@@ -1,0 +1,34 @@
+{
+  "label": "rank5Batch47",
+  "passed": true,
+  "at": "2026-10-03T00:36:01.935Z",
+  "details": {
+    "batch47": {
+      "terrain": true,
+      "results": {
+        "failure": {
+          "lost": 19,
+          "formula": "6d6 slashing",
+          "persistent": [
+            "3d6 bleed"
+          ],
+          "speedDrop": 10,
+          "note": [
+            "unlimited"
+          ]
+        },
+        "criticalFailure": {
+          "lost": 24,
+          "formula": "6d6 slashing",
+          "persistent": [
+            "(2 * 3d6) bleed"
+          ],
+          "speedDrop": 15,
+          "note": [
+            "unlimited"
+          ]
+        }
+      }
+    }
+  }
+}

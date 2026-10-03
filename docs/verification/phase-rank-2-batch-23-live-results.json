@@ -1,0 +1,45 @@
+{
+  "case": "rank2Batch23",
+  "date": "2026-09-30",
+  "world": "pftest",
+  "result": {
+    "label": "rank2Batch23",
+    "passed": true,
+    "at": "2026-10-01T00:54:14.835Z",
+    "details": {
+      "batch23": {
+        "atCast": 0,
+        "failure": {
+          "obligation": true,
+          "dazzled": true,
+          "weakness": 3,
+          "duration": "1 rounds turn-start",
+          "startInitiative": 30,
+          "note": true
+        },
+        "critical": {
+          "obligation": true,
+          "dazzled": true,
+          "weakness": 6,
+          "duration": "1 rounds turn-start",
+          "startInitiative": 20,
+          "note": true
+        },
+        "immune": {
+          "obligation": true,
+          "eligible": false,
+          "reason": "immune to spirit damage"
+        },
+        "failureNextTurn": {
+          "round": 2,
+          "turn": 1,
+          "effect": false,
+          "expired": null,
+          "remaining": null
+        },
+        "ended": "ended",
+        "regionLeft": false
+      }
+    }
+  }
+}

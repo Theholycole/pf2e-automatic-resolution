@@ -1,0 +1,265 @@
+{
+  "summary": {
+    "compared": 1994,
+    "changed": 7,
+    "newlyExecutable": [
+      "All-Encompassing Hunger",
+      "Vampiric Feast",
+      "Vampiric Exsanguination",
+      "Devour Life"
+    ],
+    "noLongerExecutable": []
+  },
+  "changes": [
+    {
+      "id": "spells/spells/rank-1/all-encompassing-hunger.json",
+      "name": "All-Encompassing Hunger",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": true,
+      "before": {
+        "pending": [
+          "description-effects",
+          "description-lifecycle",
+          "description-target-predicates"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "basic-save-composition:Basic-save riders have not been completely compiled.",
+            "compiler-gap:description-effects",
+            "compiler-gap:description-lifecycle",
+            "compiler-gap:description-target-predicates",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [],
+        "route": {
+          "supported": true,
+          "blockers": []
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-1/soul-siphon.json",
+      "name": "Soul Siphon",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "preamble:additional-condition"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:additional-condition"
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "preamble:additional-condition",
+          "preamble:caster-benefit"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:additional-condition",
+            "compiler-gap:preamble:caster-benefit"
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-3/vampiric-feast.json",
+      "name": "Vampiric Feast",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": true,
+      "before": {
+        "pending": [
+          "description-effects",
+          "description-lifecycle",
+          "description-target-predicates"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "basic-save-composition:Basic-save riders have not been completely compiled.",
+            "compiler-gap:description-effects",
+            "compiler-gap:description-lifecycle",
+            "compiler-gap:description-target-predicates",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [],
+        "route": {
+          "supported": true,
+          "blockers": []
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-4/fallow-field.json",
+      "name": "Fallow Field",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "manual:temporary-immunity",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:manual:temporary-immunity",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "manual:temporary-immunity",
+          "preamble:caster-benefit",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:manual:temporary-immunity",
+            "compiler-gap:preamble:caster-benefit",
+            "compiler-gap:residual-prose",
+            "lifecycle:The save route cannot manage this lifecycle or controller.",
+            "manual-mechanic:This outcome contains mechanics requiring manual handling.",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-4/vampiric-maiden.json",
+      "name": "Vampiric Maiden",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": false,
+      "before": {
+        "pending": [
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:residual-prose",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [
+          "preamble:caster-benefit",
+          "residual-prose"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "compiler-gap:preamble:caster-benefit",
+            "compiler-gap:residual-prose",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-6/vampiric-exsanguination.json",
+      "name": "Vampiric Exsanguination",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": true,
+      "before": {
+        "pending": [
+          "description-effects",
+          "description-lifecycle",
+          "description-target-predicates"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "basic-save-composition:Basic-save riders have not been completely compiled.",
+            "compiler-gap:description-effects",
+            "compiler-gap:description-lifecycle",
+            "compiler-gap:description-target-predicates",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [],
+        "route": {
+          "supported": true,
+          "blockers": []
+        }
+      }
+    },
+    {
+      "id": "spells/spells/rank-8/devour-life.json",
+      "name": "Devour Life",
+      "fields": [
+        "pending",
+        "route"
+      ],
+      "routeBefore": false,
+      "routeAfter": true,
+      "before": {
+        "pending": [
+          "description-effects",
+          "description-lifecycle",
+          "description-target-predicates"
+        ],
+        "route": {
+          "supported": false,
+          "blockers": [
+            "basic-save-composition:Basic-save riders have not been completely compiled.",
+            "compiler-gap:description-effects",
+            "compiler-gap:description-lifecycle",
+            "compiler-gap:description-target-predicates",
+            "unaccounted-prose:Some rules in this outcome remain unaccounted for."
+          ]
+        }
+      },
+      "after": {
+        "pending": [],
+        "route": {
+          "supported": true,
+          "blockers": []
+        }
+      }
+    }
+  ]
+}

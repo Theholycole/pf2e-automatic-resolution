@@ -1,0 +1,27 @@
+{
+  "label": "rank4Batch113",
+  "passed": true,
+  "at": "2026-10-03T08:55:40.312Z",
+  "details": {
+    "batch113": {
+      "effect": {
+        "sustained": true,
+        "minutes": 1
+      },
+      "assault": {
+        "formula": "5d10 void",
+        "lost": 42
+      },
+      "again": "Pernicious Poltergeist: one effect a round (the first Sustain each round).",
+      "frighten": {
+        "formula": null,
+        "lost": 0
+      },
+      "frightened": 2,
+      "storm": {
+        "formula": "5d8 force",
+        "lost": 15
+      }
+    }
+  }
+}

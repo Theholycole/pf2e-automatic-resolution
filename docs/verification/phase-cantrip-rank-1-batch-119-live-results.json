@@ -1,0 +1,46 @@
+{
+  "batch": 119,
+  "spells": [
+    "Crown of Prophets"
+  ],
+  "results": [
+    {
+      "label": "cr1Batch119",
+      "passed": true,
+      "at": "2026-09-28T02:45:49.699Z",
+      "details": {
+        "crownOfProphets": {
+          "marker": [
+            "Strike:fangs"
+          ],
+          "strike": true,
+          "failure": {
+            "ended": false,
+            "total": 3,
+            "lost": 3,
+            "formula": "2d4 poison"
+          },
+          "success": {
+            "ended": false,
+            "total": 7,
+            "lost": 3,
+            "formula": "2d4 poison"
+          },
+          "statusAfter": "active",
+          "sustained": true,
+          "afterEnd": 0
+        }
+      }
+    }
+  ],
+  "regressions": [
+    {
+      "c": "cr1Batch79",
+      "passed": true
+    },
+    {
+      "c": "cr1Batch81",
+      "passed": true
+    }
+  ]
+}

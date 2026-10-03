@@ -1,0 +1,24 @@
+{
+  "label": "rank4Batch38",
+  "passed": true,
+  "at": "2026-10-02T17:47:35.972Z",
+  "details": {
+    "batch38": {
+      "formula": "5d6 fire",
+      "lost": [
+        10,
+        21
+      ],
+      "note": {
+        "text": true,
+        "duration": "1 minutes",
+        "sustained": false
+      },
+      "successNote": false,
+      "speech": {
+        "formula": "5 fire",
+        "lost": 5
+      }
+    }
+  }
+}

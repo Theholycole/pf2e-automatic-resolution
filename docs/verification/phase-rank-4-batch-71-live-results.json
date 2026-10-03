@@ -1,0 +1,19 @@
+{
+  "label": "rank4Batch71",
+  "passed": true,
+  "at": "2026-10-02T23:27:25.529Z",
+  "details": {
+    "batch71": {
+      "foes": [
+        [],
+        [],
+        [
+          "7 days"
+        ],
+        [
+          "-1 unlimited attitude"
+        ]
+      ]
+    }
+  }
+}

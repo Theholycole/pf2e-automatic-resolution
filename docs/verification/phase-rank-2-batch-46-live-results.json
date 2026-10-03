@@ -1,0 +1,43 @@
+{
+  "phase": "rank-2-batch-46",
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cleanup",
+      "passed": true,
+      "at": "2026-10-01T22:48:18.976Z",
+      "details": {
+        "actorsRemoved": 0,
+        "journalsRemoved": 0,
+        "regionsRemoved": 0,
+        "remainingFixtureActors": 0
+      }
+    },
+    {
+      "label": "rank2Batch46",
+      "passed": true,
+      "at": "2026-10-01T22:48:19.620Z",
+      "details": {
+        "batch46": {
+          "mist": {
+            "modes": [
+              "healing",
+              "damage"
+            ],
+            "formula": "3d8 vitality",
+            "total": 12,
+            "healed": 12,
+            "bleedLeft": false,
+            "removed": "Persistent Damage (2 bleed)",
+            "undeadLost": 12,
+            "undeadPersistent": [
+              "3 vitality"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

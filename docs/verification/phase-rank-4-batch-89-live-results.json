@@ -1,0 +1,27 @@
+{
+  "label": "rank4Batch89",
+  "passed": true,
+  "at": "2026-10-03T02:33:48.615Z",
+  "details": {
+    "batch89": {
+      "dc": 24,
+      "marker": {
+        "inside": true,
+        "outside": false
+      },
+      "inside": {
+        "hp": 106,
+        "save": {
+          "actorUuid": "Actor.rVgFCd4mQrKeNZld",
+          "amount": 12,
+          "degree": "failure",
+          "regained": 6
+        }
+      },
+      "outside": {
+        "hp": 112
+      },
+      "afterEnd": false
+    }
+  }
+}

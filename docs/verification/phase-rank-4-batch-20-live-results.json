@@ -1,0 +1,30 @@
+{
+  "label": "rank4Batch20",
+  "passed": true,
+  "at": "2026-10-02T14:41:07.403Z",
+  "details": {
+    "batch20": {
+      "corpse": {
+        "supported": true,
+        "note": true
+      },
+      "notes": {
+        "Grave Impressions": {
+          "kind": "spell-note",
+          "error": null,
+          "card": true
+        },
+        "Peaceful Rest": {
+          "kind": "spell-note",
+          "error": null,
+          "card": true
+        },
+        "Fate's Travels": {
+          "kind": "spell-note",
+          "error": null,
+          "card": true
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "batch": "rank-2-14",
+  "date": "2026-09-30",
+  "world": "pftest",
+  "system": "8.5.0",
+  "core": "14.367",
+  "module": "0.8.2",
+  "results": [
+    {
+      "case": "rank2Batch14",
+      "passed": true,
+      "details": {
+        "batch14": {
+          "laugh": {
+            "success": {
+              "conditions": [],
+              "effects": [
+                "Laughing Fit: GM note|10 minutes"
+              ]
+            },
+            "failure": {
+              "conditions": [
+                "slowed"
+              ],
+              "effects": [
+                "Laughing Fit: Slowed 1|10 minutes",
+                "Laughing Fit: Reactions|10 minutes"
+              ]
+            },
+            "critical": {
+              "conditions": [
+                "prone",
+                "slowed"
+              ],
+              "effects": [
+                "Laughing Fit: Prone|-1 unlimited",
+                "Laughing Fit: Slowed 1|10 minutes",
+                "Laughing Fit: GM note|1 rounds",
+                "Laughing Fit: Reactions|10 minutes"
+              ]
+            },
+            "afterSustainEnds": {
+              "failure": [],
+              "critical": [
+                "prone"
+              ]
+            }
+          },
+          "calm": {
+            "success": {
+              "effects": [
+                "Calm: Penalty|1 minutes"
+              ],
+              "attack": [
+                "Calm -1 status"
+              ]
+            },
+            "critical": {
+              "effects": [
+                "Calm: No hostile actions against the caster|1 minutes"
+              ],
+              "attack": [],
+              "but": true
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,893 @@
+{
+  "generatedAt": "2026-09-24T23:38:46.462Z",
+  "scope": "Disposable pftest GM fixtures; Foundry 14.367 / PF2e 8.5.0; only this module active; automatic expired-Effect removal on. Save degrees are real rolls corrected to explicit provisional degrees so each branch runs. Scripted Escape messages use constant totals through the real createChatMessage hook; verifyUi used a genuine PF2e Escape action roll and a clicked End button. Rank cases use a level 2r-1 caster so PF2e resolves rank r.",
+  "attempts": [
+    {
+      "label": "environment",
+      "passed": true,
+      "at": "2026-09-24T23:21:05.873Z",
+      "error": null
+    },
+    {
+      "label": "degrees",
+      "passed": true,
+      "at": "2026-09-24T23:21:10.354Z",
+      "error": null
+    },
+    {
+      "label": "escape",
+      "passed": false,
+      "at": null,
+      "error": "A second End click is refused"
+    },
+    {
+      "label": "multiple",
+      "passed": false,
+      "at": null,
+      "error": "One Escape ends one restraint"
+    },
+    {
+      "label": "timer",
+      "passed": true,
+      "at": "2026-09-24T23:22:09.397Z",
+      "error": null
+    },
+    {
+      "label": "escape",
+      "passed": true,
+      "at": "2026-09-24T23:23:11.951Z",
+      "error": null
+    },
+    {
+      "label": "multiple",
+      "passed": true,
+      "at": "2026-09-24T23:23:21.426Z",
+      "error": null
+    },
+    {
+      "label": "prepareReload",
+      "passed": true,
+      "at": "2026-09-24T23:23:33.197Z",
+      "error": null
+    },
+    {
+      "label": "reload",
+      "passed": true,
+      "at": "2026-09-24T23:24:00.149Z",
+      "error": null
+    },
+    {
+      "label": "prepareUi",
+      "passed": true,
+      "at": "2026-09-24T23:24:17.603Z",
+      "error": null
+    },
+    {
+      "label": "verifyUi",
+      "passed": false,
+      "at": null,
+      "error": "The End button recorded the ending"
+    },
+    {
+      "label": "verifyUi",
+      "passed": false,
+      "at": null,
+      "error": "The End button recorded the ending"
+    },
+    {
+      "label": "prepareUi",
+      "passed": true,
+      "at": "2026-09-24T23:25:34.895Z",
+      "error": null
+    },
+    {
+      "label": "verifyUi",
+      "passed": true,
+      "at": "2026-09-24T23:26:00.889Z",
+      "error": null
+    },
+    {
+      "label": "environment",
+      "passed": true,
+      "at": "2026-09-24T23:26:08.344Z",
+      "error": null
+    },
+    {
+      "label": "degrees",
+      "passed": true,
+      "at": "2026-09-24T23:26:08.972Z",
+      "error": null
+    },
+    {
+      "label": "ranks",
+      "passed": true,
+      "at": "2026-09-24T23:26:20.348Z",
+      "error": null
+    },
+    {
+      "label": "escape",
+      "passed": true,
+      "at": "2026-09-24T23:26:36.623Z",
+      "error": null
+    },
+    {
+      "label": "multiple",
+      "passed": true,
+      "at": "2026-09-24T23:26:41.195Z",
+      "error": null
+    },
+    {
+      "label": "timer",
+      "passed": true,
+      "at": "2026-09-24T23:26:46.759Z",
+      "error": null
+    },
+    {
+      "label": "prepareReload",
+      "passed": true,
+      "at": "2026-09-24T23:26:54.324Z",
+      "error": null
+    },
+    {
+      "label": "reload",
+      "passed": true,
+      "at": "2026-09-24T23:27:23.918Z",
+      "error": null
+    },
+    {
+      "label": "ranks",
+      "passed": true,
+      "at": "2026-09-24T23:30:00.116Z",
+      "error": null
+    },
+    {
+      "label": "ranks",
+      "passed": true,
+      "at": "2026-09-24T23:31:47.156Z",
+      "error": null
+    },
+    {
+      "label": "cleanup",
+      "passed": true,
+      "at": "2026-09-24T23:35:16.068Z",
+      "error": null
+    }
+  ],
+  "cases": [
+    {
+      "label": "environment",
+      "passed": true,
+      "at": "2026-09-24T23:26:08.344Z",
+      "details": {
+        "foundry": "14.367",
+        "pf2e": "8.5.0",
+        "module": "0.8.2",
+        "world": "pftest",
+        "modules": [
+          "pf2e-automatic-resolution"
+        ],
+        "removal": true
+      }
+    },
+    {
+      "label": "degrees",
+      "passed": true,
+      "at": "2026-09-24T23:26:08.972Z",
+      "details": [
+        {
+          "name": "Grasping Grave",
+          "degree": "criticalSuccess",
+          "rank": 5,
+          "damage": 0,
+          "speed": 25,
+          "conditions": {
+            "immobilized": false,
+            "stunned": false,
+            "enfeebled": false
+          },
+          "effects": []
+        },
+        {
+          "name": "Grasping Grave",
+          "degree": "success",
+          "rank": 5,
+          "damage": 7,
+          "speed": 25,
+          "conditions": {
+            "immobilized": false,
+            "stunned": false,
+            "enfeebled": false
+          },
+          "effects": []
+        },
+        {
+          "name": "Grasping Grave",
+          "degree": "failure",
+          "rank": 5,
+          "damage": 15,
+          "speed": 15,
+          "conditions": {
+            "immobilized": false,
+            "stunned": false,
+            "enfeebled": false
+          },
+          "effects": [
+            {
+              "name": "Grasping Grave: 10-foot Speed penalty",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "escape": null
+            }
+          ]
+        },
+        {
+          "name": "Grasping Grave",
+          "degree": "criticalFailure",
+          "rank": 5,
+          "damage": 30,
+          "speed": 25,
+          "conditions": {
+            "immobilized": true,
+            "stunned": false,
+            "enfeebled": false
+          },
+          "effects": [
+            {
+              "name": "Grasping Grave: Immobilized (until Escape)",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "escape": {
+                "dc": 24,
+                "event": "escape",
+                "expirationMode": "first"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Shadow's Web",
+          "degree": "criticalSuccess",
+          "rank": 7,
+          "damage": 0,
+          "speed": 25,
+          "conditions": {
+            "immobilized": false,
+            "stunned": false,
+            "enfeebled": false
+          },
+          "effects": []
+        },
+        {
+          "name": "Shadow's Web",
+          "degree": "success",
+          "rank": 7,
+          "damage": 17,
+          "speed": 25,
+          "conditions": {
+            "immobilized": false,
+            "stunned": false,
+            "enfeebled": 1
+          },
+          "effects": [
+            {
+              "name": "Shadow's Web: Enfeebled 1",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "escape": null
+            }
+          ]
+        },
+        {
+          "name": "Shadow's Web",
+          "degree": "failure",
+          "rank": 7,
+          "damage": 34,
+          "speed": 25,
+          "conditions": {
+            "immobilized": false,
+            "stunned": false,
+            "enfeebled": 2
+          },
+          "effects": [
+            {
+              "name": "Shadow's Web: Enfeebled 2",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "escape": null
+            }
+          ]
+        },
+        {
+          "name": "Shadow's Web",
+          "degree": "criticalFailure",
+          "rank": 7,
+          "damage": 68,
+          "speed": 25,
+          "conditions": {
+            "immobilized": true,
+            "stunned": 1,
+            "enfeebled": 2
+          },
+          "effects": [
+            {
+              "name": "Shadow's Web: Stunned 1",
+              "duration": {
+                "value": -1,
+                "unit": "unlimited",
+                "expiry": null,
+                "sustained": false
+              },
+              "escape": null
+            },
+            {
+              "name": "Shadow's Web: Immobilized (until Escape)",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "escape": {
+                "dc": 24,
+                "event": "escape",
+                "expirationMode": "first"
+              }
+            },
+            {
+              "name": "Shadow's Web: Enfeebled 2",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "escape": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "escape",
+      "passed": true,
+      "at": "2026-09-24T23:26:36.623Z",
+      "details": {
+        "shadowsWeb": {
+          "cardId": "vCuIVvqa0eUbxLca",
+          "escapeCardId": "qZfCUuQFiv0Arlvn",
+          "dc": 24,
+          "hp": 422,
+          "journal": {
+            "uuid": "Actor.RyqKstspnQihOMRY.Item.EAki9BbrCcSWDOFt",
+            "actorUuid": "Actor.RyqKstspnQihOMRY",
+            "status": "ended",
+            "metadata": {
+              "schema": 9,
+              "applicationId": "8sjFhhrtmWBZqVBe",
+              "castId": "NMr8gQC7zOzc6pgX",
+              "sourceActorUuid": "Actor.xqYzjD4JUakFkidR",
+              "sourceItemUuid": "Actor.xqYzjD4JUakFkidR.Item.LvhkadFNPqsS7S7g",
+              "sourceItemName": "Shadow's Web",
+              "targetId": "sfnsi3QUYK5OuVQV",
+              "degree": "criticalFailure",
+              "secondaryDegree": null,
+              "escape": {
+                "dc": 24,
+                "event": "escape",
+                "expirationMode": "first"
+              },
+              "conditions": [
+                {
+                  "slug": "immobilized",
+                  "label": "Immobilized",
+                  "ruleFlag": "condition1"
+                }
+              ]
+            },
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "permanent": false,
+            "reason": "escaped"
+          },
+          "repeat": "This Escape choice is no longer available.",
+          "remaining": [
+            "Shadow's Web: Stunned 1",
+            "Shadow's Web: Enfeebled 2"
+          ]
+        }
+      }
+    },
+    {
+      "label": "multiple",
+      "passed": true,
+      "at": "2026-09-24T23:26:41.195Z",
+      "details": {
+        "status": {
+          "e1": "Ended by Escape",
+          "e0": "Not chosen"
+        },
+        "remaining": [
+          "Grasping Grave: Immobilized (until Escape)"
+        ]
+      }
+    },
+    {
+      "label": "timer",
+      "passed": true,
+      "at": "2026-09-24T23:26:46.759Z",
+      "details": {
+        "cardId": "fbuKfvoHwcblYwVF",
+        "hp": [
+          456,
+          478
+        ]
+      }
+    },
+    {
+      "label": "prepareReload",
+      "passed": true,
+      "at": "2026-09-24T23:26:54.324Z",
+      "details": {
+        "actorId": "RZ02jFCH5e9gOsUm",
+        "cardId": "vNQFLdz1NaKvKZh1",
+        "effect": "Actor.RZ02jFCH5e9gOsUm.Item.6rhf834ycWeIBzEd",
+        "dc": 24,
+        "hp": 458
+      }
+    },
+    {
+      "label": "reload",
+      "passed": true,
+      "at": "2026-09-24T23:27:23.918Z",
+      "details": {
+        "actorId": "RZ02jFCH5e9gOsUm",
+        "cardId": "vNQFLdz1NaKvKZh1",
+        "effect": "Actor.RZ02jFCH5e9gOsUm.Item.6rhf834ycWeIBzEd",
+        "dc": 24,
+        "hp": 458
+      }
+    },
+    {
+      "label": "prepareUi",
+      "passed": true,
+      "at": "2026-09-24T23:25:34.895Z",
+      "details": {
+        "actorId": "M9doh16n9dmmGZqN",
+        "effect": "Actor.M9doh16n9dmmGZqN.Item.1H9bChCsouALdIWh",
+        "messages": 2157
+      }
+    },
+    {
+      "label": "verifyUi",
+      "passed": true,
+      "at": "2026-09-24T23:26:00.889Z",
+      "details": {
+        "checkTotal": 22,
+        "options": [
+          "action:escape",
+          "action:escape:athletics",
+          "attack",
+          "item:trait:attack"
+        ],
+        "status": {
+          "e0": "Ended by Escape"
+        }
+      }
+    },
+    {
+      "label": "ranks",
+      "passed": true,
+      "at": "2026-09-24T23:31:47.156Z",
+      "details": [
+        {
+          "name": "Grasping Grave",
+          "degree": "criticalFailure",
+          "rank": 5,
+          "damage": 50,
+          "speed": 25,
+          "conditions": {
+            "immobilized": true,
+            "stunned": false,
+            "enfeebled": false
+          },
+          "effects": [
+            {
+              "name": "Grasping Grave: Immobilized (until Escape)",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "escape": {
+                "dc": 24,
+                "event": "escape",
+                "expirationMode": "first"
+              }
+            }
+          ],
+          "formula": "6d6 slashing"
+        },
+        {
+          "name": "Grasping Grave",
+          "degree": "criticalFailure",
+          "rank": 6,
+          "damage": 50,
+          "speed": 25,
+          "conditions": {
+            "immobilized": true,
+            "stunned": false,
+            "enfeebled": false
+          },
+          "effects": [
+            {
+              "name": "Grasping Grave: Immobilized (until Escape)",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "escape": {
+                "dc": 24,
+                "event": "escape",
+                "expirationMode": "first"
+              }
+            }
+          ],
+          "formula": "8d6 slashing"
+        },
+        {
+          "name": "Grasping Grave",
+          "degree": "criticalFailure",
+          "rank": 7,
+          "damage": 82,
+          "speed": 25,
+          "conditions": {
+            "immobilized": true,
+            "stunned": false,
+            "enfeebled": false
+          },
+          "effects": [
+            {
+              "name": "Grasping Grave: Immobilized (until Escape)",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "escape": {
+                "dc": 24,
+                "event": "escape",
+                "expirationMode": "first"
+              }
+            }
+          ],
+          "formula": "10d6 slashing"
+        },
+        {
+          "name": "Grasping Grave",
+          "degree": "criticalFailure",
+          "rank": 8,
+          "damage": 86,
+          "speed": 25,
+          "conditions": {
+            "immobilized": true,
+            "stunned": false,
+            "enfeebled": false
+          },
+          "effects": [
+            {
+              "name": "Grasping Grave: Immobilized (until Escape)",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "escape": {
+                "dc": 24,
+                "event": "escape",
+                "expirationMode": "first"
+              }
+            }
+          ],
+          "formula": "12d6 slashing"
+        },
+        {
+          "name": "Grasping Grave",
+          "degree": "criticalFailure",
+          "rank": 9,
+          "damage": 112,
+          "speed": 25,
+          "conditions": {
+            "immobilized": true,
+            "stunned": false,
+            "enfeebled": false
+          },
+          "effects": [
+            {
+              "name": "Grasping Grave: Immobilized (until Escape)",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "escape": {
+                "dc": 24,
+                "event": "escape",
+                "expirationMode": "first"
+              }
+            }
+          ],
+          "formula": "14d6 slashing"
+        },
+        {
+          "name": "Grasping Grave",
+          "degree": "criticalFailure",
+          "rank": 10,
+          "damage": 140,
+          "speed": 25,
+          "conditions": {
+            "immobilized": true,
+            "stunned": false,
+            "enfeebled": false
+          },
+          "effects": [
+            {
+              "name": "Grasping Grave: Immobilized (until Escape)",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "escape": {
+                "dc": 24,
+                "event": "escape",
+                "expirationMode": "first"
+              }
+            }
+          ],
+          "formula": "16d6 slashing"
+        },
+        {
+          "name": "Grasping Grave",
+          "clampedRankRefusal": "Grasping Grave: PF2e resolved rank 5, not the recorded cast rank 10. Damage was not rolled."
+        },
+        {
+          "name": "Shadow's Web",
+          "degree": "criticalFailure",
+          "rank": 7,
+          "damage": 42,
+          "speed": 25,
+          "conditions": {
+            "immobilized": true,
+            "stunned": 1,
+            "enfeebled": 2
+          },
+          "effects": [
+            {
+              "name": "Shadow's Web: Stunned 1",
+              "duration": {
+                "value": -1,
+                "unit": "unlimited",
+                "expiry": null,
+                "sustained": false
+              },
+              "escape": null
+            },
+            {
+              "name": "Shadow's Web: Immobilized (until Escape)",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "escape": {
+                "dc": 24,
+                "event": "escape",
+                "expirationMode": "first"
+              }
+            },
+            {
+              "name": "Shadow's Web: Enfeebled 2",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "escape": null
+            }
+          ],
+          "formula": "14d4 void"
+        },
+        {
+          "name": "Shadow's Web",
+          "degree": "criticalFailure",
+          "rank": 8,
+          "damage": 94,
+          "speed": 25,
+          "conditions": {
+            "immobilized": true,
+            "stunned": 1,
+            "enfeebled": 2
+          },
+          "effects": [
+            {
+              "name": "Shadow's Web: Stunned 1",
+              "duration": {
+                "value": -1,
+                "unit": "unlimited",
+                "expiry": null,
+                "sustained": false
+              },
+              "escape": null
+            },
+            {
+              "name": "Shadow's Web: Immobilized (until Escape)",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "escape": {
+                "dc": 24,
+                "event": "escape",
+                "expirationMode": "first"
+              }
+            },
+            {
+              "name": "Shadow's Web: Enfeebled 2",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "escape": null
+            }
+          ],
+          "formula": "16d4 void"
+        },
+        {
+          "name": "Shadow's Web",
+          "degree": "criticalFailure",
+          "rank": 9,
+          "damage": 88,
+          "speed": 25,
+          "conditions": {
+            "immobilized": true,
+            "stunned": 1,
+            "enfeebled": 2
+          },
+          "effects": [
+            {
+              "name": "Shadow's Web: Stunned 1",
+              "duration": {
+                "value": -1,
+                "unit": "unlimited",
+                "expiry": null,
+                "sustained": false
+              },
+              "escape": null
+            },
+            {
+              "name": "Shadow's Web: Immobilized (until Escape)",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "escape": {
+                "dc": 24,
+                "event": "escape",
+                "expirationMode": "first"
+              }
+            },
+            {
+              "name": "Shadow's Web: Enfeebled 2",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "escape": null
+            }
+          ],
+          "formula": "18d4 void"
+        },
+        {
+          "name": "Shadow's Web",
+          "degree": "criticalFailure",
+          "rank": 10,
+          "damage": 90,
+          "speed": 25,
+          "conditions": {
+            "immobilized": true,
+            "stunned": 1,
+            "enfeebled": 2
+          },
+          "effects": [
+            {
+              "name": "Shadow's Web: Stunned 1",
+              "duration": {
+                "value": -1,
+                "unit": "unlimited",
+                "expiry": null,
+                "sustained": false
+              },
+              "escape": null
+            },
+            {
+              "name": "Shadow's Web: Immobilized (until Escape)",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "escape": {
+                "dc": 24,
+                "event": "escape",
+                "expirationMode": "first"
+              }
+            },
+            {
+              "name": "Shadow's Web: Enfeebled 2",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "escape": null
+            }
+          ],
+          "formula": "20d4 void"
+        },
+        {
+          "name": "Shadow's Web",
+          "clampedRankRefusal": "Shadow's Web: PF2e resolved rank 7, not the recorded cast rank 10. Damage was not rolled."
+        }
+      ]
+    },
+    {
+      "label": "cleanup",
+      "passed": true,
+      "at": "2026-09-24T23:35:16.068Z",
+      "details": {
+        "actorsRemoved": 114,
+        "journalsRemoved": 49,
+        "remainingFixtureActors": 0
+      }
+    }
+  ]
+}

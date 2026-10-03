@@ -1,0 +1,19 @@
+{
+  "label": "rank4Batch21",
+  "passed": true,
+  "at": "2026-10-02T14:46:03.092Z",
+  "details": {
+    "batch21": {
+      "lash": {
+        "supported": true,
+        "note": true,
+        "immunity": "1 hours",
+        "adjustment": -2
+      },
+      "ward": {
+        "kind": "spell-note",
+        "damage": true
+      }
+    }
+  }
+}

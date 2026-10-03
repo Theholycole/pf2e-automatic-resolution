@@ -1,0 +1,30 @@
+{
+  "generatedAt": "2026-10-02T21:44:28.437Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "results": [
+    {
+      "label": "rank5Batch33",
+      "passed": true,
+      "at": "2026-10-02T21:44:04.706Z",
+      "details": {
+        "batch33": {
+          "cast": {
+            "formula": "3d4 mental + 3d4 void",
+            "total": 17,
+            "lost": 34,
+            "frightened": 2,
+            "fleeing": true
+          },
+          "sustain": {
+            "formula": "3d4 mental + 3d4 void",
+            "total": 16,
+            "lost": 32,
+            "frightened": 2,
+            "fleeing": false
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+ "label": "rank6Batch4",
+ "passed": true,
+ "at": "2026-10-03T16:53:41.957Z",
+ "details": {
+  "batch4": {
+   "decree": {
+    "secondaries": [
+     "second",
+     "none"
+    ],
+    "enfeebled": [
+     2,
+     2
+    ],
+    "paralyzed": [
+     true,
+     false
+    ],
+    "note": true
+   },
+   "petrifyStart": 2,
+   "petrify": {
+    "obligation": true,
+    "petrified": true,
+    "effect": false
+   },
+   "lignify": {
+    "own": 10,
+    "rolled": 12,
+    "bonus": true
+   }
+  }
+ }
+}

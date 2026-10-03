@@ -1,0 +1,56 @@
+{
+  "batch": "cantrip-rank-1-batch-54",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch54",
+    "passed": true,
+    "details": {
+      "sepulchralMask": {
+        "casterEffect": {
+          "rules": [
+            "will:1:[\"item:trait:emotion\"]"
+          ],
+          "duration": "1 minutes"
+        },
+        "lost": 3,
+        "total": 3,
+        "note": {
+          "name": "Sepulchral Mask: Will penalty against emotion effects",
+          "duration": "1 rounds",
+          "rules": [
+            "will:-1:[\"item:trait:emotion\"]"
+          ]
+        }
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch54",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "drought",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 10
+  }
+}

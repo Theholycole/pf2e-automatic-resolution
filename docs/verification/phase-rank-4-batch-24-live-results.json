@@ -1,0 +1,25 @@
+{
+  "label": "rank4Batch24",
+  "passed": true,
+  "at": "2026-10-02T15:26:25.494Z",
+  "details": {
+    "batch24": {
+      "pain": {
+        "level": "automatic",
+        "refused": "Retributive Pain: PFTEST P23 Affliction Retributive Pain caster has taken no damage to reflect.",
+        "lost": 10,
+        "formula": "10[mental]"
+      },
+      "clock": {
+        "level": "automatic",
+        "terrain": true,
+        "radiusBefore": 10,
+        "early": "Conjured Clockwork: Sustain it this round first.",
+        "expanded": "expanded",
+        "radiusAfter": 15,
+        "areaValue": 15,
+        "again": "Conjured Clockwork was already expanded this round."
+      }
+    }
+  }
+}

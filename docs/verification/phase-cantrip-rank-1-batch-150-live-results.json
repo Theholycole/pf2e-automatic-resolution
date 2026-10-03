@@ -1,0 +1,36 @@
+{
+  "batch": 150,
+  "spells": [
+    "Frenzied Revelry"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch150",
+      "passed": true,
+      "at": "2026-09-28T22:46:47.143Z",
+      "details": {
+        "frenziedRevelry": {
+          "status": "applied",
+          "radius": 5,
+          "atCast": [
+            true,
+            true,
+            false,
+            false
+          ],
+          "bonus": [
+            1
+          ],
+          "critical": "1 rounds",
+          "afterLeave": [
+            true,
+            false
+          ]
+        }
+      }
+    }
+  ]
+}

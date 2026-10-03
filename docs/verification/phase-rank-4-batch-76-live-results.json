@@ -1,0 +1,38 @@
+{
+  "label": "rank4Batch76",
+  "passed": true,
+  "at": "2026-10-02T23:49:59.299Z",
+  "details": {
+    "batch76": {
+      "eligible": [
+        true,
+        true,
+        true,
+        false
+      ],
+      "foes": [
+        {
+          "frightened": 1,
+          "fleeing": false
+        },
+        {
+          "frightened": 2,
+          "fleeing": false
+        },
+        {
+          "frightened": 3,
+          "fleeing": true
+        },
+        {
+          "frightened": 0,
+          "fleeing": false
+        }
+      ],
+      "caster": [
+        "10 minutes"
+      ],
+      "before": false,
+      "after": true
+    }
+  }
+}

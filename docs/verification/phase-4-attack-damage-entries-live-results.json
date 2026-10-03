@@ -1,0 +1,81 @@
+{
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "attackComponents",
+      "passed": true,
+      "at": "2026-09-26T05:27:59.400Z",
+      "details": {
+        "liveWire": {
+          "formula": "1d4 slashing + 1d4 electricity",
+          "total": 3,
+          "byType": {
+            "slashing": 2,
+            "electricity": 1
+          },
+          "lost": [
+            6,
+            3,
+            1,
+            0
+          ],
+          "persistent": [
+            [
+              "1d4 electricity"
+            ],
+            [],
+            [],
+            []
+          ],
+          "extra": []
+        },
+        "purifyingIcicle": {
+          "formula": "2d6 piercing + 1d6 cold",
+          "total": 6,
+          "byType": {
+            "piercing": 5,
+            "cold": 1
+          },
+          "lost": [
+            16,
+            6
+          ],
+          "persistent": [
+            [],
+            []
+          ],
+          "extra": [
+            {
+              "trait": "undead",
+              "total": 2
+            }
+          ],
+          "speedEffect": "Purifying Icicle: 10-foot Speed penalty"
+        },
+        "gougingClaw": {
+          "formula": "2d6 piercing + 2 bleed",
+          "total": 11,
+          "byType": {
+            "piercing": 11,
+            "persistent bleed": 0
+          },
+          "lost": [
+            22,
+            11
+          ],
+          "persistent": [
+            [
+              "2 * 2 bleed"
+            ],
+            [
+              "2 bleed"
+            ]
+          ],
+          "extra": []
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "label": "rank4Batch29",
+  "passed": true,
+  "at": "2026-10-02T16:24:25.409Z",
+  "details": {
+    "batch29": {
+      "runic": {
+        "level": "automatic",
+        "effect": true,
+        "offered": [
+          [
+            "Unarmed Attack",
+            "Weapon"
+          ],
+          [
+            "Corrosive",
+            "Flaming",
+            "Frost",
+            "Ghost Touch",
+            "Returning",
+            "Shock",
+            "Thundering"
+          ]
+        ],
+        "selections": {
+          "spellEffectRunicImpression": "unarmed",
+          "weapon": null,
+          "rune": "flaming"
+        },
+        "adjust": 1,
+        "notes": true
+      }
+    }
+  }
+}

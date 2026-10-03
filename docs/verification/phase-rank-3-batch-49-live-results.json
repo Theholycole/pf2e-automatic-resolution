@@ -1,0 +1,20 @@
+{
+  "label": "rank3Batch49",
+  "passed": true,
+  "at": "2026-10-02T18:27:00.347Z",
+  "details": {
+    "batch49": {
+      "notes": 2,
+      "event": "turn-start",
+      "save": {
+        "statistic": "fortitude",
+        "formula": "4d6 poison",
+        "total": 15,
+        "lost": 15,
+        "sickened": 1,
+        "immune": true
+      },
+      "again": 1
+    }
+  }
+}

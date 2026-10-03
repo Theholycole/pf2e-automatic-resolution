@@ -1,0 +1,49 @@
+{
+  "batch": "cantrip-rank-1-batch-67",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch67",
+    "passed": true,
+    "details": {
+      "total": 6,
+      "lost": [
+        6,
+        6,
+        12
+      ],
+      "pushLiving": null,
+      "pushUndead": "5",
+      "pushUndeadCrit": "10",
+      "nonlethal": true
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch67",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "rank3Batch1",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

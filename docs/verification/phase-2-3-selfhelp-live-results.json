@@ -1,0 +1,182 @@
+{
+  "generatedAt": "2026-09-25T00:32:46.438Z",
+  "scope": "Disposable pftest GM fixtures; Foundry 14.367 / PF2e 8.5.0; only this module active; automatic expired-Effect removal on. Save degrees are real rolls corrected to explicit provisional degrees. Interact endings: the harness confirms the panel offers the control, then invokes the control's own request; one real mouse click on the control is recorded separately (synthetic clicks race the panel re-render).",
+  "attempts": [
+    {
+      "label": "environment",
+      "passed": true,
+      "at": "2026-09-25T00:28:55.817Z",
+      "error": null
+    },
+    {
+      "label": "dazzlingFlash",
+      "passed": false,
+      "at": null,
+      "error": "Both blinded and dazzled"
+    },
+    {
+      "label": "slimeSpit",
+      "passed": false,
+      "at": null,
+      "error": "criticalFailure: dazzled ends on Interact"
+    },
+    {
+      "label": "graspOfTheDeep",
+      "passed": true,
+      "at": "2026-09-25T00:29:05.737Z",
+      "error": null
+    },
+    {
+      "label": "dazzlingFlash",
+      "passed": false,
+      "at": null,
+      "error": "Interact ended Blinded only; Dazzled remains and is now active"
+    },
+    {
+      "label": "slimeSpit",
+      "passed": false,
+      "at": null,
+      "error": "criticalFailure: Interact removed dazzled"
+    },
+    {
+      "label": "dazzlingFlash",
+      "passed": true,
+      "at": "2026-09-25T00:31:45.185Z",
+      "error": null
+    },
+    {
+      "label": "slimeSpit",
+      "passed": true,
+      "at": "2026-09-25T00:31:49.564Z",
+      "error": null
+    },
+    {
+      "label": "boilBlood",
+      "passed": true,
+      "at": "2026-09-25T00:31:56.734Z",
+      "error": null
+    },
+    {
+      "label": "reblooded",
+      "passed": true,
+      "at": "2026-09-25T00:32:00.665Z",
+      "error": null
+    }
+  ],
+  "cases": [
+    {
+      "label": "environment",
+      "passed": true,
+      "at": "2026-09-25T00:28:55.817Z",
+      "details": {
+        "foundry": "14.367",
+        "pf2e": "8.5.0",
+        "module": "0.8.2",
+        "world": "pftest",
+        "modules": [
+          "pf2e-automatic-resolution"
+        ],
+        "removal": true
+      }
+    },
+    {
+      "label": "dazzlingFlash",
+      "passed": true,
+      "at": "2026-09-25T00:31:45.185Z",
+      "details": {
+        "failedEffects": [
+          "Dazzling Flash: Dazzled"
+        ],
+        "criticalEffects": [
+          "Dazzling Flash: Blinded",
+          "Dazzling Flash: Dazzled"
+        ]
+      }
+    },
+    {
+      "label": "slimeSpit",
+      "passed": true,
+      "at": "2026-09-25T00:31:49.564Z",
+      "details": {
+        "success": {
+          "duration": {
+            "value": 1,
+            "unit": "rounds",
+            "expiry": "turn-start",
+            "sustained": false
+          },
+          "blinded": false
+        },
+        "criticalFailure": {
+          "duration": {
+            "value": -1,
+            "unit": "unlimited",
+            "expiry": null,
+            "sustained": false
+          },
+          "blinded": true
+        }
+      }
+    },
+    {
+      "label": "graspOfTheDeep",
+      "passed": true,
+      "at": "2026-09-25T00:29:05.737Z",
+      "details": {
+        "duration": {
+          "value": 1,
+          "unit": "minutes",
+          "expiry": "turn-start",
+          "sustained": false
+        }
+      }
+    },
+    {
+      "label": "boilBlood",
+      "passed": true,
+      "at": "2026-09-25T00:31:56.734Z",
+      "details": {
+        "refused": "Boil Blood: GM must confirm 2 targets: Does the creature have blood? A creature with no blood is immune.",
+        "confirmations": [
+          {
+            "question": "Does the creature have blood? A creature with no blood is immune.",
+            "status": "affected",
+            "userId": "rW96bfNVu9Z4WVK7"
+          },
+          {
+            "question": "Does the creature have blood? A creature with no blood is immune.",
+            "status": "immune",
+            "userId": "rW96bfNVu9Z4WVK7"
+          }
+        ]
+      }
+    },
+    {
+      "label": "reblooded",
+      "passed": true,
+      "at": "2026-09-25T00:32:00.665Z",
+      "details": {
+        "persistent": [
+          "2d6"
+        ],
+        "clumsyEffect": [
+          {
+            "value": 1,
+            "unit": "minutes",
+            "expiry": "turn-start",
+            "sustained": false
+          }
+        ]
+      }
+    },
+    {
+      "label": "interactUiClick",
+      "passed": true,
+      "at": "2026-09-25T00:32:46.438Z",
+      "details": {
+        "control": "PFTEST P23 SelfHelp spit criticalFailure: Interact to end Dazzled — 1 action",
+        "result": "real mouse click removed the Interact-ended Dazzled Effect; Slime Spit Blinded remained"
+      }
+    }
+  ]
+}

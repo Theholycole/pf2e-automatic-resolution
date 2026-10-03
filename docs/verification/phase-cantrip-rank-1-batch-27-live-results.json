@@ -1,0 +1,50 @@
+{
+  "batch": "cantrip-rank-1-batch-27",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch27",
+    "passed": true,
+    "at": "2026-09-27T13:52:30.194Z",
+    "details": {
+      "spiritLink": {
+        "start": [
+          500,
+          495
+        ],
+        "afterCast": [
+          498,
+          497
+        ],
+        "afterTurn": [
+          496,
+          499
+        ],
+        "atZero": [
+          0,
+          497
+        ],
+        "maxFriend": 500,
+        "record": [
+          "ended caster-at-0-hp"
+        ]
+      }
+    }
+  },
+  "regressions": [
+    {
+      "n": "cr1Batch26",
+      "passed": true
+    },
+    {
+      "n": "sustainArea",
+      "passed": true
+    }
+  ],
+  "note": "The first cr1Batch27 run failed on a harness setup (the target was nearly at full HP, so only 1 HP could move at the 0-HP step); the case was fixed and rerun cleanly on its own.",
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

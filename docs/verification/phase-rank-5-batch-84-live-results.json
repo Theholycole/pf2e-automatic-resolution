@@ -1,0 +1,31 @@
+{
+  "label": "rank5Batch84",
+  "passed": true,
+  "at": "2026-10-03T12:20:12.529Z",
+  "details": {
+    "batch84": {
+      "kind": "skill-counteract",
+      "freed": {
+        "status": "counteracted",
+        "grabbed": false,
+        "effect": false
+      },
+      "failed": {
+        "status": "failed",
+        "restrained": true,
+        "lock": {
+          "value": 24,
+          "unit": "hours",
+          "expiry": "turn-start",
+          "sustained": false
+        }
+      },
+      "again": "locked",
+      "two": "Symphony of the Unfettered Heart: target yourself or 1 ally.",
+      "ninth": [
+        "absent",
+        "locked"
+      ]
+    }
+  }
+}

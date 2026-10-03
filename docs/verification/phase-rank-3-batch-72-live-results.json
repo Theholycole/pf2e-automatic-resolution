@@ -1,0 +1,38 @@
+{
+  "label": "rank3Batch72",
+  "passed": true,
+  "at": "2026-10-03T01:10:31.264Z",
+  "details": {
+    "batch72r3": {
+      "foes": [
+        {
+          "stupefied": 2,
+          "timed": [
+            "1 rounds"
+          ],
+          "note": [
+            "1 rounds penalty"
+          ]
+        },
+        {
+          "stupefied": 2,
+          "timed": [
+            "1 minutes"
+          ],
+          "note": [
+            "1 minutes terrain"
+          ]
+        },
+        {
+          "stupefied": 2,
+          "timed": [
+            "1 minutes"
+          ],
+          "note": [
+            "1 minutes"
+          ]
+        }
+      ]
+    }
+  }
+}

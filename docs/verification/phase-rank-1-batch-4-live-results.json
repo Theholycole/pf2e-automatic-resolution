@@ -1,0 +1,128 @@
+{
+  "generatedAt": "2026-09-26T21:01:26.532Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "world": "pftest",
+  "results": {
+    "rank1Batch4": {
+      "label": "rank1Batch4",
+      "passed": true,
+      "at": "2026-09-26T20:55:24.889Z",
+      "details": {
+        "drawIre": {
+          "lost": [
+            5,
+            10,
+            20
+          ],
+          "total": 10,
+          "success": {
+            "name": "Spell Effect: Draw Ire (Success)",
+            "duration": {
+              "value": 0,
+              "unit": "rounds",
+              "expiry": "turn-end",
+              "sustained": false
+            },
+            "initiative": 20,
+            "modifier": -1
+          },
+          "failure": {
+            "name": "Spell Effect: Draw Ire (Failure)",
+            "selection": "-1",
+            "duration": {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            }
+          },
+          "criticalFailure": {
+            "selection": "-2"
+          }
+        },
+        "appealToAuthority": {
+          "before": {
+            "success": {
+              "selection": -1,
+              "recurring": {
+                "mode": "end",
+                "statistic": "will",
+                "dc": 24
+              }
+            },
+            "critical": {
+              "selection": -2,
+              "recurring": null
+            }
+          },
+          "obligation": "PFTEST P23 Affliction appeal success: end-of-turn will save (Appeal to Authority)",
+          "saved": {
+            "target": "PFTEST P23 Affliction appeal success"
+          },
+          "after": {
+            "success": false,
+            "critical": true
+          }
+        }
+      }
+    },
+    "regressions": {
+      "cleanup#0": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T20:56:32.975Z"
+      },
+      "degreeChoiceAndRift#1": {
+        "label": "degreeChoiceAndRift",
+        "passed": true,
+        "at": "2026-09-26T20:56:45.578Z"
+      },
+      "cleanup#2": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T20:57:07.859Z"
+      },
+      "longTailBatch4#3": {
+        "label": "longTailBatch4",
+        "passed": true,
+        "at": "2026-09-26T20:57:19.241Z"
+      },
+      "cleanup#4": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T20:57:53.795Z"
+      },
+      "rank1Batch1#5": {
+        "label": "rank1Batch1",
+        "passed": true,
+        "at": "2026-09-26T20:58:15.484Z"
+      },
+      "cleanup#6": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T20:58:44.083Z"
+      },
+      "persistentLinked#7": {
+        "label": "persistentLinked",
+        "passed": true,
+        "at": "2026-09-26T20:59:03.544Z"
+      },
+      "cleanup#8": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T20:59:19.739Z"
+      },
+      "rank1Batch3#9": {
+        "label": "rank1Batch3",
+        "passed": true,
+        "at": "2026-09-26T20:59:28.815Z"
+      },
+      "cleanup#10": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T20:59:51.257Z"
+      }
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "label": "rank2Batch54",
+  "passed": true,
+  "at": "2026-10-01T23:22:54.713Z",
+  "details": {
+    "batch54": {
+      "2": {
+        "level": "automatic",
+        "eaters": [
+          {
+            "effect": "Spell Effect: Thermal Remedy (Fire Resistance)",
+            "duration": "1 hours",
+            "temp": 0,
+            "fire": 2,
+            "disease": []
+          },
+          {
+            "effect": "Spell Effect: Thermal Remedy (Fire Resistance)",
+            "duration": "1 hours",
+            "temp": 0,
+            "fire": 2,
+            "disease": []
+          }
+        ]
+      },
+      "4": {
+        "level": "automatic",
+        "eaters": [
+          {
+            "effect": "Spell Effect: Thermal Remedy (Temporary Hit Points) (Bonus vs. Disease)",
+            "duration": "2 hours",
+            "temp": 10,
+            "fire": 0,
+            "disease": [
+              2
+            ]
+          },
+          {
+            "effect": "Spell Effect: Thermal Remedy (Temporary Hit Points) (Bonus vs. Disease)",
+            "duration": "2 hours",
+            "temp": 10,
+            "fire": 0,
+            "disease": [
+              2
+            ]
+          }
+        ]
+      },
+      "7": {
+        "level": "automatic",
+        "eaters": [
+          {
+            "effect": "Spell Effect: Thermal Remedy",
+            "duration": "8 hours",
+            "temp": 15,
+            "fire": 5,
+            "disease": [
+              3
+            ]
+          },
+          {
+            "effect": "Spell Effect: Thermal Remedy",
+            "duration": "8 hours",
+            "temp": 15,
+            "fire": 5,
+            "disease": [
+              3
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch3",
+    "passed": true,
+    "at": "2026-09-27T01:50:05.197Z",
+    "details": {
+      "gravitationalPull": {
+        "one": [
+          "GM: PFTEST P23 Affliction pull one is pulled 10 feet toward the caster. Move the token; the module doesn't."
+        ],
+        "two": [
+          "GM: PFTEST P23 Affliction pull two is pulled 20 feet toward the caster. Move the token; the module doesn't."
+        ],
+        "prone": [
+          true,
+          false
+        ]
+      },
+      "callOfTheGrave": {
+        "during": {
+          "sickened": 2,
+          "slowed": 1
+        },
+        "afterSickened": {
+          "sickened": false,
+          "slowed": false
+        }
+      },
+      "hydraulicPush": {
+        "total": 11,
+        "lost": [
+          22,
+          11
+        ],
+        "reminders": [
+          "GM: PFTEST P23 Affliction hydro crit is pushed 10 feet away from the caster. Move the token; the module doesn't.",
+          "GM: PFTEST P23 Affliction hydro hit is pushed 5 feet away from the caster. Move the token; the module doesn't."
+        ]
+      }
+    }
+  },
+  "regressions": {
+    "spellAttack": true,
+    "attackRowRules": true,
+    "forcedMovement": true,
+    "actionVariants": true,
+    "compact": true,
+    "rank3Batch1": true,
+    "attackVariantChoices": true
+  },
+  "cleanup": {
+    "actorsRemoved": 9,
+    "journalsRemoved": 1,
+    "remainingFixtureActors": 0
+  },
+  "combats": 0
+}

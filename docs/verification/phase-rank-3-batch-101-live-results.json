@@ -1,0 +1,35 @@
+{
+  "label": "rank3Batch101",
+  "passed": true,
+  "at": "2026-10-03T06:34:19.926Z",
+  "details": {
+    "batch101": {
+      "level": "automatic",
+      "kind": "plant-form",
+      "stone": {
+        "ac": 23,
+        "size": "lg",
+        "plant": false,
+        "immobilized": true,
+        "reflex": "failure"
+      },
+      "dismissed": {
+        "effect": false,
+        "size": "med",
+        "immobilized": false
+      },
+      "merge": {
+        "blinded": true,
+        "immobilized": true,
+        "button": true
+      },
+      "expel": {
+        "damage": 28,
+        "lost": 28,
+        "status": "ended",
+        "blinded": false,
+        "flavor": true
+      }
+    }
+  }
+}

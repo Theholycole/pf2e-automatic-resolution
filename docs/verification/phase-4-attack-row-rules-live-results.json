@@ -1,0 +1,98 @@
+{
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "attackRowRules",
+      "passed": true,
+      "at": "2026-09-26T14:08:19.635Z",
+      "details": {
+        "brinyCrit": {
+          "total": 2,
+          "lost": 4,
+          "effects": [
+            {
+              "name": "Briny Bolt: Blinded (ends on Interact)",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "actionEnd": {
+                "action": "interact",
+                "expirationMode": "first"
+              },
+              "rules": [
+                "GrantItem::undefined"
+              ]
+            },
+            {
+              "name": "Briny Bolt: Dazzled",
+              "duration": {
+                "value": 1,
+                "unit": "minutes",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "actionEnd": null,
+              "rules": [
+                "GrantItem::undefined"
+              ]
+            }
+          ],
+          "conditions": [
+            "blinded",
+            "dazzled"
+          ]
+        },
+        "brinyHit": {
+          "total": 7,
+          "lost": 7,
+          "effects": [
+            {
+              "name": "Briny Bolt: Blinded (ends on Interact)",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "actionEnd": {
+                "action": "interact",
+                "expirationMode": "first"
+              },
+              "rules": [
+                "GrantItem::undefined"
+              ]
+            }
+          ],
+          "conditions": [
+            "blinded"
+          ]
+        },
+        "frostCrit": {
+          "total": 4,
+          "lost": 8,
+          "effects": [
+            {
+              "name": "Ray of Frost: 10-foot Speed penalty",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "actionEnd": null,
+              "rules": [
+                "FlatModifier:all-speeds:-10"
+              ]
+            }
+          ],
+          "conditions": []
+        }
+      }
+    }
+  ]
+}

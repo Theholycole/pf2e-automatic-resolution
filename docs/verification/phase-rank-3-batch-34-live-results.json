@@ -1,0 +1,20 @@
+{
+  "label": "rank3Batch34",
+  "passed": true,
+  "at": "2026-10-02T15:30:11.376Z",
+  "details": {
+    "batch34": {
+      "level": "automatic",
+      "terrain": true,
+      "initialEvents": [
+        null
+      ],
+      "afterCast": 5,
+      "sustainEvents": [
+        "sustain"
+      ],
+      "afterSustain": 24,
+      "notes": 2
+    }
+  }
+}

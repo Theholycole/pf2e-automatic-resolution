@@ -1,0 +1,18 @@
+{
+  "label": "rank3Batch38",
+  "passed": true,
+  "at": "2026-10-02T16:05:21.583Z",
+  "details": {
+    "batch38": {
+      "venom": {
+        "level": "automatic",
+        "effect": true,
+        "level6": 6,
+        "button": true,
+        "clumsy": 2,
+        "clumsyDuration": "1 rounds",
+        "familiar": "Envenom Companion can't target familiars (PFTEST P23 Affliction venom familiar)."
+      }
+    }
+  }
+}

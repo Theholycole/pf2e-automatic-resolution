@@ -1,0 +1,22 @@
+{
+  "label": "rank4Batch116",
+  "passed": true,
+  "at": "2026-10-03T09:08:46.110Z",
+  "details": {
+    "batch116": {
+      "refused": "Community Restoration: divide at most 6 temporary Hit Points among the targeted allies.",
+      "temp": {
+        "caster": 6,
+        "a": 4,
+        "b": 2,
+        "total": 6
+      },
+      "duration": {
+        "value": 1,
+        "unit": "minutes",
+        "expiry": "turn-start",
+        "sustained": false
+      }
+    }
+  }
+}

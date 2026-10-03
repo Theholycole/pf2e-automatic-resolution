@@ -1,0 +1,51 @@
+{
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "module": "0.8.2",
+  "results": [
+    {
+      "label": "dyingRecovery",
+      "passed": true,
+      "at": "2026-09-26T15:08:11.928Z",
+      "details": {
+        "immediate": {
+          "before": {
+            "hp": 0,
+            "dying": 1,
+            "wounded": 1,
+            "unconscious": true
+          },
+          "after": {
+            "hp": 1,
+            "dying": 0,
+            "wounded": 2,
+            "unconscious": false
+          },
+          "revived": {
+            "woundedBefore": 1,
+            "woundedAfter": 2,
+            "woundedRaised": true
+          },
+          "status": "completed",
+          "note": true
+        },
+        "saveCard": {
+          "mode": "healing",
+          "after": {
+            "hp": 1,
+            "dying": 0,
+            "wounded": 1,
+            "unconscious": false
+          },
+          "revived": {
+            "woundedBefore": 0,
+            "woundedAfter": 1,
+            "woundedRaised": true
+          },
+          "note": true
+        }
+      }
+    }
+  ]
+}

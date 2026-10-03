@@ -1,0 +1,22 @@
+{
+ "label": "rank6Batch16",
+ "passed": true,
+ "at": "2026-10-03T20:19:58.477Z",
+ "details": {
+  "batch16": {
+   "wrack": {
+    "supported": true,
+    "notes": [
+     [
+      "1 minutes"
+     ],
+     [
+      "-1 unlimited"
+     ]
+    ],
+    "formula": "4d12 persistent force",
+    "persistent": "4d12|force"
+   }
+  }
+ }
+}

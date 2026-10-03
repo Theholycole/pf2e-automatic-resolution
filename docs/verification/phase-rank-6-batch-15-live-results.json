@@ -1,0 +1,35 @@
+{
+ "label": "rank6Batch15",
+ "passed": true,
+ "at": "2026-10-03T20:16:51.939Z",
+ "details": {
+  "batch15": {
+   "manifold": {
+    "supported": true,
+    "lost": [
+     17,
+     34
+    ],
+    "stupefied": [
+     2,
+     4
+    ],
+    "slowed": [
+     0,
+     1
+    ],
+    "effects": [
+     [
+      "Stupefied 2|1 minutes",
+      "Sobbing|1 minutes",
+      "Temporary immunity|1 days"
+     ],
+     [
+      "Stupefied 4, Slowed 1|1 minutes",
+      "Temporary immunity|1 days"
+     ]
+    ]
+   }
+  }
+ }
+}

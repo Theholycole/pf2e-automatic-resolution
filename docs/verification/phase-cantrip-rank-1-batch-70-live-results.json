@@ -1,0 +1,52 @@
+{
+  "batch": "cantrip-rank-1-batch-70",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch70",
+    "passed": true,
+    "details": {
+      "success": {
+        "note": false,
+        "fire": 0
+      },
+      "failure": {
+        "note": "Personal Rain Cloud: Spell's effect",
+        "fire": 2,
+        "lasts": "1 minutes"
+      },
+      "rank3": {
+        "fire": 6
+      },
+      "optional": true
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch70",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch16",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

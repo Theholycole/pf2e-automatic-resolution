@@ -1,0 +1,37 @@
+{
+  "label": "rank3Batch98",
+  "passed": true,
+  "at": "2026-10-03T06:18:21.933Z",
+  "details": {
+    "batch98": {
+      "trigger": "turn-start",
+      "onCast": false,
+      "first": {
+        "eligible": [
+          true,
+          false
+        ],
+        "formula": "4d10 bludgeoning",
+        "total": 22,
+        "lost": 22
+      },
+      "wall": {
+        "ac": 10,
+        "hp": 40,
+        "fort": 0,
+        "size": "lg"
+      },
+      "second": {
+        "eligible": [
+          true,
+          false
+        ],
+        "formula": "4d10 bludgeoning",
+        "total": 11,
+        "lost": 22
+      },
+      "count": 1,
+      "afterEnd": 0
+    }
+  }
+}

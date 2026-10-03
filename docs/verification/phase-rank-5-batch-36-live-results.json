@@ -1,0 +1,34 @@
+{
+  "generatedAt": "2026-10-02T22:03:54.619Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "results": [
+    {
+      "label": "rank5Batch36",
+      "passed": true,
+      "at": "2026-10-02T22:03:11.687Z",
+      "details": {
+        "batch36": {
+          "areaCount": 3,
+          "terrain": [
+            3,
+            3,
+            3
+          ],
+          "exposed": "turn-start",
+          "failure": {
+            "formula": "8d6 acid",
+            "total": 18,
+            "lost": 36,
+            "persistent": [
+              [
+                "acid",
+                "1d6"
+              ]
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "label": "rank4Batch6",
+  "passed": true,
+  "at": "2026-10-02T11:54:23.050Z",
+  "details": {
+    "batch6": {
+      "stride": {
+        "supported": true,
+        "reminder": true,
+        "sickened": 2,
+        "lost": 27
+      },
+      "leach": {
+        "supported": true,
+        "failure": {
+          "enfeebled": 2,
+          "drained": 1,
+          "note": "<p><strong>GM / player:</strong> It is filled with listlessness and ennui. When it tries to use a move action, it must succeed at a @Check[will|dc:25|traits:mental,emotion] save or the action is lost.</p><p><em>The module doesn't enforce this; it reminds you until the effect ends.</em></p>",
+          "noteDuration": {
+            "value": 1,
+            "unit": "rounds",
+            "expiry": "turn-start",
+            "sustained": false
+          }
+        },
+        "critical": {
+          "enfeebled": 2,
+          "drained": 2,
+          "permanent": true,
+          "listless": true,
+          "enfeebledTimer": {
+            "value": -1,
+            "unit": "unlimited",
+            "expiry": null,
+            "sustained": false
+          }
+        }
+      }
+    }
+  }
+}

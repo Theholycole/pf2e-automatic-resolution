@@ -1,0 +1,35 @@
+{
+  "label": "rank4Batch119",
+  "passed": true,
+  "at": "2026-10-03T09:22:59.083Z",
+  "details": {
+    "batch119": {
+      "allied": true,
+      "cast": {
+        "caster": false,
+        "ally": false,
+        "region": true
+      },
+      "afterCaster": {
+        "caster": true,
+        "ally": false
+      },
+      "afterAlly": {
+        "ally": true,
+        "ac": 1
+      },
+      "far": false,
+      "used": {
+        "lost": 10,
+        "holds": false,
+        "immune": {
+          "value": 10,
+          "unit": "minutes",
+          "expiry": "turn-start",
+          "sustained": false
+        }
+      },
+      "again": false
+    }
+  }
+}

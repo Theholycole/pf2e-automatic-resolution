@@ -1,0 +1,37 @@
+{
+  "label": "rank4Batch13",
+  "passed": true,
+  "at": "2026-10-02T13:44:18.487Z",
+  "details": {
+    "batch13": {
+      "foes": {
+        "supported": true,
+        "targets": 3,
+        "frightened": [
+          1,
+          2,
+          2
+        ],
+        "confused": true,
+        "notes": [
+          1,
+          2,
+          1
+        ],
+        "confusedAfter": false
+      },
+      "dream": {
+        "supported": true,
+        "reminder": true,
+        "bonus": [
+          4,
+          4
+        ],
+        "immunity": "7 days",
+        "fatigued": true,
+        "drained": 2,
+        "drainedAfter": 0
+      }
+    }
+  }
+}

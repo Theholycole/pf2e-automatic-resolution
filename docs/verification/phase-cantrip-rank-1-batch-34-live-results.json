@@ -1,0 +1,90 @@
+{
+  "batch": "cantrip-rank-1-batch-34",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch34",
+    "passed": true,
+    "details": {
+      "overstuff": {
+        "speedBefore": [
+          25,
+          25,
+          25
+        ],
+        "rows": [
+          {
+            "effect": true,
+            "selection": {
+              "badge": 1,
+              "degree": "success"
+            },
+            "sickened": [
+              1
+            ],
+            "speed": 15,
+            "addendum": true
+          },
+          {
+            "effect": true,
+            "selection": {
+              "badge": 1,
+              "degree": "failure"
+            },
+            "sickened": [
+              1
+            ],
+            "speed": 15,
+            "addendum": false
+          },
+          {
+            "effect": true,
+            "selection": {
+              "badge": 2,
+              "degree": "critical-failure"
+            },
+            "sickened": [
+              2
+            ],
+            "speed": 15,
+            "addendum": false
+          }
+        ],
+        "afterRecover": {
+          "effect": false,
+          "selection": null,
+          "sickened": [],
+          "speed": 25,
+          "addendum": false
+        }
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch34",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "degreeChoiceAndRift",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

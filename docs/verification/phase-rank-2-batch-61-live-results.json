@@ -1,0 +1,30 @@
+{
+  "label": "rank2Batch61",
+  "passed": true,
+  "at": "2026-10-02T00:01:19.535Z",
+  "details": {
+    "batch61": {
+      "holders": {
+        "caster": false,
+        "ally": true,
+        "far": false,
+        "foe": false
+      },
+      "cardsAtCast": 1,
+      "escape": {
+        "used": true,
+        "flavor": " Escape A ( Acrobatics Check ) Target: PFTEST P23 Affliction dance foe (DC 10) Result: Success by +6 Attack Modifier +0 Coiling Dance: PFTEST P23 Affliction Coiling Dance caster's Religion +6 Success You get free and remove the grabbed, immobilized, and restrained conditions imposed by your chosen target. ",
+        "modifiers": [
+          "Modifier:0",
+          "Coiling Dance: PFTEST P23 Affliction Coiling Dance caster's Religion:6"
+        ]
+      },
+      "sustainAsked": true,
+      "cardsAfterSustain": 2,
+      "afterMissed": {
+        "status": "ended",
+        "ally": false
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "generatedAt": "2026-10-02T21:32:57.766Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "results": [
+    {
+      "label": "rank4Batch51",
+      "passed": true,
+      "at": "2026-10-02T21:32:45.381Z",
+      "details": {
+        "batch51": {
+          "targets": [
+            "PFTEST P23 Affliction dichotomy victim",
+            "PFTEST P23 Affliction Debilitating Dichotomy caster"
+          ],
+          "formula": "12d6 mental",
+          "total": 39,
+          "victim": {
+            "lost": 78,
+            "stunned": 1
+          },
+          "caster": {
+            "rolled": "criticalFailure",
+            "degree": "failure",
+            "lost": 39,
+            "stunned": 0
+          }
+        }
+      }
+    }
+  ]
+}

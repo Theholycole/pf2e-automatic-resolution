@@ -1,0 +1,34 @@
+{
+  "label": "rank2Batch75",
+  "passed": true,
+  "at": "2026-10-02T01:20:18.225Z",
+  "details": {
+    "batch75": {
+      "cast": {
+        "level": "automatic",
+        "cards": 0,
+        "terrainCost": 15
+      },
+      "comer": {
+        "card": true,
+        "degree": "criticalFailure",
+        "immobilized": true,
+        "speed": 15,
+        "speedBefore": 25
+      },
+      "inside": {
+        "card": true,
+        "degree": "criticalSuccess",
+        "againCards": 0
+      },
+      "left": {
+        "penalty": false,
+        "immobilized": true
+      },
+      "ended": {
+        "region": false,
+        "immobilized": false
+      }
+    }
+  }
+}

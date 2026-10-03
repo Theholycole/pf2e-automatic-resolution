@@ -1,0 +1,49 @@
+{
+  "label": "rank3Batch14",
+  "passed": true,
+  "at": "2026-10-02T10:53:56.035Z",
+  "details": {
+    "batch14": {
+      "ghostly": {
+        "level": "automatic",
+        "effect": true,
+        "selected": true
+      },
+      "retreat": {
+        "level": "automatic",
+        "resistance": 7,
+        "casterLevel": 7,
+        "after": {
+          "effect": false,
+          "resistance": 0
+        }
+      },
+      "unfettered": {
+        "level": "automatic",
+        "rule": [
+          "AdjustModifier"
+        ]
+      },
+      "roots": {
+        "level": "automatic",
+        "resist": [
+          "bludgeoning:5",
+          "piercing:5"
+        ]
+      },
+      "vapor": {
+        "level": "automatic",
+        "concealed": true,
+        "ac": 22,
+        "after": {
+          "concealed": false,
+          "effect": false
+        }
+      },
+      "wind": {
+        "level": "automatic",
+        "fly": 25
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "label": "rank3Batch7",
+  "passed": true,
+  "at": "2026-10-02T09:49:21.718Z",
+  "details": {
+    "batch7": {
+      "supported": true,
+      "criticalFailure": {
+        "formula": "3d8 mental",
+        "total": 17,
+        "lost": 34,
+        "offGuard": true,
+        "acDrop": 2,
+        "effect": "Shadow Projectile: Off-Guard (against the triggering attack)",
+        "duration": "1 rounds turn-end",
+        "immunity": true
+      },
+      "afterAttack": {
+        "offGuard": false,
+        "ac": true
+      },
+      "success": {
+        "lost": 0,
+        "offGuard": true,
+        "immunity": true
+      }
+    }
+  }
+}

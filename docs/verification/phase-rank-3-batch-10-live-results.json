@@ -1,0 +1,27 @@
+{
+  "label": "rank3Batch10",
+  "passed": true,
+  "at": "2026-10-02T10:04:27.442Z",
+  "details": {
+    "batch10": {
+      "initial": [
+        "victim"
+      ],
+      "save": {
+        "formula": "6d4 piercing + 3 bleed",
+        "total": 12,
+        "lost": 12,
+        "bleed": "3 bleed"
+      },
+      "terrain": {
+        "walkCost": 25
+      },
+      "note": true,
+      "noteSuffix": false,
+      "ended": {
+        "status": "ended",
+        "region": false
+      }
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "batch": "rank-2-12",
+  "date": "2026-09-30",
+  "world": "pftest",
+  "system": "8.5.0",
+  "core": "14.367",
+  "module": "0.8.2",
+  "results": [
+    {
+      "case": "rank2Batch12",
+      "passed": true,
+      "details": {
+        "stuck": {
+          "cast": {
+            "lost": [
+              5,
+              10
+            ],
+            "okOffGuard": false,
+            "failOffGuard": true,
+            "stuckName": "Frog Tongue: Off-Guard (until Escape)",
+            "stuckNote": true,
+            "casterNotes": [
+              "Spell Note: Frog Tongue"
+            ],
+            "modifiers": [
+              {
+                "label": "Frog Tongue",
+                "value": -2,
+                "type": "circumstance",
+                "predicate": "[{\"or\":[\"item:trait:auditory\",\"self:action:trait:auditory\"]}]"
+              }
+            ]
+          },
+          "afterEscape": {
+            "failOffGuard": false,
+            "casterNotes": 0,
+            "modifiers": 0
+          }
+        },
+        "predicateCheck": {
+          "spell": true,
+          "action": true,
+          "other": false
+        }
+      }
+    }
+  ]
+}

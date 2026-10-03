@@ -1,0 +1,52 @@
+{
+  "batch": "cantrip-rank-1-batch-53",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch53",
+    "passed": true,
+    "details": {
+      "sacredBeasts": {
+        "rank1": {
+          "dice": "2d6",
+          "type": true,
+          "total": 7,
+          "lost": 7
+        },
+        "rank2": {
+          "dice": "4d6",
+          "type": true,
+          "total": 17,
+          "lost": 17
+        }
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch53",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch52",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

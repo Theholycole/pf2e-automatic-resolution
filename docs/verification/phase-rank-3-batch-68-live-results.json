@@ -1,0 +1,21 @@
+{
+  "label": "rank3Batch68",
+  "passed": true,
+  "at": "2026-10-03T00:25:45.389Z",
+  "details": {
+    "batch68r3": {
+      "foes": [
+        [
+          "1 rounds turn-end a single action"
+        ],
+        [
+          "1 rounds turn-end all of its actions"
+        ],
+        [
+          "1 rounds turn-end at least two"
+        ],
+        []
+      ]
+    }
+  }
+}

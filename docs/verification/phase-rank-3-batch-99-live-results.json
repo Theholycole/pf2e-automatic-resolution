@@ -1,0 +1,50 @@
+{
+  "label": "rank3Batch99",
+  "passed": true,
+  "at": "2026-10-03T06:23:08.399Z",
+  "details": {
+    "batch99": {
+      "cast": {
+        "count": 8,
+        "tokens": 8,
+        "ac": 5,
+        "hp": 1,
+        "fort": -50,
+        "attacks": 3,
+        "onNear": true,
+        "lostNear": 8,
+        "sum": 8
+      },
+      "move": {
+        "xsBefore": [
+          16,
+          17,
+          18,
+          16,
+          18,
+          16,
+          17,
+          18
+        ],
+        "xsAfter": [
+          15,
+          15,
+          21,
+          14,
+          21,
+          13,
+          16,
+          21
+        ],
+        "attacks": 7,
+        "onFar": 3,
+        "lostFar": 4,
+        "sum": 4
+      },
+      "afterEnd": {
+        "tokens": 0,
+        "actor": false
+      }
+    }
+  }
+}

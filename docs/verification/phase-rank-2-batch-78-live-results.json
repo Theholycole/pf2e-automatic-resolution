@@ -1,0 +1,51 @@
+{
+  "label": "rank2Batch78",
+  "passed": true,
+  "at": "2026-10-02T01:39:16.998Z",
+  "details": {
+    "batch78": {
+      "level": "automatic",
+      "refused": "Illusory Creature: at most Large at this rank.",
+      "image": {
+        "dc": 24,
+        "ac": 24,
+        "reflex": 14,
+        "size": "huge",
+        "width": 3,
+        "formula": "4d4"
+      },
+      "combat": {
+        "strike": {
+          "act": "strike",
+          "hit": true,
+          "dealt": 13,
+          "disbelieved": false
+        },
+        "lost": 13,
+        "disbelief": {
+          "act": "disbelieve",
+          "success": true,
+          "healed": 6
+        },
+        "recovered": 6,
+        "again": {
+          "act": "strike",
+          "hit": true,
+          "dealt": 0,
+          "disbelieved": true
+        },
+        "lostAfter": 0
+      },
+      "failedSave": {
+        "status": "ended",
+        "token": false,
+        "actor": false
+      },
+      "range": {
+        "near": "active",
+        "far": "ended",
+        "token": false
+      }
+    }
+  }
+}

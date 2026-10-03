@@ -1,0 +1,33 @@
+{
+  "label": "rank3Batch71",
+  "passed": true,
+  "at": "2026-10-03T00:52:52.860Z",
+  "details": {
+    "batch71r3": {
+      "foes": [
+        {
+          "immune": [
+            "24 hours"
+          ],
+          "note": []
+        },
+        {
+          "immune": [
+            "24 hours"
+          ],
+          "note": [
+            "unlimited"
+          ]
+        },
+        {
+          "immune": [
+            "24 hours"
+          ],
+          "note": [
+            "unlimited"
+          ]
+        }
+      ]
+    }
+  }
+}

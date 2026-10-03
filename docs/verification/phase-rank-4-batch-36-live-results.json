@@ -1,0 +1,21 @@
+{
+  "label": "rank4Batch36",
+  "passed": true,
+  "at": "2026-10-02T17:36:47.680Z",
+  "details": {
+    "batch36": {
+      "allyExposed": false,
+      "first": {
+        "event": "initial",
+        "statistic": "will"
+      },
+      "foeFrightened": 1,
+      "notes": 2,
+      "second": {
+        "event": "sustain",
+        "statistic": "will"
+      },
+      "foe2Frightened": 2
+    }
+  }
+}

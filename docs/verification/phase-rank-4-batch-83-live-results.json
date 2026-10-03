@@ -1,0 +1,15 @@
+{
+  "label": "rank4Batch83",
+  "passed": true,
+  "at": "2026-10-03T01:39:16.383Z",
+  "details": {
+    "batch83": {
+      "exposed": true,
+      "failure": {
+        "formula": "5d6 fire",
+        "total": 16,
+        "lost": 16
+      }
+    }
+  }
+}

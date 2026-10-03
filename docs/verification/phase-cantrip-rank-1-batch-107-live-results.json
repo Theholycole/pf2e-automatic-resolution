@@ -1,0 +1,61 @@
+{
+  "batch": 107,
+  "spells": [
+    "Lift Nature's Caul"
+  ],
+  "results": [
+    {
+      "label": "cr1Batch107",
+      "passed": true,
+      "at": "2026-09-28T01:37:40.154Z",
+      "details": {
+        "liftNaturesCaul": {
+          "refusedBeforeAnswer": true,
+          "aberration": {
+            "effects": [
+              "Spell Effect: Lift Nature's Caul (Bonus)"
+            ],
+            "conditions": []
+          },
+          "critSuccess": {
+            "immune": true,
+            "conditions": []
+          },
+          "success": {
+            "conditions": [
+              "sickened1"
+            ],
+            "immune": false
+          },
+          "critFail": {
+            "conditions": [
+              "frightened1",
+              "frightened2",
+              "stupefied1"
+            ],
+            "frightened": 2,
+            "floor": [
+              "1 minutes"
+            ],
+            "afterTwoDrops": [
+              "frightened1",
+              "stupefied1"
+            ],
+            "floorAfterStupefied": 0,
+            "afterStupefied": []
+          }
+        }
+      }
+    }
+  ],
+  "regressions": [
+    {
+      "c": "cr1Batch56",
+      "passed": true
+    },
+    {
+      "c": "cr1Batch16",
+      "passed": true
+    }
+  ]
+}

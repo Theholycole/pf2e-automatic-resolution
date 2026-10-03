@@ -1,0 +1,234 @@
+{
+  "generatedAt": "2026-09-26T16:53:56.655Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "world": "pftest",
+  "results": {
+    "healingRiders": {
+      "label": "healingRiders",
+      "passed": true,
+      "at": "2026-09-26T16:51:13.345Z",
+      "details": {
+        "rebukeDeath": {
+          "before": {
+            "dying": {
+              "hp": 0,
+              "dying": 1,
+              "wounded": 0,
+              "unconscious": true
+            },
+            "awake": {
+              "hp": 300,
+              "dying": 0,
+              "wounded": 0,
+              "unconscious": false
+            }
+          },
+          "after": {
+            "dying": {
+              "hp": 7,
+              "dying": 0,
+              "wounded": 0,
+              "unconscious": false
+            },
+            "awake": {
+              "hp": 307,
+              "dying": 0,
+              "wounded": 0,
+              "unconscious": false
+            }
+          },
+          "total": 7,
+          "results": [
+            {
+              "name": "PFTEST P23 Affliction rebuke dying",
+              "healing": 7,
+              "revived": {
+                "woundedBefore": 0,
+                "woundedAfter": 0,
+                "woundedRaised": false
+              }
+            },
+            {
+              "name": "PFTEST P23 Affliction rebuke awake",
+              "healing": 7,
+              "revived": null
+            }
+          ],
+          "farRefused": "Rebuke Death: PFTEST P23 Affliction rebuke far isn't within 20 feet of the caster."
+        },
+        "breathOfLife": {
+          "after": {
+            "hp": 15,
+            "dying": 0,
+            "wounded": 1,
+            "unconscious": false
+          },
+          "total": 15,
+          "note": true
+        },
+        "livelyFlight": {
+          "gained": 27,
+          "total": 27,
+          "note": true,
+          "undeadRefused": "Lively Flight: PFTEST P23 Affliction flight undead can't be healed by this spell (requires a living creature)."
+        },
+        "necromancersGenerosity": {
+          "gained": 12,
+          "total": 12,
+          "effect": [
+            "Spell Effect: Necromancer's Generosity"
+          ],
+          "livingRefused": "Necromancer's Generosity: PFTEST P23 Affliction generosity living can't be healed by this spell (requires the undead trait)."
+        }
+      }
+    },
+    "directHealing": {
+      "label": "directHealing",
+      "passed": true,
+      "at": "2026-09-26T16:51:40.382Z",
+      "details": {
+        "companion": {
+          "formula": "1d10 + 8",
+          "total": 10,
+          "gained": 10
+        },
+        "soothe": {
+          "total": 11,
+          "effect": "Spell Effect: Soothe"
+        },
+        "refusals": [
+          "Heal Animal: PFTEST P23 Affliction not an animal can't be healed by this spell (requires the animal trait).",
+          "Heal Animal: PFTEST P23 Affliction undead hound can't be healed by this spell (requires a living creature)."
+        ]
+      }
+    },
+    "healOrHarm": {
+      "label": "healOrHarm",
+      "passed": true,
+      "at": "2026-09-26T16:51:51.887Z",
+      "details": {
+        "harmTouch": {
+          "modes": [
+            "damage",
+            "healing",
+            "unaffected"
+          ],
+          "healButton": false,
+          "formula": "1d8 void",
+          "total": 3,
+          "change": [
+            -3,
+            3,
+            0
+          ],
+          "status": "completed"
+        },
+        "harmBurst": {
+          "modes": [
+            "damage",
+            "healing"
+          ],
+          "healButton": false,
+          "formula": "1d8 void",
+          "total": 8,
+          "change": [
+            -16,
+            8
+          ],
+          "status": "completed"
+        },
+        "harmVsUndead": {
+          "formula": "1d8 + 8 void",
+          "total": 12,
+          "refusal": "Harm (vs. Undead): PFTEST P23 Affliction harm living can't be healed by this spell (requires an undead creature or one with void healing)."
+        },
+        "harmVsLiving": [
+          {
+            "eligible": true,
+            "mode": null,
+            "reason": null
+          },
+          {
+            "eligible": false,
+            "mode": null,
+            "reason": "requires a living creature"
+          }
+        ],
+        "healTouch": {
+          "modes": [
+            "healing",
+            "damage"
+          ],
+          "healButton": false,
+          "formula": "1d8 vitality",
+          "total": 5,
+          "change": [
+            5,
+            -2
+          ],
+          "status": "completed"
+        }
+      }
+    },
+    "foodHealing": {
+      "label": "foodHealing",
+      "passed": true,
+      "at": "2026-09-26T16:52:34.039Z",
+      "details": {
+        "cornucopia": {
+          "pieces": 3,
+          "ate": 2,
+          "total": 11,
+          "before": {
+            "hp": 300,
+            "dying": 0,
+            "wounded": 0
+          },
+          "after": {
+            "hp": 311,
+            "dying": 0,
+            "wounded": 0
+          },
+          "left": 1,
+          "undeadRefused": "Cornucopia: PFTEST P23 Affliction cornucopia undead isn't healed by vitality energy.",
+          "tooMany": "Cornucopia: only 1 piece left.",
+          "card": true,
+          "rolls": [
+            5,
+            6
+          ]
+        },
+        "naturesBounty": {
+          "total": 33,
+          "after": {
+            "hp": 33,
+            "dying": 0,
+            "wounded": 1
+          },
+          "nourished": true,
+          "again": "Nature's Bounty: the food has all been eaten.",
+          "withered": "Nature's Bounty: the food has withered away."
+        },
+        "eatButton": {
+          "cast": "Cornucopia rank 1",
+          "targetedTokenHealed": 6,
+          "hpBefore": 5,
+          "hpAfter": 11,
+          "remaining": 0,
+          "eatButtonRemoved": true
+        }
+      }
+    },
+    "cleanup": {
+      "label": "cleanup",
+      "passed": true,
+      "at": "2026-09-26T16:52:46.521Z",
+      "details": {
+        "actorsRemoved": 32,
+        "journalsRemoved": 2,
+        "remainingFixtureActors": 0
+      }
+    }
+  }
+}

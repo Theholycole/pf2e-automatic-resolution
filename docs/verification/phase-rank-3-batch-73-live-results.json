@@ -1,0 +1,25 @@
+{
+  "label": "rank3Batch73",
+  "passed": true,
+  "at": "2026-10-03T01:14:40.021Z",
+  "details": {
+    "batch73r3": {
+      "bonus": 2,
+      "start": [
+        true,
+        true
+      ],
+      "endSave": "ended-for-creature",
+      "afterSave": {
+        "doubter": false,
+        "immune": true,
+        "rapt": true
+      },
+      "newcomerCards": 1,
+      "late": true,
+      "lateCards": 0,
+      "repeat": "started",
+      "doubterAgain": false
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "batch": 102,
+  "spells": [
+    "Scouring Sand"
+  ],
+  "results": [
+    {
+      "label": "cr1Batch102",
+      "passed": true,
+      "at": "2026-09-28T00:59:22.299Z",
+      "details": {
+        "scouringSand": {
+          "afterCast": {
+            "crit": [
+              "blinded"
+            ],
+            "fail": [
+              "dazzled"
+            ]
+          },
+          "card": {
+            "terrain": true,
+            "counteract": true,
+            "immune": true
+          },
+          "controls": [
+            "interact",
+            "next"
+          ],
+          "afterNextAction": [
+            "dazzled"
+          ],
+          "turnEnd": [
+            "turn-end"
+          ],
+          "later": [
+            "dazzled"
+          ]
+        }
+      }
+    },
+    {
+      "label": "cr1Batch100",
+      "passed": true,
+      "at": "2026-09-28T01:00:25.397Z",
+      "details": {
+        "results": {
+          "failer": {
+            "degree": "failure",
+            "total": 4,
+            "lost": 4,
+            "persistent": [
+              "1 fire"
+            ]
+          },
+          "saver": {
+            "degree": "success",
+            "total": 4,
+            "lost": 2,
+            "persistent": []
+          },
+          "later": {
+            "degree": "criticalFailure",
+            "total": 7,
+            "lost": 14,
+            "persistent": [
+              "(2 * 1) fire"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

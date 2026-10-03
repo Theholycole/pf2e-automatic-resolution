@@ -1,0 +1,40 @@
+{
+  "label": "rank3Batch94",
+  "passed": true,
+  "at": "2026-10-03T06:01:37.750Z",
+  "details": {
+    "batch94": {
+      "cast": {
+        "formula": "3d4",
+        "extra": "6d4",
+        "duration": {
+          "value": 1,
+          "unit": "hours",
+          "expiry": "turn-start",
+          "sustained": false
+        },
+        "card": true
+      },
+      "after25": {
+        "count": 2,
+        "formulas": [
+          "3d4",
+          "3d4"
+        ],
+        "lastAt": 1200,
+        "hp": 26
+      },
+      "bonus": {
+        "status": "applied",
+        "total": 12,
+        "gained": 12,
+        "again": "used"
+      },
+      "after85": {
+        "count": 6,
+        "effect": false
+      },
+      "after105": 6
+    }
+  }
+}

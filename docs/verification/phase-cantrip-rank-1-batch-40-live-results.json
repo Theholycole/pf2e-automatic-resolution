@@ -1,0 +1,63 @@
+{
+  "batch": "cantrip-rank-1-batch-40",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch40",
+    "passed": true,
+    "details": {
+      "funeralFlames": {
+        "offered": null,
+        "selection": true,
+        "club": {
+          "potency": 1,
+          "versatileFire": true,
+          "dice": 1
+        },
+        "sword": {
+          "potency": 0,
+          "versatileFire": false,
+          "dice": 0
+        },
+        "toggle": true,
+        "light": true,
+        "note": true
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch40",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch39",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch2",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

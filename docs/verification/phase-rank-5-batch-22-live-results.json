@@ -1,0 +1,21 @@
+{
+  "label": "rank5Batch22",
+  "passed": true,
+  "at": "2026-10-02T18:14:10.779Z",
+  "details": {
+    "batch22": {
+      "formula": "6d8 vitality",
+      "total": 21,
+      "lost": [
+        10,
+        21
+      ],
+      "persistent": "1d8",
+      "halo": [
+        false,
+        true
+      ],
+      "haloAfter": false
+    }
+  }
+}

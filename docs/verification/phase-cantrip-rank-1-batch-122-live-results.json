@@ -1,0 +1,54 @@
+{
+  "batch": 122,
+  "spells": [
+    "Grasping Vine"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch122",
+      "passed": true,
+      "at": "2026-09-28T09:45:11.378Z",
+      "details": {
+        "graspingVine": {
+          "eligible": [
+            true,
+            true,
+            true,
+            false
+          ],
+          "asked": [
+            "pending",
+            "pending",
+            "pending",
+            null
+          ],
+          "grabs": [
+            {
+              "grabbed": true,
+              "escape": true,
+              "duration": "1 rounds"
+            },
+            {
+              "grabbed": true,
+              "escape": true,
+              "duration": "1 minutes"
+            },
+            {
+              "grabbed": true,
+              "escape": true,
+              "duration": "1 minutes"
+            }
+          ],
+          "large": false,
+          "breakable": true,
+          "reposition5": true,
+          "reposition10": true,
+          "objectBranch": true
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "label": "rank3Batch58",
+  "passed": true,
+  "at": "2026-10-02T19:26:02.994Z",
+  "details": {
+    "batch58": {
+      "formula": "4d10 bludgeoning",
+      "total": 27,
+      "lost": [
+        27,
+        0
+      ],
+      "note": true
+    }
+  }
+}

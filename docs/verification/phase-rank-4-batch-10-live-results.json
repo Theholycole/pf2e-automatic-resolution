@@ -1,0 +1,18 @@
+{
+  "label": "rank4Batch10",
+  "passed": true,
+  "at": "2026-10-02T13:03:37.439Z",
+  "details": {
+    "batch10": {
+      "suggestion": {
+        "supported": true,
+        "targets": 3,
+        "durations": [
+          null,
+          "1 minutes",
+          "1 hours"
+        ]
+      }
+    }
+  }
+}

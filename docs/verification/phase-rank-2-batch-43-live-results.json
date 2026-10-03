@@ -1,0 +1,54 @@
+{
+  "phase": "rank-2-batch-43",
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cleanup",
+      "passed": true,
+      "at": "2026-10-01T22:36:48.917Z",
+      "details": {
+        "actorsRemoved": 0,
+        "journalsRemoved": 0,
+        "regionsRemoved": 0,
+        "remainingFixtureActors": 0
+      }
+    },
+    {
+      "label": "rank2Batch43",
+      "passed": true,
+      "at": "2026-10-01T22:36:49.582Z",
+      "details": {
+        "batch43": {
+          "visage": {
+            "level": "automatic",
+            "wrong": "Summoner's Visage: PFTEST P23 Affliction visage other doesn't have the eidolon trait.",
+            "duration": "1 hours",
+            "rules": [
+              "FlatModifier",
+              "FlatModifier",
+              "RollOption",
+              "ActorTraits",
+              "CreatureSize"
+            ],
+            "traits": [
+              "beast",
+              "eidolon",
+              "elf",
+              "humanoid"
+            ],
+            "size": "sm",
+            "after": {
+              "traits": [
+                "beast",
+                "eidolon"
+              ],
+              "size": "lg"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

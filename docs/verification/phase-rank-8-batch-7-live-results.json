@@ -1,0 +1,38 @@
+{
+ "label": "rank8Batch7",
+ "passed": true,
+ "at": "2026-10-03T21:02:06.933Z",
+ "details": {
+  "batch7": {
+   "ac": {
+    "ally": 1,
+    "foe": 0,
+    "caster": 0,
+    "foeHeld": false,
+    "casterHeld": false
+   },
+   "rules": [
+    "FlatModifier:ac:1:status",
+    "FlatModifier:saving-throw:1:status",
+    "RollOption:divine-aura-opposed:false:",
+    "FlatModifier:ac:2:status",
+    "FlatModifier:saving-throw:2:status",
+    "RollOption:divine-aura-controlled:false:",
+    "FlatModifier:ac:4:status",
+    "FlatModifier:saving-throw:4:status"
+   ],
+   "acMods": [
+    "Modifier:10:true:untyped",
+    "Divine Aura:1:true:status",
+    "Divine Aura:2:false:status",
+    "Divine Aura:4:false:status"
+   ],
+   "opposedAc": 2,
+   "statistic": "will",
+   "blinded": true,
+   "again": "none",
+   "radius": 20,
+   "afterEnd": false
+  }
+ }
+}

@@ -1,0 +1,38 @@
+{
+  "batch": "rank-2-6",
+  "date": "2026-09-30",
+  "world": "pftest",
+  "system": "8.5.0",
+  "core": "14.367",
+  "module": "0.8.2",
+  "results": [
+    {
+      "case": "rank2Batch6",
+      "passed": true,
+      "details": {
+        "falls": {
+          "drop": {
+            "failureLost": 10,
+            "criticalLost": 20
+          },
+          "gravity": {
+            "success": [
+              "encumbered"
+            ],
+            "failure": [
+              "prone",
+              "encumbered"
+            ],
+            "critical": [
+              "prone",
+              "encumbered"
+            ],
+            "failureNote": true,
+            "criticalNote": true,
+            "successNote": false
+          }
+        }
+      }
+    }
+  ]
+}

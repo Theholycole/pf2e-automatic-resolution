@@ -1,0 +1,28 @@
+{
+  "label": "rank4Batch111",
+  "passed": true,
+  "at": "2026-10-03T08:48:37.238Z",
+  "details": {
+    "batch111": {
+      "supported": true,
+      "repeatable": "sustain",
+      "first": {
+        "formula": "2d12 cold + 2d12 bludgeoning",
+        "lost": 25,
+        "total": 25
+      },
+      "costs": {
+        "foe": 20,
+        "caster": 10
+      },
+      "moved": -200,
+      "second": {
+        "formula": "2d12 cold + 2d12 bludgeoning",
+        "lost": 23,
+        "total": 23
+      },
+      "regions": 1,
+      "record": true
+    }
+  }
+}

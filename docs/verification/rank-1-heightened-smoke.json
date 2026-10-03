@@ -1,0 +1,5028 @@
+{
+  "date": "2026-09-30",
+  "kind": "rank-1-heightened-smoke",
+  "results": [
+    {
+      "name": "Acidic Burst",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "4d6 acid",
+        "total": 8,
+        "targets": [
+          "enemy criticalFailure: 16 HP"
+        ]
+      }
+    },
+    {
+      "name": "Acidic Burst",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "6d6 acid",
+        "total": 17,
+        "targets": [
+          "enemy failure: 17 HP"
+        ]
+      }
+    },
+    {
+      "name": "Admonishing Ray",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Admonishing Ray",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "6d6 bludgeoning",
+        "total": 21,
+        "targets": [
+          "enemy success: 21 HP"
+        ]
+      }
+    },
+    {
+      "name": "Agitate",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Agitate: Spell's effect (level 2, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy success: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Agitate",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Agitate: Spell's effect (level 3, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy success: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Airburst",
+      "rank": 4,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Airburst: Reactions (level 4, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Alarm",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Alarm (area) (level 3, 8 hours)"
+      ]
+    },
+    {
+      "name": "All-Encompassing Hunger",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "2d6 void",
+        "total": 9,
+        "targets": [
+          "enemy failure: 9 HP"
+        ]
+      }
+    },
+    {
+      "name": "All-Encompassing Hunger",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "3d6 void",
+        "total": 10,
+        "targets": [
+          "enemy success: 5 HP"
+        ]
+      }
+    },
+    {
+      "name": "Ancestral Memories",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Ancestral Memories (level 5, 0 rounds)"
+      ]
+    },
+    {
+      "name": "Ancestral Memories",
+      "rank": 8,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Ancestral Memories (level 8, 0 rounds)"
+      ]
+    },
+    {
+      "name": "Ancestral Touch",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Ancestral Touch: Frightened 1 (level 2, -1 unlimited)"
+      ],
+      "saveDamage": {
+        "formula": "3d4 mental",
+        "total": 7,
+        "targets": [
+          "enemy failure: 7 HP"
+        ]
+      }
+    },
+    {
+      "name": "Ancestral Touch",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Ancestral Touch: Frightened 1 (level 3, -1 unlimited)"
+      ],
+      "saveDamage": {
+        "formula": "4d4 mental",
+        "total": 12,
+        "targets": [
+          "enemy failure: 12 HP"
+        ]
+      }
+    },
+    {
+      "name": "Animal Allies",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "6d4 piercing",
+        "total": 15,
+        "targets": [
+          "enemy criticalSuccess: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Animal Allies",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "9d4 piercing",
+        "total": 26,
+        "targets": [
+          "enemy success: 13 HP"
+        ]
+      }
+    },
+    {
+      "name": "Animate Rope",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Animate Rope (commands) (level 3, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Animate Rope",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Animate Rope (commands) (level 5, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Anticipate Peril",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Anticipate Peril (level 3, 10 minutes)"
+      ]
+    },
+    {
+      "name": "Anticipate Peril",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Anticipate Peril (level 5, 10 minutes)"
+      ]
+    },
+    {
+      "name": "Appeal to Authority",
+      "rank": 5,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Spell Effect: Appeal to Authority (Success) (level 5, 1 minutes)"
+      ],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy success: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Aqueous Blast",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Aqueous Blast: Prone (level 2, -1 unlimited)"
+      ],
+      "saveDamage": {
+        "formula": "3d8 bludgeoning",
+        "total": 10,
+        "targets": [
+          "enemy criticalSuccess: 20 HP"
+        ]
+      }
+    },
+    {
+      "name": "Aqueous Blast",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Armor of Thorn and Claw",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Armor of Thorn and Claw (retaliates) (level 3, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Armor of Thorn and Claw",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Armor of Thorn and Claw (retaliates) (level 5, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Arms of Nature",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Arms of Nature (level 1, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Arms of Nature",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Arms of Nature (level 1, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Arms of Nature",
+      "rank": 7,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Arms of Nature (level 1, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Augmented Body",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Augmented Body (Ablative Plating) (level 3, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Augmented Body",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Augmented Body (Ablative Plating) (level 5, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Augmented Body",
+      "rank": 7,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Augmented Body (Ablative Plating) (level 7, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Augmented Body",
+      "rank": 9,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Augmented Body (Ablative Plating) (level 9, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Barbed Spear",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Barbed Spear: Clumsy 1 (ends on Interact) (level 2, 1 minutes)"
+      ],
+      "saveDamage": {
+        "formula": "2d8 piercing",
+        "total": 8,
+        "targets": [
+          "enemy success: 8 HP"
+        ]
+      }
+    },
+    {
+      "name": "Barbed Spear",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy criticalFailure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Beseech the Sphinx",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Beseech the Sphinx (Acrobatics) (Fortitude) (level 4, 10 minutes)"
+      ]
+    },
+    {
+      "name": "Beseech the Sphinx",
+      "rank": 7,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Beseech the Sphinx (Acrobatics) (Fortitude) (level 7, 10 minutes)"
+      ]
+    },
+    {
+      "name": "Biting Words",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "4d6 sonic",
+        "total": 12,
+        "targets": [
+          "enemy success: 12 HP"
+        ]
+      }
+    },
+    {
+      "name": "Biting Words",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy criticalFailure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Blessing of Vigor",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Blessing of Vigor (level 2, 3 rounds)"
+      ]
+    },
+    {
+      "name": "Blessing of Vigor",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Blessing of Vigor (level 3, 3 rounds)"
+      ]
+    },
+    {
+      "name": "Blood Infusion",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Spell Effect: Blood Infusion (level 2, 1 minutes)"
+      ],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Blood Infusion",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Spell Effect: Blood Infusion (level 3, 1 minutes)"
+      ],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy success: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Blood Ward",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Blood Ward (Aberration) (level 5, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Bone Shield",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Bone Shield (level 1, 1 minutes)",
+        "caster: Effect: Raise a Shield (level 1, 1 rounds)"
+      ]
+    },
+    {
+      "name": "Bone Shield",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Bone Shield (level 1, 1 minutes)",
+        "caster: Effect: Raise a Shield (level 1, 1 rounds)"
+      ]
+    },
+    {
+      "name": "Bone Spear",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "4d6 piercing",
+        "total": 12,
+        "targets": [
+          "enemy success: 6 HP"
+        ]
+      }
+    },
+    {
+      "name": "Bone Spear",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "6d6 piercing",
+        "total": 22,
+        "targets": [
+          "enemy success: 11 HP"
+        ]
+      }
+    },
+    {
+      "name": "Brain Drain",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "2d8 mental",
+        "total": 9,
+        "targets": [
+          "enemy success: 4 HP"
+        ]
+      }
+    },
+    {
+      "name": "Brain Drain",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "3d8 mental",
+        "total": 12,
+        "targets": [
+          "enemy failure: 12 HP"
+        ]
+      }
+    },
+    {
+      "name": "Breadcrumbs",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Note: Breadcrumbs (level 2, 8 hours)"
+      ]
+    },
+    {
+      "name": "Breadcrumbs",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Note: Breadcrumbs (level 3, 1 days)"
+      ]
+    },
+    {
+      "name": "Breathe Fire",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "4d6 fire",
+        "total": 11,
+        "targets": [
+          "enemy failure: 11 HP"
+        ]
+      }
+    },
+    {
+      "name": "Breathe Fire",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "6d6 fire",
+        "total": 19,
+        "targets": [
+          "enemy success: 9 HP"
+        ]
+      }
+    },
+    {
+      "name": "Briny Bolt",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Briny Bolt: Blinded (ends on Interact) (level 2, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "4d6 bludgeoning",
+        "total": 13,
+        "targets": [
+          "enemy success: 13 HP"
+        ]
+      }
+    },
+    {
+      "name": "Briny Bolt",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Briny Bolt: Blinded (ends on Interact) (level 3, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "6d6 bludgeoning",
+        "total": 18,
+        "targets": [
+          "enemy success: 18 HP"
+        ]
+      }
+    },
+    {
+      "name": "Buffeting Winds",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "4d4 bludgeoning",
+        "total": 12,
+        "targets": [
+          "enemy success: 6 HP"
+        ]
+      }
+    },
+    {
+      "name": "Buffeting Winds",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "6d4 bludgeoning",
+        "total": 14,
+        "targets": [
+          "enemy failure: 14 HP"
+        ]
+      }
+    },
+    {
+      "name": "Buoyant Bubbles",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Note: Buoyant Bubbles (level 4, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Call to Arms",
+      "rank": 6,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Call to Arms (level 6, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Call to Arms",
+      "rank": 9,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Call to Arms (level 9, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Camel Spit",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Camel Spit: Dazzled (level 2, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "2d6 acid",
+        "total": 9,
+        "targets": [
+          "enemy success: 9 HP"
+        ]
+      }
+    },
+    {
+      "name": "Camel Spit",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Camel Spit: Dazzled (level 3, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "3d6 acid",
+        "total": 7,
+        "targets": [
+          "enemy success: 7 HP"
+        ]
+      }
+    },
+    {
+      "name": "Carryall",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Carryall (level 4, 8 hours)"
+      ]
+    },
+    {
+      "name": "Charged Javelin",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Spell Effect: Charged Javelin (level 2, -1 unlimited)"
+      ],
+      "saveDamage": {
+        "formula": "2d6 electricity + 2 persistent electricity",
+        "total": 6,
+        "targets": [
+          "enemy success: 6 HP"
+        ]
+      }
+    },
+    {
+      "name": "Charged Javelin",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Charm",
+      "rank": 4,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Charm: Attitude (level 4, 1 days)"
+      ],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy criticalFailure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Charm",
+      "rank": 8,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy criticalSuccess: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Chastising Retort",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "4d6 mental",
+        "total": 17,
+        "targets": [
+          "enemy success: 8 HP"
+        ]
+      }
+    },
+    {
+      "name": "Chastising Retort",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Chastising Retort: Stupefied 1 (level 3, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "6d6 mental",
+        "total": 26,
+        "targets": [
+          "enemy failure: 26 HP"
+        ]
+      }
+    },
+    {
+      "name": "Chilling Spray",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Chilling Spray: 5-foot Speed penalty (level 2, 2 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "4d4 cold",
+        "total": 10,
+        "targets": [
+          "enemy failure: 10 HP"
+        ]
+      }
+    },
+    {
+      "name": "Chilling Spray",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "6d4 cold",
+        "total": 20,
+        "targets": [
+          "enemy success: 10 HP"
+        ]
+      }
+    },
+    {
+      "name": "Cinder Gaze",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Cinder Gaze (level 2, 10 minutes)"
+      ]
+    },
+    {
+      "name": "Cinder Gaze",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Cinder Gaze (level 3, 10 minutes)"
+      ]
+    },
+    {
+      "name": "Cinder Scribe",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Cinder Scribe (area) (level 2, 24 hours)"
+      ]
+    },
+    {
+      "name": "Cinder Scribe",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Cinder Scribe (area) (level 4, 24 hours)"
+      ]
+    },
+    {
+      "name": "Circle of Weakness",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Place Lingering Area",
+      "effects": []
+    },
+    {
+      "name": "Circle of Weakness",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Place Lingering Area",
+      "effects": []
+    },
+    {
+      "name": "Cleanse Cuisine",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Cleanse Cuisine",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Clouded Focus",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Clouded Focus: Spell's effect (level 3, 1 minutes)"
+      ],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy criticalFailure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Clouded Focus",
+      "rank": 6,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Clouded Focus: Spell's effect (level 6, 1 minutes)"
+      ],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy criticalFailure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Command",
+      "rank": 5,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy success: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Concordant Choir",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "2d4 sonic",
+        "total": 5,
+        "targets": [
+          "enemy success: 2 HP"
+        ]
+      }
+    },
+    {
+      "name": "Concordant Choir",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "3d4 sonic",
+        "total": 10,
+        "targets": [
+          "enemy success: 5 HP"
+        ]
+      }
+    },
+    {
+      "name": "Connective Current",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Note: Connective Current (level 4, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Connective Current",
+      "rank": 6,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Note: Connective Current (level 6, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Cornucopia",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Cornucopia",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Corpse Bloom",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Place Lingering Area",
+      "effects": []
+    },
+    {
+      "name": "Corpse Bloom",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Place Lingering Area",
+      "effects": []
+    },
+    {
+      "name": "Crown of Prophets",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Set (waits for its trigger)",
+      "effects": [
+        "caster: Spell Effect: Crown of Prophets (level 2, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Crown of Prophets",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Set (waits for its trigger)",
+      "effects": [
+        "caster: Spell Effect: Crown of Prophets (level 3, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Crushing Ground",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "4d6 bludgeoning",
+        "total": 17,
+        "targets": [
+          "enemy success: 8 HP"
+        ]
+      }
+    },
+    {
+      "name": "Crushing Ground",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Spell Effect: Crushing Ground (Failure) (level 3, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "6d6 bludgeoning",
+        "total": 25,
+        "targets": [
+          "enemy failure: 25 HP"
+        ]
+      }
+    },
+    {
+      "name": "Cry of Destruction",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: ? HP"
+        ]
+      }
+    },
+    {
+      "name": "Cry of Destruction",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy success: ? HP"
+        ]
+      }
+    },
+    {
+      "name": "Cycle of Retribution",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Cycle of Retribution: Hostile actions (level 2, 1 minutes)"
+      ],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Cycle of Retribution",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Cycle of Retribution: Hostile actions (level 3, 1 minutes)"
+      ],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Darkened Forest Form",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Pest Form (Darkened Forest Form) (level 2, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Darkened Forest Form",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Pest Form (Darkened Forest Form) (level 5, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Dazzling Flash",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Dazzling Flash: Blinded (ends on Interact) (level 3, 1 rounds)",
+        "enemy: Dazzling Flash: Dazzled (level 3, 1 minutes)"
+      ],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Deathly Scream",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "2d4 mental",
+        "total": 5,
+        "targets": [
+          "enemy success: 2 HP"
+        ]
+      }
+    },
+    {
+      "name": "Deathly Scream",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Deathly Scream: Frightened 1 (level 3, -1 unlimited)"
+      ],
+      "saveDamage": {
+        "formula": "3d4 mental",
+        "total": 11,
+        "targets": [
+          "enemy failure: 11 HP"
+        ]
+      }
+    },
+    {
+      "name": "Decompose",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Defended by Spirits",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "ally: Defended by Spirits (against PFTEST Smoke enemy) (level 3, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Defended by Spirits",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "ally: Defended by Spirits (against PFTEST Smoke enemy) (level 5, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Dehydrate",
+      "rank": 3,
+      "status": "no-button",
+      "detail": "Manual resolution: this spell is not yet automated. Native save rolls will not apply its damage or conditions.",
+      "effects": []
+    },
+    {
+      "name": "Dehydrate",
+      "rank": 5,
+      "status": "no-button",
+      "detail": "Manual resolution: this spell is not yet automated. Native save rolls will not apply its damage or conditions.",
+      "effects": []
+    },
+    {
+      "name": "Detect Poison",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Devouring Dark Form",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Devouring Dark Form (Tentacle) (level 2, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Devouring Dark Form",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Devouring Dark Form (Tentacle) (level 5, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Dimensional Assault",
+      "rank": 5,
+      "status": "refused",
+      "detail": "Dimensional Assault: PFTEST Smoke caster has no melee Strike that meets the spell's requirement.",
+      "effects": []
+    },
+    {
+      "name": "Discomfiting Whispers",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Start Lingering Emanation",
+      "effects": []
+    },
+    {
+      "name": "Discomfiting Whispers",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Start Lingering Emanation",
+      "effects": []
+    },
+    {
+      "name": "Disguise Magic",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Disguise Magic (area) (level 2, 1 days)"
+      ]
+    },
+    {
+      "name": "Divine Plagues",
+      "rank": 5,
+      "status": "refused",
+      "detail": "Divine Plagues: at rank 5 and above its heightened rules aren't automated (“The divine plague disease gains the virulent trait. The condition value for the clumsy, enfeebled, or stupefied condition is 2 instead of 1”). Resolve it by hand.",
+      "effects": []
+    },
+    {
+      "name": "Dome of Tranquility",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Dome of Tranquility (area) (level 3, 8 hours)"
+      ]
+    },
+    {
+      "name": "Dome of Tranquility",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Dome of Tranquility (area) (level 5, 24 hours)"
+      ]
+    },
+    {
+      "name": "Draconic Barrage",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Set (waits for its trigger)",
+      "effects": [
+        "caster: Spell Effect: Draconic Barrage (level 2, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Draconic Barrage",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Set (waits for its trigger)",
+      "effects": [
+        "caster: Spell Effect: Draconic Barrage (level 3, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Draw Ire",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Spell Effect: Draw Ire (Failure) (level 2, 1 minutes)"
+      ],
+      "saveDamage": {
+        "formula": "2d10 mental",
+        "total": 18,
+        "targets": [
+          "enemy failure: 18 HP"
+        ]
+      }
+    },
+    {
+      "name": "Draw Ire",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Spell Effect: Draw Ire (Success) (level 3, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "3d10 mental",
+        "total": 21,
+        "targets": [
+          "enemy success: 10 HP"
+        ]
+      }
+    },
+    {
+      "name": "Earth's Bile",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Place Lingering Area",
+      "effects": []
+    },
+    {
+      "name": "Earth's Bile",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Place Lingering Area",
+      "effects": []
+    },
+    {
+      "name": "Earthworks",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Echoing Weapon",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Echoing Weapon (retaliates) (level 3, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Echoing Weapon",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Echoing Weapon (retaliates) (level 5, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Eject Soul",
+      "rank": 4,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: ? HP"
+        ]
+      }
+    },
+    {
+      "name": "Eject Soul",
+      "rank": 7,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy success: ? HP"
+        ]
+      }
+    },
+    {
+      "name": "Elemental Betrayal",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Elemental Betrayal (Air) (level 3, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Elemental Betrayal",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Elemental Betrayal (Air) (level 5, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Elemental Toss",
+      "rank": 2,
+      "status": "refused",
+      "detail": "Elemental Toss: PFTEST Smoke caster has no elemental bloodline choice in PF2e, so PF2e can't give this spell its damage type.",
+      "effects": []
+    },
+    {
+      "name": "Elemental Toss",
+      "rank": 3,
+      "status": "refused",
+      "detail": "Elemental Toss: PFTEST Smoke caster has no elemental bloodline choice in PF2e, so PF2e can't give this spell its damage type.",
+      "effects": []
+    },
+    {
+      "name": "Embodiment of Battle",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Embodiment of Battle (level 4, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Embodiment of Battle",
+      "rank": 7,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Embodiment of Battle (level 7, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Empty Inside",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Resolve Empty Inside",
+      "effects": []
+    },
+    {
+      "name": "Endure",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Endure (level 2, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Endure",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Endure (level 3, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Entreat Spirit",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Entreat Spirit (Arcana) (level 4, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Entreat Spirit",
+      "rank": 8,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Entreat Spirit (Arcana) (level 8, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Evolution Surge",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Evolution Surge (Low-light vision and darkvision) (level 3, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Evolution Surge",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Evolution Surge (Low-light vision and darkvision) (level 5, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Face in the Crowd",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Face in the Crowd (level 3, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Faerie Dust",
+      "rank": 4,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy success: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Faerie Dust",
+      "rank": 7,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Spell Effect: Faerie Dust (Critical Failure) (level 7, 1 minutes)",
+        "enemy: Spell Effect: Faerie Dust (Failure) (level 7, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy criticalFailure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Fashionista",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Fashionista (level 3, 1 hours)"
+      ]
+    },
+    {
+      "name": "Fashionista",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Fashionista (level 5, 1 hours)"
+      ]
+    },
+    {
+      "name": "Fated Healing",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Fated Healing",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Fear",
+      "rank": 3,
+      "status": "error",
+      "detail": "Changed condition-spell target requires review.",
+      "effects": []
+    },
+    {
+      "name": "Fire Ray",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy criticalFailure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Fire Ray",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "6d6 fire",
+        "total": 22,
+        "targets": [
+          "enemy success: 22 HP"
+        ]
+      }
+    },
+    {
+      "name": "Flense",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: ? HP"
+        ]
+      }
+    },
+    {
+      "name": "Flense",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: ? HP"
+        ]
+      }
+    },
+    {
+      "name": "Flourishing Flora",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy success: ? HP"
+        ]
+      }
+    },
+    {
+      "name": "Flourishing Flora",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy criticalFailure: ? HP"
+        ]
+      }
+    },
+    {
+      "name": "Flurry of Claws",
+      "rank": 2,
+      "status": "refused",
+      "detail": "Flurry of Claws: PFTEST Smoke caster has no draconic bloodline choice in PF2e, so PF2e can't give this spell its damage type.",
+      "effects": []
+    },
+    {
+      "name": "Flurry of Claws",
+      "rank": 3,
+      "status": "refused",
+      "detail": "Flurry of Claws: PFTEST Smoke caster has no draconic bloodline choice in PF2e, so PF2e can't give this spell its damage type.",
+      "effects": []
+    },
+    {
+      "name": "Fold Metal",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Fold Metal (area) (level 3, 1 hours)"
+      ]
+    },
+    {
+      "name": "Foraging Friends",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Foraging Friends",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Force Barrage",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Resolve Immediate Spell",
+      "effects": []
+    },
+    {
+      "name": "Force Barrage",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Resolve Immediate Spell",
+      "effects": []
+    },
+    {
+      "name": "Force Bolt",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Force Bolt",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Force Fang",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Force Fang",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Forced Mercy",
+      "rank": 4,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Forced Mercy: Spell's effect (level 4, 4 rounds)"
+      ],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Forge",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy criticalSuccess: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Forge",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "7d6 fire",
+        "total": 25,
+        "targets": [
+          "enemy criticalFailure: 50 HP"
+        ]
+      }
+    },
+    {
+      "name": "Frenzied Revelry",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Frenzied Revelry (level 4, 1 minutes)",
+        "caster: Spell Note: Frenzied Revelry (area) (level 4, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Frenzied Revelry",
+      "rank": 7,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Frenzied Revelry (level 7, 1 minutes)",
+        "caster: Spell Note: Frenzied Revelry (area) (level 7, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Friendly Push",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Note: Friendly Push (level 4, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Friendly Push",
+      "rank": 7,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Note: Friendly Push (level 7, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Funeral Flames",
+      "rank": 3,
+      "status": "refused",
+      "detail": "Funeral Flames: PFTEST Smoke caster has no weapon for PF2e's Spell Effect: Funeral Flames to choose. Target a creature with a weapon.",
+      "effects": []
+    },
+    {
+      "name": "Funeral Flames",
+      "rank": 5,
+      "status": "refused",
+      "detail": "Funeral Flames: PFTEST Smoke caster has no weapon for PF2e's Spell Effect: Funeral Flames to choose. Target a creature with a weapon.",
+      "effects": []
+    },
+    {
+      "name": "Garden of Healing",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Garden of Healing",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Garden of Healing (level 2, 10 minutes)",
+        "ally: Spell Effect: Garden of Healing (level 2, 10 minutes)",
+        "enemy: Spell Effect: Garden of Healing (level 2, 10 minutes)"
+      ]
+    },
+    {
+      "name": "Glutton's Jaws",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Glutton's Jaws",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "caster: Spell Effect: Glutton's Jaws (level 3, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "6d6 piercing",
+        "total": 14,
+        "targets": [
+          "enemy success: 14 HP"
+        ]
+      }
+    },
+    {
+      "name": "Grim Tendrils",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "4d4 void",
+        "total": 12,
+        "targets": [
+          "enemy success: 6 HP"
+        ]
+      }
+    },
+    {
+      "name": "Grim Tendrils",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "6d4 void",
+        "total": 17,
+        "targets": [
+          "enemy failure: 17 HP"
+        ]
+      }
+    },
+    {
+      "name": "Gritty Wheeze",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "4d4 bludgeoning",
+        "total": 12,
+        "targets": [
+          "enemy success: 6 HP"
+        ]
+      }
+    },
+    {
+      "name": "Gritty Wheeze",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Gritty Wheeze: Dazzled (level 3, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "6d4 bludgeoning",
+        "total": 15,
+        "targets": [
+          "enemy failure: 15 HP"
+        ]
+      }
+    },
+    {
+      "name": "Guided Introspection",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Guided Introspection (level 4, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Halcyon Mists",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Halcyon Mists (level 2, 1 rounds)"
+      ]
+    },
+    {
+      "name": "Halcyon Mists",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Halcyon Mists (level 3, 1 rounds)"
+      ]
+    },
+    {
+      "name": "Hallowed Ground",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Place Lingering Area",
+      "effects": []
+    },
+    {
+      "name": "Hallowed Ground",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Place Lingering Area",
+      "effects": []
+    },
+    {
+      "name": "Harm",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "2d8 void",
+        "total": 9,
+        "targets": [
+          "enemy failure: 9 HP"
+        ]
+      }
+    },
+    {
+      "name": "Harm",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "3d8 void",
+        "total": 19,
+        "targets": [
+          "enemy failure: 19 HP"
+        ]
+      }
+    },
+    {
+      "name": "Heal Animal",
+      "rank": 2,
+      "status": "refused",
+      "detail": "Heal Animal: select the creature to heal before resolving.",
+      "effects": []
+    },
+    {
+      "name": "Heal Animal",
+      "rank": 3,
+      "status": "refused",
+      "detail": "Heal Animal: select the creature to heal before resolving.",
+      "effects": []
+    },
+    {
+      "name": "Heal Companion",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Heal Companion",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Heal",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Resolve Immediate Spell",
+      "effects": []
+    },
+    {
+      "name": "Heal",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Resolve Immediate Spell",
+      "effects": []
+    },
+    {
+      "name": "Healer's Blessing",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Healer's Blessing (level 2, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Healer's Blessing",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Healer's Blessing (level 3, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Helpful Steps",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Helpful Steps (area) (level 2, 10 minutes)"
+      ]
+    },
+    {
+      "name": "Helpful Steps",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Helpful Steps (area) (level 3, 10 minutes)"
+      ]
+    },
+    {
+      "name": "Hippocampus Retreat",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "caster: Spell Effect: Hippocampus Retreat (level 2, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "3d6 bludgeoning",
+        "total": 13,
+        "targets": [
+          "enemy success: 13 HP"
+        ]
+      }
+    },
+    {
+      "name": "Hippocampus Retreat",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "caster: Spell Effect: Hippocampus Retreat (level 3, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "4d6 bludgeoning",
+        "total": 6,
+        "targets": [
+          "enemy criticalSuccess: 12 HP"
+        ]
+      }
+    },
+    {
+      "name": "Horizon Thunder Sphere",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "5d6 electricity",
+        "total": 15,
+        "targets": [
+          "enemy success: 15 HP"
+        ]
+      }
+    },
+    {
+      "name": "Horizon Thunder Sphere",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "7d6 electricity",
+        "total": 25,
+        "targets": [
+          "enemy success: 25 HP"
+        ]
+      }
+    },
+    {
+      "name": "Hurtling Stone",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "3d6 bludgeoning",
+        "total": 9,
+        "targets": [
+          "enemy success: 9 HP"
+        ]
+      }
+    },
+    {
+      "name": "Hurtling Stone",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "4d6 bludgeoning",
+        "total": 10,
+        "targets": [
+          "enemy criticalSuccess: 20 HP"
+        ]
+      }
+    },
+    {
+      "name": "Hydraulic Push",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Hydraulic Push",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "7d6 bludgeoning",
+        "total": 20,
+        "targets": [
+          "enemy success: 20 HP"
+        ]
+      }
+    },
+    {
+      "name": "Hymn of Healing",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Hymn of Healing (level 2, 4 rounds)"
+      ]
+    },
+    {
+      "name": "Hymn of Healing",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Hymn of Healing (level 3, 4 rounds)"
+      ]
+    },
+    {
+      "name": "Illusory Disguise",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Illusory Disguise (level 3, 1 hours)"
+      ]
+    },
+    {
+      "name": "Illusory Disguise",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Illusory Disguise (level 4, 1 hours)"
+      ]
+    },
+    {
+      "name": "Illusory Disguise",
+      "rank": 7,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Illusory Disguise (level 7, 1 hours)"
+      ]
+    },
+    {
+      "name": "Illusory Object",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Illusory Object (area) (level 2, 1 hours)"
+      ]
+    },
+    {
+      "name": "Illusory Object",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Illusory Object (area) (level 5, 1 hours)"
+      ]
+    },
+    {
+      "name": "Incendiary Aura",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Incendiary Aura (level 3, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Incendiary Aura",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Incendiary Aura (level 5, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Infuse Vitality",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Infuse Vitality (level 3, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Infuse Vitality",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Infuse Vitality (level 5, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Inkshot",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Inkshot",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Inkshot: Dazzled (level 3, 1 minutes)"
+      ],
+      "saveDamage": {
+        "formula": "6d6 poison",
+        "total": 18,
+        "targets": [
+          "enemy criticalSuccess: 36 HP"
+        ]
+      }
+    },
+    {
+      "name": "Inner Upheaval",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Resolve Strike Spell",
+      "effects": [
+        "caster: Spell Effect: Inner Upheaval (Force) (level 5, 1 rounds)"
+      ]
+    },
+    {
+      "name": "Inner Upheaval",
+      "rank": 9,
+      "status": "ok",
+      "detail": "Resolve Strike Spell",
+      "effects": [
+        "caster: Spell Effect: Inner Upheaval (Force) (level 9, 1 rounds)"
+      ]
+    },
+    {
+      "name": "Instant Pottery",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Instant Pottery (level 2, 1 hours)"
+      ]
+    },
+    {
+      "name": "Instant Pottery",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Instant Pottery (level 3, 1 hours)"
+      ]
+    },
+    {
+      "name": "Interposing Earth",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Interposing Earth (level 1, 1 rounds)"
+      ]
+    },
+    {
+      "name": "Invisible Item",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Invisible Item (area) (level 3, 1 days)"
+      ]
+    },
+    {
+      "name": "Invisible Item",
+      "rank": 7,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Invisible Item (area) (level 7, 1 days)"
+      ]
+    },
+    {
+      "name": "Item Facade",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Item Facade (area) (level 2, 24 hours)"
+      ]
+    },
+    {
+      "name": "Item Facade",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Item Facade (area) (level 3, 24 hours)"
+      ]
+    },
+    {
+      "name": "Jump",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Juvenile Companion",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Juvenile Companion (level 2, 1 hours)"
+      ]
+    },
+    {
+      "name": "Keen Smell",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Keen Smell (level 3, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Know Location",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Know Location (level 3, 1 days)"
+      ]
+    },
+    {
+      "name": "Know Location",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Know Location (level 5, 1 days)"
+      ]
+    },
+    {
+      "name": "Know Location",
+      "rank": 7,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Know Location (level 7, 1 days)"
+      ]
+    },
+    {
+      "name": "Lament",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy success: ? HP"
+        ]
+      }
+    },
+    {
+      "name": "Lament",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: ? HP"
+        ]
+      }
+    },
+    {
+      "name": "Lay on Hands",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Lay on Hands (level 2, 1 rounds)"
+      ]
+    },
+    {
+      "name": "Lay on Hands",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Lay on Hands (level 3, 1 rounds)"
+      ]
+    },
+    {
+      "name": "Leaden Steps",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Spell Effect: Leaden Steps (Success) (level 2, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy success: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Leaden Steps",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Spell Effect: Leaden Steps (Failure) (level 3, 1 minutes)"
+      ],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Life Boost",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Life Boost (level 2, 4 rounds)"
+      ]
+    },
+    {
+      "name": "Life Boost",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Life Boost (level 3, 4 rounds)"
+      ]
+    },
+    {
+      "name": "Life Link",
+      "rank": 3,
+      "status": "no-button",
+      "detail": "Manual resolution: this spell is not yet automated. Native save rolls will not apply its damage or conditions.",
+      "effects": []
+    },
+    {
+      "name": "Life Link",
+      "rank": 6,
+      "status": "no-button",
+      "detail": "Manual resolution: this spell is not yet automated. Native save rolls will not apply its damage or conditions.",
+      "effects": []
+    },
+    {
+      "name": "Life Link",
+      "rank": 9,
+      "status": "no-button",
+      "detail": "Manual resolution: this spell is not yet automated. Native save rolls will not apply its damage or conditions.",
+      "effects": []
+    },
+    {
+      "name": "Lift Nature's Caul",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy success: ? HP"
+        ]
+      }
+    },
+    {
+      "name": "Lift Nature's Caul",
+      "rank": 5,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: ? HP"
+        ]
+      }
+    },
+    {
+      "name": "Lock",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Lock (area) (level 2, 1 days)"
+      ]
+    },
+    {
+      "name": "Mending",
+      "rank": 2,
+      "status": "refused",
+      "detail": "Mending: PFTEST Smoke enemy has no damaged item it can mend at rank 2.",
+      "effects": []
+    },
+    {
+      "name": "Mending",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Message Rune",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Message Rune (area) (level 3, 1 days)"
+      ]
+    },
+    {
+      "name": "Message Rune",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Message Rune (area) (level 5, 1 days)"
+      ]
+    },
+    {
+      "name": "Moonbeam",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy criticalFailure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Moonbeam",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Muscle Barrier",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Muscle Barrier (level 2, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Muscle Barrier",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Muscle Barrier (level 3, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Mushroom Patch",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Place Lingering Area",
+      "effects": []
+    },
+    {
+      "name": "Mushroom Patch",
+      "rank": 6,
+      "status": "ok",
+      "detail": "Place Lingering Area",
+      "effects": []
+    },
+    {
+      "name": "Mushroom Patch",
+      "rank": 9,
+      "status": "ok",
+      "detail": "Place Lingering Area",
+      "effects": []
+    },
+    {
+      "name": "Mystic Armor",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Mystic Armor (level 4, 1 days)"
+      ]
+    },
+    {
+      "name": "Mystic Armor",
+      "rank": 6,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Mystic Armor (level 6, 1 days)"
+      ]
+    },
+    {
+      "name": "Mystic Armor",
+      "rank": 8,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Mystic Armor (level 8, 1 days)"
+      ]
+    },
+    {
+      "name": "Mystic Armor",
+      "rank": 10,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Mystic Armor (level 10, 1 days)"
+      ]
+    },
+    {
+      "name": "Necromancer's Generosity",
+      "rank": 2,
+      "status": "refused",
+      "detail": "Necromancer's Generosity: select at least one target token before resolving this Effect.",
+      "effects": []
+    },
+    {
+      "name": "Necromancer's Generosity",
+      "rank": 3,
+      "status": "refused",
+      "detail": "Necromancer's Generosity: select at least one target token before resolving this Effect.",
+      "effects": []
+    },
+    {
+      "name": "Necrotic Bomb",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "2d12 void",
+        "total": 15,
+        "targets": [
+          "enemy success: 7 HP"
+        ]
+      }
+    },
+    {
+      "name": "Necrotic Bomb",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "3d12 void",
+        "total": 30,
+        "targets": [
+          "enemy criticalFailure: 60 HP"
+        ]
+      }
+    },
+    {
+      "name": "Needle of Vengeance",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Set (waits for its trigger)",
+      "effects": [
+        "enemy: Needle of Vengeance (waiting for its trigger) (level 2, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Needle of Vengeance",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Set (waits for its trigger)",
+      "effects": [
+        "enemy: Needle of Vengeance (waiting for its trigger) (level 3, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Negate Aroma",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Negate Aroma (level 5, 1 hours)"
+      ]
+    },
+    {
+      "name": "Nettleskin",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Nettleskin (retaliates) (level 2, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Nettleskin",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Nettleskin (retaliates) (level 3, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Noxious Vapors",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Start Lingering Emanation",
+      "effects": [
+        "caster: Noxious Vapors: inside (concealed) (level 2, -1 unlimited)",
+        "ally: Noxious Vapors: inside (concealed) (level 2, -1 unlimited)",
+        "enemy: Noxious Vapors: inside (concealed) (level 2, -1 unlimited)"
+      ]
+    },
+    {
+      "name": "Noxious Vapors",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Start Lingering Emanation",
+      "effects": [
+        "caster: Noxious Vapors: inside (concealed) (level 3, -1 unlimited)",
+        "ally: Noxious Vapors: inside (concealed) (level 3, -1 unlimited)",
+        "enemy: Noxious Vapors: inside (concealed) (level 3, -1 unlimited)"
+      ]
+    },
+    {
+      "name": "Nudge the Odds",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Nudge the Odds (level 5, 1 days)"
+      ]
+    },
+    {
+      "name": "Nymph's Token",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Nymph's Token (level 4, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Oathkeeper's Insignia",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Oathkeeper's Insignia (level 3, 1 days)"
+      ]
+    },
+    {
+      "name": "Oathkeeper's Insignia",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Oathkeeper's Insignia (level 5, 1 days)"
+      ]
+    },
+    {
+      "name": "Oathkeeper's Insignia",
+      "rank": 7,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Oathkeeper's Insignia (level 7, 1 days)"
+      ]
+    },
+    {
+      "name": "Oathkeeper's Insignia",
+      "rank": 9,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Oathkeeper's Insignia (level 9, 1 days)"
+      ]
+    },
+    {
+      "name": "Object Memory",
+      "rank": 6,
+      "status": "refused",
+      "detail": "Object Memory: PFTEST Smoke caster has no weapon for PF2e's Spell Effect: Object Memory (Weapon) to choose. Target a creature with a weapon.",
+      "effects": []
+    },
+    {
+      "name": "Object Reading",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Object Reading",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Object Reading",
+      "rank": 6,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Object Reading",
+      "rank": 8,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Object Reading",
+      "rank": 9,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Parch",
+      "rank": 4,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy success: ? HP"
+        ]
+      }
+    },
+    {
+      "name": "Personal Rain Cloud",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy success: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Personal Rain Cloud",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy criticalSuccess: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Pest Form",
+      "rank": 4,
+      "status": "error",
+      "detail": "Native battle forms require a character actor. NPC transformation support remains unverified.",
+      "effects": []
+    },
+    {
+      "name": "Phantom Pain",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Phantom Pain: Sickened 2 (level 2, 1 minutes)"
+      ],
+      "saveDamage": {
+        "formula": "4d4 mental",
+        "total": 15,
+        "targets": [
+          "enemy criticalFailure: 15 HP"
+        ]
+      }
+    },
+    {
+      "name": "Phantom Pain",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "6d4 mental",
+        "total": 20,
+        "targets": [
+          "enemy success: 20 HP"
+        ]
+      }
+    },
+    {
+      "name": "Phase Familiar",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Phase Familiar (level 2, 1 rounds)"
+      ]
+    },
+    {
+      "name": "Phase Familiar",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Phase Familiar (level 3, 1 rounds)"
+      ]
+    },
+    {
+      "name": "Pocket Library",
+      "rank": 3,
+      "status": "refused",
+      "detail": "Pocket Library: PF2e's Spell Effect: Pocket Library has no option open to PFTEST Smoke caster (it needs trained in Arcana, or trained in Crafting, or trained in Medicine, or trained in Nature, or trained in Occultism, or trained in Religion, or trained in Society).",
+      "effects": []
+    },
+    {
+      "name": "Pocket Library",
+      "rank": 6,
+      "status": "refused",
+      "detail": "Pocket Library: PF2e's Spell Effect: Pocket Library has no option open to PFTEST Smoke caster (it needs trained in Arcana, or trained in Crafting, or trained in Medicine, or trained in Nature, or trained in Occultism, or trained in Religion, or trained in Society).",
+      "effects": []
+    },
+    {
+      "name": "Pocket Library",
+      "rank": 9,
+      "status": "refused",
+      "detail": "Pocket Library: PF2e's Spell Effect: Pocket Library has no option open to PFTEST Smoke caster (it needs trained in Arcana, or trained in Crafting, or trained in Medicine, or trained in Nature, or trained in Occultism, or trained in Religion, or trained in Society).",
+      "effects": []
+    },
+    {
+      "name": "Precious Gleam",
+      "rank": 2,
+      "status": "refused",
+      "detail": "Precious Gleam: select at least one target token before resolving this Effect.",
+      "effects": []
+    },
+    {
+      "name": "Precious Gleam",
+      "rank": 3,
+      "status": "refused",
+      "detail": "Precious Gleam: select at least one target token before resolving this Effect.",
+      "effects": []
+    },
+    {
+      "name": "Propelling Air Stream",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "caster: Spell Effect: Propelling Air Stream (level 2, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Propelling Air Stream",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "caster: Spell Effect: Propelling Air Stream (level 3, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Protection",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "ally: Spell Effect: Protection (level 3, 1 minutes)",
+        "enemy: Spell Effect: Protection (level 3, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Protector Tree",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Protector Tree",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Protector's Sacrifice",
+      "rank": 2,
+      "status": "refused",
+      "detail": "Protector's Sacrifice: PFTEST Smoke ally hasn't taken damage to react to.",
+      "effects": []
+    },
+    {
+      "name": "Protector's Sacrifice",
+      "rank": 3,
+      "status": "refused",
+      "detail": "Protector's Sacrifice: PFTEST Smoke ally hasn't taken damage to react to.",
+      "effects": []
+    },
+    {
+      "name": "Pummeling Rubble",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "4d4 bludgeoning",
+        "total": 7,
+        "targets": [
+          "enemy success: 3 HP"
+        ]
+      }
+    },
+    {
+      "name": "Pummeling Rubble",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "6d4 bludgeoning",
+        "total": 15,
+        "targets": [
+          "enemy criticalFailure: 30 HP"
+        ]
+      }
+    },
+    {
+      "name": "Purifying Icicle",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Purifying Icicle: 10-foot Speed penalty (level 2, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "3d6 piercing + 2d6 cold",
+        "total": 21,
+        "targets": [
+          "enemy criticalSuccess: 42 HP"
+        ]
+      }
+    },
+    {
+      "name": "Purifying Icicle",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "4d6 piercing + 3d6 cold",
+        "total": 24,
+        "targets": [
+          "enemy success: 24 HP"
+        ]
+      }
+    },
+    {
+      "name": "Putrefy Food and Drink",
+      "rank": 2,
+      "status": "refused",
+      "detail": "Putrefy Food and Drink: at rank 2 and above its heightened rules aren't automated (“You can target an alchemical elixir with this spell, attempting a counteract check against it. If you succeed, the elixir spoils and becomes a mundane item.”). Resolve it by hand.",
+      "effects": []
+    },
+    {
+      "name": "Putrefy Food and Drink",
+      "rank": 3,
+      "status": "refused",
+      "detail": "Putrefy Food and Drink: at rank 2 and above its heightened rules aren't automated (“You can target an alchemical elixir with this spell, attempting a counteract check against it. If you succeed, the elixir spoils and becomes a mundane item.”). Resolve it by hand.",
+      "effects": []
+    },
+    {
+      "name": "Pyroclastic Truth",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "caster: Lethologic Mark (Pyroclastic Truth) (level 1, -1 unlimited)",
+        "enemy: Pyroclastic Truth: marked by fire (level 2, 1 minutes)"
+      ],
+      "saveDamage": {
+        "formula": "4d12 fire",
+        "total": 23,
+        "targets": [
+          "enemy failure: 23 HP"
+        ]
+      }
+    },
+    {
+      "name": "Pyroclastic Truth",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "caster: Lethologic Mark (Pyroclastic Truth) (level 1, -1 unlimited)",
+        "enemy: Pyroclastic Truth: marked by fire (level 3, 1 minutes)"
+      ],
+      "saveDamage": {
+        "formula": "6d12 fire",
+        "total": 33,
+        "targets": [
+          "enemy failure: 33 HP"
+        ]
+      }
+    },
+    {
+      "name": "Quick Sort",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Quick Sort (area) (level 3, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Rainbow's End",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "caster: Spell Note: Rainbow's End (level 3, 1 minutes)",
+        "enemy: Rainbow's End: Dazzled (level 3, 2 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "3d4 spirit",
+        "total": 8,
+        "targets": [
+          "enemy failure: 8 HP"
+        ]
+      }
+    },
+    {
+      "name": "Rainbow's End",
+      "rank": 5,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "caster: Spell Note: Rainbow's End (level 5, 1 minutes)",
+        "enemy: Rainbow's End: Dazzled (level 5, 3 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "5d4 spirit",
+        "total": 16,
+        "targets": [
+          "enemy failure: 16 HP"
+        ]
+      }
+    },
+    {
+      "name": "Reclined Apport",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Reclined Apport",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Reclined Apport",
+      "rank": 7,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Redact",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Redact (level 3, 1 days)"
+      ]
+    },
+    {
+      "name": "Redact",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Redact (level 4, 1 days)"
+      ]
+    },
+    {
+      "name": "Reed Whistle",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Reed Whistle (level 1, 4 hours)"
+      ]
+    },
+    {
+      "name": "Rejuvenating Flames",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "2d4 fire",
+        "total": 5,
+        "targets": [
+          "enemy success: 2 HP"
+        ]
+      }
+    },
+    {
+      "name": "Rejuvenating Flames",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "3d4 fire",
+        "total": 9,
+        "targets": [
+          "enemy success: 4 HP"
+        ]
+      }
+    },
+    {
+      "name": "Rising Surf",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Rising Surf",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Runic Body",
+      "rank": 6,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Runic Body (level 6, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Runic Body",
+      "rank": 9,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Runic Body (level 9, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Runic Weapon",
+      "rank": 6,
+      "status": "refused",
+      "detail": "Runic Weapon: select at least one target token before resolving this Effect.",
+      "effects": []
+    },
+    {
+      "name": "Runic Weapon",
+      "rank": 9,
+      "status": "refused",
+      "detail": "Runic Weapon: select at least one target token before resolving this Effect.",
+      "effects": []
+    },
+    {
+      "name": "Sacred Beasts",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: ? HP"
+        ]
+      }
+    },
+    {
+      "name": "Sacred Beasts",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy success: ? HP"
+        ]
+      }
+    },
+    {
+      "name": "Savor the Sting",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "caster: Spell Effect: Savor the Sting (level 2, -1 unlimited)"
+      ],
+      "saveDamage": {
+        "formula": "2d4 mental",
+        "total": 7,
+        "targets": [
+          "enemy failure: 7 HP"
+        ]
+      }
+    },
+    {
+      "name": "Savor the Sting",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "3d4 mental",
+        "total": 12,
+        "targets": [
+          "enemy success: 6 HP"
+        ]
+      }
+    },
+    {
+      "name": "Scorching Blast",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Scorching Blast",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "4d8 fire",
+        "total": 14,
+        "targets": [
+          "enemy success: 14 HP"
+        ]
+      }
+    },
+    {
+      "name": "Scouring Sand",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Place Lingering Area",
+      "effects": []
+    },
+    {
+      "name": "Scouring Sand",
+      "rank": 6,
+      "status": "ok",
+      "detail": "Place Lingering Area",
+      "effects": []
+    },
+    {
+      "name": "Sepulchral Mask",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Start Lingering Emanation",
+      "effects": [
+        "caster: Spell Effect: Sepulchral Mask (level 3, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Sepulchral Mask",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Start Lingering Emanation",
+      "effects": [
+        "caster: Spell Effect: Sepulchral Mask (level 5, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Serrate",
+      "rank": 3,
+      "status": "refused",
+      "detail": "Serrate: select at least one target token before resolving this Effect.",
+      "effects": []
+    },
+    {
+      "name": "Serrate",
+      "rank": 5,
+      "status": "refused",
+      "detail": "Serrate: select at least one target token before resolving this Effect.",
+      "effects": []
+    },
+    {
+      "name": "Share Lore",
+      "rank": 3,
+      "status": "refused",
+      "detail": "Share Lore: PFTEST Smoke caster isn't trained in a Lore.",
+      "effects": []
+    },
+    {
+      "name": "Share Lore",
+      "rank": 5,
+      "status": "refused",
+      "detail": "Share Lore: PFTEST Smoke caster isn't trained in a Lore.",
+      "effects": []
+    },
+    {
+      "name": "Shattering Gem",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Set (waits for its trigger)",
+      "effects": [
+        "enemy: Shattering Gem (gem: 10 HP) (level 2, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Shattering Gem",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Set (waits for its trigger)",
+      "effects": [
+        "enemy: Shattering Gem (gem: 15 HP) (level 3, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Shielded Arm",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Shielded Arm (level 3, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Shielded Arm",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Shielded Arm (level 5, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Shields of the Spirit",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Shields of the Spirit (level 3, 1 rounds)",
+        "caster: Effect: Raise a Shield (level 3, 1 rounds)"
+      ]
+    },
+    {
+      "name": "Shields of the Spirit",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Shields of the Spirit (level 5, 1 rounds)",
+        "caster: Effect: Raise a Shield (level 5, 1 rounds)"
+      ]
+    },
+    {
+      "name": "Shocking Grasp",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "3d12 electricity",
+        "total": 24,
+        "targets": [
+          "enemy criticalSuccess: 48 HP"
+        ]
+      }
+    },
+    {
+      "name": "Shocking Grasp",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Shockwave",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy success: ? HP"
+        ]
+      }
+    },
+    {
+      "name": "Shockwave",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy success: ? HP"
+        ]
+      }
+    },
+    {
+      "name": "Signal Skyrocket",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: ? HP"
+        ]
+      }
+    },
+    {
+      "name": "Signal Skyrocket",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: ? HP"
+        ]
+      }
+    },
+    {
+      "name": "Sleep",
+      "rank": 4,
+      "status": "refused",
+      "detail": "Sleep: at rank 4 and above its heightened rules aren't automated (“The creatures fall unconscious for 1 round on a failure or 1 minute on a critical failure. They fall prone and release what they're holding, and they can't atte”). Resolve it by hand.",
+      "effects": []
+    },
+    {
+      "name": "Slime Spit",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Slime Spit: Dazzled (ends on Interact) (level 2, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "4d6 poison",
+        "total": 15,
+        "targets": [
+          "enemy success: 7 HP"
+        ]
+      }
+    },
+    {
+      "name": "Slime Spit",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Slime Spit: Dazzled (level 3, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "6d6 poison",
+        "total": 18,
+        "targets": [
+          "enemy failure: 18 HP"
+        ]
+      }
+    },
+    {
+      "name": "Snare Hopping",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Snare Hopping",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Snowball",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Snowball",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Snowball: 5-foot Speed penalty (level 3, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "6d4 cold",
+        "total": 19,
+        "targets": [
+          "enemy success: 19 HP"
+        ]
+      }
+    },
+    {
+      "name": "Song of the Soul",
+      "rank": 2,
+      "status": "refused",
+      "detail": "Song of the Soul: select at least one target token before resolving this Effect.",
+      "effects": []
+    },
+    {
+      "name": "Song of the Soul",
+      "rank": 3,
+      "status": "refused",
+      "detail": "Song of the Soul: select at least one target token before resolving this Effect.",
+      "effects": []
+    },
+    {
+      "name": "Soothe",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Soothe (level 2, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Soothe",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Soothe (level 3, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Soothing Words",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Soothing Words (level 5, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Soul Siphon",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "caster: Soul Siphon: Temporary Hit Points (level 2, -1 unlimited)"
+      ],
+      "saveDamage": {
+        "formula": "2d4 void",
+        "total": 5,
+        "targets": [
+          "enemy success: 2 HP"
+        ]
+      }
+    },
+    {
+      "name": "Soul Siphon",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "caster: Soul Siphon: Temporary Hit Points (level 3, -1 unlimited)",
+        "enemy: Soul Siphon: Drained 1 (level 3, -1 unlimited)"
+      ],
+      "saveDamage": {
+        "formula": "3d4 void",
+        "total": 7,
+        "targets": [
+          "enemy failure: 10 HP"
+        ]
+      }
+    },
+    {
+      "name": "Spirit Link",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Spirit Link",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Split the Tongue",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Split the Tongue: Stupefied 2 (level 2, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "2d8 slashing",
+        "total": 8,
+        "targets": [
+          "enemy criticalFailure: 16 HP"
+        ]
+      }
+    },
+    {
+      "name": "Split the Tongue",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "3d8 slashing",
+        "total": 23,
+        "targets": [
+          "enemy success: 11 HP"
+        ]
+      }
+    },
+    {
+      "name": "Spray of Stars",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Spray of Stars: Dazzled (level 2, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "3d4 fire",
+        "total": 9,
+        "targets": [
+          "enemy success: 4 HP"
+        ]
+      }
+    },
+    {
+      "name": "Spray of Stars",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Spray of Stars: Dazzled (level 3, 3 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "4d4 fire",
+        "total": 11,
+        "targets": [
+          "enemy failure: 11 HP"
+        ]
+      }
+    },
+    {
+      "name": "Summon Lesser Servitor",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Summon Lesser Servitor (level 1, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Summon Lesser Servitor",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Summon Lesser Servitor (level 1, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Summon Lesser Servitor",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Summon Lesser Servitor (level 1, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Swampcall",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Place Lingering Area",
+      "effects": []
+    },
+    {
+      "name": "Swarmsense",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Swarmsense (area) (level 3, 10 minutes)"
+      ]
+    },
+    {
+      "name": "Swarmsense",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Swarmsense (area) (level 5, 10 minutes)"
+      ]
+    },
+    {
+      "name": "Swarmsense",
+      "rank": 7,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Swarmsense (area) (level 7, 10 minutes)"
+      ]
+    },
+    {
+      "name": "Swear Oath",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Swear Oath (level 5, 1 rounds)"
+      ]
+    },
+    {
+      "name": "Swear Oath",
+      "rank": 9,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Swear Oath (level 9, 1 rounds)"
+      ]
+    },
+    {
+      "name": "Sweet Dream",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Sweet Dream (Dream of Insight) (level 4, 1 hours)"
+      ]
+    },
+    {
+      "name": "Sweet Dream",
+      "rank": 7,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Sweet Dream (Dream of Insight) (level 7, 1 hours)"
+      ]
+    },
+    {
+      "name": "Synchronize Steps",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Note: Synchronize Steps (level 5, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Synchronize",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Note: Synchronize (level 2, 24 hours)"
+      ]
+    },
+    {
+      "name": "Tailwind",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Tailwind (8 hours) (level 2, 8 hours)"
+      ]
+    },
+    {
+      "name": "Tempest Surge",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Tempest Surge: Clumsy 2 (level 2, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "2d12 electricity",
+        "total": 14,
+        "targets": [
+          "enemy failure: 14 HP"
+        ]
+      }
+    },
+    {
+      "name": "Tempest Surge",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Tempest Surge: Clumsy 2 (level 3, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "3d12 electricity",
+        "total": 21,
+        "targets": [
+          "enemy failure: 21 HP"
+        ]
+      }
+    },
+    {
+      "name": "Tempest Touch",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Spell Effect: Tempest Touch (Failure) (level 2, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "2d4 bludgeoning + 2d4 cold",
+        "total": 7,
+        "targets": [
+          "enemy failure: 7 HP"
+        ]
+      }
+    },
+    {
+      "name": "Tempest Touch",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Spell Effect: Tempest Touch (Failure) (level 3, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "3d4 bludgeoning + 3d4 cold",
+        "total": 19,
+        "targets": [
+          "enemy failure: 19 HP"
+        ]
+      }
+    },
+    {
+      "name": "Tentacular Limbs",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Tentacular Limbs (level 1, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Tentacular Limbs",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Tentacular Limbs (level 1, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Tether",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Tether: Tethered (level 2, 1 minutes)"
+      ],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Tether",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Tether: Tethered (level 3, 1 minutes)"
+      ],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy success: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Thoughtful Gift",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Thoughtful Gift",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Threefold Limb",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy criticalSuccess: ? HP"
+        ]
+      }
+    },
+    {
+      "name": "Threefold Limb",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy success: ? HP"
+        ]
+      }
+    },
+    {
+      "name": "Thunderous Strike",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "3 sonic",
+        "total": 3,
+        "targets": [
+          "enemy failure: 3 HP"
+        ]
+      }
+    },
+    {
+      "name": "Thunderous Strike",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "4 sonic",
+        "total": 4,
+        "targets": [
+          "enemy success: 2 HP"
+        ]
+      }
+    },
+    {
+      "name": "Thunderstrike",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Thunderstrike: Clumsy 1 (level 2, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "2d12 electricity + 2d4 sonic",
+        "total": 22,
+        "targets": [
+          "enemy failure: 22 HP"
+        ]
+      }
+    },
+    {
+      "name": "Thunderstrike",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Thunderstrike: Clumsy 1 (level 3, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "3d12 electricity + 3d4 sonic",
+        "total": 14,
+        "targets": [
+          "enemy success: 6 HP"
+        ]
+      }
+    },
+    {
+      "name": "Touch of the Void",
+      "rank": 2,
+      "status": "refused",
+      "detail": "Touch of the Void (Healing): select at least one target token before resolving this Effect.",
+      "effects": []
+    },
+    {
+      "name": "Touch of the Void",
+      "rank": 3,
+      "status": "refused",
+      "detail": "Touch of the Void (Healing): select at least one target token before resolving this Effect.",
+      "effects": []
+    },
+    {
+      "name": "Touch of Undeath",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "2d6 void",
+        "total": 4,
+        "targets": [
+          "enemy success: 2 HP"
+        ]
+      }
+    },
+    {
+      "name": "Touch of Undeath",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Touch of Undeath: Healing halved (level 3, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "3d6 void",
+        "total": 14,
+        "targets": [
+          "enemy failure: 14 HP"
+        ]
+      }
+    },
+    {
+      "name": "Traveling Workshop",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Traveling Workshop (level 3, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Traveling Workshop",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Traveling Workshop (level 5, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Traveling Workshop",
+      "rank": 9,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Traveling Workshop (level 9, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Trickster's Mirrors",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Set (waits for its trigger)",
+      "effects": [
+        "caster: Trickster's Mirrors (mirrors: 1) (level 2, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Trickster's Mirrors",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Set (waits for its trigger)",
+      "effects": [
+        "caster: Trickster's Mirrors (mirrors: 1) (level 3, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Ulcerous Canker",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "2d4 void + 2d4 poison",
+        "total": 12,
+        "targets": [
+          "enemy success: 5 HP"
+        ]
+      }
+    },
+    {
+      "name": "Ulcerous Canker",
+      "rank": 5,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "3d4 void + 3d4 poison",
+        "total": 15,
+        "targets": [
+          "enemy success: 7 HP"
+        ]
+      }
+    },
+    {
+      "name": "Undeath's Blessing",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Undeath's Blessing: Heal and harm halved (level 2, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy success: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Undeath's Blessing",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Undeath's Blessing: Treated as undead (level 3, 1 minutes)"
+      ],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Unraveling Blast",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Unraveling Blast: Stunned 1 (level 2, -1 unlimited)",
+        "enemy: Unraveling Blast: Off-Guard (level 2, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "5d4 mental",
+        "total": 14,
+        "targets": [
+          "enemy criticalFailure: 28 HP"
+        ]
+      }
+    },
+    {
+      "name": "Unraveling Blast",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Unraveling Blast: Off-Guard (level 3, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "8d4 mental",
+        "total": 22,
+        "targets": [
+          "enemy failure: 22 HP"
+        ]
+      }
+    },
+    {
+      "name": "Untamed Form",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Untamed Form (level 2, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Untamed Shift",
+      "rank": 6,
+      "status": "refused",
+      "detail": "Untamed Shift: PF2e's Spell Effect: Untamed Shift has no option open to PFTEST Smoke caster (it needs the Untamed Form feat, or the Insect Shape feat, or the Elemental Shape feat, or the Plant Shape feat, or the Soaring Shape feat).",
+      "effects": []
+    },
+    {
+      "name": "Untamed Shift",
+      "rank": 10,
+      "status": "refused",
+      "detail": "Untamed Shift: PF2e's Spell Effect: Untamed Shift has no option open to PFTEST Smoke caster (it needs the Untamed Form feat, or the Insect Shape feat, or the Elemental Shape feat, or the Plant Shape feat, or the Soaring Shape feat).",
+      "effects": []
+    },
+    {
+      "name": "Updraft",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "4d6 bludgeoning",
+        "total": 11,
+        "targets": [
+          "enemy success: 5 HP"
+        ]
+      }
+    },
+    {
+      "name": "Updraft",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "6d6 bludgeoning",
+        "total": 22,
+        "targets": [
+          "enemy success: 11 HP"
+        ]
+      }
+    },
+    {
+      "name": "Vanishing Tracks",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Vanishing Tracks (level 2, 8 hours)"
+      ]
+    },
+    {
+      "name": "Vanishing Tracks",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Vanishing Tracks (area) (level 4, 8 hours)"
+      ]
+    },
+    {
+      "name": "Vengeful Glare",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy success: ? HP"
+        ]
+      }
+    },
+    {
+      "name": "Vengeful Glare",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: ? HP"
+        ]
+      }
+    },
+    {
+      "name": "Ventriloquism",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Ventriloquism (level 2, 1 hours)"
+      ]
+    },
+    {
+      "name": "Verdant Sprout",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Verdant Sprout",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Vibrant Thorns",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Vibrant Thorns (retaliates) (level 2, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Vibrant Thorns",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Vibrant Thorns (retaliates) (level 3, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Victory Cry",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Victory Cry",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Vindicator's Mark",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy success: ? HP"
+        ]
+      }
+    },
+    {
+      "name": "Vindicator's Mark",
+      "rank": 5,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy success: ? HP"
+        ]
+      }
+    },
+    {
+      "name": "Waking Nightmare",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Waking Nightmare: Frightened 1 (level 2, -1 unlimited)",
+        "enemy: Waking Nightmare: Hit while frightened (level 2, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy success: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Waking Nightmare",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Waking Nightmare: Frightened 1 (level 3, -1 unlimited)",
+        "enemy: Waking Nightmare: Hit while frightened (level 3, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy success: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Wall of Shrubs",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Wall of Shrubs (level 1, 10 minutes)"
+      ]
+    },
+    {
+      "name": "Wall of Shrubs",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Wall of Shrubs (level 1, 1 hours)"
+      ]
+    },
+    {
+      "name": "Warped Terrain",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Weaken Earth",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy success: ? HP"
+        ]
+      }
+    },
+    {
+      "name": "Weaken Earth",
+      "rank": 5,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy success: ? HP"
+        ]
+      }
+    },
+    {
+      "name": "Weapon Surge",
+      "rank": 5,
+      "status": "refused",
+      "detail": "Weapon Surge: PFTEST Smoke caster has no weapon for PF2e's Spell Effect: Weapon Surge to choose. Target a creature with a weapon.",
+      "effects": []
+    },
+    {
+      "name": "Weapon Surge",
+      "rank": 9,
+      "status": "refused",
+      "detail": "Weapon Surge: PFTEST Smoke caster has no weapon for PF2e's Spell Effect: Weapon Surge to choose. Target a creature with a weapon.",
+      "effects": []
+    },
+    {
+      "name": "Weave Wood",
+      "rank": 2,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Weave Wood",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Wildfire",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Place Lingering Area",
+      "effects": []
+    },
+    {
+      "name": "Wildfire",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Place Lingering Area",
+      "effects": []
+    },
+    {
+      "name": "Winter Bolt",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Winter Bolt: Lodged bolt (level 2, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "2d8 piercing",
+        "total": 3,
+        "targets": [
+          "enemy success: 3 HP"
+        ]
+      }
+    },
+    {
+      "name": "Winter Bolt",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Winter Bolt: Lodged bolt (level 3, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": "3d8 piercing",
+        "total": 13,
+        "targets": [
+          "enemy success: 13 HP"
+        ]
+      }
+    },
+    {
+      "name": "Wish Market",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Wish Market (level 4, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Wish Market",
+      "rank": 7,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Wish Market (level 7, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Withering Grasp",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": "2d12 void + (1d4 + 1) persistent void",
+        "total": 15,
+        "targets": [
+          "enemy success: 15 HP"
+        ]
+      }
+    },
+    {
+      "name": "Withering Grasp",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Wooden Fists",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Wooden Fists (level 3, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Wooden Fists",
+      "rank": 7,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Wooden Fists (level 7, 10 minutes)"
+      ]
+    },
+    {
+      "name": "Wooden Fists",
+      "rank": 9,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Wooden Fists (level 9, 1 hours)"
+      ]
+    },
+    {
+      "name": "Zenith Star",
+      "rank": 2,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Zenith Star: Dazzled (level 2, 1 rounds)"
+      ],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy success: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Zenith Star",
+      "rank": 3,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Zenith Star: Dazzled (level 3, 1 rounds)",
+        "enemy: Zenith Star: GM note (level 3, 3 days)"
+      ],
+      "saveDamage": {
+        "formula": null,
+        "total": null,
+        "targets": [
+          "enemy failure: 0 HP"
+        ]
+      }
+    },
+    {
+      "name": "Zenith Star",
+      "rank": 4,
+      "status": "refused",
+      "detail": "Zenith Star: at rank 4 and above its heightened rules aren't automated (“You ignore the Concealed condition against targets marked by zenith star.”). Resolve it by hand.",
+      "effects": []
+    }
+  ]
+}

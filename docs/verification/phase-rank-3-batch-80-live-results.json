@@ -1,0 +1,29 @@
+{
+  "label": "rank3Batch80",
+  "passed": true,
+  "at": "2026-10-03T02:42:22.192Z",
+  "details": {
+    "batch80r3": {
+      "cast": {
+        "formula": "3d12 electricity",
+        "lost": 13,
+        "total": 13,
+        "immobilized": true,
+        "start": 22160
+      },
+      "sustain": {
+        "lost": 4,
+        "results": [
+          {
+            "actorUuid": "Actor.36SKzEsyrVB2GtMU",
+            "total": 4,
+            "round": 2
+          }
+        ],
+        "immobilized": true,
+        "start": 22166,
+        "worldTime": 22166
+      }
+    }
+  }
+}

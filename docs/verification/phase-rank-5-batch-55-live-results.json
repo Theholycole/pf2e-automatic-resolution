@@ -1,0 +1,33 @@
+{
+  "label": "rank5Batch55",
+  "passed": true,
+  "at": "2026-10-03T01:57:15.269Z",
+  "details": {
+    "batch55": {
+      "cast": [
+        {
+          "exposed": true,
+          "formula": "5d10 force",
+          "total": 38,
+          "lost": 38,
+          "persistent": [],
+          "offGuard": false
+        },
+        {
+          "exposed": true,
+          "formula": "5d10 force",
+          "total": 25,
+          "lost": 25,
+          "persistent": [
+            "1d10"
+          ],
+          "offGuard": true
+        }
+      ],
+      "sustainExposed": [
+        true,
+        true
+      ]
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+ "label": "rank8Batch4",
+ "passed": true,
+ "at": "2026-10-03T18:13:41.972Z",
+ "details": {
+  "batch4": {
+   "colors": {
+    "degree": "criticalFailure",
+    "dazzled": true,
+    "stunned": true,
+    "rounds": 2,
+    "unit": "rounds",
+    "then": true,
+    "refused": "already confused or stunned",
+    "notes": 1
+   },
+   "pattern": {
+    "degree": "failure",
+    "blinded": true,
+    "timer": "1 minutes",
+    "recurring": true
+   }
+  }
+ }
+}

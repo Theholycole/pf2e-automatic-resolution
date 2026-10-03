@@ -1,0 +1,55 @@
+{
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "attackVariantChoices",
+      "passed": true,
+      "at": "2026-09-26T06:29:45.368Z",
+      "details": {
+        "telekinetic": {
+          "formula": "2d6 piercing",
+          "total": 3,
+          "lost": 6,
+          "persistent": [],
+          "effects": []
+        },
+        "needleDarts": {
+          "formula": "3d4 piercing",
+          "total": 4,
+          "lost": 13,
+          "persistent": [
+            "1 bleed"
+          ],
+          "effects": []
+        },
+        "horizonTwo": {
+          "formula": "3d6 electricity",
+          "total": 12,
+          "lost": 24,
+          "persistent": [],
+          "effects": [
+            "Horizon Thunder Sphere: Dazzled"
+          ]
+        },
+        "horizonThree": {
+          "formula": "3d6 electricity",
+          "total": 10,
+          "lost": 5,
+          "persistent": [],
+          "effects": []
+        },
+        "ignition": {
+          "formula": "2d4 fire",
+          "total": 5,
+          "lost": 10,
+          "persistent": [
+            "1d4 fire"
+          ],
+          "effects": []
+        }
+      }
+    }
+  ]
+}

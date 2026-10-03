@@ -1,0 +1,51 @@
+{
+  "batch": 159,
+  "spells": [
+    "Diviner's Sight",
+    "Read Fate",
+    "Fact Check",
+    "Nudge Fate"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch159",
+      "passed": true,
+      "at": "2026-09-29T01:05:40.824Z",
+      "details": {
+        "rollFamilies": {
+          "sight": {
+            "value": 12,
+            "rules": [
+              "SubstituteRoll:saving-throw:12",
+              "SubstituteRoll:skill-check:12"
+            ],
+            "die": 12,
+            "formula": "12 + 10",
+            "after": false
+          },
+          "readFate": {
+            "status": "applied",
+            "blind": true,
+            "whisperGM": true,
+            "immune": true,
+            "again": "Read Fate: PFTEST P23 Affliction fated is temporarily immune."
+          },
+          "factCheck": {
+            "skill": "arcana",
+            "dc": 15,
+            "degree": "success",
+            "error": null
+          },
+          "nudge": {
+            "byTwo": true,
+            "byOne": false,
+            "card": "Nudge Fate : PFTEST P23 Affliction nudged's saving throw 14 → 15 (+1 status) against DC 15: failure → success . The spell ends. GM: apply the new result."
+          }
+        }
+      }
+    }
+  ]
+}

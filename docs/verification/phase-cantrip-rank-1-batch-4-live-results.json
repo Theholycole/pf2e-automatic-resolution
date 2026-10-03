@@ -1,0 +1,59 @@
+{
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch4",
+    "passed": true,
+    "at": "2026-09-27T02:06:38.997Z",
+    "details": {
+      "faerieDust": {
+        "failure": {
+          "effects": [
+            "Spell Effect: Faerie Dust (Failure)"
+          ],
+          "will": -2
+        },
+        "critical": {
+          "effects": [
+            "Spell Effect: Faerie Dust (Critical Failure)",
+            "Spell Effect: Faerie Dust (Failure)"
+          ],
+          "will": -2
+        },
+        "notes": [
+          "GM: PFTEST P23 Affliction dust failure: It can't use reactions.",
+          "GM: PFTEST P23 Affliction dust crit: It can't use reactions."
+        ]
+      },
+      "kineticRam": {
+        "notes": [
+          "GM: PFTEST P23 Affliction ram failure is pushed 10 feet away from the caster. Move the token; the module doesn't.",
+          "GM: PFTEST P23 Affliction ram crit is pushed 20 feet away from the caster. Move the token; the module doesn't."
+        ],
+        "baseSupported": false
+      }
+    }
+  },
+  "regressions": {
+    "cr1Batch4": true,
+    "cr1Batch3": true,
+    "compact": true,
+    "actionVariants": true,
+    "rowProofRegressions": {
+      "cr1Batch1": true,
+      "rank1Batch2": true,
+      "rank1Batch3": true,
+      "rank1Batch4": true,
+      "rank1Batch5": true,
+      "actionVariants": true,
+      "note": "run before the guard reload"
+    }
+  },
+  "cleanup": {
+    "actorsRemoved": 6,
+    "journalsRemoved": 0,
+    "remainingFixtureActors": 0
+  },
+  "combats": 0
+}

@@ -1,0 +1,31 @@
+{
+  "label": "rank5Batch49",
+  "passed": true,
+  "at": "2026-10-03T00:43:39.598Z",
+  "details": {
+    "batch49": {
+      "results": {
+        "criticalSuccess": {
+          "stunned": 0,
+          "immune": true,
+          "notes": []
+        },
+        "failure": {
+          "stunned": 1,
+          "immune": false,
+          "notes": [
+            "Held by the whispers 1 rounds"
+          ]
+        },
+        "criticalFailure": {
+          "stunned": 1,
+          "immune": false,
+          "notes": [
+            "Held by the whispers 1 rounds",
+            "Whispered suggestion 1 minutes"
+          ]
+        }
+      }
+    }
+  }
+}

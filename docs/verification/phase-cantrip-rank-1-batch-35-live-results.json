@@ -1,0 +1,73 @@
+{
+  "batch": "cantrip-rank-1-batch-35",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch35",
+    "passed": true,
+    "details": {
+      "wakingNightmare": {
+        "success": {
+          "frightened": 1,
+          "paralyzed": false,
+          "unconscious": false,
+          "notes": [
+            "1 rounds turn-end"
+          ]
+        },
+        "failureAwake": {
+          "frightened": 2,
+          "paralyzed": false,
+          "unconscious": false,
+          "notes": [
+            "2 rounds turn-end"
+          ]
+        },
+        "criticalFailureAsleep": {
+          "frightened": 3,
+          "paralyzed": true,
+          "unconscious": false,
+          "notes": [
+            "3 rounds turn-end"
+          ]
+        },
+        "cardNotes": [
+          [],
+          [
+            "Paralyzed not applied: the creature wasn't asleep."
+          ],
+          [
+            "It was asleep: it wakes up."
+          ]
+        ]
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch35",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "rank1Batch1",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

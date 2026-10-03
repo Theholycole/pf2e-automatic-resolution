@@ -1,0 +1,78 @@
+{
+  "batch": "rank-2-8",
+  "date": "2026-09-30",
+  "world": "pftest",
+  "system": "8.5.0",
+  "core": "14.367",
+  "module": "0.8.2",
+  "results": [
+    {
+      "case": "rank2Batch8",
+      "passed": true,
+      "details": {
+        "inlinePersistentRows": {
+          "grip": {
+            "lost": [
+              4,
+              8,
+              16
+            ],
+            "persistent": [
+              [],
+              [
+                "1d6 acid"
+              ],
+              [
+                "1d6 acid"
+              ]
+            ],
+            "effect": [
+              false,
+              true,
+              true
+            ],
+            "speed": {
+              "before": 25,
+              "failure": 15,
+              "success": 25
+            },
+            "moves": [
+              true,
+              true,
+              true
+            ],
+            "afterPersistentEnds": {
+              "effect": false,
+              "speed": 25,
+              "critKept": true
+            }
+          },
+          "combustion": {
+            "rank3": {
+              "lost": 23,
+              "persistent": [
+                "2d6 fire"
+              ]
+            },
+            "rank4": {
+              "lost": 21,
+              "persistent": [
+                "3d6 fire"
+              ]
+            },
+            "rank3Critical": {
+              "lost": 32,
+              "persistent": [
+                "(2 * 2d6) fire"
+              ]
+            },
+            "rank3Success": {
+              "lost": 9,
+              "persistent": []
+            }
+          }
+        }
+      }
+    }
+  ]
+}

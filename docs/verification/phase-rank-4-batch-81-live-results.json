@@ -1,0 +1,19 @@
+{
+  "label": "rank4Batch81",
+  "passed": true,
+  "at": "2026-10-03T00:59:30.965Z",
+  "details": {
+    "batch81": {
+      "acrobat": {
+        "degree": "criticalSuccess",
+        "modifier": 30,
+        "acrobatics": 30
+      },
+      "prone": [
+        false,
+        true,
+        true
+      ]
+    }
+  }
+}

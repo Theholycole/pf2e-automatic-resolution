@@ -1,0 +1,82 @@
+{
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "persistentLinked",
+      "passed": true,
+      "at": "2026-09-26T05:40:49.772Z",
+      "details": {
+        "stickyFire": {
+          "before": {
+            "persistent": [
+              "1d8"
+            ],
+            "enfeebled": 1,
+            "linked": [
+              "Sticky Fire: Enfeebled 1 (while taking persistent fire damage)"
+            ]
+          },
+          "after": {
+            "enfeebled": 0,
+            "linked": 0
+          },
+          "immune": {
+            "persistent": 0,
+            "enfeebled": 0,
+            "notes": [
+              "Enfeebled 1 not applied: the creature isn't taking persistent fire damage."
+            ]
+          }
+        },
+        "widowsBite": {
+          "persistent": [
+            "2 * 3d4"
+          ],
+          "enfeebled": 1,
+          "afterEnfeebled": 0,
+          "afterLinked": 0
+        },
+        "chargedJavelin": {
+          "persistent": 1,
+          "effect": "Spell Effect: Charged Javelin",
+          "linked": 1,
+          "afterEffect": 0
+        },
+        "ongoingRecords": [
+          {
+            "name": "Sticky Fire",
+            "status": "ended",
+            "entries": [
+              [
+                "ended",
+                "persistent-damage-ended"
+              ]
+            ]
+          },
+          {
+            "name": "Widow’s Bite",
+            "status": "ended",
+            "entries": [
+              [
+                "ended",
+                "persistent-damage-ended"
+              ]
+            ]
+          },
+          {
+            "name": "Charged Javelin",
+            "status": "ended",
+            "entries": [
+              [
+                "ended",
+                "persistent-damage-ended"
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

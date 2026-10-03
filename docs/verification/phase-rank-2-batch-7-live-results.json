@@ -1,0 +1,35 @@
+{
+  "batch": "rank-2-7",
+  "date": "2026-09-30",
+  "world": "pftest",
+  "system": "8.5.0",
+  "core": "14.367",
+  "module": "0.8.2",
+  "results": [
+    {
+      "case": "rank2Batch7",
+      "passed": true,
+      "details": {
+        "bleedingFloor": {
+          "cast": {
+            "fail": 2,
+            "crit": 3,
+            "failFloor": "Horrifying Blood Loss: frightened floor",
+            "critFloor": true,
+            "floorText": "Can't reduce Frightened below 1 while taking persistent bleed damage.",
+            "dryEligible": false,
+            "dryReason": "requires persistent bleed damage",
+            "dry": 0
+          },
+          "failAfterDecrease": 1,
+          "afterBleedEnds": {
+            "floor": false,
+            "frightened": 0,
+            "critFloorKept": true,
+            "decreased": 0
+          }
+        }
+      }
+    }
+  ]
+}

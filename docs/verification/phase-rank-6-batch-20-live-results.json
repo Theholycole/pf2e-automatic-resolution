@@ -1,0 +1,22 @@
+{
+ "label": "rank6Batch20",
+ "passed": true,
+ "at": "2026-10-03T21:19:58.608Z",
+ "details": {
+  "batch20": {
+   "kind": "hazard-area",
+   "formula": "7[slashing]",
+   "lost": 14,
+   "terrain": true,
+   "seconds": 60,
+   "radii": [
+    25,
+    30,
+    35,
+    40
+   ],
+   "regionRadius": 40,
+   "fifth": "refused"
+  }
+ }
+}

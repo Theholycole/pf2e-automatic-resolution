@@ -1,0 +1,34 @@
+{
+ "label": "rank8Batch2",
+ "passed": true,
+ "at": "2026-10-03T16:41:49.875Z",
+ "details": {
+  "batch2": {
+   "rift": {
+    "immobilized": true,
+    "slowed": 1,
+    "reminder": true,
+    "escape": null
+   },
+   "beacon": {
+    "counteract": true,
+    "effect": 1
+   },
+   "image": [
+    "Spell Note: Project Image"
+   ],
+   "migration": {
+    "land": 40,
+    "fly": 40,
+    "swim": 40
+   },
+   "wall": {
+    "count": 1,
+    "move": 20,
+    "sight": 0,
+    "hp": true
+   },
+   "wallGone": true
+  }
+ }
+}

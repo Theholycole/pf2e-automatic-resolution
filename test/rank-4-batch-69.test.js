@@ -1,0 +1,47 @@
+import assert from 'node:assert/strict';
+import {readFile, readdir} from 'node:fs/promises';
+import test from 'node:test';
+
+import {compileAbility} from '../src/compiler/index.js';
+import {inspectSavePlan} from '../scripts/basic-save-core.js';
+
+const base = new URL('../.cache/pf2e-test-fixtures/', import.meta.url);
+const spell = async path => JSON.parse(await readFile(new URL(`spells/spells/${path}.json`, base), 'utf8'));
+async function catalog() {
+    const map = new Map();
+    const walk = async dir => { for (const entry of await readdir(dir, {withFileTypes: true})) {
+        const path = new URL(entry.name + (entry.isDirectory() ? '/' : ''), dir);
+        if (entry.isDirectory()) await walk(path);
+        else if (entry.name.endsWith('.json')) { const e = JSON.parse(await readFile(path, 'utf8')); const rules = e.system?.rules ?? [];
+            map.set(e.name, {id: e._id, name: e.name, type: e.type, automation: {ruleKeys: [...new Set(rules.map(r => r.key))], requiresConfiguration: rules.some(r => r.key === 'ChoiceSet'), removesAfterRoll: rules.some(r => r.removeAfterRoll != null)},
+                mechanics: {rules, duration: e.system?.duration ?? null, start: e.system?.start ?? null}, ...(e.system?.badge ? {badge: e.system.badge} : {})}); }
+    } };
+    await walk(new URL('spell-effects/', base));
+    return map;
+}
+const effects = await catalog();
+const compile = source => compileAbility(source, {nativeEffectCatalog: effects});
+const withText = (source, replace) => { const copy = structuredClone(source); copy.system.description.value = replace(copy.system.description.value); return copy; };
+
+const supported = plan => inspectSavePlan(plan).supported;
+
+
+// Rank 4, batch 69 (2026-10-02): Vision of Beauty (Will: Stupefied 1 for 1 round; failure also Fascinated for 2 rounds — the moving round and the
+// round after — with an Entranced movement note; critical failure Stupefied 2 and Fascinated for 1 minute).
+
+test("Vision of Beauty: the rows' conditions and the movement note", async () => {
+    const { inspectSavePlan } = await import("../scripts/basic-save-core.js");
+    const plan = compile(await spell("rank-4/vision-of-beauty"));
+    const effects = d => plan.resolution.outcomes[d].effects.map(e => [e.slug, e.value ?? null, e.duration?.value, e.duration?.unit]);
+    assert.deepEqual(effects("criticalSuccess"), []);
+    assert.deepEqual(effects("success"), [["stupefied", 1, 1, "rounds"]]);
+    assert.deepEqual(effects("failure"), [["stupefied", 1, 1, "rounds"], ["fascinated", null, 2, "rounds"]]);
+    assert.deepEqual(effects("criticalFailure"), [["stupefied", 2, 1, "rounds"], ["fascinated", null, 1, "minutes"]]);
+    assert.deepEqual(["success", "failure", "criticalFailure"].map(d => (plan.resolution.outcomes[d].noteEffects ?? []).map(n => [n.label, n.duration.value, n.duration.expiry])),
+        [[], [["Entranced", 1, "turn-end"]], [["Entranced", 1, "turn-end"]]]);
+    assert.match(plan.resolution.outcomes.failure.noteEffects[0].text, /moving toward the image's location via the most direct route possible/);
+    assert.deepEqual(inspectSavePlan(plan).blockers ?? [], []);
+    // A stupefied value the success row doesn't share isn't read.
+    const other = compile(withText(await spell("rank-4/vision-of-beauty"), html => html.replace("becoming stupefied 1 for 1 round and moving", "becoming stupefied 3 for 1 round and moving")));
+    assert.equal(other.compilerEvidence.entrancedRows, undefined);
+});

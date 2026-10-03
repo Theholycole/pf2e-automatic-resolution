@@ -1,0 +1,53 @@
+{
+  "batch": "rank-2-9",
+  "date": "2026-09-30",
+  "world": "pftest",
+  "system": "8.5.0",
+  "core": "14.367",
+  "module": "0.8.2",
+  "results": [
+    {
+      "case": "rank2Batch9",
+      "passed": true,
+      "details": {
+        "variantText": {
+          "flash": {
+            "one": {
+              "formula": "1d10 sonic",
+              "total": 6,
+              "lost": 6,
+              "conditions": [
+                "dazzled"
+              ],
+              "note": true
+            },
+            "three": {
+              "formula": "2d10 sonic",
+              "total": 18,
+              "lost": 18,
+              "conditions": [
+                "dazzled",
+                "deafened"
+              ],
+              "note": true
+            },
+            "heightened": {
+              "formula": "3d10 sonic",
+              "total": 17,
+              "lost": 17
+            }
+          },
+          "torrent": {
+            "formula": "4d4 force",
+            "total": 7,
+            "lost": 14,
+            "conditions": [
+              "blinded"
+            ],
+            "counteract": true
+          }
+        }
+      }
+    }
+  ]
+}

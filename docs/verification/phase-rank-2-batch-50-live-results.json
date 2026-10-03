@@ -1,0 +1,38 @@
+{
+  "phase": "rank-2-batch-50",
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cleanup",
+      "passed": true,
+      "at": "2026-10-01T23:02:58.516Z",
+      "details": {
+        "actorsRemoved": 3,
+        "journalsRemoved": 1,
+        "regionsRemoved": 0,
+        "remainingFixtureActors": 0
+      }
+    },
+    {
+      "label": "rank2Batch50",
+      "passed": true,
+      "at": "2026-10-01T23:03:03.102Z",
+      "details": {
+        "batch50": {
+          "fire": {
+            "kind": "outline",
+            "atCast": {
+              "visibleConcealed": false,
+              "hiddenConcealed": true
+            },
+            "later": false,
+            "duration": "5 minutes",
+            "hiddenAfterVisible": false
+          }
+        }
+      }
+    }
+  ]
+}

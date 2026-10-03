@@ -1,0 +1,49 @@
+{
+  "batch": 118,
+  "spells": [
+    "Murmuration"
+  ],
+  "results": [
+    {
+      "label": "cr1Batch118",
+      "passed": true,
+      "at": "2026-09-28T02:40:15.769Z",
+      "details": {
+        "murmuration": {
+          "rank": 1,
+          "failure": {
+            "lost": 2,
+            "total": 2,
+            "formula": "1d4 sonic",
+            "outcome": [
+              "(@item.rank)d4[sonic],(@item.rank)d4[piercing]=null"
+            ],
+            "effect": []
+          },
+          "critical": {
+            "lost": 7,
+            "total": null,
+            "formula": null,
+            "outcome": [
+              "(@item.rank)d4[sonic],(@item.rank)d4[piercing]=7"
+            ],
+            "effect": [
+              "FlatModifier:-2"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "regressions": [
+    {
+      "passed": true,
+      "d": "{\"pactBroker\":{\"refused\":{\"rolled\":\"failure\",\"degree\":\"failure\",\"lost\":7,\"total\":7,\"penalty\":[-1],\"immune\":true,\"again\":\"immune\"},\"accepted\":{\"rolled\":\"criticalFailure\",\"degree\":\"criticalFailure\",\"lost\":4,\"total\":4,\"penalty\":[-2],\"immune\":true,\"again\":\"immune\"}}}"
+    },
+    {
+      "passed": true,
+      "d": "{\"pactBroker\":{\"refused\":{\"rolled\":\"failure\",\"degree\":\"failure\",\"lost\":6,\"total\":6,\"penalty\":[-1],\"immune\":true,\"again\":\"immune\"},\"accepted\":{\"rolled\":\"criticalFailure\",\"degree\":\"criticalFailure\",\"lost\":5,\"total\":5,\"penalty\":[-2],\"immune\":true,\"again\":\"immune\"}}}"
+    }
+  ],
+  "note": "cr1Batch112 harness now checks the accepted pact as one degree worse than the rolled result (the first rerun used a fixed GM correction that the adjustment applies before)."
+}

@@ -1,0 +1,50 @@
+{
+  "batch": 129,
+  "spells": [
+    "Hand of the Apprentice"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch129",
+      "passed": true,
+      "at": "2026-09-28T10:31:15.337Z",
+      "details": {
+        "handOfTheApprentice": {
+          "refused": "Hand of the Apprentice: target the 1 creature you hurl the weapon at.",
+          "degree": "success",
+          "dialog": true,
+          "effectName": "Spell Effect: Hand of the Apprentice (Test Dagger)",
+          "selection": "3C8teQRoIaS2LDsV",
+          "dagger": "3C8teQRoIaS2LDsV",
+          "button": "Complete",
+          "damage": {
+            "formula": "1d4 piercing",
+            "outcome": "success",
+            "abilities": [
+              "str:0:false",
+              "int:0:true"
+            ]
+          },
+          "intMod": 0
+        }
+      }
+    }
+  ],
+  "earlierRuns": [
+    {
+      "note": "Run b129c (assertion failed only on reading the ChoiceSet selection by exact Effect name; PF2e appends the weapon to the name): critical hit",
+      "degree": "criticalSuccess",
+      "damage": {
+        "formula": "(2 * 1d4) piercing + 1d6 bleed",
+        "outcome": "criticalSuccess",
+        "abilities": [
+          "str:0:false",
+          "int:0:true"
+        ]
+      }
+    }
+  ]
+}

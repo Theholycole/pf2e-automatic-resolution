@@ -1,0 +1,61 @@
+{
+  "batch": "cantrip-rank-1-batch-16",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch16",
+    "passed": true,
+    "at": "2026-09-27T12:49:20.447Z",
+    "details": {
+      "forcedQuiet": [
+        [
+          "Temporary immunity 24 hours"
+        ],
+        [
+          "Spell's effect 1 rounds",
+          "Temporary immunity 24 hours"
+        ],
+        [
+          "Spell's effect 1 minutes",
+          "Temporary immunity 24 hours"
+        ],
+        [
+          "Spell's effect 10 minutes",
+          "Temporary immunity 24 hours"
+        ]
+      ],
+      "cloudedFocus": {
+        "notes": [
+          "Spell's effect 1 minutes"
+        ],
+        "tenFeet": true,
+        "reminders": [
+          "GM: A willing target (or an ally, where the spell allows it) may choose its result: set it on the card instead of rolling."
+        ]
+      }
+    }
+  },
+  "regressions": [
+    {
+      "n": "cr1Batch6",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch11",
+      "passed": true
+    },
+    {
+      "n": "longTailBatch4",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch15",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "label": "rank3Batch4",
+  "passed": true,
+  "at": "2026-10-02T09:33:42.270Z",
+  "details": {
+    "batch4": {
+      "plan": {
+        "kind": "save",
+        "concealment": true,
+        "events": [
+          "turn-end"
+        ]
+      },
+      "atCast": {
+        "victim": true,
+        "outside": false,
+        "pending": 0
+      },
+      "turnEnd": [
+        "Review PFTEST P23 Affliction cloud victim's exposure (ended its turn in the area)"
+      ],
+      "save": {
+        "degree": "criticalFailure",
+        "sickened": 2,
+        "slowed": 1,
+        "slowedEffect": "Stinking Cloud: Slowed 1 (while in the area)"
+      },
+      "left": {
+        "sickened": 2,
+        "slowed": false,
+        "concealed": false
+      },
+      "ended": "ended"
+    }
+  }
+}

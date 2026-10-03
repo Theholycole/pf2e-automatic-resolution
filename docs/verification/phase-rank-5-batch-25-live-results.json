@@ -1,0 +1,20 @@
+{
+  "label": "rank5Batch25",
+  "passed": true,
+  "at": "2026-10-02T19:34:39.381Z",
+  "details": {
+    "batch25": {
+      "modifiers": [
+        15,
+        15
+      ],
+      "formula": "7d8 cold",
+      "total": 32,
+      "lost": [
+        32,
+        16
+      ],
+      "label": true
+    }
+  }
+}

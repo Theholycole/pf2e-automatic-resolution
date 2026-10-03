@@ -1,0 +1,68 @@
+{
+  "batch": "cantrip-rank-1-batch-45",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch45",
+    "passed": true,
+    "details": {
+      "airburst": {
+        "eligible": [
+          true,
+          true,
+          true,
+          false
+        ],
+        "notes": [
+          [
+            "Reactions 1 rounds turn-end"
+          ],
+          [
+            "Reactions 1 rounds turn-end"
+          ],
+          [
+            "Reactions 1 rounds turn-end"
+          ],
+          []
+        ],
+        "pushes": [
+          5,
+          5,
+          5
+        ],
+        "reminder": true,
+        "rank4Pushes": [
+          5,
+          10
+        ]
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch45",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "forcedMovement",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

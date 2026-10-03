@@ -1,0 +1,22 @@
+{
+  "label": "rank3Batch25",
+  "passed": true,
+  "at": "2026-10-02T12:54:41.642Z",
+  "details": {
+    "batch25": {
+      "moonlight": {
+        "supported": true,
+        "lost": [
+          36,
+          17,
+          72
+        ],
+        "cold": 17,
+        "conditional": [
+          19
+        ],
+        "reminder": true
+      }
+    }
+  }
+}

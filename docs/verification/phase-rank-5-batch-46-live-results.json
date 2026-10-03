@@ -1,0 +1,32 @@
+{
+  "label": "rank5Batch46",
+  "passed": true,
+  "at": "2026-10-03T00:32:33.297Z",
+  "details": {
+    "batch46": {
+      "results": {
+        "failure": {
+          "lost": 13,
+          "formulas": null,
+          "persistent": [
+            "2d6 poison"
+          ],
+          "grabbed": true,
+          "restrained": false
+        },
+        "criticalFailure": {
+          "lost": 12,
+          "formulas": null,
+          "persistent": [
+            "(2 * 2d6) poison"
+          ],
+          "grabbed": false,
+          "restrained": true
+        }
+      },
+      "escape": [
+        30
+      ]
+    }
+  }
+}

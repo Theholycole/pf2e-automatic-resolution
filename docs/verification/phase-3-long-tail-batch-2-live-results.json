@@ -1,0 +1,438 @@
+{
+  "generatedAt": "2026-09-26T18:48:20.326Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "world": "pftest",
+  "results": {
+    "longTailBatch2": {
+      "label": "longTailBatch2",
+      "passed": true,
+      "at": "2026-09-26T18:37:08.334Z",
+      "details": {
+        "eclipseBurst": {
+          "total": 53,
+          "lost": [
+            106,
+            38,
+            38
+          ],
+          "blinded": true,
+          "blindDuration": {
+            "value": -1,
+            "unit": "unlimited",
+            "expiry": null,
+            "sustained": false
+          },
+          "instances": [
+            "cold:38",
+            "void:15"
+          ],
+          "reminder": true
+        },
+        "heinousFuture": {
+          "failure": {
+            "cast": [
+              "slowed 1",
+              "stupefied 1"
+            ],
+            "afterRest": []
+          },
+          "criticalFailure": {
+            "cast": [
+              "slowed 2",
+              "stupefied 2"
+            ],
+            "afterRest": [
+              "slowed 1",
+              "stupefied 1"
+            ],
+            "afterSecondRest": []
+          }
+        },
+        "daysWeight": {
+          "conditions": [
+            "enfeebled 2",
+            "fatigued"
+          ],
+          "wrappers": [
+            {
+              "name": "Day's Weight: Enfeebled 2",
+              "duration": {
+                "value": 1,
+                "unit": "minutes",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "rest": null
+            },
+            {
+              "name": "Day's Weight: Fatigued",
+              "duration": {
+                "value": -1,
+                "unit": "unlimited",
+                "expiry": null,
+                "sustained": false
+              },
+              "rest": {
+                "mode": "end"
+              }
+            }
+          ]
+        },
+        "mantisGrasp": {
+          "lost": 66,
+          "total": 33,
+          "immobilized": true,
+          "name": "Mantis's Grasp: Immobilized (until Escape)",
+          "duration": {
+            "value": 1,
+            "unit": "minutes",
+            "expiry": "turn-start",
+            "sustained": false
+          },
+          "escape": {
+            "dc": 24,
+            "event": "escape",
+            "expirationMode": "first"
+          }
+        },
+        "gravityWell": {
+          "success": true,
+          "criticalFailure": true
+        },
+        "interstellarVoid": {
+          "fatiguedAtCast": true,
+          "castResult": {
+            "formula": "3d6 cold",
+            "total": 13,
+            "lost": 13
+          },
+          "sustainResult": {
+            "formula": "3d6 cold",
+            "total": 15,
+            "lost": 7
+          },
+          "ended": "ended",
+          "fatiguedAfter": false
+        }
+      }
+    },
+    "cleanup": {
+      "label": "cleanup",
+      "passed": true,
+      "at": "2026-09-26T18:43:53.223Z",
+      "details": {
+        "actorsRemoved": 40,
+        "journalsRemoved": 12,
+        "remainingFixtureActors": 0
+      }
+    },
+    "sustainedConditions": {
+      "label": "sustainedConditions",
+      "passed": true,
+      "at": "2026-09-26T18:40:01.730Z",
+      "details": {
+        "windfall": {
+          "asked": true,
+          "afterSustained": {
+            "status": "active",
+            "encumbered": true
+          },
+          "askedAgain": true,
+          "missed": {
+            "status": "ended",
+            "reason": "missed-sustain",
+            "encumbered": false
+          }
+        },
+        "overload": {
+          "stupefied": [
+            2,
+            0
+          ],
+          "expired": {
+            "status": "ended",
+            "reason": "maximum-duration",
+            "stupefied": 0
+          }
+        }
+      }
+    },
+    "lingering": {
+      "label": "lingering",
+      "passed": true,
+      "at": "2026-09-26T18:40:39.331Z",
+      "details": {
+        "turnStart": [
+          "Review PFTEST P23 Affliction petal inside's exposure (started its turn in the area)"
+        ],
+        "exposures": [
+          "Review PFTEST P23 Affliction petal inside's exposure (started its turn in the area)",
+          "Review PFTEST P23 Affliction petal outside's exposure (entered the area)"
+        ],
+        "damage": 15,
+        "ended": "ended"
+      }
+    },
+    "sustainDamage": {
+      "label": "sustainDamage",
+      "passed": true,
+      "at": "2026-09-26T18:46:25.103Z",
+      "details": {
+        "castResult": {
+          "formula": "4d10 bludgeoning",
+          "total": 19,
+          "hpLost": 19
+        },
+        "sustainResult": {
+          "formula": "2d10 bludgeoning",
+          "total": 7,
+          "hpLost": 14
+        },
+        "ended": "ended"
+      }
+    },
+    "persistentOnce": {
+      "label": "persistentOnce",
+      "passed": true,
+      "at": "2026-09-26T18:41:33.210Z",
+      "details": {
+        "crit": {
+          "lost": 34,
+          "initial": {
+            "formula": "5d8 acid",
+            "total": 17
+          },
+          "persistent": {
+            "formula": "2d6",
+            "type": "acid"
+          }
+        },
+        "hit": {
+          "lost": 15,
+          "initial": {
+            "formula": "5d8 acid",
+            "total": 15
+          },
+          "persistent": {
+            "formula": "2d6",
+            "type": "acid"
+          }
+        },
+        "miss": {
+          "lost": 0,
+          "initial": {
+            "formula": null,
+            "total": null
+          },
+          "persistent": null
+        }
+      }
+    },
+    "forcedMovement": {
+      "label": "forcedMovement",
+      "passed": true,
+      "at": "2026-09-26T18:41:51.914Z",
+      "details": {
+        "pull": {
+          "note": "PFTEST P23 Affliction Shadow Strike target is pulled up to 20 feet toward the caster. Move the token; the module doesn't.",
+          "lost": 82,
+          "total": 41,
+          "moved": false
+        },
+        "push": {
+          "note": "PFTEST P23 Affliction Hurtling Stone target can be pushed up to 5 feet (the caster's choice). Move the token; the module doesn't.",
+          "lost": 20,
+          "total": 20,
+          "moved": false
+        },
+        "miss": {
+          "note": null,
+          "lost": 0,
+          "total": null,
+          "moved": false
+        }
+      }
+    },
+    "attackConditionRiders": {
+      "label": "attackConditionRiders",
+      "passed": true,
+      "at": "2026-09-26T18:42:21.255Z",
+      "details": {
+        "inkshot": {
+          "crit": {
+            "lost": 18,
+            "total": 9,
+            "dazzled": {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            }
+          },
+          "hit": {
+            "lost": 7,
+            "total": 7,
+            "dazzled": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            }
+          },
+          "miss": {
+            "lost": 0,
+            "effects": 0
+          }
+        },
+        "brineDragonBile": {
+          "hit": {
+            "persistent": [
+              "2d6 acid"
+            ],
+            "lost": 0
+          },
+          "crit": {
+            "persistent": [
+              "2 * 2d6 acid"
+            ],
+            "lost": 0
+          }
+        },
+        "blindingFoam": {
+          "lost": 25,
+          "total": 25,
+          "persistent": [
+            "1d6 acid"
+          ],
+          "blinded": {
+            "name": "Blinding Foam: Blinded (while taking persistent acid damage)",
+            "duration": {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "persistentLink": {
+              "damageType": "acid"
+            }
+          },
+          "reminder": true,
+          "afterRemoval": {
+            "blinded": false,
+            "effects": []
+          }
+        },
+        "incapacitation": {
+          "high": {
+            "degree": "criticalFailure",
+            "total": 17,
+            "natural": 3,
+            "expected": "criticalFailure"
+          },
+          "low": {
+            "degree": "success",
+            "total": 23,
+            "natural": 9,
+            "expected": "success"
+          }
+        }
+      }
+    },
+    "degreeChoiceAndRift": {
+      "label": "degreeChoiceAndRift",
+      "passed": true,
+      "at": "2026-09-26T18:46:59.343Z",
+      "details": {
+        "distractingDecoy": {
+          "failure": {
+            "selection": "failure",
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "offGuardSources": 0,
+            "offGuard": true,
+            "attackPenalty": null,
+            "attackPenalties": [],
+            "moduleOffGuard": 0
+          },
+          "criticalFailure": {
+            "selection": "critical-failure",
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "offGuardSources": 0,
+            "offGuard": true,
+            "attackPenalty": null,
+            "attackPenalties": [
+              -2
+            ]
+          },
+          "success": {
+            "effect": false,
+            "offGuard": false
+          }
+        },
+        "illOmen": {
+          "failure": {
+            "selection": "failure",
+            "rollTwice": [
+              {
+                "keep": "lower"
+              }
+            ]
+          },
+          "criticalFailure": {
+            "selection": "critical-failure",
+            "rollTwice": [
+              {
+                "keep": "lower",
+                "removeAfterRoll": false
+              }
+            ]
+          }
+        },
+        "fiendishRift": {
+          "castResult": {
+            "formula": "7d6 spirit",
+            "total": 25,
+            "extra": 10,
+            "hpLost": 35,
+            "conditions": [
+              "grabbed"
+            ]
+          },
+          "sustainResult": {
+            "formula": "7d6 spirit",
+            "total": 25,
+            "extra": 10,
+            "hpLost": 17,
+            "conditions": [
+              "grabbed"
+            ]
+          },
+          "ended": "ended"
+        }
+      }
+    },
+    "sustainDamageSequenced": {
+      "label": "sustainDamage",
+      "passed": false,
+      "error": "Cast: heightened item damage 4d10, full on a failure: {\"formula\":\"4d10 bludgeoning\",\"total\":23,\"hpLost\":0}",
+      "stack": "Error: Cast: heightened item damage 4d10, full on a failure: {\"formula\":\"4d10 bludgeoning\",\"total\":23,\"hpLost\":0}\n    at assert (http://localhost:30000/modules/pf2e-automatic-resolution/tools/phase23-affliction-verification.mjs?1790447944957:4:56)\n    at Object.sustainDamage (http://localhost:30000/modules/pf2e-automatic-resolution/tools/phase23-affliction-verification.mjs?1790447944957:666:9)\n    at async Object.record (http://localhost:30000/modules/pf2e-automatic-resolution/tools/phase23-affliction-verification.mjs?1790447944957:55:85)\n    at async Module.runCase (http://localhost:30000/modules/pf2e-automatic-resolution/tools/phase23-affliction-verification.mjs?1790447944957:2838:12)\n    at async <anonymous>:2:250"
+    },
+    "degreeChoiceAndRiftSequenced": {
+      "label": "degreeChoiceAndRift",
+      "passed": false,
+      "error": "Fiendish Rift: cast and Sustain exposures, +10 spirit for the holy creature, Grabbed on a failure: {\"castResult\":{\"formula\":\"7d6 spirit\",\"total\":26,\"extra\":null,\"hpLost\":0,\"conditions\":[]},\"sustainResult\":{\"formula\":\"7d6 spirit\",\"total\":23,\"extra\":null,\"hpLost\":0,\"conditions\":[]},\"ended\":\"ended\"}",
+      "stack": "Error: Fiendish Rift: cast and Sustain exposures, +10 spirit for the holy creature, Grabbed on a failure: {\"castResult\":{\"formula\":\"7d6 spirit\",\"total\":26,\"extra\":null,\"hpLost\":0,\"conditions\":[]},\"sustainResult\":{\"formula\":\"7d6 spirit\",\"total\":23,\"extra\":null,\"hpLost\":0,\"conditions\":[]},\"ended\":\"ended\"}\n    at assert (http://localhost:30000/modules/pf2e-automatic-resolution/tools/phase23-affliction-verification.mjs?1790447944957:4:56)\n    at Object.degreeChoiceAndRift (http://localhost:30000/modules/pf2e-automatic-resolution/tools/phase23-affliction-verification.mjs?1790447944957:2703:9)\n    at async Object.record (http://localhost:30000/modules/pf2e-automatic-resolution/tools/phase23-affliction-verification.mjs?1790447944957:55:85)\n    at async Module.runCase (http://localhost:30000/modules/pf2e-automatic-resolution/tools/phase23-affliction-verification.mjs?1790447944957:2838:12)\n    at async <anonymous>:2:250"
+    },
+    "note": "sustainDamage and degreeChoiceAndRift failed when run after other area cases without cleanup (a creature left in the same map area took the first exposure); rerun after cleanup, both passed."
+  }
+}

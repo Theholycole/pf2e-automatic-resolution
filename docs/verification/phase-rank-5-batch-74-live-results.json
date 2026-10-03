@@ -1,0 +1,41 @@
+{
+  "label": "rank5Batch74",
+  "passed": true,
+  "at": "2026-10-03T11:39:29.964Z",
+  "details": {
+    "batch74": {
+      "kind": "force-hand",
+      "hand": {
+        "ac": 25,
+        "hp": 50,
+        "size": "med"
+      },
+      "move": 2,
+      "protect": {
+        "ally": 4,
+        "caster": 0
+      },
+      "ended": {
+        "token": false,
+        "cover": false
+      },
+      "grasp": {
+        "size": "lg",
+        "degree": 3,
+        "restrained": true
+      },
+      "graspEnded": false,
+      "crush": {
+        "ac": 35,
+        "hp": 90,
+        "degree": 3,
+        "damage": 60,
+        "grabbed": true
+      },
+      "constrict": {
+        "status": "constrict",
+        "damage": 27
+      }
+    }
+  }
+}

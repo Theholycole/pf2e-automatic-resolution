@@ -1,0 +1,63 @@
+{
+  "batch": "cantrip-rank-1-batch-74",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch74",
+    "passed": true,
+    "details": {
+      "living": {
+        "healed": 8,
+        "total": 8,
+        "effect": "1 minutes",
+        "fastHealing": "@item.level",
+        "thrallNote": true,
+        "dataNote": true
+      },
+      "undead": {
+        "healed": 3,
+        "total": 3,
+        "effect": "1 minutes",
+        "fastHealing": "@item.level",
+        "thrallNote": true,
+        "dataNote": true
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch74",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "directHealing",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "healingRiders",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "label": "rank3Batch96",
+  "passed": true,
+  "at": "2026-10-03T06:11:36.120Z",
+  "details": {
+    "batch96": {
+      "choices": [
+        "fire",
+        "spirit",
+        "cold",
+        "force"
+      ],
+      "perTurn": "any",
+      "first": {
+        "formula": "3d10 spirit",
+        "total": 23,
+        "lost": 23
+      },
+      "effect": {
+        "count": 1,
+        "immobilized": true,
+        "rules": [
+          "FlatModifier:ac:1",
+          "FlatModifier:saving-throw:1",
+          "GrantItem::"
+        ],
+        "sustained": true,
+        "fort": 11
+      },
+      "second": {
+        "formula": "3d10 fire",
+        "total": 21,
+        "lost": 21
+      },
+      "afterSecond": 1,
+      "afterMove": {
+        "count": 0,
+        "immobilized": false
+      },
+      "refused": "Sign of Conviction: the spell has ended (its Effect on PFTEST P23 Affliction Sign of Conviction caster is gone).",
+      "recast": {
+        "card": true,
+        "count": 1
+      }
+    }
+  }
+}

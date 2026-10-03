@@ -1,0 +1,27 @@
+{
+  "label": "rank3Batch52",
+  "passed": true,
+  "at": "2026-10-02T18:39:57.990Z",
+  "details": {
+    "batch52": {
+      "hit": {
+        "formula": "3d6 slashing",
+        "total": 12,
+        "lost": 12,
+        "notes": true
+      },
+      "critical": {
+        "formula": "3d6 slashing",
+        "total": 10,
+        "lost": 20,
+        "notes": true
+      },
+      "heightened": {
+        "formula": "5d6 slashing",
+        "total": 14,
+        "lost": 14,
+        "notes": true
+      }
+    }
+  }
+}

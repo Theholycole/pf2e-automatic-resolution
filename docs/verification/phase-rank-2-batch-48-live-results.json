@@ -1,0 +1,42 @@
+{
+  "phase": "rank-2-batch-48",
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cleanup",
+      "passed": true,
+      "at": "2026-10-01T22:55:12.344Z",
+      "details": {
+        "actorsRemoved": 0,
+        "journalsRemoved": 0,
+        "regionsRemoved": 0,
+        "remainingFixtureActors": 0
+      }
+    },
+    {
+      "label": "rank2Batch48",
+      "passed": true,
+      "at": "2026-10-01T22:55:13.008Z",
+      "details": {
+        "batch48": {
+          "dismantle": {
+            "kind": "dismantle",
+            "status": "applied",
+            "during": {
+              "hp": 5,
+              "broken": true,
+              "duration": "10 minutes"
+            },
+            "after": 10
+          },
+          "pack": {
+            "kind": "spell-note",
+            "note": "1 hours"
+          }
+        }
+      }
+    }
+  ]
+}

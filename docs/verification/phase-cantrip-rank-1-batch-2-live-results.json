@@ -1,0 +1,110 @@
+{
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch2",
+    "passed": true,
+    "at": "2026-09-27T01:41:19.762Z",
+    "details": {
+      "stingOfTheSea": {
+        "atCast": {
+          "pending": [],
+          "effects": []
+        },
+        "turn1": {
+          "effect": true,
+          "rules": [
+            "perception:-2"
+          ],
+          "duration": {
+            "value": 0,
+            "unit": "rounds",
+            "expiry": "turn-end",
+            "sustained": false
+          },
+          "note": true
+        },
+        "afterTurn": {
+          "effect": false,
+          "expired": null,
+          "remaining": null,
+          "start": null,
+          "round": 2,
+          "dazzleEffects": []
+        },
+        "sustained": true,
+        "turn2": {
+          "dazzled": true,
+          "status": "active"
+        },
+        "afterTurn2": {
+          "dazzled": false,
+          "effects": [],
+          "autoExpire": true
+        },
+        "ended": "ended"
+      },
+      "runicWeapon": {
+        "level": "prompted",
+        "offered": [
+          "Club",
+          "Longsword"
+        ],
+        "runes": {
+          "potency": 1,
+          "striking": 1
+        },
+        "club": 0,
+        "damage": "2d8 slashing",
+        "effect": true
+      },
+      "serrate": {
+        "damage": "1d6 bludgeoning + 1d4 slashing",
+        "note": "PF2e's Spell Effect: Serrate lasts until the end of your next turn; the text says until the start of it."
+      },
+      "shillelagh": {
+        "offered": "auto",
+        "potency": 1,
+        "striking": 1
+      },
+      "conductiveWeapon": {
+        "potency": 1,
+        "damage": "1d8 slashing + 1d6 electricity",
+        "items": [
+          "weapon:Club",
+          "weapon:+1 Shock Longsword",
+          "effect:Spell Effect: Conductive Weapon (Longsword)"
+        ],
+        "card": [
+          " Shillelagh Applied the selected official PF2e Effect: Spell Effect: Shillelagh (Club) \u2192 PFTEST P23 Affliction shillelagh caster ",
+          " Conductive Weapon Applied the selected official PF2e Effect: Spell Effect: Conductive Weapon (Longsword) \u2192 PFTEST P23 Affliction conductive ally "
+        ]
+      }
+    }
+  },
+  "regressions": {
+    "cr1Batch2": true,
+    "durationBuffs": true,
+    "rank2Batch2": true,
+    "rank1Batch1": true,
+    "terrainBatch1": true
+  },
+  "regressionsNote": "timing-fix regressions (lingering \u2026 attackConditionRiders) ran before the final reload; the rest after",
+  "cleanup": {
+    "actorsRemoved": 8,
+    "journalsRemoved": 4,
+    "remainingFixtureActors": 0
+  },
+  "combats": 0,
+  "timingFixRegressions": {
+    "lingering": true,
+    "sustainedConditions": true,
+    "terrainBatch2": true,
+    "cr1Batch1": true,
+    "reactionBuffs": true,
+    "degreeChoiceAndRift": true,
+    "attackConditionRiders": true,
+    "note": "recorded from the run before the final reload (page state was reset by the reload)"
+  }
+}

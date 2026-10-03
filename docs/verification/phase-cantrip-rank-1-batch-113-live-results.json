@@ -1,0 +1,30 @@
+{
+  "batch": 113,
+  "spells": [
+    "Forge"
+  ],
+  "results": [
+    {
+      "label": "cr1Batch113",
+      "passed": true,
+      "at": "2026-09-28T02:14:43.743Z",
+      "details": {
+        "forge": {
+          "total": 12,
+          "lost": [
+            24,
+            24
+          ],
+          "weakness": [
+            [
+              "1 rounds turn-end"
+            ],
+            []
+          ],
+          "reminder": true,
+          "note": false
+        }
+      }
+    }
+  ]
+}

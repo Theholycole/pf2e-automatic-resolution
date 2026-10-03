@@ -1,0 +1,39 @@
+{
+  "batch": 145,
+  "spells": [
+    "Eat Fire"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch145",
+      "passed": true,
+      "at": "2026-09-28T22:19:41.921Z",
+      "details": {
+        "eatFire": {
+          "cast1": {
+            "effect": true,
+            "fire": 5
+          },
+          "refused": "Eat Fire: the smoke cloud must be within 20 feet (it was 40).",
+          "belch": {
+            "status": "started",
+            "effectGone": true,
+            "fire": null,
+            "caster": true,
+            "near": true,
+            "far": false
+          },
+          "again": true,
+          "afterUnconscious": false,
+          "afterRegionRemoved": {
+            "casterConcealed": false,
+            "nearConcealed": false
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "batch": "cantrip-rank-1-batch-61",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch61",
+    "passed": true,
+    "details": {
+      "yellow": {
+        "roll": {
+          "formula": "1d4",
+          "results": {
+            "1": "dazzled",
+            "2": "enfeebled",
+            "3": "frightened",
+            "4": "clumsy"
+          },
+          "chooseOn": [],
+          "options": [
+            "dazzled",
+            "enfeebled",
+            "clumsy",
+            "frightened"
+          ],
+          "labels": {
+            "dazzled": "White",
+            "enfeebled": "Red",
+            "frightened": "Yellow",
+            "clumsy": "Blue"
+          },
+          "rolled": 3,
+          "slug": "frightened"
+        },
+        "success": [],
+        "failure": [
+          "frightened 1"
+        ],
+        "criticalFailure": [
+          "frightened 2"
+        ],
+        "frightenedEffect": "-1 unlimited"
+      },
+      "white": {
+        "roll": {
+          "formula": "1d4",
+          "results": {
+            "1": "dazzled",
+            "2": "enfeebled",
+            "3": "frightened",
+            "4": "clumsy"
+          },
+          "chooseOn": [],
+          "options": [
+            "dazzled",
+            "enfeebled",
+            "clumsy",
+            "frightened"
+          ],
+          "labels": {
+            "dazzled": "White",
+            "enfeebled": "Red",
+            "frightened": "Yellow",
+            "clumsy": "Blue"
+          },
+          "rolled": 1,
+          "slug": "dazzled"
+        },
+        "failure": [
+          "dazzled"
+        ],
+        "failureLasts": "1 rounds",
+        "criticalFailure": [
+          "dazzled"
+        ],
+        "criticalLasts": "1 minutes"
+      },
+      "rolled": {
+        "roll": {
+          "formula": "1d4",
+          "results": {
+            "1": "dazzled",
+            "2": "enfeebled",
+            "3": "frightened",
+            "4": "clumsy"
+          },
+          "chooseOn": [],
+          "options": [
+            "dazzled",
+            "enfeebled",
+            "clumsy",
+            "frightened"
+          ],
+          "labels": {
+            "dazzled": "White",
+            "enfeebled": "Red",
+            "frightened": "Yellow",
+            "clumsy": "Blue"
+          },
+          "rolled": 2,
+          "slug": "enfeebled"
+        },
+        "conditions": [
+          "enfeebled 1"
+        ]
+      }
+    },
+    "cardLines": [
+      "1d4: 3 — Yellow: frightened",
+      "1d4: 1 — White: dazzled",
+      "1d4: 2 — Red: enfeebled"
+    ]
+  },
+  "runs": [
+    {
+      "n": "cr1Batch61",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "rank1Batch5",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

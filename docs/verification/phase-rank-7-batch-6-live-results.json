@@ -1,0 +1,43 @@
+{
+ "label": "rank7Batch6",
+ "passed": true,
+ "at": "2026-10-03T17:48:53.648Z",
+ "details": {
+  "batch6": {
+   "lancers": {
+    "count": 2,
+    "speed": 30,
+    "strike": [
+     "reach-10",
+     "unarmed"
+    ],
+    "damageType": "piercing",
+    "charge": 2,
+    "hit": 5
+   },
+   "nightmare": {
+    "fly": 60,
+    "damageType": "void",
+    "frightened": 2
+   },
+   "resummonEarly": "Recurring Nightmare: the thrall hasn't been destroyed.",
+   "resummon": 1,
+   "graveyard": {
+    "size": "grg",
+    "hp": 400,
+    "reach": true,
+    "beside": 5,
+    "spawned": 5
+   },
+   "perfect": {
+    "hp": 200,
+    "charge": 6
+   },
+   "lob": {
+    "prone": true,
+    "stunned": 1,
+    "reminder": true
+   }
+  }
+ }
+}

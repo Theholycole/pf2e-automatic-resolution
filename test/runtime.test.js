@@ -149,6 +149,8 @@ test("Foundry runtime clones, tags, and dismisses a direct native Effect", async
     assert.equal(result.status, "applied");
     assert.equal(result.created.length, 1);
     assert.equal(result.created[0].system.level.value, 4);
+    assert.equal(result.created[0].system.context.origin.actor, caster.uuid);
+    assert.equal(result.created[0].system.context.origin.item, plan.source.uuid);
     assert.equal(result.created[0].flags[MODULE_ID].runtime.castInstanceId, "cast-1");
     assert.equal(result.created[0].flags[MODULE_ID].runtime.termination.id, termination.id);
     await runtime.dismiss(result.created[0], { skipConfirmation: true });

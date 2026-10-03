@@ -1,0 +1,67 @@
+{
+  "label": "rank4Batch33",
+  "passed": true,
+  "at": "2026-10-02T17:08:43.311Z",
+  "details": {
+    "batch33": {
+      "plain": {
+        "instances": [
+          [
+            "piercing",
+            "4d4",
+            12
+          ],
+          [
+            "void",
+            "4d4",
+            12
+          ]
+        ],
+        "voidRolled": 12,
+        "lost": 24,
+        "temp": 12,
+        "immobilized": true,
+        "iwr": [
+          []
+        ],
+        "duration": "1 minutes",
+        "status": "completed"
+      },
+      "resisting": {
+        "instances": [
+          [
+            "piercing",
+            "5d4",
+            11
+          ],
+          [
+            "void",
+            "5d4",
+            15
+          ]
+        ],
+        "voidRolled": 15,
+        "lost": 23,
+        "temp": 10,
+        "immobilized": true,
+        "iwr": [
+          [
+            {
+              "category": "weakness",
+              "type": "piercing",
+              "adjustment": 2
+            },
+            {
+              "category": "resistance",
+              "type": "void",
+              "adjustment": -5,
+              "ignored": false
+            }
+          ]
+        ],
+        "duration": "1 minutes",
+        "status": "completed"
+      }
+    }
+  }
+}

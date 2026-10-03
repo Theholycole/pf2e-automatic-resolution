@@ -1,0 +1,17 @@
+{
+  "label": "rank4Batch47",
+  "passed": true,
+  "at": "2026-10-02T20:56:17.742Z",
+  "details": {
+    "batch47": {
+      "exposed": true,
+      "failure": {
+        "formula": "5d6 bludgeoning",
+        "total": 11,
+        "lost": 11,
+        "prone": true,
+        "clumsy": 1
+      }
+    }
+  }
+}

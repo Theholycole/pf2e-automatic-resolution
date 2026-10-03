@@ -1,0 +1,47 @@
+{
+ "label": "rank9Batch1",
+ "passed": true,
+ "at": "2026-10-03T17:05:19.833Z",
+ "details": {
+  "batch1": {
+   "pillar": {
+    "restrained": true,
+    "passed": false,
+    "reminder": true
+   },
+   "dance": {
+    "success": [
+     3,
+     "rounds",
+     3
+    ],
+    "failure": [
+     1,
+     "minutes",
+     true
+    ],
+    "offGuard": [
+     true,
+     true
+    ]
+   },
+   "exciseQuestion": [
+    "pending",
+    "pending",
+    "pending"
+   ],
+   "excise": {
+    "bleed": [
+     "0.5 * 2d10",
+     "2 * 2d10"
+    ],
+    "lost": [
+     442,
+     570
+    ],
+    "weakDead": true,
+    "penalty": -4
+   }
+  }
+ }
+}

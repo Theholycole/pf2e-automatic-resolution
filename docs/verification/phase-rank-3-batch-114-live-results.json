@@ -1,0 +1,19 @@
+{
+  "label": "rank3Batch114",
+  "passed": true,
+  "at": "2026-10-03T07:43:48.454Z",
+  "details": {
+    "batch114": {
+      "member": {
+        "stuck": true,
+        "walker": true
+      },
+      "balance": [
+        -2
+      ],
+      "plain": [],
+      "immobilized": true,
+      "walkerLeft": false
+    }
+  }
+}

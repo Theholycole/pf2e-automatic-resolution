@@ -1,0 +1,35 @@
+{
+  "label": "rank3Batch104",
+  "passed": true,
+  "at": "2026-10-03T06:47:27.466Z",
+  "details": {
+    "batch104": {
+      "cast": {
+        "status": "applied",
+        "dc": 20,
+        "marked": true,
+        "duration": "1 minutes",
+        "toggles": [
+          "organ-dependent",
+          "skin-dependent"
+        ],
+        "button": true
+      },
+      "blunt": {
+        "formula": "1d4 bludgeoning",
+        "marked": true
+      },
+      "pierce": {
+        "formula": "1d4 + 4d6 piercing",
+        "marked": false,
+        "effect": true
+      },
+      "again": {
+        "degree": 3,
+        "dc": 20,
+        "marked": true
+      },
+      "againMarked": true
+    }
+  }
+}

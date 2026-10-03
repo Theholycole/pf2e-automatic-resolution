@@ -1,0 +1,50 @@
+{
+  "batch": "cantrip-rank-1-batch-48",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch48",
+    "passed": true,
+    "details": {
+      "igniteAmbition": [
+        [],
+        [
+          "1 rounds|"
+        ],
+        [
+          "1 rounds|more"
+        ],
+        [
+          "1 rounds|follows"
+        ]
+      ]
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch48",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch6",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

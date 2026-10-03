@@ -1,0 +1,60 @@
+{
+  "batch": 163,
+  "spells": [
+    "Extend Boost",
+    "Lingering Composition",
+    "Share Burden",
+    "Counter Performance",
+    "Foresee the Path"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch163",
+      "passed": true,
+      "at": "2026-09-29T01:35:52.441Z",
+      "details": {
+        "checkHelpers": {
+          "extendBoost": {
+            "skill": "arcana",
+            "dc": 15,
+            "degree": "failure",
+            "rounds": 1,
+            "effect": "1 rounds",
+            "success": {
+              "degree": "criticalSuccess",
+              "rounds": 4,
+              "effect": "4 rounds"
+            }
+          },
+          "shareBurden": {
+            "outcome": "failure",
+            "unadjusted": "criticalFailure",
+            "after": false
+          },
+          "counter": {
+            "total": 52,
+            "results": [
+              {
+                "name": "PFTEST P23 Affliction listening ally",
+                "dc": 35,
+                "original": "criticalFailure",
+                "performance": "criticalSuccess",
+                "better": true
+              }
+            ]
+          },
+          "foresee": {
+            "dc": 20,
+            "expected": 20,
+            "degree": "failure",
+            "allyEffect": false,
+            "again": "Foresee the Path: PFTEST P23 Affliction foreseen enemy is temporarily immune."
+          }
+        }
+      }
+    }
+  ]
+}

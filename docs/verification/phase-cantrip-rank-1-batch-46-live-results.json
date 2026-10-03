@@ -1,0 +1,61 @@
+{
+  "batch": "cantrip-rank-1-batch-46",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch46",
+    "passed": true,
+    "details": {
+      "ejectSoul": {
+        "asked": [
+          "pending",
+          "pending"
+        ],
+        "failure": {
+          "stunned": 1,
+          "invisible": false,
+          "notes": [],
+          "effects": [
+            "Eject Soul: Stunned 1"
+          ]
+        },
+        "criticalFailure": {
+          "stunned": 1,
+          "invisible": false,
+          "notes": [
+            "Soul form 1 rounds"
+          ],
+          "effects": [
+            "Eject Soul: Stunned (can't act for 1 round)",
+            "Eject Soul: Soul form"
+          ]
+        },
+        "reminder": true
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch46",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch37",
+      "passed": true,
+      "note": "same session, the run before (the first cr1Batch46 attempt counted the module's condition Effects as notes)"
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

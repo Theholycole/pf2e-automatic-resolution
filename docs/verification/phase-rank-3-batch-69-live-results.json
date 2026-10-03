@@ -1,0 +1,51 @@
+{
+  "label": "rank3Batch69",
+  "passed": true,
+  "at": "2026-10-03T00:28:36.554Z",
+  "details": {
+    "batch69r3": {
+      "whispers": [
+        [
+          "success",
+          "higher",
+          true
+        ],
+        [
+          "failure",
+          "lower",
+          true
+        ],
+        [
+          "other",
+          "equal",
+          true
+        ]
+      ],
+      "casterInt": 0,
+      "notes": [
+        [
+          "1 rounds"
+        ],
+        [
+          "1 rounds"
+        ],
+        [
+          "1 minutes"
+        ],
+        []
+      ],
+      "immune": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "again": [
+        false,
+        false,
+        false,
+        false
+      ]
+    }
+  }
+}

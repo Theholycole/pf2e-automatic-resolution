@@ -1,0 +1,30 @@
+{
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "strikeResult",
+      "passed": true,
+      "at": "2026-09-26T06:54:32.942Z",
+      "details": {
+        "hit": {
+          "early": "Flowing Strike: make PFTEST P23 Affliction Flowing Strike caster's Strike against PFTEST P23 Affliction flowing hit with PF2e first (with PFTEST P23 Affliction flowing hit targeted), then read its result.",
+          "degree": "criticalSuccess",
+          "pendingQuestion": "pending",
+          "total": 10,
+          "lost": 10,
+          "content": "pushed 10 feet."
+        },
+        "miss": {
+          "early": "Flowing Strike: make PFTEST P23 Affliction Flowing Strike caster's Strike against PFTEST P23 Affliction flowing miss with PF2e first (with PFTEST P23 Affliction flowing miss targeted), then read its result.",
+          "degree": "criticalFailure",
+          "pendingQuestion": "pending",
+          "total": null,
+          "lost": 0,
+          "content": null
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "label": "rank4Batch25",
+  "passed": true,
+  "at": "2026-10-02T15:49:38.658Z",
+  "details": {
+    "batch25": {
+      "failure": {
+        "stupefied": 2,
+        "notes": [
+          "Lured 1 rounds"
+        ]
+      },
+      "critical": {
+        "stupefied": 4,
+        "notes": [
+          "Lured 1 rounds",
+          "Stays at the destination 4 rounds"
+        ]
+      },
+      "level": "guided"
+    }
+  }
+}

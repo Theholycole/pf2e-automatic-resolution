@@ -1,0 +1,82 @@
+{
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "module": "0.8.2",
+  "uiCheck": {
+    "manager": [
+      "End Veil of Privacy",
+      "Detach Veil of Privacy",
+      "Counteract with Veil of Privacy"
+    ],
+    "entered": {
+      "name": "UI scrying",
+      "dc": 1,
+      "rank": 1
+    },
+    "result": "Veil of Privacy — counteract. Counteract check vs DC 1: critical success (rank 3 vs 1). GM to apply: UI scrying is counteracted."
+  },
+  "results": [
+    {
+      "label": "counteractWards",
+      "passed": true,
+      "at": "2026-09-26T16:08:44.136Z",
+      "details": {
+        "immunity": [
+          "PFTEST P23 Affliction warded ally is warded (until PFTEST P23 Affliction Spell Immunity caster's next daily preparations) against Fireball: Whenever the warded creature is a target of the named spell or in its area."
+        ],
+        "immunityState": {
+          "before": {
+            "name": "Spell Immunity (Fireball)",
+            "status": "active",
+            "duration": "unlimited"
+          },
+          "easy": true,
+          "hard": false,
+          "afterRest": {
+            "effect": false,
+            "status": "ended"
+          }
+        },
+        "turning": [
+          "PFTEST P23 Affliction Spell Turning caster is warded (1 hour): When a spell targets you."
+        ],
+        "turningState": {
+          "countered": true,
+          "text": "Spell Turning — counteract Counteract check vs DC 1: critical success (rank 7 vs 5). GM to apply: Test targeted spell is counteracted: the spell is turned back on its caster. Spell Turning ends.",
+          "after": false,
+          "status": "ended"
+        },
+        "rigid": [
+          "PFTEST P23 Affliction Rigid Form caster is warded (10 minutes): Whenever you're targeted by a harmful polymorph effect."
+        ],
+        "rigidState": {
+          "before": {
+            "duration": {
+              "value": 10,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "reaction": true
+          },
+          "afterExpiry": false
+        },
+        "veil": [
+          "PFTEST P23 Affliction veiled is warded (8 hours): Whenever detection, revelation, and scrying effects are used against the warded creature or its gear."
+        ],
+        "veilState": {
+          "duration": {
+            "value": 8,
+            "unit": "hours",
+            "expiry": "turn-start",
+            "sustained": false
+          },
+          "cantripRank": 1,
+          "countered": true,
+          "stillActive": true
+        }
+      }
+    }
+  ]
+}

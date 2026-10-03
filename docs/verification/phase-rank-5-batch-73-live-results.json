@@ -1,0 +1,34 @@
+{
+  "label": "rank5Batch73",
+  "passed": true,
+  "at": "2026-10-03T11:33:10.402Z",
+  "details": {
+    "batch73": {
+      "kind": "option-mantle",
+      "first": {
+        "vitality": true,
+        "trunk": true,
+        "size": "lg",
+        "clumsy": 1,
+        "branch": true,
+        "note": "[{\"or\":[\"unwavering-heart-first:towering-trunk\",\"unwavering-heart-second:towering-trunk\"]}]"
+      },
+      "second": {
+        "size": "med",
+        "clumsy": 0,
+        "fascinatedImmune": true,
+        "start": true,
+        "button": true
+      },
+      "refused": "Mantle of the Unwavering Heart: replace one of Evergreen Vitality or Unyielding Will with another option.",
+      "third": {
+        "sickened": 1
+      },
+      "fourth": {
+        "size": "lg",
+        "clumsy": 1,
+        "effect": true
+      }
+    }
+  }
+}

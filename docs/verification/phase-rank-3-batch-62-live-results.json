@@ -1,0 +1,30 @@
+{
+  "label": "rank3Batch62",
+  "passed": true,
+  "at": "2026-10-02T20:49:22.203Z",
+  "details": {
+    "batch62": {
+      "exposed": true,
+      "failure": {
+        "lost": 14,
+        "effect": true,
+        "flags": [
+          {
+            "castId": "aJnUSotXQV1sHYhC"
+          }
+        ],
+        "castId": "aJnUSotXQV1sHYhC"
+      },
+      "status": "active",
+      "afterLeaving": false,
+      "afterRecord": {
+        "status": "active",
+        "members": [
+          "Scene.pCgysuwHQ8wg9vST.Token.EHoWQOgIkcReYVOl"
+        ],
+        "review": null,
+        "pending": []
+      }
+    }
+  }
+}

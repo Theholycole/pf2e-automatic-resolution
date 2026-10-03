@@ -1,0 +1,26 @@
+{
+  "generated": "2026-09-25T23:06:25.652Z",
+  "harness": {
+    "label": "lingering",
+    "passed": true,
+    "at": "2026-09-25T23:02:22.132Z",
+    "details": {
+      "turnStart": [
+        "Review PFTEST P23 Affliction petal inside's exposure (started its turn in the area)"
+      ],
+      "exposures": [
+        "Review PFTEST P23 Affliction petal inside's exposure (started its turn in the area)",
+        "Review PFTEST P23 Affliction petal outside's exposure (entered the area)"
+      ],
+      "damage": 16,
+      "ended": "ended"
+    }
+  },
+  "uiPath": {
+    "spell": "Acid Storm",
+    "button": "Place Lingering Area",
+    "region": "placed by mouse via PF2e placeTemplate",
+    "becameActive": true,
+    "endedOnRegionDelete": "ended"
+  }
+}

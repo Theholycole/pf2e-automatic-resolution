@@ -1,0 +1,64 @@
+{
+  "batch": 124,
+  "spells": [
+    "Shattering Gem"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch124",
+      "passed": true,
+      "at": "2026-09-28T09:55:41.109Z",
+      "details": {
+        "shatteringGem": {
+          "start": "Shattering Gem (gem: 10 HP)",
+          "checks": [
+            5,
+            2,
+            8,
+            12,
+            3,
+            2,
+            12
+          ],
+          "early": "Shattering Gem: roll the flat check first; the gem blocks only on a success.",
+          "first": {
+            "status": "absorbed",
+            "absorbed": 6,
+            "restored": 6,
+            "remaining": 4,
+            "regained": 6,
+            "name": "Shattering Gem (gem: 4 HP)"
+          },
+          "second": {
+            "status": "shattered",
+            "absorbed": 4,
+            "restored": 4,
+            "remaining": 0,
+            "distance": 5,
+            "cardId": "Rof8TDXBAr7VeF5e",
+            "regained": 4,
+            "name": null
+          },
+          "burst": {
+            "target": "PFTEST P23 Affliction gem attacker",
+            "formula": "2d8 slashing",
+            "total": 12,
+            "lost": 12
+          },
+          "ended": true,
+          "ongoingControl": [
+            "End Shattering Gem",
+            "Detach Shattering Gem (gem: 10 HP)",
+            "Shattering Gem: PFTEST P23 Affliction gem ward was Struck (gem 10 HP; target the attacker)",
+            "End Shattering Gem",
+            "Detach Shattering Gem (gem: 5 HP)",
+            "Shattering Gem: PFTEST P23 Affliction gem ward was Struck (gem 5 HP; target the attacker)"
+          ]
+        }
+      }
+    }
+  ]
+}

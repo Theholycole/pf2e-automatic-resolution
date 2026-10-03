@@ -1,0 +1,143 @@
+{
+  "generatedAt": "2026-09-26T23:09:36.750Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "world": "pftest",
+  "results": {
+    "cantripBatch1": {
+      "label": "cantripBatch1",
+      "passed": true,
+      "at": "2026-09-26T23:04:10.992Z",
+      "details": {
+        "galeBlast": {
+          "moves": [
+            "push 5 away",
+            "push 10 away"
+          ],
+          "card": true,
+          "lost": [
+            2,
+            4
+          ],
+          "total": 2
+        },
+        "scatterScree": {
+          "terrain": [
+            {
+              "type": "modifyMovementCost",
+              "walk": 2
+            }
+          ],
+          "note": true,
+          "damage": {
+            "formula": "2d4 bludgeoning",
+            "total": 6,
+            "lost": 6
+          },
+          "firstAfterRecast": {
+            "status": "ended",
+            "reason": "recast",
+            "region": false
+          },
+          "second": "active",
+          "secondEnded": {
+            "status": "ended",
+            "region": false
+          }
+        },
+        "brambleBush": {
+          "atCast": [
+            "inside"
+          ],
+          "initial": {
+            "formula": "1d4 piercing",
+            "total": 2
+          },
+          "rootedLost": 2,
+          "entered": [
+            "Review PFTEST P23 Affliction bush walker's exposure (entered the area)"
+          ],
+          "enterRoll": {
+            "formula": "1d4 + 1 - 1 piercing",
+            "total": 4
+          },
+          "walkerLost": 4,
+          "terrain": [
+            "modifyMovementCost"
+          ],
+          "atCasterTurn": {
+            "status": "ended",
+            "reason": "duration",
+            "region": false
+          }
+        }
+      }
+    }
+  },
+  "regressions": {
+    "cleanup#0": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "cleanup#1": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "lingering#2": {
+      "label": "lingering",
+      "passed": true
+    },
+    "cleanup#3": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "sustainDamage#4": {
+      "label": "sustainDamage",
+      "passed": true
+    },
+    "cleanup#5": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "forcedMovement#6": {
+      "label": "forcedMovement",
+      "passed": true
+    },
+    "cleanup#7": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "longTailBatch2#8": {
+      "label": "longTailBatch2",
+      "passed": true
+    },
+    "cleanup#9": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "rank1Batch8#10": {
+      "label": "rank1Batch8",
+      "passed": true
+    },
+    "cleanup#11": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "rank1Batch9#12": {
+      "label": "rank1Batch9",
+      "passed": true
+    },
+    "cleanup#13": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "enemies#14": {
+      "label": "enemies",
+      "passed": true
+    },
+    "cleanup#15": {
+      "label": "cleanup",
+      "passed": true
+    }
+  }
+}

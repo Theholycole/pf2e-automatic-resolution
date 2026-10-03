@@ -1,0 +1,64 @@
+{
+  "batch": "cantrip-rank-1-batch-33",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch33",
+    "passed": true,
+    "details": {
+      "benediction": {
+        "atCast": {
+          "badge": 1,
+          "record": "active",
+          "radius": [
+            15
+          ],
+          "allyAC": [
+            20,
+            21
+          ],
+          "note": true
+        },
+        "afterSustain": {
+          "badge": 2,
+          "label": "Optional Sustain to expand Benediction",
+          "radius": [
+            25
+          ]
+        },
+        "afterSkipped": {
+          "record": "active",
+          "aura": true,
+          "badge": 2
+        }
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch33",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch7",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

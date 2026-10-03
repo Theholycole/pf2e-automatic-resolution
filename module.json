@@ -2,7 +2,7 @@
   "id": "pf2e-automatic-resolution",
   "title": "PF2e Automatic Ability Resolution",
   "description": "Interactive, confirmation-first execution of compiled PF2e Effects and saving-throw outcomes.",
-    "version": "0.8.2",
+  "version": "0.8.2",
   "compatibility": {
     "minimum": "14",
     "verified": "14"
@@ -29,5 +29,6 @@
   ],
   "styles": [
     "styles/runtime.css"
-  ]
+  ],
+  "socket": true
 }

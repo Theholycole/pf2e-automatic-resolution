@@ -1,0 +1,46 @@
+{
+  "generatedAt": "2026-10-02T21:48:44.395Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "results": [
+    {
+      "label": "rank5Batch34",
+      "passed": true,
+      "at": "2026-10-02T21:48:28.476Z",
+      "details": {
+        "batch34": {
+          "formula": "7d6 fire",
+          "total": 25,
+          "plain": {
+            "lost": 25,
+            "persistent": [
+              [
+                "fire",
+                "3d6"
+              ]
+            ]
+          },
+          "resistant": {
+            "lost": 25,
+            "persistent": [
+              [
+                "spirit",
+                "3d6"
+              ]
+            ],
+            "swapped": "fire → spirit"
+          },
+          "crit": {
+            "lost": 50,
+            "persistent": [
+              [
+                "fire",
+                "(2 * 3d6)"
+              ]
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

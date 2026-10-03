@@ -1,0 +1,132 @@
+{
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "module": "0.8.2",
+  "pseudoAfflictions": "0.5.1",
+  "dialogCheck": {
+    "spell": "Empty Inside",
+    "picked": "Test emotion hard",
+    "dc": 1,
+    "result": [
+      "Test emotion hard: counteract check vs DC 1: critical success (rank 1 vs 1)",
+      "Test emotion hard counteracted"
+    ]
+  },
+  "results": [
+    {
+      "label": "care",
+      "passed": true,
+      "at": "2026-09-26T15:18:12.239Z",
+      "details": {
+        "restorativeMoment": [
+          "doomed 1 → 0",
+          "drained 2 → 1",
+          "Affliction Effect: Spider Sting: critical failure — stage 2 → 2",
+          "Restorative Moment: temporarily immune (1 day)"
+        ],
+        "restorativeMomentAgain": [
+          "PFTEST P23 Affliction care moment can't benefit again yet (Restorative Moment: temporarily immune)."
+        ],
+        "doomedDrained": {
+          "doomedBefore": 1,
+          "drainedBefore": 2,
+          "doomed": 0,
+          "drained": 1
+        },
+        "lessen": [
+          "Affliction Effect: Spider Sting: stage 2 → 1",
+          "Restoration: benefited today (1 day)"
+        ],
+        "reduce": [
+          "clumsy 2 → 0",
+          "Restoration: benefited today (1 day)"
+        ],
+        "takeItsCourse": [
+          "Affliction Effect: Spider Sting: critical failure (-2) — stage 1 → 2"
+        ],
+        "unwilling": [
+          "Unwilling will save: critical success (DC 24)",
+          "Take its Course is negated."
+        ],
+        "persistent": [
+          "Persistent Damage (2d6 poison): took 6 damage now",
+          "Persistent Damage (2d6 poison): flat check DC 20 — continues"
+        ],
+        "expulsion-counteracted": [
+          "Test emotion counteracted: counteract check vs DC 5: critical success (rank 5 vs 3)",
+          "Test emotion counteracted counteracted"
+        ],
+        "expulsion-resonance": [
+          "Test emotion resonance: counteract check vs DC 80: critical failure (rank 5 vs 3)",
+          "Test emotion resonance not counteracted; Ectoplasmic Expulsion: resonance against Test emotion resonance (+2 for 1 hour)"
+        ]
+      }
+    },
+    {
+      "label": "counteractCare",
+      "passed": true,
+      "at": "2026-09-26T15:20:11.477Z",
+      "details": {
+        "emptyInside": [
+          "Test emotion easy: counteract check vs DC 1: critical success (rank 1 vs 1)",
+          "Test emotion easy counteracted"
+        ],
+        "emptyInsideHard": [
+          "Test emotion hard: counteract check vs DC 80: critical failure (rank 1 vs 1)",
+          "Test emotion hard not counteracted"
+        ],
+        "emptyInsideRefused": "Empty Inside: choose one eligible effect to counteract.",
+        "emptyInside5": [
+          "Test emotion A: counteract check vs DC 1: critical success (rank 5 vs 1)",
+          "Test emotion A counteracted",
+          "Test emotion B: counteract check vs DC 1: critical success (rank 5 vs 1)",
+          "Test emotion B counteracted"
+        ],
+        "dispelRefused": "Dispel Magic: choose one eligible effect to counteract.",
+        "dispelMagic": [
+          "Test spell effect: counteract check vs DC 1: critical success (rank 2 vs 3)",
+          "Test spell effect counteracted"
+        ],
+        "dispelArea": [
+          "Counteract check vs DC 1: critical success (rank 2 vs 4)",
+          "Test wall of fire is counteracted: end it."
+        ],
+        "dispelArtifact": [
+          "Test artifact is an artifact: the counteract automatically fails."
+        ],
+        "dispelItem": [
+          "Counteract check vs DC 1: critical success (rank 2 vs 2)",
+          "Test wand is counteracted: it becomes a mundane item of its type for 10 minutes (its non-magical properties are unchanged)."
+        ],
+        "purgingToxins": [
+          "3 poison damage: took 3",
+          "Affliction Effect: Spider Sting (stage 2): counteract check vs DC 1: critical success (rank 3 vs 1)",
+          "Affliction Effect: Spider Sting (stage 2) counteracted (cured)",
+          "Purging Toxins: temporarily immune (24 hours)"
+        ],
+        "purgingImmune": [
+          "PFTEST P23 Affliction purge immune is immune to poison: Purging Toxins has no effect."
+        ],
+        "harmonizeHeal": [
+          "Regained 8 HP (8 vitality = 8)"
+        ],
+        "harmonizeCounteract": [
+          "Affliction Effect: Spider Sting (stage 2): counteract check vs DC 1: critical success (rank 2 vs 1)",
+          "Affliction Effect: Spider Sting (stage 2) counteracted (cured)"
+        ],
+        "cleanse2": [
+          "Affliction Effect: Spider Sting: stage 2 → 1"
+        ],
+        "cleanse2Again": [
+          "Affliction Effect: Spider Sting: this exposure was already lessened by Cleanse Affliction"
+        ],
+        "cleanse3": [
+          "Affliction Effect: Spider Sting: this exposure was already lessened by Cleanse Affliction",
+          "Affliction Effect: Spider Sting (stage 1): counteract check vs DC 1: critical success (rank 3 vs 1)",
+          "Affliction Effect: Spider Sting (stage 1) counteracted (cured)"
+        ]
+      }
+    }
+  ]
+}

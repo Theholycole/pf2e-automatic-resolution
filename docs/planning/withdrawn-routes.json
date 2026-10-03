@@ -1,0 +1,30 @@
+{
+  "definition": "Executable routes intentionally withdrawn because a later gate proved the route applied an incorrect outcome. Regression tools accept a lost route only when it is listed here with a reason.",
+  "withdrawn": [
+    {
+      "id": "3E1p58MNQMO4GAxt",
+      "name": "Stagnate Time",
+      "date": "2026-09-25",
+      "reason": "Moved, not lost. The shared save resolved one save at casting, but the spell says “Any creature that begins its turn in the area must attempt a Will save.” The preamble checker didn't recognise “begins its turn”. The spell now runs on the lingering-area route (ongoing), with a turn-start exposure for each creature in the placed area.",
+      "verification": "../verification/phase-3-lingering-areas.md"
+    },
+    {
+      "id": "2uEuYmlyx1R7zQeH",
+      "name": "Pollen Pods",
+      "date": "2026-09-25",
+      "reason": "Moved, not lost. The shared save resolved damage and conditions immediately at casting. The spell creates four motion-triggered bulbs that each blossom separately later during a 12-hour duration (“when a creature enters a space adjacent to a bulb”). The preamble checker now recognizes area-entry triggers; the route returns only with trigger/placement management. Since 2026-10-03 (rank 7 batch 8) it runs on Instant Minefield's route: the bulbs are squares of a region the GM draws, and the GM's control when one blossoms opens the save card for the creatures within 15 feet of it.",
+      "verification": "../verification/phase-2-3-self-help-family.md"
+    }
+  ],
+  "restored": [
+    {
+      "id": "0jadeyQIItIuRgeH",
+      "name": "Eclipse Burst",
+      "date": "2026-10-02",
+      "reason": "The shared save rolled PF2e's 8d4 void part against every creature in the area, but the spell says “plus an additional 8d4 void damage to living creatures.” The preamble checker now reads who a sentence limits the damage to; the route returns once the living-only damage part is compiled.",
+      "verification": "pending-user-decisions.md",
+      "restored": "2026-10-03",
+      "restoredReason": "PF2e's own void damage harms only living creatures (verified live: a construct and an undead took 0 from {10[void]}, a living NPC took 10), so the item's two entries rolled together are the text's living-only void part. Rank 7 batch 2."
+    }
+  ]
+}

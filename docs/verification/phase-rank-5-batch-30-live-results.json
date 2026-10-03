@@ -1,0 +1,20 @@
+{
+  "label": "rank5Batch30",
+  "passed": true,
+  "at": "2026-10-02T20:59:17.008Z",
+  "details": {
+    "batch30": {
+      "results": {
+        "living": {
+          "formula": "1d6 mental + 5d6 void",
+          "total": 24,
+          "lost": 24,
+          "frightened": 2
+        },
+        "construct": {
+          "eligible": false
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "label": "rank2Batch62",
+  "passed": true,
+  "at": "2026-10-02T00:11:57.097Z",
+  "details": {
+    "batch62": {
+      "level": "automatic",
+      "base": {
+        "formula": "1d8 + 3 slashing",
+        "total": 6
+      },
+      "critical": {
+        "formula": "2 * (1d8 + 3) slashing",
+        "total": 22
+      },
+      "targets": [
+        {
+          "name": "oath fail",
+          "degree": "failure",
+          "lost": [
+            6
+          ],
+          "types": [
+            "slashing"
+          ],
+          "note": null
+        },
+        {
+          "name": "oath crit",
+          "degree": "criticalFailure",
+          "lost": [
+            22
+          ],
+          "types": [
+            "slashing"
+          ],
+          "note": "the weapon's critical damage"
+        },
+        {
+          "name": "oath immune",
+          "degree": "criticalFailure",
+          "lost": [
+            6
+          ],
+          "types": [
+            "slashing"
+          ],
+          "note": "immune to critical hits: the failure's damage"
+        },
+        {
+          "name": "oath undead",
+          "degree": "failure",
+          "lost": [
+            6
+          ],
+          "types": [
+            "vitality"
+          ],
+          "note": "physical → vitality"
+        }
+      ],
+      "hp": [
+        494,
+        478,
+        494,
+        494
+      ]
+    }
+  },
+  "deadlyProbe": {
+    "weapon": "rapier (1d6 piercing, deadly d8), Strength +3",
+    "critical": "2 * (1d6 + 3) + 1d8 piercing",
+    "note": "PF2e's critical Strike roll, as the Oath's critical failure uses it"
+  }
+}

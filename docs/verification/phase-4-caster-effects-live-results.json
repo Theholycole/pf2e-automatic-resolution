@@ -1,0 +1,67 @@
+{
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "casterEffects",
+      "passed": true,
+      "at": "2026-09-26T13:57:05.804Z",
+      "details": {
+        "gluttonsJaws": {
+          "hit": {
+            "result": {
+              "status": "applied",
+              "name": "Spell Effect: Glutton's Jaws",
+              "uuid": "Actor.23vIdxA0tdEBkjJN.Item.CtMKZbO5NpNzFMUi"
+            },
+            "card": "Caster: Spell Effect: Glutton's Jaws applied."
+          },
+          "tempBefore": 0,
+          "tempHP": 4,
+          "badge": 4,
+          "miss": {
+            "result": {
+              "status": "not-hit"
+            },
+            "card": "Caster: no benefit (the attack didn't hit)."
+          },
+          "missEffects": []
+        },
+        "propellingAirStream": {
+          "missed": {
+            "result": {
+              "status": "applied",
+              "name": "Spell Effect: Propelling Air Stream",
+              "uuid": "Actor.VTa0GAxsoEJnzZqr.Item.fUcJ3acuOXJkiMEC"
+            },
+            "card": "Caster: Spell Effect: Propelling Air Stream applied."
+          },
+          "fly": 15,
+          "effects": [
+            [
+              "Spell Effect: Propelling Air Stream",
+              {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-end",
+                "sustained": false
+              }
+            ]
+          ]
+        },
+        "spikedCarapace": {
+          "struck": {
+            "result": {
+              "status": "applied",
+              "name": "Spell Effect: Spiked Carapace",
+              "uuid": "Actor.u5ODliymnw8UGYkU.Item.Si3u94oxVu5Yyvfu"
+            },
+            "card": "Caster: Spell Effect: Spiked Carapace applied."
+          },
+          "acChange": 1
+        }
+      }
+    }
+  ]
+}

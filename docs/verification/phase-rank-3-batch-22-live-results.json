@@ -1,0 +1,40 @@
+{
+  "label": "rank3Batch22",
+  "passed": true,
+  "at": "2026-10-02T12:15:10.523Z",
+  "details": {
+    "batch22": {
+      "Clairvoyance": {
+        "kind": "spell-note",
+        "note": true
+      },
+      "Clairaudience": {
+        "kind": "spell-note",
+        "note": true
+      },
+      "Scouting Eye": {
+        "kind": "spell-note",
+        "note": true
+      },
+      "cloak": {
+        "kind": "condition-note",
+        "invisible": true,
+        "timer": "10 minutes"
+      },
+      "drop": {
+        "kind": "condition-note",
+        "invisible": true
+      },
+      "trance": {
+        "kind": "condition-note",
+        "casterOffGuard": true,
+        "petOffGuard": false
+      },
+      "skip": {
+        "kind": "condition-note",
+        "quickened": true,
+        "selfRefused": true
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "label": "rank3Batch31",
+  "passed": true,
+  "at": "2026-10-02T14:07:21.677Z",
+  "details": {
+    "batch31": {
+      "virtue": {
+        "kind": "damaging-wall",
+        "formula": "{2d8[spirit],2d8[vitality]}",
+        "lost": [
+          21,
+          6
+        ],
+        "button": true,
+        "countered": true
+      },
+      "stones": {
+        "kind": "hazard-area",
+        "formula": "5[piercing]",
+        "lost": 10,
+        "terrain": true
+      }
+    }
+  }
+}

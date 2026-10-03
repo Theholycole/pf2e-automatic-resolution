@@ -1,0 +1,62 @@
+{
+  "batch": 128,
+  "spells": [
+    "Dehydrate"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch128",
+      "passed": true,
+      "at": "2026-09-28T10:22:43.264Z",
+      "details": {
+        "dehydrate": {
+          "degrees": [
+            {
+              "rolled": "failure",
+              "effective": "failure",
+              "rule": "not-applicable"
+            },
+            {
+              "rolled": "success",
+              "effective": "failure",
+              "rule": "applies"
+            },
+            {
+              "rolled": "success",
+              "effective": "criticalSuccess",
+              "rule": "not-applicable"
+            }
+          ],
+          "persistent": [
+            [
+              "1d6 fire"
+            ],
+            [
+              "1d6 fire"
+            ],
+            []
+          ],
+          "followUps": [
+            "started",
+            "started",
+            null
+          ],
+          "dryLabel": "PFTEST P23 Affliction dehydrate dry ended its turn: additional save. Did the creature consume water or a similar hydrating liquid within the last round? If so, it can forgo this save (Unaffected).",
+          "drySave": {
+            "statistic": null,
+            "enfeebled": 1
+          },
+          "plantReviewed": true,
+          "plantEnfeebled": false,
+          "after": {
+            "dry": "ended",
+            "plant": "active"
+          }
+        }
+      }
+    }
+  ]
+}

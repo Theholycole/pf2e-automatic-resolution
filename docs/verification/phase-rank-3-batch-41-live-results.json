@@ -1,0 +1,19 @@
+{
+  "label": "rank3Batch41",
+  "passed": true,
+  "at": "2026-10-02T16:52:16.992Z",
+  "details": {
+    "batch41": {
+      "sparkle": {
+        "level": "automatic",
+        "effect": true,
+        "button": true,
+        "statistic": "fortitude",
+        "durations": [
+          "1 rounds",
+          "3 rounds"
+        ]
+      }
+    }
+  }
+}

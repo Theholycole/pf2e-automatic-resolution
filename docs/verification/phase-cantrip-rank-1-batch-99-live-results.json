@@ -1,0 +1,94 @@
+{
+  "batch": "cantrip-rank-1-batch-99",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch99",
+    "passed": true,
+    "details": {
+      "saves": {
+        "zombie": {
+          "lost": 10,
+          "formula": "1d6 vitality + 1d4 spirit"
+        },
+        "living": "ineligible"
+      },
+      "weakAtCast": [
+        [
+          1
+        ],
+        [],
+        []
+      ],
+      "weakAfterMoves": [
+        [],
+        [],
+        [
+          1
+        ]
+      ],
+      "record": {
+        "status": "active",
+        "review": null,
+        "obligations": [
+          "membership:completed:zombie",
+          "membership:completed:living",
+          "save:completed:zombie",
+          "save:completed:living"
+        ],
+        "members": [
+          "PFTEST P23 Affliction hallowed living",
+          "PFTEST P23 Affliction hallowed ghoul"
+        ],
+        "effects": [
+          [],
+          [],
+          [
+            "Spell Effect: Hallowed Ground|{\"castId\":\"1v6jr7AN2UM5KpZJ\"}"
+          ]
+        ]
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch99",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch88",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch98",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "flakyEarlier": {
+    "case": "cr1Batch98",
+    "firstRegressionRun": "failed (flyer not adjusted)",
+    "note": "passed alone and after a harness wait was added"
+  },
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

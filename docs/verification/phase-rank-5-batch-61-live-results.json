@@ -1,0 +1,30 @@
+{
+  "label": "rank5Batch61",
+  "passed": true,
+  "at": "2026-10-03T05:03:16.521Z",
+  "details": {
+    "batch61": {
+      "regions": 4,
+      "lost": {
+        "asked": true,
+        "note": true,
+        "duration": {
+          "value": 1,
+          "unit": "minutes",
+          "expiry": "turn-start",
+          "sustained": false
+        }
+      },
+      "seer": {
+        "asked": true,
+        "note": false
+      },
+      "seerAgain": false,
+      "disbelieve": {
+        "status": "disbelieved",
+        "note": false,
+        "cast": "active"
+      }
+    }
+  }
+}

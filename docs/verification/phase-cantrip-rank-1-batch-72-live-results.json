@@ -1,0 +1,72 @@
+{
+  "batch": "cantrip-rank-1-batch-72",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch72",
+    "passed": true,
+    "details": {
+      "dance": [
+        {
+          "name": "Elysian Whimsy: 1d4 1",
+          "lasts": "1 rounds turn-start",
+          "speed": -5,
+          "land": 20,
+          "text": "  GM / player:  The target feels a powerful urge to dance. For 1 round, it takes a –5-foot"
+        }
+      ],
+      "danceCritical": [
+        {
+          "name": "Elysian Whimsy: 1d4 1",
+          "lasts": "1 rounds turn-start",
+          "speed": -10,
+          "land": 15,
+          "text": "  GM / player:  The target feels a powerful urge to dance. For 1 round, it takes a –10-foo"
+        }
+      ],
+      "sing": [
+        {
+          "name": "Elysian Whimsy: 1d4 2",
+          "lasts": "1 rounds turn-end",
+          "speed": null,
+          "land": 25,
+          "text": "  GM / player:  The target is compelled to loudly sing a song. Its first action on its nex"
+        }
+      ],
+      "success": [],
+      "lines": [
+        "1d4: 1 — the note for result 1",
+        "1d4: 2 — the note for result 2"
+      ]
+    }
+  },
+  "runs": [
+    {
+      "n": "cr1Batch72",
+      "passed": false,
+      "note": "first run: behaviour correct; the harness read the rule's selector as a string (PF2e keeps an array)"
+    },
+    {
+      "n": "cr1Batch72",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch61",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

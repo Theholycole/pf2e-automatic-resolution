@@ -1,0 +1,20 @@
+{
+  "label": "rank5Batch56",
+  "passed": true,
+  "at": "2026-10-03T02:25:38.549Z",
+  "details": {
+    "batch56": {
+      "immune": true,
+      "beforeDrained": 0,
+      "noncompliance": {
+        "formula": "6d8 persistent void",
+        "drained": 2,
+        "doomed": 1,
+        "persistent": [
+          "6d8"
+        ],
+        "ended": true
+      }
+    }
+  }
+}

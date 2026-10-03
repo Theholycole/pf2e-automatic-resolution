@@ -1,0 +1,17 @@
+{
+  "label": "rank4Batch125",
+  "passed": true,
+  "at": "2026-10-03T09:54:13.968Z",
+  "details": {
+    "batch125": {
+      "kind": "a 60-foot line, 10 feet wide, from you",
+      "allyExposed": false,
+      "enemyExposed": true,
+      "enemy": {
+        "prone": true,
+        "cost": 20
+      },
+      "allyCost": 10
+    }
+  }
+}

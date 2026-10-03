@@ -1,0 +1,91 @@
+{
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "attackAdjustments",
+      "passed": true,
+      "at": "2026-09-26T13:47:48.588Z",
+      "details": {
+        "magnetic": {
+          "early": "Magnetic Acceleration: answer the GM question for PFTEST P23 Affliction magnet metal before rolling the attack.",
+          "modifiers": [
+            15,
+            14
+          ],
+          "total": 23,
+          "lost": [
+            23,
+            23
+          ],
+          "persistent": [
+            [],
+            []
+          ],
+          "extra": []
+        },
+        "shocking": {
+          "early": "Shocking Grasp: answer the GM question for PFTEST P23 Affliction grasp metal before rolling the attack.",
+          "modifiers": [
+            15,
+            14
+          ],
+          "total": 19,
+          "lost": [
+            38,
+            38
+          ],
+          "persistent": [
+            [
+              "(1d4 + 0) electricity"
+            ],
+            []
+          ],
+          "extra": [
+            0
+          ]
+        },
+        "phase": {
+          "early": "Phase Bolt: answer the GM question for PFTEST P23 Affliction phase shielded before rolling the attack.",
+          "modifiers": [
+            16,
+            14
+          ],
+          "total": 8,
+          "lost": [
+            8,
+            8
+          ],
+          "persistent": [
+            [],
+            []
+          ],
+          "extra": []
+        },
+        "boomerang": {
+          "content": "GM: This attack ignores the target's Concealed condition and ignores all cover except greater cover. Heightened (9th): it ignores cover completely. Leave the target's cover and concealment out of this at",
+          "early": null,
+          "modifiers": [
+            14
+          ],
+          "total": 47,
+          "lost": [
+            47
+          ],
+          "persistent": [
+            []
+          ],
+          "extra": []
+        }
+      }
+    }
+  ],
+  "regressions": {
+    "cleanup": "pass",
+    "spellAttack": "pass",
+    "attackComponents": "pass",
+    "persistentOnce": "pass",
+    "conditionalDamage": "pass"
+  }
+}

@@ -16,7 +16,7 @@ export class NativeEffectCatalog {
         if (this.#catalog && !refresh) return this.#catalog;
         const pack = game.packs.get(PACK_ID);
         if (!pack) throw new Error(`Required PF2e compendium ${PACK_ID} is unavailable.`);
-        const index = await pack.getIndex({ fields: ["name", "type", "system.rules"] });
+        const index = await pack.getIndex({ fields: ["name", "type", "system.rules", "system.duration", "system.start", "system.badge"] });
         this.#catalog = new Map();
         for (const entry of index) {
             const profile = {
@@ -24,7 +24,13 @@ export class NativeEffectCatalog {
                 name: entry.name,
                 type: entry.type,
                 sourceFile: PACK_ID,
-                automation: automationProfile(entry)
+                automation: automationProfile(entry),
+                mechanics: {
+                    rules: structuredClone(entry.system?.rules ?? []),
+                    duration: structuredClone(entry.system?.duration ?? null),
+                    start: structuredClone(entry.system?.start ?? null)
+                },
+                ...(entry.system?.badge ? { badge: structuredClone(entry.system.badge) } : {})
             };
             this.#catalog.set(entry.name, profile);
             this.#catalog.set(entry._id, profile);

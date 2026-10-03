@@ -1,0 +1,51 @@
+{
+  "batch": 170,
+  "date": "2026-09-28",
+  "world": "pftest",
+  "system": "8.5.0",
+  "core": "14.367",
+  "module": "0.8.2",
+  "results": [
+    {
+      "case": "cr1Batch170",
+      "passed": true,
+      "details": {
+        "savesAndAreas": {
+          "lure": {
+            "rolled": [
+              "rat",
+              "swarm"
+            ],
+            "rat": true,
+            "swarm": false,
+            "ratEffect": true,
+            "swarmEffect": false,
+            "bait": true,
+            "dog": false,
+            "far": false
+          },
+          "cover": {
+            "inside": 2,
+            "outside": 0,
+            "back": 2,
+            "foePushed": true,
+            "foeCover": false,
+            "ended": {
+              "region": true,
+              "ac": 0
+            }
+          },
+          "mind": {
+            "stupefiedBefore": true,
+            "spell": "Chastising Retort",
+            "from": "failure",
+            "degree": "criticalSuccess",
+            "replaced": true,
+            "stupefiedAfter": false,
+            "onceOnly": true
+          }
+        }
+      }
+    }
+  ]
+}

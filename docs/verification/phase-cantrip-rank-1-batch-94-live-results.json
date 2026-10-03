@@ -1,0 +1,77 @@
+{
+  "batch": "cantrip-rank-1-batch-94",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch94",
+    "passed": true,
+    "details": {
+      "cacti": {
+        "formula": "2d4 piercing",
+        "total": 3,
+        "lost": [
+          6,
+          1
+        ],
+        "extras": [
+          [
+            "persistent 1 bleed"
+          ],
+          []
+        ]
+      },
+      "fruits": {
+        "formula": "2d4 bludgeoning",
+        "total": 5,
+        "lost": [
+          10
+        ],
+        "extras": [
+          [
+            "clumsy 1"
+          ]
+        ]
+      },
+      "roots": {
+        "formula": "2d4 bludgeoning",
+        "total": 8,
+        "lost": [
+          16
+        ],
+        "extras": [
+          [
+            "prone"
+          ]
+        ]
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch94",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch91",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

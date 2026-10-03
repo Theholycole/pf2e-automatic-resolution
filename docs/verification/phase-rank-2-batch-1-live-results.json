@@ -1,0 +1,140 @@
+{
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "rank2Batch1",
+    "passed": true,
+    "at": "2026-09-27T00:21:33.108Z",
+    "details": {
+      "Bone Spray": {
+        "formula": "2d10 piercing + 1 bleed",
+        "total": 6,
+        "targets": [
+          {
+            "degree": "criticalSuccess",
+            "lost": 0,
+            "bleed": [],
+            "status": "applied"
+          },
+          {
+            "degree": "success",
+            "lost": 3,
+            "bleed": [
+              "0.5 * 1"
+            ],
+            "status": "applied"
+          },
+          {
+            "degree": "failure",
+            "lost": 6,
+            "bleed": [
+              "1"
+            ],
+            "status": "applied"
+          },
+          {
+            "degree": "criticalFailure",
+            "lost": 12,
+            "bleed": [
+              "2 * 1"
+            ],
+            "status": "applied"
+          }
+        ]
+      },
+      "Calcium Rain": {
+        "formula": "10d4 piercing + 5 bleed",
+        "total": 22,
+        "targets": [
+          {
+            "degree": "failure",
+            "lost": 22,
+            "bleed": [
+              "5"
+            ],
+            "status": "applied"
+          }
+        ]
+      },
+      "feralShades": {
+        "question": true,
+        "supported": true,
+        "modifiers": [
+          8,
+          10
+        ],
+        "answers": [
+          "Yes (−2)",
+          "No"
+        ],
+        "base": [
+          10,
+          10
+        ],
+        "lost": [
+          8,
+          8
+        ],
+        "total": 8
+      },
+      "manifestationOfSpirits": {
+        "stupefied": [
+          3,
+          3,
+          3
+        ],
+        "confused": [
+          false,
+          false,
+          true
+        ],
+        "durations": [
+          [
+            "Stupefied 3:1 rounds"
+          ],
+          [
+            "Stupefied 3:1 minutes"
+          ],
+          [
+            "Stupefied 3:1 minutes",
+            "Confused:1 rounds"
+          ]
+        ],
+        "effects": [
+          [
+            "1 rounds"
+          ],
+          [
+            "1 minutes"
+          ],
+          [
+            "1 minutes",
+            "1 rounds"
+          ]
+        ]
+      }
+    }
+  },
+  "regressions": {
+    "attackAdjustments": true,
+    "longTailBatch4": true,
+    "rank1Batch1": true,
+    "lingering": true,
+    "rank1Batch10": true,
+    "cantripBatch1": true,
+    "terrainBatch2": true,
+    "note": "run before the final reload, each followed by cleanup (all passed)"
+  },
+  "cleanup": {
+    "label": "cleanup",
+    "passed": true,
+    "at": "2026-09-27T00:22:19.922Z",
+    "details": {
+      "actorsRemoved": 14,
+      "journalsRemoved": 1,
+      "remainingFixtureActors": 0
+    }
+  },
+  "combats": 0
+}

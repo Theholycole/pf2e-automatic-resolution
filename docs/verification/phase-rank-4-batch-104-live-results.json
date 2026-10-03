@@ -1,0 +1,29 @@
+{
+  "label": "rank4Batch104",
+  "passed": true,
+  "at": "2026-10-03T05:50:20.320Z",
+  "details": {
+    "batch104": {
+      "cast": {
+        "reservoir": 5,
+        "light": "TokenLight"
+      },
+      "nextTurn": 10,
+      "undead": {
+        "amount": 5,
+        "lost": 5
+      },
+      "again": "PFTEST P23 Affliction luminance ghoul already took it this round.",
+      "recast": {
+        "first": "ended",
+        "count": 1
+      },
+      "dismiss": {
+        "amount": 5,
+        "hp": 55,
+        "status": "ended",
+        "effect": false
+      }
+    }
+  }
+}

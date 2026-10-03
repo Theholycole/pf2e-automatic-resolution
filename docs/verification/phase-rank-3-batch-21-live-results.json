@@ -1,0 +1,48 @@
+{
+  "label": "rank3Batch21",
+  "passed": true,
+  "at": "2026-10-02T12:09:45.688Z",
+  "details": {
+    "batch21": {
+      "firework": {
+        "supported": true,
+        "lost": [
+          8,
+          16
+        ],
+        "modifierGap": 2,
+        "failure": [
+          true,
+          true,
+          false
+        ],
+        "critical": [
+          true,
+          true,
+          false
+        ],
+        "criticalTimers": [
+          "1 rounds",
+          "1 minutes",
+          "1 minutes"
+        ]
+      },
+      "blizzard": {
+        "lingering": true,
+        "area": {
+          "type": "cone",
+          "value": 60
+        },
+        "threeArea": {
+          "type": "burst",
+          "value": 30
+        },
+        "threeSupported": true,
+        "terrain": true,
+        "initial": true,
+        "endsAt": "caster-turn-start",
+        "regionGone": true
+      }
+    }
+  }
+}

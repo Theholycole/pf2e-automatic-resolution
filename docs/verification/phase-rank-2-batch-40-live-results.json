@@ -1,0 +1,45 @@
+{
+  "phase": "rank-2-batch-40",
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cleanup",
+      "passed": true,
+      "at": "2026-10-01T22:23:38.391Z",
+      "details": {
+        "actorsRemoved": 0,
+        "journalsRemoved": 0,
+        "regionsRemoved": 0,
+        "remainingFixtureActors": 0
+      }
+    },
+    {
+      "label": "rank2Batch40",
+      "passed": true,
+      "at": "2026-10-01T22:23:39.048Z",
+      "details": {
+        "batch40": {
+          "dominance": {
+            "level": "automatic",
+            "error": null,
+            "effect": true,
+            "bonus": 2,
+            "roar": true
+          },
+          "fauna": {
+            "level": "automatic",
+            "tooMany": "Imitate Fauna: target at most 1 creature (1 willing animal).",
+            "notAnimal": "Imitate Fauna: PFTEST P23 Affliction fauna person doesn't have the animal trait.",
+            "atFifth": null,
+            "effects": [
+              1,
+              1
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

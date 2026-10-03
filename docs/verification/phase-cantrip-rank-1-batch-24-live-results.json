@@ -1,0 +1,41 @@
+{
+  "batch": "cantrip-rank-1-batch-24",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch24",
+    "passed": true,
+    "details": {
+      "nettleskin": {
+        "before": "1 minutes",
+        "after": "9 rounds",
+        "total": 3,
+        "lost": 3,
+        "refused": "Nettleskin: target the creature that set it off, not the caster."
+      },
+      "armor": {
+        "hit": 1,
+        "lost": 1,
+        "bleed": [
+          "1d4 bleed"
+        ]
+      }
+    }
+  },
+  "regressions": [
+    {
+      "n": "cr1Batch12",
+      "passed": true
+    },
+    {
+      "n": "longTailBatch2",
+      "passed": true
+    }
+  ],
+  "note": "A mistyped regression name (storedTriggers) was replaced by longTailBatch2, the stored-trigger case.",
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "label": "rank4Batch122",
+  "passed": true,
+  "at": "2026-10-03T09:38:13.374Z",
+  "details": {
+    "batch122": {
+      "cast": {
+        "healing": "5d8",
+        "fire": 10
+      },
+      "after": {
+        "hp": 40,
+        "dying": false,
+        "ward": false,
+        "lockout": {
+          "value": 24,
+          "unit": "hours",
+          "expiry": "turn-start",
+          "sustained": false
+        }
+      },
+      "again": "Phoenix Ward: PFTEST P23 Affliction Phoenix Ward caster can't cast it again yet (24 hours after it last triggered)."
+    }
+  }
+}

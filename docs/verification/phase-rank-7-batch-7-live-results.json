@@ -1,0 +1,21 @@
+{
+ "label": "rank7Batch7",
+ "passed": true,
+ "at": "2026-10-03T18:29:39.456Z",
+ "details": {
+  "batch7": {
+   "plain": {
+    "drained": 2,
+    "stupefied": 2,
+    "casterEffect": null,
+    "resistance": null
+   },
+   "holy": {
+    "drained": 2,
+    "stupefied": 2,
+    "casterEffect": "1 minutes",
+    "resistance": 15
+   }
+  }
+ }
+}

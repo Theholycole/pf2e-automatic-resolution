@@ -1,0 +1,83 @@
+{
+  "phase": "rank-2-batch-38",
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cleanup",
+      "passed": true,
+      "at": "2026-10-01T22:15:25.153Z",
+      "details": {
+        "actorsRemoved": 0,
+        "journalsRemoved": 0,
+        "regionsRemoved": 0,
+        "remainingFixtureActors": 0
+      }
+    },
+    {
+      "label": "rank2Batch38",
+      "passed": true,
+      "at": "2026-10-01T22:15:25.819Z",
+      "details": {
+        "batch38": {
+          "mirror": {
+            "kind": "image-decoys",
+            "steps": [
+              {
+                "start": 3,
+                "name": "Spell Effect: Mirror Image (3 images)"
+              },
+              {
+                "kind": "miss",
+                "status": "resolved",
+                "hitsCaster": false,
+                "roll": null,
+                "images": 2,
+                "name": "Spell Effect: Mirror Image (2 images)"
+              },
+              {
+                "kind": "critical",
+                "status": "resolved",
+                "hitsCaster": true,
+                "roll": 4,
+                "images": 1,
+                "name": "Spell Effect: Mirror Image (1 image)"
+              },
+              {
+                "kind": "miss",
+                "status": "ended",
+                "hitsCaster": false,
+                "roll": null,
+                "images": null,
+                "name": null
+              }
+            ],
+            "ended": "ended",
+            "effectLeft": false
+          },
+          "unseen": {
+            "2": {
+              "level": "automatic",
+              "effect": "10 minutes",
+              "note": "10 minutes",
+              "rules": [
+                "Sense",
+                "FlatModifier"
+              ]
+            },
+            "5": {
+              "level": "automatic",
+              "effect": "8 hours",
+              "note": "8 hours",
+              "rules": [
+                "Sense",
+                "FlatModifier"
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]
+}

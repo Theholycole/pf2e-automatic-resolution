@@ -1,0 +1,43 @@
+{
+  "generatedAt": "2026-10-02T23:05:01.279Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "results": [
+    {
+      "label": "rank4Batch64",
+      "passed": true,
+      "at": "2026-10-02T23:04:50.129Z",
+      "details": {
+        "batch64": {
+          "penalty": [
+            [
+              "1 rounds"
+            ],
+            [
+              "3 rounds"
+            ],
+            [
+              "1 hours"
+            ]
+          ],
+          "undetected": [
+            false,
+            false,
+            false
+          ],
+          "notes": [
+            [
+              "1 rounds"
+            ],
+            [
+              "3 rounds"
+            ],
+            [
+              "1 hours"
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}

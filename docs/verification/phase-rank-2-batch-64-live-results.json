@@ -1,0 +1,56 @@
+{
+  "label": "rank2Batch64",
+  "passed": true,
+  "at": "2026-10-02T00:27:00.935Z",
+  "details": {
+    "batch64": {
+      "cast": {
+        "level": "automatic",
+        "slowed": true,
+        "region": true,
+        "shapes": 2,
+        "terrain": [
+          {
+            "actorUuid": "Actor.jfeul25vDeRuHJQv",
+            "difficulty": 2
+          },
+          {
+            "actorUuid": "Actor.A3bdVHSNndkOJVNB",
+            "difficulty": 3
+          }
+        ]
+      },
+      "costs": {
+        "armored": 15,
+        "metal": 20,
+        "plain": 10
+      },
+      "followed": {
+        "x": 1400,
+        "y": 1400
+      },
+      "penalty": {
+        "value": 2,
+        "held": true
+      },
+      "strike": {
+        "modifiers": [
+          "Modifier:5",
+          "Magnetic Repulsion:-2"
+        ],
+        "after": false
+      },
+      "end": {
+        "before": {
+          "regions": 1,
+          "slowed": true
+        },
+        "after": {
+          "regions": 0,
+          "slowed": false,
+          "effect": false
+        }
+      }
+    }
+  }
+}

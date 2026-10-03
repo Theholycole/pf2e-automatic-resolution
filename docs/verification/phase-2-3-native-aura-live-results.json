@@ -1,0 +1,28 @@
+{
+  "generated": "2026-09-25T22:50:37.645Z",
+  "result": {
+    "sphere": {
+      "caster": [
+        "Aura: Protector's Sphere",
+        "Spell Effect: Protector's Sphere"
+      ],
+      "near": [
+        "Spell Effect: Protector's Sphere"
+      ],
+      "far": [],
+      "foe": [],
+      "casterResist": [
+        "all-damage 3"
+      ],
+      "nearResist": [
+        "all-damage 3"
+      ]
+    },
+    "magicHide": {
+      "companion": [
+        "Spell Effect: Magic Hide"
+      ],
+      "caster": []
+    }
+  }
+}

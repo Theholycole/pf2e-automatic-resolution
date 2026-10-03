@@ -1,0 +1,49 @@
+{
+  "batch": "cantrip-rank-1-batch-81",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch81",
+    "passed": true,
+    "details": {
+      "marker": true,
+      "raised": true,
+      "hardness": 2,
+      "ac": 1,
+      "note": true,
+      "formula": "1d4 piercing",
+      "total": 1,
+      "lost": 1,
+      "ended": true,
+      "markerGone": true
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch81",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch79",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

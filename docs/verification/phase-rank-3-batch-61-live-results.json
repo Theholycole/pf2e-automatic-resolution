@@ -1,0 +1,21 @@
+{
+  "label": "rank3Batch61",
+  "passed": true,
+  "at": "2026-10-02T20:42:19.999Z",
+  "details": {
+    "batch61": {
+      "results": {
+        "walker": {
+          "pull": true,
+          "immobilized": false
+        },
+        "faller": {
+          "pull": true,
+          "immobilized": true
+        }
+      },
+      "area": 20,
+      "terrain": true
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "label": "rank5Batch86",
+  "passed": true,
+  "at": "2026-10-03T12:28:58.847Z",
+  "details": {
+    "batch86": {
+      "kind": "tree-pair",
+      "tree": {
+        "hp": 50,
+        "ac": 10,
+        "resistance": 10,
+        "atCast": [
+          0,
+          100
+        ]
+      },
+      "foe": 14,
+      "ally": 11,
+      "undead": 0,
+      "ended": {
+        "trees": 0,
+        "regions": 0,
+        "records": 0
+      }
+    }
+  }
+}

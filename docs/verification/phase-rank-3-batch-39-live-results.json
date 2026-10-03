@@ -1,0 +1,18 @@
+{
+  "label": "rank3Batch39",
+  "passed": true,
+  "at": "2026-10-02T16:35:48.451Z",
+  "details": {
+    "batch39": {
+      "hum": {
+        "kind": "spell-note",
+        "level": "automatic",
+        "note": true,
+        "rules": 1,
+        "hide": 1,
+        "plain": 0,
+        "text": true
+      }
+    }
+  }
+}

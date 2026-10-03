@@ -1,0 +1,913 @@
+{
+  "generatedAt": "2026-09-24T23:38:46.476Z",
+  "note": "Speed family all-ranks rerun with level 2r-1 casters (the original run used a level-5 caster, which PF2e clamps to rank 3).",
+  "result": {
+    "label": "all-ranks",
+    "passed": true,
+    "at": "2026-09-24T23:33:46.841Z",
+    "details": [
+      {
+        "name": "Chilling Spray",
+        "degree": "criticalFailure",
+        "rank": 1,
+        "cardId": "Y2PQpqzZYNLX2PBF",
+        "damage": 10,
+        "speed": 15,
+        "clumsy": 0,
+        "slowed": 0,
+        "effects": [
+          {
+            "uuid": "Actor.iupdY89SIawzNimx.Item.QUbtVPRKW11HA4N6",
+            "duration": {
+              "value": 2,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "FlatModifier"
+            ]
+          }
+        ],
+        "formula": "2d4 cold"
+      },
+      {
+        "name": "Chilling Spray",
+        "degree": "criticalFailure",
+        "rank": 2,
+        "cardId": "egb2wJQUmVCkLmNX",
+        "damage": 28,
+        "speed": 15,
+        "clumsy": 0,
+        "slowed": 0,
+        "effects": [
+          {
+            "uuid": "Actor.w4AYbpMT6buobwKP.Item.HbdfPu0qotBUWA3R",
+            "duration": {
+              "value": 2,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "FlatModifier"
+            ]
+          }
+        ],
+        "formula": "4d4 cold"
+      },
+      {
+        "name": "Chilling Spray",
+        "degree": "criticalFailure",
+        "rank": 3,
+        "cardId": "bT2ExJZ5guMX3WBl",
+        "damage": 22,
+        "speed": 15,
+        "clumsy": 0,
+        "slowed": 0,
+        "effects": [
+          {
+            "uuid": "Actor.oNoLArXYBNDLHNTg.Item.2HefkEfKQMaTtfOj",
+            "duration": {
+              "value": 2,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "FlatModifier"
+            ]
+          }
+        ],
+        "formula": "6d4 cold"
+      },
+      {
+        "name": "Chilling Spray",
+        "degree": "criticalFailure",
+        "rank": 4,
+        "cardId": "I7NPd8j743kMtLNx",
+        "damage": 42,
+        "speed": 15,
+        "clumsy": 0,
+        "slowed": 0,
+        "effects": [
+          {
+            "uuid": "Actor.jWWVxTMcSPisZbzL.Item.Ukk4P0F0CNakt4vM",
+            "duration": {
+              "value": 2,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "FlatModifier"
+            ]
+          }
+        ],
+        "formula": "8d4 cold"
+      },
+      {
+        "name": "Chilling Spray",
+        "degree": "criticalFailure",
+        "rank": 5,
+        "cardId": "VStwIxIgVGwzGk2O",
+        "damage": 44,
+        "speed": 15,
+        "clumsy": 0,
+        "slowed": 0,
+        "effects": [
+          {
+            "uuid": "Actor.AMqqWaLczmp5SFvW.Item.sOujPxYufVWxKDYh",
+            "duration": {
+              "value": 2,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "FlatModifier"
+            ]
+          }
+        ],
+        "formula": "10d4 cold"
+      },
+      {
+        "name": "Chilling Spray",
+        "degree": "criticalFailure",
+        "rank": 6,
+        "cardId": "dp6CBqhUlX18PWeL",
+        "damage": 60,
+        "speed": 15,
+        "clumsy": 0,
+        "slowed": 0,
+        "effects": [
+          {
+            "uuid": "Actor.48MBzXZ6Nh5u2X24.Item.UQIGxilE1SEPVaiW",
+            "duration": {
+              "value": 2,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "FlatModifier"
+            ]
+          }
+        ],
+        "formula": "12d4 cold"
+      },
+      {
+        "name": "Chilling Spray",
+        "degree": "criticalFailure",
+        "rank": 7,
+        "cardId": "pGv51piATiBwNLdc",
+        "damage": 66,
+        "speed": 15,
+        "clumsy": 0,
+        "slowed": 0,
+        "effects": [
+          {
+            "uuid": "Actor.Xv3RGfL5g3bV6Hm9.Item.eOxUFWl4FxtyyGKq",
+            "duration": {
+              "value": 2,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "FlatModifier"
+            ]
+          }
+        ],
+        "formula": "14d4 cold"
+      },
+      {
+        "name": "Chilling Spray",
+        "degree": "criticalFailure",
+        "rank": 8,
+        "cardId": "69CsvaoQ7JOAYDbR",
+        "damage": 68,
+        "speed": 15,
+        "clumsy": 0,
+        "slowed": 0,
+        "effects": [
+          {
+            "uuid": "Actor.wvA6Nsp8m8ynq4XC.Item.tgqsoMLUWHRqsSDj",
+            "duration": {
+              "value": 2,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "FlatModifier"
+            ]
+          }
+        ],
+        "formula": "16d4 cold"
+      },
+      {
+        "name": "Chilling Spray",
+        "degree": "criticalFailure",
+        "rank": 9,
+        "cardId": "2w350eWJKa8eyee8",
+        "damage": 78,
+        "speed": 15,
+        "clumsy": 0,
+        "slowed": 0,
+        "effects": [
+          {
+            "uuid": "Actor.BmG6ajQ4LpldwsTw.Item.6wHTtaHFO9VX5rVG",
+            "duration": {
+              "value": 2,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "FlatModifier"
+            ]
+          }
+        ],
+        "formula": "18d4 cold"
+      },
+      {
+        "name": "Chilling Spray",
+        "degree": "criticalFailure",
+        "rank": 10,
+        "cardId": "Z7ecFgFY7Wz4VDY4",
+        "damage": 94,
+        "speed": 15,
+        "clumsy": 0,
+        "slowed": 0,
+        "effects": [
+          {
+            "uuid": "Actor.agXVkvpwQoGb531P.Item.PArNQcQYrLrNHBzr",
+            "duration": {
+              "value": 2,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "FlatModifier"
+            ]
+          }
+        ],
+        "formula": "20d4 cold"
+      },
+      {
+        "name": "Magical Fetters",
+        "degree": "criticalFailure",
+        "rank": 3,
+        "cardId": "smKo7c8XHFszDfdf",
+        "damage": 0,
+        "speed": 15,
+        "clumsy": 3,
+        "slowed": 1,
+        "effects": [
+          {
+            "uuid": "Actor.ZEBUzCWY6TiTtTSf.Item.JRSXVWs0JLMbFzrm",
+            "duration": {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "GrantItem"
+            ]
+          },
+          {
+            "uuid": "Actor.ZEBUzCWY6TiTtTSf.Item.UQMcfoqDZPud2E9q",
+            "duration": {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "GrantItem"
+            ]
+          },
+          {
+            "uuid": "Actor.ZEBUzCWY6TiTtTSf.Item.9LfiySvTYSYeJRu5",
+            "duration": {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "FlatModifier"
+            ]
+          }
+        ],
+        "formula": null
+      },
+      {
+        "name": "Magical Fetters",
+        "degree": "criticalFailure",
+        "rank": 4,
+        "cardId": "zPAwqqDW6DRGYra6",
+        "damage": 0,
+        "speed": 15,
+        "clumsy": 3,
+        "slowed": 1,
+        "effects": [
+          {
+            "uuid": "Actor.cRVpIJX1pPj6RuhL.Item.KNkrWBLapOkEs6cr",
+            "duration": {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "GrantItem"
+            ]
+          },
+          {
+            "uuid": "Actor.cRVpIJX1pPj6RuhL.Item.wmyMGOVjL7iysF0O",
+            "duration": {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "GrantItem"
+            ]
+          },
+          {
+            "uuid": "Actor.cRVpIJX1pPj6RuhL.Item.FqsBIAKEeD045r58",
+            "duration": {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "FlatModifier"
+            ]
+          }
+        ],
+        "formula": null
+      },
+      {
+        "name": "Magical Fetters",
+        "degree": "criticalFailure",
+        "rank": 5,
+        "cardId": "chpdbFfXLXOOuxQ7",
+        "damage": 0,
+        "speed": 15,
+        "clumsy": 3,
+        "slowed": 1,
+        "effects": [
+          {
+            "uuid": "Actor.dovQDMMwBalkGXH1.Item.E17trMRwtjYud9ng",
+            "duration": {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "GrantItem"
+            ]
+          },
+          {
+            "uuid": "Actor.dovQDMMwBalkGXH1.Item.6EgoxSNHiTNgn9uh",
+            "duration": {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "GrantItem"
+            ]
+          },
+          {
+            "uuid": "Actor.dovQDMMwBalkGXH1.Item.uqCq0ksdUn1NjrwC",
+            "duration": {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "FlatModifier"
+            ]
+          }
+        ],
+        "formula": null
+      },
+      {
+        "name": "Magical Fetters",
+        "degree": "criticalFailure",
+        "rank": 6,
+        "cardId": "m05CfwqIKtZIySBz",
+        "damage": 0,
+        "speed": 15,
+        "clumsy": 3,
+        "slowed": 1,
+        "effects": [
+          {
+            "uuid": "Actor.20fBI5k2xHU3NcfP.Item.FTUfBX2cvhMYSLwp",
+            "duration": {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "GrantItem"
+            ]
+          },
+          {
+            "uuid": "Actor.20fBI5k2xHU3NcfP.Item.bP0Q4DL95OXnhJVV",
+            "duration": {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "GrantItem"
+            ]
+          },
+          {
+            "uuid": "Actor.20fBI5k2xHU3NcfP.Item.2OTExZi9oXm53gBc",
+            "duration": {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "FlatModifier"
+            ]
+          }
+        ],
+        "formula": null
+      },
+      {
+        "name": "Magical Fetters",
+        "degree": "criticalFailure",
+        "rank": 7,
+        "cardId": "zgkQNCiL60GMRFZA",
+        "damage": 0,
+        "speed": 15,
+        "clumsy": 3,
+        "slowed": 1,
+        "effects": [
+          {
+            "uuid": "Actor.rzijssMXYywWPz8t.Item.cfgjRlmlHEZ4sXRB",
+            "duration": {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "GrantItem"
+            ]
+          },
+          {
+            "uuid": "Actor.rzijssMXYywWPz8t.Item.MfvC6PYq0C3NQOQQ",
+            "duration": {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "GrantItem"
+            ]
+          },
+          {
+            "uuid": "Actor.rzijssMXYywWPz8t.Item.VCQgMrQx94gx2zzW",
+            "duration": {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "FlatModifier"
+            ]
+          }
+        ],
+        "formula": null
+      },
+      {
+        "name": "Magical Fetters",
+        "degree": "criticalFailure",
+        "rank": 8,
+        "cardId": "pktb2MICIOkfn7oI",
+        "damage": 0,
+        "speed": 15,
+        "clumsy": 3,
+        "slowed": 1,
+        "effects": [
+          {
+            "uuid": "Actor.yGbOfo2Ty3SBwtNC.Item.NBbuvIYIfCT7lWMt",
+            "duration": {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "GrantItem"
+            ]
+          },
+          {
+            "uuid": "Actor.yGbOfo2Ty3SBwtNC.Item.KjhOKnANoqssjZBy",
+            "duration": {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "GrantItem"
+            ]
+          },
+          {
+            "uuid": "Actor.yGbOfo2Ty3SBwtNC.Item.ve7lscmxJ6WIiss2",
+            "duration": {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "FlatModifier"
+            ]
+          }
+        ],
+        "formula": null
+      },
+      {
+        "name": "Magical Fetters",
+        "degree": "criticalFailure",
+        "rank": 9,
+        "cardId": "zndYt1vGtdEvk3u6",
+        "damage": 0,
+        "speed": 15,
+        "clumsy": 3,
+        "slowed": 1,
+        "effects": [
+          {
+            "uuid": "Actor.7w18yFXeTeicnZij.Item.IYJj1fQXAkDJ1sVF",
+            "duration": {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "GrantItem"
+            ]
+          },
+          {
+            "uuid": "Actor.7w18yFXeTeicnZij.Item.AiaylZ5MW29lGmm3",
+            "duration": {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "GrantItem"
+            ]
+          },
+          {
+            "uuid": "Actor.7w18yFXeTeicnZij.Item.m6NcZ5R9UaGSQ9H0",
+            "duration": {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "FlatModifier"
+            ]
+          }
+        ],
+        "formula": null
+      },
+      {
+        "name": "Magical Fetters",
+        "degree": "criticalFailure",
+        "rank": 10,
+        "cardId": "ycg0t7kH9wWU49s9",
+        "damage": 0,
+        "speed": 15,
+        "clumsy": 3,
+        "slowed": 1,
+        "effects": [
+          {
+            "uuid": "Actor.tLP2eblQWVypeZ6P.Item.ThpaixzlOTaXLTrX",
+            "duration": {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "GrantItem"
+            ]
+          },
+          {
+            "uuid": "Actor.tLP2eblQWVypeZ6P.Item.zRth9wcMMyt4Q0Ot",
+            "duration": {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "GrantItem"
+            ]
+          },
+          {
+            "uuid": "Actor.tLP2eblQWVypeZ6P.Item.tRh2UK10X8jdbkUv",
+            "duration": {
+              "value": 1,
+              "unit": "minutes",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": [
+              "FlatModifier"
+            ]
+          }
+        ],
+        "formula": null
+      },
+      {
+        "name": "Tempest Touch",
+        "degree": "criticalFailure",
+        "rank": 1,
+        "cardId": "N9A4DtmsmTbrwFsK",
+        "damage": 12,
+        "speed": 15,
+        "clumsy": 0,
+        "slowed": 0,
+        "effects": [
+          {
+            "uuid": "Actor.vax4afa6RnX5kqpo.Item.CMYpG7ScSMssY8OG",
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-end",
+              "sustained": false
+            },
+            "rules": [
+              "ChoiceSet",
+              "FlatModifier"
+            ]
+          }
+        ],
+        "formula": "1d4 bludgeoning + 1d4 cold"
+      },
+      {
+        "name": "Tempest Touch",
+        "degree": "criticalFailure",
+        "rank": 2,
+        "cardId": "IzxI0Kx3brF72TUj",
+        "damage": 28,
+        "speed": 15,
+        "clumsy": 0,
+        "slowed": 0,
+        "effects": [
+          {
+            "uuid": "Actor.lXhglliUJPIA1aex.Item.bYcQPnB1W4lXZJ46",
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-end",
+              "sustained": false
+            },
+            "rules": [
+              "ChoiceSet",
+              "FlatModifier"
+            ]
+          }
+        ],
+        "formula": "2d4 bludgeoning + 2d4 cold"
+      },
+      {
+        "name": "Tempest Touch",
+        "degree": "criticalFailure",
+        "rank": 3,
+        "cardId": "5atP1yW7xyA2U16K",
+        "damage": 24,
+        "speed": 15,
+        "clumsy": 0,
+        "slowed": 0,
+        "effects": [
+          {
+            "uuid": "Actor.6iqmZ58ZDguR1wVj.Item.o3K5rKZCsJpxAuae",
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-end",
+              "sustained": false
+            },
+            "rules": [
+              "ChoiceSet",
+              "FlatModifier"
+            ]
+          }
+        ],
+        "formula": "3d4 bludgeoning + 3d4 cold"
+      },
+      {
+        "name": "Tempest Touch",
+        "degree": "criticalFailure",
+        "rank": 4,
+        "cardId": "B3hN0jW3K7LxqVfP",
+        "damage": 46,
+        "speed": 15,
+        "clumsy": 0,
+        "slowed": 0,
+        "effects": [
+          {
+            "uuid": "Actor.yYVI4dTTw2SHe49I.Item.rTxlsDyxJpFxHK3K",
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-end",
+              "sustained": false
+            },
+            "rules": [
+              "ChoiceSet",
+              "FlatModifier"
+            ]
+          }
+        ],
+        "formula": "4d4 bludgeoning + 4d4 cold"
+      },
+      {
+        "name": "Tempest Touch",
+        "degree": "criticalFailure",
+        "rank": 5,
+        "cardId": "GBQpILMYbsX7YeG3",
+        "damage": 46,
+        "speed": 15,
+        "clumsy": 0,
+        "slowed": 0,
+        "effects": [
+          {
+            "uuid": "Actor.nN1g07lkRAyCgIdG.Item.OyDjWZcZbACOrKq9",
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-end",
+              "sustained": false
+            },
+            "rules": [
+              "ChoiceSet",
+              "FlatModifier"
+            ]
+          }
+        ],
+        "formula": "5d4 bludgeoning + 5d4 cold"
+      },
+      {
+        "name": "Tempest Touch",
+        "degree": "criticalFailure",
+        "rank": 6,
+        "cardId": "PzVOyt9MentZXWqI",
+        "damage": 52,
+        "speed": 15,
+        "clumsy": 0,
+        "slowed": 0,
+        "effects": [
+          {
+            "uuid": "Actor.ByWT7H1TZ0JlGwlk.Item.1uXlBldMtV09K7WS",
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-end",
+              "sustained": false
+            },
+            "rules": [
+              "ChoiceSet",
+              "FlatModifier"
+            ]
+          }
+        ],
+        "formula": "6d4 bludgeoning + 6d4 cold"
+      },
+      {
+        "name": "Tempest Touch",
+        "degree": "criticalFailure",
+        "rank": 7,
+        "cardId": "kfchLriAeVav55Cg",
+        "damage": 62,
+        "speed": 15,
+        "clumsy": 0,
+        "slowed": 0,
+        "effects": [
+          {
+            "uuid": "Actor.ScoHyRgSV5EQozfX.Item.4hldKScnq9TLBJiY",
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-end",
+              "sustained": false
+            },
+            "rules": [
+              "ChoiceSet",
+              "FlatModifier"
+            ]
+          }
+        ],
+        "formula": "7d4 bludgeoning + 7d4 cold"
+      },
+      {
+        "name": "Tempest Touch",
+        "degree": "criticalFailure",
+        "rank": 8,
+        "cardId": "YWDVMqv4yi1wkoPM",
+        "damage": 78,
+        "speed": 15,
+        "clumsy": 0,
+        "slowed": 0,
+        "effects": [
+          {
+            "uuid": "Actor.8ZeZ25gu4MQWHB40.Item.ZPIyGDjgyvLYaP4G",
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-end",
+              "sustained": false
+            },
+            "rules": [
+              "ChoiceSet",
+              "FlatModifier"
+            ]
+          }
+        ],
+        "formula": "8d4 bludgeoning + 8d4 cold"
+      },
+      {
+        "name": "Tempest Touch",
+        "degree": "criticalFailure",
+        "rank": 9,
+        "cardId": "6eLvUVvwy4johiYa",
+        "damage": 90,
+        "speed": 15,
+        "clumsy": 0,
+        "slowed": 0,
+        "effects": [
+          {
+            "uuid": "Actor.mVmY6ftd3uBNbtCW.Item.mpkd4yEyazNCjA4b",
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-end",
+              "sustained": false
+            },
+            "rules": [
+              "ChoiceSet",
+              "FlatModifier"
+            ]
+          }
+        ],
+        "formula": "9d4 bludgeoning + 9d4 cold"
+      },
+      {
+        "name": "Tempest Touch",
+        "degree": "criticalFailure",
+        "rank": 10,
+        "cardId": "0JjEZqKCpv6HNIXI",
+        "damage": 94,
+        "speed": 15,
+        "clumsy": 0,
+        "slowed": 0,
+        "effects": [
+          {
+            "uuid": "Actor.CS6OQK7WfRIn2XAD.Item.8JC6PgShVsjZRxi5",
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-end",
+              "sustained": false
+            },
+            "rules": [
+              "ChoiceSet",
+              "FlatModifier"
+            ]
+          }
+        ],
+        "formula": "10d4 bludgeoning + 10d4 cold"
+      }
+    ]
+  }
+}

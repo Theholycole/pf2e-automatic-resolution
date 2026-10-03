@@ -1,0 +1,43 @@
+{
+  "label": "rank3Batch60",
+  "passed": true,
+  "at": "2026-10-02T20:26:38.365Z",
+  "details": {
+    "batch60": {
+      "healNow": 7,
+      "harmNow": {
+        "total": 6,
+        "lost": [
+          6,
+          12
+        ],
+        "records": [
+          "started",
+          "started"
+        ]
+      },
+      "turnEnd": {
+        "allyHealed": 6,
+        "undeadLost": [
+          6,
+          4
+        ],
+        "rolls": [
+          6,
+          4
+        ],
+        "formulas": [
+          "1d8 vitality",
+          "2 * 1d8 vitality"
+        ]
+      },
+      "immediate": [
+        {
+          "actorUuid": "Actor.SBSHbZNAR5dntEeV",
+          "total": 7,
+          "healing": 7
+        }
+      ]
+    }
+  }
+}

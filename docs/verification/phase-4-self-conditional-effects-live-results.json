@@ -1,0 +1,68 @@
+{
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "selfConditional",
+      "passed": true,
+      "at": "2026-09-26T05:13:55.594Z",
+      "details": {
+        "layAlly": {
+          "healed": 6,
+          "roll": 6,
+          "effects": 1,
+          "acChange": 2
+        },
+        "laySelf": {
+          "healed": 6,
+          "roll": 6,
+          "effects": 0,
+          "acChange": 0
+        },
+        "layFail": {
+          "lost": 2,
+          "total": 2,
+          "acChange": -2,
+          "labels": [
+            "Spell Effect: Lay on Hands"
+          ]
+        },
+        "laySuccess": {
+          "lost": 3,
+          "total": 6,
+          "acChange": 0,
+          "labels": []
+        },
+        "touchSelf": {
+          "healed": 6,
+          "roll": 6,
+          "effects": 1,
+          "acChange": 0
+        },
+        "touchOther": {
+          "healed": 6,
+          "roll": 6,
+          "effects": 0,
+          "acChange": 0
+        },
+        "touchCrit": {
+          "lost": 14,
+          "total": 7,
+          "acChange": -2,
+          "labels": [
+            "Spell Effect: Touch of the Void"
+          ]
+        },
+        "touchSelfDamageModifier": {
+          "slug": "touch-of-the-void",
+          "value": 2,
+          "type": "status",
+          "enabled": true,
+          "predicateHolds": true,
+          "acRulePredicateHolds": false
+        }
+      }
+    }
+  ]
+}

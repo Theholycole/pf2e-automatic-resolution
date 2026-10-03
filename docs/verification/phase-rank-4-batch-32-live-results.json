@@ -1,0 +1,21 @@
+{
+  "label": "rank4Batch32",
+  "passed": true,
+  "at": "2026-10-02T16:38:20.099Z",
+  "details": {
+    "batch32": {
+      "card": {
+        "from": "failure",
+        "to": "success",
+        "degree": "success"
+      },
+      "plain": {
+        "from": "criticalFailure",
+        "to": "failure",
+        "note": true
+      },
+      "refused": "Perfected Body: PFTEST P23 Affliction Perfected Body caster has no failed save to improve.",
+      "kind": "save-upgrade"
+    }
+  }
+}

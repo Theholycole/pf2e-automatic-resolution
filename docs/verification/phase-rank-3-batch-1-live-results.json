@@ -1,0 +1,47 @@
+{
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "rank3Batch1",
+    "passed": true,
+    "at": "2026-09-27T00:47:35.707Z",
+    "details": {
+      "pushingGust": {
+        "reminders": [
+          "GM: PFTEST P23 Affliction gust success is pushed 5 feet away from the caster. Move the token; the module doesn't.",
+          "GM: PFTEST P23 Affliction gust failure is pushed 10 feet away from the caster. Move the token; the module doesn't.",
+          "GM: PFTEST P23 Affliction gust criticalFailure is pushed 10 feet away from the caster. Move the token; the module doesn't."
+        ],
+        "prone": [
+          false,
+          false,
+          true
+        ],
+        "lost": [
+          0,
+          0,
+          0
+        ]
+      },
+      "begone": {
+        "rank": 3,
+        "reminders": [
+          "GM: PFTEST P23 Affliction begone failure is pushed 15 feet away from the caster. Move the token; the module doesn't. If the creature's movement causes it to hit a firm surface, such as a wall, it takes 5 bludgeoning damage. A creature knocked off a ledge or the like can Grab an Edge to avoid falling."
+        ]
+      }
+    }
+  },
+  "regressions": {
+    "rank3Batch1": true,
+    "cantripBatch1": true,
+    "longTailBatch2": true,
+    "rank2Batch1": true
+  },
+  "cleanup": {
+    "actorsRemoved": 14,
+    "journalsRemoved": 1,
+    "remainingFixtureActors": 0
+  },
+  "combats": 0
+}

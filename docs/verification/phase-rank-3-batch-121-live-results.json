@@ -1,0 +1,143 @@
+{
+  "rank3Batch121": {
+    "label": "rank3Batch121",
+    "passed": true,
+    "at": "2026-10-03T13:35:54.646Z",
+    "details": {
+      "batch121": {
+        "portraitCS": {
+          "enfeebled": 4,
+          "hours": 8760
+        },
+        "portraitStrong": {
+          "enfeebled": 0,
+          "applied": 0,
+          "degree": "criticalSuccess"
+        },
+        "portraitCF": {
+          "helper": 4,
+          "primary": 4,
+          "primaryExpected": 4
+        },
+        "geasBig": "Geas: at rank 3 the target can be at most level 6.",
+        "geasMark": true,
+        "strain": {
+          "first": 1,
+          "second": 2,
+          "reduced": 2,
+          "removed": 2,
+          "ended": 0
+        },
+        "geasCS": {
+          "toggle": true,
+          "selector": [
+            "skill-check"
+          ]
+        },
+        "unwillingWeak": {
+          "value": 168,
+          "unit": "hours",
+          "expiry": "turn-start",
+          "sustained": false
+        },
+        "unwillingStrong": {
+          "marked": false,
+          "applied": 0
+        },
+        "geasCF": true
+      }
+    }
+  },
+  "rank3Batch120": {
+    "label": "rank3Batch120",
+    "passed": true,
+    "at": "2026-10-03T13:36:31.384Z",
+    "details": {
+      "batch120": {
+        "door": {
+          "lost": 120,
+          "rolled": 60,
+          "helper": 2,
+          "rolls": 2
+        },
+        "doorPulled": 3,
+        "cord": {
+          "toggle": true,
+          "value": 4
+        },
+        "astral": {
+          "doomed": 1,
+          "dying": 1,
+          "hp": 0,
+          "helperDoomed": 1,
+          "helperDying": 1
+        },
+        "expel": [
+          "memories removed"
+        ],
+        "expelCF": {
+          "value": 720,
+          "unit": "hours",
+          "expiry": "turn-start",
+          "sustained": false
+        },
+        "garden": {
+          "primary": true,
+          "helper": true
+        },
+        "spirit": -2,
+        "spiritNone": 0,
+        "rune": {
+          "subject": 26,
+          "helper": 26,
+          "hits": 3,
+          "multipliers": [
+            1,
+            1,
+            1
+          ]
+        }
+      }
+    }
+  },
+  "rank3Batch119": {
+    "label": "rank3Batch119",
+    "passed": true,
+    "at": "2026-10-03T13:37:27.408Z",
+    "details": {
+      "batch119": {
+        "restCF": {
+          "primary": 1,
+          "helper": 1,
+          "duration": {
+            "value": 168,
+            "unit": "hours",
+            "expiry": "turn-start",
+            "sustained": false
+          }
+        },
+        "restCS": "<p>Attempts to communicate with the dead creature, return it to life, turn it into an undead, or otherwise disturb its afterlife fail unless the effect's counteract rank is at least 2 higher than that of rest eternal or originates from an artifact or a deity. (an effect needs a counteract rank of at least 6)</p>",
+        "portal": {
+          "stupefied": 1,
+          "helper": 0
+        },
+        "portalS": 4,
+        "prison": {
+          "trapped": true,
+          "stupefied": 2
+        },
+        "prisonHigh": "Labyrinthine Prison: at rank 3 the target can be at most level 8.",
+        "rations": {
+          "eater": 2,
+          "ghoul": 0
+        },
+        "drain": {
+          "helperLost": 118,
+          "rolled": 59,
+          "primaryLost": 0
+        }
+      }
+    }
+  },
+  "done": true
+}

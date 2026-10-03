@@ -1,0 +1,121 @@
+{
+  "rank3Batch120": {
+    "label": "rank3Batch120",
+    "passed": true,
+    "at": "2026-10-03T13:24:04.756Z",
+    "details": {
+      "batch120": {
+        "door": {
+          "lost": 142,
+          "rolled": 71,
+          "helper": 2,
+          "rolls": 2
+        },
+        "doorPulled": 4,
+        "cord": {
+          "toggle": true,
+          "value": 4
+        },
+        "astral": {
+          "doomed": 1,
+          "dying": 1,
+          "hp": 0,
+          "helperDoomed": 1,
+          "helperDying": 1
+        },
+        "expel": [
+          "memories removed"
+        ],
+        "expelCF": {
+          "value": 720,
+          "unit": "hours",
+          "expiry": "turn-start",
+          "sustained": false
+        },
+        "garden": {
+          "primary": true,
+          "helper": true
+        },
+        "spirit": -2,
+        "spiritNone": 0,
+        "rune": {
+          "subject": 27,
+          "helper": 27,
+          "hits": 3,
+          "multipliers": [
+            1,
+            1,
+            1
+          ]
+        }
+      }
+    }
+  },
+  "rank3Batch119": {
+    "label": "rank3Batch119",
+    "passed": true,
+    "at": "2026-10-03T13:24:55.133Z",
+    "details": {
+      "batch119": {
+        "restCF": {
+          "primary": 1,
+          "helper": 1,
+          "duration": {
+            "value": 168,
+            "unit": "hours",
+            "expiry": "turn-start",
+            "sustained": false
+          }
+        },
+        "restCS": "<p>Attempts to communicate with the dead creature, return it to life, turn it into an undead, or otherwise disturb its afterlife fail unless the effect's counteract rank is at least 2 higher than that of rest eternal or originates from an artifact or a deity. (an effect needs a counteract rank of at least 6)</p>",
+        "portal": {
+          "stupefied": 1,
+          "helper": 0
+        },
+        "portalS": 4,
+        "prison": {
+          "trapped": true,
+          "stupefied": 2
+        },
+        "prisonHigh": "Labyrinthine Prison: at rank 3 the target can be at most level 8.",
+        "rations": {
+          "eater": 2,
+          "ghoul": 0
+        },
+        "drain": {
+          "helperLost": 130,
+          "rolled": 65,
+          "primaryLost": 0
+        }
+      }
+    }
+  },
+  "rank5Batch86": {
+    "label": "rank5Batch86",
+    "passed": true,
+    "at": "2026-10-03T13:25:30.120Z",
+    "details": {
+      "batch86": {
+        "kind": "tree-pair",
+        "tree": {
+          "hp": 50,
+          "ac": 10,
+          "resistance": 10,
+          "atCast": [
+            0,
+            100
+          ]
+        },
+        "foe": 20,
+        "ally": 13,
+        "undead": 0,
+        "ended": {
+          "trees": 0,
+          "regions": 0,
+          "records": 0
+        }
+      }
+    }
+  },
+  "done": true
+}

@@ -1,0 +1,63 @@
+{
+  "batch": "cantrip-rank-1-batch-41",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch41",
+    "passed": true,
+    "details": {
+      "halcyonMists": {
+        "one": {
+          "before": [
+            "fire"
+          ],
+          "after": [],
+          "temp": 5,
+          "concealed": true,
+          "effect": true,
+          "ended": true
+        },
+        "two": {
+          "before": [
+            "acid",
+            "fire"
+          ],
+          "after": [
+            "acid",
+            "fire"
+          ],
+          "choose": true,
+          "temp": 1
+        },
+        "hideNote": true
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch41",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch33",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

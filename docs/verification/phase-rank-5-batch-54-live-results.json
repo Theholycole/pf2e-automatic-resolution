@@ -1,0 +1,23 @@
+{
+  "label": "rank5Batch54",
+  "passed": true,
+  "at": "2026-10-03T01:28:42.478Z",
+  "details": {
+    "batch54": {
+      "cast": {
+        "formula": "7d8 mental",
+        "total": 32,
+        "lost": 32
+      },
+      "frightened": 1,
+      "afterDecrease": 1,
+      "sustain": {
+        "formula": "7d8 mental",
+        "total": 40,
+        "lost": 0
+      },
+      "status": "ended",
+      "frightenedAfter": 0
+    }
+  }
+}

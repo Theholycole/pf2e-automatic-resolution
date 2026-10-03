@@ -1,0 +1,65 @@
+{
+  "batch": "cantrip-rank-1-batch-87",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch87",
+    "passed": true,
+    "details": {
+      "conditions": [
+        [
+          "dazzled"
+        ],
+        [
+          "dazzled"
+        ],
+        [
+          "blinded"
+        ]
+      ],
+      "notes": [
+        [],
+        [
+          "1 days"
+        ],
+        [
+          "1 days"
+        ]
+      ],
+      "rank3": {
+        "notes": [
+          "3 days"
+        ],
+        "dazzled": true
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch87",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch19",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

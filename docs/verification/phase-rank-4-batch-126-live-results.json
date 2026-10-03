@@ -1,0 +1,21 @@
+{
+  "label": "rank4Batch126",
+  "passed": true,
+  "at": "2026-10-03T09:58:41.577Z",
+  "details": {
+    "batch126": {
+      "living": {
+        "lost": 0,
+        "prone": true,
+        "formula": "4d6 mental",
+        "cost": 20
+      },
+      "undead": {
+        "lost": 16,
+        "prone": true,
+        "formula": "4d6 mental"
+      },
+      "livingNextTurnCost": 10
+    }
+  }
+}

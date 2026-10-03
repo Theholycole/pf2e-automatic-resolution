@@ -1,0 +1,30 @@
+{
+  "label": "rank3Batch112",
+  "passed": true,
+  "at": "2026-10-03T07:34:00.656Z",
+  "details": {
+    "batch112": {
+      "plan": {
+        "area": {
+          "type": "line",
+          "value": 60
+        },
+        "terrain": [
+          "walk"
+        ],
+        "push": 10,
+        "reminder": true
+      },
+      "behaviors": [
+        "modifyMovementCost:2"
+      ],
+      "blown": {
+        "note": true,
+        "push": 10
+      },
+      "through": {
+        "note": true
+      }
+    }
+  }
+}

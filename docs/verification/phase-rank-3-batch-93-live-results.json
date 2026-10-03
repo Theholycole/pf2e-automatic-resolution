@@ -1,0 +1,29 @@
+{
+  "label": "rank3Batch93",
+  "passed": true,
+  "at": "2026-10-03T05:54:35.598Z",
+  "details": {
+    "batch93": {
+      "hit": {
+        "outcome": "criticalSuccess",
+        "ward": "critical-success",
+        "choice": "critical-success",
+        "mark": true
+      },
+      "afterHitTurn": "active",
+      "afterQuietTurn": {
+        "status": "ended",
+        "ward": false
+      },
+      "crit": {
+        "outcome": "criticalSuccess",
+        "ward": "critical-success",
+        "granted": true
+      },
+      "dead": {
+        "status": "ended",
+        "ward": false
+      }
+    }
+  }
+}

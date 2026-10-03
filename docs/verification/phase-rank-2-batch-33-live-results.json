@@ -1,0 +1,62 @@
+{
+  "phase": "rank-2-batch-33",
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cleanup",
+      "passed": true,
+      "at": "2026-10-01T21:20:33.523Z",
+      "details": {
+        "actorsRemoved": 7,
+        "journalsRemoved": 3,
+        "regionsRemoved": 0,
+        "remainingFixtureActors": 0
+      }
+    },
+    {
+      "label": "rank2Batch33",
+      "passed": true,
+      "at": "2026-10-01T21:20:40.446Z",
+      "details": {
+        "batch33": {
+          "empathy": {
+            "kind": "spell-note",
+            "holder": "target",
+            "duration": "1 days",
+            "plants": true
+          },
+          "mire": {
+            "notes": 1,
+            "atCast": 1,
+            "proneAfterSuccess": false,
+            "sameRound": 0,
+            "turnStart": 1,
+            "statusAtTurn": "active",
+            "prone": true,
+            "lost": 0,
+            "ended": "ended",
+            "regionLeft": false
+          },
+          "cage": {
+            "immobilized": [
+              true,
+              false
+            ],
+            "escape": {
+              "dc": 24,
+              "event": "escape",
+              "expirationMode": "event"
+            },
+            "reminder": true,
+            "afterEnd": {
+              "immobilized": false,
+              "status": "ended"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

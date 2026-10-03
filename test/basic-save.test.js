@@ -2,6 +2,9 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
+    correctSaveTarget,
+    synchronizeSecondary,
+    recordSecondarySave,
     basicSaveMultiplier,
     basicSaveReadiness,
     saveCollectionReadiness,
@@ -14,8 +17,17 @@ import {
     validateActorTarget
 } from "../scripts/basic-save-core.js";
 import { BasicSaveRuntime } from "../scripts/basic-save-runtime.js";
-import { BASIC_SAVE_PREPARE_ACTION, claimNativeSpellSaveButton } from "../scripts/chat-card-controls.js";
+import { BASIC_SAVE_PREPARE_ACTION, claimNativeSpellSaveButton, refreshSaveButtonAuthority } from "../scripts/chat-card-controls.js";
 import { MODULE_ID } from "../scripts/effect-runtime.js";
+
+async function mockNativeDamage({ damage, rollOptions }) {
+    this.system.attributes.hp.value -= damage.total;
+    Hooks.callAll("updateActor", this, {}, { damageTaken: damage.total }, game.user.id);
+    Hooks.callAll("createChatMessage", { id: "native-receipt", flags: { pf2e: {
+        appliedDamage: { uuid: this.uuid, updates: [{ path: "system.attributes.hp.value", value: damage.total }], persistent: [] },
+        context: { type: "damage-taken", options: [...rollOptions] }
+    } } });
+}
 
 function automaticPlan() {
     const outcome = multiplier => ({
@@ -231,6 +243,47 @@ function provisionalState() {
     };
 }
 
+test("GM corrections retain rolls, reject stale edits, and reset secondary branches", () => {
+    const state = provisionalState();
+    state.status = "collecting";
+    state.damage.enabled = false;
+    state.outcomes = automaticPlan().resolution.outcomes;
+    state.outcomes.criticalFailure.followUps = [{ id: "secondary" }];
+    const target = state.targets[0];
+    recordProvisionalSave(state, target.id, { degree: "failure", total: 19, natural: 10, timestamp: 1 });
+    correctSaveTarget(state, target.id, { action: "degree", degree: "criticalFailure", expectedRevision: 1 }, "gm");
+    assert.equal(target.rolledDegree, "failure");
+    assert.equal(target.saveTotal, 19);
+    assert.equal(target.degreeOverride.to, "criticalFailure");
+    recordSecondarySave(state, target.id, { degree: "failure", total: 10 });
+    correctSaveTarget(state, target.id, { action: "degree", stage: "secondary", degree: "success" }, "gm");
+    assert.equal(target.secondary.rolledDegree, "failure");
+    correctSaveTarget(state, target.id, { action: "exclude" }, "gm");
+    assert.equal(saveCollectionReadiness(state).ready, true);
+    assert.equal(recordProvisionalSave(state, target.id, { degree: "success", timestamp: 2 }).status, "stale");
+    correctSaveTarget(state, target.id, { action: "restore" }, "gm");
+    assert.equal(target.secondary.degree, "success");
+    assert.throws(() => correctSaveTarget(state, target.id, { action: "exclude", expectedRevision: 1 }, "gm"), /changed/);
+    correctSaveTarget(state, target.id, { action: "degree", degree: "success" }, "gm");
+    assert.equal(target.secondary, null);
+    correctSaveTarget(state, target.id, { action: "degree", degree: "criticalFailure" }, "gm");
+    assert.equal(target.secondary.degree, null);
+    recordProvisionalSave(state, target.id, { degree: "success", timestamp: 3, reroll: true });
+    synchronizeSecondary(state, target);
+    assert.equal(target.degreeOverride, null);
+    assert.equal(target.rolledDegree, "success");
+    assert.equal(target.secondary, null);
+    correctSaveTarget(state, target.id, { action: "unaffected" }, "gm");
+    assert.equal(target.originalEligibility.eligible, true);
+    correctSaveTarget(state, target.id, { action: "affected" }, "gm");
+    assert.equal(target.eligible, true);
+    state.status = "finalizing";
+    assert.throws(() => correctSaveTarget(state, target.id, { action: "exclude" }, "gm"), /locked/);
+    assert.equal(recordProvisionalSave(state, target.id, { degree: "failure", timestamp: 4 }).status, "stale");
+    state.status = "completed";
+    assert.throws(() => correctSaveTarget(state, target.id, { action: "exclude" }, "gm"), /locked/);
+});
+
 test("basic-save core accepts only complete automatic shared-damage plans", () => {
     const plan = automaticPlan();
     assert.equal(isExecutableBasicSavePlan(plan), true);
@@ -265,11 +318,11 @@ test("degree-outcome gate accepts only fully compiled, bounded save results", ()
     const missingValue = structuredClone(plan);
     missingValue.resolution.outcomes.failure.effects[0].value = null;
     assert.equal(isExecutableDegreeSavePlan(missingValue), false);
-    const excessiveStunned = structuredClone(plan);
-    excessiveStunned.resolution.outcomes.failure.effects[0] = {
+    const multiTurnStunned = structuredClone(plan);
+    multiTurnStunned.resolution.outcomes.failure.effects[0] = {
         kind: "condition", slug: "stunned", name: "Stunned", value: 4, duration: null
     };
-    assert.equal(isExecutableDegreeSavePlan(excessiveStunned), false);
+    assert.equal(isExecutableDegreeSavePlan(multiTurnStunned), true);
 });
 
 test("actor target predicates enforce undead and living creature restrictions", () => {
@@ -306,6 +359,27 @@ test("basic-save core normalizes degrees and preserves PF2e multipliers", () => 
         basicSaveMultiplier("failure"),
         basicSaveMultiplier("criticalFailure")
     ], [0, 0.5, 1, 2]);
+});
+
+test("GM handoff refreshes authority without unlocking unready or busy controls", () => {
+    const button = { dataset: { saveAction: "correct-target" }, disabled: false, title: "" };
+    refreshSaveButtonAuthority(button, false);
+    assert.equal(button.disabled, true);
+    refreshSaveButtonAuthority(button, true);
+    assert.equal(button.disabled, false);
+    button.dataset.runtimeBusy = "true";
+    refreshSaveButtonAuthority(button, true);
+    assert.equal(button.disabled, true);
+    delete button.dataset.runtimeBusy;
+    refreshSaveButtonAuthority(button, true);
+    assert.equal(button.disabled, false);
+    refreshSaveButtonAuthority(button, false);
+    assert.equal(button.disabled, true);
+    const unready = { dataset: { saveAction: "finalize" }, disabled: true, title: "Wait for saves" };
+    refreshSaveButtonAuthority(unready, false);
+    refreshSaveButtonAuthority(unready, true);
+    assert.equal(unready.disabled, true);
+    assert.equal(unready.title, "Wait for saves");
 });
 
 test("save buttons use PF2e's Shift-click dialog toggle", () => {
@@ -406,6 +480,7 @@ test("basic-save runtime persists a reroll and applies one shared roll by degree
         id: "target",
         uuid: "Actor.target",
         documentName: "Actor",
+        getActiveTokens() { return [{ documentName: "Token", name: this.name, actor: this }]; },
         type: "character",
         name: "Target",
         system: { attributes: { hp: { value: 50 } } },
@@ -418,9 +493,7 @@ test("basic-save runtime persists a reroll and applies one shared roll by degree
             reflex: { roll: async () => ({ degreeOfSuccess: "failure" }) },
             will: { roll: async () => ({ degreeOfSuccess: "failure" }) }
         },
-        async applyDamage({ damage }) {
-            this.system.attributes.hp.value -= damage.total;
-        },
+        async applyDamage(options) { await mockNativeDamage.call(this, options); },
         async createEmbeddedDocuments(_type, sources) {
             outcomeEffectSources.push(...structuredClone(sources));
             return sources.flatMap((source, index) => [{
@@ -448,6 +521,8 @@ test("basic-save runtime persists a reroll and applies one shared roll by degree
         system: { traits: { value: ["fire"] } },
         spellcasting: { statistic: { dc: { value: 24 } } },
         getRollData() { return { item: { rank: this.rank, level: this.rank } }; },
+        // PF2e returns a heightened copy of the spell for the requested rank.
+        loadVariant({ castRank }) { return { ...this, rank: castRank }; },
         async getDamage() {
             damagePreparations += 1;
             return { template: { damage: { roll: new DamageRoll() } }, context: { options: new Set(["item:trait:fire"]) } };
@@ -500,7 +575,12 @@ test("basic-save runtime persists a reroll and applies one shared roll by degree
             return message;
         }
     };
-    globalThis.Hooks = { callAll: () => {} };
+    const hookHandlers = new Map();
+    globalThis.Hooks = {
+        on(event, fn) { const handlers = hookHandlers.get(event) ?? new Set(); handlers.add(fn); hookHandlers.set(event, handlers); return fn; },
+        off(event, fn) { hookHandlers.get(event)?.delete(fn); },
+        callAll(event, ...args) { for (const fn of hookHandlers.get(event) ?? []) fn(...args); }
+    };
     globalThis.fromUuid = async uuid => documents.get(uuid) ?? null;
     globalThis.CONFIG = { Dice: { rolls: [DamageRoll] }, PF2E: { chatDamageButtonShieldToggle: false } };
     globalThis.ui = { notifications: { warn: () => {} } };
@@ -642,7 +722,7 @@ test("basic-save runtime persists a reroll and applies one shared roll by degree
         items: [],
         canUserModify: () => true,
         saves: { fortitude: { roll: async () => ({ degreeOfSuccess: "failure" }) } },
-        async applyDamage({ damage }) { this.system.attributes.hp.value -= damage.total; },
+        async applyDamage(options) { await mockNativeDamage.call(this, options); },
         async toggleStatusEffect(slug, { active }) {
             if (active) this.statuses.add(slug);
             else this.statuses.delete(slug);
@@ -754,8 +834,9 @@ test("basic-save runtime persists a reroll and applies one shared roll by degree
     const stunnedEffect = syntheticC.effectSources.find(source =>
         source.system.rules.some(rule => rule.uuid.endsWith(".stunned")));
     assert.deepEqual(stunnedEffect.system.duration, {
-        value: 1, unit: "rounds", expiry: "turn-start", sustained: false
+        value: -1, unit: "unlimited", expiry: null, sustained: false
     });
+    assert.equal(stunnedEffect.flags["pf2e-automatic-resolution"].outcomeEffect.conditions[0].recovery, "stunned-actions");
 
     const syntheticD = makeSyntheticActor("d");
     const syntheticE = makeSyntheticActor("e");
@@ -1018,4 +1099,65 @@ test("basic-save runtime persists a reroll and applies one shared roll by degree
     const secondaryResultCard = messages.get(completedSecondary.resultMessageId);
     assert.match(secondaryResultCard.content, /Secondary fortitude save/);
     assert.match(secondaryResultCard.content, /Mental Damage/);
+    const corrections = await runtime.start(spell, {
+        plan: automaticPlan(), sourceActor: caster, targets: [target], castRank: 3, skipConfirmation: true
+    });
+    const correctionState = corrections.card.getFlag(MODULE_ID, "basicSaveState");
+    const correctionId = correctionState.targets[0].id;
+    await runtime.handleSaveMessage(makeSaveMessage("correction-save", "failure", false, correctionState));
+    await runtime.correctTarget(corrections.card, correctionId, { action: "degree", degree: "success" });
+    assert.match(corrections.card.content, /GM adjusted/);
+    game.user.isGM = false;
+    await assert.rejects(runtime.correctTarget(corrections.card, correctionId, { action: "exclude" }), /coordinating GM/);
+    game.user.isGM = true;
+    await runtime.correctTarget(corrections.card, correctionId, { action: "exclude" });
+    assert.match(corrections.card.content, /Restore Target/);
+    await runtime.correctTarget(corrections.card, correctionId, { action: "restore" });
+    assert.equal(corrections.card.getFlag(MODULE_ID, "basicSaveState").targets[0].degree, "success");
+    await runtime.correctTarget(corrections.card, correctionId, { action: "unaffected" });
+    const hpBeforeCorrection = target.system.attributes.hp.value;
+    const concurrent = await Promise.allSettled([
+        runtime.finalize(corrections.card),
+        runtime.finalize(corrections.card),
+        runtime.correctTarget(corrections.card, correctionId, { action: "affected" })
+    ]);
+    assert.deepEqual(concurrent.map(result => result.status), ["fulfilled", "rejected", "rejected"]);
+    assert.match(concurrent[2].reason.message, /locked/);
+    assert.equal(target.system.attributes.hp.value, hpBeforeCorrection);
+    await assert.rejects(runtime.correctTarget(corrections.card, correctionId, { action: "affected" }), /locked/);
+
+    const tokenless = await runtime.start(spell, {
+        plan: automaticPlan(), sourceActor: caster, targets: [target], castRank: 3, skipConfirmation: true
+    });
+    await runtime.handleSaveMessage(makeSaveMessage("tokenless-save", "failure", false, tokenless.card.getFlag(MODULE_ID, "basicSaveState")));
+    const activeTokens = target.getActiveTokens;
+    target.getActiveTokens = () => [];
+    const tokenlessHp = target.system.attributes.hp.value;
+    target.applyDamage = async options => mockNativeDamage.call(target, options);
+    await assert.rejects(runtime.finalize(tokenless.card), /token.*damage/i);
+    assert.equal(target.system.attributes.hp.value, tokenlessHp, "missing token must stop before irreversible PF2e damage");
+    assert.equal(tokenless.card.getFlag(MODULE_ID, "basicSaveState").status, "collecting");
+    target.getActiveTokens = activeTokens;
+
+    let releaseNativeRoll;
+    let nativeRollStarted;
+    const nativeStarted = new Promise(resolve => { nativeRollStarted = resolve; });
+    target.saves.reflex.roll = () => {
+        nativeRollStarted();
+        return new Promise(resolve => { releaseNativeRoll = resolve; });
+    };
+    const tokenlessState = tokenless.card.getFlag(MODULE_ID, "basicSaveState");
+    const pendingNativeRoll = runtime.rollSave(tokenless.card, tokenlessState.targets[0].id);
+    await nativeStarted;
+    await runtime.correctTarget(tokenless.card, tokenlessState.targets[0].id, { action: "degree", degree: "success" });
+    releaseNativeRoll({ degreeOfSuccess: "criticalFailure", total: 1 });
+    await assert.rejects(pendingNativeRoll, /changed while the save dialog was open/);
+    assert.equal(tokenless.card.getFlag(MODULE_ID, "basicSaveState").targets[0].degree, "success");
+    await assert.rejects(runtime.handleSocket({
+        type: "inline-save-result", castId: tokenlessState.castId,
+        targetId: tokenlessState.targets[0].id, actorUuid: target.uuid,
+        userId: "unknown-player", degree: "criticalSuccess", submissionId: "unauthorized",
+        targetRevision: tokenless.card.getFlag(MODULE_ID, "basicSaveState").targets[0].revision
+    }), /submitting user cannot roll/);
+
 });

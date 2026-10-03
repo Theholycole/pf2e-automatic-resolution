@@ -1,0 +1,34 @@
+{
+  "label": "rank3Batch57",
+  "passed": true,
+  "at": "2026-10-02T19:12:39.016Z",
+  "details": {
+    "batch57": {
+      "base": {
+        "concealed": true,
+        "note": true
+      },
+      "tooMany": "refused",
+      "heightened": {
+        "caster": {
+          "concealed": true,
+          "note": true
+        },
+        "allies": [
+          {
+            "concealed": true,
+            "note": true
+          },
+          {
+            "concealed": true,
+            "note": true
+          },
+          {
+            "concealed": false,
+            "note": false
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,737 @@
+{
+  "date": "2026-09-30",
+  "kind": "rank-2-heightened-smoke",
+  "results": [
+    {
+      "name": "Animal Feature",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Animal Feature (Cat Eyes) (level 4, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Animal Form",
+      "rank": 3,
+      "status": "error",
+      "detail": "Native battle forms require a character actor. NPC transformation support remains unverified.",
+      "effects": []
+    },
+    {
+      "name": "Animal Form",
+      "rank": 4,
+      "status": "error",
+      "detail": "Native battle forms require a character actor. NPC transformation support remains unverified.",
+      "effects": []
+    },
+    {
+      "name": "Animal Form",
+      "rank": 5,
+      "status": "error",
+      "detail": "Native battle forms require a character actor. NPC transformation support remains unverified.",
+      "effects": []
+    },
+    {
+      "name": "Bee-Man's Summons",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Bee-Man's Summons (area) (level 4, 1 days)"
+      ]
+    },
+    {
+      "name": "Bee-Man's Summons",
+      "rank": 7,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Bee-Man's Summons (area) (level 7, 1 days)"
+      ]
+    },
+    {
+      "name": "Bee-Man's Summons",
+      "rank": 9,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Bee-Man's Summons (area) (level 9, 1 days)"
+      ]
+    },
+    {
+      "name": "Befitting Attire",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Note: Befitting Attire (level 4, 1 hours)"
+      ]
+    },
+    {
+      "name": "Befitting Attire",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Note: Befitting Attire (level 5, 1 hours)"
+      ]
+    },
+    {
+      "name": "Binding Muzzle",
+      "rank": 5,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Binding Muzzle: GM note (level 5, 1 rounds)"
+      ]
+    },
+    {
+      "name": "Blast of the Bellows",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Blast of the Bellows (area) (level 4, 10 minutes)"
+      ]
+    },
+    {
+      "name": "Breath of Drought",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Place Lingering Area",
+      "effects": []
+    },
+    {
+      "name": "Breath of Drought",
+      "rank": 7,
+      "status": "ok",
+      "detail": "Place Lingering Area",
+      "effects": []
+    },
+    {
+      "name": "Cleanse Affliction",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Resolve Cleanse Affliction",
+      "effects": []
+    },
+    {
+      "name": "Cleanse Affliction",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Resolve Cleanse Affliction",
+      "effects": []
+    },
+    {
+      "name": "Cleanse Air",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Cleanse Air (area) (level 3, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Cleanse Air",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Cleanse Air (area) (level 4, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Cleanse Air",
+      "rank": 6,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Cleanse Air (area) (level 6, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Cleanse Air",
+      "rank": 9,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Cleanse Air (area) (level 9, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Clear Mind",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Resolve Clear Mind",
+      "effects": []
+    },
+    {
+      "name": "Clear Mind",
+      "rank": 6,
+      "status": "ok",
+      "detail": "Resolve Clear Mind",
+      "effects": []
+    },
+    {
+      "name": "Clear Mind",
+      "rank": 8,
+      "status": "ok",
+      "detail": "Resolve Clear Mind",
+      "effects": []
+    },
+    {
+      "name": "Create Food",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Create Food",
+      "rank": 6,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Create Food",
+      "rank": 8,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Darkvision",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Darkvision (level 3, 1 hours)"
+      ]
+    },
+    {
+      "name": "Darkvision",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Darkvision (24 hours) (level 5, 24 hours)"
+      ]
+    },
+    {
+      "name": "Dimensional Drop",
+      "rank": 5,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": []
+    },
+    {
+      "name": "Embed Message",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Embed Message (area) (level 4, -1 unlimited)"
+      ]
+    },
+    {
+      "name": "Embed Message",
+      "rank": 6,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Embed Message (area) (level 6, -1 unlimited)"
+      ]
+    },
+    {
+      "name": "Empathic Link",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Note: Empathic Link (level 4, 8 hours)"
+      ]
+    },
+    {
+      "name": "Enlarge Companion",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Enlarge Companion (level 4, 5 minutes)"
+      ]
+    },
+    {
+      "name": "Enlarge",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Enlarge (level 4, 5 minutes)"
+      ]
+    },
+    {
+      "name": "Enlarge",
+      "rank": 6,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Enlarge (level 6, 5 minutes)"
+      ]
+    },
+    {
+      "name": "Environmental Endurance",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Note: Environmental Endurance (level 3, 1 days)"
+      ]
+    },
+    {
+      "name": "Environmental Endurance",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Note: Environmental Endurance (level 5, 1 days)"
+      ]
+    },
+    {
+      "name": "Far-Flung Fetch",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Far-Flung Fetch",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Far-Flung Fetch",
+      "rank": 7,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Floating Harness",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Floating Harness (level 4, 8 hours)"
+      ]
+    },
+    {
+      "name": "Gecko Grip",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Gecko Grip (level 5, 1 hours)"
+      ]
+    },
+    {
+      "name": "Grave Impressions",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Grave Impressions (area) (level 4, 1 hours)"
+      ]
+    },
+    {
+      "name": "Grave Impressions",
+      "rank": 6,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Grave Impressions (area) (level 6, 1 days)"
+      ]
+    },
+    {
+      "name": "Horrifying Blood Loss",
+      "rank": 4,
+      "status": "refused",
+      "detail": "Horrifying Blood Loss: at rank 4 and above its heightened rules aren't automated (“You even terrify witnesses with the copious quantities of blood. You can target up to four creatures as secondary targets. These secondary targets don't need to”). Resolve it by hand.",
+      "effects": []
+    },
+    {
+      "name": "Humanoid Form",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Humanoid Form (level 3, 10 minutes)"
+      ]
+    },
+    {
+      "name": "Humanoid Form",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Humanoid Form (level 5, 10 minutes)"
+      ]
+    },
+    {
+      "name": "Impeccable Flow",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Impeccable Flow (level 5, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Impeccable Flow",
+      "rank": 8,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Impeccable Flow (level 8, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Iron Gut",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Iron Gut (3rd Rank) (level 3, 8 hours)"
+      ]
+    },
+    {
+      "name": "Manifestation of Spirits",
+      "rank": 6,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Manifestation of Spirits: Stupefied 3 (level 6, 1 rounds)"
+      ]
+    },
+    {
+      "name": "Mist Sight",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Note: Mist Sight (level 4, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Pack Attack",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Note: Pack Attack (level 5, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Paranoia",
+      "rank": 6,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Paranoia: GM note (level 6, 1 rounds)"
+      ]
+    },
+    {
+      "name": "Peaceful Rest",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Peaceful Rest (area) (level 5, 1 days)"
+      ]
+    },
+    {
+      "name": "Penumbral Disguise",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Note: Penumbral Disguise (level 4, 10 minutes)"
+      ]
+    },
+    {
+      "name": "Penumbral Disguise",
+      "rank": 6,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Note: Penumbral Disguise (level 6, 10 minutes)"
+      ]
+    },
+    {
+      "name": "Penumbral Disguise",
+      "rank": 8,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Note: Penumbral Disguise (level 8, 10 minutes)"
+      ]
+    },
+    {
+      "name": "Resist Energy",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Resist Energy (Acid) (level 4, 10 minutes)"
+      ]
+    },
+    {
+      "name": "Resist Energy",
+      "rank": 7,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Resist Energy (Acid) (level 7, 10 minutes)"
+      ]
+    },
+    {
+      "name": "Restoration",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Resolve Restoration",
+      "effects": [
+        "enemy: Restoration: benefited today (level 1, 1 days)"
+      ]
+    },
+    {
+      "name": "Restoration",
+      "rank": 6,
+      "status": "ok",
+      "detail": "Resolve Restoration",
+      "effects": [
+        "enemy: Restoration: benefited today (level 1, 1 days)"
+      ]
+    },
+    {
+      "name": "Retrieving Hook",
+      "rank": 5,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": []
+    },
+    {
+      "name": "Rubble Step",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Note: Rubble Step (level 4, 10 minutes)"
+      ]
+    },
+    {
+      "name": "Shrink",
+      "rank": 6,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Shrink (level 6, 5 minutes)"
+      ]
+    },
+    {
+      "name": "Silence",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Silence (level 2, 1 unlimited)",
+        "ally: Spell Effect: Silence (level 2, 1 unlimited)",
+        "enemy: Spell Effect: Silence (level 4, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Sound Body",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Resolve Sound Body",
+      "effects": []
+    },
+    {
+      "name": "Sound Body",
+      "rank": 6,
+      "status": "ok",
+      "detail": "Resolve Sound Body",
+      "effects": []
+    },
+    {
+      "name": "Sound Body",
+      "rank": 8,
+      "status": "ok",
+      "detail": "Resolve Sound Body",
+      "effects": []
+    },
+    {
+      "name": "Spirit of the Beast",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Spirit of the Beast (Aspect of Might) (level 5, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Spirit of the Beast",
+      "rank": 8,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Effect: Spirit of the Beast (Aspect of Might) (level 8, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Spy's Mark",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Spy's Mark (area) (level 4, 8 hours)"
+      ]
+    },
+    {
+      "name": "Spy's Mark",
+      "rank": 9,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Spy's Mark (area) (level 9, 8 hours)"
+      ]
+    },
+    {
+      "name": "Status",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Status (level 4, 1 days)"
+      ]
+    },
+    {
+      "name": "Sure Footing",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Resolve Sure Footing",
+      "effects": []
+    },
+    {
+      "name": "Sure Footing",
+      "rank": 6,
+      "status": "ok",
+      "detail": "Resolve Sure Footing",
+      "effects": []
+    },
+    {
+      "name": "Sure Footing",
+      "rank": 8,
+      "status": "ok",
+      "detail": "Resolve Sure Footing",
+      "effects": []
+    },
+    {
+      "name": "Timely Reminder",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Timely Reminder (level 5, 365 days)"
+      ]
+    },
+    {
+      "name": "Translate",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Note: Translate (level 3, 1 hours)"
+      ]
+    },
+    {
+      "name": "Translate",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Translate (level 4, 1 hours)"
+      ]
+    },
+    {
+      "name": "Tremorsense",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Tremorsense (level 3, 1 hours)"
+      ]
+    },
+    {
+      "name": "Tremorsense",
+      "rank": 5,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Effect: Tremorsense (level 5, 8 hours)"
+      ]
+    },
+    {
+      "name": "Unrelenting Gravity",
+      "rank": 4,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": []
+    },
+    {
+      "name": "Vicious Jealousy",
+      "rank": 4,
+      "status": "ok",
+      "detail": "save card finalized",
+      "effects": [
+        "enemy: Vicious Jealousy: No allies (level 4, 1 minutes)"
+      ]
+    },
+    {
+      "name": "Voice on the Breeze",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": []
+    },
+    {
+      "name": "Water Breathing",
+      "rank": 3,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Note: Water Breathing (level 3, 8 hours)"
+      ]
+    },
+    {
+      "name": "Water Breathing",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "enemy: Spell Note: Water Breathing (level 4, 1 days)"
+      ]
+    },
+    {
+      "name": "Water Walk",
+      "rank": 4,
+      "status": "ok",
+      "detail": "Native Effect Resolved",
+      "effects": [
+        "caster: Spell Note: Water Walk (level 4, 1 hours)"
+      ]
+    }
+  ]
+}

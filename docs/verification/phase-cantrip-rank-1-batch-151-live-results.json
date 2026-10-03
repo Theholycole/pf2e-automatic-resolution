@@ -1,0 +1,154 @@
+{
+  "batch": 151,
+  "spells": [
+    "Contagious Idea",
+    "Eat Fire",
+    "Spirit Ward",
+    "Frenzied Revelry"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch149",
+      "passed": true,
+      "at": "2026-09-28T23:24:54.485Z",
+      "details": {
+        "contagiousIdea": {
+          "debug": {
+            "tempHP": 9,
+            "level": 5,
+            "rank": 5,
+            "rules": [
+              "[{\"key\":\"TempHP\",\"value\":9,\"slug\":null,\"priority\":100,\"ignored\":false,\"predicate\":[],\"requiresEquipped\":null,\"requiresInvestment\":null,\"events\":{\"onCreate\":true,\"onTurnStart\":false}}]"
+            ]
+          },
+          "self": "Contagious Idea: you can't choose yourself.",
+          "farSecond": "Contagious Idea: the second target must be within 30 feet of the first.",
+          "pleasant": "applied",
+          "temp": [
+            9,
+            9
+          ],
+          "terrifying": "save-started",
+          "frightened": [
+            1,
+            2
+          ],
+          "immune": [
+            true,
+            false
+          ],
+          "again": {
+            "eligible": false,
+            "reason": "temporarily immune to this spell"
+          }
+        }
+      }
+    },
+    {
+      "label": "cr1Batch145",
+      "passed": true,
+      "at": "2026-09-28T23:25:37.081Z",
+      "details": {
+        "eatFire": {
+          "cast1": {
+            "effect": true,
+            "fire": 5,
+            "spellRules": [],
+            "resistanceEffect": true
+          },
+          "refused": "Eat Fire: the smoke cloud must be within 20 feet (it was 40).",
+          "belch": {
+            "status": "started",
+            "effectGone": true,
+            "fire": null,
+            "caster": true,
+            "near": true,
+            "far": false
+          },
+          "again": true,
+          "afterUnconscious": false,
+          "unconsciousEffects": [
+            "Eat Fire: smoke cloud: inside (concealed)"
+          ],
+          "inTurn": {
+            "fire": 5,
+            "spell": true
+          },
+          "nextTurn": {
+            "turnDebug": {
+              "start": {
+                "value": 19288,
+                "initiative": 20
+              },
+              "combatant": 30,
+              "time": 19288
+            },
+            "remaining": null,
+            "now": 20,
+            "fire": null,
+            "spell": true,
+            "resistanceExpired": true
+          }
+        }
+      }
+    },
+    {
+      "label": "cr1Batch147",
+      "passed": true,
+      "at": "2026-09-28T23:26:48.427Z",
+      "details": {
+        "spiritWard": {
+          "tooFar": "Spirit Ward: PFTEST P23 Affliction ward far ally is beyond 30 feet.",
+          "two": 1,
+          "twoBonus": [
+            2
+          ],
+          "plainSpell": [],
+          "haunt": [
+            2
+          ],
+          "one": "Spirit Ward: PFTEST P23 Affliction ward ally is beyond touch.",
+          "three": [
+            "Spirit Ward caster",
+            "ward ally"
+          ],
+          "threeBonus": [
+            1
+          ],
+          "sustained": true
+        }
+      }
+    },
+    {
+      "label": "cr1Batch150",
+      "passed": true,
+      "at": "2026-09-28T23:27:33.803Z",
+      "details": {
+        "frenziedRevelry": {
+          "status": "applied",
+          "radius": 5,
+          "atCast": [
+            true,
+            true,
+            false,
+            false
+          ],
+          "bonus": [
+            1
+          ],
+          "fort": [
+            1
+          ],
+          "critical": "1 rounds",
+          "afterLeave": [
+            true,
+            false
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "label": "rank3Batch83",
+  "passed": true,
+  "at": "2026-10-03T04:04:18.203Z",
+  "details": {
+    "batch83": {
+      "third": {
+        "cast": [
+          "-",
+          "off-guard",
+          "off-guard+frightened3"
+        ],
+        "round2": [
+          "off-guard",
+          "off-guard+frightened2",
+          "off-guard+frightened2+stunned1"
+        ],
+        "round3": [
+          "off-guard+frightened1",
+          "off-guard+frightened1+stunned1",
+          "off-guard+frightened1+stunned1+paralyzed"
+        ],
+        "round4": [
+          "-",
+          "-",
+          "-"
+        ],
+        "dealt": {
+          "total": 23,
+          "formula": "6d6 mental",
+          "targets": [
+            {
+              "actorUuid": "Actor.IUrTtXldG6waiucQ",
+              "amount": 11
+            },
+            {
+              "actorUuid": "Actor.ccImrxTqHR4Ax2cJ",
+              "amount": 23
+            },
+            {
+              "actorUuid": "Actor.YZuQ2WJFf9JPLbaj",
+              "amount": 46
+            }
+          ]
+        },
+        "lost": [
+          11,
+          23,
+          46
+        ],
+        "status": "ended"
+      },
+      "fourth": {
+        "cast": [
+          "-",
+          "off-guard",
+          "off-guard+frightened3"
+        ],
+        "round2": [
+          "off-guard",
+          "off-guard+frightened2",
+          "off-guard+frightened2+stunned1"
+        ],
+        "round3": [
+          "off-guard+frightened1",
+          "off-guard+frightened1+stunned1",
+          "off-guard+frightened1+stunned1+paralyzed"
+        ],
+        "round4": [
+          "-",
+          "-",
+          "-"
+        ],
+        "dealt": {
+          "total": 26,
+          "formula": "8d6 mental",
+          "targets": [
+            {
+              "actorUuid": "Actor.CdUhuxs1dKGgMcYY",
+              "amount": 13
+            },
+            {
+              "actorUuid": "Actor.OxOYIPfuREykUdmY",
+              "amount": 26
+            },
+            {
+              "actorUuid": "Actor.diNBEHxsVmr7mJUP",
+              "amount": 52
+            }
+          ]
+        },
+        "lost": [
+          13,
+          26,
+          52
+        ],
+        "status": "ended"
+      }
+    }
+  }
+}

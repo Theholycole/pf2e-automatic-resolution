@@ -1,0 +1,121 @@
+{
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "strikePrelude",
+      "passed": true,
+      "at": "2026-09-26T06:43:13.002Z",
+      "details": {
+        "boomingBlast": {
+          "reminder": true,
+          "total": null,
+          "lost": [
+            0,
+            0,
+            0
+          ],
+          "rows": [
+            {
+              "name": "PFTEST P23 Affliction boom foe fail",
+              "eligible": true,
+              "reason": null
+            },
+            {
+              "name": "PFTEST P23 Affliction boom foe crit",
+              "eligible": true,
+              "reason": null
+            },
+            {
+              "name": "PFTEST P23 Affliction boom ally",
+              "eligible": false,
+              "reason": "an ally of the caster, not an enemy"
+            }
+          ],
+          "conditions": [
+            [
+              "frightened1"
+            ],
+            [
+              "frightened2"
+            ],
+            []
+          ]
+        },
+        "thunderousStrike": {
+          "reminder": true,
+          "total": 2,
+          "lost": [
+            2,
+            4
+          ],
+          "rows": [
+            {
+              "name": "PFTEST P23 Affliction thunder fail",
+              "eligible": true,
+              "reason": null
+            },
+            {
+              "name": "PFTEST P23 Affliction thunder crit",
+              "eligible": true,
+              "reason": null
+            }
+          ],
+          "conditions": [
+            [],
+            [
+              "prone"
+            ]
+          ]
+        },
+        "pulverizingWake": {
+          "reminder": true,
+          "total": 21,
+          "lost": [
+            21
+          ],
+          "rows": [
+            {
+              "name": "PFTEST P23 Affliction wake cone",
+              "eligible": true,
+              "reason": null
+            }
+          ],
+          "conditions": [
+            []
+          ],
+          "rider": {
+            "name": "Pulverizing Wake: additional damage on this Strike",
+            "rules": [
+              {
+                "key": "DamageDice",
+                "selector": [
+                  "melee-strike-damage"
+                ],
+                "diceNumber": 3,
+                "dieSize": "d8",
+                "damageType": "sonic",
+                "slug": null,
+                "priority": 100,
+                "ignored": false,
+                "predicate": [],
+                "requiresEquipped": null,
+                "requiresInvestment": null,
+                "critical": null,
+                "category": null,
+                "tags": [],
+                "hideIfDisabled": false,
+                "battleForm": false
+              }
+            ]
+          },
+          "strikeFormula": "1d6 slashing + 3d8 sonic",
+          "strikeOptions": [],
+          "riderAfter": 0
+        },
+        "note": "PF2e's 'Always Show Dialog' is on in pftest, so the Strike damage dialog was confirmed by clicking Roll; it showed 'additional damage on this Strike 3d8' enabled."
+      }
+    }
+  ]
+}

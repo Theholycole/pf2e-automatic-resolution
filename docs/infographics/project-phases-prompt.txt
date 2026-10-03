@@ -1,0 +1,94 @@
+Create a polished, text-accurate project infographic, landscape 4:3, high resolution, with nine generously sized panels in a 3-column by 3-row grid. Reading order phases 1,2,3 / 4,5,6 / 7,8,9. This is a reference poster for a tabletop RPG software project. Use a sophisticated restrained fantasy technical-document aesthetic: warm ivory background, deep navy typography, small geometric line icons (shield, dice, clock, wand, transformation, creature, map, ritual circle, checklist), thin dividers, elegant clear sans-serif body text, large bold phase numbers. Minimal ornament, no character art. Accent Phase 2 teal and Phase 3 blue subtly to indicate current focus; other panels use muted colors. No progress bars, no completion checkmarks, no invented facts. Text clarity and completeness are the priority. Avoid tiny print; give Phase 2 and 3 adequate room. Phase titles may wrap over 2 lines. Render the following exact information, using bullets or neatly spaced rows in each card. Do not add or omit a phase or family.
+
+Main title: "PF2e AUTOMATIC SPELL RESOLUTION"
+Subtitle: "Project phases & established rule families"
+Small banner: "Shared rules-based automation • Current focus: Phases 2–3"
+
+PANEL 1
+"01  GM corrections"
+Subheading "Shared controls across all phases"
+• Target exclusion & restoration
+• Save-degree & Unaffected overrides
+• Condition-value & duration corrections
+• Roll history, authority & finalization
+
+PANEL 2
+"02  Outcome-specific Effects and conditions"
+Subheading "Apply the finalized outcome"
+• Basic-save damage
+• Degree-specific outcomes
+• Save-result condition riders
+• Native conditions & native Effects
+• Persistent damage
+• Temporary immunity
+• Delegated affliction handoff
+
+PANEL 3
+"03  Ongoing rules and recurring saves"
+Subheading "Manage what happens afterward"
+• Aura membership & area exposure
+• Condition-dependent lifetimes
+• Recurring saving throws
+• Turn boundaries & timed consequences
+• Condition recovery
+• Sustain
+• Ending, dismissal & selective cleanup
+
+PANEL 4
+"04  Immediate resolution and choices"
+• Spell attacks & dependent results
+• Healing & recipient modes
+• Choices & casting variants
+• Counteract
+• Granted movement speeds
+• Information & adjudication
+• Other immediate workflows
+
+PANEL 5
+"05  Transformations"
+Rule family: "Creature transformation"
+Scope:
+• Form selection & native statistics
+• Restrictions & granted actions
+• Usage limits & recharge
+• Expiry & safe reversion
+
+PANEL 6
+"06  Summons and created creatures"
+• Creature creation
+• Created entities
+• Incarnate arrival & departure
+Scope: "Selection, placement, control & cast-linked cleanup"
+
+PANEL 7
+"07  Spatial effects and movement"
+• Forced movement
+• Movement actions
+• Teleportation
+• Walls & barriers
+• Terrain
+• Object & structure creation
+
+PANEL 8
+"08  Rituals"
+Rule family: "Ritual resolution"
+Scope:
+• Confirmed ceremony outcomes
+• Rank branches & later saves
+• Delayed & lasting consequences
+• Affliction handoff
+
+PANEL 9
+"09  Catalog completion and unresolved classification"
+Subheading "Acceptance work across the catalog"
+• Review & workflow classification
+• Remaining mechanical gaps
+• Complex interactions & variants
+• Evidence & accepted exceptions
+Highlighted note: "51 unresolved review spells: last"
+
+Footer, readable:
+"Phases overlap: one spell may need several families. Established families do not imply complete automation."
+"Phase 1 controls and Phase 9 acceptance apply across the catalog. • Project snapshot: 24 Sep 2026"
+
+Keep labels and hierarchy visually clear: Phase 1 and Phase 9 are cross-project work, not spell families. Phase 5 and 8 show their single catalog family plus scope. Use professional typographic rhythm, consistent spacing, and balanced card layouts.

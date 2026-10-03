@@ -1,0 +1,55 @@
+{
+  "phase": "rank-2-batch-45",
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cleanup",
+      "passed": true,
+      "at": "2026-10-01T22:44:59.801Z",
+      "details": {
+        "actorsRemoved": 4,
+        "journalsRemoved": 1,
+        "regionsRemoved": 0,
+        "remainingFixtureActors": 0
+      }
+    },
+    {
+      "label": "rank2Batch45",
+      "passed": true,
+      "at": "2026-10-01T22:45:06.631Z",
+      "details": {
+        "batch45": {
+          "cauterize": {
+            "kind": "cauterize",
+            "first": {
+              "results": [
+                {
+                  "actor": "PFTEST P23 Affliction cauterize bleeding",
+                  "status": "sealed",
+                  "recovered": true,
+                  "roll": 17
+                },
+                {
+                  "actor": "PFTEST P23 Affliction cauterize whole",
+                  "status": "no-persistent"
+                }
+              ],
+              "lost": 1,
+              "wholeLost": 0,
+              "effect": true,
+              "bleedLeft": false
+            },
+            "repeat": {
+              "status": "sealed",
+              "lost": 1,
+              "roll": 6
+            },
+            "outsider": "Cauterize Wounds: target one of the spell's targets."
+          }
+        }
+      }
+    }
+  ]
+}

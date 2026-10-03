@@ -1,0 +1,33 @@
+{
+  "label": "rank4Batch68",
+  "passed": true,
+  "at": "2026-10-02T23:18:04.452Z",
+  "details": {
+    "batch68": {
+      "foes": [
+        {
+          "note": [],
+          "immune": true
+        },
+        {
+          "note": [
+            "1 rounds turn-end"
+          ],
+          "immune": true
+        },
+        {
+          "note": [
+            "1 minutes turn-start"
+          ],
+          "immune": true
+        },
+        {
+          "note": [
+            "-1 unlimited null"
+          ],
+          "immune": true
+        }
+      ]
+    }
+  }
+}

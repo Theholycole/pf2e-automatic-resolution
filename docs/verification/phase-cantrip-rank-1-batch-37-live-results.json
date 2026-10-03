@@ -1,0 +1,52 @@
+{
+  "batch": "cantrip-rank-1-batch-37",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch37",
+    "passed": true,
+    "details": {
+      "shroudOfNight": {
+        "success": {
+          "notes": [],
+          "concealed": false
+        },
+        "failure": {
+          "notes": [
+            "1 minutes"
+          ],
+          "concealed": false,
+          "text": true
+        },
+        "reminder": true
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch37",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch16",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

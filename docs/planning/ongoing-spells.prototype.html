@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ongoing spells — workflow prototype</title>
+<style>
+  :root { color-scheme: light dark; font: 16px/1.5 system-ui,sans-serif; }
+  body { margin: auto; max-width: 1000px; padding: 24px; background: light-dark(#f6f4ef,#17191e); color: light-dark(#22262f,#eeeef0); }
+  h1 { font-size: 28px; } h2 { font-size: 20px; } h3 { font-size: 17px; }
+  section, article { padding: 16px; margin: 16px 0; border: 1px solid light-dark(#c4c7ce,#505461); border-radius: 8px; }
+  button, select { font: inherit; padding: 8px 12px; margin: 4px; cursor: pointer; border-radius: 5px; border: 1px solid light-dark(#a1a6b2,#6c7383); }
+  button[aria-selected=true] { background: #375ca0; color: white; }
+  button:disabled { opacity: .5; cursor: default; }
+  .row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  dl { display: grid; grid-template-columns: minmax(110px,1fr) 3fr; gap: 8px; } dt { font-weight: 600; } dd { margin: 0; overflow-wrap: anywhere; }
+  #notice { border-left: 4px solid #658bd1; padding: 12px; }
+  small { display: block; } li { margin-block: 6px; }
+</style>
+<main>
+  <h1>Ongoing spells</h1>
+  <p><strong>Throwaway interaction prototype.</strong> Does one cast overview make recurring saves, Sustain, aura reminders, and uncertain endings easy to manage? These are fictional workflow fixtures, not verified spell rules or live Foundry behavior. Everything runs in memory.</p>
+  <div class="row"><label>View as <select id="role"><option value="gm">Gamemaster</option><option value="player">Player — Mira's owner</option></select></label><button id="reset">Reset demo</button></div>
+  <p id="notice" aria-live="polite"></p>
+  <div id="overview"></div>
+  <section>
+    <h2>Free play</h2>
+    <p>Try events in any order. A blocked action explains why it cannot proceed.</p>
+    <div id="free"></div>
+  </section>
+  <section>
+    <h2>Guided walkthroughs</h2>
+    <div id="tabs" role="tablist" aria-label="Walkthrough"></div>
+    <div id="walk" role="tabpanel"></div>
+  </section>
+  <section><h2>Confirmed history</h2><ol id="history"></ol></section>
+  <p>Native PF2e actors, Effects, conditions, roll dialogs, and damage application remain authoritative. This demo proposes reminders and decisions around them. Reload and GM handoff below simulate recovery; actual browser refresh resets the demo.</p>
+</main>
+<script>
+const initial = () => ({ role: 'gm', round: 1, time: 0, history: [], notice: 'Three illustrative casts are active. Advance a boundary to see the grouped obligations.', casts: [
+  { id: 'save', name: 'Recurring save example', caster: 'Mira', target: 'Mira', duration: '1 minute', state: 'Active', due: false, rolls: [], override: null, applied: 0, review: null, backlog: [], remaining: 60 },
+  { id: 'sustain', name: 'Sustained creation example', caster: 'Mira', target: 'Created guardian', duration: 'Until next Sustain deadline; maximum 1 minute', state: 'Active', sustained: false, review: null, detached: false, cleanup: 'Temporary guardian and granted action linked; permanent mark and unrelated condition preserved', endingApplied: false },
+  { id: 'aura', name: 'Aura reminder example', caster: 'Oren', target: 'Mira (suggested)', duration: '1 minute', state: 'Active', due: false, membership: false, rolls: [], override: null, applied: 0, exposed: false, review: null }
+] });
+const actions = {
+ boundary: 'Advance to relevant turn boundary', roll: 'Roll recurring save (sample failure)', reroll: 'Reroll recurring save (sample success)', correct: 'GM: override recurring result to success', finalize: 'GM: finalize recurring save',
+ sustain: 'Sustain creation — 1 action', deadline: 'Reach Sustain deadline', dismiss: 'Dismiss creation — 1 action', detach: 'GM: detach guardian from cleanup', end: 'GM: end creation as correction',
+ aura: 'Aura trigger for Mira', membership: 'GM: confirm Mira is affected', auraRoll: 'Roll aura save (sample failure)', auraFinalize: 'GM: finalize aura save',
+ interrupt: 'Simulate interrupted save application', reload: 'Simulate reload', handoff: 'Simulate GM handoff', reconcile: 'GM: confirm interrupted result already applied',
+ missing: 'Caster token missing', keep: 'GM: confirm caster and Sustain are valid', jump: 'Advance world time by 30 seconds', reviewTime: 'GM: review next missed save', rewind: 'Move world time back 6 seconds'
+};
+// Pure in-memory transition model. No Foundry API calls or DOM access.
+function transition(current, action) {
+ const s = structuredClone(current), [save, creation, aura] = s.casts;
+ const blocked = message => { s.notice = message; return s; };
+ const record = message => { s.notice = message; s.history.push(message); };
+ const finish = reason => {
+   creation.state = 'Ended'; creation.review = null;
+   creation.cleanup = creation.detached ? 'Guardian kept under separate GM management; granted action removed; permanent mark and unrelated condition preserved' : 'Temporary guardian and granted action removed; permanent mark and unrelated condition preserved';
+   if (!creation.endingApplied) { creation.endingApplied = true; record(reason + '. Ending cleanup recorded once.'); }
+ };
+ const restricted = ['correct','finalize','detach','end','membership','auraFinalize','reconcile','keep','reviewTime'];
+ if (restricted.includes(action) && s.role !== 'gm') return blocked('Only the GM can perform this correction or finalization.');
+ switch (action) {
+ case 'boundary':
+   s.round++; if (save.state === 'Active' && !save.due && !save.review) save.due = true;
+   record('Turn boundary: one pending recurring-save reminder; Sustain deadline remains visible. Existing reminders are reused.'); break;
+ case 'roll': case 'reroll':
+   if (!save.due || save.review) return blocked('The recurring save must be due and free of unresolved review.');
+   save.rolls.push(action === 'roll' ? 'Failure' : 'Success'); save.override = null;
+   record('Sample native-dialog result recorded: ' + save.rolls.at(-1) + '. Reactions and corrections remain available before GM finalization.'); break;
+ case 'correct':
+   if (!save.due || !save.rolls.length || save.review) return blocked('A provisional save is required before correction.');
+   save.override = 'Success'; record('GM correction: effective degree is Success. Original roll retained; note: illustrative ruling.'); break;
+ case 'finalize':
+   if (!save.due || !save.rolls.length || save.review) return blocked('Finalize waits for a provisional roll and any required review.');
+   save.applied++; save.due = false; record('Recurring outcome finalized once: ' + (save.override || save.rolls.at(-1)) + '. Next reminder waits for a later trigger.'); save.rolls = []; save.override = null; break;
+ case 'sustain':
+   if (creation.state !== 'Active' || creation.review) return blocked('Sustain cannot extend an ended or uncertain cast.');
+   if (creation.sustained) return blocked('Maintenance is already recorded for this interval. Additional spell-specific benefits are outside this fixture.');
+   creation.sustained = true; record('Mira spends 1 action to Sustain this cast. No action is inferred from movement.'); break;
+ case 'deadline':
+   if (creation.state !== 'Active' || creation.review) return blocked('Deadline cannot resolve while the cast is ended or needs review.');
+   if (creation.sustained) { creation.sustained = false; record('Sustain confirmed. Cast continues to the next deadline.'); }
+   else finish('Reliable tracking confirms missed Sustain'); break;
+ case 'dismiss': case 'end':
+   if (creation.state === 'Ended') return blocked('The cast already ended. No cleanup is repeated.');
+   if (creation.review && action === 'dismiss') return blocked('GM review is required before resolving this uncertain ending.');
+   finish(action === 'dismiss' ? 'Mira uses the fixture’s permitted 1-action Dismiss' : 'GM explicitly confirms the cast ends'); break;
+ case 'detach':
+   if (creation.state === 'Ended') return blocked('The cast already ended.');
+   creation.detached = true; record('Guardian is explicitly detached and separately managed. Other temporary cast contributions stay linked.'); break;
+ case 'aura':
+   if (aura.exposed) return blocked('Mira already resolved this fixture’s once-per-cast exposure. No duplicate reminder.');
+   aura.due = true; record('Aura reminder: review suggested membership. Repeated detection reuses this obligation.'); break;
+ case 'membership':
+   if (!aura.due) return blocked('Wait for an aura trigger.');
+   aura.membership = true; aura.target = 'Mira (confirmed)'; record('GM confirms uncertain aura membership.'); break;
+ case 'auraRoll':
+   if (!aura.due || !aura.membership || aura.review) return blocked('Aura save waits for confirmed membership and any required review.');
+   aura.rolls.push('Failure'); record('Sample aura save recorded. GM finalization still required.'); break;
+ case 'auraFinalize':
+   if (!aura.due || !aura.rolls.length || aura.review) return blocked('Aura finalization waits for the save and review.');
+   aura.applied++; aura.due = false; aura.exposed = true; record('Aura outcome applied once; exposure limit recorded.'); break;
+ case 'interrupt':
+   if (!save.due || !save.rolls.length || save.review) return blocked('Prepare a recurring save before simulating an interrupted application.');
+   save.review = 'Application interrupted: inspect native state before choosing any further action'; record('Needs review. Last confirmed application count retained; actual outcome is unknown.'); break;
+ case 'reload': case 'handoff':
+   record((action === 'reload' ? 'Reload' : 'GM handoff') + ': confirmed records and pending reminders restored. Uncertain work stays Needs review; no mutation is replayed.'); break;
+ case 'reconcile':
+   if (!save.review?.startsWith('Application')) return blocked('There is no interrupted application to reconcile.');
+   save.applied++; save.due = false; save.rolls = []; save.override = null; save.review = null; record('GM inspected native state and confirmed the result was already applied. Receipt reconciled; no damage or effect replay.'); break;
+ case 'missing':
+   if (creation.state === 'Ended') return blocked('The creation already ended.');
+   creation.review = 'Caster token unavailable: establish spell-specific ending facts'; record('Missing token does not prove death, unconsciousness, or an ending. Cleanup pauses for GM review.'); break;
+ case 'keep':
+   if (!creation.review) return blocked('No source or Sustain uncertainty is pending.');
+   creation.review = null; creation.sustained = true; record('GM confirms source is valid and Sustain occurred. No ending is applied.'); break;
+ case 'jump':
+   if (save.review || save.due) return blocked('Resolve existing save obligations before adding this walkthrough’s time jump.');
+   s.time += 30; save.remaining = Math.max(0, save.remaining - 30); save.backlog = [s.time - 20, s.time - 10, s.time]; save.review = 'World-time jump crossed unresolved consequential events';
+   record('World time advanced: three example 10-second obligations queued in order. No missed save was rolled automatically.'); break;
+ case 'reviewTime':
+   if (!save.backlog.length || save.due) return blocked('Review one missed obligation at a time, finalizing it before the next.');
+   save.review = null; save.due = true; record('GM opens missed obligation at ' + save.backlog.shift() + ' seconds for a native save.'); break;
+ case 'rewind':
+   s.time -= 6; record('World time moved backward. Confirmed consequences remain; none are undone or replayed. Remaining duration requires native reconciliation.'); break;
+ }
+ return s;
+}
+const scenarios = [
+ ['Recurring save', 'An owner rolls, the GM corrects, and one final action resolves. Try finalizing twice.', ['boundary','roll','correct','finalize','finalize']],
+ ['Sustain and cleanup', 'A detached creation survives a later missed Sustain; other temporary contributions end.', ['sustain','deadline','detach','deadline','end']],
+ ['Aura exposure', 'Uncertain membership requires review. Repeated detection never adds a duplicate obligation.', ['aura','aura','membership','auraRoll','auraFinalize','aura']],
+ ['Interrupted result', 'A reload or GM change cannot prove whether consequences were applied.', ['boundary','roll','interrupt','reload','handoff','finalize','reconcile','finalize']],
+ ['Missing source', 'Deleting a caster token alone does not end a cast.', ['missing','deadline','keep','deadline','dismiss']],
+ ['World-time jump', 'Review missed saves in order. Moving time backward does not undo confirmed outcomes.', ['jump','reviewTime','roll','finalize','reviewTime','reroll','finalize','reviewTime','roll','finalize','rewind']]
+];
+let state = initial(), scenario = 0, step = 0;
+const byId = id => document.getElementById(id);
+const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const button = (label, handler) => { const b = document.createElement('button'); b.textContent = label; b.onclick = handler; return b; };
+function act(a) { state = transition(state,a); render(); }
+function render() {
+ byId('notice').textContent = state.notice;
+ byId('role').value = state.role;
+ byId('overview').innerHTML = '<h2>Active cast overview</h2><p>Boundary ' + state.round + ' · World time ' + state.time + ' seconds</p>' + state.casts.map(c => {
+   const next = c.review ? 'GM review: ' + c.review : c.state === 'Ended' ? 'No further action' : c.id === 'sustain' ? (c.sustained ? 'Sustain recorded for this interval' : 'Mira: Sustain before deadline') : c.backlog?.length && !c.due ? 'GM: review next missed obligation' : c.due ? (c.id === 'aura' && !c.membership ? 'GM: review targets' : c.rolls.length ? 'GM: finalize after reactions and corrections' : 'Mira’s owner or GM: roll save') : 'Wait for next eligible trigger';
+   return '<article><h3>' + esc(c.name) + ' — ' + (c.review ? 'Needs review' : c.state) + '</h3><dl>' + Object.entries({Caster:c.caster,'Affected creature':c.target,Duration:c.duration,'Next action':next,...(c.rolls ? {'Provisional results':c.rolls.join(' → ') || 'None','Effective degree':c.override || c.rolls.at(-1) || 'None','Confirmed outcomes':c.applied} : {}),...(c.backlog ? {'Missed obligations':c.backlog.join(', ') || 'None','Nominal seconds remaining':c.remaining} : {}),...(c.cleanup ? {Cleanup:c.cleanup,'Ending recorded':c.endingApplied ? 'Yes' : 'No'} : {})}).map(([k,v]) => '<dt>'+esc(k)+'</dt><dd>'+esc(v)+'</dd>').join('')+'</dl></article>';
+ }).join('');
+ byId('history').innerHTML = state.history.map(h=>'<li>'+esc(h)+'</li>').join('');
+ byId('tabs').replaceChildren(...scenarios.map((x,i)=> { const b=button(x[0],()=>{scenario=i;step=0;state=initial();render();}); b.setAttribute('role','tab'); b.setAttribute('aria-selected',String(scenario===i)); b.setAttribute('aria-controls','walk'); b.id='scenario-'+i; return b; }));
+ byId('walk').setAttribute('aria-labelledby','scenario-'+scenario);
+ byId('walk').innerHTML='<p>'+esc(scenarios[scenario][1])+'</p>';
+ scenarios[scenario][2].forEach((a,i)=>{ const b=button((i+1)+'. '+actions[a],()=>{act(a);step++;render();}); b.disabled=i!==step; byId('walk').append(b); });
+}
+byId('free').replaceChildren(...Object.entries(actions).map(([a,label])=>button(label,()=>act(a))));
+byId('role').onchange=e=>{state.role=e.target.value;state.notice='Role changed. Both displayed casters have a relevant relationship to Mira; GM corrections remain restricted.';render();};
+byId('reset').onclick=()=>{state=initial();step=0;render();};
+render();
+</script>
+</html>

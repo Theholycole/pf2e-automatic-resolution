@@ -1,0 +1,44 @@
+{
+  "batch": 139,
+  "spells": [
+    "Glimpse Weakness",
+    "Uplifting Overture"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch139",
+      "passed": true,
+      "at": "2026-09-28T21:37:39.762Z",
+      "details": {
+        "batch139": {
+          "glimpse": {
+            "weakness": 2,
+            "effectBefore": true,
+            "first": {
+              "total": 3,
+              "lost": 5
+            },
+            "effectAfter": false,
+            "second": {
+              "total": 1,
+              "lost": 1
+            }
+          },
+          "overture": {
+            "rolled": "failure",
+            "degree": "success",
+            "value": 1,
+            "effect": [
+              "athletics:1"
+            ],
+            "applied": [],
+            "afterRoll": false
+          }
+        }
+      }
+    }
+  ]
+}

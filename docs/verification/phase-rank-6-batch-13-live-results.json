@@ -1,0 +1,37 @@
+{
+ "label": "rank6Batch13",
+ "passed": true,
+ "at": "2026-10-03T20:06:28.375Z",
+ "details": {
+  "batch13": {
+   "dominate": {
+    "supported": true,
+    "controlled": [
+     true,
+     true
+    ],
+    "effects": [
+     [
+      "Controlled (end-of-turn save)|1 days"
+     ],
+     [
+      "Controlled|1 days",
+      "Dominated|1 days"
+     ]
+    ],
+    "reminder": true
+   },
+   "mind": {
+    "supported": true,
+    "stupefied": 4,
+    "unit": "unlimited",
+    "mods": [
+     -5,
+     -5,
+     -5
+    ],
+    "critStupefied": 0
+   }
+  }
+ }
+}

@@ -1,0 +1,45 @@
+{
+  "batch": 130,
+  "spells": [
+    "Invoke True Name"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch130",
+      "passed": true,
+      "at": "2026-09-28T10:38:27.626Z",
+      "details": {
+        "invokeTrueName": {
+          "weakness": 2,
+          "rules": [
+            "FlatModifier",
+            "FlatModifier",
+            "Weakness"
+          ],
+          "attackDC": 18,
+          "saveAgainstSpell": [
+            "-2:true"
+          ],
+          "plainSave": [
+            "-2:false"
+          ],
+          "first": {
+            "total": 4,
+            "lost": 6
+          },
+          "afterFirst": [
+            "FlatModifier",
+            "FlatModifier"
+          ],
+          "second": {
+            "total": 6,
+            "lost": 6
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "label": "rank5Batch1",
+  "passed": true,
+  "at": "2026-10-02T10:24:22.591Z",
+  "details": {
+    "batch1": {
+      "r5": {
+        "success": {
+          "supported": true,
+          "stunned": 1,
+          "controlled": false,
+          "note": false,
+          "recurring": false,
+          "durations": []
+        },
+        "failure": {
+          "supported": true,
+          "stunned": 1,
+          "controlled": false,
+          "note": true,
+          "recurring": false,
+          "durations": []
+        },
+        "criticalFailure": {
+          "supported": true,
+          "stunned": 0,
+          "controlled": true,
+          "note": false,
+          "recurring": false,
+          "durations": [
+            "1 rounds"
+          ]
+        }
+      },
+      "r7": {
+        "failure": {
+          "supported": true,
+          "stunned": 0,
+          "controlled": true,
+          "note": false,
+          "recurring": false,
+          "durations": [
+            "1 rounds"
+          ]
+        },
+        "criticalFailure": {
+          "supported": true,
+          "stunned": 0,
+          "controlled": true,
+          "note": false,
+          "recurring": true,
+          "durations": [
+            "1 minutes"
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "case": "rank2Batch29",
+  "date": "2026-10-01",
+  "world": "pftest",
+  "result": {
+    "label": "rank2Batch29",
+    "passed": true,
+    "at": "2026-10-01T20:46:08.749Z",
+    "details": {
+      "batch29": {
+        "hit": {
+          "formula": "4d12 acid",
+          "total": 28,
+          "lost": 28,
+          "region": {
+            "x": 9,
+            "y": 9,
+            "w": 3,
+            "h": 3
+          }
+        },
+        "turnStart": {
+          "lost": 3,
+          "formula": "2d4 acid"
+        },
+        "enter": {
+          "lost": 5,
+          "formula": "2d4 acid"
+        },
+        "regionLeft": false
+      }
+    }
+  }
+}

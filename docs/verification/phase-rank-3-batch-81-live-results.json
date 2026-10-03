@@ -1,0 +1,16 @@
+{
+  "label": "rank3Batch81",
+  "passed": true,
+  "at": "2026-10-03T03:14:01.902Z",
+  "details": {
+    "batch81r3": {
+      "nearExposed": true,
+      "near": {
+        "formula": "1d12 bludgeoning",
+        "total": 8,
+        "lost": 8
+      },
+      "farExposed": false
+    }
+  }
+}

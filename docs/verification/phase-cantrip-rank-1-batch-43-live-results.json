@@ -1,0 +1,82 @@
+{
+  "batch": "cantrip-rank-1-batch-43",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch43",
+    "passed": true,
+    "details": {
+      "equalFooting": {
+        "caster": 25,
+        "speeds": [
+          40,
+          40,
+          40,
+          25
+        ],
+        "eligible": [
+          true,
+          true,
+          true,
+          false
+        ],
+        "rows": [
+          {
+            "clumsy": 1,
+            "clumsyItems": 0,
+            "speed": 30,
+            "effect": [
+              "1 rounds turn-end"
+            ]
+          },
+          {
+            "clumsy": 1,
+            "clumsyItems": 0,
+            "speed": 25,
+            "effect": [
+              "1 minutes turn-start"
+            ]
+          },
+          {
+            "clumsy": 2,
+            "clumsyItems": 0,
+            "speed": 25,
+            "effect": [
+              "1 minutes turn-start"
+            ]
+          }
+        ],
+        "slow": {
+          "clumsy": 0,
+          "clumsyItems": 0,
+          "speed": 25,
+          "effect": []
+        }
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch43",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "degreeChoiceAndRift",
+      "passed": true,
+      "note": "same session, the run before (the first cr1Batch43 attempt expected stored Clumsy items; PF2e grants in memory)"
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

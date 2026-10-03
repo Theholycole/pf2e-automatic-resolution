@@ -1,0 +1,212 @@
+{
+  "generatedAt": "2026-09-26T23:36:05.816Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "world": "pftest",
+  "results": {
+    "cantripBatch2": {
+      "label": "cantripBatch2",
+      "passed": true,
+      "at": "2026-09-26T23:28:21.187Z",
+      "details": {
+        "tangleVine": {
+          "baseSpeed": 25,
+          "dc": 24,
+          "crit": {
+            "effect": "Spell Effect: Tangle Vine (Critical Success)",
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-start"
+            },
+            "escapeDC": 24,
+            "immobilized": true,
+            "speed": 15
+          },
+          "hit": {
+            "effect": "Spell Effect: Tangle Vine (Success)",
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-start"
+            },
+            "escapeDC": 24,
+            "immobilized": false,
+            "speed": 15
+          },
+          "miss": {
+            "effect": null,
+            "duration": null,
+            "escapeDC": null,
+            "immobilized": false,
+            "speed": 25
+          },
+          "afterEscape": {
+            "card": true,
+            "effect": null,
+            "duration": null,
+            "escapeDC": null,
+            "immobilized": false,
+            "speed": 25
+          },
+          "heightened": {
+            "rank": 2,
+            "effect": "Spell Effect: Tangle Vine (Success)",
+            "duration": {
+              "value": 2,
+              "unit": "rounds",
+              "expiry": "turn-start"
+            },
+            "escapeDC": 24,
+            "immobilized": false,
+            "speed": 15
+          }
+        },
+        "boostEidolon": {
+          "replaces": [
+            "Reinforce Eidolon"
+          ],
+          "before": [
+            "Spell Effect: Reinforce Eidolon"
+          ],
+          "after": [
+            "Spell Effect: Boost Eidolon"
+          ]
+        },
+        "buzzingBites": {
+          "record": "ended",
+          "total": 3,
+          "during": {
+            "sickened": 1,
+            "floor": true,
+            "immunity": {
+              "bitten": {
+                "unit": "unlimited",
+                "value": -1
+              },
+              "grazed": {
+                "unit": "unlimited",
+                "value": -1
+              }
+            },
+            "lost": [
+              6,
+              1
+            ]
+          },
+          "after": {
+            "sickened": 1,
+            "floor": false,
+            "immunity": {
+              "bitten": {
+                "unit": "minutes",
+                "value": 1
+              },
+              "grazed": {
+                "unit": "minutes",
+                "value": 1
+              }
+            },
+            "lost": [
+              6,
+              1
+            ]
+          }
+        }
+      }
+    }
+  },
+  "regressions": {
+    "cleanup#0": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "sustainedConditions#1": {
+      "label": "sustainedConditions",
+      "passed": true
+    },
+    "cleanup#2": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "marinersCurse#3": {
+      "label": "marinersCurse",
+      "passed": true
+    },
+    "cleanup#4": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "cordyceps#5": {
+      "label": "cordyceps",
+      "passed": true
+    },
+    "cleanup#6": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "goblinImmunity#7": {
+      "label": "goblinImmunity",
+      "passed": true
+    },
+    "cleanup#8": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "blisterImmunity#9": {
+      "label": "blisterImmunity",
+      "passed": true
+    },
+    "cleanup#10": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "attackConditionRiders#11": {
+      "label": "attackConditionRiders",
+      "passed": true
+    },
+    "cleanup#12": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "rank1Batch9#13": {
+      "label": "rank1Batch9",
+      "passed": true
+    },
+    "cleanup#14": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "escape:cleanup#e0": {
+      "label": "escape:cleanup",
+      "passed": true
+    },
+    "escape:degrees#e1": {
+      "label": "escape:degrees",
+      "passed": true
+    },
+    "escape:ranks#e2": {
+      "label": "escape:ranks",
+      "passed": true
+    },
+    "escape:escape#e3": {
+      "label": "escape:escape",
+      "passed": true
+    },
+    "escape:multiple#e4": {
+      "label": "escape:multiple",
+      "passed": true
+    },
+    "escape:timer#e5": {
+      "label": "escape:timer",
+      "passed": true
+    },
+    "escape:cleanup#e6": {
+      "label": "escape:cleanup",
+      "passed": true
+    }
+  },
+  "notes": [
+    "The Escape harness now creates each caster at the level for the spell’s own rank (PF2e clamps an NPC’s spell to its maximum rank); its earlier runs at level 5 were refused by the runtime’s rank check."
+  ]
+}

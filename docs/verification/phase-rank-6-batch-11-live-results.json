@@ -1,0 +1,23 @@
+{
+ "label": "rank6Batch11",
+ "passed": true,
+ "at": "2026-10-03T19:40:13.349Z",
+ "details": {
+  "batch11": {
+   "card": {
+    "kind": "spell-strike",
+    "weapons": [
+     "Test Fist"
+    ],
+    "notes": 5
+   },
+   "hit": {
+    "outcome": "criticalSuccess",
+    "sickened": 1,
+    "grabbed": true,
+    "grabTimer": "1 minutes",
+    "escapeNote": true
+   }
+  }
+ }
+}

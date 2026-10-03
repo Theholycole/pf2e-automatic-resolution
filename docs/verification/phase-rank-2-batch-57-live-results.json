@@ -1,0 +1,52 @@
+{
+  "label": "rank2Batch57",
+  "passed": true,
+  "at": "2026-10-01T23:38:28.248Z",
+  "details": {
+    "batch57": {
+      "level": "automatic",
+      "before": {
+        "small": {
+          "formula": "1d4 slashing",
+          "traits": []
+        },
+        "keen": {
+          "formula": "1d6 slashing",
+          "traits": [
+            "versatile-p"
+          ]
+        },
+        "pierce": {
+          "formula": "1d6 piercing",
+          "traits": []
+        }
+      },
+      "errors": {
+        "two": "Clawsong: target at most 1 creature (1 willing creature with an unarmed claw Strike).",
+        "none": "Clawsong: PFTEST P23 Affliction Clawsong no claw doesn't have an unarmed claw Strike."
+      },
+      "cast4": null,
+      "after": {
+        "small": {
+          "formula": "1d6 slashing",
+          "traits": [
+            "versatile-p"
+          ]
+        },
+        "keen": {
+          "formula": "1d8 slashing",
+          "traits": [
+            "deadly-d8",
+            "versatile-p"
+          ]
+        },
+        "pierce": {
+          "formula": "1d6 slashing",
+          "traits": [
+            "versatile-p"
+          ]
+        }
+      }
+    }
+  }
+}

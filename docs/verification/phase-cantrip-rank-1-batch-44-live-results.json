@@ -1,0 +1,75 @@
+{
+  "batch": "cantrip-rank-1-batch-44",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch44",
+    "passed": true,
+    "details": {
+      "celestialAccord": {
+        "asked": [
+          [
+            "pending",
+            "pending"
+          ],
+          [
+            "pending",
+            "pending"
+          ],
+          [
+            "pending",
+            "pending"
+          ],
+          [
+            "pending",
+            "pending"
+          ]
+        ],
+        "notes": [
+          [
+            "Penalty against the other target 1 rounds"
+          ],
+          [
+            "Attitude 1 minutes"
+          ],
+          [
+            "Attitude 1 minutes"
+          ]
+        ],
+        "critCarries": true,
+        "combat": {
+          "rolled": "criticalFailure",
+          "effective": "success",
+          "rule": "applies"
+        }
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch44",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch11",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

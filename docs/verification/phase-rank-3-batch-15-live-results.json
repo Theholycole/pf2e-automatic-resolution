@@ -1,0 +1,38 @@
+{
+  "label": "rank3Batch15",
+  "passed": true,
+  "at": "2026-10-02T10:57:55.591Z",
+  "details": {
+    "batch15": {
+      "levitate": {
+        "level": "automatic",
+        "rules": [
+          "FlatModifier",
+          "RollOption"
+        ]
+      },
+      "rush": {
+        "level": "automatic",
+        "effect": true,
+        "land": 35
+      },
+      "march": {
+        "level": "automatic",
+        "fortitude": 1,
+        "both": true,
+        "rank7": 2
+      },
+      "advance": {
+        "level": "automatic",
+        "resistance": 9,
+        "casterLevel": 9
+      },
+      "filter": {
+        "level": "automatic",
+        "rules": [
+          "AdjustDegreeOfSuccess"
+        ]
+      }
+    }
+  }
+}

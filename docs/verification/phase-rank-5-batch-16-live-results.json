@@ -1,0 +1,40 @@
+{
+  "label": "rank5Batch16",
+  "passed": true,
+  "at": "2026-10-02T17:04:01.088Z",
+  "details": {
+    "batch16": {
+      "event": "turn-end",
+      "statistic": "will",
+      "otherFirst": true,
+      "effects": [
+        {
+          "name": "Glimmer of Charm: Attitude",
+          "duration": "1 minutes",
+          "immunity": false
+        },
+        {
+          "name": "Glimmer of Charm: No hostile actions against the caster",
+          "duration": "1 minutes",
+          "immunity": false
+        },
+        {
+          "name": "Glimmer of Charm: Temporary immunity",
+          "duration": "24 hours",
+          "immunity": true
+        }
+      ],
+      "attitude": true,
+      "immunity": "24 hours",
+      "again": [
+        [
+          "turn-end",
+          "completed",
+          null
+        ]
+      ],
+      "status": "active",
+      "otherExposures": 2
+    }
+  }
+}

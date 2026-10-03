@@ -1,0 +1,53 @@
+{
+  "batch": "cantrip-rank-1-batch-95",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch95",
+    "passed": true,
+    "details": {
+      "initial": {
+        "formula": "1d8 piercing",
+        "total": 5,
+        "lost": 5
+      },
+      "note": "1 rounds turn-end",
+      "explosion": {
+        "formula": "2 * 1d12 cold",
+        "total": 8,
+        "multiplier": 2,
+        "struckLost": 8,
+        "besideLost": 8,
+        "noteGone": true
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch95",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch80",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

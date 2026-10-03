@@ -1,0 +1,36 @@
+{
+  "label": "rank3Batch77",
+  "passed": true,
+  "at": "2026-10-03T02:03:26.238Z",
+  "details": {
+    "batch77r3": {
+      "cast": {
+        "formula": "4d4 void",
+        "total": 9,
+        "foes": [
+          {
+            "lost": 9,
+            "enfeebled": 1
+          },
+          {
+            "lost": 0,
+            "enfeebled": 1
+          }
+        ]
+      },
+      "strikeTargets": 1,
+      "strikeNames": [
+        "PFTEST P23 Affliction shadow failure"
+      ],
+      "strike": {
+        "formula": "4d4 void",
+        "total": 13,
+        "lost": [
+          13,
+          0
+        ]
+      },
+      "afterEnd": 0
+    }
+  }
+}

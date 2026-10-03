@@ -1,0 +1,42 @@
+{
+  "batch": 140,
+  "spells": [
+    "Pyroclastic Truth"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch140",
+      "passed": true,
+      "at": "2026-09-28T21:42:22.990Z",
+      "details": {
+        "pyroclasticTruth": {
+          "marks": {
+            "burned": true,
+            "spared": false
+          },
+          "castId": "AW5qAHk8ozTUzpVs",
+          "lethologic": {
+            "present": true,
+            "healNote": true
+          },
+          "fuel": {
+            "burned": [
+              "1d12 fire"
+            ],
+            "spared": []
+          },
+          "frightened": 1,
+          "frightenedAfterCold": 0,
+          "death": {
+            "hp": 0,
+            "dying": 4,
+            "max": 4
+          }
+        }
+      }
+    }
+  ]
+}

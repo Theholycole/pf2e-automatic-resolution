@@ -1,0 +1,43 @@
+{
+  "rank8Batch1": {
+    "label": "rank8Batch1",
+    "passed": true,
+    "at": "2026-10-03T15:47:14.036Z",
+    "details": {
+      "batch1": {
+        "bindBig": "Binding Circle: at rank 6 the target can be at most level 12.",
+        "bind": 24,
+        "separation": [
+          720,
+          720
+        ],
+        "sepCF": true,
+        "freedom": {
+          "petrified": false,
+          "toggle": true
+        },
+        "prisonObject": "cancelled",
+        "prison": true,
+        "prisonCS": true,
+        "prisonCF": true,
+        "sleepless": {
+          "weak": true,
+          "strong": false,
+          "hours": 168,
+          "enfeebled": 1
+        },
+        "sleepCF": {
+          "fatigued": true,
+          "rest": true
+        },
+        "harvest": {
+          "doomed": 2,
+          "zombie": "@actor.level",
+          "weakResist": false
+        },
+        "harvestCF": 4,
+        "curse": "<p>The first counteract attempt against the curse automatically fails. After that, the curse's counteract rank is 2 higher (at most 10).</p>"
+      }
+    }
+  }
+}

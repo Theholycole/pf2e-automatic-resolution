@@ -1,0 +1,37 @@
+{
+  "label": "rank4Batch72",
+  "passed": true,
+  "at": "2026-10-02T23:31:16.274Z",
+  "details": {
+    "batch72": {
+      "casts": [
+        {
+          "formula": "2d10 mental",
+          "total": 9
+        },
+        {
+          "formula": "3d10 mental",
+          "total": 17
+        }
+      ],
+      "foes": [
+        {
+          "lost": 4,
+          "stunned": 0
+        },
+        {
+          "lost": 9,
+          "stunned": 0
+        },
+        {
+          "lost": 34,
+          "stunned": 1
+        },
+        {
+          "lost": 0,
+          "stunned": 0
+        }
+      ]
+    }
+  }
+}

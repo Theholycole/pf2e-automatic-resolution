@@ -1,0 +1,91 @@
+{
+  "batch": "cantrip-rank-1-batch-38",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch38",
+    "passed": true,
+    "details": {
+      "stumblingCurse": {
+        "skills": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              -2,
+              -2
+            ]
+          ],
+          [
+            [
+              0,
+              0
+            ],
+            [
+              -2,
+              -2
+            ]
+          ],
+          [
+            [
+              0,
+              0
+            ],
+            [
+              -2,
+              -2
+            ]
+          ]
+        ],
+        "notes": [
+          [
+            "Skill penalty 1 minutes"
+          ],
+          [
+            "Skill penalty 1 minutes",
+            "Stumbling Strides 1 minutes"
+          ],
+          [
+            "Skill penalty 1 minutes",
+            "Stumbling Strides 1 minutes"
+          ]
+        ],
+        "pf2eEffect": [
+          false,
+          false,
+          false
+        ],
+        "steer": true
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch38",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch19",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

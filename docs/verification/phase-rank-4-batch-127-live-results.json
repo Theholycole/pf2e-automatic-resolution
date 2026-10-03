@@ -1,0 +1,26 @@
+{
+  "label": "rank4Batch127",
+  "passed": true,
+  "at": "2026-10-03T10:08:17.052Z",
+  "details": {
+    "batch127": {
+      "a": {
+        "rolled": "failure",
+        "lost": 14,
+        "formula": "4d6 mental",
+        "cost": 10
+      },
+      "b": {
+        "rolled": "success",
+        "lost": 8,
+        "formula": "4d6 mental"
+      },
+      "bLock": true,
+      "bAgain": {
+        "rolled": "success",
+        "lost": 8,
+        "formula": "4d6 mental"
+      }
+    }
+  }
+}

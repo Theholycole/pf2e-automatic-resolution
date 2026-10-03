@@ -1,0 +1,28 @@
+{
+  "label": "rank5Batch71",
+  "passed": true,
+  "at": "2026-10-03T11:21:36.321Z",
+  "details": {
+    "batch71": {
+      "kind": "fume-cloud",
+      "cast": {
+        "hazard": "2d6",
+        "blast": "10d6",
+        "innerAtCast": 0
+      },
+      "early": "Flammable Fumes: the fumes become flammable a round after the cast.",
+      "innerTurn": 11,
+      "walkerEnter": 4,
+      "walkerTurn": 4,
+      "blast": {
+        "status": "detonated",
+        "targets": 2,
+        "ended": true,
+        "damage": [
+          27,
+          27
+        ]
+      }
+    }
+  }
+}

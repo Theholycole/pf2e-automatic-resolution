@@ -1,0 +1,21 @@
+{
+  "label": "rank5Batch18",
+  "passed": true,
+  "at": "2026-10-02T17:32:36.021Z",
+  "details": {
+    "batch18": {
+      "effect": {
+        "duration": "1 minutes",
+        "level": 7,
+        "note": true
+      },
+      "resistance": 15,
+      "darkvision": true,
+      "hit": {
+        "formula": "3d6 acid",
+        "total": 13,
+        "lost": 13
+      }
+    }
+  }
+}

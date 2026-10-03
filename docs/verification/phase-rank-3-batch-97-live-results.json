@@ -1,0 +1,37 @@
+{
+  "label": "rank3Batch97",
+  "passed": true,
+  "at": "2026-10-03T06:15:13.720Z",
+  "details": {
+    "batch97": {
+      "cast": {
+        "amount": 4,
+        "pacts": [
+          1,
+          1,
+          1
+        ]
+      },
+      "saved": {
+        "a": 3,
+        "b": 16,
+        "c": 0,
+        "pacts": [
+          0,
+          0,
+          0
+        ],
+        "dying": false
+      },
+      "short": {
+        "a": 0,
+        "b": 27,
+        "pacts": [
+          0,
+          0,
+          0
+        ]
+      }
+    }
+  }
+}

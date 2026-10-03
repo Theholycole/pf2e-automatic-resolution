@@ -1,0 +1,26 @@
+{
+  "label": "rank3Batch59",
+  "passed": true,
+  "at": "2026-10-02T19:47:01.144Z",
+  "details": {
+    "batch59": {
+      "results": {
+        "walker": {
+          "degree": "failure",
+          "prone": true,
+          "lost": 0,
+          "push": false
+        },
+        "flyer": {
+          "degree": "criticalFailure",
+          "prone": true,
+          "lost": 6,
+          "push": true
+        },
+        "big": {
+          "eligible": false
+        }
+      }
+    }
+  }
+}

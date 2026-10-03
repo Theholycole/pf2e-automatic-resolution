@@ -1,0 +1,15 @@
+{
+  "label": "rank4Batch26",
+  "passed": true,
+  "at": "2026-10-02T15:52:32.756Z",
+  "details": {
+    "batch26": {
+      "notes": [
+        "initiative lower 1 hours false",
+        "initiative lower 1 days true",
+        "initiative lower unlimited true"
+      ],
+      "level": "guided"
+    }
+  }
+}

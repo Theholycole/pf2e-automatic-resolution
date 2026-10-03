@@ -1,0 +1,36 @@
+{
+  "label": "rank5Batch83",
+  "passed": true,
+  "at": "2026-10-03T12:16:39.452Z",
+  "details": {
+    "batch83": {
+      "kind": "soul-vessel",
+      "tooBig": "Soulshelter Vessel: the stone must be 1 to 2 Bulk.",
+      "cast": {
+        "healed": 10,
+        "pool": 30,
+        "hp": 60
+      },
+      "drain": {
+        "steps": [
+          "transferred",
+          "transferred",
+          "broken"
+        ],
+        "hp": 90,
+        "effect": false
+      },
+      "high": {
+        "healed": 15,
+        "pool": 65,
+        "hp": 55
+      },
+      "rescue": {
+        "hp": 30,
+        "dying": false,
+        "wounded": false,
+        "effect": false
+      }
+    }
+  }
+}

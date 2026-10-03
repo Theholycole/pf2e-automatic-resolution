@@ -1,0 +1,21 @@
+{
+  "label": "rank4Batch129",
+  "passed": true,
+  "at": "2026-10-03T10:16:08.185Z",
+  "details": {
+    "batch129": {
+      "refused": "Replicate: PFTEST P23 Affliction replica big is above level 8.",
+      "double": {
+        "hp": 10,
+        "max": 10,
+        "minion": true,
+        "token": true,
+        "effect": true
+      },
+      "ended": {
+        "effect": false,
+        "actor": false
+      }
+    }
+  }
+}

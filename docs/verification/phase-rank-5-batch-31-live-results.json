@@ -1,0 +1,54 @@
+{
+  "generatedAt": "2026-10-02T21:10:46.972Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "results": [
+    {
+      "label": "rank5Batch31",
+      "passed": true,
+      "at": "2026-10-02T21:10:04.065Z",
+      "details": {
+        "batch31": {
+          "saved": true,
+          "held": {
+            "grabbed": true,
+            "restrained": false
+          },
+          "sustain": {
+            "formula": "4d6 piercing",
+            "total": 16,
+            "lost": 16
+          },
+          "newSave": false,
+          "afterEnd": {
+            "grabbed": false,
+            "restrained": false
+          }
+        }
+      }
+    },
+    {
+      "label": "rank4Batch48",
+      "passed": true,
+      "at": "2026-10-02T21:10:24.164Z",
+      "details": {
+        "batch48": {
+          "saved": true,
+          "held": {
+            "grabbed": false,
+            "restrained": true
+          },
+          "sustain": {
+            "formula": "4d6 bludgeoning",
+            "total": 16,
+            "lost": 16
+          },
+          "afterEnd": {
+            "grabbed": false,
+            "restrained": false
+          }
+        }
+      }
+    }
+  ]
+}

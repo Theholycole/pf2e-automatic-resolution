@@ -1,0 +1,22 @@
+{
+  "label": "rank3Batch76",
+  "passed": true,
+  "at": "2026-10-03T01:51:00.605Z",
+  "details": {
+    "batch76r3": {
+      "area": {
+        "type": "burst",
+        "value": 20
+      },
+      "actions": 3,
+      "terrain": true,
+      "beforeTurnEnd": 0,
+      "exposed": true,
+      "failure": {
+        "formula": "2d6 poison",
+        "total": 5,
+        "lost": 5
+      }
+    }
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "batch": "cantrip-rank-1-batch-98",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch98",
+    "passed": true,
+    "details": {
+      "atCast": [
+        "flyer",
+        "giant",
+        "walker"
+      ],
+      "results": {
+        "walker": {
+          "degree": "failure",
+          "prone": true,
+          "lost": 0,
+          "total": null
+        },
+        "flyer": {
+          "degree": "criticalFailure",
+          "prone": true,
+          "lost": 5,
+          "total": 5
+        },
+        "giant": {
+          "eligible": false,
+          "reason": "too large (huge); the spell affects lg or smaller creatures"
+        },
+        "late": {
+          "degree": "failure",
+          "prone": true,
+          "lost": 0,
+          "total": null
+        }
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch98",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "drought",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch88",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

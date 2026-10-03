@@ -1,0 +1,150 @@
+{
+  "batch": "cantrip-rank-1-batch-11",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch11",
+    "passed": true,
+    "details": {
+      "charm": {
+        "failure": [
+          {
+            "label": "Attitude",
+            "duration": "1 hours",
+            "rules": 0,
+            "text": "GM / player: The target's attitude becomes Friendly toward you. If it was Friendly, it becomes Helpful. If you use hostile actions against the target, the spell ends. The module doesn't enforce this; "
+          },
+          {
+            "label": "No hostile actions against the caster",
+            "duration": "1 hours",
+            "rules": 0,
+            "text": "GM / player: It can't use hostile actions against you. If you use hostile actions against the target, the spell ends. The module doesn't enforce this; it reminds you until the effect ends."
+          }
+        ],
+        "criticalFailure": [
+          {
+            "label": "Attitude",
+            "duration": "1 hours",
+            "rules": 0,
+            "text": "GM / player: The target's attitude becomes Helpful toward you, and it can't use hostile actions against you. If you use hostile actions against the target, the spell ends. The module doesn't enforce t"
+          }
+        ],
+        "success": [],
+        "conditions": [],
+        "adjustment": [
+          {
+            "status": "answered",
+            "value": 4,
+            "label": "Yes (+4)",
+            "userId": "rW96bfNVu9Z4WVK7"
+          },
+          {
+            "status": "answered",
+            "value": 0,
+            "label": "No",
+            "userId": "rW96bfNVu9Z4WVK7"
+          },
+          {
+            "status": "answered",
+            "value": 0,
+            "label": "No",
+            "userId": "rW96bfNVu9Z4WVK7"
+          }
+        ]
+      },
+      "charm4": [
+        {
+          "label": "Attitude",
+          "duration": "1 days",
+          "rules": 0,
+          "text": "GM / player: The target's attitude becomes Friendly toward you. If it was Friendly, it becomes Helpful. If you use hostile actions against the target, the spell ends. The module doesn't enforce this; "
+        },
+        {
+          "label": "No hostile actions against the caster",
+          "duration": "1 days",
+          "rules": 0,
+          "text": "GM / player: It can't use hostile actions against you. If you use hostile actions against the target, the spell ends. The module doesn't enforce this; it reminds you until the effect ends."
+        }
+      ],
+      "charmingTouch": {
+        "confirmed": [
+          {
+            "label": "Attitude",
+            "duration": "10 minutes",
+            "rules": 0,
+            "text": "GM / player: The target is helpful. The module doesn't enforce this; it reminds you until the effect ends."
+          },
+          {
+            "label": "Ends if the caster is hostile",
+            "duration": "10 minutes",
+            "rules": 0,
+            "text": "GM / player: If you use a hostile action against the target, the spell ends. The module doesn't enforce this; it reminds you until the effect ends."
+          },
+          {
+            "label": "No hostile actions against the caster",
+            "duration": "10 minutes",
+            "rules": 0,
+            "text": "GM / player: It can't use hostile actions against you. The module doesn't enforce this; it reminds you until the effect ends."
+          }
+        ],
+        "declined": [],
+        "question": "Could the creature find the caster attractive? Only such a creature can be targeted."
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cr1Batch11",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch6",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch4",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "longTailBatch4",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "phrasings",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "rank1Batch2",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0
+  }
+}

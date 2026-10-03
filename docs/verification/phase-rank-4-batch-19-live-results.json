@@ -1,0 +1,22 @@
+{
+  "label": "rank4Batch19",
+  "passed": true,
+  "at": "2026-10-02T14:29:57.332Z",
+  "details": {
+    "batch19": {
+      "siphon": {
+        "kind": "healing",
+        "healed": 19,
+        "formula": "3d8"
+      },
+      "fallen": {
+        "kind": "healing",
+        "down": "applied",
+        "hp": 23,
+        "dying": 0,
+        "fine": "Let Not the Fallen Rest: PFTEST P23 Affliction fallen fine isn't dying (or unconscious) at Dying 2 or less.",
+        "foe": "Let Not the Fallen Rest: PFTEST P23 Affliction fallen foe isn't the caster's ally."
+      }
+    }
+  }
+}

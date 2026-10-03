@@ -1,0 +1,31 @@
+{
+  "generatedAt": "2026-10-02T21:24:31.762Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "results": [
+    {
+      "label": "rank4Batch49",
+      "passed": true,
+      "at": "2026-10-02T21:24:09.869Z",
+      "details": {
+        "batch49": {
+          "cast": {
+            "formula": "3d8 bludgeoning + 3d8 cold",
+            "total": 33,
+            "lost": 33
+          },
+          "button": true,
+          "record": {
+            "sustained": true,
+            "events": [
+              "turn-end"
+            ],
+            "formula": "(floor(6/2))"
+          },
+          "turnEnd": 3,
+          "terrain": true
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "label": "rank3Batch50",
+  "passed": true,
+  "at": "2026-10-02T18:34:45.633Z",
+  "details": {
+    "batch50": {
+      "eligible": [
+        true,
+        true,
+        true,
+        false
+      ],
+      "notes": [
+        [
+          9,
+          20
+        ],
+        [
+          9,
+          40
+        ],
+        [
+          9,
+          60
+        ],
+        null
+      ]
+    }
+  }
+}

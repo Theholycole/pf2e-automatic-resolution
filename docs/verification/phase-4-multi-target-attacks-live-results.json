@@ -1,0 +1,95 @@
+{
+  "generated": "2026-09-26T03:53:19.686Z",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "multiAttack": {
+    "label": "multiAttack",
+    "passed": true,
+    "at": "2026-09-26T03:51:43.446Z",
+    "details": {
+      "attackNumbers": [
+        2,
+        2
+      ],
+      "damage": {
+        "formula": "4d4 slashing",
+        "total": 11
+      },
+      "lost": [
+        22,
+        11
+      ],
+      "bleed": {
+        "formula": "3d4",
+        "damageType": "bleed",
+        "dc": 15,
+        "criticalHit": false,
+        "damage": {
+          "class": "DamageRoll",
+          "options": {
+            "evaluatePersistent": true,
+            "critRule": "double-damage",
+            "degreeOfSuccess": null,
+            "showBreakdown": true
+          },
+          "dice": [],
+          "formula": "{(3d4)[persistent,bleed]}",
+          "terms": [
+            {
+              "class": "InstancePool",
+              "options": {},
+              "evaluated": false,
+              "terms": [
+                "(3d4)[persistent,bleed]"
+              ],
+              "modifiers": [],
+              "rolls": [
+                {
+                  "class": "DamageInstance",
+                  "options": {
+                    "flavor": "persistent,bleed",
+                    "evaluatePersistent": true
+                  },
+                  "dice": [],
+                  "formula": "(3d4)[persistent,bleed]",
+                  "terms": [
+                    {
+                      "class": "Grouping",
+                      "options": {
+                        "flavor": "persistent,bleed"
+                      },
+                      "evaluated": false,
+                      "term": {
+                        "class": "Die",
+                        "options": {},
+                        "evaluated": false,
+                        "number": 3,
+                        "faces": 4,
+                        "modifiers": [],
+                        "results": []
+                      }
+                    }
+                  ],
+                  "evaluated": false
+                }
+              ],
+              "results": []
+            }
+          ],
+          "evaluated": false
+        },
+        "expectedValue": 7.5
+      }
+    }
+  },
+  "regressions": {
+    "spellAttack": {
+      "passed": true,
+      "at": "2026-09-26T03:52:17.614Z"
+    }
+  },
+  "cleanup": {
+    "fixtures": 0,
+    "combats": 0
+  }
+}

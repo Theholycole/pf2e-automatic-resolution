@@ -1,0 +1,74 @@
+{
+  "batch": 169,
+  "date": "2026-09-28",
+  "world": "pftest",
+  "system": "8.5.0",
+  "core": "14.367",
+  "module": "0.8.2",
+  "results": [
+    {
+      "case": "cr1Batch169",
+      "passed": true,
+      "details": {
+        "checksAndActions": {
+          "dim": {
+            "results": [
+              "PFTEST P23 Affliction watcher:true"
+            ],
+            "hidden": true,
+            "marker": true,
+            "after": {
+              "hidden": false,
+              "marker": false
+            }
+          },
+          "scan": {
+            "degree": "criticalSuccess",
+            "modifier": 2,
+            "otherEnemy": {
+              "aid": false,
+              "kept": true
+            },
+            "target": {
+              "mods": [
+                "Aid (Omnidirectional Scan):2"
+              ],
+              "used": true
+            }
+          },
+          "whistle": {
+            "hours": 4,
+            "clicked": true,
+            "left": 3,
+            "seek": {
+              "caster": 1,
+              "ally": 1,
+              "enemy": 0,
+              "rounds": 2
+            },
+            "seekRoll": [
+              "Reed Whistle (PFTEST P23 Affliction other enemy):2"
+            ],
+            "rank1Expended": true
+          },
+          "form": {
+            "status": "applied",
+            "form": "Pest Form",
+            "name": "Spell Effect: Pest Form (Darkened Forest Form)",
+            "minutes": 1,
+            "sustained": true,
+            "level": 1,
+            "battleForm": true,
+            "rank2": {
+              "status": "applied",
+              "name": "Spell Effect: Animal Form (Ape) (Darkened Forest Form)",
+              "level": 2,
+              "minutes": 1
+            },
+            "rank1Animal": true
+          }
+        }
+      }
+    }
+  ]
+}

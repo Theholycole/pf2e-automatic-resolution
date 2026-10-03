@@ -1,0 +1,33 @@
+{
+  "label": "rank2Batch59",
+  "passed": true,
+  "at": "2026-10-01T23:48:37.456Z",
+  "details": {
+    "batch59": {
+      "swallow": {
+        "beforeGate": 0,
+        "failedGate": {
+          "countered": false,
+          "degree": 0
+        },
+        "afterFailed": 0,
+        "passedGate": {
+          "countered": true,
+          "degree": 3
+        },
+        "afterFirst": 1,
+        "whileRecharging": 1,
+        "rechargeRounds": 1,
+        "afterRecharge": 2,
+        "afterDuration": 2,
+        "first": {
+          "formula": "1d6 cold + 1d6 void",
+          "total": 7,
+          "lost": [
+            7
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "label": "rank3Batch103",
+  "passed": true,
+  "at": "2026-10-03T06:43:26.302Z",
+  "details": {
+    "batch103": {
+      "cast": {
+        "status": "applied",
+        "degree": 3,
+        "rules": [
+          "TokenMark",
+          "DamageDice"
+        ],
+        "mark": true
+      },
+      "damage": {
+        "formula": "1d4 bludgeoning + 4d10 slashing",
+        "used": true
+      },
+      "failed": {
+        "status": "failed",
+        "effect": false
+      }
+    }
+  }
+}

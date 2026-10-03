@@ -1,0 +1,21 @@
+{
+  "label": "rank3Batch29",
+  "passed": true,
+  "at": "2026-10-02T13:52:27.323Z",
+  "details": {
+    "batch29": {
+      "fury": {
+        "level": "automatic",
+        "effect": true,
+        "selected": true,
+        "rules": [
+          "ChoiceSet",
+          "DamageDice",
+          "FlatModifier",
+          "TokenLight"
+        ],
+        "light": 20
+      }
+    }
+  }
+}

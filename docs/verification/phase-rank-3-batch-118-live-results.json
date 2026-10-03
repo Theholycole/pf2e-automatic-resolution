@@ -1,0 +1,29 @@
+{
+  "label": "rank3Batch118",
+  "passed": true,
+  "at": "2026-10-03T07:59:35.732Z",
+  "details": {
+    "batch118": {
+      "keys": {
+        "note": true,
+        "duration": "1 rounds",
+        "acRule": 1
+      },
+      "keysEnd": {
+        "status": "ended",
+        "left": false
+      },
+      "hammers": {
+        "enfeebled": 2,
+        "duration": "1 minutes"
+      },
+      "hammersEnd": {
+        "first": "continues",
+        "successes": 1,
+        "second": "ended",
+        "left": false,
+        "enfeebled": 0
+      }
+    }
+  }
+}

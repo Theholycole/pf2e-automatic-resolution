@@ -1,0 +1,33 @@
+{
+  "label": "rank5Batch70",
+  "passed": true,
+  "at": "2026-10-03T11:16:29.514Z",
+  "details": {
+    "batch70": {
+      "kind": "skill-demoralize",
+      "low": {
+        "name": "Spell Effect: Flame Dancer",
+        "level": 5,
+        "formula": "1d4 bludgeoning + 2d6 fire",
+        "demoralize": {
+          "degree": 3,
+          "frightened": 2,
+          "fleeing": null
+        }
+      },
+      "refused": "Flame Dancer: PFTEST P23 Affliction dance far isn't within 30 feet.",
+      "high": {
+        "formula": "1d4 bludgeoning + 3d6 fire",
+        "degree": 3,
+        "frightened": 2,
+        "fleeing": {
+          "value": 1,
+          "unit": "rounds",
+          "expiry": "turn-start",
+          "sustained": false
+        },
+        "condition": true
+      }
+    }
+  }
+}

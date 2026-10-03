@@ -1,0 +1,24 @@
+{
+  "label": "rank3Batch37",
+  "passed": true,
+  "at": "2026-10-02T15:45:57.474Z",
+  "details": {
+    "batch37": {
+      "notes": [
+        true,
+        true
+      ],
+      "rule": "attack-roll lower true",
+      "results": [
+        "criticalFailure",
+        "failure/criticalFailure"
+      ],
+      "damage": {
+        "formula": "4d10 force",
+        "lost": 31,
+        "ended": true
+      },
+      "level": "guided"
+    }
+  }
+}

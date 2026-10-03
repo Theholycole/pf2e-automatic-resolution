@@ -1,0 +1,23 @@
+{
+  "label": "rank4Batch35",
+  "passed": true,
+  "at": "2026-10-02T17:25:17.847Z",
+  "details": {
+    "batch35": {
+      "kind": "concealing-area",
+      "concealed": true,
+      "notes": true,
+      "water": {
+        "lost": 16,
+        "roll": "2 * 2d6 slashing",
+        "total": 16,
+        "flavor": true
+      },
+      "walker": {
+        "lost": 3,
+        "roll": "2d6 slashing",
+        "total": 3
+      }
+    }
+  }
+}

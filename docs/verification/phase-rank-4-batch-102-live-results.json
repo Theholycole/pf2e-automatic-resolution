@@ -1,0 +1,36 @@
+{
+  "label": "rank4Batch102",
+  "passed": true,
+  "at": "2026-10-03T05:29:10.903Z",
+  "details": {
+    "batch102": {
+      "hero": {
+        "before": [
+          "Prophet's Luck: prophecy of success:1:1rounds"
+        ],
+        "save": {
+          "outcome": "criticalSuccess",
+          "bonus": 1
+        },
+        "after": [],
+        "caster": [
+          "Prophet's Luck: fortune favors:1:10minutes"
+        ]
+      },
+      "doubter": {
+        "save": {
+          "outcome": "criticalSuccess",
+          "bonus": -1
+        },
+        "after": [
+          "Prophet's Luck: fortune spurns:-1:10minutes"
+        ]
+      },
+      "high": {
+        "before": [
+          "Prophet's Luck: prophecy of success:2:1rounds"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch7",
+    "passed": true,
+    "at": "2026-09-27T02:49:13.424Z",
+    "details": {
+      "protectiveWards": {
+        "atCast": {
+          "badge": 1,
+          "record": "active",
+          "radius": [
+            5
+          ]
+        },
+        "afterSustain": {
+          "badge": 2,
+          "obligation": true,
+          "radius": [
+            10
+          ]
+        },
+        "twice": "This spell was already sustained this round.",
+        "afterMissed": {
+          "record": "ended",
+          "reason": "missed-sustain",
+          "aura": false
+        }
+      }
+    }
+  },
+  "regressions": {
+    "durationBuffs": true,
+    "reactionBuffs": true,
+    "sustainedConditions": true,
+    "rank2Batch2": true
+  },
+  "cleanup": {
+    "actorsRemoved": 4,
+    "journalsRemoved": 3,
+    "remainingFixtureActors": 0
+  },
+  "combats": 0
+}

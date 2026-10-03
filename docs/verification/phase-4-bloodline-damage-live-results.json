@@ -1,0 +1,418 @@
+{
+  "generatedAt": "2026-09-26T17:12:07.321Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "world": "pftest",
+  "results": {
+    "bloodlineDamage": {
+      "label": "bloodlineDamage",
+      "passed": true,
+      "at": "2026-09-26T17:09:02.022Z",
+      "details": {
+        "dragonBreath": {
+          "formula": "9d6 spirit",
+          "total": 30,
+          "lost": [
+            30,
+            30
+          ],
+          "attackNumbers": [
+            null,
+            null
+          ],
+          "reminder": false
+        },
+        "elementalBlast": {
+          "formula": "8d6 fire",
+          "total": 32,
+          "lost": [
+            16
+          ],
+          "attackNumbers": [
+            null
+          ],
+          "reminder": true,
+          "traits": [
+            "concentrate",
+            "focus",
+            "manipulate",
+            "sorcerer",
+            "fire"
+          ]
+        },
+        "elementalToss": {
+          "formula": "5d8 fire",
+          "total": 26,
+          "lost": [
+            52
+          ],
+          "attackNumbers": [
+            1
+          ],
+          "reminder": false
+        },
+        "flurryOfClaws": {
+          "formula": "5d8 slashing + 5d4 spirit",
+          "total": 31,
+          "lost": [
+            31,
+            62
+          ],
+          "attackNumbers": [
+            1,
+            1
+          ],
+          "reminder": false,
+          "farRefused": "Flurry of Claws: PFTEST P23 Affliction claws far and PFTEST P23 Affliction claws one are more than 10 feet from each other."
+        },
+        "noBloodline": "Dragon Breath: PFTEST P23 Affliction Dragon Breath caster has no draconic bloodline choice in PF2e, so PF2e can't give this spell its damage type."
+      }
+    },
+    "spellAttack": {
+      "label": "spellAttack",
+      "passed": true,
+      "at": "2026-09-26T17:09:44.162Z",
+      "details": {
+        "lance": {
+          "rolled": {
+            "degree": "failure",
+            "total": 16,
+            "natural": 2
+          },
+          "damage": {
+            "formula": "2d4 spirit",
+            "total": 5
+          },
+          "hpLost": 10
+        },
+        "crows": {
+          "hpLost": 11,
+          "dazzled": true
+        },
+        "miss": 0,
+        "snowball": {
+          "hpLost": 6,
+          "effect": "Snowball: 10-foot Speed penalty",
+          "rules": [
+            "FlatModifier:all-speeds:-10"
+          ]
+        }
+      }
+    },
+    "actionVariants": {
+      "label": "actionVariants",
+      "passed": true,
+      "at": "2026-09-26T17:09:56.088Z",
+      "details": {
+        "twoOrThree": {
+          "overlayIds": [
+            "hqiwae0wgehycnex"
+          ],
+          "attackNumbers": [
+            2,
+            2
+          ],
+          "formula": "4d6 fire",
+          "total": 11,
+          "lost": [
+            22,
+            11
+          ]
+        },
+        "one": {
+          "overlayIds": [
+            "wlrbtv7c5shfmdh1"
+          ],
+          "attackNumbers": [
+            1
+          ],
+          "formula": "2d6 fire",
+          "total": 5,
+          "lost": [
+            5
+          ]
+        },
+        "splinterBleed": {
+          "formula": "1",
+          "type": "bleed"
+        }
+      }
+    },
+    "attackComponents": {
+      "label": "attackComponents",
+      "passed": true,
+      "at": "2026-09-26T17:10:05.387Z",
+      "details": {
+        "liveWire": {
+          "formula": "1d4 slashing + 1d4 electricity",
+          "total": 3,
+          "byType": {
+            "slashing": 1,
+            "electricity": 2
+          },
+          "lost": [
+            6,
+            3,
+            2,
+            0
+          ],
+          "persistent": [
+            [
+              "1d4 electricity"
+            ],
+            [],
+            [],
+            []
+          ],
+          "extra": []
+        },
+        "purifyingIcicle": {
+          "formula": "2d6 piercing + 1d6 cold",
+          "total": 13,
+          "byType": {
+            "piercing": 9,
+            "cold": 4
+          },
+          "lost": [
+            28,
+            13
+          ],
+          "persistent": [
+            [],
+            []
+          ],
+          "extra": [
+            {
+              "trait": "undead",
+              "total": 1
+            }
+          ],
+          "speedEffect": "Purifying Icicle: 10-foot Speed penalty"
+        },
+        "gougingClaw": {
+          "formula": "2d6 piercing + 2 bleed",
+          "total": 4,
+          "byType": {
+            "piercing": 4,
+            "persistent bleed": 0
+          },
+          "lost": [
+            8,
+            4
+          ],
+          "persistent": [
+            [
+              "2 * 2 bleed"
+            ],
+            [
+              "2 bleed"
+            ]
+          ],
+          "extra": []
+        }
+      }
+    },
+    "attackRowRules": {
+      "label": "attackRowRules",
+      "passed": true,
+      "at": "2026-09-26T17:10:22.757Z",
+      "details": {
+        "brinyCrit": {
+          "total": 12,
+          "lost": 24,
+          "effects": [
+            {
+              "name": "Briny Bolt: Blinded (ends on Interact)",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "actionEnd": {
+                "action": "interact",
+                "expirationMode": "first"
+              },
+              "rules": [
+                "GrantItem::undefined"
+              ]
+            },
+            {
+              "name": "Briny Bolt: Dazzled",
+              "duration": {
+                "value": 1,
+                "unit": "minutes",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "actionEnd": null,
+              "rules": [
+                "GrantItem::undefined"
+              ]
+            }
+          ],
+          "conditions": [
+            "blinded",
+            "dazzled"
+          ]
+        },
+        "brinyHit": {
+          "total": 6,
+          "lost": 6,
+          "effects": [
+            {
+              "name": "Briny Bolt: Blinded (ends on Interact)",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "actionEnd": {
+                "action": "interact",
+                "expirationMode": "first"
+              },
+              "rules": [
+                "GrantItem::undefined"
+              ]
+            }
+          ],
+          "conditions": [
+            "blinded"
+          ]
+        },
+        "frostCrit": {
+          "total": 7,
+          "lost": 14,
+          "effects": [
+            {
+              "name": "Ray of Frost: 10-foot Speed penalty",
+              "duration": {
+                "value": 1,
+                "unit": "rounds",
+                "expiry": "turn-start",
+                "sustained": false
+              },
+              "actionEnd": null,
+              "rules": [
+                "FlatModifier:all-speeds:-10"
+              ]
+            }
+          ],
+          "conditions": []
+        }
+      }
+    },
+    "energyByCreature": {
+      "label": "energyByCreature",
+      "passed": true,
+      "at": "2026-09-26T17:10:32.910Z",
+      "details": {
+        "executeVoid": {
+          "rows": [
+            {
+              "eligible": true,
+              "reason": null
+            },
+            {
+              "eligible": false,
+              "reason": "undead and void-healing creatures take the vitality variant"
+            }
+          ],
+          "total": 70,
+          "lost": [
+            70,
+            0
+          ],
+          "swapped": [
+            null,
+            null
+          ]
+        },
+        "executeVitality": {
+          "rows": [
+            {
+              "eligible": true,
+              "reason": null
+            }
+          ],
+          "total": 70,
+          "lost": [
+            70
+          ],
+          "swapped": [
+            null
+          ]
+        },
+        "divineArmageddon": {
+          "rows": [
+            {
+              "eligible": true,
+              "reason": null
+            },
+            {
+              "eligible": true,
+              "reason": null
+            }
+          ],
+          "total": 57,
+          "lost": [
+            57,
+            57
+          ],
+          "swapped": [
+            null,
+            "void → vitality"
+          ]
+        }
+      }
+    },
+    "persistentOnce": {
+      "label": "persistentOnce",
+      "passed": true,
+      "at": "2026-09-26T17:10:44.417Z",
+      "details": {
+        "crit": {
+          "lost": 62,
+          "initial": {
+            "formula": "5d8 acid",
+            "total": 31
+          },
+          "persistent": {
+            "formula": "2d6",
+            "type": "acid"
+          }
+        },
+        "hit": {
+          "lost": 16,
+          "initial": {
+            "formula": "5d8 acid",
+            "total": 16
+          },
+          "persistent": {
+            "formula": "2d6",
+            "type": "acid"
+          }
+        },
+        "miss": {
+          "lost": 0,
+          "initial": {
+            "formula": null,
+            "total": null
+          },
+          "persistent": null
+        }
+      }
+    },
+    "cleanup": {
+      "label": "cleanup",
+      "passed": true,
+      "at": "2026-09-26T17:10:53.043Z",
+      "details": {
+        "actorsRemoved": 56,
+        "journalsRemoved": 6,
+        "remainingFixtureActors": 0
+      }
+    }
+  }
+}

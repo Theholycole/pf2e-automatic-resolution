@@ -1,0 +1,23 @@
+{
+  "label": "rank3Batch36",
+  "passed": true,
+  "at": "2026-10-02T15:42:52.594Z",
+  "details": {
+    "batch36": {
+      "success": {
+        "lost": 10,
+        "weakness": 4,
+        "effect": "Spell Effect: Incendiary Ashes (Success)",
+        "duration": "1 rounds"
+      },
+      "failure": {
+        "lost": 20,
+        "weakness": 4,
+        "effect": "Spell Effect: Incendiary Ashes (Failure)",
+        "duration": "1 minutes"
+      },
+      "note": true,
+      "level": "guided"
+    }
+  }
+}

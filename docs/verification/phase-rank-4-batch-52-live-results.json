@@ -1,0 +1,33 @@
+{
+  "generatedAt": "2026-10-02T21:37:10.965Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "results": [
+    {
+      "label": "rank4Batch52",
+      "passed": true,
+      "at": "2026-10-02T21:36:53.233Z",
+      "details": {
+        "batch52": {
+          "living": {
+            "formula": "10d4 void",
+            "lost": 26,
+            "button": true,
+            "sickened": 2
+          },
+          "undead": {
+            "lost": 25,
+            "buttons": true,
+            "temp": 12,
+            "quickened": true,
+            "duration": [
+              1,
+              "rounds"
+            ],
+            "tempEffect": true
+          }
+        }
+      }
+    }
+  ]
+}

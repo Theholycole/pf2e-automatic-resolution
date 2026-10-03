@@ -1,0 +1,30 @@
+{
+  "label": "rank5Batch80",
+  "passed": true,
+  "at": "2026-10-03T12:03:34.373Z",
+  "details": {
+    "batch80": {
+      "kind": "flesh-wall",
+      "cast": {
+        "mouths": "2d6",
+        "sectionHP": 75
+      },
+      "bitten": 8,
+      "held": {
+        "grabbed": false,
+        "restrained": true,
+        "duration": {
+          "value": 1,
+          "unit": "rounds",
+          "expiry": "turn-start",
+          "sustained": false
+        }
+      },
+      "eyes": 2,
+      "high": {
+        "formula": "3d6",
+        "sectionHP": 85
+      }
+    }
+  }
+}

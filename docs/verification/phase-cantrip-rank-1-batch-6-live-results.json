@@ -1,0 +1,123 @@
+{
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch6",
+    "passed": true,
+    "at": "2026-09-27T02:39:51.097Z",
+    "details": {
+      "charmingPush": {
+        "success": [
+          {
+            "name": "Spell Effect: Charming Push",
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": 1,
+            "note": false
+          }
+        ],
+        "failure": [
+          {
+            "name": "Charming Push: No hostile actions against the caster",
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": 0,
+            "note": true
+          }
+        ],
+        "critical": [
+          {
+            "name": "Charming Push: Stunned 1",
+            "duration": {
+              "value": -1,
+              "unit": "unlimited",
+              "expiry": null,
+              "sustained": false
+            },
+            "rules": 1,
+            "note": false
+          },
+          {
+            "name": "Charming Push: No hostile actions against the caster",
+            "duration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "rules": 0,
+            "note": true
+          }
+        ],
+        "stunned": 1
+      },
+      "hollowHeart": {
+        "success": {
+          "value": 1,
+          "unit": "rounds",
+          "expiry": "turn-start",
+          "sustained": false
+        },
+        "failure": {
+          "value": 3,
+          "unit": "rounds",
+          "expiry": "turn-start",
+          "sustained": false
+        },
+        "critical": {
+          "value": 3,
+          "unit": "rounds",
+          "expiry": "turn-start",
+          "sustained": false
+        },
+        "frightened": 1
+      },
+      "command": {
+        "failure": "GM / player: For the first action on its next turn, the creature must use a single action to do as you command. You can command the target to approach you, run away (as if it had the Fleeing condition), release what it's holding, drop Prone, or stand in place. It can't Delay or take any reactions until it has obeyed your command. The module doesn't enforce this; it reminds you until the effect ends.",
+        "critical": "Command: Actions on its next turn",
+        "duration": {
+          "value": 1,
+          "unit": "rounds",
+          "expiry": "turn-end",
+          "sustained": false
+        }
+      },
+      "heartsHook": {
+        "failure": [
+          "Heart's Hook: Actions on its next turn|GM / player: The creature must spend the first action on its next turn to approach its par",
+          "Heart's Hook: No Delay or reactions|GM / player: It can't Delay or take any reactions until it has obeyed this urge. The modul"
+        ],
+        "critical": [
+          "Heart's Hook: Actions on its next turn|GM / player: The target must use all its actions on its next turn. The module doesn't enfo",
+          "Heart's Hook: No Delay or reactions|GM / player: It can't Delay or take any reactions until it has obeyed this urge. The modul"
+        ],
+        "reminder": true
+      }
+    }
+  },
+  "regressions": {
+    "cr1Batch1": true,
+    "cr1Batch4": true,
+    "rank1Batch1": true,
+    "rank1Batch2": true,
+    "phrasings": true,
+    "sustainedConditions": true,
+    "rank2Batch1": true,
+    "attackConditionRiders": true
+  },
+  "cleanup": {
+    "actorsRemoved": 11,
+    "journalsRemoved": 4,
+    "remainingFixtureActors": 0
+  },
+  "combats": 0
+}

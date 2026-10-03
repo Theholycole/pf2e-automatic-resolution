@@ -1,0 +1,30 @@
+{
+  "label": "rank3Batch78",
+  "passed": true,
+  "at": "2026-10-03T02:13:19.753Z",
+  "details": {
+    "batch78r3": {
+      "cast": [
+        {
+          "immobilized": true,
+          "restrained": false,
+          "note": true
+        },
+        {
+          "immobilized": true,
+          "restrained": true,
+          "note": true
+        }
+      ],
+      "control": true,
+      "broken": {
+        "formula": "4d4 slashing",
+        "total": 12,
+        "lost": 12,
+        "ended": true,
+        "immobilized": false,
+        "otherRestrained": true
+      }
+    }
+  }
+}

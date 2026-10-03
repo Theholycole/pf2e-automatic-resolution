@@ -1,0 +1,23 @@
+{
+  "label": "rank3Batch46",
+  "passed": true,
+  "at": "2026-10-02T18:05:56.197Z",
+  "details": {
+    "batch46": {
+      "statistic": "reflex",
+      "formula": "2d6 fire + 6d6 bludgeoning",
+      "total": 23,
+      "lost": [
+        23,
+        46
+      ],
+      "prone": [
+        false,
+        true
+      ],
+      "push10": true,
+      "push20": true,
+      "traitNote": true
+    }
+  }
+}

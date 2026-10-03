@@ -1,0 +1,119 @@
+{
+  "generatedAt": "2026-09-26T23:50:48.009Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "world": "pftest",
+  "results": {
+    "terrainBatch1": {
+      "label": "terrainBatch1",
+      "passed": true,
+      "at": "2026-09-26T23:45:17.286Z",
+      "details": {
+        "caveFangs": {
+          "terrain": [
+            {
+              "type": "modifyMovementCost",
+              "walk": 2
+            }
+          ],
+          "damage": {
+            "formula": "6d6 piercing",
+            "total": 18,
+            "lost": 18
+          },
+          "dismissed": {
+            "status": "ended",
+            "reason": "dismissed",
+            "region": false
+          }
+        },
+        "dataTrust": {
+          "reinforce": {
+            "applied": true,
+            "note": "Reinforce Eidolon : applied PF2e's Spell Effect: Reinforce Eidolon as PF2e defines it. PF2e data: PF2e's Effect gives resistance 0 at rank 1; the text's value differs (resistance 1 to all damage equal to half the spell's rank (minimum 1).)."
+          },
+          "ghostly": {
+            "onTarget": true,
+            "onCaster": false,
+            "note": "Ghostly Shift : applied PF2e's Spell Effect: Ghostly Shift as PF2e defines it. PF2e data: The text describes the caster (“You gain resistance 2 to all damage (except force).”), but PF2e's Target is 1 creature; the Effect goes to the target."
+          },
+          "song": {
+            "caster": true,
+            "ally": true,
+            "note": "Song of Strength : applied PF2e's Spell Effect: Song of Strength as PF2e defines it. PF2e data: PF2e's Effect covers Disarm, Reposition, Shove, Trip; the text's list is examples (“such as”), so other actions are the GM's call."
+          }
+        }
+      }
+    }
+  },
+  "regressions": {
+    "cleanup#0": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "lingering#1": {
+      "label": "lingering",
+      "passed": true
+    },
+    "cleanup#2": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "cantripBatch1#3": {
+      "label": "cantripBatch1",
+      "passed": true
+    },
+    "cleanup#4": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "cantripBatch2#5": {
+      "label": "cantripBatch2",
+      "passed": true
+    },
+    "cleanup#6": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "durationBuffs#7": {
+      "label": "durationBuffs",
+      "passed": true
+    },
+    "cleanup#8": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "reactionBuffs#9": {
+      "label": "reactionBuffs",
+      "passed": true
+    },
+    "cleanup#10": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "heightenedDuration#11": {
+      "label": "heightenedDuration",
+      "passed": true
+    },
+    "cleanup#12": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "enemies#13": {
+      "label": "enemies",
+      "passed": true
+    },
+    "cleanup#14": {
+      "label": "cleanup",
+      "passed": true
+    },
+    "phrasings#15": {
+      "label": "phrasings",
+      "passed": true
+    },
+    "cleanup#16": {
+      "label": "cleanup",
+      "passed": true
+    }
+  }
+}

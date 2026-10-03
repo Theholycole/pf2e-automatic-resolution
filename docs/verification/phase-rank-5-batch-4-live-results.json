@@ -1,0 +1,68 @@
+{
+  "label": "rank5Batch4",
+  "passed": true,
+  "at": "2026-10-02T11:21:37.921Z",
+  "details": {
+    "batch4": {
+      "domora": {
+        "level": "automatic",
+        "ac": 1,
+        "fire": 5,
+        "both": true
+      },
+      "spiral": {
+        "level": "automatic",
+        "aura": true
+      },
+      "buffetUnansweredRefused": true,
+      "buffet": {
+        "supported": true,
+        "half": true,
+        "double": true,
+        "prone": true,
+        "successProne": false
+      },
+      "miasma": {
+        "supported": true,
+        "note": true
+      },
+      "ego": {
+        "supported": true,
+        "success": {
+          "duration": {
+            "value": 1,
+            "unit": "rounds",
+            "expiry": "turn-start",
+            "sustained": false
+          },
+          "fascinated": true,
+          "light": 20
+        },
+        "failure": {
+          "duration": {
+            "value": 1,
+            "unit": "minutes",
+            "expiry": "turn-start",
+            "sustained": false
+          },
+          "fascinated": true,
+          "hostile": true
+        },
+        "fascinatedDurations": [
+          {
+            "value": 1,
+            "unit": "rounds",
+            "expiry": "turn-start",
+            "sustained": false
+          },
+          {
+            "value": 1,
+            "unit": "minutes",
+            "expiry": "turn-start",
+            "sustained": false
+          }
+        ]
+      }
+    }
+  }
+}

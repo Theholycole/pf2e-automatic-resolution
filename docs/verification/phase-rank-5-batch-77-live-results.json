@@ -1,0 +1,32 @@
+{
+  "label": "rank5Batch77",
+  "passed": true,
+  "at": "2026-10-03T11:51:01.519Z",
+  "details": {
+    "batch77": {
+      "kind": "guardian",
+      "guardian": {
+        "hp": 50
+      },
+      "attack": {
+        "status": "hit",
+        "degree": 3,
+        "damage": 22,
+        "type": "slashing"
+      },
+      "protect": {
+        "first": 15,
+        "guardian1": 40,
+        "second": 0,
+        "guardian2": 36
+      },
+      "away": 10,
+      "markerAfterAttack": false,
+      "ended": false,
+      "high": {
+        "hp": 70,
+        "dice": 4
+      }
+    }
+  }
+}

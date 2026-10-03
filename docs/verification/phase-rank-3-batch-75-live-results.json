@@ -1,0 +1,16 @@
+{
+  "label": "rank3Batch75",
+  "passed": true,
+  "at": "2026-10-03T01:31:46.326Z",
+  "details": {
+    "batch75r3": {
+      "before": 0,
+      "exposed": true,
+      "failure": {
+        "formula": "3d6 fire",
+        "total": 13,
+        "lost": 13
+      }
+    }
+  }
+}

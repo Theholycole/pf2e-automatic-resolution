@@ -1,0 +1,37 @@
+{
+  "rank3Batch125": {
+    "label": "rank3Batch125",
+    "passed": true,
+    "at": "2026-10-03T14:12:24.327Z",
+    "details": {
+      "batch125": {
+        "ward": {
+          "dc": 26,
+          "statuses": [
+            "held",
+            "left"
+          ],
+          "strongDegree": 3,
+          "again": "waiting",
+          "hours": 24
+        },
+        "wardS": "1 hours",
+        "wardCF": true,
+        "rough": {
+          "radius": 1000,
+          "difficulty": 2
+        },
+        "roughEnded": true,
+        "greater": "2,3",
+        "smoothed": "1",
+        "restored": "2",
+        "fall": {
+          "damage": 15,
+          "prone": true,
+          "regionKept": true
+        },
+        "backfire": 168
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "label": "rank3Batch32",
+  "passed": true,
+  "at": "2026-10-02T14:12:19.037Z",
+  "details": {
+    "batch32": {
+      "jump": {
+        "kind": "spell-note",
+        "error": null,
+        "card": true,
+        "stupefied": false
+      },
+      "cloak": {
+        "kind": "spell-note",
+        "error": null,
+        "note": "1 rounds",
+        "hidden": false
+      },
+      "shadow": {
+        "kind": "spell-note",
+        "error": null,
+        "card": true,
+        "invisible": false
+      }
+    }
+  }
+}

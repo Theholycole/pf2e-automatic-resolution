@@ -1,0 +1,54 @@
+{
+  "case": "rank2Batch30",
+  "date": "2026-10-01",
+  "world": "pftest",
+  "result": {
+    "label": "rank2Batch30",
+    "passed": true,
+    "at": "2026-10-01T20:54:22.264Z",
+    "details": {
+      "batch30": {
+        "mindtheft": {
+          "kind": "steal-damage",
+          "note": "3 rounds",
+          "tries": [
+            "success"
+          ],
+          "formula": "4d6 mental",
+          "total": 14,
+          "lost": 14,
+          "again": "refused",
+          "dice": "4d6"
+        },
+        "extraction": {
+          "kind": "steal-damage",
+          "note": "3 rounds",
+          "tries": [
+            "success"
+          ],
+          "formula": "2d4 mental",
+          "total": 4,
+          "lost": 4,
+          "again": "refused",
+          "dice": "2d4"
+        },
+        "extract": {
+          "kind": "counteract-transfer",
+          "tries": [
+            3
+          ],
+          "countered": true,
+          "weapon": "Dagger",
+          "selections": {
+            "weapon": "CZWgm3L0Ldw8le9N",
+            "level": "2"
+          },
+          "duration": "1 rounds turn-end",
+          "strikeFound": true,
+          "damageFormula": "1d4 piercing + 2d6 poison",
+          "afterDamage": false
+        }
+      }
+    }
+  }
+}

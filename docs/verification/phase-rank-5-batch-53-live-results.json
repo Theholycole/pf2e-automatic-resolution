@@ -1,0 +1,16 @@
+{
+  "label": "rank5Batch53",
+  "passed": true,
+  "at": "2026-10-03T01:20:21.245Z",
+  "details": {
+    "batch53": {
+      "formula": "4d6 bludgeoning + 5d6 fire",
+      "total": 38,
+      "lost": [
+        19,
+        48,
+        96
+      ]
+    }
+  }
+}

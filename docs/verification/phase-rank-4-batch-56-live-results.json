@@ -1,0 +1,30 @@
+{
+  "generatedAt": "2026-10-02T22:37:07.576Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "results": [
+    {
+      "label": "rank4Batch56",
+      "passed": true,
+      "at": "2026-10-02T22:36:54.459Z",
+      "details": {
+        "batch56": {
+          "flee": {
+            "fascinated": true,
+            "fleeing": true,
+            "prone": false,
+            "notes": []
+          },
+          "prone": {
+            "fascinated": true,
+            "fleeing": false,
+            "prone": true,
+            "notes": [
+              "Every action"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

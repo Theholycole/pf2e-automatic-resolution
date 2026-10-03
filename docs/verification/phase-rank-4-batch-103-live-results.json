@@ -1,0 +1,24 @@
+{
+  "label": "rank4Batch103",
+  "passed": true,
+  "at": "2026-10-03T05:31:58.614Z",
+  "details": {
+    "batch103": {
+      "cast": {
+        "hero": true,
+        "friend": false
+      },
+      "crit": {
+        "result": "extended",
+        "friend": true
+      },
+      "refused": "PFTEST P23 Affliction streak far isn't the target or one of its allies within 20 feet.",
+      "broken": {
+        "status": "ended",
+        "hero": false,
+        "friend": false,
+        "round": 3
+      }
+    }
+  }
+}

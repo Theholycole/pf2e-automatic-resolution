@@ -1,0 +1,50 @@
+{
+  "label": "rank2Batch65",
+  "passed": true,
+  "at": "2026-10-02T00:35:32.238Z",
+  "details": {
+    "batch65": {
+      "made": [
+        {
+          "ac": 10,
+          "hp": 60,
+          "bt": 30,
+          "hardness": 9,
+          "size": "lg",
+          "width": 2
+        },
+        {
+          "ac": 10,
+          "hp": 60,
+          "bt": 30,
+          "hardness": 9,
+          "size": "lg",
+          "width": 2
+        }
+      ],
+      "costs": {
+        "medium": 10,
+        "small": 5
+      },
+      "broken": {
+        "gone": true,
+        "region": false,
+        "savers": [
+          "fort medium",
+          "fort small"
+        ]
+      },
+      "bleed": {
+        "medium": [
+          "2d6 bleed"
+        ],
+        "small": 0
+      },
+      "ended": {
+        "second": false,
+        "token": false,
+        "region": false
+      }
+    }
+  }
+}

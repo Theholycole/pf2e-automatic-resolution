@@ -1,0 +1,13 @@
+{
+  "label": "rank5Batch20",
+  "passed": true,
+  "at": "2026-10-02T18:01:06.678Z",
+  "details": {
+    "batch20": {
+      "reminder": true,
+      "choiceShown": true,
+      "formula": "65 bludgeoning",
+      "lost": 65
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "label": "rank3Batch110",
+  "passed": true,
+  "at": "2026-10-03T07:19:58.744Z",
+  "details": {
+    "batch110": {
+      "r3": {
+        "duration": "24 hours",
+        "off": [],
+        "stays": true,
+        "on": [
+          1
+        ],
+        "used": true
+      },
+      "r5": {
+        "duration": "24 hours",
+        "off": [],
+        "stays": true,
+        "on": [
+          2
+        ],
+        "used": true
+      }
+    }
+  }
+}

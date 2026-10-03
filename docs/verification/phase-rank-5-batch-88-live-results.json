@@ -1,0 +1,22 @@
+{
+  "label": "rank5Batch88",
+  "passed": true,
+  "at": "2026-10-03T12:38:04.873Z",
+  "details": {
+    "batch88": {
+      "kind": "servitor",
+      "arrive": {
+        "temp": 20,
+        "shielded": 1
+      },
+      "depart": {
+        "total": 19,
+        "healed": 19,
+        "temp": 0,
+        "undeadLost": 19
+      },
+      "again": "Summon Healing Servitor: the servitor has already departed.",
+      "high": 28
+    }
+  }
+}

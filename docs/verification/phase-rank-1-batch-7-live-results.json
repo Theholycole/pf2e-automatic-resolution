@@ -1,0 +1,122 @@
+{
+  "generatedAt": "2026-09-26T21:56:24.685Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "world": "pftest",
+  "results": {
+    "rank1Batch7": {
+      "label": "rank1Batch7",
+      "passed": true,
+      "at": "2026-09-26T21:53:26.254Z",
+      "details": {
+        "jealousHex": {
+          "choice": {
+            "strong": {
+              "status": "set",
+              "slug": "enfeebled",
+              "attributes": [
+                "str"
+              ],
+              "mods": {
+                "str": 4,
+                "dex": 1,
+                "con": 0,
+                "int": 0,
+                "wis": 0,
+                "cha": 0
+              }
+            },
+            "tied": {
+              "status": "pending",
+              "options": [
+                "clumsy",
+                "drained"
+              ],
+              "attributes": [
+                "dex",
+                "con"
+              ],
+              "mods": {
+                "str": 0,
+                "dex": 3,
+                "con": 3,
+                "int": 0,
+                "wis": 0,
+                "cha": 0
+              }
+            }
+          },
+          "refusedBeforeTieChoice": true,
+          "applied": {
+            "strong": [
+              "enfeebled 2"
+            ],
+            "tied": [
+              "drained 1"
+            ]
+          },
+          "obligations": [
+            "PFTEST P23 Affliction hex strong: will save at the start of the caster's turn (Jealous Hex)",
+            "PFTEST P23 Affliction hex tied: will save at the start of the caster's turn (Jealous Hex)"
+          ],
+          "after": {
+            "strong": [],
+            "tied": [
+              "drained 1"
+            ]
+          }
+        }
+      }
+    },
+    "regressions": {
+      "recurring:cleanup#0": {
+        "label": "recurring:cleanup",
+        "passed": true
+      },
+      "recurring:endMode#1": {
+        "label": "recurring:endMode",
+        "passed": true
+      },
+      "recurring:cleanup#2": {
+        "label": "recurring:cleanup",
+        "passed": true
+      },
+      "recurring:reduceMode#3": {
+        "label": "recurring:reduceMode",
+        "passed": true
+      },
+      "recurring:cleanup#4": {
+        "label": "recurring:cleanup",
+        "passed": true
+      },
+      "recurring:jump#5": {
+        "label": "recurring:jump",
+        "passed": true
+      },
+      "recurring:cleanup#6": {
+        "label": "recurring:cleanup",
+        "passed": true
+      },
+      "cleanup#7": {
+        "label": "cleanup",
+        "passed": true
+      },
+      "rank1Batch4#8": {
+        "label": "rank1Batch4",
+        "passed": true
+      },
+      "cleanup#9": {
+        "label": "cleanup",
+        "passed": true
+      },
+      "rank1Batch5#10": {
+        "label": "rank1Batch5",
+        "passed": true
+      },
+      "cleanup#11": {
+        "label": "cleanup",
+        "passed": true
+      }
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "batch": "cantrip-rank-1-batch-69",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch69",
+    "passed": true,
+    "details": {
+      "rank1": {
+        "formula": "1d6 sonic",
+        "total": 1,
+        "lost": 1,
+        "struckNote": true,
+        "shoveNote": true,
+        "dataNote": true
+      },
+      "rank3": {
+        "formula": "2d6 sonic",
+        "total": 9,
+        "lost": 9,
+        "struckNote": true,
+        "shoveNote": true,
+        "dataNote": true
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cr1Batch69",
+      "passed": false,
+      "note": "first run cast rank 3 with a 1st-level caster: PF2e heightens a focus spell by the caster, so it rolled 1d6; the case now uses a 5th-level caster for rank 3"
+    },
+    {
+      "n": "cr1Batch69",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch15",
+      "passed": true,
+      "note": "not a direct-damage case; rank1Batch10 and cr1Batch31 were run for that"
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "rank1Batch10",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch31",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

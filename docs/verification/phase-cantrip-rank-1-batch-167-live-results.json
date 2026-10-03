@@ -1,0 +1,64 @@
+{
+  "batch": 167,
+  "date": "2026-09-28",
+  "world": "pftest",
+  "system": "8.5.0",
+  "core": "14.367",
+  "module": "0.8.2",
+  "results": [
+    {
+      "case": "cr1Batch167",
+      "passed": true,
+      "details": {
+        "ruleSets": {
+          "unfetter": {
+            "off": 0,
+            "on": 1,
+            "dc": 1,
+            "grappleDC": 1,
+            "refused": true
+          },
+          "plaster": {
+            "rank1Rules": 0,
+            "replaced": true,
+            "otherCheck": {
+              "bonus": false,
+              "kept": true
+            },
+            "treat": {
+              "mods": [
+                "Healing Plaster:1"
+              ],
+              "used": true
+            }
+          },
+          "time": {
+            "expired": true,
+            "immuneAfterExpiry": false,
+            "untoggled": {
+              "bonus": false,
+              "kept": true
+            },
+            "toggled": {
+              "mods": [
+                "Time Sense:1"
+              ],
+              "used": true,
+              "immune": true
+            },
+            "again": "immune"
+          },
+          "glamor": {
+            "plus": 1,
+            "hours": 1
+          },
+          "panoply": {
+            "weapon": true,
+            "diplomacy": 1,
+            "nonlethal": true
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "label": "rank4Batch44",
+  "passed": true,
+  "at": "2026-10-02T19:54:09.091Z",
+  "details": {
+    "batch44": {
+      "results": [
+        {
+          "note": "1 rounds",
+          "blinded": false,
+          "immune": true
+        },
+        {
+          "note": "1 minutes",
+          "blinded": false,
+          "immune": true
+        },
+        {
+          "note": "1 minutes",
+          "blinded": true,
+          "immune": true
+        }
+      ]
+    }
+  }
+}

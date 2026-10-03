@@ -1,0 +1,32 @@
+{
+ "label": "rank7Batch8",
+ "passed": true,
+ "at": "2026-10-03T18:33:28.622Z",
+ "details": {
+  "batch8": {
+   "pods": {
+    "kind": "save",
+    "formula": "10d8 poison",
+    "lost": 51,
+    "total": 51,
+    "dazzled": "1 rounds",
+    "stupefied": [
+     1,
+     "1 minutes"
+    ],
+    "minesLeft": 3,
+    "notes": 1,
+    "hours": 43200
+   },
+   "curse": {
+    "supported": true,
+    "timer": "1 hours",
+    "rules": [
+     "RollTwice:diplomacy+intimidation+performance+stealth",
+     "AdjustDegreeOfSuccess:skill-check",
+     "AdjustDegreeOfSuccess:skill-check"
+    ]
+   }
+  }
+ }
+}

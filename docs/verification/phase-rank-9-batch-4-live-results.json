@@ -1,0 +1,24 @@
+{
+ "label": "rank9Batch4",
+ "passed": true,
+ "at": "2026-10-03T20:13:57.774Z",
+ "details": {
+  "batch4": {
+   "shadow": {
+    "supported": true,
+    "frightened": [
+     3,
+     4,
+     1
+    ],
+    "floors": [
+     "1 minutes",
+     "1 minutes"
+    ],
+    "note": true,
+    "dead": true
+   },
+   "floorHolds": 1
+  }
+ }
+}

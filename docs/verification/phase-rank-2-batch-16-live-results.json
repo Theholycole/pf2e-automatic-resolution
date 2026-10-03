@@ -1,0 +1,74 @@
+{
+  "batch": "rank-2-16",
+  "date": "2026-09-30",
+  "world": "pftest",
+  "system": "8.5.0",
+  "core": "14.367",
+  "module": "0.8.2",
+  "results": [
+    {
+      "case": "rank2Batch16",
+      "passed": true,
+      "details": {
+        "batch16": {
+          "dehydrate": [
+            "4d6 fire"
+          ],
+          "sleep": [
+            [
+              "Sleep: Unconscious|1 rounds",
+              "Sleep: Prone|-1 unlimited",
+              "Sleep: Asleep|1 rounds",
+              "unconscious",
+              "prone"
+            ],
+            [
+              "Sleep: Unconscious|1 minutes",
+              "Sleep: Prone|-1 unlimited",
+              "Sleep: Asleep|1 minutes",
+              "unconscious",
+              "prone"
+            ]
+          ],
+          "zenith": true,
+          "plagues": {
+            "name": "Affliction Effect: Divine Plagues",
+            "virulent": true,
+            "value2": true,
+            "stageValues": [
+              "clumsy2+enfeebled2+stupefied2",
+              "slowed+clumsy2+enfeebled2+stupefied2",
+              "clumsy2+enfeebled2+stupefied2"
+            ],
+            "granted": [
+              "stupefied 2",
+              "enfeebled 2",
+              "clumsy 2"
+            ]
+          },
+          "earth": {
+            "text": true,
+            "resistance": 8
+          },
+          "putrefy": {
+            "button": true,
+            "countered": true,
+            "degree": 3
+          },
+          "patch": {
+            "success": [
+              "blinded"
+            ],
+            "failure": [
+              "blinded"
+            ],
+            "criticalFailure": [
+              "slowed",
+              "blinded"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

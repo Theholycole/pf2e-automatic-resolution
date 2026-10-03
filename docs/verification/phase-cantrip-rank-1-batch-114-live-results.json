@@ -1,0 +1,45 @@
+{
+  "batch": 114,
+  "spells": [
+    "Appearance of Wealth"
+  ],
+  "results": [
+    {
+      "label": "cr1Batch114",
+      "passed": true,
+      "at": "2026-09-28T02:18:23.939Z",
+      "details": {
+        "appearanceOfWealth": {
+          "refusedBeforeConfirm": true,
+          "fascinated": [
+            true,
+            true
+          ],
+          "notes": true,
+          "controls": [
+            [
+              "saver",
+              "next-turn-action"
+            ]
+          ],
+          "afterFirstAction": [
+            false,
+            true
+          ],
+          "sustained": true,
+          "afterEnd": false
+        }
+      }
+    }
+  ],
+  "regressions": [
+    {
+      "c": "cr1Batch106",
+      "passed": true
+    },
+    {
+      "c": "cr1Batch102",
+      "passed": true
+    }
+  ]
+}

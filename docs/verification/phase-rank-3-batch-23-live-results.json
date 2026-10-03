@@ -1,0 +1,37 @@
+{
+  "label": "rank3Batch23",
+  "passed": true,
+  "at": "2026-10-02T12:24:05.609Z",
+  "details": {
+    "batch23": {
+      "stomach": {
+        "kind": "spell-note",
+        "note": true,
+        "error": null
+      },
+      "bubble": {
+        "kind": "spell-note",
+        "note": true
+      },
+      "vision": {
+        "kind": "spell-note",
+        "note": true,
+        "error": null
+      },
+      "shared": {
+        "kind": "condition-note",
+        "invisible": [
+          true,
+          true,
+          true
+        ],
+        "timer": "10 minutes",
+        "rank5": {
+          "invisible": true,
+          "timer": "1 hours"
+        },
+        "sixRefused": true
+      }
+    }
+  }
+}

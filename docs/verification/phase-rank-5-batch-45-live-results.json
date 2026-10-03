@@ -1,0 +1,29 @@
+{
+  "label": "rank5Batch45",
+  "passed": true,
+  "at": "2026-10-03T00:23:36.788Z",
+  "details": {
+    "batch45": {
+      "casts": [
+        {
+          "rank": 5,
+          "degree": "success",
+          "asked": true,
+          "notes": [
+            "1 rounds turn-end weakness 5"
+          ],
+          "offGuard": false
+        },
+        {
+          "rank": 7,
+          "degree": "criticalFailure",
+          "asked": true,
+          "notes": [
+            "1 minutes turn-start weakness 10"
+          ],
+          "offGuard": false
+        }
+      ]
+    }
+  }
+}

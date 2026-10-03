@@ -1,0 +1,26 @@
+{
+  "label": "rank4Batch22",
+  "passed": true,
+  "at": "2026-10-02T14:56:33.238Z",
+  "details": {
+    "batch22": {
+      "elephant": {
+        "kind": "effect",
+        "level": "automatic",
+        "effect": true,
+        "size": "huge",
+        "tempHP": 20,
+        "trunk": true
+      },
+      "swarm": {
+        "kind": "effect",
+        "level": "automatic",
+        "resistance": 10,
+        "button": true,
+        "statistic": null,
+        "sickened": 2,
+        "after": "Swarm Form has ended."
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+ "label": "rank9Batch3",
+ "passed": true,
+ "at": "2026-10-03T19:49:37.565Z",
+ "details": {
+  "batch3": {
+   "cast": {
+    "kind": "aura-turn-effect",
+    "effect": true,
+    "quickened": true,
+    "fly": 25
+   },
+   "turns": {
+    "near": 9,
+    "far": 0,
+    "caster": 0
+   }
+  }
+ }
+}

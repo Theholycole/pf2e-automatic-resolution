@@ -1,0 +1,87 @@
+{
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "module": "0.8.2",
+  "dialogCheck": "Nullify dialog shows the triggering spell name and rank only (no DC: automatic)",
+  "earlierRunDisjunctionSuccess": [
+    "Counteract check vs DC 1: success (rank 9 vs 9)",
+    "Test staff is counteracted: it's deactivated for 1 week."
+  ],
+  "regressions": {
+    "counteractCare": true,
+    "care": true
+  },
+  "results": [
+    {
+      "label": "counteractSpells",
+      "passed": true,
+      "at": "2026-09-26T15:29:05.224Z",
+      "details": {
+        "riposte": {
+          "labels": [
+            "Trigger You're the target of a spell you're aware of.",
+            "Spell riposte can't affect spells that aren't targeted (such as area spells).",
+            "Counteract check vs DC 1: critical success (rank 7 vs 5)",
+            "Test targeted spell is counteracted: instead of ending, it continues with its caster as the target instead of you."
+          ]
+        },
+        "riposteFail": {
+          "labels": [
+            "Trigger You're the target of a spell you're aware of.",
+            "Spell riposte can't affect spells that aren't targeted (such as area spells).",
+            "Counteract check vs DC 80: critical failure (rank 7 vs 5)",
+            "Test hard spell is not counteracted; it takes effect as normal."
+          ]
+        },
+        "siphon": {
+          "labels": [
+            "Trigger A spell or magical effect deals damage.",
+            "Counteract check vs DC 1: critical success (rank 7 including +2 vs 8)",
+            "Test damaging spell is counteracted: instead of ending, it works as normal, but creatures it would damage take only half as much damage."
+          ]
+        },
+        "nullify": {
+          "labels": [
+            "Trigger A foe within range casts a 9th-rank or lower spell.",
+            "Test rank 3 spell (rank 3) is automatically counteracted.",
+            "Test rank 3 spell is counteracted: it has no effect.",
+            "PFTEST P23 Affliction Nullify caster loses 11 Hit Points (3d8 = 11)"
+          ],
+          "lost": 11
+        },
+        "disjunction": {
+          "labels": [
+            "Counteract check vs DC 1: critical success (rank 9 vs 9)",
+            "Test staff is counteracted: it's destroyed."
+          ]
+        },
+        "disjunctionArtifact": {
+          "labels": [
+            "Test artifact is an artifact: the counteract automatically fails."
+          ]
+        },
+        "disjunctionFail": {
+          "labels": [
+            "Counteract check vs DC 80: critical failure (rank 9 vs 1)",
+            "Test ring is not counteracted."
+          ]
+        },
+        "essence": {
+          "labels": [
+            "Counteract check vs DC 1: critical success (rank 7 vs 2)",
+            "Test lock ward is counteracted: end it.",
+            "PFTEST P23 Affliction Return To Essence caster restores one expended spell slot of rank 3 or lower."
+          ]
+        },
+        "essence8": {
+          "labels": [
+            "Counteract check vs DC 1: critical success (rank 8 vs 2)",
+            "Test rune trap is counteracted: end it.",
+            "PFTEST P23 Affliction Return To Essence caster restores one expended spell slot of rank 4 or lower."
+          ]
+        }
+      }
+    }
+  ]
+}

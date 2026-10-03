@@ -1,0 +1,20 @@
+{
+  "label": "rank4Batch88",
+  "passed": true,
+  "at": "2026-10-03T02:22:41.585Z",
+  "details": {
+    "batch88": {
+      "note": {
+        "present": true,
+        "unlimited": true
+      },
+      "noAmount": "refused",
+      "raked": {
+        "formula": "2d6 slashing",
+        "total": 7,
+        "lost": 7,
+        "ended": false
+      }
+    }
+  }
+}

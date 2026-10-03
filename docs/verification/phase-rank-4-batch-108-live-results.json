@@ -1,0 +1,41 @@
+{
+  "label": "rank4Batch108",
+  "passed": true,
+  "at": "2026-10-03T08:24:07.143Z",
+  "details": {
+    "batch108": {
+      "living": {
+        "kind": "seed-drain",
+        "drained": 1,
+        "formula": "2d12 void",
+        "taken": 17,
+        "erupt": {
+          "status": "erupted",
+          "most": 17,
+          "amount": 34,
+          "undead": false,
+          "damage": 0,
+          "healing": 34
+        },
+        "change": 34,
+        "gone": true
+      },
+      "undead": {
+        "kind": "seed-drain",
+        "drained": 1,
+        "formula": "2d12 void",
+        "taken": 10,
+        "erupt": {
+          "status": "erupted",
+          "most": 10,
+          "amount": 20,
+          "undead": true,
+          "damage": 20,
+          "healing": 0
+        },
+        "change": -20,
+        "gone": true
+      }
+    }
+  }
+}

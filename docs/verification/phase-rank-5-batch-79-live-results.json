@@ -1,0 +1,48 @@
+{
+  "label": "rank5Batch79",
+  "passed": true,
+  "at": "2026-10-03T11:59:33.620Z",
+  "details": {
+    "batch79": {
+      "kind": "tentacle-area",
+      "cast": {
+        "results": [
+          [
+            "tentacle weak",
+            "grabbed",
+            11
+          ],
+          [
+            "tentacle strong",
+            "missed",
+            0
+          ]
+        ],
+        "weakGrabbed": true,
+        "weakCondition": true,
+        "effects": [
+          "Black Tentacles: Grabbed by the tentacles"
+        ],
+        "conditions": [
+          "grabbed"
+        ],
+        "strong": false,
+        "outside": 0
+      },
+      "weakTurn": 1,
+      "strongTurn": {
+        "grabbed": true,
+        "damage": 11
+      },
+      "released": {
+        "count": 1,
+        "weak": false,
+        "grabbedCondition": false
+      },
+      "ended": {
+        "strong": false,
+        "condition": false
+      }
+    }
+  }
+}

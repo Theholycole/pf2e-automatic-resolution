@@ -1,0 +1,46 @@
+{
+  "batch": 146,
+  "spells": [
+    "Protect Companion"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch146",
+      "passed": true,
+      "at": "2026-09-28T22:25:56.713Z",
+      "details": {
+        "protectCompanion": {
+          "notMinion": "Protect Companion: PFTEST P23 Affliction companion stranger isn't an eidolon or a minion.",
+          "status": "applied",
+          "tiers": [
+            [
+              10,
+              5
+            ]
+          ],
+          "ac": [
+            20,
+            21
+          ],
+          "offerDamage": 15,
+          "buttons": 1,
+          "hp": [
+            30,
+            15,
+            25
+          ],
+          "casterHp": [
+            500,
+            495
+          ],
+          "effectGone": true,
+          "lockout": "10 minutes",
+          "recast": "Protect Companion: PFTEST P23 Affliction Protect Companion caster can't cast it again yet (Protect Companion: can't cast again)."
+        }
+      }
+    }
+  ]
+}

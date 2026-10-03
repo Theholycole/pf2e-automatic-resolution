@@ -1,0 +1,49 @@
+{
+  "batch": 160,
+  "spells": [
+    "Protector's Sacrifice",
+    "Delay Consequence",
+    "Interposing Earth"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch160",
+      "passed": true,
+      "at": "2026-09-29T01:11:02.379Z",
+      "details": {
+        "damageReactions": {
+          "sacrifice": {
+            "moved": 3,
+            "ally": [
+              500,
+              490,
+              493
+            ],
+            "caster": [
+              500,
+              497
+            ]
+          },
+          "delay": {
+            "amount": 8,
+            "afterCast": 500,
+            "victimTurn": 500,
+            "casterTurn": 492,
+            "full": 500
+          },
+          "earth": {
+            "ac": [
+              20,
+              22
+            ],
+            "lost": 8,
+            "after": false
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "label": "rank5Batch81",
+  "passed": true,
+  "at": "2026-10-03T12:07:32.068Z",
+  "details": {
+    "batch81": {
+      "kind": "option-mantle",
+      "first": {
+        "size": "lg",
+        "clumsy": 1,
+        "reach": 10
+      },
+      "burn": {
+        "damage": 7,
+        "hp": 7
+      },
+      "second": {
+        "cold": 5,
+        "fire": 5,
+        "burn": "Mantle of the Magma Heart: Heart of Fire isn't one of the chosen abilities."
+      },
+      "third": {
+        "size": "med",
+        "clumsy": 0,
+        "fist": true
+      },
+      "large": "Mantle of the Magma Heart: PFTEST P23 Affliction Mantle of the Magma Heart caster is already too large for that option."
+    }
+  }
+}

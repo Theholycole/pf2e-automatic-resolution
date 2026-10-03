@@ -1,0 +1,34 @@
+{
+  "label": "rank2Batch70",
+  "passed": true,
+  "at": "2026-10-02T01:01:15.175Z",
+  "details": {
+    "batch70": {
+      "cast": {
+        "level": "automatic",
+        "light": true,
+        "blindable": true,
+        "plain": false,
+        "concealed": false
+      },
+      "turn": {
+        "card": true,
+        "degree": "criticalFailure",
+        "blinded": true,
+        "duration": {
+          "value": 1,
+          "unit": "rounds",
+          "expiry": "turn-start",
+          "sustained": false
+        }
+      },
+      "ended": {
+        "light": false,
+        "blinded": false
+      },
+      "rank4": {
+        "concealed": true
+      }
+    }
+  }
+}

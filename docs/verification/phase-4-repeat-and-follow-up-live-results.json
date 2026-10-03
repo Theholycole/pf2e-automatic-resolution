@@ -1,0 +1,59 @@
+{
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "repeatAndFollowUp",
+      "passed": true,
+      "at": "2026-09-26T14:18:13.420Z",
+      "details": {
+        "scorching": {
+          "afterFirst": "Blast Again",
+          "cards": [
+            "AqxJgpaz0WNBKdZ6",
+            "7LvGG2YFs9iTLyuM"
+          ],
+          "firstLost": [
+            30,
+            0
+          ],
+          "secondLost": [
+            8
+          ],
+          "persistent": [
+            "(1d6 + (0 * 2)) fire"
+          ],
+          "total1": 15,
+          "total2": 8
+        },
+        "combatWindow": {
+          "openLabel": "Blast Again",
+          "window": {
+            "combatId": "9lQP5PM6WFQPtpNL",
+            "round": 1,
+            "turn": 0
+          },
+          "closed": true
+        },
+        "aqueous": {
+          "prone": true,
+          "lost": 20,
+          "total": 10
+        },
+        "exploding": {
+          "prone": true,
+          "lost": [
+            33,
+            3
+          ],
+          "total": 18,
+          "rows": [
+            "attack",
+            "splash"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "module": "0.8.2",
+  "regressions": {
+    "counteractAreaWards": true,
+    "counteractWards": true,
+    "counteractSetAside": true,
+    "care": true,
+    "cleanup": true
+  },
+  "results": [
+    {
+      "label": "counteractAreaWards",
+      "passed": true,
+      "at": "2026-09-26T16:16:22.155Z",
+      "details": {
+        "planarSeal": {
+          "duration": "unlimited",
+          "counter": {
+            "countered": true,
+            "whisper": 0,
+            "blind": false,
+            "text": "Planar Seal — counteract Counteract check vs DC 1: critical success (rank 7 vs 5). GM to apply: Test teleport is counteracted."
+          },
+          "afterRest": false
+        },
+        "dispellingGlobe": {
+          "countered": true,
+          "whisper": 0,
+          "blind": false,
+          "text": "Dispelling Globe — counteract Counteract check vs DC 1: critical success (rank 3 (-1) vs 4). GM to apply: Test incoming spell is counteracted: only the portion of the spell that would have entered the globe is prevented; targets or area outside it are affected normally."
+        },
+        "truesight": {
+          "countered": true,
+          "whisper": 1,
+          "blind": false,
+          "text": "Truesight — counteract Counteract check vs DC 1: critical success (rank 6 vs 1). The check succeeds against Test illusory disguise: you see through it (it doesn't end)."
+        },
+        "glimpse": {
+          "duration": {
+            "value": 1,
+            "unit": "rounds",
+            "expiry": "turn-start",
+            "sustained": false
+          },
+          "secret": true
+        },
+        "unblinkingFlame": {
+          "labels": [
+            "Target: the creature you hit.",
+            "Test illusory disguise: counteract check vs DC 1: critical success (rank 3 vs 1)",
+            "Test illusory disguise suppressed for 2 rounds (it returns afterwards)"
+          ],
+          "suppressed": {
+            "gone": true,
+            "marker": {
+              "value": 2,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "whisper": 1
+          },
+          "returned": true
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "case": "rank2Batch22",
+  "date": "2026-09-30",
+  "world": "pftest",
+  "result": {
+    "label": "rank2Batch22",
+    "passed": true,
+    "at": "2026-10-01T00:42:50.349Z",
+    "details": {
+      "batch22": {
+        "teeth": {
+          "formula": "4d4 mental + 2d4 persistent mental",
+          "total": 6,
+          "rows": [
+            {
+              "name": "teeth success",
+              "lost": 3,
+              "persistent": [],
+              "frightened": 0,
+              "note": null
+            },
+            {
+              "name": "teeth failure",
+              "lost": 6,
+              "persistent": [
+                "2d4"
+              ],
+              "frightened": 1,
+              "note": "[[[\"strike-attack-roll\"],-1,[{\"or\":[\"item:slug:jaws\",\"item:slug:teeth\"]}]]]"
+            },
+            {
+              "name": "teeth critical",
+              "lost": 6,
+              "persistent": [
+                "2d4"
+              ],
+              "frightened": 3,
+              "note": "[[[\"strike-attack-roll\"],-1,[{\"or\":[\"item:slug:jaws\",\"item:slug:teeth\"]}]]]"
+            }
+          ],
+          "noteAfterPersistentEnds": false
+        },
+        "rime": {
+          "behaviors": [
+            {
+              "type": "modifyMovementCost",
+              "walk": 2
+            }
+          ],
+          "notes": 1,
+          "formula": "8d4 cold",
+          "total": 26,
+          "lost": 52,
+          "prone": true,
+          "ended": "ended",
+          "regionLeft": false
+        },
+        "mind": {
+          "stunnedAtCast": 1,
+          "sustained": true,
+          "cardText": true,
+          "casterStunned": 1,
+          "status": "ended"
+        }
+      }
+    }
+  },
+  "strikePenaltyProbe": [
+    {
+      "name": "Claw",
+      "total": 10
+    },
+    {
+      "name": "Jaws",
+      "total": 9,
+      "mods": [
+        "Modifier:10",
+        "probe effect:-1"
+      ]
+    }
+  ]
+}

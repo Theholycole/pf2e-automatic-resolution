@@ -1,0 +1,43 @@
+{
+ "label": "rank7Batch1",
+ "passed": true,
+ "at": "2026-10-03T16:17:11.625Z",
+ "details": {
+  "batch1": {
+   "stun": {
+    "kind": "level-tiers",
+    "stunned": 1,
+    "immune": true
+   },
+   "stunAgain": "Power Word Stun: PFTEST P23 Affliction pw high is temporarily immune.",
+   "blind": {
+    "result": "Blinded permanently",
+    "blinded": true
+   },
+   "kill": {
+    "low": true,
+    "toughHP": 0,
+    "dying": 1
+   },
+   "aria": 50,
+   "vanish": true,
+   "implosion": {
+    "kind": "repeat-save",
+    "lost": [
+     75,
+     75
+    ],
+    "again": "Implosion: PFTEST P23 Affliction implode a was already targeted by this casting."
+   },
+   "sufEligible": [
+    true,
+    false
+   ],
+   "suffocate": {
+    "unconscious": true,
+    "note": true,
+    "lost": 18
+   }
+  }
+ }
+}

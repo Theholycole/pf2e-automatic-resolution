@@ -1,0 +1,35 @@
+{
+  "label": "rank3Batch47",
+  "passed": true,
+  "at": "2026-10-02T18:17:57.687Z",
+  "details": {
+    "batch47": {
+      "supported": true,
+      "repeatable": {
+        "window": "sustain",
+        "attacks": 11,
+        "actions": 1,
+        "onCast": true,
+        "sourceText": "When you Cast this Spell and the first time you Sustain this spell on subsequent turns, this magical connection flares in a line between you and your familiar, dealing @Damage[3d8[mental]] damage to all creatures in the line, with a basic Reflex save."
+      },
+      "cast": {
+        "formula": "3d8 mental",
+        "total": 15,
+        "lost": 15,
+        "notes": true
+      },
+      "sustain": {
+        "formula": "3d8 mental",
+        "total": 11,
+        "lost": 22,
+        "notes": true
+      },
+      "heightened": {
+        "formula": "5d8 mental",
+        "total": 23,
+        "lost": 23,
+        "notes": true
+      }
+    }
+  }
+}

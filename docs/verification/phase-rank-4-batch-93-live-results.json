@@ -1,0 +1,47 @@
+{
+  "label": "rank4Batch93",
+  "passed": true,
+  "at": "2026-10-03T02:55:08.890Z",
+  "details": {
+    "batch93": {
+      "light": {
+        "bright": 30,
+        "dim": 60,
+        "negative": false,
+        "priority": 0,
+        "alpha": 0.5,
+        "angle": 360,
+        "color": null,
+        "coloration": 1,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "animation": {
+          "type": null,
+          "speed": 5,
+          "intensity": 5,
+          "reverse": false
+        },
+        "darkness": {
+          "min": 0,
+          "max": 1
+        }
+      },
+      "living": {
+        "mode": "healing",
+        "formula": "4d6 vitality",
+        "total": 14,
+        "regained": 14
+      },
+      "undead": {
+        "mode": "damage",
+        "formula": "4d6 vitality",
+        "total": 16,
+        "lost": 16
+      },
+      "lightAfter": false
+    }
+  }
+}

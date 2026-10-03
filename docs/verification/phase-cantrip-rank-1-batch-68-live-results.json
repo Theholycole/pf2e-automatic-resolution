@@ -1,0 +1,52 @@
+{
+  "batch": "cantrip-rank-1-batch-68",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch68",
+    "passed": true,
+    "details": {
+      "refused": "Lament: Caster: What is the counteract rank of the highest-level emotion effect imposing a harmful condition on you? (0 if none)",
+      "formula": "1d8 + 2 mental",
+      "total": 6,
+      "lost": [
+        6,
+        12
+      ],
+      "line": "(0 if none) 2 (+2 mental damage)"
+    }
+  },
+  "runs": [
+    {
+      "n": "cr1Batch68",
+      "passed": true,
+      "note": "an earlier passing run (total 8) whose evidence upload failed: the Foundry session had dropped; rejoined and re-ran"
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch68",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "rank1Batch2",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

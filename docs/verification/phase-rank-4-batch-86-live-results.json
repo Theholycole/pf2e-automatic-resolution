@@ -1,0 +1,36 @@
+{
+  "label": "rank4Batch86",
+  "passed": true,
+  "at": "2026-10-03T02:17:13.676Z",
+  "details": {
+    "batch86": {
+      "success": {
+        "formula": "2d6 mental",
+        "total": 8,
+        "lost": 8,
+        "ended": true,
+        "noteLeft": false
+      },
+      "failureHit": {
+        "formula": "2d6 persistent mental",
+        "persistent": [
+          "2d6"
+        ],
+        "doomed": 0,
+        "noteLeft": true
+      },
+      "failureCritical": {
+        "doomed": 1,
+        "critical": {
+          "slug": "doomed",
+          "value": 1,
+          "effectUuid": "Actor.eNl7ZPoWexIqIuJp.Item.QkqqjRdcIc0bzsOJ",
+          "whilePersistent": true
+        }
+      },
+      "afterPersistent": {
+        "doomed": 0
+      }
+    }
+  }
+}

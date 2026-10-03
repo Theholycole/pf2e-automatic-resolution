@@ -1,0 +1,44 @@
+{
+  "batch": 136,
+  "spells": [
+    "Metal Merged",
+    "Nymph's Token",
+    "Traveling Workshop"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch136",
+      "passed": true,
+      "at": "2026-09-28T20:32:28.807Z",
+      "details": {
+        "batch136": {
+          "metalMerged": {
+            "caster": true
+          },
+          "nymphsToken": {
+            "ally": true,
+            "willDelta": 1,
+            "caster": false,
+            "afterDismiss": false
+          },
+          "travelingWorkshop": {
+            "caster": true,
+            "before": {
+              "crafting": 0,
+              "thievery": 0
+            },
+            "after": {
+              "crafting": 1,
+              "thievery": 1
+            }
+          }
+        }
+      }
+    }
+  ],
+  "dismissDialog": "Spell Effect: Nymph's Token — Dismiss Use a free action to Dismiss Spell Effect: Nymph's Token? Dismiss",
+  "note": "The Dismiss confirmation was answered by the harness clicking its Dismiss button."
+}

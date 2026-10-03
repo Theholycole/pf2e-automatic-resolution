@@ -1,0 +1,32 @@
+{
+  "label": "rank3Batch26",
+  "passed": true,
+  "at": "2026-10-02T13:04:19.835Z",
+  "details": {
+    "batch26": {
+      "chatter": {
+        "supported": true,
+        "targets": 3,
+        "offGuard": [
+          true,
+          true,
+          true
+        ],
+        "notes": [
+          "1 rounds",
+          "3 rounds",
+          "1 minutes"
+        ]
+      },
+      "excise": {
+        "supported": true,
+        "notes": [
+          "1 minutes",
+          "1 days",
+          "unlimited"
+        ],
+        "extraWord": true
+      }
+    }
+  }
+}

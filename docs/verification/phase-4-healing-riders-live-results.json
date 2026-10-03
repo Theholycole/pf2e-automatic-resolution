@@ -1,0 +1,87 @@
+{
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "module": "0.8.2",
+  "results": [
+    {
+      "label": "healingRiders",
+      "passed": true,
+      "at": "2026-09-26T14:49:38.085Z",
+      "details": {
+        "rebukeDeath": {
+          "before": {
+            "dying": {
+              "hp": 0,
+              "dying": 1,
+              "wounded": 0,
+              "unconscious": true
+            },
+            "awake": {
+              "hp": 300,
+              "dying": 0,
+              "wounded": 0,
+              "unconscious": false
+            }
+          },
+          "after": {
+            "dying": {
+              "hp": 8,
+              "dying": 0,
+              "wounded": 0,
+              "unconscious": false
+            },
+            "awake": {
+              "hp": 308,
+              "dying": 0,
+              "wounded": 0,
+              "unconscious": false
+            }
+          },
+          "total": 8,
+          "results": [
+            {
+              "name": "PFTEST P23 Affliction rebuke dying",
+              "healing": 8,
+              "revived": {
+                "woundedBefore": 0,
+                "woundedAfter": 0,
+                "woundedRaised": false
+              }
+            },
+            {
+              "name": "PFTEST P23 Affliction rebuke awake",
+              "healing": 8,
+              "revived": null
+            }
+          ],
+          "farRefused": "Rebuke Death: PFTEST P23 Affliction rebuke far isn't within 20 feet of the caster."
+        },
+        "breathOfLife": {
+          "after": {
+            "hp": 28,
+            "dying": 0,
+            "wounded": 1,
+            "unconscious": false
+          },
+          "total": 28,
+          "note": true
+        },
+        "livelyFlight": {
+          "gained": 36,
+          "total": 36,
+          "note": true,
+          "undeadRefused": "Lively Flight: PFTEST P23 Affliction flight undead can't be healed by this spell (requires a living creature)."
+        },
+        "necromancersGenerosity": {
+          "gained": 5,
+          "total": 5,
+          "effect": [
+            "Spell Effect: Necromancer's Generosity"
+          ],
+          "livingRefused": "Necromancer's Generosity: PFTEST P23 Affliction generosity living can't be healed by this spell (requires the undead trait)."
+        }
+      }
+    }
+  ]
+}

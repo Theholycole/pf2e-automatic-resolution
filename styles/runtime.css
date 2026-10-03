@@ -10,7 +10,8 @@
     margin-top: 0.5rem;
 }
 
-.pf2e-auto-runtime-button[disabled] {
+.pf2e-auto-runtime-button[disabled],
+.pf2e-auto-escape-button[disabled] {
     opacity: 0.65;
 }
 

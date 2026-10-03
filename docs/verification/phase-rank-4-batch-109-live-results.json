@@ -1,0 +1,33 @@
+{
+  "label": "rank4Batch109",
+  "passed": true,
+  "at": "2026-10-03T08:28:26.781Z",
+  "details": {
+    "batch109": {
+      "kind": "rule-set",
+      "options": [
+        "heaven",
+        "nirvana",
+        "elysium",
+        "axis",
+        "boneyard",
+        "maelstrom",
+        "hell",
+        "abaddon",
+        "abyss"
+      ],
+      "heaven": {
+        "choice": "heaven",
+        "holy": true,
+        "unholy": 10,
+        "holyRes": null
+      },
+      "bone": {
+        "vitality": 5,
+        "void": 5,
+        "holy": false,
+        "notes": "<p>Boneyard (N).</p>"
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "label": "rank5Batch11",
+  "passed": true,
+  "at": "2026-10-02T15:33:26.737Z",
+  "details": {
+    "batch11": {
+      "roots": {
+        "level": "guided",
+        "lost": 8,
+        "prone": true,
+        "region": true,
+        "radiusFeet": 13,
+        "terrain": true,
+        "centred": true,
+        "note": true
+      }
+    }
+  }
+}

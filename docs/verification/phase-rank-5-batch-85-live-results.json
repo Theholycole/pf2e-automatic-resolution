@@ -1,0 +1,30 @@
+{
+  "label": "rank5Batch85",
+  "passed": true,
+  "at": "2026-10-03T12:23:43.185Z",
+  "details": {
+    "batch85": {
+      "kind": "rock-mud",
+      "terrain": {
+        "floor": [
+          2
+        ],
+        "deep": [
+          3
+        ],
+        "cubes": 2
+      },
+      "ceiling": {
+        "targets": 1,
+        "damage": 28,
+        "outside": 0
+      },
+      "rock": {
+        "targets": 1,
+        "restrained": true,
+        "outside": false
+      },
+      "high": 3
+    }
+  }
+}

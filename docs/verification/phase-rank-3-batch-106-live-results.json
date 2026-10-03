@@ -1,0 +1,17 @@
+{
+  "label": "rank3Batch106",
+  "passed": true,
+  "at": "2026-10-03T06:58:28.579Z",
+  "details": {
+    "batch106": {
+      "effects": [
+        "Effect: Bone Flense (Damage)",
+        "Effect: Bone Flense (Reaction)"
+      ],
+      "spurs": "Erupting Spurs",
+      "off": "1d4 slashing",
+      "on": "1d4 slashing + 2d6 bleed",
+      "persistent": true
+    }
+  }
+}

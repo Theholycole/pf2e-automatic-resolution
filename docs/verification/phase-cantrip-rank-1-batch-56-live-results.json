@@ -1,0 +1,44 @@
+{
+  "batch": "cantrip-rank-1-batch-56",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch56",
+    "passed": true,
+    "details": {
+      "dirgeOfDoom": {
+        "refused": "Dirge of Doom: target only the enemies in the area.",
+        "atCast": 1,
+        "afterDecrease": 1,
+        "effect": "1 rounds",
+        "afterSpell": false,
+        "friendFrightened": false
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch56",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch21",
+      "passed": true,
+      "note": "same session, the run before (the first cr1Batch56 attempt checked the floor after the spell had already ended)"
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

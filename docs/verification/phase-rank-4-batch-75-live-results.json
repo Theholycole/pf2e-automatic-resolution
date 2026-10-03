@@ -1,0 +1,41 @@
+{
+  "label": "rank4Batch75",
+  "passed": true,
+  "at": "2026-10-02T23:42:26.679Z",
+  "details": {
+    "batch75": {
+      "results": [
+        {
+          "degree": "success",
+          "needs": "automatic",
+          "dc": 24,
+          "status": "disbelieved",
+          "rolled": null,
+          "ended": true,
+          "recordStatus": "ended",
+          "noteLeft": false
+        },
+        {
+          "degree": "failure",
+          "needs": "success",
+          "dc": 24,
+          "status": "disbelieved",
+          "rolled": 3,
+          "ended": true,
+          "recordStatus": "ended",
+          "noteLeft": false
+        },
+        {
+          "degree": "criticalFailure",
+          "needs": "criticalSuccess",
+          "dc": 24,
+          "status": "believed",
+          "rolled": 2,
+          "ended": false,
+          "recordStatus": "active",
+          "noteLeft": true
+        }
+      ]
+    }
+  }
+}

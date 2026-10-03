@@ -1,0 +1,166 @@
+{
+  "generatedAt": "2026-09-26T21:35:48.149Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "world": "pftest",
+  "results": {
+    "rank1Batch5": {
+      "label": "rank1Batch5",
+      "passed": true,
+      "at": "2026-09-26T21:31:22.133Z",
+      "details": {
+        "bloodInfusion": {
+          "failure": {
+            "effect": "Spell Effect: Blood Infusion",
+            "bleed": [
+              "1d6"
+            ]
+          },
+          "immune": {
+            "effect": "Spell Effect: Blood Infusion",
+            "immunities": [
+              "death-effects",
+              "disease",
+              "doomed",
+              "drained",
+              "fatigued",
+              "healing",
+              "nonlethal-attacks",
+              "paralyzed",
+              "poison",
+              "sickened",
+              "spirit",
+              "unconscious",
+              "vitality",
+              "void"
+            ],
+            "bleed": [
+              "2d6"
+            ]
+          },
+          "thrallReminder": true
+        },
+        "temporalDistortion": {
+          "rolled3": {
+            "success": [
+              "stupefied 1"
+            ],
+            "successDuration": {
+              "value": 1,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "critical": [
+              "stupefied 3"
+            ],
+            "criticalDuration": {
+              "value": 2,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            }
+          },
+          "rolled4": {
+            "refusedBeforeChoice": true,
+            "conditions": [
+              "enfeebled 1"
+            ],
+            "duration": {
+              "value": 4,
+              "unit": "rounds",
+              "expiry": "turn-start",
+              "sustained": false
+            },
+            "chosen": {
+              "formula": "1d4",
+              "results": {
+                "1": "clumsy",
+                "2": "enfeebled",
+                "3": "stupefied"
+              },
+              "chooseOn": [
+                4
+              ],
+              "options": [
+                "clumsy",
+                "enfeebled",
+                "stupefied"
+              ],
+              "rolled": 4,
+              "slug": "enfeebled",
+              "chosen": true
+            }
+          }
+        }
+      }
+    },
+    "regressions": {
+      "cleanup#0": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T21:32:01.193Z"
+      },
+      "thrallSpells#1": {
+        "label": "thrallSpells",
+        "passed": true,
+        "at": "2026-09-26T21:32:08.975Z"
+      },
+      "cleanup#2": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T21:32:20.995Z"
+      },
+      "longTailBatch4#3": {
+        "label": "longTailBatch4",
+        "passed": true,
+        "at": "2026-09-26T21:32:34.541Z"
+      },
+      "cleanup#4": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T21:33:07.572Z"
+      },
+      "rank1Batch4#5": {
+        "label": "rank1Batch4",
+        "passed": true,
+        "at": "2026-09-26T21:33:28.052Z"
+      },
+      "cleanup#6": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T21:33:48.872Z"
+      },
+      "rank1Batch2#7": {
+        "label": "rank1Batch2",
+        "passed": true,
+        "at": "2026-09-26T21:34:00.147Z"
+      },
+      "cleanup#8": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T21:34:31.324Z"
+      },
+      "compact#9": {
+        "label": "compact",
+        "passed": true,
+        "at": "2026-09-26T21:34:46.230Z"
+      },
+      "cleanup#10": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T21:34:59.733Z"
+      },
+      "persistentOnce#11": {
+        "label": "persistentOnce",
+        "passed": true,
+        "at": "2026-09-26T21:35:07.235Z"
+      },
+      "cleanup#12": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T21:35:15.096Z"
+      }
+    }
+  }
+}

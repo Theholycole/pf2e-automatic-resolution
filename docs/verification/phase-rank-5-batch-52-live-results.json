@@ -1,0 +1,26 @@
+{
+  "label": "rank5Batch52",
+  "passed": true,
+  "at": "2026-10-03T01:17:16.847Z",
+  "details": {
+    "batch52": {
+      "first": {
+        "slowed": 1,
+        "notes": [
+          "Giggling 1 minutes"
+        ]
+      },
+      "cards": 1,
+      "second": {
+        "prone": true,
+        "slowed": 1,
+        "notes": [
+          "Doubled over 1 rounds",
+          "Giggling 1 minutes"
+        ]
+      },
+      "secondCards": 0,
+      "repeat": "started"
+    }
+  }
+}

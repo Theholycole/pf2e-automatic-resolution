@@ -1,0 +1,80 @@
+{
+  "batch": "cantrip-rank-1-batch-93",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch93",
+    "passed": true,
+    "details": {
+      "atCast": [
+        "near",
+        "other"
+      ],
+      "afterCast": [
+        1,
+        0,
+        0
+      ],
+      "radius": 20,
+      "onSustain": [
+        "far",
+        "other"
+      ],
+      "afterSustain": [
+        1,
+        1,
+        1
+      ],
+      "leaveFlags": [
+        true,
+        true,
+        true
+      ],
+      "afterLeaving": [
+        0,
+        1,
+        1
+      ]
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch93",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch88",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "drought",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

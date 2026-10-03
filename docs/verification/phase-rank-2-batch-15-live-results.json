@@ -1,0 +1,56 @@
+{
+  "batch": "rank-2-15",
+  "date": "2026-09-30",
+  "world": "pftest",
+  "system": "8.5.0",
+  "core": "14.367",
+  "module": "0.8.2",
+  "results": [
+    {
+      "case": "rank2Batch15",
+      "passed": true,
+      "details": {
+        "batch15": {
+          "invisibility": {
+            "2": {
+              "invisible": true,
+              "effects": [
+                "Invisibility: Invisible|10 minutes",
+                "Spell Note: Invisibility|10 minutes"
+              ],
+              "heightenedLine": false
+            },
+            "4": {
+              "invisible": true,
+              "effects": [
+                "Invisibility: Invisible|1 minutes",
+                "Spell Note: Invisibility|1 minutes"
+              ],
+              "heightenedLine": true
+            }
+          },
+          "blood": {
+            "witness": {
+              "eligible": true,
+              "secondaryOf": "PFTEST P23 Affliction blood primary",
+              "question": "Can it see the primary target (the bleeding creature)? Only then is it a secondary target."
+            },
+            "cast": {
+              "primary": 2,
+              "witness": 2,
+              "primaryFloor": true,
+              "witnessFloor": "Can't reduce Frightened below 1 while PFTEST P23 Affliction blood primary (the primary target) is taking persistent bleed damage."
+            },
+            "afterPrimaryStops": {
+              "primaryFloor": false,
+              "witnessFloor": false
+            }
+          },
+          "spysMark": [
+            "Spell Note: Spy's Mark (area)|1 days"
+          ]
+        }
+      }
+    }
+  ]
+}

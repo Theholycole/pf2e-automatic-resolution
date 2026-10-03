@@ -1,0 +1,41 @@
+{
+  "batch": 138,
+  "spells": [
+    "Illusory Disguise",
+    "Swear Oath",
+    "Forbidding Ward"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch138",
+      "passed": true,
+      "at": "2026-09-28T20:40:05.867Z",
+      "details": {
+        "batch138": {
+          "illusoryDisguise": {
+            "effect": true,
+            "before": {
+              "impersonate": 0,
+              "plain": 0
+            },
+            "after": {
+              "impersonate": 5,
+              "plain": 0
+            }
+          },
+          "swearOath": {
+            "caster": true
+          },
+          "forbiddingWard": {
+            "ally": true,
+            "enemy": false,
+            "mark": true
+          }
+        }
+      }
+    }
+  ]
+}

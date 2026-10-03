@@ -1,0 +1,47 @@
+{
+  "batch": 112,
+  "spells": [
+    "Pact Broker"
+  ],
+  "results": [
+    {
+      "label": "cr1Batch112",
+      "passed": true,
+      "at": "2026-09-28T02:08:39.476Z",
+      "details": {
+        "pactBroker": {
+          "refused": {
+            "degree": "failure",
+            "lost": 7,
+            "total": 7,
+            "penalty": [
+              -1
+            ],
+            "immune": true,
+            "again": "immune"
+          },
+          "accepted": {
+            "degree": "failure",
+            "lost": 7,
+            "total": 7,
+            "penalty": [
+              -1
+            ],
+            "immune": true,
+            "again": "immune"
+          }
+        }
+      }
+    }
+  ],
+  "regressions": [
+    {
+      "c": "rank1Batch3",
+      "passed": true
+    },
+    {
+      "c": "rank1Batch4",
+      "passed": true
+    }
+  ]
+}

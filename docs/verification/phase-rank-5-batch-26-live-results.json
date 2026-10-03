@@ -1,0 +1,26 @@
+{
+  "label": "rank5Batch26",
+  "passed": true,
+  "at": "2026-10-02T19:41:30.448Z",
+  "details": {
+    "batch26": {
+      "water": {
+        "formula": "4d10 cold + 4d10 bludgeoning",
+        "total": 47,
+        "lost": 47
+      },
+      "wood": {
+        "formula": "3d10 piercing + 3d10 slashing",
+        "placed": "placed",
+        "terrain": true,
+        "duration": 60
+      },
+      "metal": {
+        "rolled": "failure",
+        "degree": "criticalFailure",
+        "total": 23,
+        "lost": 46
+      }
+    }
+  }
+}

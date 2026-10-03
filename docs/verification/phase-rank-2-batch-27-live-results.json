@@ -1,0 +1,91 @@
+{
+  "case": "rank2Batch27",
+  "date": "2026-10-01",
+  "world": "pftest",
+  "result": {
+    "label": "rank2Batch27",
+    "passed": true,
+    "at": "2026-10-01T20:33:48.750Z",
+    "details": {
+      "batch27": {
+        "weapon": {
+          "choices": [
+            "force",
+            "bludgeoning",
+            "piercing",
+            "slashing"
+          ],
+          "first": {
+            "formula": "3d8 force",
+            "total": 10,
+            "lost": 10
+          },
+          "second": {
+            "formula": "3d8 piercing",
+            "total": 13,
+            "lost": 26
+          },
+          "button": "Resolve Spell Attack"
+        },
+        "armament": {
+          "choices": [
+            "bludgeoning",
+            "piercing",
+            "slashing",
+            "spirit"
+          ],
+          "first": {
+            "formula": "3d8 spirit",
+            "total": 10,
+            "lost": 10
+          },
+          "second": {
+            "formula": "3d8 piercing",
+            "total": 12,
+            "lost": 24
+          },
+          "button": "Resolve Spell Attack"
+        },
+        "shatter": {
+          "kind": "object-damage",
+          "formula": "3d10",
+          "hardness": 6,
+          "total": 20,
+          "rollTotal": 20,
+          "gm": true
+        },
+        "dust": {
+          "kind": "hazard-area",
+          "formula": "2d4[fire]",
+          "squares": 3,
+          "lost": 9,
+          "reported": 9,
+          "rolls": [
+            null,
+            "2d4 fire",
+            null
+          ],
+          "status": "active",
+          "regionLeft": false
+        },
+        "sap": {
+          "kind": "hazard-area",
+          "formula": "(2d6)[persistent,fire]",
+          "terrain": [
+            "modifyMovementCost:2"
+          ],
+          "persistent": [
+            [
+              "2d6 fire"
+            ],
+            [
+              "2d6 fire"
+            ]
+          ],
+          "status": "ended",
+          "regionLeft": false
+        }
+      }
+    }
+  }
+}

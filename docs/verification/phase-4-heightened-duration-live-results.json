@@ -1,0 +1,381 @@
+{
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "heightenedDuration",
+      "passed": true,
+      "at": "2026-09-26T06:13:52.446Z",
+      "details": [
+        {
+          "name": "Fly",
+          "rank": 4,
+          "level": "automatic",
+          "effect": "Spell Effect: Fly",
+          "recipient": "PFTEST P23 Affliction Fly 4 recipient",
+          "duration": "5 minutes",
+          "expiry": "turn-start",
+          "remaining": 300,
+          "effectLevel": 4,
+          "override": null
+        },
+        {
+          "name": "Fly",
+          "rank": 7,
+          "level": "automatic",
+          "effect": "Spell Effect: Fly",
+          "recipient": "PFTEST P23 Affliction Fly 7 recipient",
+          "duration": "1 hours",
+          "expiry": "turn-start",
+          "remaining": 3600,
+          "effectLevel": 7,
+          "override": {
+            "value": 1,
+            "unit": "hours"
+          }
+        },
+        {
+          "name": "Tremorsense",
+          "rank": 2,
+          "level": "automatic",
+          "effect": "Spell Effect: Tremorsense",
+          "recipient": "PFTEST P23 Affliction Tremorsense caster",
+          "duration": "10 minutes",
+          "expiry": "turn-start",
+          "remaining": 600,
+          "effectLevel": 2,
+          "override": null
+        },
+        {
+          "name": "Tremorsense",
+          "rank": 3,
+          "level": "automatic",
+          "effect": "Spell Effect: Tremorsense",
+          "recipient": "PFTEST P23 Affliction Tremorsense caster",
+          "duration": "1 hours",
+          "expiry": "turn-start",
+          "remaining": 3600,
+          "effectLevel": 3,
+          "override": {
+            "value": 1,
+            "unit": "hours"
+          }
+        },
+        {
+          "name": "Tremorsense",
+          "rank": 5,
+          "level": "automatic",
+          "effect": "Spell Effect: Tremorsense",
+          "recipient": "PFTEST P23 Affliction Tremorsense caster",
+          "duration": "8 hours",
+          "expiry": "turn-start",
+          "remaining": 28800,
+          "effectLevel": 5,
+          "override": {
+            "value": 8,
+            "unit": "hours"
+          }
+        },
+        {
+          "name": "Juvenile Companion",
+          "rank": 2,
+          "level": "automatic",
+          "effect": "Spell Effect: Juvenile Companion",
+          "recipient": "PFTEST P23 Affliction Juvenile Companion 2 recipient",
+          "duration": "1 hours",
+          "expiry": "turn-start",
+          "remaining": 3600,
+          "effectLevel": 2,
+          "override": {
+            "value": 1,
+            "unit": "hours"
+          }
+        },
+        {
+          "name": "Gecko Grip",
+          "rank": 5,
+          "level": "automatic",
+          "effect": "Spell Effect: Gecko Grip",
+          "recipient": "PFTEST P23 Affliction Gecko Grip 5 recipient",
+          "duration": "1 hours",
+          "expiry": "turn-start",
+          "remaining": 3600,
+          "effectLevel": 5,
+          "override": {
+            "value": 1,
+            "unit": "hours"
+          }
+        },
+        {
+          "name": "Angelic Wings",
+          "rank": 5,
+          "level": "automatic",
+          "effect": "Spell Effect: Angelic Wings",
+          "recipient": "PFTEST P23 Affliction Angelic Wings caster",
+          "duration": "1 minutes",
+          "expiry": "turn-start",
+          "remaining": 60,
+          "effectLevel": 5,
+          "override": {
+            "value": 1,
+            "unit": "minutes"
+          }
+        },
+        {
+          "name": "Dragon Wings",
+          "rank": 8,
+          "level": "automatic",
+          "effect": "Spell Effect: Dragon Wings",
+          "recipient": "PFTEST P23 Affliction Dragon Wings caster",
+          "duration": "10 minutes",
+          "expiry": "turn-start",
+          "remaining": 600,
+          "effectLevel": 8,
+          "override": {
+            "value": 10,
+            "unit": "minutes"
+          }
+        },
+        {
+          "name": "Musical Accompaniment",
+          "rank": 2,
+          "level": "guided",
+          "effect": "Spell Effect: Musical Accompaniment",
+          "recipient": "PFTEST P23 Affliction Musical Accompaniment caster",
+          "duration": "10 minutes",
+          "expiry": "turn-start",
+          "remaining": 600,
+          "effectLevel": 2,
+          "override": {
+            "value": 10,
+            "unit": "minutes"
+          }
+        },
+        {
+          "name": "Deep Sight",
+          "rank": 7,
+          "level": "automatic",
+          "effect": "Spell Effect: Deep Sight",
+          "recipient": "PFTEST P23 Affliction Deep Sight caster",
+          "duration": "1 days",
+          "expiry": "turn-start",
+          "remaining": 86400,
+          "effectLevel": 7,
+          "override": {
+            "value": 1,
+            "unit": "days"
+          }
+        },
+        {
+          "name": "Tailwind",
+          "rank": 1,
+          "level": "automatic",
+          "effect": "Spell Effect: Tailwind",
+          "recipient": "PFTEST P23 Affliction Tailwind caster",
+          "duration": "1 hours",
+          "expiry": "turn-start",
+          "remaining": 3600,
+          "effectLevel": 1,
+          "override": null
+        },
+        {
+          "name": "Tailwind",
+          "rank": 2,
+          "level": "automatic",
+          "effect": "Spell Effect: Tailwind (8 hours)",
+          "recipient": "PFTEST P23 Affliction Tailwind caster",
+          "duration": "8 hours",
+          "expiry": "turn-start",
+          "remaining": 28800,
+          "effectLevel": 2,
+          "override": null
+        },
+        {
+          "name": "Wings of the Valkyrie",
+          "rank": 5,
+          "level": "guided",
+          "effect": "Spell Effect: Wings of the Valkyrie (Heightened)",
+          "recipient": "PFTEST P23 Affliction Wings of the Valkyrie caster",
+          "duration": "1 minutes",
+          "expiry": "turn-start",
+          "remaining": 60,
+          "effectLevel": 5,
+          "override": null
+        }
+      ]
+    },
+    {
+      "label": "durationBuffs",
+      "passed": true,
+      "at": "2026-09-26T06:15:00.754Z",
+      "details": [
+        {
+          "name": "Heroism",
+          "recipient": "target",
+          "effect": "Spell Effect: Heroism",
+          "duration": "10 minutes",
+          "rules": [
+            "FlatModifier"
+          ]
+        },
+        {
+          "name": "Fly",
+          "recipient": "target",
+          "effect": "Spell Effect: Fly",
+          "duration": "5 minutes",
+          "rules": [
+            "BaseSpeed"
+          ]
+        },
+        {
+          "name": "Shrink",
+          "recipient": "target",
+          "effect": "Spell Effect: Shrink",
+          "duration": "5 minutes",
+          "rules": [
+            "CreatureSize"
+          ]
+        },
+        {
+          "name": "Runic Body",
+          "recipient": "target",
+          "effect": "Spell Effect: Runic Body",
+          "duration": "1 minutes",
+          "rules": [
+            "ItemAlteration",
+            "ItemAlteration"
+          ]
+        },
+        {
+          "name": "Lashunta's Life Bubble",
+          "recipient": "target",
+          "effect": "Spell Effect: Lashunta's Life Bubble",
+          "duration": "8 hours",
+          "rules": [
+            "FlatModifier"
+          ]
+        },
+        {
+          "name": "Countless Eyes",
+          "recipient": "target",
+          "effect": "Spell Effect: Countless Eyes",
+          "duration": "1 minutes",
+          "rules": [
+            "RollOption",
+            "AdjustDegreeOfSuccess"
+          ]
+        },
+        {
+          "name": "Dragon Wings",
+          "recipient": "self",
+          "effect": "Spell Effect: Dragon Wings",
+          "duration": "1 minutes",
+          "rules": [
+            "BaseSpeed"
+          ]
+        },
+        {
+          "name": "Angelic Wings",
+          "recipient": "self",
+          "effect": "Spell Effect: Angelic Wings",
+          "duration": "3 rounds",
+          "rules": [
+            "BaseSpeed",
+            "TokenLight"
+          ]
+        },
+        {
+          "name": "Stormwind Flight",
+          "recipient": "self",
+          "effect": "Spell Effect: Stormwind Flight",
+          "duration": "1 minutes",
+          "rules": [
+            "BaseSpeed"
+          ]
+        },
+        {
+          "name": "Weapon Trance",
+          "recipient": "self",
+          "effect": "Spell Effect: Weapon Trance",
+          "duration": "1 minutes",
+          "rules": [
+            "ActiveEffectLike"
+          ]
+        },
+        {
+          "name": "Speaking Sky",
+          "recipient": "self",
+          "effect": "Spell Effect: Speaking Sky",
+          "duration": "1 rounds",
+          "rules": [
+            "Sense"
+          ]
+        },
+        {
+          "name": "Untwisting Iron Augmentation",
+          "recipient": "self",
+          "effect": "Spell Effect: Untwisting Iron Augmentation",
+          "duration": "1 minutes",
+          "rules": [
+            "AdjustStrike",
+            "AdjustStrike",
+            "ItemAlteration",
+            "FlatModifier",
+            "AdjustStrike"
+          ]
+        },
+        {
+          "name": "Word of Truth",
+          "recipient": "self",
+          "effect": "Spell Effect: Word of Truth",
+          "duration": "1 minutes",
+          "rules": [
+            "FlatModifier"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "reactionBuffs",
+      "passed": true,
+      "at": "2026-09-26T06:15:27.556Z",
+      "details": [
+        {
+          "name": "Enduring Might",
+          "recipient": "self",
+          "effect": "Spell Effect: Enduring Might",
+          "duration": "0 rounds (turn-end)",
+          "resistances": [
+            "all-damage 8"
+          ]
+        },
+        {
+          "name": "Flame Barrier",
+          "recipient": "target",
+          "effect": "Spell Effect: Flame Barrier",
+          "duration": "1 rounds (turn-start)",
+          "resistances": [
+            "fire 15"
+          ]
+        },
+        {
+          "name": "Hidebound",
+          "recipient": "target",
+          "effect": "Spell Effect: Hidebound",
+          "duration": "1 rounds (turn-start)",
+          "resistances": [
+            "physical 5"
+          ]
+        },
+        {
+          "name": "Tempt Fate",
+          "recipient": "target",
+          "effect": "Spell Effect: Tempt Fate",
+          "duration": "1 rounds (turn-start)",
+          "resistances": []
+        }
+      ]
+    }
+  ]
+}

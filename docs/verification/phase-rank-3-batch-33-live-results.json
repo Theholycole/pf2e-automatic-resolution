@@ -1,0 +1,26 @@
+{
+  "label": "rank3Batch33",
+  "passed": true,
+  "at": "2026-10-02T14:20:30.500Z",
+  "details": {
+    "batch33": {
+      "applause": {
+        "supported": true,
+        "slowed": 1,
+        "manipulate": true
+      },
+      "isolation": {
+        "supported": true,
+        "invisible": [
+          false,
+          false
+        ],
+        "notes": [
+          "3 rounds",
+          "3 rounds"
+        ],
+        "inaudible": true
+      }
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "label": "rank3Batch54",
+  "passed": true,
+  "at": "2026-10-02T18:57:59.706Z",
+  "details": {
+    "batch54": {
+      "level": "guided",
+      "terrifying": {
+        "conditions": [
+          "frightened 1",
+          "stupefied 2"
+        ],
+        "effects": [
+          "Overwhelming Memory: Frightened 1",
+          "Overwhelming Memory: Stupefied 2"
+        ]
+      },
+      "gleeful": {
+        "conditions": [],
+        "effects": [
+          "Overwhelming Memory: Can't use reactions"
+        ]
+      },
+      "tragic": {
+        "conditions": [
+          "dazzled",
+          "stupefied 3"
+        ],
+        "effects": [
+          "Overwhelming Memory: Dazzled",
+          "Overwhelming Memory: Stupefied 3"
+        ]
+      },
+      "romantic": {
+        "conditions": [],
+        "effects": []
+      }
+    }
+  }
+}

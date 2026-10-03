@@ -1,0 +1,28 @@
+{
+  "label": "rank5Batch62",
+  "passed": true,
+  "at": "2026-10-03T05:10:03.941Z",
+  "details": {
+    "batch62": {
+      "asked": [
+        true,
+        true,
+        true
+      ],
+      "cast": [
+        "deafened+clumsy1",
+        "deafened+clumsy2",
+        "deafened+clumsy2"
+      ],
+      "pop": {
+        "status": "removed",
+        "degree": "success"
+      },
+      "popped": "clumsy2",
+      "insideSave": 0,
+      "successAfter": "deafened+clumsy1",
+      "outsideSave": true,
+      "saved": "-"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "label": "rank4Batch132",
+  "passed": true,
+  "at": "2026-10-03T10:28:55.070Z",
+  "details": {
+    "batch132": {
+      "green": {
+        "degree": 3,
+        "damage": 50,
+        "card": true
+      },
+      "intense": {
+        "degree": 3,
+        "colors": [
+          "Intense Color",
+          "Red"
+        ],
+        "condition": "Blinded",
+        "damage": 80,
+        "held": true
+      },
+      "indigo": {
+        "degree": 3,
+        "borrowed": "Warp Mind"
+      }
+    }
+  }
+}

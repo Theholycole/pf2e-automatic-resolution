@@ -1,0 +1,29 @@
+{
+  "label": "rank4Batch45",
+  "passed": true,
+  "at": "2026-10-02T19:59:47.168Z",
+  "details": {
+    "batch45": {
+      "twoFailed": [
+        [
+          "off-guard",
+          "stupefied"
+        ],
+        [
+          "off-guard",
+          "stupefied",
+          "enfeebled",
+          "clumsy"
+        ]
+      ],
+      "oneFailed": [
+        [
+          "off-guard"
+        ],
+        [
+          "off-guard"
+        ]
+      ]
+    }
+  }
+}

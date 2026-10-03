@@ -1,0 +1,40 @@
+{
+  "label": "rank3Batch84",
+  "passed": true,
+  "at": "2026-10-03T04:17:00.939Z",
+  "details": {
+    "batch84": {
+      "cast": [
+        "clumsy2",
+        "clumsy2",
+        "clumsy1"
+      ],
+      "turns": [
+        "clumsy3,clumsy2",
+        "clumsy3,clumsy3",
+        "clumsy3,clumsy3",
+        "clumsy3,clumsy3",
+        "clumsy4+paralyzed,clumsy3",
+        "clumsy4+paralyzed,clumsy4+paralyzed",
+        "clumsy4+paralyzed,clumsy4+paralyzed",
+        "clumsy4+paralyzed,clumsy4+paralyzed"
+      ],
+      "lowered": [
+        "clumsy3+paralyzed",
+        "clumsy2+paralyzed",
+        "clumsy1+paralyzed",
+        "clumsy0+paralyzed"
+      ],
+      "critActive": "active",
+      "regrown": "clumsy1+paralyzed",
+      "failEnded": {
+        "look": "clumsy0",
+        "status": "ended"
+      },
+      "successEnded": {
+        "look": "clumsy0",
+        "status": "ended"
+      }
+    }
+  }
+}

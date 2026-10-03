@@ -1,0 +1,27 @@
+{
+  "label": "rank4Batch105",
+  "passed": true,
+  "at": "2026-10-03T08:07:17.990Z",
+  "details": {
+    "batch105": {
+      "cast": {
+        "resistance": 5,
+        "maxDice": 10
+      },
+      "lost": [
+        15,
+        15,
+        15,
+        15
+      ],
+      "cold": 10,
+      "prevented": 20,
+      "explode": {
+        "status": "exploded",
+        "formula": "2d6",
+        "statistic": null,
+        "ended": true
+      }
+    }
+  }
+}

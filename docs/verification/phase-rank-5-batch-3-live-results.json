@@ -1,0 +1,20 @@
+{
+  "label": "rank5Batch3",
+  "passed": true,
+  "at": "2026-10-02T11:12:32.259Z",
+  "details": {
+    "batch3": {
+      "supported": true,
+      "unansweredRefused": true,
+      "modifiers": [
+        10,
+        10,
+        8,
+        10
+      ],
+      "casterStunned": 1,
+      "banishedNotes": 2,
+      "targetsUnchanged": true
+    }
+  }
+}

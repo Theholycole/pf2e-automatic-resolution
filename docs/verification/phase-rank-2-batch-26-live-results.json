@@ -1,0 +1,116 @@
+{
+  "case": "rank2Batch26",
+  "date": "2026-10-01",
+  "world": "pftest",
+  "result": {
+    "label": "rank2Batch26",
+    "passed": true,
+    "at": "2026-10-01T20:23:44.030Z",
+    "details": {
+      "batch26": {
+        "card": {
+          "buttons": [
+            "disarm",
+            "shove",
+            "reposition",
+            "trip"
+          ],
+          "map": true
+        },
+        "statistic": {
+          "slug": "general-rules-casting-spellcasting",
+          "mod": 14
+        },
+        "trips": [
+          {
+            "outcome": "failure",
+            "applied": [],
+            "foeProne": false,
+            "hpLost": 0,
+            "casterProne": false,
+            "modifier": 14,
+            "dc": 20
+          },
+          {
+            "outcome": "criticalSuccess",
+            "applied": [
+              "PFTEST P23 Affliction maneuver foe: Prone",
+              "PFTEST P23 Affliction maneuver foe: 4 bludgeoning"
+            ],
+            "foeProne": true,
+            "hpLost": 4,
+            "casterProne": false,
+            "modifier": 14,
+            "dc": 20
+          },
+          {
+            "outcome": "criticalSuccess",
+            "applied": [
+              "PFTEST P23 Affliction maneuver foe: Prone",
+              "PFTEST P23 Affliction maneuver foe: 4 bludgeoning"
+            ],
+            "foeProne": true,
+            "hpLost": 4,
+            "casterProne": false,
+            "modifier": 14,
+            "dc": 20
+          },
+          {
+            "outcome": "criticalFailure",
+            "applied": [
+              "PFTEST P23 Affliction Telekinetic Maneuver caster: Prone"
+            ],
+            "foeProne": false,
+            "hpLost": 0,
+            "casterProne": true,
+            "modifier": 14,
+            "dc": 20
+          },
+          {
+            "outcome": "criticalSuccess",
+            "applied": [
+              "PFTEST P23 Affliction maneuver foe: Prone",
+              "PFTEST P23 Affliction maneuver foe: 3 bludgeoning"
+            ],
+            "foeProne": true,
+            "hpLost": 3,
+            "casterProne": false,
+            "modifier": 14,
+            "dc": 20
+          },
+          {
+            "outcome": "success",
+            "applied": [
+              "PFTEST P23 Affliction maneuver foe: Prone"
+            ],
+            "foeProne": true,
+            "hpLost": 0,
+            "casterProne": false,
+            "modifier": 14,
+            "dc": 20
+          }
+        ],
+        "disarmTries": [
+          "failure",
+          "success"
+        ],
+        "disarm": {
+          "outcome": "success",
+          "applied": [
+            "PFTEST P23 Affliction maneuver foe: Effect: Disarm (Success) (longsword)"
+          ],
+          "effect": true,
+          "attack": 6,
+          "casterOffGuard": false
+        },
+        "vanish": {
+          "kind": "spell-maneuver",
+          "buttons": [
+            "disarm"
+          ],
+          "notes": 6
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "label": "rank4Batch101",
+  "passed": true,
+  "at": "2026-10-03T04:51:54.433Z",
+  "details": {
+    "batch101": {
+      "cast": {
+        "kind": "mirror-duplicate",
+        "duplicate": true,
+        "dc": 24
+      },
+      "failure": {
+        "degree": "failure",
+        "duplicate": false,
+        "status": "ended",
+        "effect": "Mirror's Misfortune: misfortune (2 attack rolls)",
+        "rule": {
+          "key": "RollTwice",
+          "selector": [
+            "attack-roll"
+          ],
+          "keep": "lower",
+          "removeAfterRoll": false,
+          "slug": null,
+          "priority": 100,
+          "ignored": false,
+          "predicate": [],
+          "requiresEquipped": null,
+          "requiresInvestment": null
+        },
+        "duration": {
+          "value": 1,
+          "unit": "hours",
+          "expiry": "turn-start",
+          "sustained": false
+        },
+        "firstDice": 2,
+        "afterFirst": "Mirror's Misfortune: misfortune (1 attack roll)",
+        "secondDice": 2,
+        "afterSecond": null
+      },
+      "critical": {
+        "degree": "criticalFailure",
+        "duplicate": false,
+        "status": "ended",
+        "effect": "Mirror's Misfortune: misfortune (4 attack rolls)"
+      },
+      "success": {
+        "degree": "success",
+        "duplicate": false,
+        "status": "ended",
+        "effect": null
+      }
+    }
+  }
+}

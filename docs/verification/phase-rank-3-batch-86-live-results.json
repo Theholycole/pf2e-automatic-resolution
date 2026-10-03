@@ -1,0 +1,34 @@
+{
+  "label": "rank3Batch86",
+  "passed": true,
+  "at": "2026-10-03T04:31:21.690Z",
+  "details": {
+    "batch86": {
+      "three": {
+        "formula": "4d6 slashing",
+        "total": 8,
+        "lost": 8,
+        "offered": true,
+        "terrain": true,
+        "hazard": null
+      },
+      "rounds": {
+        "formula": "10d6 piercing",
+        "total": 41,
+        "lost": 41,
+        "hazard": {
+          "formula": "(2+floor((5-3)/2)*1)d6",
+          "type": "piercing",
+          "label": "the weapons"
+        }
+      },
+      "enter": 9,
+      "sameTurnEnd": 0,
+      "nextTurnEnd": 14,
+      "types": [
+        "3d6 piercing",
+        "3d6 piercing"
+      ]
+    }
+  }
+}

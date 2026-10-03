@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
+import { fileURLToPath } from "node:url";
 
 import {
     analyzeResidualProse,
@@ -23,8 +24,10 @@ import {
     selectRankBranch
 } from "../scripts/runtime-core.js";
 
-const contentRoot = "/home/theholycole/Documents/ChatGPT/pf2e/spells/spells";
-const effectRoot = "/home/theholycole/Documents/ChatGPT/pf2e/spell-effects";
+const fixtureRoot = process.env.PF2E_CONTENT_ROOT
+    ?? fileURLToPath(new URL("../.cache/pf2e-test-fixtures", import.meta.url));
+const contentRoot = `${fixtureRoot}/spells/spells`;
+const effectRoot = `${fixtureRoot}/spell-effects`;
 
 async function fixture(relativePath) {
     return JSON.parse(await readFile(`${contentRoot}/${relativePath}`, "utf8"));
@@ -43,7 +46,8 @@ async function effectCatalog(...relativePaths) {
                 ruleKeys: [...new Set(rules.map(rule => rule.key).filter(Boolean))],
                 requiresConfiguration: rules.some(rule => rule.key === "ChoiceSet"),
                 removesAfterRoll: rules.some(rule => rule.removeAfterRoll != null)
-            }
+            },
+            mechanics: { rules, duration: source.system?.duration ?? null, start: source.system?.start ?? null }
         }];
     }));
     return new Map(entries);
@@ -509,13 +513,15 @@ test("keeps choice variants guided when their native Effects contain auras", asy
 });
 
 test("keeps degree-dependent, aura, and non-Actor native effects unscoped", async () => {
+    // Tangle Vine's Effect, linked after its attack sentence, is the attack table's degree Effect (scoped to the hit row).
     const tangleVine = compileAbility(await fixture("cantrip/tangle-vine.json"));
     assert.equal(tangleVine.nativeEffects.onUse.length, 0);
-    assert.ok(tangleVine.nativeEffects.unscoped[0].triggerAnalysis.reasons.includes("degree-sections-present"));
+    assert.equal(tangleVine.nativeEffects.unscoped.length, 0);
+    assert.equal(tangleVine.resolution.outcomes.success.nativeEffects[0].reference, "Spell Effect: Tangle Vine");
 
+    // Protection's heightened emanation is a caster option the Effect route carries (rank 3+), not an aura.
     const protection = compileAbility(await fixture("rank-1/protection.json"));
-    assert.equal(protection.nativeEffects.onUse.length, 0);
-    assert.ok(protection.nativeEffects.unscoped[0].triggerAnalysis.reasons.includes("area-or-aura-present"));
+    assert.deepEqual(protection.resolution.heightenedAllies, {minRank: 3, radius: 10, centre: "target", sourceText: protection.resolution.heightenedAllies.sourceText});
 
     const runicWeapon = compileAbility(await fixture("rank-1/runic-weapon.json"));
     assert.equal(runicWeapon.nativeEffects.onUse.length, 0);
@@ -525,13 +531,13 @@ test("keeps degree-dependent, aura, and non-Actor native effects unscoped", asyn
     assert.equal(shillelagh.nativeEffects.onUse.length, 0);
     assert.ok(shillelagh.nativeEffects.unscoped[0].triggerAnalysis.reasons.includes("non-actor-target"));
 
+    // (Variable Gravity's option-block link is set aside since rank 4 batch 117: the gravities are the module's own rule-set Effect.)
     const variableGravity = compileAbility(await fixture("rank-4/variable-gravity.json"));
-    assert.equal(variableGravity.nativeEffects.onUse.length, 0);
-    assert.ok(variableGravity.nativeEffects.unscoped[0].triggerAnalysis.reasons.includes("option-block-link"));
+    assert.equal(variableGravity.resolution.kind, "rule-set");
 
+    // (Chromatic Armor's link is set aside since rank 4 batch 118: the rolled colors are the module's own Effect.)
     const chromaticArmor = compileAbility(await fixture("rank-4/chromatic-armor.json"));
-    assert.equal(chromaticArmor.nativeEffects.onUse.length, 0);
-    assert.ok(chromaticArmor.nativeEffects.unscoped[0].triggerAnalysis.reasons.includes("immediate-application-not-explicit"));
+    assert.equal(chromaticArmor.resolution.kind, "color-armor");
 });
 
 test("assigns the nearest mention-scoped condition duration", () => {
@@ -547,15 +553,19 @@ test("assigns the nearest mention-scoped condition duration", () => {
 });
 
 test("compiles event-based condition expiration", async () => {
+    // "Sickened 1 and Slowed 1 while in the cloud": the Slowed ends on leaving; the Sickened has its own recovery (rank 3 batch 4).
     const stinkingCloud = compileAbility(await fixture("rank-3/stinking-cloud.json"));
-    for (const effect of stinkingCloud.resolution.outcomes.failure.effects) {
-        assert.ok(effect.endsWhen.some(event => event.event === "leave-area"));
-        assert.equal(effect.expirationMode, "event");
-    }
+    const [sickened, slowed] = ["sickened", "slowed"].map(slug => stinkingCloud.resolution.outcomes.failure.effects.find(effect => effect.slug === slug));
+    assert.ok(slowed.endsWhen.some(event => event.event === "leave-area"));
+    assert.equal(slowed.expirationMode, "event");
+    assert.equal(sickened.endsWhen, undefined);
 
     const tether = compileAbility(await fixture("rank-1/tether.json"));
     const immobilized = tether.resolution.outcomes.criticalFailure.effects.find(effect => effect.slug === "immobilized");
-    assert.deepEqual(immobilized.endsWhen.map(event => event.event), ["escape", "spell-ended"]);
+    // "Immobilized until it Escapes or the spell ends" in a 1-minute spell: the spell's minute or an Escape, whichever is first
+    // (batch 58; the spell's Dismiss ends the cast's conditions too).
+    assert.deepEqual(immobilized.endsWhen.map(event => event.event), ["escape"]);
+    assert.deepEqual([immobilized.expirationMode, immobilized.duration.value, immobilized.duration.unit], ["first", 1, "minutes"]);
 
     const enfeeble = compileAbility(await fixture("rank-1/enfeeble.json"));
     const enfeebled = enfeeble.resolution.outcomes.success.effects[0];
@@ -630,9 +640,10 @@ test("compiles actor eligibility and identifies item-only save targets", async (
     const painful = compileAbility(await fixture("rank-4/painful-vibrations.json"));
     assert.deepEqual(painful.targeting.actorConstraints.predicates, [{ kind: "living-creature" }]);
 
+    // Bandit's Doom wards an item (its cast target); only the creature that triggers it saves.
     const banditsDoom = compileAbility(await fixture("rank-5/bandits-doom.json"));
-    assert.equal(banditsDoom.targeting.actorConstraints.supportsActorTargets, false);
-    assert.equal(banditsDoom.targeting.actorConstraints.complete, true);
+    assert.equal(banditsDoom.resolution.storedTrigger.castTarget, "1 item of 2 Bulk or less");
+    assert.equal(banditsDoom.targeting.target, "1 creature");
 
     for (const path of ["rank-4/deathless-march.json", "rank-4/enervation.json"]) {
         const areaSpell = compileAbility(await fixture(path));
@@ -711,7 +722,11 @@ test("compiles condition lifetimes that depend on another condition", async () =
 });
 
 test("compiles recurring secondary-save condition deltas", async () => {
-    const lignify = compileAbility(await fixture("rank-6/lignify.json"));
+    // (Lignify's own text now takes the petrifying-rows reader — "varies" duration, an escalating Slowed: rank 6 batch 4. With a fixed duration that reader
+    // refuses it, and the generic secondary-save reader below still reads the deltas.)
+    const source = await fixture("rank-6/lignify.json");
+    source.system.duration = { value: "1 minute", sustained: false };
+    const lignify = compileAbility(source);
     const secondary = lignify.resolution.outcomes.failure.followUps[0];
 
     assert.equal(secondary.timing.event, "turn-end");
@@ -771,28 +786,32 @@ test("attaches degree-scoped conditions only when sections belong to the primary
     );
     assert.equal(gaspingMarsh.resolution.outcomes.failure.effects[0].duration, null);
 
+    // (Firework Blast's table belongs to its second save: it's on the failing rows' follow-up saves, not the primary rows — rank 3 batch 21.)
     const fireworkBlast = compileAbility(await fixture("rank-3/firework-blast.json"));
     assert.deepEqual(fireworkBlast.resolution.outcomes.failure.effects, []);
-    assert.ok(fireworkBlast.diagnostics.some(entry => entry.code === "DEGREE_SECTION_SCOPE_AMBIGUOUS"));
+    assert.deepEqual(fireworkBlast.resolution.outcomes.failure.followUps[0].outcomes.failure.effects.map(effect => effect.slug), ["blinded", "deafened"]);
 
     const pyrotechnics = compileAbility(await fixture("rank-3/pyrotechnics.json"));
     assert.ok(!pyrotechnics.automation.compiledCapabilities.includes("secondary-saves"));
 });
 
 test("withholds complete automation when basic-save prose has extra mechanics", async () => {
+    // (Gasping Marsh is read as its written four rows since rank 3 batch 49: a sustained lingering area, no basic gate.)
     const gaspingMarsh = compileAbility(await fixture("rank-3/gasping-marsh.json"));
     assert.equal(gaspingMarsh.automation.level, "guided");
-    assert.ok(gaspingMarsh.compilerEvidence.simpleBasicSaveGate.reasons.includes("sustained"));
+    assert.equal(gaspingMarsh.compilerEvidence.writtenBasicRows, true);
 
     const fireworkBlast = compileAbility(await fixture("rank-3/firework-blast.json"));
     assert.equal(fireworkBlast.automation.level, "guided");
     assert.ok(fireworkBlast.compilerEvidence.simpleBasicSaveGate.reasons.includes("inline-checks-present"));
 
+    // (Blazing Dive's Fly is now the caster's reminder, its blast the plain basic save: rank 3 batch 27.)
     const blazingDive = compileAbility(await fixture("rank-3/blazing-dive.json"));
-    assert.equal(blazingDive.automation.level, "guided");
-    assert.ok(blazingDive.compilerEvidence.simpleBasicSaveGate.reasons.includes("action-language-present"));
+    assert.ok(blazingDive.compilerEvidence.moveBlast);
+    assert.ok(blazingDive.resolution.reminders.some(reminder => reminder.kind === "caster-movement" && /Flies 15 feet straight up/.test(reminder.text)));
 
+    // (Dive and Breach's Leaps are now the player's note, its splashes the plain basic save: rank 3 batch 58.)
     const diveAndBreach = compileAbility(await fixture("rank-3/dive-and-breach.json"));
-    assert.equal(diveAndBreach.automation.level, "guided");
-    assert.ok(diveAndBreach.compilerEvidence.simpleBasicSaveGate.reasons.includes("action-references-present"));
+    assert.ok(diveAndBreach.compilerEvidence.splashPath);
+    assert.ok(diveAndBreach.resolution.dataNotes.some(note => /^Move yourself: Leap 10 feet/.test(note)));
 });

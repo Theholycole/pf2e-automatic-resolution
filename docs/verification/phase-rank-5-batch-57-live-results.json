@@ -1,0 +1,34 @@
+{
+  "label": "rank5Batch57",
+  "passed": true,
+  "at": "2026-10-03T03:07:38.066Z",
+  "details": {
+    "batch57": {
+      "area": {
+        "type": "burst",
+        "value": 25
+      },
+      "terrain": [
+        [
+          "walk",
+          "fly",
+          "swim",
+          "burrow",
+          "deploy",
+          "travel",
+          "drive",
+          "jump",
+          "crawl",
+          "climb",
+          "blink",
+          "displace"
+        ]
+      ],
+      "move": {
+        "formula": "3d4 + 3 piercing",
+        "total": 12,
+        "lost": 12
+      }
+    }
+  }
+}

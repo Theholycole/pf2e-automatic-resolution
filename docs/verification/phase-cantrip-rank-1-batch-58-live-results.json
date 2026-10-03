@@ -1,0 +1,81 @@
+{
+  "batch": "cantrip-rank-1-batch-58",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch58",
+    "passed": true,
+    "details": {
+      "tether": {
+        "speeds": [
+          [
+            25,
+            20
+          ],
+          [
+            25,
+            15
+          ],
+          [
+            25,
+            25
+          ]
+        ],
+        "notes": [
+          [
+            "1 minutes"
+          ],
+          [
+            "1 minutes"
+          ],
+          [
+            "1 minutes"
+          ]
+        ],
+        "immobilized": true,
+        "escape": true,
+        "immobilizedDuration": "1 minutes"
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch58",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "rank1Batch10",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cantripBatch2",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

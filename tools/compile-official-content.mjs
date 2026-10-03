@@ -48,17 +48,44 @@ for (const file of effectFiles) {
             ruleKeys: [...new Set(rules.map(rule => rule.key).filter(Boolean))],
             requiresConfiguration: rules.some(rule => rule.key === "ChoiceSet"),
             removesAfterRoll: rules.some(rule => rule.removeAfterRoll != null)
-        }
+        },
+        mechanics: { rules, duration: effect.system?.duration ?? null, start: effect.system?.start ?? null },
+        // A counter or rolled badge (e.g. temporary Hit Points "(@item.level)d4"), kept outside the mechanics.
+        ...(effect.system?.badge ? { badge: effect.system.badge } : {})
     });
 }
 
 const files = await jsonFiles(spellRoot);
 const plans = [];
+// Every spell by its compendium UUID, for a spell that "functions as" another.
+const sources = await Promise.all(files.map(async file => JSON.parse(await readFile(file, "utf8"))));
+const referencedSpells = new Map(sources.filter(source => source._id).map(source => [`Compendium.pf2e.spells-srd.Item.${source._id}`, source]));
 
-for (const file of files) {
-    const source = JSON.parse(await readFile(file, "utf8"));
+for (const [index, file] of files.entries()) {
+    const source = sources[index];
     const relativeFile = path.relative(contentRoot, file);
-    plans.push(compileAbility(source, { sourceFile: relativeFile, nativeEffectCatalog }));
+    const plan = compileAbility(source, { sourceFile: relativeFile, nativeEffectCatalog, referencedSpells });
+    // PF2e variants (overlays, e.g. action counts) are cast as their own items; compile each one too.
+    const overlays = Object.entries(source.system?.overlays ?? {}).filter(([, overlay]) => overlay?.overlayType === "override");
+    if (overlays.length) plan.variantPlans = overlays.map(([id, overlay]) => {
+        const variant = structuredClone(source);
+        variant.system = mergeDeep(variant.system, structuredClone(overlay.system ?? {}));
+        delete variant.system.overlays;
+        for (const entry of Object.values(variant.system.damage ?? {})) if (!Array.isArray(entry.kinds)) entry.kinds = ["damage"];
+        const compiled = compileAbility(variant, { sourceFile: relativeFile, nativeEffectCatalog, referencedSpells });
+        compiled.source.variant = { overlayId: id, time: variant.system.time?.value ?? null };
+        return compiled;
+    });
+    plans.push(plan);
+}
+
+/** Foundry-style deep merge for an override overlay. */
+function mergeDeep(target, patch) {
+    for (const [key, value] of Object.entries(patch)) {
+        target[key] = value && typeof value === "object" && !Array.isArray(value) && target[key] && typeof target[key] === "object" && !Array.isArray(target[key])
+            ? mergeDeep(target[key], value) : value;
+    }
+    return target;
 }
 
 const nativeEffectReferences = plans.reduce((total, plan) =>

@@ -1,0 +1,22 @@
+{
+  "label": "rank5Batch93",
+  "passed": true,
+  "at": "2026-10-03T13:02:05.481Z",
+  "details": {
+    "batch93": {
+      "kind": "dance-darkness",
+      "cast": {
+        "degree": 0,
+        "dc": 26,
+        "seconds": 6,
+        "radius": 10,
+        "darkness": {
+          "mode": 0,
+          "modifier": 1
+        },
+        "notes": 3,
+        "concealedNote": true
+      }
+    }
+  }
+}

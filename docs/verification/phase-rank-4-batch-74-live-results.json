@@ -1,0 +1,32 @@
+{
+  "label": "rank4Batch74",
+  "passed": true,
+  "at": "2026-10-02T23:37:57.477Z",
+  "details": {
+    "batch74": {
+      "foes": [
+        {
+          "stunned": 0,
+          "notes": []
+        },
+        {
+          "stunned": 1,
+          "notes": []
+        },
+        {
+          "stunned": 0,
+          "notes": [
+            "1 rounds turn-start null"
+          ]
+        },
+        {
+          "stunned": 0,
+          "notes": [
+            "3 rounds turn-end {\"timing\":\"turn-end\",\"mode\":\"reduce\",\"statistic\":\"will\"}"
+          ]
+        }
+      ],
+      "recorded": 3
+    }
+  }
+}

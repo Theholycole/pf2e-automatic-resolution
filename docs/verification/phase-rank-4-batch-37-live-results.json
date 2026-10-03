@@ -1,0 +1,18 @@
+{
+  "label": "rank4Batch37",
+  "passed": true,
+  "at": "2026-10-02T17:40:18.508Z",
+  "details": {
+    "batch37": {
+      "kind": "hazard-area",
+      "sustained": true,
+      "undead": {
+        "lost": 16,
+        "roll": "6d6 spirit",
+        "total": 16
+      },
+      "livingLost": 0,
+      "status": "active"
+    }
+  }
+}

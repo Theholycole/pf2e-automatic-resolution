@@ -1,0 +1,56 @@
+{
+  "generatedAt": "2026-10-02T22:11:39.221Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "results": [
+    {
+      "label": "rank5Batch37",
+      "passed": true,
+      "at": "2026-10-02T22:11:20.361Z",
+      "details": {
+        "batch37": {
+          "damage": {
+            "formula": "12d6 piercing",
+            "total": 33,
+            "lost": 33
+          },
+          "card": true,
+          "debug": [
+            [
+              "growths target",
+              2000,
+              500,
+              0
+            ],
+            [
+              "growths near",
+              2300,
+              500,
+              15
+            ],
+            [
+              "growths far",
+              2000,
+              1300,
+              40
+            ]
+          ],
+          "savers": [
+            "growths target",
+            "growths near"
+          ],
+          "sickened": [
+            1,
+            2,
+            0
+          ],
+          "immune": [
+            true,
+            true
+          ],
+          "noCardOnCritical": true
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "batch": "cantrip-rank-1-batch-79",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch79",
+    "passed": true,
+    "details": {
+      "chosen": "mental",
+      "cardChoice": "mental",
+      "formula": "2d4 mental",
+      "total": 2,
+      "lost": 2,
+      "ended": true,
+      "markerGone": true
+    }
+  },
+  "runs": [
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch79",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "longTailBatch3",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch52",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

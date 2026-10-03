@@ -1,0 +1,113 @@
+{
+  "generated": "2026-09-25T21:31:09.484Z",
+  "handler": {
+    "id": "pseudo-afflictions",
+    "version": "0.5.1"
+  },
+  "note": "Last six affliction-family spells. The first marinersCurse run failed because PF2e re-evaluates conditional GrantItem only on actor updates; the module now nudges the actor when the curse toggle changes.",
+  "results": [
+    {
+      "label": "environment",
+      "passed": true,
+      "at": "2026-09-25T21:27:00.524Z",
+      "details": {
+        "foundry": "14.367",
+        "pf2e": "8.5.0",
+        "module": "0.8.2",
+        "world": "pftest",
+        "modules": [
+          "pf2e-automatic-resolution",
+          "pseudo-afflictions"
+        ]
+      }
+    },
+    {
+      "label": "cordyceps",
+      "passed": true,
+      "at": "2026-09-25T21:27:01.978Z",
+      "details": {
+        "blocked": "Choose the compelled behaviour before finalizing.",
+        "effect": "Affliction Effect: Cordyceps Command",
+        "stage": 1,
+        "card": [
+          "Afflicted: Cordyceps Toxin, stage 1 (compelled behaviour: Descend) — handled by Pseudo Afflictions (Affliction Effect: Cordyceps Command, stage 1)"
+        ]
+      }
+    },
+    {
+      "label": "marinersCurse",
+      "passed": true,
+      "at": "2026-09-25T21:29:46.912Z",
+      "details": {
+        "success": 1,
+        "critical": {
+          "floor": 1,
+          "curse": "Mariner's Curse (curse)"
+        },
+        "failure": {
+          "slowedBefore": false,
+          "slowedAtSea": 1,
+          "slowedAshore": 0
+        }
+      }
+    },
+    {
+      "label": "care",
+      "passed": true,
+      "at": "2026-09-25T21:27:18.866Z",
+      "details": {
+        "restorativeMoment": [
+          "doomed 1 → 0",
+          "drained 2 → 1",
+          "Affliction Effect: Spider Sting: critical success — cured",
+          "Restorative Moment: temporarily immune (1 days)"
+        ],
+        "restorativeMomentAgain": [
+          "PFTEST P23 Affliction care moment can't benefit again yet (Restorative Moment: temporarily immune)."
+        ],
+        "doomedDrained": {
+          "doomedBefore": 1,
+          "drainedBefore": 2,
+          "doomed": 0,
+          "drained": 1
+        },
+        "lessen": [
+          "Affliction Effect: Spider Sting: stage 2 → 1",
+          "Restoration: benefited today (1 days)"
+        ],
+        "reduce": [
+          "clumsy 2 → 0",
+          "Restoration: benefited today (1 days)"
+        ],
+        "takeItsCourse": [
+          "Affliction Effect: Spider Sting: critical failure (-2) — stage 1 → 2"
+        ],
+        "unwilling": [
+          "Unwilling will save: success (DC 24)",
+          "Take its Course is negated."
+        ],
+        "persistent": [
+          "Persistent Damage (2d6 poison): took 10 damage now",
+          "Persistent Damage (2d6 poison): flat check DC 20 — continues"
+        ],
+        "expulsion-counteracted": [
+          "Counteract check vs DC 5: critical success (rank 5 vs 3)",
+          "Test emotion counteracted counteracted"
+        ],
+        "expulsion-resonance": [
+          "Counteract check vs DC 80: critical failure (rank 5 vs 3)",
+          "Test emotion resonance not counteracted; Ectoplasmic Expulsion: resonance against Test emotion resonance (+2 for 1 hours)"
+        ]
+      }
+    }
+  ],
+  "dialog": {
+    "spell": "Restoration",
+    "manualDialog": true,
+    "result": [
+      "clumsy 2 → 1",
+      "enfeebled 1 → 0",
+      "Restoration: benefited today (1 day)"
+    ]
+  }
+}

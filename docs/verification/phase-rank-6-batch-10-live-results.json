@@ -1,0 +1,31 @@
+{
+ "label": "rank6Batch10",
+ "passed": true,
+ "at": "2026-10-03T19:36:04.815Z",
+ "details": {
+  "batch10": {
+   "chroma": {
+    "kind": "image-decoys",
+    "colors": 4,
+    "images": 2,
+    "color": {
+     "face": 1,
+     "label": "Red",
+     "applied": true
+    },
+    "lost": 10,
+    "frightened": 0
+   },
+   "ocean": {
+    "kind": "spell-note",
+    "note": "1 minutes",
+    "counteract": true
+   },
+   "cryo": {
+    "kind": "spell-note",
+    "refused": "Cryostasis: PFTEST P23 Affliction cryo healthy isn't a valid target (1 dying creature).",
+    "note": "1 hours"
+   }
+  }
+ }
+}

@@ -1,0 +1,21 @@
+{
+  "label": "rank5Batch78",
+  "passed": true,
+  "at": "2026-10-03T11:54:13.213Z",
+  "details": {
+    "batch78": {
+      "kind": "countermeasure",
+      "on": {
+        "effects": 2,
+        "ac": 2,
+        "fort": 2,
+        "willDC": 2,
+        "b": true
+      },
+      "off": {
+        "ac": 0,
+        "fort": 0
+      }
+    }
+  }
+}

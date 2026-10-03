@@ -1,0 +1,73 @@
+{
+  "batch": 156,
+  "spells": [
+    "Murmuration",
+    "Curse of Recoil",
+    "Healer's Blessing",
+    "Song of the Soul",
+    "Crushing Ground",
+    "Hippocampus Retreat"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch156",
+      "passed": true,
+      "at": "2026-09-29T00:26:40.999Z",
+      "details": {
+        "sixCorrections": {
+          "murmuration": {
+            "hidePenalty": [],
+            "afterHide": true,
+            "attackPenalty": [
+              -2
+            ],
+            "afterAttack": false
+          },
+          "recoil": {
+            "effect": "Spell Effect: Curse of Recoil (Critical Failure)",
+            "first": [
+              -2
+            ],
+            "locked": "[\"item:id:Rf31ckaD7J5YRpbZ\"]",
+            "other": [],
+            "again": [
+              -2
+            ],
+            "lockedToBow": true
+          },
+          "healersBlessing": {
+            "first": 7,
+            "second": 5,
+            "messageIsHealing": true,
+            "afterRecast": 7
+          },
+          "song": {
+            "bound": true,
+            "near": "[]",
+            "far": "[\"pf2e-automatic-resolution:out-of-range\"]",
+            "back": "[]"
+          },
+          "crushing": {
+            "before": [
+              "off-guard",
+              "immobilized"
+            ],
+            "endsOnly": "immobilized",
+            "after": [
+              "off-guard"
+            ],
+            "effectStays": true,
+            "escapable": false
+          },
+          "hippocampus": {
+            "before": true,
+            "after": false
+          }
+        }
+      }
+    }
+  ]
+}

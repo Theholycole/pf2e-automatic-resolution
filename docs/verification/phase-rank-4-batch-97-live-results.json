@@ -1,0 +1,21 @@
+{
+  "label": "rank4Batch97",
+  "passed": true,
+  "at": "2026-10-03T03:20:54.302Z",
+  "details": {
+    "batch97": {
+      "start": {
+        "caster": true,
+        "enemy": false
+      },
+      "bolts": {
+        "formula": "4d6 force",
+        "total": 14,
+        "lost": 14
+      },
+      "left": {
+        "caster": false
+      }
+    }
+  }
+}

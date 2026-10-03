@@ -1,0 +1,62 @@
+{
+  "batch": "cantrip-rank-1-batch-62",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "world": "pftest",
+  "case": {
+    "label": "cr1Batch62",
+    "passed": true,
+    "details": {
+      "wrongTargets": "Defended by Spirits: target 1 ally and 1 enemy.",
+      "marker": "Defended by Spirits (against PFTEST P23 Affliction spirits foe)",
+      "onCaster": false,
+      "sustained": true,
+      "otherRefused": "Defended by Spirits: it only harms PFTEST P23 Affliction spirits foe.",
+      "hit": {
+        "total": 6,
+        "formula": "1d6 spirit",
+        "lost": 6
+      },
+      "asked": true,
+      "afterSustained": "active",
+      "missed": {
+        "status": "ended",
+        "reason": "missed-sustain",
+        "marker": false
+      }
+    }
+  },
+  "runs": [
+    {
+      "n": "cr1Batch62",
+      "passed": false,
+      "note": "first run: harness looked up the record by the wrong field"
+    },
+    {
+      "n": "cr1Batch62",
+      "passed": false,
+      "note": "second run: behaviour correct; the name assertion missed the fixture prefix"
+    },
+    {
+      "n": "cr1Batch62",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    },
+    {
+      "n": "cr1Batch29",
+      "passed": true
+    },
+    {
+      "n": "cleanup",
+      "passed": true
+    }
+  ],
+  "leftover": {
+    "combats": 0,
+    "p23Actors": 0,
+    "regions": 0
+  }
+}

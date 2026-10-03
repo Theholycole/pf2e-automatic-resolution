@@ -1,0 +1,15 @@
+{
+  "label": "rank4Batch128",
+  "passed": true,
+  "at": "2026-10-03T10:12:09.763Z",
+  "details": {
+    "batch128": {
+      "hp": 60,
+      "note": true,
+      "strike": {
+        "formula": "4d4 mental",
+        "lost": 12
+      }
+    }
+  }
+}

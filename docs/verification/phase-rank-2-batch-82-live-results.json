@@ -1,0 +1,50 @@
+{
+  "label": "rank2Batch82",
+  "passed": true,
+  "at": "2026-10-02T01:59:38.408Z",
+  "details": {
+    "batch82": {
+      "level": "automatic",
+      "refused": "Oil-Slicked Walls: draw a region over the affected walls and select it first.",
+      "success": {
+        "climb": [
+          -5
+        ],
+        "plain": [],
+        "outsider": false,
+        "left": false
+      },
+      "critical": {
+        "climb": [
+          -10
+        ],
+        "note": true,
+        "ended": true
+      },
+      "failure": 0,
+      "slip": {
+        "effects": [
+          true,
+          true
+        ],
+        "casterCards": 1,
+        "caster": {
+          "act": "reflex",
+          "degree": 0,
+          "prone": true
+        },
+        "prone": true,
+        "helper": {
+          "act": "exempt",
+          "prone": false
+        },
+        "helperProne": false,
+        "again": "This check is resolved.",
+        "ended": [
+          false,
+          false
+        ]
+      }
+    }
+  }
+}

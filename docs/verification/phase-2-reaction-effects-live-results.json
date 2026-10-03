@@ -1,0 +1,54 @@
+{
+  "generated": "2026-09-25T22:08:29.902Z",
+  "note": "Practice Makes Perfect was applied in this run but is now blocked: its PF2e Effect is unlimited and applies to every skill check, not only the triggering one.",
+  "results": [
+    {
+      "label": "reactionBuffs",
+      "passed": true,
+      "at": "2026-09-25T22:07:17.500Z",
+      "details": [
+        {
+          "name": "Enduring Might",
+          "recipient": "self",
+          "effect": "Spell Effect: Enduring Might",
+          "duration": "0 rounds (turn-end)",
+          "resistances": [
+            "all-damage 8"
+          ]
+        },
+        {
+          "name": "Flame Barrier",
+          "recipient": "target",
+          "effect": "Spell Effect: Flame Barrier",
+          "duration": "1 rounds (turn-start)",
+          "resistances": [
+            "fire 15"
+          ]
+        },
+        {
+          "name": "Hidebound",
+          "recipient": "target",
+          "effect": "Spell Effect: Hidebound",
+          "duration": "1 rounds (turn-start)",
+          "resistances": [
+            "physical 5"
+          ]
+        },
+        {
+          "name": "Practice Makes Perfect",
+          "recipient": "target",
+          "effect": "Spell Effect: Practice Makes Perfect",
+          "duration": "-1 unlimited (null)",
+          "resistances": []
+        },
+        {
+          "name": "Tempt Fate",
+          "recipient": "target",
+          "effect": "Spell Effect: Tempt Fate",
+          "duration": "1 rounds (turn-start)",
+          "resistances": []
+        }
+      ]
+    }
+  ]
+}

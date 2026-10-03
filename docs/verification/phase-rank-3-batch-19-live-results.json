@@ -1,0 +1,21 @@
+{
+  "label": "rank3Batch19",
+  "passed": true,
+  "at": "2026-10-02T11:48:20.489Z",
+  "details": {
+    "batch19": {
+      "shadow": {
+        "kind": "spell-note",
+        "duration": "1 minutes",
+        "darkvision": true
+      },
+      "water": {
+        "kind": "spell-note",
+        "duration": "1 minutes",
+        "button": true,
+        "countered": true,
+        "result": true
+      }
+    }
+  }
+}

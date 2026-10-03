@@ -1,0 +1,105 @@
+{
+  "case": "rank2Batch21",
+  "date": "2026-09-30",
+  "world": "pftest",
+  "result": {
+    "label": "rank2Batch21",
+    "passed": true,
+    "at": "2026-10-01T00:31:19.415Z",
+    "details": {
+      "batch21": {
+        "ash": {
+          "behaviors": [
+            {
+              "type": "modifyMovementCost",
+              "difficulties": {
+                "walk": 1,
+                "fly": 2,
+                "swim": 1,
+                "burrow": 1,
+                "deploy": 1,
+                "travel": 1,
+                "drive": 1,
+                "jump": 1,
+                "crawl": 1,
+                "climb": 1,
+                "blink": 1,
+                "displace": 1
+              }
+            }
+          ],
+          "smellNote": 1,
+          "atCast": 0,
+          "turnStart": [
+            "Review PFTEST P23 Affliction ash sitter's exposure (started its turn in the area)"
+          ],
+          "formula": "3d4 fire",
+          "total": 8,
+          "lost": 8,
+          "dazzled": [
+            "1 rounds"
+          ],
+          "ended": "ended",
+          "regionLeft": false
+        },
+        "heat": {
+          "initial": "6d6 fire + 3d4 persistent fire",
+          "total": 18,
+          "released": {
+            "rolled": "failure",
+            "degree": "success"
+          },
+          "rows": [
+            {
+              "name": "heat success",
+              "lost": 9,
+              "persistent": []
+            },
+            {
+              "name": "heat failure",
+              "lost": 18,
+              "persistent": [
+                "3d4"
+              ]
+            },
+            {
+              "name": "heat critical",
+              "lost": 36,
+              "persistent": [
+                "2 * 3d4"
+              ]
+            },
+            {
+              "name": "heat release",
+              "lost": 9,
+              "persistent": []
+            }
+          ]
+        },
+        "refused": "ineligible",
+        "cardBefore": {
+          "dyingPlus": true,
+          "dies": true,
+          "caster": true
+        },
+        "knell": {
+          "success": 1,
+          "nearDeath": {
+            "dead": true,
+            "dying": 0
+          },
+          "failure": {
+            "dead": true
+          },
+          "safe": {
+            "dead": false,
+            "dying": 0
+          },
+          "casterEffects": 1,
+          "tempHP": 10,
+          "duration": "10 minutes"
+        }
+      }
+    }
+  }
+}

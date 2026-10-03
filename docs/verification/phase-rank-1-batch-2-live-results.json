@@ -1,0 +1,149 @@
+{
+  "generatedAt": "2026-09-26T20:32:49.947Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "world": "pftest",
+  "results": {
+    "rank1Batch2": {
+      "label": "rank1Batch2",
+      "passed": true,
+      "at": "2026-09-26T20:25:11.205Z",
+      "details": {
+        "frostbite": {
+          "lost": [
+            16,
+            8
+          ],
+          "total": 8,
+          "weakness": [
+            1,
+            null
+          ],
+          "effect": "Spell Effect: Frostbite",
+          "duration": {
+            "value": 1,
+            "unit": "rounds",
+            "expiry": "turn-start",
+            "sustained": false
+          }
+        },
+        "spout": {
+          "offGuard": [
+            true,
+            false
+          ],
+          "areaChoice": true
+        },
+        "cryOfDestruction": {
+          "refused": true,
+          "formula": "1d12 sonic",
+          "lost": 12,
+          "total": 12,
+          "objectReminder": true,
+          "dealtDamageVariant": {
+            "formula": "1d12 sonic",
+            "question": null
+          }
+        },
+        "concordantChoir": {
+          "one": {
+            "formula": "1d4 sonic",
+            "lost": [
+              1
+            ]
+          },
+          "two": {
+            "formula": "2d4 sonic",
+            "lost": [
+              3,
+              1
+            ],
+            "total": 3
+          }
+        },
+        "disorientingFlash": {
+          "formula": "2d10 sonic",
+          "dazzled": true,
+          "duration": {
+            "value": 1,
+            "unit": "rounds",
+            "expiry": "turn-end",
+            "sustained": false
+          }
+        },
+        "forceRain": {
+          "formula": "4d6 force",
+          "lost": 4,
+          "total": 8
+        }
+      }
+    },
+    "regressions": {
+      "cleanup#0": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T20:26:32.825Z"
+      },
+      "actionVariants#1": {
+        "label": "actionVariants",
+        "passed": true,
+        "at": "2026-09-26T20:27:30.765Z"
+      },
+      "cleanup#2": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T20:27:55.197Z"
+      },
+      "healOrHarm#3": {
+        "label": "healOrHarm",
+        "passed": true,
+        "at": "2026-09-26T20:28:17.381Z"
+      },
+      "cleanup#4": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T20:28:58.580Z"
+      },
+      "attackVariantChoices#5": {
+        "label": "attackVariantChoices",
+        "passed": true,
+        "at": "2026-09-26T20:29:11.209Z"
+      },
+      "cleanup#6": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T20:29:28.618Z"
+      },
+      "rank1Batch1#7": {
+        "label": "rank1Batch1",
+        "passed": true,
+        "at": "2026-09-26T20:29:39.841Z"
+      },
+      "cleanup#8": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T20:30:08.338Z"
+      },
+      "compact#9": {
+        "label": "compact",
+        "passed": true,
+        "at": "2026-09-26T20:30:27.724Z"
+      },
+      "cleanup#10": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T20:30:42.660Z"
+      },
+      "attackComponents#11": {
+        "label": "attackComponents",
+        "passed": true,
+        "at": "2026-09-26T20:30:50.543Z"
+      },
+      "cleanup#12": {
+        "label": "cleanup",
+        "passed": true,
+        "at": "2026-09-26T20:31:08.114Z"
+      }
+    }
+  }
+}

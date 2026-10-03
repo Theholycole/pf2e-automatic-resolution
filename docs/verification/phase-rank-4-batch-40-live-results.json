@@ -1,0 +1,36 @@
+{
+  "label": "rank4Batch40",
+  "passed": true,
+  "at": "2026-10-02T18:20:21.729Z",
+  "details": {
+    "batch40": {
+      "cast": {
+        "statistic": "will",
+        "formula": "4d6 mental",
+        "total": 14,
+        "lost": 14,
+        "clumsy": 1,
+        "expiry": "turn-start",
+        "notes": true
+      },
+      "sustain": {
+        "statistic": "will",
+        "formula": null,
+        "total": null,
+        "lost": 0,
+        "clumsy": 0,
+        "expiry": null,
+        "notes": true
+      },
+      "heightened": {
+        "statistic": "will",
+        "formula": "6d6 mental",
+        "total": 29,
+        "lost": 29,
+        "clumsy": 1,
+        "expiry": "turn-start",
+        "notes": true
+      }
+    }
+  }
+}

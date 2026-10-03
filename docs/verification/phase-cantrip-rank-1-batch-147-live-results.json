@@ -1,0 +1,34 @@
+{
+  "batch": 147,
+  "spells": [
+    "Spirit Ward"
+  ],
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "results": [
+    {
+      "label": "cr1Batch147",
+      "passed": true,
+      "at": "2026-09-28T22:30:59.286Z",
+      "details": {
+        "spiritWard": {
+          "tooFar": "Spirit Ward: PFTEST P23 Affliction ward far ally is beyond 30 feet.",
+          "two": 1,
+          "twoBonus": [
+            2
+          ],
+          "one": "Spirit Ward: PFTEST P23 Affliction ward ally is beyond touch.",
+          "three": [
+            "Spirit Ward caster",
+            "ward ally"
+          ],
+          "threeBonus": [
+            1
+          ],
+          "sustained": true
+        }
+      }
+    }
+  ]
+}

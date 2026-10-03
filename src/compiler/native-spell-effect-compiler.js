@@ -116,7 +116,9 @@ function compileReference(link, { catalog, recipient, scope, degrees = [] }) {
             name: entry.name ?? link.reference,
             type: entry.type ?? null,
             sourceFile: entry.sourceFile ?? null,
-            automation: entry.automation ?? null
+            automation: entry.automation ?? null,
+            mechanics: entry.mechanics ?? null,
+            ...(entry.badge ? { badge: entry.badge } : {})
         } : null,
         resolutionStatus: entry ? "resolved" : catalogWasProvided ? "unresolved" : "runtime"
     };

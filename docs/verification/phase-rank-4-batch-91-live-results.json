@@ -1,0 +1,28 @@
+{
+  "label": "rank4Batch91",
+  "passed": true,
+  "at": "2026-10-03T02:46:52.532Z",
+  "details": {
+    "batch91": {
+      "shielded": {
+        "lost": 0,
+        "effect": true,
+        "resist": [
+          [
+            "physical",
+            5
+          ],
+          [
+            "spirit",
+            5
+          ]
+        ]
+      },
+      "attacked": {
+        "formula": "5d6 spirit",
+        "total": 23,
+        "lost": 23
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "label": "rank3Batch115",
+  "passed": true,
+  "at": "2026-10-03T07:46:52.978Z",
+  "details": {
+    "batch115": {
+      "plan": {
+        "area": 5,
+        "gm": true,
+        "events": 0
+      },
+      "engulfed": {
+        "note": true,
+        "escape": true,
+        "swim": true
+      },
+      "first": "exposed",
+      "again": {
+        "status": "none",
+        "reason": "already exposed for this action"
+      }
+    }
+  }
+}
