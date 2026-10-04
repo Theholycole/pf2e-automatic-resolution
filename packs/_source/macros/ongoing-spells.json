@@ -1,0 +1,12 @@
+{
+  "_id": "pf2eAutoOngoing1",
+  "name": "Ongoing Spells",
+  "type": "script",
+  "img": "icons/svg/clockwork.svg",
+  "scope": "global",
+  "command": "// Opens the PF2e Automatic Resolution \"Ongoing spells\" window: active casts, Sustain, reviews and GM controls.\n// Players see the casts they may view and the controls for their own spells.\nconst api = game.modules.get(\"pf2e-automatic-resolution\")?.api;\nif (!api) return ui.notifications.warn(\"PF2e Automatic Resolution isn't active in this world.\");\napi.ongoing.open();",
+  "folder": null,
+  "sort": 0,
+  "ownership": { "default": 0 },
+  "flags": {}
+}

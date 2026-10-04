@@ -30,5 +30,18 @@
   "styles": [
     "styles/runtime.css"
   ],
-  "socket": true
+  "socket": true,
+  "packs": [
+    {
+      "name": "macros",
+      "label": "PF2e Automatic Resolution Macros",
+      "path": "packs/macros",
+      "type": "Macro",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {}
+    }
+  ]
 }
