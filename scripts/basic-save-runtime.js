@@ -89,6 +89,7 @@ import {
 } from "./runtime-utils.js";
 import { debugError, debugLog } from "./debug.js";
 import { destroyThrall, isThrall } from "./thrall-tokens.js";
+import { castSpellFromUuid, rememberCastSpell, spellFromSource } from './cast-spell.js';
 
 const SAVE_SCHEMA = 9;
 const SAVE_OPTION_PREFIX = "pf2e-auto-basic-save";
@@ -1093,6 +1094,18 @@ function documentDiagnostic(document) {
     };
 }
 
+/**
+ * The cast's spell: the recovery copy, the caster's own item, or — a spell cast from a wand, scroll or other item, which PF2e builds for the cast and
+ * which no UUID finds afterwards — the copy taken when the card was made.
+ */
+async function castSpellDocument(state, sourceActor) {
+    if (state.recoverySource && sourceActor) return new CONFIG.Item.documentClass(clone(state.recoverySource), { parent: sourceActor });
+    let found = null;
+    try { found = state.sourceItemUuid ? await castSpellFromUuid(state) : null; } catch (_) { found = null; }
+    if (found?.type === "spell") return found;
+    return state.originalSpellSource && sourceActor ? spellFromSource(state.originalSpellSource, sourceActor) : found;
+}
+
 function stateFromCard(card) {
     return clone(card?.getFlag(MODULE_ID, "basicSaveState") ?? card?.flags?.[MODULE_ID]?.basicSaveState ?? null);
 }
@@ -1273,7 +1286,7 @@ async function handOffAffliction(state, target, actor, affliction = null) {
     const immuneTrait = immunity?.traits.find(trait => actor.traits?.has?.(trait) ?? actor.system?.traits?.value?.includes(trait));
     if (immuneTrait) return {status: "immune", reason: `immune (${immuneTrait} trait)`};
     if (!afflictionHandlerActive()) return {status: "manual", reason: "Pseudo Afflictions is not active"};
-    const spell = await fromUuid(state.sourceItemUuid);
+    const spell = await castSpellFromUuid(state);
     const sourceActor = await fromUuid(state.sourceActorUuid);
     if (!spell) return {status: "manual", reason: "the source spell is unavailable"};
     const before = afflictionHandlerEffects(actor);
@@ -1970,6 +1983,7 @@ export class BasicSaveRuntime {
     }
 
     async start(spell, options = {}) {
+        rememberCastSpell(spell);
         const basePlan = options.plan;
         if (!this.supports(basePlan)) throw new Error(`${basePlan?.source?.name ?? spell?.name ?? "Spell"} is not an executable save plan.`);
         // A heightened variant's rows at the cast rank (Sleep at 4th): the plan the card uses.
@@ -2196,7 +2210,7 @@ export class BasicSaveRuntime {
             sourceActorUuid: sourceActor.uuid,
             sourceItemUuid: spell.uuid ?? plan.source.uuid ?? null,
             recoverySource: plan.resolution.check.purpose === "condition-recovery" ? clone(options.recoverySource ?? null) : null,
-            originalSpellSource: typeof spell.toObject === "function" ? spell.toObject() : null,
+            originalSpellSource: typeof spell.toObject === "function" ? spell.toObject() : spell?.type === "spell" && spell.system ? clone(spell) : null,
             spellName: plan.source.name,
             spellSlug: plan.source.slug ?? null,
             compilerVersion: plan.compilerVersion,
@@ -2541,7 +2555,7 @@ export class BasicSaveRuntime {
         const state = stateFromCard(card);
         const reminder = state?.reminders?.[index];
         if (!reminder || !["counteract-along-path", "counteract-overlap", "counteract-spell"].includes(reminder.kind)) throw new Error("This card has no such counteract reminder.");
-        const sourceSpell = await fromUuid(state.sourceItemUuid);
+        const sourceSpell = await castSpellFromUuid(state);
         if (!sourceSpell) throw new Error(`${state.spellName}: the original spell is unavailable.`);
         const spell = resolveSpellAtRank(sourceSpell, state.castRank, state.overlayIds);
         choice ??= await foundry.applications.api.DialogV2.prompt({ window: { title: `${state.spellName} — counteract the ${reminder.target}` },
@@ -3143,7 +3157,7 @@ export class BasicSaveRuntime {
         if (state.damage.rollJSON) return { status: "already-rolled", state };
         if (!isCardCoordinator(card)) throw new Error("The active GM must roll this cast's shared damage.");
         const sourceActor = await fromUuid(state.sourceActorUuid);
-        const sourceSpell = await fromUuid(state.sourceItemUuid);
+        const sourceSpell = await castSpellDocument(state, sourceActor);
         if (!sourceActor || !sourceSpell) throw new Error(`${state.spellName}: the original caster or spell is unavailable.`);
         if (!game.user.isGM && !sourceActor.canUserModify?.(game.user, "update")) {
             throw new Error(`You do not have permission to roll ${state.spellName}'s damage.`);
@@ -3311,7 +3325,7 @@ export class BasicSaveRuntime {
         if (entry.rollJSON) return { status: "already-rolled", state };
         if (!isCardCoordinator(card)) throw new Error("The active GM must roll this cast's outcome damage.");
         const sourceActor = await fromUuid(state.sourceActorUuid);
-        const sourceSpell = await fromUuid(state.sourceItemUuid);
+        const sourceSpell = await castSpellDocument(state, sourceActor);
         if (!sourceActor || !sourceSpell) throw new Error(`${state.spellName}: the original caster or spell is unavailable.`);
         if (!game.user.isGM && !sourceActor.canUserModify?.(game.user, "update")) {
             throw new Error(`You do not have permission to roll ${state.spellName}'s damage.`);
@@ -3368,9 +3382,7 @@ export class BasicSaveRuntime {
         if (target.applicationStatus !== "pending") throw new Error(`${target.name}'s result has already been applied.`);
         const { actor, token } = await resolveTargetDocuments(target);
         const sourceActor = await fromUuid(state.sourceActorUuid);
-        const sourceSpell = state.recoverySource && sourceActor
-            ? new CONFIG.Item.documentClass(clone(state.recoverySource), { parent: sourceActor })
-            : await fromUuid(state.sourceItemUuid);
+        const sourceSpell = await castSpellDocument(state, sourceActor);
         if (!actor || !sourceActor || !sourceSpell) throw new Error("The target, caster, or original spell is unavailable.");
         assertPersistedTargetIdentity(target, actor);
         // A Strike spell: the result is the caster's own PF2e Strike against this target, read from PF2e's message.
@@ -3837,7 +3849,7 @@ export class BasicSaveRuntime {
             if (!needed.length) continue;
             const ConditionalRoll = (CONFIG.Dice?.rolls ?? []).find(candidate => candidate?.name === "DamageRoll");
             if (!ConditionalRoll) throw new Error("PF2e's DamageRoll class could not be resolved.");
-            const spell = resolveSpellAtRank(await fromUuid(state.sourceItemUuid), state.castRank, state.overlayIds);
+            const spell = resolveSpellAtRank(await castSpellFromUuid(state), state.castRank, state.overlayIds);
             const rollData = spell?.getRollData?.({ castRank: state.castRank }) ?? { item: { rank: state.castRank, level: state.castRank } };
             // The caster's "yes" to the dice question (Sun Blade's sunlight) enlarges these dice too.
             if (state.diceUpgrade && !state.diceUpgrade.answer) throw new Error(`${state.spellName}: answer the caster's question before rolling damage.`);
@@ -4546,7 +4558,7 @@ export class BasicSaveRuntime {
             // Allies in an ally/enemy area: one healing roll for the cast, and the spell's Effect on each.
             const allies = state.allySplit ? state.targets.filter(target => target.mode === "ally" && target.excluded !== true && target.eligible !== false) : [];
             if (allies.some(target => target.applicationStatus !== "applied")) {
-                const spell = await fromUuid(state.sourceItemUuid);
+                const spell = await castSpellFromUuid(state);
                 if (!spell) throw new Error(`${state.spellName}: the spell is missing; its allies can't be healed.`);
                 if (!state.allySplit.roll) {
                     const rollData = spell.getRollData?.({ castRank: state.castRank }) ?? { item: { rank: state.castRank, level: state.castRank } };
@@ -4941,7 +4953,7 @@ export class BasicSaveRuntime {
                     const actor = resolvedTargets[index]?.actor ?? resolvedTargets[index]?.token?.actor;
                     if (actor) damaged.push(actor);
                 }
-                const caster = await fromUuid(state.sourceActorUuid), spell = await fromUuid(state.sourceItemUuid);
+                const caster = await fromUuid(state.sourceActorUuid), spell = await castSpellFromUuid(state);
                 const started = await startImpossibleMarks(this.ongoing, { spellName: state.spellName, spellSlug: spell?.slug ?? state.spellName.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
                     sourceActor: caster, sourceItemUuid: state.sourceItemUuid, castRank: state.castRank, img: spell?.img, impossible: state.impossibleBurst, damaged, durationSeconds: 60 });
                 state.impossibleMarked = started;

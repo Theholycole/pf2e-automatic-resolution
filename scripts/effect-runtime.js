@@ -108,6 +108,7 @@ import {
     terrainDifficulties
 } from "./runtime-utils.js";
 import { debugError, debugLog } from "./debug.js";
+import { castSpellFromUuid, rememberCastSpell } from './cast-spell.js';
 
 export const MODULE_ID = "pf2e-automatic-resolution";
 
@@ -274,6 +275,7 @@ export class EffectRuntime {
     }
 
     async execute(itemOrSource, options = {}) {
+        rememberCastSpell(itemOrSource);
         const key = options.sourceMessageId;
         if (!key) return this.#execute(itemOrSource, options);
         if (this.#executionJobs.has(key)) throw Error("This source card is already being resolved.");
@@ -1585,7 +1587,7 @@ export class EffectRuntime {
     async ruleSetSwitch(effectDocument, { choice = null } = {}) {
         const data = effectDocument.flags?.[MODULE_ID]?.ruleSetChoice;
         if (!data) throw new Error("This Effect has no options to switch.");
-        const spell = data.sourceItemUuid ? await fromUuid(data.sourceItemUuid) : null;
+        const spell = data.sourceItemUuid ? await castSpellFromUuid(data) : null;
         if (!spell) throw new Error(`${data.spell}: the spell is unavailable.`);
         const plan = await this.compile(spell);
         const ruleSet = plan.resolution?.ruleSet;
@@ -2961,7 +2963,7 @@ export class EffectRuntime {
         const plan = card?.flags?.[MODULE_ID]?.bitesPlan;
         if (!plan || !targets.length) throw new Error(`${data.spell}: target the creatures in the swarm's space.`);
         await effectDocument.setFlag(MODULE_ID, "familiarSwarm.lastBites", key);
-        const spell = data.sourceItemUuid ? await fromUuid(data.sourceItemUuid) : null;
+        const spell = data.sourceItemUuid ? await castSpellFromUuid(data) : null;
         const caster = await fromUuid(data.casterUuid);
         const { card: saveCard } = await this.saves.start(spell, { plan: clone(plan), sourceActor: caster, targets, castRank: data.castRank, skipConfirmation: true });
         return { status: "bitten", cardId: saveCard?.id ?? null };
@@ -3017,7 +3019,7 @@ export class EffectRuntime {
         const amount = most * data.multiplier;
         const host = effectDocument.actor;
         const undead = host.traits?.has?.("undead") ?? (host.system?.traits?.value ?? []).includes("undead");
-        const spell = data.sourceItemUuid ? await fromUuid(data.sourceItemUuid) : null;
+        const spell = data.sourceItemUuid ? await castSpellFromUuid(data) : null;
         const token = host.getActiveTokens?.(true, true)?.[0] ?? undefined;
         let receipt = null;
         if (amount > 0) {
@@ -3066,7 +3068,7 @@ export class EffectRuntime {
             const roll = await new DamageRoll(`${data.dice * number}d${data.faces}[${data.type}]`).evaluate();
             formula = roll.formula;
             await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: caster }), flavor: `<strong>${escapeHTML(data.spell)}</strong>: ${number} ${escapeHTML(data.per)}${number === 1 ? "" : "s"}` });
-            const spell = data.sourceItemUuid ? await fromUuid(data.sourceItemUuid) : null;
+            const spell = data.sourceItemUuid ? await castSpellFromUuid(data) : null;
             receipt = await applyDamageWithReceipt(caster, { damage: roll, token: caster.getActiveTokens?.(true, true)?.[0] ?? undefined, item: spell ?? undefined, rollOptions: new Set(), skipIWR: false }, randomID());
         }
         await effectDocument.delete();
@@ -3095,7 +3097,7 @@ export class EffectRuntime {
         if (!data) throw new Error("This Effect has no listed effects.");
         const round = game.combat?.started ? `${game.combat.id}:${game.combat.round}` : null;
         if (round && round === data.lastRound) throw new Error(`${data.spell}: one effect a round (the first Sustain each round).`);
-        const spell = data.sourceItemUuid ? await fromUuid(data.sourceItemUuid) : null;
+        const spell = data.sourceItemUuid ? await castSpellFromUuid(data) : null;
         if (!spell) throw new Error(`${data.spell}: the spell is unavailable.`);
         const plan = await this.compile(spell);
         const choice = plan.resolution?.sustainOptions?.choices?.find(entry => entry.key === key);
@@ -3170,7 +3172,7 @@ export class EffectRuntime {
         const caster = effectDocument.actor, target = tokens[0].actor;
         const casterToken = caster.getActiveTokens?.(true, false)?.[0];
         if (casterToken && tokenDistance(casterToken, tokens[0]) > data.range) throw new Error(`${data.spell}: ${target.name} is more than ${data.range} feet away.`);
-        const spell = data.sourceItemUuid ? await fromUuid(data.sourceItemUuid) : null;
+        const spell = data.sourceItemUuid ? await castSpellFromUuid(data) : null;
         const statistic = spell?.spellcasting?.statistic;
         if (!statistic?.check?.roll) throw new Error(`${data.spell}: the caster's spell attack is unavailable.`);
         const roll = await statistic.check.roll({ dc: { value: Number(target.armorClass?.value ?? target.system?.attributes?.ac?.value) }, item: spell, traits: ["attack", data.type],
@@ -3264,7 +3266,7 @@ export class EffectRuntime {
         if (tokens.length !== 1) throw new Error(`${data.spell}: target the one attacker.`);
         const wearer = effectDocument.actor.getActiveTokens?.(true, false)?.[0];
         if (wearer && tokenDistance(wearer, tokens[0]) > 5) throw new Error(`${data.spell}: ${tokens[0].actor.name} isn't adjacent to ${effectDocument.actor.name}.`);
-        const spell = data.sourceItemUuid ? await fromUuid(data.sourceItemUuid) : null;
+        const spell = data.sourceItemUuid ? await castSpellFromUuid(data) : null;
         if (!spell) throw new Error(`${data.spell}: the spell is unavailable.`);
         const plan = await this.compile(spell);
         const caster = await fromUuid(data.casterUuid);
@@ -3398,7 +3400,7 @@ export class EffectRuntime {
         const DamageRoll = (CONFIG.Dice?.rolls ?? []).find(candidate => candidate?.name === "DamageRoll");
         const roll = await new DamageRoll(`(${data.healing} + ${absorbed})[healing]`).evaluate();
         await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: `<strong>${escapeHTML(data.spell)}</strong>: the ward absorbs ${absorbed} damage and heals (${escapeHTML(data.healing)} + ${absorbed})` });
-        const spell = data.sourceItemUuid ? await fromUuid(data.sourceItemUuid) : null;
+        const spell = data.sourceItemUuid ? await castSpellFromUuid(data) : null;
         await applyDamageWithReceipt(actor, { damage: -roll.total, token: actor.getActiveTokens?.(true, true)?.[0] ?? undefined, item: spell ?? undefined, rollOptions: new Set(["item:trait:healing", "item:trait:vitality"]), skipIWR: false }, randomID());
         await effect.delete();
         await actor.createEmbeddedDocuments("Item", [{ name: `${data.spell}: can't cast again`, type: "effect", img: "icons/svg/clockwork.svg", flags: { [MODULE_ID]: { spellImmunity: { key: data.key } } },
@@ -3619,7 +3621,7 @@ export class EffectRuntime {
         if (tokens.length !== 1) throw new Error(`${data.spell}: target the creature whose hostile action affected the enemy.`);
         const other = tokens[0].actor, enemy = effectDocument.actor;
         if (data.exempt.includes(other.signature)) return { status: "already" };
-        const spell = data.sourceItemUuid ? await fromUuid(data.sourceItemUuid) : null;
+        const spell = data.sourceItemUuid ? await castSpellFromUuid(data) : null;
         const roll = await enemy.saves?.[data.statistic]?.roll({ dc: { value: Number(data.dc) }, item: spell ?? undefined, skipDialog });
         const degree = Number(roll?.degreeOfSuccess ?? -1);
         if (degree < 0) throw new Error(`${enemy.name}'s save wasn't rolled.`);
@@ -3841,7 +3843,7 @@ export class EffectRuntime {
         if (!data) throw new Error("This Effect isn't the cloak.");
         const tokens = targets.map(target => target?.object ?? target).filter(token => token?.actor);
         if (tokens.length !== 1) throw new Error(`${data.spell}: target the one attacker.`);
-        const spell = data.sourceItemUuid ? await fromUuid(data.sourceItemUuid) : null;
+        const spell = data.sourceItemUuid ? await castSpellFromUuid(data) : null;
         if (!spell) throw new Error(`${data.spell}: the spell is unavailable.`);
         const plan = await this.compile(spell);
         const { card } = await this.saves.start(spell, { plan: clone(plan.resolution.flashCloak.attackerPlan), sourceActor: await fromUuid(data.casterUuid), targets: tokens, castRank: data.castRank, skipConfirmation });
@@ -6543,7 +6545,7 @@ export class EffectRuntime {
         if (!burst) throw new Error(`${data.spell}: the spell's card is missing.`);
         const dice = Math.min(Math.floor(Number(data.prevented) / data.every), data.maxDice);
         const actor = effectDocument.parent;
-        const spell = data.sourceItemUuid ? await fromUuid(data.sourceItemUuid) : null;
+        const spell = data.sourceItemUuid ? await castSpellFromUuid(data) : null;
         await effectDocument.delete({ [MODULE_ID]: { reason: "exploded" } });
         if (dice < 1) { try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content: `<p><strong>${escapeHTML(data.spell)}</strong>: the scales explode, but they stored too little (${data.prevented} prevented) — no damage. The spell ends.</p>` }); } catch (_) {} return { status: "ended", dice: 0 }; }
         const plan = clone(burst);
@@ -7554,7 +7556,7 @@ export class EffectRuntime {
         const roll = await new DamageRollClass(formula).evaluate();
         await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: caster }), flavor: `<strong>${escapeHTML(data.spellName)}</strong>: ${escapeHTML(token.name)} loses ${data.kind === "lore" ? "a Lore skill" : `a rank ${units} spell`}` });
         const before = Number(token.actor.system?.attributes?.hp?.value ?? 0);
-        await token.actor.applyDamage({ damage: roll, token, item: data.sourceItemUuid ? await fromUuid(data.sourceItemUuid) : undefined, rollOptions: new Set() });
+        await token.actor.applyDamage({ damage: roll, token, item: data.sourceItemUuid ? await castSpellFromUuid(data) : undefined, rollOptions: new Set() });
         await message.setFlag(MODULE_ID, "stealDamage", { ...data, stolen: { actorUuid: token.actor.uuid, units, outcome } });
         return { status: "stolen", outcome, units, formula: roll.formula, total: roll.total, lost: before - Number(token.actor.system?.attributes?.hp?.value ?? 0) };
     }
@@ -7581,7 +7583,7 @@ export class EffectRuntime {
         const data = message?.getFlag?.(MODULE_ID, "counteractTransfer");
         if (!data) throw new Error("This card has no counteract.");
         if (data.result) throw new Error(`${data.spellName}: already resolved.`);
-        const caster = await fromUuid(data.sourceActorUuid), source = data.sourceItemUuid ? await fromUuid(data.sourceItemUuid) : null;
+        const caster = await fromUuid(data.sourceActorUuid), source = data.sourceItemUuid ? await castSpellFromUuid(data) : null;
         if (!caster || !source) throw new Error(`${data.spellName}: the caster or the spell is unavailable.`);
         const spell = spellAtCastRank(source, data.castRank);
         choice ??= await foundry.applications.api.DialogV2.prompt({ window: { title: `${data.spellName} — counteract the ${data.thing}` },
@@ -7675,7 +7677,7 @@ export class EffectRuntime {
     async spellManeuver(message, { action, map = 0, event = null, skipDialog = false } = {}) {
         const data = message?.getFlag?.(MODULE_ID, "spellManeuver");
         if (!data || !data.actions.includes(action)) throw new Error("This card doesn't offer that maneuver.");
-        const caster = await fromUuid(data.sourceActorUuid), spell = data.sourceItemUuid ? await fromUuid(data.sourceItemUuid) : null;
+        const caster = await fromUuid(data.sourceActorUuid), spell = data.sourceItemUuid ? await castSpellFromUuid(data) : null;
         const token = await fromUuid(data.targetTokenUuid);
         if (!caster || !token?.actor) throw new Error(`${data.spellName}: the caster or the target is missing.`);
         if (!game.user.isGM && !caster.isOwner) throw new Error(`${data.spellName}: only the caster's owner or the GM rolls it.`);
@@ -7826,7 +7828,7 @@ export class EffectRuntime {
             const token = targetUuid ? await fromUuid(targetUuid) : null;
             const target = token?.actor ?? token;
             if (!target?.saves) throw new Error(`${record.name}: target the creature to ${data.attack.name.toLowerCase()}.`);
-            const spell = await fromUuid(record.sourceItemUuid);
+            const spell = await castSpellFromUuid(record);
             const statistic = spell?.spellcasting?.statistic;
             if (!statistic) throw new Error(`${record.name}: the spell's spellcasting entry is missing.`);
             const dc = Number(target.saves[data.attack.defense]?.dc?.value);
@@ -8019,7 +8021,7 @@ export class EffectRuntime {
         if (!this.ongoing) throw new Error(`${data.spell} needs the ongoing spell manager.`);
         let placed = region;
         if (!placed) {
-            const item = data.sourceItemUuid ? await fromUuid(data.sourceItemUuid) : null;
+            const item = data.sourceItemUuid ? await castSpellFromUuid(data) : null;
             if (!item?.clone) throw new Error(`${data.spell}: the spell item is missing, so the ${data.cloud.name} can't be placed.`);
             placed = await item.clone({ "system.area": { type: data.cloud.area.type, value: data.cloud.area.value } }).placeTemplate();
             if (!placed) return { status: "cancelled" };
@@ -8443,7 +8445,7 @@ export class EffectRuntime {
         if (!game.user.isGM) throw new Error("The GM resolves the counteract.");
         const data = message?.getFlag?.(MODULE_ID, "noteCounteract");
         if (!data) throw new Error("This card has no counteract.");
-        const source = data.sourceItemUuid ? await fromUuid(data.sourceItemUuid) : null;
+        const source = data.sourceItemUuid ? await castSpellFromUuid(data) : null;
         if (!source) throw new Error(`${data.spellName}: the original spell is unavailable.`);
         const spell = spellAtCastRank(source, data.castRank);
         choice ??= await foundry.applications.api.DialogV2.prompt({ window: { title: `${data.spellName} — counteract ${data.target}` },
@@ -9331,7 +9333,7 @@ export class EffectRuntime {
             result = { act, success, healed };
             await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: await fromUuid(record.sourceActorUuid) }), content: `<p><strong>${escapeHTML(record.name)}</strong>: ${escapeHTML(target.name)} ${success ? `disbelieves the illusion${healed ? ` and recovers ${healed} Hit Points` : ""}; it takes no further damage from it` : "believes the illusion"}.</p>` });
         } else {
-            const caster = await fromUuid(record.sourceActorUuid), spell = await fromUuid(record.sourceItemUuid);
+            const caster = await fromUuid(record.sourceActorUuid), spell = await castSpellFromUuid(record);
             const statistic = spell?.spellcasting?.statistic;
             if (!statistic?.check?.roll) throw new Error(`${record.name}: the caster's spell attack is unavailable.`);
             const roll = await statistic.check.roll({ dc: { value: Number(target.armorClass?.value ?? target.system?.attributes?.ac?.value) }, item: spell, extraRollOptions: ["attack", "item:trait:attack"], skipDialog: true });

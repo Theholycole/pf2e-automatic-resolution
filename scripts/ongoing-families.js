@@ -15,6 +15,7 @@ import { inspectCasterBenefitClaim } from './effect-modifier-proof.js';
 import { heightenedComponentFormula } from '../src/compiler/retaliation.js';
 import { hasPersistentDamage } from './persistent-link-runtime.js';
 import { tentacleAttempt } from './tentacle-grab.js';
+import { castSpellFromUuid } from './cast-spell.js';
 
 // The lantern's light: bright in the area, dim to its multiple.
 const lanternLightRule = (radius, light) => ({ key: "TokenLight", value: { bright: Number(radius) * light.brightTimes, dim: Number(radius) * light.dimTimes } });
@@ -765,7 +766,7 @@ export class OngoingFamilies {
             if (!actor || (healing.living && !livingMode(actor))) continue;
             const wasDying = isDying(actor);
             const token = actor.getActiveTokens?.()?.[0]?.document;
-            await applyDamageWithReceipt(actor, { damage: -healing.amount, token: token ?? undefined, item: (await fromUuid(record.sourceItemUuid)) ?? undefined, rollOptions: new Set(), skipIWR: false }, randomID());
+            await applyDamageWithReceipt(actor, { damage: -healing.amount, token: token ?? undefined, item: (await castSpellFromUuid(record)) ?? undefined, rollOptions: new Set(), skipIWR: false }, randomID());
             await recoverFromDying(actor, wasDying);
             healed.push(actor.name);
         }
@@ -1135,7 +1136,7 @@ export class OngoingFamilies {
         record.timeline.ended = true;
         await this.ongoing.save(journal, record);
         const DamageRoll = (CONFIG.Dice?.rolls ?? []).find(candidate => candidate?.name === "DamageRoll");
-        const caster = await fromUuid(record.sourceActorUuid), spell = (await fromUuid(record.sourceItemUuid)) ?? undefined;
+        const caster = await fromUuid(record.sourceActorUuid), spell = (await castSpellFromUuid(record)) ?? undefined;
         const roll = await new DamageRoll(`{${record.timeline.formula}[${record.timeline.damageType}]}`).evaluate();
         await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: caster }), flavor: `${escapeHTML(record.name)}: the doom arrives` });
         const dealt = [];
@@ -1166,7 +1167,7 @@ export class OngoingFamilies {
             const actor = token.actor;
             if (!(actor.attributes?.hp?.negativeHealing ?? actor.system?.attributes?.hp?.negativeHealing)) continue;
             const roll = await new DamageRoll(`{${sun.voidHealing.damage}[${sun.voidHealing.type}]}`).evaluate();
-            await applyDamageWithReceipt(actor, { damage: roll, token, item: (await fromUuid(record.sourceItemUuid)) ?? undefined, rollOptions: new Set(["area-damage"]), skipIWR: false }, randomID());
+            await applyDamageWithReceipt(actor, { damage: roll, token, item: (await castSpellFromUuid(record)) ?? undefined, rollOptions: new Set(["area-damage"]), skipIWR: false }, randomID());
             harmed.push(actor.name);
         }
         const statistic = sun.sunlight.statistic[0].toUpperCase() + sun.sunlight.statistic.slice(1);
@@ -1186,7 +1187,7 @@ export class OngoingFamilies {
         if (!tokens.length) throw Error("Target the creatures vulnerable to sunlight first.");
         const outside = tokens.filter(token => !inside.has(token.uuid));
         if (outside.length) throw Error(`${outside.map(token => token.name).join(", ")} ${outside.length === 1 ? "isn't" : "aren't"} in the aura.`);
-        const caster = await fromUuid(record.sourceActorUuid), spell = await fromUuid(record.sourceItemUuid);
+        const caster = await fromUuid(record.sourceActorUuid), spell = await castSpellFromUuid(record);
         const started = await this.saves.start(spell, { plan: record.sunAura.sunlightPlan, sourceActor: caster, targets: tokens.map(token => token.object ?? token), castRank: record.castRank ?? record.rank,
             dc: record.dc, skipConfirmation: true });
         return { cardId: started?.card?.id ?? null };
@@ -1205,7 +1206,7 @@ export class OngoingFamilies {
             const roll = await new DamageRoll(`{${record.sunAura.fire.damage}[${record.sunAura.fire.type}]}`).evaluate();
             // (PF2e decides what vitality does to it: nothing to a living creature.)
             const before = Number(actor.hitPoints?.value ?? 0);
-            await actor.applyDamage({ damage: roll, token, item: (await fromUuid(record.sourceItemUuid)) ?? undefined });
+            await actor.applyDamage({ damage: roll, token, item: (await castSpellFromUuid(record)) ?? undefined });
             applied.push({ castId: record.castId, damage: before - Number(actor.hitPoints?.value ?? 0) });
             try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: await fromUuid(record.sourceActorUuid) }), content: `<p><strong>${escapeHTML(record.name)}</strong>: ${escapeHTML(actor.name)} lost Hit Points to fire damage in the aura and takes ${record.sunAura.fire.damage} ${record.sunAura.fire.type} damage.</p>` }); } catch (_) {}
         }
@@ -1288,7 +1289,7 @@ export class OngoingFamilies {
         if ((record.lanternOutcomes ?? []).some(entry => entry.actorUuid === actorUuid)) throw Error(`${actor.name} already saved against ${record.name}.`);
         const statistic = actor.saves?.[record.declaration.lantern.statistic];
         if (!statistic) throw Error(`${actor.name} has no ${record.declaration.lantern.statistic} save.`);
-        const caster = await fromUuid(record.sourceActorUuid), spell = await fromUuid(record.sourceItemUuid);
+        const caster = await fromUuid(record.sourceActorUuid), spell = await castSpellFromUuid(record);
         const roll = await statistic.roll({ dc: { value: Number(record.dc) }, skipDialog: true, ...(spell ? { item: spell, origin: caster } : {}) });
         const degree = ["criticalFailure", "failure", "success", "criticalSuccess"][roll?.degreeOfSuccess ?? -1];
         if (!degree) throw Error(`${actor.name}'s save wasn't rolled.`);
@@ -1389,7 +1390,7 @@ export class OngoingFamilies {
             const roll = await new DamageRoll(turnEffect.damage.formula).evaluate();
             const token = member.tokenUuid ? await fromUuid(member.tokenUuid) : null;
             try { await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: await fromUuid(record.sourceActorUuid) }), flavor: `<strong>${escapeHTML(record.name)}</strong>: ${escapeHTML(actor.name)} starts its turn in the aura` }); } catch (_) {}
-            await actor.applyDamage({ damage: roll, token: token?.object ?? token ?? undefined, item: (await fromUuid(record.sourceItemUuid)) ?? undefined });
+            await actor.applyDamage({ damage: roll, token: token?.object ?? token ?? undefined, item: (await castSpellFromUuid(record)) ?? undefined });
             return { status: "applied", damage: roll.total };
         }
         // A condition until the end of this turn (Quicken Time's Quickened), replacing this cast's earlier one.
@@ -1494,7 +1495,7 @@ export class OngoingFamilies {
             roll ??= await new Roll(String(pulse.formula)).evaluate();
             const wasDying = isDying(actor);
             const token = await fromUuid(member.tokenUuid);
-            await applyDamageWithReceipt(actor, { damage: -roll.total, token: token ?? undefined, item: (await fromUuid(record.sourceItemUuid)) ?? undefined, rollOptions: new Set(), skipIWR: false }, randomID());
+            await applyDamageWithReceipt(actor, { damage: -roll.total, token: token ?? undefined, item: (await castSpellFromUuid(record)) ?? undefined, rollOptions: new Set(), skipIWR: false }, randomID());
             await recoverFromDying(actor, wasDying);
             healed.push(member.name);
             if (!record.healedActorUuids.includes(actor.uuid)) record.healedActorUuids.push(actor.uuid);
@@ -1526,7 +1527,7 @@ export class OngoingFamilies {
     async applyHeldDamage(record) {
         const DamageRoll = (CONFIG.Dice?.rolls ?? []).find(candidate => candidate?.name === "DamageRoll");
         if (!DamageRoll) throw Error("PF2e's damage roll is unavailable.");
-        const held = record.declaration.heldDamage, spell = await fromUuid(record.sourceItemUuid), caster = await fromUuid(record.sourceActorUuid);
+        const held = record.declaration.heldDamage, spell = await castSpellFromUuid(record), caster = await fromUuid(record.sourceActorUuid);
         const results = [];
         for (const token of canvas.scene?.tokens ?? []) {
             const actor = token.actor;
@@ -1548,7 +1549,7 @@ export class OngoingFamilies {
     async applyHazardDamage(record, member, event) {
         const actor = await fromUuid(member.actorUuid);
         const token = await fromUuid(member.tokenUuid);
-        const spell = await fromUuid(record.sourceItemUuid);
+        const spell = await castSpellFromUuid(record);
         const DamageRoll = (CONFIG.Dice?.rolls ?? []).find(candidate => candidate?.name === "DamageRoll");
         if (!actor || !DamageRoll) throw Error(`${record.name}: the creature or PF2e's damage roll is unavailable.`);
         let hazard = record.declaration.hazardDamage;
@@ -1834,7 +1835,7 @@ export class OngoingFamilies {
         const spec = record.declaration.healingSave;
         const statistic = actor.saves?.[spec.statistic];
         if (!statistic) throw Error(`${actor.name} has no ${spec.statistic} save.`);
-        const caster = await fromUuid(record.sourceActorUuid), spell = await fromUuid(record.sourceItemUuid);
+        const caster = await fromUuid(record.sourceActorUuid), spell = await castSpellFromUuid(record);
         const roll = await statistic.roll({ dc: { value: Number(record.dc) }, skipDialog: true, ...(spell ? { item: spell, origin: caster } : {}) });
         const degree = ["criticalFailure", "failure", "success", "criticalSuccess"][roll?.degreeOfSuccess ?? -1];
         if (!degree) throw Error(`${actor.name}'s save wasn't rolled.`);
@@ -2035,7 +2036,7 @@ export class OngoingFamilies {
         const record = clone(state(journal));
         const existing = record.obligations.find(o => o.key === key);
         if (existing?.cardId) return game.messages.get(existing.cardId);
-        const spell = await fromUuid(record.sourceItemUuid);
+        const spell = await castSpellFromUuid(record);
         if (!spell) throw Error("The original spell is unavailable. Review the cast.");
         // (One save a round per creature; "only once per turn" — Ephemeral Hazards — one a turn.)
         const clock = this.ongoing.clock();
@@ -2126,7 +2127,7 @@ export class OngoingFamilies {
                 const DamageRoll = (CONFIG.Dice?.rolls ?? []).find(candidate => candidate?.name === "DamageRoll");
                 const roll = await new DamageRoll(`(${rust.formula.replace(/@item\.(?:level|rank)\b/g, String(Number(record.rank)))})[persistent,${rust.type}]`).evaluate();
                 const token = target.tokenUuid ? await fromUuid(target.tokenUuid) : actor.getActiveTokens?.()?.[0]?.document;
-                await applyDamageWithReceipt(actor, { damage: roll, token, item: (await fromUuid(record.sourceItemUuid)) ?? undefined, rollOptions: new Set(), skipIWR: false }, randomID());
+                await applyDamageWithReceipt(actor, { damage: roll, token, item: (await castSpellFromUuid(record)) ?? undefined, rollOptions: new Set(), skipIWR: false }, randomID());
                 const grow = Math.min(rust.feet, rust.maxRadius - Number(record.declaration.area.value));
                 if (grow > 0) await this.growRegion(record, grow);
                 try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: await fromUuid(record.sourceActorUuid) }), content: `<p><strong>${escapeHTML(record.name)}</strong>: ${escapeHTML(actor.name)} starts to rust (${escapeHTML(roll.formula)})${grow > 0 ? `; the cloud grows to a ${record.declaration.area.value}-foot burst` : ""}.</p>` }); } catch (_) {}
@@ -2142,7 +2143,7 @@ export class OngoingFamilies {
             const lock = record.kind === "lingering" ? record.declaration?.successLock : null;
             if (lock) for (const target of saveState.targets) {
                 if (target.excluded || target.eligible === false || target.degree !== "success") continue;
-                const actor = await fromUuid(target.actorUuid), spell = await fromUuid(record.sourceItemUuid);
+                const actor = await fromUuid(target.actorUuid), spell = await castSpellFromUuid(record);
                 if (!actor || actor.itemTypes?.effect?.some(effect => effect.flags?.[MODULE_ID]?.successLock?.castId === record.castId)) continue;
                 const [effect] = await actor.createEmbeddedDocuments("Item", [{ name: `${record.name}: sees through them`, type: "effect", img: "icons/svg/eye.svg",
                     flags: { [MODULE_ID]: { successLock: { castId: record.castId }, runtime: { schema: 1, kind: "lingering", castInstanceId: record.castId, sourceActorUuid: record.sourceActorUuid, sourceItemUuid: record.sourceItemUuid, sourceItemName: record.name } } },
@@ -2196,7 +2197,7 @@ export class OngoingFamilies {
         const caster = await fromUuid(record.sourceActorUuid);
         if (!caster) return this.ongoing.review(journal, "The caster is missing. Token deletion or disconnection does not by itself end this spell.");
         if (record.kind === "floating-flame" && !await fromUuid(record.regionUuid)) return this.ongoing.review(journal, "The flame area is missing. Review its placement before continuing.");
-        if (!await fromUuid(record.sourceItemUuid)) return this.ongoing.review(journal, "The original spell is missing. The durable cast remains available for GM review.");
+        if (!await castSpellFromUuid(record)) return this.ongoing.review(journal, "The original spell is missing. The durable cast remains available for GM review.");
         if (record.kind === "floating-flame" && (caster.statuses.has("dead") || caster.hasCondition("unconscious"))) return this.ongoing.end(journal, { reason: "caster-cannot-sustain" });
         for (const recipient of record.recipients ?? []) if (!await fromUuid(recipient.actorUuid)) return this.ongoing.review(journal, "A recipient is missing. Review its last confirmed state before continuing.");
         if (record.obligations.some(o => o.kind === "save" && o.status === "collecting" && !game.messages.get(o.cardId))) return this.ongoing.review(journal, "A pending save card disappeared. Review its outcome; no replacement save was rolled.");
@@ -2484,7 +2485,7 @@ export class OngoingFamilies {
             if (used >= mines.count) throw Error(`${record.name}: every mine has exploded.`);
             const tokens = (await Promise.all((data.tokenUuids ?? []).map(uuid => fromUuid(uuid)))).filter(token => token?.actor);
             if (!tokens.length) throw Error(`${record.name}: target the creatures the explosion catches.`);
-            const spell = await fromUuid(record.sourceItemUuid);
+            const spell = await castSpellFromUuid(record);
             if (!spell) throw Error(`${record.name}: the spell is unavailable.`);
             const plan = lingeringExposurePlan(heightenedPlanAt(await game.modules.get(MODULE_ID).api.compile(spell), record.rank));
             const { card } = await this.saves.start(spell, { plan, sourceActor: spell.actor, targets: tokens.map(token => token.object ?? token), castRank: record.rank, dc: record.dc ?? undefined, skipConfirmation: true });
@@ -2498,7 +2499,7 @@ export class OngoingFamilies {
         if (action === "move-save") {
             const squares = Number(data.squares);
             if (!record.declaration?.moveSave || !Number.isInteger(squares) || squares < 1 || squares > 100) throw Error("Give the number of squares (1 or more) the creature moved through.");
-            const token = await fromUuid(data.tokenUuid), spell = await fromUuid(record.sourceItemUuid);
+            const token = await fromUuid(data.tokenUuid), spell = await castSpellFromUuid(record);
             if (!token?.actor || !spell) throw Error(`${record.name}: the creature or the spell is unavailable.`);
             const plan = moveSaveExposurePlan(await game.modules.get(MODULE_ID).api.compile(spell), squares, record.rank);
             if (!plan) throw Error(`${record.name}: the spell no longer has a move save.`);
@@ -2513,10 +2514,10 @@ export class OngoingFamilies {
             const token = await fromUuid(data.tokenUuid), actor = token?.actor;
             const DamageRoll = (CONFIG.Dice?.rolls ?? []).find(candidate => candidate?.name === "DamageRoll");
             if (!actor || !DamageRoll) throw Error(`${record.name}: the creature or PF2e's damage roll is unavailable.`);
-            const base = Number((await fromUuid(record.sourceItemUuid))?.system?.level?.value ?? record.rank);
+            const base = Number((await castSpellFromUuid(record))?.system?.level?.value ?? record.rank);
             const amount = move.fixed && Number(record.rank) >= move.fixed.rank ? Number(move.fixed.value)
                 : Number(move.formula) + (move.heightening ? Math.max(0, Math.floor((Number(record.rank) - base) / move.heightening.interval)) * move.heightening.increase : 0);
-            const spell = await fromUuid(record.sourceItemUuid);
+            const spell = await castSpellFromUuid(record);
             let lost = 0;
             for (let square = 0; square < squares; square++) {
                 const roll = await new DamageRoll(`${amount}[${move.type}]`).evaluate();
@@ -2596,7 +2597,7 @@ export class OngoingFamilies {
             const hazard = record.declaration?.gmHazard;
             if (!user.isGM || !hazard) throw Error("Only the GM triggers this area's damage.");
             const DamageRoll = (CONFIG.Dice?.rolls ?? []).find(candidate => candidate?.name === "DamageRoll");
-            const spell = await fromUuid(record.sourceItemUuid);
+            const spell = await castSpellFromUuid(record);
             const tokens = (await Promise.all((data.tokenUuids ?? []).map(uuid => fromUuid(uuid)))).filter(token => token?.actor);
             if (!DamageRoll || !tokens.length) throw Error(`${record.name}: target the creature(s) first.`);
             // (A wall's damage per move action: the thorns, once for each move action into its spaces.)
@@ -2630,12 +2631,12 @@ export class OngoingFamilies {
             const actor = await fromUuid(entry.actorUuid), token = entry.tokenUuid ? await fromUuid(entry.tokenUuid) : null;
             const DamageRoll = (CONFIG.Dice?.rolls ?? []).find(candidate => candidate?.name === "DamageRoll");
             if (!actor || !DamageRoll) throw Error(`${record.name}: the creature or PF2e's damage roll is unavailable.`);
-            const steps = damage.heightening ? Math.max(0, Math.floor((Number(record.rank) - Number((await fromUuid(record.sourceItemUuid))?.system?.level?.value ?? record.rank)) / damage.heightening.interval)) : 0;
+            const steps = damage.heightening ? Math.max(0, Math.floor((Number(record.rank) - Number((await castSpellFromUuid(record))?.system?.level?.value ?? record.rank)) / damage.heightening.interval)) : 0;
             const formula = heightenedComponentFormula(damage.formula, damage.heightening?.dice, steps);
             const roll = await new DamageRoll(`${formula}[${damage.type}]`).evaluate();
             try { await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: await fromUuid(record.sourceActorUuid) }),
                 flavor: `<strong>${escapeHTML(record.name)}</strong>: ${escapeHTML(actor.name)}'s attack roll (rolled twice) failed`, flags: { [MODULE_ID]: { kind: "failed-attack", castId: record.castId, actorUuid: actor.uuid } } }); } catch (_) {}
-            const receipt = await applyDamageWithReceipt(actor, { damage: roll, token: token ?? undefined, item: (await fromUuid(record.sourceItemUuid)) ?? undefined, rollOptions: new Set(), skipIWR: false }, randomID());
+            const receipt = await applyDamageWithReceipt(actor, { damage: roll, token: token ?? undefined, item: (await castSpellFromUuid(record)) ?? undefined, rollOptions: new Set(), skipIWR: false }, randomID());
             await this.ongoing.save(journal, record);
             return { status: "damaged", total: roll.total, formula, receipt };
         }
@@ -2675,7 +2676,7 @@ export class OngoingFamilies {
                 // "On subsequent rounds, the first time each round you Sustain the Spell, you can throttle the shadow …": a basic save card for the targets
                 // that failed (the caster can leave it unfinalized).
                 if (record.sustainStrike?.targetTokenUuids?.length && record.sustainedRound !== clock.round) {
-                    const spell = await fromUuid(record.sourceItemUuid);
+                    const spell = await castSpellFromUuid(record);
                     const tokens = (await Promise.all(record.sustainStrike.targetTokenUuids.map(uuid => fromUuid(uuid)))).filter(token => token?.actor);
                     if (spell && tokens.length) {
                         const { card } = await this.saves.start(spell, { plan: clone(record.sustainStrike.plan), sourceActor: spell.actor, targets: tokens.map(token => token.object ?? token), castRank: record.rank, dc: record.dc, skipConfirmation: true });
@@ -2687,7 +2688,7 @@ export class OngoingFamilies {
                 if (record.sustainHold?.targetActorUuids?.length && record.sustainedRound !== clock.round) {
                     const spec = record.sustainHold;
                     const DamageRoll = (CONFIG.Dice?.rolls ?? []).find(candidate => candidate?.name === "DamageRoll");
-                    const caster = await fromUuid(record.sourceActorUuid), spell = await fromUuid(record.sourceItemUuid);
+                    const caster = await fromUuid(record.sourceActorUuid), spell = await castSpellFromUuid(record);
                     record.sustainHoldResults ??= [];
                     for (const actorUuid of spec.targetActorUuids) {
                         const actor = await fromUuid(actorUuid);

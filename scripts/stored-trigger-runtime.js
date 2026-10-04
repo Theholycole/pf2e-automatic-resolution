@@ -11,6 +11,7 @@ import { heightenedComponentFormula } from "../src/compiler/retaliation.js";
 import { tokenDistance } from "./token-distance.js";
 import { createNativeEffect, loadNativeEffectTemplate, prepareNativeEffectSource } from "./native-outcome-effects.js";
 import { prepareConditionGrantSource } from "./note-effects.js";
+import { castSpellFromUuid } from './cast-spell.js';
 
 const MODULE_ID = "pf2e-automatic-resolution";
 
@@ -152,7 +153,7 @@ export class StoredTriggerRuntime {
         const DamageRoll = (CONFIG.Dice?.rolls ?? []).find(candidate => candidate?.name === "DamageRoll");
         const roll = await new DamageRoll(`(${formula})[${damage.persistent ? `persistent,${damage.type}` : damage.type}]`).evaluate();
         try { await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: caster }), flavor: `<strong>${escapeHTML(metadata.sourceItemName)}</strong>: ${escapeHTML(token.name)} — ${escapeHTML(trigger.trigger)}` }); } catch (_) {}
-        const spell = await fromUuid(metadata.sourceItemUuid);
+        const spell = await castSpellFromUuid(metadata);
         const receipt = await applyDamageWithReceipt(actor, { damage: roll, token, item: spell ?? undefined, rollOptions: new Set(), skipIWR: false }, randomID());
         let ended = false;
         if (metadata.retaliation.shortenPerHit) {
@@ -221,7 +222,7 @@ export class StoredTriggerRuntime {
         const token = targetUuid ? await fromUuid(targetUuid) : null;
         const target = token?.actor;
         if (!target) throw new Error("Target the creature first.");
-        const spell = await fromUuid(entry.metadata.sourceItemUuid);
+        const spell = await castSpellFromUuid(entry.metadata);
         const statistic = spell?.spellcasting?.statistic;
         if (!statistic) throw new Error(`${entry.metadata.sourceItemName}: the caster's spell attack is unavailable.`);
         const penalty = [0, -5, -10][Number(map)] ?? 0;
@@ -250,7 +251,7 @@ export class StoredTriggerRuntime {
         const actor = target?.actor ?? target;
         if (!actor || !data.targetUuids.includes(actor.uuid)) throw new Error(`${entry.metadata.sourceItemName}: target one of the spell's targets.`);
         const { cauterizeTarget } = await import("./effect-runtime.js");
-        return cauterizeTarget(actor, data, { castInstanceId: castId, castRank: entry.metadata.castRank, sourceActor: caster, itemOrSource: await fromUuid(entry.metadata.sourceItemUuid), spellName: entry.metadata.sourceItemName });
+        return cauterizeTarget(actor, data, { castInstanceId: castId, castRank: entry.metadata.castRank, sourceActor: caster, itemOrSource: await castSpellFromUuid(entry.metadata), spellName: entry.metadata.sourceItemName });
     }
 
     /**
@@ -363,7 +364,7 @@ export class StoredTriggerRuntime {
             const DamageRoll = (CONFIG.Dice?.rolls ?? []).find(candidate => candidate?.name === "DamageRoll");
             const roll = await new DamageRoll(`(${wisps.formula})[${wisps.type}]`).evaluate();
             try { await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: caster }), flavor: `<strong>${escapeHTML(entry.metadata.sourceItemName)}</strong>: a wisp hurtles at ${escapeHTML(token.name)}` }); } catch (_) {}
-            const spell = await fromUuid(entry.metadata.sourceItemUuid);
+            const spell = await castSpellFromUuid(entry.metadata);
             const receipt = await applyDamageWithReceipt(token.actor, { damage: roll, token, item: spell ?? undefined, rollOptions: new Set(), skipIWR: false }, randomID());
             count -= 1; result = { status: "damaged", formula: roll.formula, total: roll.total, receipt };
         }
@@ -408,7 +409,7 @@ export class StoredTriggerRuntime {
                 const DamageRoll = (CONFIG.Dice?.rolls ?? []).find(candidate => candidate?.name === "DamageRoll");
                 const roll = await new DamageRoll(`{${row.damage.join(",")}}`).evaluate();
                 try { await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: caster }), flavor: `<strong>${escapeHTML(entry.metadata.sourceItemName)}</strong>: ${escapeHTML(row.label)} — ${escapeHTML(attacker.name)}` }); } catch (_) {}
-                const spell = await fromUuid(entry.metadata.sourceItemUuid);
+                const spell = await castSpellFromUuid(entry.metadata);
                 await applyDamageWithReceipt(attacker, { damage: roll, token: attackerToken.object ?? attackerToken, item: spell ?? undefined, rollOptions: new Set(), skipIWR: false }, randomID());
                 if (row.condition) await attacker.increaseCondition(row.condition.slug, row.condition.value ? { value: row.condition.value } : {});
                 color.applied = true;
@@ -706,7 +707,7 @@ export class StoredTriggerRuntime {
         const type = trigger.trigger === "strike-wound" ? damageType : trigger.persistent ? `persistent,${trigger.type}` : trigger.type;
         const roll = await new DamageRoll(trigger.trigger === "bleed-gained" ? `(${String(amount).trim()})[${type}]` : formula ? `(${formula})[${type}]` : doubled ? `(2*(${dice}d${scaled.die}))[${type}]` : `(${dice}d${scaled.die})[${type}]`).evaluate();
         try { await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: caster }), flavor: `<strong>${escapeHTML(entry.metadata.sourceItemName)}</strong>: ${escapeHTML(actor.name)} ${what}` }); } catch (_) {}
-        const spell = await fromUuid(entry.metadata.sourceItemUuid);
+        const spell = await castSpellFromUuid(entry.metadata);
         const token = actor.getActiveTokens?.()?.[0]?.document;
         // A lodged projectile's explosion: doubled on a critical hit, to the creature and each adjacent creature the GM targeted.
         const multiplier = trigger.trigger === "explosion" ? Number(trigger.multiplier ?? 1) : 1;
@@ -787,7 +788,7 @@ export class StoredTriggerRuntime {
         const note = await fromUuid(uuid), marked = note?.actor;
         const token = marked?.getActiveTokens?.()?.[0]?.document;
         if (!token) throw new Error(`${entry.metadata.sourceItemName}: the marked creature isn't on the scene.`);
-        const spell = await fromUuid(entry.metadata.sourceItemUuid);
+        const spell = await castSpellFromUuid(entry.metadata);
         if (!spell) throw new Error(`${entry.metadata.sourceItemName}: the spell is no longer on the caster.`);
         const plan = detonationPlan(await game.modules.get(MODULE_ID).api.compile(spell));
         if (!plan) throw new Error(`${entry.metadata.sourceItemName}: the spell no longer has an explosion.`);
@@ -985,7 +986,7 @@ export class StoredTriggerRuntime {
         const target = await fromUuid(metadata.storedTrigger.held && metadata.storedTrigger.saveTarget !== "attacker" ? metadata.targetTokenUuid : targetUuid);
         const token = target?.documentName === "Token" ? target : target?.document ?? null;
         if (!token?.actor) throw new Error(`${metadata.sourceItemName}: target the creature that triggered it.`);
-        const spell = await fromUuid(metadata.sourceItemUuid);
+        const spell = await castSpellFromUuid(metadata);
         if (!spell) throw new Error(`${metadata.sourceItemName}: the spell is no longer on the caster.`);
         const plan = await game.modules.get(MODULE_ID).api.compile(spell);
         if (!this.supports(plan)) throw new Error(`${metadata.sourceItemName}: the spell no longer waits for a trigger.`);

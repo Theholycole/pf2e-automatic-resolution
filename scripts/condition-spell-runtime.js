@@ -4,6 +4,7 @@ import { clone, randomID, escapeHTML as esc } from './runtime-utils.js';
 import { turnAdvance, addObligation, boundaryKey } from './ongoing-core.js';
 import { emptyConditionSavePlan, sickenedAfterRecovery, clingingIceSavePlan } from './condition-spell-core.js';
 import { conditionProfileDigest, CONDITION_PROFILE_HASHES, CONDITION_PROFILE_FIELDS, clingingIceEffectMechanics, CLINGING_ICE_EFFECT_MECHANICS } from './condition-spell-baseline.js';
+import { castSpellFromUuid, spellFromSource } from './cast-spell.js';
 const state = j => j.getFlag(MODULE_ID, 'ongoingCast');
 const IDS = { 'evil-eye': 'f45JpY7Ph2cAJGW2', fear: '4koZzrnMXhhosn0D', 'clinging-ice':'MraZBLJ4Be3ogmWL', paralyze:'DCQHaLrYXMI37dvW' };
 
@@ -66,9 +67,11 @@ export class ConditionSpellRuntime {
     }
     async prepare(journal, targets, recovery, pendingKey=null) {
         const record = clone(state(journal)), actor = await fromUuid(record.sourceActorUuid);
+        // (A spell cast from a wand or scroll is PF2e's copy for that cast, which no UUID finds afterwards: the copy kept when the cast started.)
+        let stored=null;try{stored=record.sourceItemUuid?await castSpellFromUuid(record):null;}catch(_){stored=null;}
         const item = recovery && record.recoverySource && actor
             ? new CONFIG.Item.documentClass(clone(record.recoverySource),{parent:actor})
-            : await fromUuid(record.sourceItemUuid);
+            : stored?.type==='spell' ? stored : record.recoverySource && actor ? spellFromSource(record.recoverySource,actor) : null;
         if (!item || !actor) throw Error('The original caster or spell is unavailable. Review this cast before rolling.');
         if(record.obligations.some(o=>o.status==='collecting'))throw Error('Finish the pending save before another recovery attempt.');
         const plan = record.profile==='clinging-ice' ? clingingIceSavePlan(item) : emptyConditionSavePlan(item, recovery&&record.profile==='evil-eye'?'fortitude':'will');

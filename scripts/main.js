@@ -21,6 +21,7 @@ import { StoredTriggerRuntime } from "./stored-trigger-runtime.js";
 import { inspectSavePlan } from "./basic-save-core.js";
 import { claimNativeSpellSaveButton, refreshSaveButtonAuthority } from "./chat-card-controls.js";
 import { debugCast, debugEnabled, debugLatestCast, registerDebugSetting } from "./debug.js";
+import { rememberCastSpell, rememberedCastSpell, spellFromSource } from './cast-spell.js';
 
 const immediate = new ImmediateRuntime();
 const runtime = new EffectRuntime();
@@ -120,7 +121,9 @@ function spellCardContext(message) {
     let item = null;
     try { item = message.item ?? null; } catch (_) {}
     item ??= actor.items.get(itemId) ?? null;
-    const embeddedSource = message.flags?.pf2e?.casting?.embeddedSpell ?? null;
+    // (A used-up scroll: PF2e deleted it and its card keeps no copy — the spell kept on the card, or remembered before the deletion.)
+    const keptSource = message.flags?.[MODULE_ID]?.castSpellSource ?? rememberedCastSpell(message.flags?.pf2e?.origin?.uuid)?.source ?? null;
+    const embeddedSource = message.flags?.pf2e?.casting?.embeddedSpell ?? (item ? null : keptSource);
     if (item?.type !== "spell" && embeddedSource?.type !== "spell") return null;
     const castRank = Number(
         message.content.match(/data-cast-rank=["'](\d+)["']/i)?.[1]
@@ -128,9 +131,14 @@ function spellCardContext(message) {
         ?? item?.rank
         ?? embeddedSource?.system?.level?.value
     );
+    // (A wand or scroll's spell exists only for this card: an item built from its stored copy, owned by the caster, and remembered so
+    // later steps can find it.)
+    const spell = item?.type === "spell" && !item.spellcasting && item.parentItem ? spellFromSource(item.toObject(), actor)
+        : item ?? (embeddedSource ? spellFromSource(embeddedSource, actor) : null);
+    rememberCastSpell(spell);
     return {
         actor,
-        item: item ?? embeddedSource,
+        item: spell,
         baseSource: embeddedSource ?? unheightenedSource(item, actor.items.get(itemId)),
         castRank: Number.isFinite(castRank) ? castRank : null
     };
@@ -1569,6 +1577,18 @@ Hooks.on("updateItem", item => {
 // Client-local refresh: authority changes must not rewrite persisted cast state.
 Hooks.on("userConnected", () => bindSaveButtons(document));
 Hooks.on("updateUser", () => bindSaveButtons(document));
+
+// A scroll (or other consumable) used up by its cast: its stored spell remembered just before PF2e deletes it, and kept on the spell card
+// it posted so the card's resolution still finds the spell (after a reload too).
+Hooks.on("preDeleteItem", item => { try { if (item.type === "consumable" && item.embeddedSpell) rememberCastSpell(item.embeddedSpell); } catch (_) {} });
+Hooks.on("createChatMessage", message => {
+    try {
+        if (message.author?.id !== game.user?.id || message.flags?.pf2e?.origin?.type !== "spell" || message.flags?.pf2e?.casting?.embeddedSpell) return;
+        const uuid = message.flags.pf2e.origin.uuid, kept = rememberedCastSpell(uuid);
+        if (!kept || fromUuidSync(uuid)) return;
+        void message.setFlag(MODULE_ID, "castSpellSource", kept.source).catch(() => {});
+    } catch (_) {}
+});
 
 Hooks.on("getSceneControlButtons", controls => {
     if (controls.tokens) controls.tokens.tools.ongoingSpells = { name: "ongoingSpells", title: "Ongoing spells", icon: "fa-solid fa-clock", button: true, onChange: () => { void ongoing.open(); } };

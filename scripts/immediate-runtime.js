@@ -4,6 +4,7 @@ import { applyDamageWithReceipt, confirmedDamageSummary } from './native-damage-
 import { isDying, recoverFromDying, revivedNote } from './dying-recovery.js';
 import { coordinatorId } from './ongoing-core.js';
 import { IMMEDIATE_FLAG, PROFILES, DEGREES, degree, effectiveCheck, saveDegree, needsSave, readiness, recordCheck, correctTarget, validateChoices, checkAudience } from './immediate-core.js';
+import { castSpellFromUuid } from './cast-spell.js';
 const stateOf = card => clone(card.getFlag(MODULE_ID, IMMEDIATE_FLAG));
 const actorOf = target => target.actor ?? target;
 const tokenOf = target => target.documentName === 'Token' ? target : target.document?.documentName === 'Token' ? target.document : null;
@@ -180,7 +181,7 @@ export class ImmediateRuntime {
         }catch(error){state.status='review';state.reviewReason=error.message;await this.update(card,state);throw error;}
     }
     async variant(s,mode) {
-        const original=await fromUuid(s.sourceItemUuid);if(!original)throw Error('The original spell is missing.');await this.verify(original);
+        const original=await castSpellFromUuid(s);if(!original)throw Error('The original spell is missing.');await this.verify(original);
         let overlayIds=[];
         if(s.kind==='heal'){
             const id=Object.entries(original.system.overlays).find(([,o])=>Number(o.system.time?.value)===s.actions&&(s.actions!==2||(mode==='healing'?o.system.defense===null:o.system.defense!==null)))?.[0];

@@ -10,6 +10,7 @@ import { ONGOING_FLAG, coordinatorId } from "./ongoing-core.js";
 import { counteracts } from "./affliction-care-core.js";
 import { applyDamageWithReceipt } from "./native-damage-receipt.js";
 import { revealInformation } from "./reveal-runtime.js";
+import { castSpellFromUuid, castSpellSource } from './cast-spell.js';
 
 const flag = item => item?.flags?.[MODULE_ID]?.runtime ?? item?.flags?.[MODULE_ID]?.outcomeEffect;
 const value = journal => journal?.getFlag(MODULE_ID, ONGOING_FLAG);
@@ -87,6 +88,8 @@ export class OngoingRuntime {
     async begin(record) {
         this.assertCoordinator();
         if (this.find(record.castId)) throw Error("This ongoing cast already has a durable record.");
+        // (A wand or scroll's spell, which no UUID finds later: its source kept on the record.)
+        if (record.sourceItemUuid && !record.spellSource) { const spellSource = await castSpellSource(record.sourceItemUuid); if (spellSource) record = { ...record, spellSource }; }
         const actors = await Promise.all([record.sourceActorUuid, ...(record.recipientUuids ?? [])].filter(Boolean).map(uuid => fromUuid(uuid)));
         const ownership = { default: 0 };
         for (const user of game.users) if (!user.isGM && actors.some(actor => actor?.testUserPermission(user, "OWNER"))) ownership[user.id] = 2;
@@ -441,7 +444,7 @@ export class OngoingRuntime {
         const caster = await fromUuid(record.sourceActorUuid);
         if (!user.isGM && !caster?.testUserPermission(user, "OWNER")) throw Error("You do not control this ward.");
         if (!name || !Number.isFinite(Number(dc)) || !Number.isInteger(Number(rank))) throw Error(`${record.name}: name the effect and enter its counteract DC and rank.`);
-        const spell = await fromUuid(entry.metadata.sourceItemUuid);
+        const spell = await castSpellFromUuid(entry.metadata);
         const statistic = spell?.spellcasting?.counteraction ?? spell?.spellcasting?.statistic;
         if (!statistic) throw Error(`${record.name}: the caster's counteract statistic is unavailable.`);
         // "The GM rolls a secret counteract check": blind roll, and the result is whispered to the GM.
