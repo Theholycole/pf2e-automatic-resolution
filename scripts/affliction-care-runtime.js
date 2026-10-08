@@ -6,10 +6,10 @@ import { MODULE_ID } from "./effect-runtime.js";
 import { applyDamageWithReceipt } from "./native-damage-receipt.js";
 import { isDying, recoverFromDying, revivedNote } from "./dying-recovery.js";
 import { setAsideEffect } from "./set-aside-runtime.js";
+import { AFFLICTION_HANDLER as HANDLER } from "./runtime-utils.js";
 import { afflictionCounteractRank, afflictionStage, afflictionStageDelta, carePlanAtRank, counteracts, durationSeconds, isExecutableCarePlan,
     nextAfflictionBadge, stageLengthSeconds } from "./affliction-care-core.js";
 
-const HANDLER = "pseudo-afflictions";
 const esc = value => foundry.utils.escapeHTML(String(value ?? ""));
 const DEGREES = ["critical failure", "failure", "success", "critical success"];
 const span = d => `${d.value} ${d.value === 1 ? d.unit.replace(/s$/, "") : d.unit}`;

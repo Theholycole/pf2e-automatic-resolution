@@ -52,14 +52,8 @@
 //     with rows of 40/80/160 void damage; "If the target is in contact with solid ground" the ground shakes (difficult terrain until the start of your next
 //     turn), opens into a shallow grave (Prone; difficult terrain until filled in), or closes a stone shell around it (AC 10, Hardness 14, 80 Hit Points;
 //     filled with soil at the start of your next turn; a ghast if it dies inside): the rows' damage, Prone behind the GM's ground question, the rest notes.
-import { htmlToPlainText } from "./description-parser.js";
+import { WORD_NUMBERS_2_6 as COUNT, CONDITION_LINK as LINK, PETRIFIED_UUID as PETRIFIED, DEGREE_LABEL_PAIRS as ROWS, plainOrEmpty as plain, rowOf, sentenceSplitTrimmed as sentencesOf } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(String(html ?? "")).replace(/\s+/g, " ").trim();
-const sentencesOf = text => text.split(/(?<=[.!?])\s+(?=[A-Z@])/).map(sentence => sentence.trim()).filter(Boolean);
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
-const rowOf = (html, heading) => { const row = new RegExp(String.raw`<strong>\s*${heading}\s*</strong>([\s\S]*?)</p>`).exec(html); return row ? row[1].replace(/\s+/g, " ").trim() : null; };
-const ROWS = [["criticalSuccess", "Critical Success"], ["success", "Success"], ["failure", "Failure"], ["criticalFailure", "Critical Failure"]];
-const LINK = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Z][a-z]+)(?: (\d))?\}`;
 const flagOf = slug => `condition${slug.split("-").map(word => word[0].toUpperCase() + word.slice(1)).join("")}`;
 const NEXT_TURN = { mode: "fixed", value: 1, unit: "rounds", expiry: "turn-end", anchor: "target-turn", offset: 1, sourceText: "until the end of its next turn" };
 const UNLIMITED = sourceText => ({ mode: "unlimited", value: null, unit: null, sourceText });
@@ -300,7 +294,6 @@ const TRIBUTE = {
     failure: /^As success, but the target must pay tribute a total of (two|three|four|five|six|\d+) times\.$/,
     critical: /^As failure, but the target must spend all its actions paying tribute, and they cannot take other actions until the tribute is fully paid\.$/
 };
-const COUNT = { two: 2, three: 3, four: 4, five: 5, six: 6 };
 
 function overwhelmingPresence(adapted) {
     const [body, table, ...rest] = String(adapted.descriptionHTML ?? "").split(/<hr\s*\/?>/i);
@@ -406,7 +399,6 @@ export function extractLastingCurse(adapted) {
     return undermineReality(adapted) ?? fabricatedTruth(adapted) ?? cursedMetamorphosis(adapted) ?? remakePhysiology(adapted) ?? chrysopoeticCurse(adapted) ?? dreadSecret(adapted) ?? overwhelmingPresence(adapted) ?? tanglecurse(adapted);
 }
 
-const PETRIFIED = "Compendium.pf2e.conditionitems.Item.dTwPJuKgBQCMxixg";
 const BONE = {
     lead: [/^You transform a thrall into fine dust particles that invade a creature's body and begin transforming their body into a statue made of pure enhanced bone\.$/,
         /^Destroy a thrall within range, and choose a living or undead creature within (\d+) feet of where the thrall was\.$/,

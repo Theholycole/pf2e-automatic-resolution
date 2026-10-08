@@ -6,8 +6,8 @@
 //   the marked rows' note).
 // Each variant is built from the base plan's rows; anything that doesn't line up leaves the entry to the rank gate.
 import { htmlToPlainText } from "./description-parser.js";
+import { UNIT } from "./text-patterns.js";
 
-const UNIT = { round: "rounds", minute: "minutes", hour: "hours" };
 const PRONE_UUID = "Compendium.pf2e.conditionitems.Item.j91X7x0XSomq8d60";
 const clone = value => JSON.parse(JSON.stringify(value));
 

@@ -9,9 +9,8 @@
 // shards (PF2e's item damage at the cast rank) when the creature Escapes or the cage is destroyed (or Dismissed), ending the cage; the cage's
 // statistics a reminder.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C, NARRATION_RULES } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const SAVE = /^A creature targeted with this spell must attempt an? (Fortitude|Reflex|Will) save\.$/;
 const CAGE = /^The cage has AC (\d+), Hardness (\d+), and (\d+) Hit Points, and it's immune to critical hits and precision damage\.$/;
 const SHARDS = /^When a creature Escapes or the cage is destroyed, shards of [a-z ]+ cut the target creature, dealing (\d+)d(\d+) ([a-z]+) damage\.$/;

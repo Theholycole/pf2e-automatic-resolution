@@ -5,8 +5,8 @@
 // - "{landSpeed}" in a rule is the recipient's land Speed at the cast; requiresTrait: each recipient must have it ("1 animal").
 // Every sentence is a rule, a note, or narration with no rule in it; anything else leaves the spell to its note.
 import { durationSeconds, plainText as plain, splitSentences as split } from "./description-parser.js";
+import { SKILLS, unlinkText as unlink } from "./text-patterns.js";
 
-const unlink = text => text.replace(/@UUID\[[^\]]+\]\{([^}]+)\}/g, "$1");
 // (A sentence that states a rule the module would otherwise drop.)
 const RULE_WORDS = /\d|\[\[|@(?:Check|Damage|Template)|\b(?:damage|saves?|saving throws?|bonus|penalty|immune|immunity|resistance|weakness|Speed|checks?|DC|Hit Points|Strikes?|(?:im)?precise sense|tremorsense|low-light vision|darkvision)\b/i;
 const ORDINAL = "(\\d+)(?:st|nd|rd|th)";
@@ -344,7 +344,6 @@ const FOREBEAR = [/^Once per turn for the duration, your forebearers @UUID\[[^\]
     /^If they roll a failure, they get a success instead\.$/, /^If you are legendary in the skill granted by your patron, they automatically critically succeed\.$/,
     /^In addition, whenever you succeed at a check that was aided by your forebearers, you are @UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{Concealed\} by their afterimages until the beginning of your next turn\.$/,
     /^You can't use this concealment to Hide or Sneak\.$/];
-const SKILLS = ["acrobatics", "arcana", "athletics", "crafting", "deception", "diplomacy", "intimidation", "medicine", "nature", "occultism", "performance", "religion", "society", "stealth", "survival", "thievery"];
 function forebearers(adapted) {
     if (target(adapted) || adapted.lifecycle?.sustained) return null;
     const { sentences, heightened } = parts(adapted);

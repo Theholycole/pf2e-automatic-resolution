@@ -9,13 +9,13 @@
 // bright light damages the caster (half the reservoir, once a round); the Dismiss into a targeted creature (the reservoir's healing or damage); a new casting
 // ends the earlier one.
 import { htmlToPlainText } from "./description-parser.js";
+import { SPELL_EFFECT_LINK_LABEL as LINK } from "./text-patterns.js";
 
 const P1 = /^[A-Z][^.]*\. You glow with bright light in a (\d+)-foot emanation \(and dim light to the next (\d+) feet\), and you gain an internal pool of light called a luminance reservoir, which begins with a value of (\d+)\. At the start of each of your turns, increase your reservoir by (\d+)\.$/;
 const P2 = /^If an undead creature damages you with an attack or spell while it's within the bright light of your aura, that creature takes vitality damage equal to half your luminance reservoir value\. It takes this damage only the first time it damages you in a round\.$/;
 const P3 = /^You can Dismiss this Spell\. When you do, you can target a creature within your light and direct the vital energy into it\. The target must be a willing living creature or an undead creature\. This heals a living target or deals vitality damage to an undead target equal to your luminance reservoir's value\.$/;
 const P4 = /^If you Cast this Spell again, any previous casting ends\.$/;
 const STEP = /^Heightened \(\+1\) Both the initial value of your luminance reservoir and the amount you gain each turn increase by 1\.$/;
-const LINK = /^@UUID\[Compendium\.pf2e\.spell-effects\.Item\.([^\]]+)\]\{([^}]+)\}$/;
 
 /** {luminance, claimed} or null; the catalog proves PF2e's Effect (its light and counter). */
 export function compileLuminance(adapted, catalog) {

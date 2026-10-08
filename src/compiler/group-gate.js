@@ -6,17 +6,15 @@
 //   becomes @UUID[…]{Enfeebled 1} and @UUID[…]{Clumsy 1} for the spell's duration."
 // The rows written out plainly; the gated conditions apply at Finalize only when at least two targets got a failure or critical failure.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C, DEGREE_LABEL_PAIRS as DEGREES, NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
 const LEAD = /^Each creature in the area must attempt an? (Fortitude|Reflex|Will) save\.$/;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const ROWS = {
     criticalSuccess: /^The creature is unaffected\.$/,
     success: new RegExp(String.raw`^The creature's [a-z ,]+ cause the creature to become (${C}Off-Guard\}) until the start of its next turn\.$`),
     failure: new RegExp(String.raw`^As success, but the creature is off-guard for the duration of the spell\. If more than one of the targets failed to resist this spell, the creature also becomes (${C}Stupefied 1\}) for the duration of the spell as [a-z ,]+\.$`),
     criticalFailure: new RegExp(String.raw`^As failure, but any creature that becomes stupefied 1 for the duration of the spell also becomes (${C}Enfeebled 1\}) and (${C}Clumsy 1\}) for the spell's duration\.$`)
 };
-const DEGREES = [["criticalSuccess", "Critical Success"], ["success", "Success"], ["failure", "Failure"], ["criticalFailure", "Critical Failure"]];
 
 /** {html, gated: [labels], claimed} or null. */
 export function rewriteGroupGate(adapted) {

@@ -57,3 +57,46 @@ export function spellAtCastRank(item, castRank) {
     if (Number(item.rank) === Number(castRank) && !fixedLevels) return item;
     try { return item.loadVariant({ castRank: Number(castRank) }) ?? item; } catch { return item; }
 }
+
+// ---- Helpers the runtimes shared as copies (merged 2026-10-08) ----
+
+// The module and its neighbours.
+export const MODULE_ID = "pf2e-automatic-resolution";
+export const AFFLICTION_HANDLER = "pseudo-afflictions";
+
+// Users: the active GM (the one client that acts on hooks), the GMs, an actor's owners.
+export const activeGM = () => game.user?.isGM && game.users.activeGM?.id === game.user.id;
+export const gmIds = () => game.users.filter(user => user.isGM).map(user => user.id);
+export const ownerIds = actor => game.users.filter(user => actor?.testUserPermission?.(user, "OWNER")).map(user => user.id);
+
+// Chat: a line from an actor (wrapped in a paragraph, or as given), and the spell-cast messages PF2e posts.
+export const say = (actor, text) => ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content: `<p>${text}</p>` }).catch(() => null);
+export const post = (actor, content) => ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content }).catch(() => null);
+export const isCastMessage = message => message?.flags?.pf2e?.context?.type === "spell-cast" || (!message?.flags?.pf2e?.context?.type && message?.flags?.pf2e?.origin?.type === "spell" && message?.flags?.pf2e?.casting);
+export const castRankOf = message => Number(message.flags?.pf2e?.origin?.castRank ?? message.flags?.pf2e?.casting?.castRank ?? message.item?.rank ?? 1);
+
+// Documents and creatures.
+export const docOf = token => token?.document ?? token;
+export const actorOf = target => target.actor ?? target;
+export const allied = (a, b) => a === b || Boolean(a?.alliance && a.alliance === b?.alliance);
+export const familiarOf = caster => game.actors.find(actor => actor.type === "familiar" && (actor.system?.master?.id === caster.id || actor.master?.id === caster.id)) ?? null;
+export const DamageRollClass = () => { const found = (CONFIG.Dice?.rolls ?? []).find(candidate => candidate?.name === "DamageRoll"); if (!found) throw new Error("PF2e's DamageRoll class could not be resolved."); return found; };
+
+// The lead GM: the first active GM by id (a stable choice among several).
+export function isLeadGM() {
+    const gms = game.users.filter(user => user.active && user.isGM).sort((a, b) => a.id.localeCompare(b.id));
+    return gms[0]?.id === game.user.id;
+}
+
+// A check's degree (0 critical failure … 3 critical success) from its total, the DC and the natural die.
+export function degreeOf(total, dc, natural) {
+    let degree = total >= dc + 10 ? 3 : total >= dc ? 2 : total <= dc - 10 ? 0 : 1;
+    if (natural === 20) degree = Math.min(3, degree + 1);
+    if (natural === 1) degree = Math.max(0, degree - 1);
+    return degree;
+}
+
+// Degrees, from worst to best; duration units; plain text from HTML.
+export const DEGREES = Object.freeze(["criticalFailure", "failure", "success", "criticalSuccess"]);
+export const UNITS = new Set(["rounds", "minutes", "hours", "days"]);
+export const plainText = html => String(html ?? "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().replace(/[’]/g, "'");

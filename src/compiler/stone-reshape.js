@@ -3,8 +3,8 @@
 // "The creature falls off the stone (if applicable) and lands Prone.": the creatures atop the stone (the GM's targets) roll the better of their Reflex
 // save and Acrobatics check; Prone on a failure or critical failure; falling off the GM's (a reminder).
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
 const LEAD = /^You shape the stone into a rough shape of your choice\. (The shaping process is too crude to produce intricate parts, fine details, moving pieces, or the like\.) (Any creatures standing atop the stone when you reshape it must each attempt a (Fortitude|Reflex|Will) save or (Acrobatics|Athletics) check\.)$/;
 const FAILURE = new RegExp(String.raw`^The creature falls (${C}Prone\}) atop the stone\.$`);
 const CRITICAL = /^The creature falls off the stone \(if applicable\) and lands Prone\.$/;

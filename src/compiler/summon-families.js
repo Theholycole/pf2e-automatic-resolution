@@ -3,6 +3,7 @@
 // traits and is at most the stated level for the cast rank; it is imported with the summoned and minion traits and placed within range, and it
 // is removed when the spell's (sustained) Effect on the caster ends.
 import { plainText as plain, splitSentences as split } from "./description-parser.js";
+import { TRADITIONS } from "./text-patterns.js";
 
 
 /** The summon trait's table: the highest creature level for each spell rank (Player Core). */
@@ -109,7 +110,6 @@ export function summonMaxLevel(data, castRank) {
     return ranks.length ? data.levels.byRank[ranks.at(-1)] : null;
 }
 
-const TRADITIONS = ["arcane", "divine", "occult", "primal"];
 /** Whether a compendium creature (its index entry) may be summoned: type, traits, level, rarity, tradition. */
 export function summonEligible(data, entry, { castRank, tradition = null, allowRarity = false } = {}) {
     if (entry?.type !== "npc") return false;

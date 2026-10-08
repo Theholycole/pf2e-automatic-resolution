@@ -10,11 +10,8 @@ import { isDying, recoverFromDying } from "./dying-recovery.js";
 import { ONGOING_FLAG } from "./ongoing-core.js";
 import { tokenDistance } from "./token-distance.js";
 import { lowerAfflictionStage } from "./affliction-care-runtime.js";
+import { DamageRollClass, MODULE_ID, escapeHTML, post as say } from "./runtime-utils.js";
 
-const MODULE_ID = "pf2e-automatic-resolution";
-const escapeHTML = value => String(value ?? "").replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
-const DamageRollClass = () => { const found = (CONFIG.Dice?.rolls ?? []).find(candidate => candidate?.name === "DamageRoll"); if (!found) throw new Error("PF2e's DamageRoll class could not be resolved."); return found; };
-const say = (actor, content) => ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content }).catch(() => null);
 const recordOf = (ongoing, castId) => { const journal = castId ? ongoing.find(castId) : null; const record = journal?.getFlag(MODULE_ID, ONGOING_FLAG); return record?.status === "active" ? { journal, record } : null; };
 const centreOf = token => ({ x: token.x + (Number(token.width) || 1) * canvas.grid.size / 2, y: token.y + (Number(token.height) || 1) * canvas.grid.size / 2, elevation: Number(token.elevation ?? 0) });
 const inside = region => canvas.scene.tokens.filter(token => token.actor && !token.hidden && region.testPoint?.(centreOf(token)));

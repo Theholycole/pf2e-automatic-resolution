@@ -7,11 +7,11 @@
 // taken out of the description and become a card reminder with a Counteract button (the caster's counteract check
 // against the effect the GM names).
 
+import { stripTags as plain } from "./text-patterns.js";
+
 const NAME = String.raw`(?:<em>)?[A-Za-z' ]+(?:<\/em>)?(?:'s)?`;
 const ALONG = new RegExp(String.raw`If the (ray|light|beam|line) passes through an area of magical (light|darkness) or targets a creature affected by magical \2, ${NAME} attempts to counteract the \2\.(?:\s*If you need to determine whether the \1 passes through an area of \2, draw a line between yourself and the (?:spell's )?target\.)?`, "g");
 const OVERLAP = new RegExp(String.raw`If the (globe|burst|cloud) overlaps with an area of magical (light|darkness)(?: or affects a creature affected by magical \2)?, ${NAME} attempts to counteract the \2(?: effect)?\.`, "g");
-
-const plain = html => String(html).replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
 
 /** The description without these sentences, and their reminders; null when there are none. */
 export function extractLightDarknessCounteract(html) {

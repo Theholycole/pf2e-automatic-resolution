@@ -1,9 +1,6 @@
 import { analyzeNativeEffectCompleteness } from "./direct-effect-resolution-compiler.js";
 import { htmlToPlainText } from "./description-parser.js";
-
-function baseReference(reference) {
-    return String(reference ?? "").replace(/\s*\([^)]*\)\s*$/, "").trim();
-}
+import { baseReference } from "./text-patterns.js";
 
 function rankFromVariantLabel(reference) {
     const match = String(reference ?? "").match(/\((\d+)(?:st|nd|rd|th)\s+(?:rank|level)\)/i);

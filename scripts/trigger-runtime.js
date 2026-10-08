@@ -17,14 +17,10 @@ import { findStrikeMessage } from "./strike-prelude-runtime.js";
 import { freeSpaceBeside, teleportToken } from "./teleport-runtime.js";
 import { tokenDistance } from "./token-distance.js";
 import { lastDamageOf } from "./climb-aid-runtime.js";
+import { DEGREES, DamageRollClass, MODULE_ID, activeGM, escapeHTML } from "./runtime-utils.js";
 
-const MODULE_ID = "pf2e-automatic-resolution";
-const DEGREES = ["criticalFailure", "failure", "success", "criticalSuccess"];
-const escapeHTML = value => String(value ?? "").replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
-const DamageRollClass = () => { const found = (CONFIG.Dice?.rolls ?? []).find(candidate => candidate?.name === "DamageRoll"); if (!found) throw new Error("PF2e's DamageRoll class could not be resolved."); return found; };
 const tokenOf = actor => actor?.getActiveTokens?.(true, true)?.[0] ?? null;
 const say = (actor, content, whisper = false) => ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content, ...(whisper ? { whisper: game.users.filter(user => user.isGM).map(user => user.id) } : {}) }).catch(() => null);
-const activeGM = () => game.user?.isGM && game.users.activeGM?.id === game.user.id;
 const recordOf = (ongoing, castId) => { const journal = castId ? ongoing.find(castId) : null; const record = journal?.getFlag(MODULE_ID, ONGOING_FLAG); return record?.status === "active" ? { journal, record } : null; };
 
 /** A creature's save against the spell's DC (a forced degree when the GM rules it). */

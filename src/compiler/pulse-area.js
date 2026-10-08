@@ -4,11 +4,10 @@
 // burst, its damage (the item's dice at the cast rank, of the caster's type) to each creature in it when cast and on the first Sustain each turn. (The module's
 // variants add a Will or Reflex save the text doesn't have; the text has none.)
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES, HEIGHTENED_DAMAGE_STEP_ONE as STEP } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const CHOOSE = /^When you Cast the Spell, choose between ([a-z, ]+), or ([a-z]+) damage\.$/;
 const DEALS = /^You create [a-z ,]+ that deal (\d+)d(\d+) damage of the type you chose to each creature in the area, and the first time you Sustain each turn\.$/;
-const STEP = /^Heightened \(\+1\) The damage increases by (\d+)d(\d+)\.$/;
 
 /** {pulse, sentences} or null. */
 export function extractPulseArea(adapted) {

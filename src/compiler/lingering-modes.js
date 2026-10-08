@@ -9,6 +9,7 @@
 // immunity after it), compiled on its own; the card asks the mode. The fire source, the area's rise or fall, the smoke's Perception penalties and its
 // critical failure's "can't recover while in the area" are reminders.
 import { htmlToPlainText } from "./description-parser.js";
+import { LABELS as DEGREES, squashedSentences as split } from "./text-patterns.js";
 
 const LEAD = [/^You turn a fire into either a burst of blinding fireworks or a thick cloud of choking smoke, chosen when you Cast the Spell\.$/,
     /^The spell targets one fire source, which is immediately extinguished if it is a non-magical fire the size of a campfire or smaller\.$/,
@@ -18,8 +19,6 @@ const ASCEND = /^The first time you Sustain the Spell each round, you can cause 
 const START = /^Creatures that start their turn within the (?:area of the fireworks|smoke cloud) must attempt an? (Fortitude|Reflex|Will) save, and are then temporarily immune for (\d+) (minute|hour)s?\.$/;
 const SMOKE_PENALTY = /^Creatures within the smoke cloud take a [-–−](\d) circumstance penalty to visual Perception checks, and creatures outside the smoke cloud take a [-–−]\1 circumstance penalty to visual Perception checks to detect creatures or objects within it\.$/;
 const NO_RECOVERY = /^The creature is (@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{Sickened \d\}|Sickened \d) and cannot recover from the sickened condition while in the area of the smoke cloud\.$/;
-const DEGREES = { "Critical Success": "criticalSuccess", Success: "success", Failure: "failure", "Critical Failure": "criticalFailure" };
-const split = text => text.replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s+(?=[A-Z@])/).filter(Boolean);
 
 /** {modes: [{key, label, html, area, notes}], notes, sentences} or null. */
 export function extractLingeringModes(adapted) {

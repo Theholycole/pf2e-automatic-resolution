@@ -15,26 +15,12 @@
 import { counters, loseSpell } from "./casting-rules-runtime.js";
 import { castTargetActors, refundSlot, timedConditions } from "./spellshape-runtime.js";
 import { tokenDistance } from "./token-distance.js";
+import { DEGREES, MODULE_ID, activeGM, allied, castRankOf, escapeHTML, gmIds, isCastMessage, ownerIds, degreeOf } from "./runtime-utils.js";
 
-const MODULE_ID = "pf2e-automatic-resolution";
-const escapeHTML = value => String(value ?? "").replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
-const activeGM = () => game.user?.isGM && game.users.activeGM?.id === game.user.id;
-const gmIds = () => game.users.filter(user => user.isGM).map(user => user.id);
-const ownerIds = actor => game.users.filter(user => actor?.testUserPermission?.(user, "OWNER")).map(user => user.id);
-const isCastMessage = message => message?.flags?.pf2e?.context?.type === "spell-cast" || (!message?.flags?.pf2e?.context?.type && message?.flags?.pf2e?.origin?.type === "spell" && message?.flags?.pf2e?.casting);
-const castRankOf = message => Number(message.flags?.pf2e?.origin?.castRank ?? message.flags?.pf2e?.casting?.castRank ?? message.item?.rank ?? 1);
-const DEGREES = ["criticalFailure", "failure", "success", "criticalSuccess"];
 /** Whether a creature has an action (PF2e grants class actions as action items; some are feats). */
 export const hasAbility = (actor, slug) => [...(actor?.itemTypes?.action ?? []), ...(actor?.itemTypes?.feat ?? [])].some(item => item.slug === slug);
 const DELIVERY = { spellstrike: { name: "Spellstrike", saves: true }, "eldritch-shot": { name: "Eldritch Shot" }, "spell-woven-shot": { name: "Spell-Woven Shot" }, spellsling: { name: "Spellsling" } };
-const allied = (a, b) => a === b || Boolean(a?.alliance && a.alliance === b?.alliance);
 
-function degreeOf(total, dc, natural) {
-    let degree = total >= dc + 10 ? 3 : total >= dc ? 2 : total <= dc - 10 ? 0 : 1;
-    if (natural === 20) degree = Math.min(3, degree + 1);
-    if (natural === 1) degree = Math.max(0, degree - 1);
-    return degree;
-}
 const card = (actor, whisperTo, data, html) => ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), whisper: whisperTo, flags: { [MODULE_ID]: { kind: "spell-action", spellAction: data } }, content: `<section class="pf2e-auto-runtime-card">${html}</section>` }).catch(() => null);
 
 /** The cast's delivery by a Strike, when marked: { kind, name, saves } or null. */

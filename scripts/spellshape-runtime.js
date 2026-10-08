@@ -16,10 +16,8 @@ import { readPassiveCastRider, readActionCast } from "../src/compiler/plus-featu
 import { startFollowingAura } from "./form-aura-runtime.js";
 import { readActionShape } from "./spell-actions-runtime.js";
 import { catalystCastRider, catalystSaveRider, catalystSummoned } from "./catalyst-runtime.js";
+import { MODULE_ID, activeGM, escapeHTML, familiarOf } from "./runtime-utils.js";
 
-const MODULE_ID = "pf2e-automatic-resolution";
-const escapeHTML = value => String(value ?? "").replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
-const activeGM = () => game.user?.isGM && game.users.activeGM?.id === game.user.id;
 // (A wand just used: its charge spent moments before or after its spell's card.)
 const recentWandUse = new Map();
 
@@ -913,13 +911,6 @@ export function powerRingBonus(caster) {
         if (rule?.type === "item") best = Math.max(best, Number(rule.value) || 0);
     }
     return best;
-}
-
-/** Hone Spell: the cast's one target and the degree map, or null. */
-export function shapeHoneFor(messageId) {
-    const shaping = messageId ? game.messages.get(messageId)?.getFlag(MODULE_ID, "shaping") : null;
-    for (const shape of shaping?.shapes ?? []) for (const rider of shape.riders ?? []) if (rider.type === "hone") return { label: shape.name, degrees: rider.degrees, ringBonus: rider.ringBonus === true };
-    return null;
 }
 
 /** A creature a shaped summon brought (Veracious Summon: the ring's bonus to its Strikes, while it's here). */
@@ -2423,7 +2414,6 @@ export function tokensWithin(center, feet, { includeCenter = false, exclude = []
 
 const amountAt = (formula, rank, level) => formula === "2rank" ? 2 * rank : formula === "rank" ? rank : formula === "2level" ? 2 * level : formula === "level" ? level : Number(formula);
 const enemyOf = (actor, other) => Boolean(actor.alliance && other.alliance && actor.alliance !== other.alliance);
-const familiarOf = caster => game.actors.find(actor => actor.type === "familiar" && (actor.system?.master?.id === caster.id || actor.master?.id === caster.id)) ?? null;
 
 /** The tokens a card at the cast reaches: within the distance of the caster (or its familiar), all or the enemies. */
 function cardTargets(caster, rider) {

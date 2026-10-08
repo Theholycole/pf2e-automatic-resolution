@@ -8,9 +8,8 @@
 // The damage increases by 1d6." — a card of parts: the tree's area (placed for the spell's time; the petals' damage, no save, to each creature ending
 // its turn there) and the enemies' Will save (pressed again by the GM each time a creature that can still see the tree ends its turn), its rows'
 // Fascinated, immunity and the move-toward note.
-import { htmlToPlainText } from "./description-parser.js";
+import { plainOrEmpty as plain } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(String(html ?? "")).replace(/\s+/g, " ").trim();
 const FASCINATED = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{Fascinated\}`;
 const LEAD = [
     /^An intangible hollow tree grows to towering height, radiating a fiery passion and fascinating viewers\.$/,

@@ -6,8 +6,8 @@
 // immune for the hour; PF2e's Unfriendly (a note granting it) and "no allies" for the minute; the failing rows' Confused; and a card per affected creature
 // starting the same save for its former allies within reach (the GM targets them).
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_UUID_START as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{`;
 const LEAD = /^You can deceive creatures by changing their perception of their allies' behavior\. Each affected creature suspects their allies have changed allegiance, depending on the outcome of their (Fortitude|Reflex|Will) save\. (Regardless of the effects of the saving throw, the creature is then temporarily immune to [a-z ]+ for (\d+) (hour|minute)s?\.)$/;
 const SUCCESS = new RegExp(String.raw`^The creature becomes ${C}(Unfriendly)\} to all creatures to which it wasn't already hostile, even those that were previously allies\. It treats no one as an ally for (\d+) (minute|round)s?\. (Each of its former allies within its reach must attempt a save against [a-z ]+\.)$`);
 const FAILURE = new RegExp(String.raw`^As success, but the creature is also (${C}Confused\}) for (\d+) (round|minute)s?\.$`);

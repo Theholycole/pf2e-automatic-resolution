@@ -6,8 +6,8 @@
 // action is lost." (with PF2e's Effect) / "As failure, but the duration is unlimited." (with its Effect): Clumsy 1 for the row's time, PF2e's
 // Effects for the weakness (bound by their durations), the Strike and the flat check notes.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
 const EFFECT = /^@UUID\[Compendium\.pf2e\.spell-effects\.Item\.[^\]]+\]\{[^}]+\}$/;
 const SUCCESS = new RegExp(String.raw`^The target's body gains minor [a-z]+ features\. Its insides churn as they partially transform, causing it to be (${C}Clumsy (\d)\}) for 1 round\. When it recovers from the clumsy condition, its features revert to normal, and the spell ends\.$`);
 const FAILURE = /^The target transforms into a [a-z]+ form for (\d+) (hour|minute)s?\. The target becomes clumsy (\d) and gains weakness (\d+) to ([a-z]+)\. (It gains a claw, hoof, horn, or jaws Strike \(your choice\) that uses the target's unarmed Strike statistics except that the damage type changes to bludgeoning, piercing, or slashing, as appropriate\.) (Whenever the target attempts to use any manipulate action, it must succeed at a @Check\[flat\|dc:5\] or the action is lost\.)$/;

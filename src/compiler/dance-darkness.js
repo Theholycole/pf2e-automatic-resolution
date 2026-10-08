@@ -5,6 +5,7 @@
 // against the level's standard DC (a critical failure as a failure, PF2e's rule for an unlisted result); the burst a region at the caster's position (start or end of
 // the Stride, the caster's press) made the linked spell's darkness for the result's time (that spell's own compiled darkness and notes at the cast rank).
 import { htmlToPlainText } from "./description-parser.js";
+import { LABELS } from "./text-patterns.js";
 
 const RULES = {
     stride: /^You dance, (?:@UUID\[[^\]]+\]\{)?Striding\}? up to half your Speed\.$/,
@@ -13,7 +14,6 @@ const RULES = {
     check: /^When you create the darkness, attempt a ([A-Z][a-z]+) check to dance, with a standard DC for your level, to determine the duration of the darkness\.$/
 };
 const UNITS = { round: 6, rounds: 6, minute: 60, minutes: 60 };
-const LABELS = { "Critical Success": "criticalSuccess", Success: "success", Failure: "failure", "Critical Failure": "criticalFailure" };
 
 /** {danceDarkness, claimed} or null. */
 export function compileDanceDarkness(adapted) {

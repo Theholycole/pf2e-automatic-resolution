@@ -7,11 +7,8 @@
 // spend up to 2 actions." (3 on a critical failure).
 // Each row is a note on the creature until the end of the caster's turn: Controlled (the caster's players own its token), Stunned 1 when it ends, and
 // half its lost Hit Points the caster's; the destroyed thrall is the controls card's.
-import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK as C, WORD_NUMBERS_1_3 as NUMBER, plainOrEmpty as plain } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(String(html ?? "")).replace(/\s+/g, " ").trim();
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Z][a-z]+)(?: (\d))?\}`;
-const NUMBER = { one: 1, two: 2, three: 3 };
 const INTRO = /^You destroy the target thrall, using its destruction as a catalyst to temporarily possess an enemy\. One (living or undead) target creature within (\d+) feet of the destroyed thrall must attempt an? (Fortitude|Reflex|Will) saving throw\.$/;
 const SUCCESS = new RegExp(String.raw`^The target is ${C} by you until the end of your turn, and you can have it take up to (one|two|three|\d) actions? of your choice: ([A-Za-z ,']+)\. The possessed creature's Strikes use and contribute toward your multiple attack penalty\. At the end of your turn, the creature is no longer controlled and becomes ${C}\. If the creature loses any Hit Points for any reason while it's possessed or stunned by this ability, you lose Hit Points equal to half that amount since your spirit partially lingers within its body\.$`);
 const MORE = /^As success, but you can spend up to (\d|two|three) actions\.$/;

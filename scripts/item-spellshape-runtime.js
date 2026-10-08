@@ -11,15 +11,10 @@ import { riderChoice, timedConditions, shapeEffect, timedTempHp, castTargetActor
 import { applyDamageWithReceipt } from "./native-damage-receipt.js";
 import { loadNativeEffectTemplate, prepareNativeEffectSource, createNativeEffect } from "./native-outcome-effects.js";
 import { tokenDistance, tokenDocumentDistance } from "./token-distance.js";
+import { DEGREES, MODULE_ID, activeGM, allied, escapeHTML, gmIds } from "./runtime-utils.js";
 
-const MODULE_ID = "pf2e-automatic-resolution";
-const escapeHTML = value => String(value ?? "").replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
-const activeGM = () => game.user?.isGM && game.users.activeGM?.id === game.user.id;
-const gmIds = () => game.users.filter(user => user.isGM).map(user => user.id);
-const DEGREES = ["criticalFailure", "failure", "success", "criticalSuccess"];
 const damageRollClass = () => CONFIG.Dice.rolls.find(roll => roll.name === "DamageRoll");
 const capital = text => `${text[0].toUpperCase()}${text.slice(1)}`;
-const allied = (a, b) => a === b || Boolean(a?.alliance && a.alliance === b?.alliance);
 
 /** An activation's name on the GM's choice: its label and the spell it takes ("a healing spell"). */
 function activationLabel(activation) {

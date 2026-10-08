@@ -8,8 +8,8 @@
 // harmful effect (an attack roll, or a save card the module starts) gets the Will save card (its own plan: Frightened 1 or 2, then immune for the hour); a creature
 // of a type of the caster's tradition (or a dragon or spellcaster of it) holds the module's −1 status penalty Effect for that save.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_ID_LINK_VALUED as C, ITEM_LINK as LINK } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.([A-Za-z0-9]+)\]\{([A-Z][a-z]+) (\d)\}`;
 const NARRATION_RULES = /\d|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const SHARE = /^The target ally also gains your mark of the patron somewhere on its person, allowing you to use your ally's position when determining your mark['’]s effects as well as your own\.$/;
 const TRIGGER = /^In addition, when creatures target you or an ally with a harmful effect while the spell is active, they must attempt an? (Fortitude|Reflex|Will) save\.$/;
@@ -17,7 +17,6 @@ const ROWS = new RegExp(String.raw`^Creatures that fail their save become ${C} o
 const IMMUNE = /^Regardless of the result, a creature that succeeds its save or is no longer frightened by your mark is immune to this effect for (\d+) (hour|minute)s?\.$/;
 const PENALTY = /^Creatures of a type associated with your tradition listed below take a -(\d) status penalty to their saves against your effect and mindless creatures are not immune to the frightened condition from being mindless, though they may be immune for other reasons\.$/;
 const ALSO = /^This penalty also applies to spellcasters and dragons of your associated tradition\.$/;
-const LINK = /^@UUID\[(Compendium\.[A-Za-z0-9_.-]+\.Item\.([A-Za-z0-9]{16}))\]\{([^}]+)\}$/;
 
 /** {mainNote, followHTML, statistic, seconds, traditions, penalty, sentences} or null. */
 export function extractMarkWard(item, catalog = null) {

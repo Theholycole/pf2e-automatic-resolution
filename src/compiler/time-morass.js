@@ -7,9 +7,8 @@
 // creatures save once (immune for the spell); the difficult terrain a note while inside; a failure's Slowed 1 granted while it's inside (being slowed as its turn
 // starts there); a critical failure's Restrained until it Escapes; the optional growth a control (5 feet, up to 60) after each Sustain; re-entry a reminder.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_UUID_START as C, NARRATION_RULES } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{`;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const WHO = /^A creature in the emanation, or that later enters the emanation, must attempt an? (Fortitude|Reflex|Will) save\.$/;
 const ONCE = /^The creature attempts this save only once and uses the same effect for the duration of the spell\.$/;
 const GROW = /^Each time you Sustain the Spell, you can choose to increase the emanation's radius by (\d+) feet, to a maximum of (\d+) feet\.$/;

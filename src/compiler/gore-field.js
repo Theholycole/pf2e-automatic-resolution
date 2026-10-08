@@ -5,8 +5,8 @@
 // the burst a region at its token's corner, two Ongoing areas: entering or starting a turn inside, the persistent bleed at the cast rank; a bleeding creature ending its
 // turn inside, its save (Drained by the result); the thralls created the GM's (the necromancer's own rules).
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_UUID_START as C, LABELS } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{`;
 const RULES = {
     field: /^This field appears in a (\d+)-foot burst centered on a corner in the target thrall's space, and that thrall is destroyed\.$/,
     bleed: /^A creature that enters or starts its turn in the area takes (\d+) persistent ([a-z]+) damage from the rose's thorns\.$/,
@@ -20,7 +20,6 @@ const ROWS = {
     criticalFailure: new RegExp(String.raw`^The creature becomes ${C}Drained (\d)\}, and (\d+) thralls are created in unoccupied spaces adjacent to the field\.$`)
 };
 const STEP = /^Heightened \(\+1\) The persistent ([a-z]+) damage increases by (\d+)\.$/;
-const LABELS = { "Critical Success": "criticalSuccess", Success: "success", Failure: "failure", "Critical Failure": "criticalFailure" };
 
 /** {goreField, claimed} or null. */
 export function compileGoreField(adapted) {

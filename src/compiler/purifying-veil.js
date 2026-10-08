@@ -4,8 +4,8 @@
 // for the minute: it's Concealed, with the note that those outside are concealed to it; the GM's control when it moves through the veil opens its basic Will
 // save against PF2e's damage (heightened), and then the spell ends.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const SURROUNDS = /^The veil surrounds the target\.$/;
 const CONCEAL = /^Everything on each side of the veil is @UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{Concealed\} from creatures on the opposite side, but the water doesn't impede attacks or movement across the veil\.$/;
 const THROUGH = /^If the target moves through the veil, it takes (\d+d\d+) ([a-z]+) damage with a basic (Fortitude|Reflex|Will) save\.$/;

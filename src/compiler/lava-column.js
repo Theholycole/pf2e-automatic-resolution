@@ -8,9 +8,8 @@
 // increases by 2d6, and the damage from the intense heat increases by 1d6." — a card of parts: the column's save (the failing rows' "Encased in rock"
 // note: Clumsy 1 and the Speed penalty as PF2e's rules, ended by an Escape against the spell DC or 50 total damage) and the heat's damage, no save,
 // to the creatures the GM targets (in the area and within 5 feet of it).
-import { htmlToPlainText } from "./description-parser.js";
+import { plainOrEmpty as plain } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(String(html ?? "")).replace(/\s+/g, " ").trim();
 const C = name => String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{${name}\}`;
 const LEAD = [
     /^The ground opens up, spraying a column of lava high into the air in a vertical cylinder, dealing (\d+d\d+) ([a-z]+) damage to creatures in the area\.$/,

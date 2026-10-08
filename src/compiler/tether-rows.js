@@ -6,8 +6,8 @@
 // 10 feet closer to you and falls @UUID[…]{Prone}, tripping in its haste to move toward you.": the success's Speed penalty; the tether a note for
 // the spell's time that an Escape ends; the critical failure's pull (the GM's) and Prone. Only the enemy is targeted ("you and 1 enemy").
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
 const LEAD = /^You twist the paths of the target, ensuring that each one leads to you\. The target attempts a (Fortitude|Reflex|Will) saving throw\.$/;
 const SUCCESS = /^Your pull hampers the target's footsteps\. It takes a [–−-](\d+)-foot (circumstance|status) penalty to its Speeds until the end of its next turn\.$/;
 const FAILURE = /^(The target can't move any farther from you than it was when you Cast the Spell, though it can move in such a way that it maintains an equal distance\.) (If you move farther away from the target than the initial distance, the spell ends\.) The targeted foe can attempt to (?:@UUID\[[^\]]+\]\{Escape\}|Escape) against your spell DC\. If it succeeds, the spell ends\.$/;

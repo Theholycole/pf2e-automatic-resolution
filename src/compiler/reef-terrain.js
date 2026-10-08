@@ -7,8 +7,8 @@
 // the save's rows (the bleed on a critical failure); after Finalize the GM selects the bursts' regions and the card places the terrain for the
 // duration, its per-square damage the GM's control (target the creature and give the squares) at the cast rank.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const AREA = /^<p>\s*<strong>\s*Area\s*<\/strong>\s*(two) (\d+)-foot bursts that don't overlap\s*<\/p>$/i;
 const THIRD = /^You can create a third nonoverlapping burst if the centers of all three bursts are underwater\.$/;
 const CAST = /^Creatures in the area when the spell is cast take (\d+d\d+) ([a-z]+) damage and must attempt a basic (Fortitude|Reflex|Will) save\.$/;

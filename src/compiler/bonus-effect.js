@@ -7,14 +7,13 @@
 // on the action where one is named), for the spell's duration or the stated time; a bonus for one initial check is removed after that check.
 // The other sentences (appearance, what the GM decides) are notes on the Effect.
 import { htmlToPlainText } from "./description-parser.js";
+import { DISMISS_THIS as DISMISS, slug } from "./text-patterns.js";
 
 const SKILLS = ["acrobatics", "arcana", "athletics", "crafting", "deception", "diplomacy", "intimidation", "medicine", "nature", "occultism", "performance",
     "religion", "society", "stealth", "survival", "thievery"];
-const slug = text => text.toLowerCase().replace(/[^a-z]+/g, "-").replace(/^-|-$/g, "");
 const STATED = /^(The target|Your companion) gains a \+(\d) (status|circumstance|item) bonus (?:on|to) ([A-Z][a-z]+) checks(?: to ((?:@UUID\[[^\]]+\]\{[^}]+\})|[A-Z][a-z]+(?: an?)?(?: [A-Z][a-z]+)*))?\.$/;
 const SEEK = /^You can immediately attempt to (?:@UUID\[[^\]]+\]\{Seek\}|Seek) an undetected creature, and you gain a \+(\d) status bonus to this attempt and any of your other attempts to Seek (?:@UUID\[[^\]]+\]\{Hidden\}|Hidden) or (?:@UUID\[[^\]]+\]\{undetected\}|undetected) creatures until the end of your next turn\.$/;
 const TRACK = /^If you begin to (?:@UUID\[[^\]]+\]\{Track\}|Track) a creature detected in this way, you gain a \+(\d) status bonus to the initial check\.$/;
-const DISMISS = /^You can Dismiss this spell\.$/;
 const GM_NOTE = /\b(?:At the GM's discretion|you learn of their presence|You also learn if any such creatures passed through)\b/;
 const HEIGHTENED = /^<p>\s*<strong>\s*Heightened \(\+(\d)\)\s*<\/strong>\s*The status bonus increases by 1, to a maximum of \+(\d) at (\d+)(?:st|nd|rd|th) rank\.\s*<\/p>$/;
 const RULE_WORDS = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|checks?|DC|Hit Points|terrain)\b/i;

@@ -1,4 +1,5 @@
 import { lingeringTriggerEvents } from "./lingering-area-compiler.js";
+import { CONDITION, HAZARD_MOVE, SAVE_NAME_GROUP as STAT } from "./text-patterns.js";
 // Compact degree tables: a non-basic save written as one sentence instead of
 // Critical Success / Success / Failure / Critical Failure entries.
 //   "… must succeed at a Fortitude saving throw or become Dazzled for 1 round (or Blinded for 1 round on a critical failure)."
@@ -13,10 +14,7 @@ const THIS_FLOOR = /^This condition can't be reduced below \d+ while the spell i
 const DISMISS_PAYOFF_LEAD = /^You can Dismiss the spell as a reaction when /;
 const HEADING = /<strong\b[^>]*>\s*(?:Critical Success|Success|Failure|Critical Failure)\s*<\/strong>/i;
 const LINK = /@UUID\[[^\]]+\]\{[^}]+\}/g;
-// A condition, optionally valued, optionally with a duration: "Dazzled for 1 round", "@UUID[…]{Stupefied 1}".
-const CONDITION = String.raw`(?:@@\d+@@|[A-Za-z]+(?: \d+)?)(?: for \d+ (?:round|minute)s?)?`;
 const CRIT = String.raw`(?: \(or (${CONDITION}) on a critical failure\))?`;
-const STAT = String.raw`(Fortitude|Reflex|Will)`;
 // ("Each of them" after the sentence naming them: Disruptive Transfer's creatures adjacent to where the caster was.)
 const SUBJECT = /^(?:The target|(?:Each|Every|All|Any) (?:creatures?|enem(?:y|ies))|Each of them|Creatures|Enemies)(?: (?:who|that|in|within)\b[^,]*)?$/;
 const FORMS = [
@@ -420,7 +418,6 @@ function expandRollTwiceAura(adapted, html) {
 // The save becomes a turn-end table whose failure is the persistent damage (raised by the heightening); the per-square damage is the
 // lingering record's control (`hazardMove`, the item's one damage entry); the growth is `sustainGrowth`.
 const HAZARD_TERRAIN = /^The area becomes hazardous terrain\.$/;
-const HAZARD_MOVE = /^A creature that moves on the ground through the area takes (\d+) ([a-z]+) damage for every square of that area it moves into\.$/;
 const TURN_END_PERSISTENT = /^A creature that ends its turn in the area must succeed at an? (Fortitude|Reflex|Will) save or take @@(\d+)@@ damage\.$/;
 const SUSTAIN_GROWTH = /^Each time you sustain this spell, the radius of the (burst|emanation) increases by (\d+) feet\.$/i;
 const BOTH_HEIGHTENED = /^<p>\s*<strong>\s*Heightened \(\+(\d)\)\s*<\/strong>\s*Increase the damage and persistent damage by (\d+)\.\s*<\/p>$/;

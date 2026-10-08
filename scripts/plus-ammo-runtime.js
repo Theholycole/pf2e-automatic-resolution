@@ -3,10 +3,8 @@
 // the creature is also Stupefied 2 for 1 round."
 // Its card posted arms the shooter's next Strike; a hit marks the creature for a minute; its next cast opens the save card.
 import { startShapeCard } from "./spellshape-runtime.js";
+import { MODULE_ID, activeGM } from "./runtime-utils.js";
 
-const MODULE_ID = "pf2e-automatic-resolution";
-const activeGM = () => game.user?.isGM && game.users.activeGM?.id === game.user.id;
-const STUPEFIED = "Compendium.pf2e.conditionitems.Item.e1XGnhKNSQIm5IXg";
 const plainText = html => String(html ?? "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
 
 const GRAY_DUST = /The first time they Cast a Spell for the next (minute|(\d+) rounds?), they take @Damage\[(\d+d\d+)\[([a-z]+)\]\] damage with a @Check\[(fortitude|reflex|will)\|dc:(\d+)\|basic\] save as their own magic backfires\. On a critical failure, the creature is also @UUID\[(Compendium\.pf2e\.conditionitems\.(?:Item\.)?[A-Za-z0-9]+)\]\{(Stupefied) (\d+)\} for (\d+) rounds?\./;

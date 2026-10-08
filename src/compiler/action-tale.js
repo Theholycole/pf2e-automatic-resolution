@@ -5,17 +5,13 @@
 // "Heightened (+1) The temporary Hit Points increase by 3 and the mental damage for the 3-action version increases by 1d8.": the actions spent (asked when
 // cast); temporary Hit Points (PF2e's rule on an Effect for the stated time) for the targeted willing creatures, or, with 3 actions, the chosen creature's
 // basic save card (a plan of its own) and the temporary Hit Points for every other creature in the emanation.
-import { htmlToPlainText } from "./description-parser.js";
+import { WORD_NUMBERS_1_3 as WORDS, plain, sentenceSplit as split } from "./text-patterns.js";
 
-const WORDS = { one: 1, two: 2, three: 3 };
 const LEAD = /^The number of actions you spend when Casting this Spell and telling the story determine its targets and effects\.$/;
 const ONE = /^(One|Two) willing targets? (you can touch|within (\d+) feet) (?:each )?gains? (\d+) temporary Hit Points that last (\d+) (minute|round)s?\.$/;
 const AREA = /^All creatures within an? (\d+)-foot emanation are affected by the [a-z]+\.$/;
 const CHOSEN = /^Choose one creature in the emanation to take (\d+)d(\d+) ([a-z]+) \(basic (Fortitude|Reflex|Will) save\), while each other creature in the emanation gains (\d+) temporary Hit Points that last (\d+) (minute|round)s?\.$/;
 const STEP = /^Heightened \(\+1\) The temporary Hit Points increase by (\d+) and the [a-z]+ damage for the 3-action version increases by (\d+)d(\d+)\.$/;
-
-const plain = html => htmlToPlainText(html).replace(/\s+/g, " ").trim();
-const split = text => text.split(/(?<=[.!?])\s+(?=[A-Z@])/).filter(Boolean);
 
 /** {actionTale, saveHTML, claimed} or null. */
 export function compileActionTale(adapted) {

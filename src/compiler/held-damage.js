@@ -13,10 +13,7 @@
 // The lingering area's plain rows (the condition until it Escapes, ending with the spell); each Sustain deals the held creatures their damage at
 // the cast rank (the text's step); Gluttonous Growth's held creatures don't save again.
 import { htmlToPlainText } from "./description-parser.js";
-
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
-const DEGREES = [["criticalSuccess", "Critical Success"], ["success", "Success"], ["failure", "Failure"], ["criticalFailure", "Critical Failure"]];
+import { CONDITION_LINK_START as C, DEGREE_LABEL_PAIRS as DEGREES, NARRATION_RULES } from "./text-patterns.js";
 
 const GLUTTON = {
     terrain: /^All affected squares are difficult terrain, both on the ground and for flying creatures\.$/,

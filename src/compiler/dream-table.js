@@ -8,9 +8,8 @@
 // effect — the +1 to Make a Request and Demoralize, the creature's timed Effects lengthened, the module's fly Speed Effect (checked against the text), each energy
 // type's replacement rolled.
 import { htmlToPlainText } from "./description-parser.js";
+import { DOMAIN, ITEM_LINK as LINK, NARRATION_RULES } from "./text-patterns.js";
 
-const DOMAIN = /^<strong>Domain<\/strong> ([a-z]+(?: \([a-z]+\))?)$/;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const LEAD = [/^All creatures within the aura must make a (Fortitude|Reflex|Will) save; on a failure, roll \[\[\/r 1d(\d)\]\] to determine the results on the table below\.$/,
     /^On a critical failure, roll twice, taking the result chosen by the caster\.$/, /^Creatures can choose to get the result of a failure on their save\.$/];
 const ENTRIES = [
@@ -18,7 +17,6 @@ const ENTRIES = [
     { kind: "extend", pattern: /^Static Time (Clocks tick irregularly, moving backwards as often as forwards\.) Effects and conditions with a duration affecting you are extended by 1d(\d) rounds\.$/ },
     { kind: "fly", pattern: /^Untethered To Ground (Gravity acts as more of a suggestion than a rule\.) The creature gains a fly Speed equal to its land Speed until the end of its next turn\.$/ },
     { kind: "warp", pattern: /^Warped Energy (Energies are maladapted in the area\.) Until the end of the creature's turn, if the creature deals ([a-z]+), ([a-z]+), ([a-z]+), ([a-z]+) or ([a-z]+) damage, it instead deals another energy damage type \(roll 1d4 randomly to determine which other damage type\)\. (If a creature would deal more than one type of these damage types, you choose which damage type is altered\.)$/ }];
-const LINK = /^@UUID\[(Compendium\.[A-Za-z0-9_.-]+\.Item\.([A-Za-z0-9]{16}))\]\{([^}]+)\}$/;
 
 /** {table, sentences} or null. */
 export function extractDreamTable(item, catalog = null) {

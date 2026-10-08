@@ -10,6 +10,7 @@
 // Returns the rewritten description (an ordinary basic save), the damage component and formula, the options, and the claimed text.
 import { extractScopedConditionReferences, htmlToPlainText } from "./description-parser.js";
 import { compileEffectDuration } from "./duration-compiler.js";
+import { TYPES } from "./text-patterns.js";
 
 const DAMAGE = /^All creatures in the (?:target )?area take (\d+)d(\d+) damage\.$/;
 const FIXED_SENTENCES = [
@@ -17,7 +18,6 @@ const FIXED_SENTENCES = [
     /^On a critical failure, targets experience additional effects, also depending on what you choose to [a-z]+\.$/,
     /^The type of ([a-z]+) and its effects are chosen when you Cast the Spell\.$/
 ];
-const TYPES = new Set(["acid", "bludgeoning", "cold", "electricity", "fire", "force", "mental", "piercing", "poison", "slashing", "sonic", "spirit", "vitality", "void"]);
 const OPTION = /^<strong>\s*([A-Z][a-z]+)\s*<\/strong>\s*([A-Z][a-z]+) damage, and (.+) on a critical failure\.$/;
 const BLEED = /^@Damage\[\(@item\.(?:level|rank)\)\[bleed\]\] damage$/;
 const CONDITION_FOR = /^(@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{[A-Za-z]+(?: \d)?\}) for (\d+) rounds?$/;

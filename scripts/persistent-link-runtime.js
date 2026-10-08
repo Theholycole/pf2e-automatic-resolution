@@ -1,9 +1,10 @@
 // Conditions and Effects that last as long as the target takes a spell's persistent damage ("until they recover from
 // their persistent fire damage", "as long as the target is taking persistent damage from this spell"). They carry no
 // timer; the active GM removes them once the creature has no persistent-damage condition of that type left.
-const MODULE_ID = "pf2e-automatic-resolution";
 
 /** The persistent damage type an applied Effect is linked to, or null. */
+import { MODULE_ID, isLeadGM } from "./runtime-utils.js";
+
 export function persistentLinkType(effect) {
     const flags = effect?.flags?.[MODULE_ID];
     return flags?.outcomeEffect?.persistentLink?.damageType ?? flags?.runtime?.persistentLink?.damageType ?? null;
@@ -13,11 +14,6 @@ export function persistentLinkType(effect) {
 export function hasPersistentDamage(actor, damageType) {
     return [...(actor?.itemTypes?.condition ?? [])].some(condition => condition.slug === "persistent-damage"
         && condition.system?.persistent?.damageType === damageType);
-}
-
-function isLeadGM() {
-    const gms = game.users.filter(user => user.active && user.isGM).sort((a, b) => a.id.localeCompare(b.id));
-    return gms[0]?.id === game.user.id;
 }
 
 /** The creature whose persistent damage a linked Effect follows: its own, or the one the link names (a secondary target's primary). */

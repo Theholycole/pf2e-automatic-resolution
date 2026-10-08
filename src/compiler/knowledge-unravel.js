@@ -7,10 +7,9 @@
 // action or untrained skill action.": the save; on a failure or worse a note whose controls (the chosen ability, or a basic or untrained one) deal that
 // damage once a round when the target uses the ability; the critical failure's penalty PF2e's Effect (its toggle); the choice of ability a reminder.
 import { htmlToPlainText } from "./description-parser.js";
+import { ATTEMPTS_SAVE as LEAD, NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const CHOOSE = /^Choose a single action, activity, or spell you know the target can use,/;
-const LEAD = /^The target attempts an? (Fortitude|Reflex|Will) save\.$/;
 const FAILURE = /^The target's memories of their ability grow foggy\. The first time they use the chosen ability each round, they take (\d+)d(\d+) ([a-z]+) damage\. This ability is less effective if you choose an ability almost anyone can use; the target takes (\d+)d(\d+) \3 damage instead if you choose a basic action \([^)]*\) or a skill action that can be used untrained \([^)]*\)\.$/;
 const CRITICAL = /^As failure, and (the target takes a –(\d) (status) penalty to any check or DC for the ability the first time they use it each round)\.$/;
 const STEP = /^Heightened \(\+(\d)\) The damage increases by (\d)d(\d+), or by (\d)d(\d+) for a basic action or untrained skill action\.$/;

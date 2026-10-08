@@ -4,8 +4,8 @@
 // radius increases by 5 feet": a lingering burst (difficult terrain) whose turn-end save deals the damage; its radius 5 feet (the smallest burst:
 // the text names no initial radius), 5 more for each action past the first and each heightening step.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const TERRAIN = /^The area is difficult terrain\.$/;
 const DEALS = /^The swamp deals (\d+d\d+) ([a-z]+) damage to creatures that end their turn in the area \(basic (Fortitude|Reflex|Will) save\)\.$/;
 const ACTIONS = /^For each additional action you use when Casting the Spell, increase the burst's radius by (\d+) feet\.$/;

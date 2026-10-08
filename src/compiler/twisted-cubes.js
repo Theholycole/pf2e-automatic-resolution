@@ -6,13 +6,12 @@
 // ones'): the GM's placed cubes (separate areas); each creature saves once, in one when cast or entering one (immune for the spell after any result); a
 // failure's note for the spell — the cubes' terrain and the random exit, the GM's — with its disbelief control (a Will save; success ends its note).
 import { htmlToPlainText } from "./description-parser.js";
+import { WORD_NUMBERS_2_5 as COUNTS, NARRATION_RULES_SHORT as NARRATION_RULES } from "./text-patterns.js";
 
-const COUNTS = { two: 2, three: 3, four: 4, five: 5 };
 const AREA = /^<p>\s*<strong>\s*Area\s*<\/strong>\s*(\d+|two|three|four|five) cubes, each (\d+) feet on a side\s*<\/p>/i;
 const APART = /^The cubes of the spell's area can't be adjacent to one another\.$/;
 const WHO = /^A creature must attempt an? (Fortitude|Reflex|Will) save if it's in one of the cubes when you Cast the Spell, or if it later enters one of the areas, with the following effects\.$/;
 const DISBELIEVE = /^A creature interacting with the illusion can also attempt an? (Will) save to disbelieve the illusion, as normal\.$/;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|must|until|terrain)\b/i;
 
 /** {html, lingering, immunity, note, sentences} or null. */
 export function rewriteTwistedCubes(adapted) {

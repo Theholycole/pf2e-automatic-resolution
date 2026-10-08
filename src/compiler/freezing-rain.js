@@ -5,8 +5,8 @@
 // The lingering area (difficult terrain) exposed on that Sustain only; whether the caster freezes the rain is the review (mark the creatures
 // unaffected when it isn't frozen); moving the area and the fires are notes.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const TERRAIN = /^The [a-z ]+ make the area difficult terrain and extinguish non-magical fires\.$/;
 const MOVE = /^On subsequent rounds, the first time you Sustain the spell each round, you can move the area up to (\d+) feet and can also freeze the ([a-z]+)\.$/;
 const FREEZE = /^If you freeze the ([a-z]+), each creature in the area takes (\d+d\d+) ([a-z]+) damage and might be [a-z]+, depending on result of its (Fortitude|Reflex|Will) save\.$/;

@@ -9,12 +9,9 @@
 // - on events: damage (Black Ash, Ghostcracker, Demon Bone Tiles, Shadow Ash), Mirror Image's destroyed images, flat checks, turns, moves, Effects ending, casts in a battle form.
 import { shapeEffect, riderChoice, startShapeCard, tokensWithin, timedConditions, timedTempHp, castTargetActors, castGrants, shapeSpellFacts, shapeTerrain, postTerrainCard, tokenInRegion } from "./spellshape-runtime.js";
 import { forcedMove } from "./forced-movement.js";
+import { MODULE_ID, activeGM, escapeHTML, say } from "./runtime-utils.js";
 
-const MODULE_ID = "pf2e-automatic-resolution";
-const activeGM = () => game.user?.isGM && game.users.activeGM?.id === game.user.id;
-const escapeHTML = text => String(text ?? "").replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[ch]);
 const gmWhisper = text => ChatMessage.create({ whisper: game.users.filter(user => user.isGM).map(user => user.id), content: `<p class="pf2e-auto-gm-reminder">${text}</p>` }).catch(() => null);
-const say = (actor, text) => ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content: `<p>${text}</p>` }).catch(() => null);
 const PLAIN = "The creature is unaffected.";
 const plainRows = { criticalSuccess: PLAIN, success: PLAIN, failure: PLAIN, criticalFailure: PLAIN };
 const combatStart = () => { const combat = game.combat?.started ? game.combat : null; return { value: game.time.worldTime, initiative: combat?.combatant?.initiative ?? null }; };
@@ -295,12 +292,6 @@ export async function catalystSummoned(shape, rider, caster, summoned) {
         system: { duration: { value: -1, unit: "unlimited", expiry: null, sustained: false }, start: combatStart(), tokenIcon: { show: true }, rules: [],
             description: { value: `<p>The first opponent to damage it with a melee Strike in a combat takes ${rider.formula} ${rider.damageType} and becomes ${rider.condition.slug} ${rider.condition.value ?? ""}. When it dies, a DC ${rider.riseDC} flat check: it rises with half its Hit Points within 1d4 rounds.</p>` } } }]);
     return [{ label: `${shape.name}: ${summoned.name} wreathed in a shroud of frost`, status: "applied", effectUuid: made?.uuid ?? null }];
-}
-
-/** The shaping riders of a type on a cast message. */
-export function shapeRidersOfType(messageId, type) {
-    const shaping = messageId ? game.messages.get(messageId)?.getFlag(MODULE_ID, "shaping") : null;
-    return (shaping?.shapes ?? []).flatMap(shape => (shape.riders ?? []).filter(rider => rider.type === type).map(rider => ({ shape, rider })));
 }
 
 // ---- Once the spell has resolved ----

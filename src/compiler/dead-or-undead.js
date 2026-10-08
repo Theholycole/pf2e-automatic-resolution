@@ -3,10 +3,8 @@
 // animated with this spell die again once the spell ends. If you target undead creatures, each undead must attempt a basic Will save." with rows
 // "Critical Success The undead takes 5d6 vitality damage. … Critical Failure The undead is destroyed."
 // The card holds the two, one used up by the other: the dead ones' Effect (the temporary Hit Points, Slowed, death when it ends), and the undead's save.
-import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK as C, plainOrEmpty as plain } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(String(html ?? "")).replace(/\s+/g, " ").trim();
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Z][a-z]+)(?: (\d))?\}`;
 const TARGET = /^up to (\d+) dead creatures or up to \1 undead creatures$/i;
 const OPENING = /^You [a-z]+ an? [a-z ,]+ that either rouses the dead to action or reminds undead that they should lay to rest\.$/;
 const DEAD = /^If you target dead creatures, the bodies animate and can continue acting as if they were alive\.$/;

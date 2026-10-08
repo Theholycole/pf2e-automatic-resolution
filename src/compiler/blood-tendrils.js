@@ -5,8 +5,8 @@
 // cast's targets (their tokens, up to 3 — 1 more every 3 ranks); an enemy ending its turn within 10 feet of any of them saves (PF2e's damage, heightened),
 // once a turn; the tendrils' immunity and stillness a note.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const CREATE = /^You create up to (\d+) (Medium) thralls shaped like [a-z ]+ in range\.$/;
 const IMMUNE = /^These tendrils are immune to physical damage and can't move\.$/;
 const REACH = /^The tendril's Strike has a reach of (\d+) feet\.$/;

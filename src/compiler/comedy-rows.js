@@ -5,8 +5,8 @@
 // failure effect.": the rows for the sustained spell (Slowed 1 a condition; no reactions, the critical failure's lost round notes; Prone); the spread a card for each
 // Sustain (the GM targets the new creature; its save posts no card).
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
 const LEAD = /^You tell a magical joke and infect a target with laughter that spreads to those nearby\. (The first time you Sustain the Spell each round, you can target another creature you can see that is within (\d+) feet of an affected target\.) (The new target need not be able to see or hear the affected target, as the humor spreads magically\.) (You can't target the same creature more than once with this spell\.)$/;
 const FAILURE = new RegExp(String.raw`^The target is (${C}Slowed (\d)\}) and can't use reactions\.$`);
 const CRITICAL = new RegExp(String.raw`^The target falls (${C}Prone\}) and can't use actions or reactions for (\d+) rounds?\. It then suffers the failure effect\.$`);

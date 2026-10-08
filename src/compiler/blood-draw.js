@@ -6,9 +6,8 @@
 // the target's basic save; after Finalize, if the target lost Hit Points, the card gives the caster its part by what the caster is (PF2e's
 // mode of being and void healing): Sickened 2, or the caster's pick of the two.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C, NARRATION_RULES_NO_DAMAGE as NARRATION_RULES } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const DEAL = /^You deal (\d+d\d+) ([a-z]+) damage to the target\.$/;
 const FLOWS = /^If the target takes damage, its blood flows into your mouth\.$/;
 const LIVING = new RegExp(String.raw`^If you're a living creature and don't have void healing, you're (${C}(Sickened) (\d)\})\.$`);

@@ -6,14 +6,13 @@
 // @UUID[…]{Sickened 2}." / "As success, except …": two tables — every living creature's basic save, and for those creatures the same with the
 // rows' persistent damage and the condition while it lasts. The traits are read from PF2e; the aversion is the GM's answer for the others.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C, DEGREE_LABEL_PAIRS as DEGREES } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
 const LEAD = /^This spell forces [a-z ]+ to coalesce on the skin or surface of all living creatures in the area, dealing (\d+d\d+) ([a-z]+) damage with a basic (Fortitude|Reflex|Will) save\.$/;
 const WHO = /^Any creature that has the ([a-z]+) trait, has the ([a-z]+) trait, or has an anathema toward ([a-z]+), takes the following effects depending on the result of that (Fortitude|Reflex|Will) save\.$/;
 const ROW_SUCCESS = new RegExp(String.raw`^The creature takes (@Damage\[[^\]]*\[persistent,([a-z]+)\]\]) damage and is (${C}([A-Z][a-z]+) (\d)\}) as long as it takes this persistent damage\.$`);
 const ROW_AS = new RegExp(String.raw`^As success, except (@Damage\[[^\]]*\[persistent,([a-z]+)\]\]) damage and (${C}([A-Z][a-z]+) (\d)\})\.$`);
 const NONE = /^The creature suffers no additional effects\.$/;
-const DEGREES = [["criticalSuccess", "Critical Success"], ["success", "Success"], ["failure", "Failure"], ["criticalFailure", "Critical Failure"]];
 
 /** {mainHTML, variantHTML, traits, aversion, question, labels, persistentType, sentences} or null. */
 export function extractTraitRows(adapted) {

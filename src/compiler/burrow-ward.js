@@ -8,8 +8,8 @@
 // targets as underground in it rolls its Fortitude save: a failure is ejected toward the surface, a success forced out of the area (the GM moves
 // them, as with the module's other forced movement).
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const CANT = /^Creatures that can't burrow through stone can't burrow through the area\.$/;
 const UNDER = /^Such creatures already underground within the area must succeed at an? (Fortitude|Reflex|Will) save or be ejected from the area toward the surface\.$/;
 const SUCCEED = /^Those who succeed are forced out of the area but can remain underground\.$/;

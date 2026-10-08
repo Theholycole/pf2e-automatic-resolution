@@ -5,13 +5,12 @@
 // — the wearer's Effect for the duration; the adjacent creatures (not the wearer) hold Dazzled while adjacent (Ongoing's aura); the card's control for a creature
 // that hit it in melee: its save of the stated results (incapacitation), then temporarily immune until the end of its turn.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_UUID_START as C, LABELS } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{`;
 const ADJACENT = new RegExp(String.raw`^Creatures are ${C}([A-Z][a-z]+)\} while adjacent to it, and attacking the target causes a brilliant flash of light\.$`);
 const HIT = /^A creature that hits the target with a melee attack must attempt an? (Will|Fortitude|Reflex) save\.$/;
 const IMMUNE = /^The creature is then temporarily immune until the end of its turn; this effect has the ([a-z]+) trait\.$/;
 const ROW = new RegExp(String.raw`^The attacker is (?:unaffected|${C}([A-Z][a-z]+)(?: (\d))?\} for (\d+) rounds?)\.?$`);
-const LABELS = { "Critical Success": "criticalSuccess", Success: "success", Failure: "failure", "Critical Failure": "criticalFailure" };
 
 /** {flashCloak, claimed} or null. */
 export function compileFlashCloak(adapted) {

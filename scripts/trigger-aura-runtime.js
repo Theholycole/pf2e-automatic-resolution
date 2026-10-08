@@ -1,12 +1,8 @@
 // Overwhelming Festivities: an enemy holding the caster's aura Effect (it's in the emanation) that fails a save against an emotion effect, or newly becomes
 // Frightened, takes the spell's persistent damage at the cast rank. The active GM applies it; persistent damage of one type doesn't stack, so a save and the
 // Frightened it gives land as one.
-import { escapeHTML } from "./runtime-utils.js";
+import { escapeHTML, MODULE_ID, activeGM } from "./runtime-utils.js";
 import { applyDamageWithReceipt } from "./native-damage-receipt.js";
-
-const MODULE_ID = "pf2e-automatic-resolution";
-
-const activeGM = () => game.user?.isGM && game.users.activeGM?.id === game.user.id;
 
 /** The caster's aura Effect behind the enemy's granted Effect, or null. */
 async function auraFor(actor) {

@@ -7,11 +7,11 @@
 // leaving (the radius from the rank). When a holder critically succeeds at a save against an enemy's mental effect, PF2e's critical Effect
 // (the +1 to attacks and damage for 1 round) goes on it. PF2e's modifier is on Will saves only; the module's Effect puts it on every save.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_TIMED as NARRATION_RULES } from "./text-patterns.js";
 
 const BONUS = /^You and your allies gain a \+(\d) status bonus to saving throws against ([a-z]+) effects while in the area\.$/;
 const CRITICAL = /^Whenever someone benefiting from this bonus critically succeeds at a saving throw against an enemy's ([a-z]+) effect, its [a-z]+ increases, granting it a \+(\d) status bonus to attack rolls and damage rolls for (\d+) rounds?\.$/;
 const HEIGHTENED = /^<p>\s*<strong>\s*Heightened \((\d+)(?:st|nd|rd|th)\)\s*<\/strong>\s*The emanation's radius is (\d+) feet, and the status bonus to saves is \+(\d)\.\s*<\/p>$/;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|rounds?|minutes?)\b/i;
 
 /** Returns {allyAura, claimed} or null. */
 export function compileAllyAura(adapted, nativeSpellEffects) {

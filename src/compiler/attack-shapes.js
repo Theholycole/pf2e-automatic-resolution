@@ -16,15 +16,10 @@
 //     elemental effect chosen on the cast;
 //   - a sustained hold: "make a spell attack roll against the targets. On a success, they're Immobilized until the spell ends or they Escape; on a
 //     critical success, they're also Restrained …" and the held creatures' basic save, again on each Sustain.
-import { htmlToPlainText } from "./description-parser.js";
+import { capitalize as Stat, CONDITION_LINK_HYPHENATED as UUID, blocks, condition, plain, sentenceSplit as split } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(html).replace(/\s+/g, " ").trim();
-const split = text => text.split(/(?<=[.!?])\s+(?=[A-Z@])/).filter(Boolean);
-const Stat = name => name[0].toUpperCase() + name.slice(1);
 // (An attack whose miss does nothing: only its hit rows.)
 const hitRows = (critical, hit) => `<hr /><p><strong>Critical Success</strong> ${critical}</p><p><strong>Success</strong> ${hit}</p>`;
-const UUID = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Za-z-]+)(?: (\d+))?\}`;
-const condition = (uuid, name, value) => `@UUID[${uuid}]{${name}${value ? ` ${value}` : ""}}`;
 // ("Heightened (+1) The damage increases by 1d8.": the stated dice at the rank.)
 const ranked = (count, step, rank) => step ? `(${count} + ${step} * (@item.rank - ${rank}))` : String(count);
 
@@ -34,7 +29,6 @@ export function extractAttackCard(adapted) {
     return null;
 }
 
-const blocks = adapted => String(adapted.descriptionHTML ?? "").split(/<hr\s*\/?>/);
 // (Every sentence read: the stated ones claimed, the rest flavour — no number, inline roll, damage or save left behind.)
 const unread = (sentences, found) => sentences.filter(sentence => !found.some(match => match?.[0] === sentence)).filter(sentence => /\d|@|\b(?:damage|save|attack|Speed)\b/i.test(sentence));
 const range = adapted => Number(/^(\d+) feet$/.exec(adapted.targeting?.range ?? "")?.[1] ?? NaN);

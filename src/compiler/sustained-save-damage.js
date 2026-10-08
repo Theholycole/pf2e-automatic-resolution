@@ -8,9 +8,8 @@
 // damage and the persistent damage, and an Effect on the target makes it Concealed (others concealed to it: a note); a sustained record holds
 // the Effect and the persistent damage, which end with it.
 import { htmlToPlainText } from "./description-parser.js";
+import { HEADINGS, NARRATION_RULES_NO_TERRAIN as NARRATION_RULES, ATTEMPTS_SAVE as SAVE, trimmedSentences as split } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
-const SAVE = /^The target attempts an? (Fortitude|Reflex|Will) save\.$/;
 const ROWS = {
     criticalSuccess: [/^The target is unaffected\.$/],
     success: [/^The target takes @Damage\[(\d+d\d+)\[([a-z]+)\]\] damage, and the spell ends\.$/],
@@ -19,12 +18,10 @@ const ROWS = {
         /^It is @UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{Concealed\} to other creatures, and other creatures are concealed to it\.$/],
     criticalFailure: [/^As failure, but both the ([a-z]+) damage and the persistent ([a-z]+) damage increase to (\d+d\d+)\.$/]
 };
-const HEADINGS = { criticalSuccess: "Critical Success", success: "Success", failure: "Failure", criticalFailure: "Critical Failure" };
 const HEIGHTENED = /^<p>\s*<strong>\s*Heightened \(\+(\d+)\)\s*<\/strong>\s*The ([a-z]+) damage and persistent ([a-z]+) damage increase by (\d+) \((\d+) on a critical failure\)\.\s*<\/p>$/;
 // (Witches+'s Personal Blizzard+: "Heightened (+2) The cold damage increases by 1d6 and the persistent cold damage increases by 2 (2d6 and 4 on a critical
 // failure).")
 const HEIGHTENED_DICE = /^<p>\s*<strong>\s*Heightened \(\+(\d+)\)\s*<\/strong>\s*The ([a-z]+) damage increases by (\d+)d(\d+) and the persistent ([a-z]+) damage increases by (\d+) \((\d+)d(\d+) and (\d+) on a critical failure\)\.\s*<\/p>$/;
-const split = text => text.replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s+(?=[A-Z@])/).map(sentence => sentence.trim()).filter(Boolean);
 
 /** Returns {sustainedSaveDamage, claimed} or null. */
 export function compileSustainedSaveDamage(adapted) {

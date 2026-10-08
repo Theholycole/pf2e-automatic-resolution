@@ -10,6 +10,7 @@
 // creature. The GM judges when a creature sets it off.
 import { htmlToPlainText, stripHeighteningHTML } from "./description-parser.js";
 import { proveEffectNote } from "./effect-note-proof.js";
+import { WORD_NUMBERS_2_4 as WORDS } from "./text-patterns.js";
 
 const DICE = String.raw`(\d+d\d+|\d+)`;
 const HIT_TRIGGERS = [
@@ -293,7 +294,6 @@ const SHARE = /^The first time each round that the target takes damage, reduce t
 const SHARE_LOSS = /^You lose (\d+) Hit Points each time, or the total damage dealt, if less than (\d+); this damage ignores any immunities or resistances you have and can't otherwise be mitigated in any way\.$/;
 const SHARE_ENDS = [/^The spell ends immediately if you fall Unconscious\.$/, /^You can Dismiss the spell\.$/];
 const SHARE_HEIGHTENED = /^You can target (two|three|four|\d) creatures other than you\. The initial healing increases to (\d+d\d+) Hit Points and the maximum damage reduced and Hit Points lost increases to (\d+)\.$/;
-const WORDS = { two: 2, three: 3, four: 4 };
 
 /** Returns {damageShare} or null. */
 export function compileDamageShare(adapted) {

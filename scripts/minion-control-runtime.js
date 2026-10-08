@@ -1,8 +1,9 @@
 // The caster's control of a creature for as long as a note lasts (Shadow Zombie; user decision 2026-10-01): the caster's owners get OWNER
 // on the creature (its linked actor, or the token's synthetic one) and it gains the minion trait; both are restored when the note ends.
-const MODULE_ID = "pf2e-automatic-resolution";
 
 /** Grants the control and records what to restore on the note. */
+import { MODULE_ID } from "./runtime-utils.js";
+
 export async function grantMinionControl(note, actor, casterUuid) {
     const caster = casterUuid ? await fromUuid(casterUuid) : null;
     if (!caster) throw new Error("The caster is unavailable for the minion's control.");

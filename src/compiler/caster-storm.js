@@ -5,8 +5,8 @@
 // against your poltergeist's fury get a critical success instead, as you attempt to avoid hitting them." — the basic save on the creatures in the emanation (the GM
 // targets them), an ally's success a critical success; the caster's Effect for the spell's time: lesser cover (+1 circumstance AC); its growth a note.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_COVER as RULE_WORDS } from "./text-patterns.js";
 
-const RULE_WORDS = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain|cover)\b/i;
 const OBJECTS = /^Any loose, unattended objects of \d+ Bulk or less within range are picked up and begin to orbit you at [a-z ]+\.$/;
 const DEALS = /^All creatures in the area take (\d+d\d+) ([a-z]+) damage with a basic (Fortitude|Reflex|Will) save\.$/;
 const GROWS = /^Each time you Sustain the spell, you can increase the radius of the storm by (\d+) feet, to a maximum of (\d+) feet\.$/;

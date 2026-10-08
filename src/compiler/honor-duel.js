@@ -7,8 +7,8 @@
 // Effect for the row's time with the GM's end-of-turn control — no hostile action against the two: the damage (twice the rank, basic save); then, on the longer
 // rows, the save that shortens or ends it; the target reduced to 0 Hit Points while it lasts dies (the module reads "a creature" as the spell's target).
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const LEAD = [/^Choose yourself or an ally within (\d+) feet and the target must attempt a (Fortitude|Reflex|Will) save\.$/,
     /^(A creature that is reduced to 0 Hit Points while this spell is active is instantly killed) and (their soul is transported to the domain of your deity to become a shade or appropriate entity there)\.$/];
 const ROWS = { criticalSuccess: /^The target is unaffected and the spell ends\.$/,

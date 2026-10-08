@@ -8,8 +8,8 @@
 // The cast asks the actions; the attack is the caster's spell attack with its proficiency raised to mythic (level + 10). On a hit: the touch's
 // damage, the push away from the caster, then the fall from the launch height (half the distance, PF2e's falling damage) and Prone.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const ATTACK = /^Make a melee spell attack at mythic proficiency against your target's AC\.$/;
 const HIT = /^If you hit, you deal (\d+)d(\d+) ([a-z]+) damage, and you launch the target into the air and away from you; the target takes falling damage as normal\.$/;
 const ACTIONS = /^The number of actions you spend while Casting the Spell determines the damage dealt by your touch and how far the target is launched\.$/;

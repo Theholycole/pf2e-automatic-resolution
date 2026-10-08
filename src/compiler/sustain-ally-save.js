@@ -5,8 +5,8 @@
 // spell's duration), and on the first Sustain each turn a save card for one ally within the distance of a target that failed — its own plan, with the
 // immunity; the critical failure's "not an ally" a GM note.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_ID_LINK_VALUED as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.([A-Za-z0-9]+)\]\{([A-Z][a-z]+) (\d)\}`;
 const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const LEAD = /^(.+?) The creature must attempt an? (Fortitude|Reflex|Will) save\.$/;
 const FAILURE = new RegExp(String.raw`^The target is ${C} for the duration\. (The first time you Sustain the spell each turn, one of the target creature['’]s allies within (\d+) feet of the target must attempt a @Check\[(?:type:)?(fortitude|reflex|will)\|dc:resolve\(@actor\.attributes\.spellDC\.value\)\] or become ${C}; or ${C} on a critical failure\.) (A creature targeted by this effect is then temporarily immune for (\d+) (minute|hour)s\.)$`);

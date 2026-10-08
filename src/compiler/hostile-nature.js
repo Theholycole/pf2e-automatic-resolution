@@ -6,9 +6,8 @@
 // Furthermore, animal, fungus, and plant creatures become hostile to it …" and "The GM might decide that you can't subject some creatures …": a card's
 // Effect on each target (up to the stated count) for the spell's time — the Speed penalty as PF2e's rule, the turn-start flat check, basic save, damage
 // and Off-Guard the module's, the rest notes (and leaving the area the GM's: remove the Effect).
-import { htmlToPlainText } from "./description-parser.js";
+import { plainOrEmpty as plain, sentenceSplit as split } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(String(html ?? "")).replace(/\s+/g, " ").trim();
 const INTRO = [/^Animals, plants, and fungi in the area turn against the targets\.$/, /^Each target suffers from the following effects as long as it remains in the area\.$/];
 const SPEED = /^Vegetation springs up from every surface, giving each target a [-–−](\d+)-foot (circumstance|status) penalty to its Speed any time it's adjacent to the plants and fungi\.$/;
 const ATTACK = [/^Aggressive animals attack unpredictably\.$/, /^At the start of its turn, each target rolls a @Check\[flat\|dc:(\d+)\]\.$/,
@@ -17,7 +16,6 @@ const ATTACK = [/^Aggressive animals attack unpredictably\.$/, /^At the start of
 const NATURE = [/^The target loses any connection to nature or natural creatures\.$/, /^The target must succeed at a @Check\[flat\|dc:(\d+)\] when casting any primal spell or the spell fails\.$/,
     /^Furthermore, animal, fungus, and plant creatures become hostile to it, even one with a strong bond to the target, such as an animal companion\.$/];
 const GM = /^The GM might decide that you can't subject some creatures, such as an emissary of a nature deity, to the ire of nature\.$/;
-const split = text => text.split(/(?<=[.!?])\s+(?=[A-Z@])/).filter(Boolean);
 
 /** {count, part, notes, sentences} or null. */
 export function extractHostileNature(adapted) {

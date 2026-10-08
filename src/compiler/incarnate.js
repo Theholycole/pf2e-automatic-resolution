@@ -16,7 +16,6 @@ const PENALTY_HEIGHTENED = /^\s*(?:<p>\s*<strong>\s*Heightened \((?:\d+)(?:st|nd
 const SPACE = /^(?:The [a-z' ]+|It) occup(?:y|ies) the space of an? (Small|Medium|Large|Huge|Gargantuan) creature(?:,? (?:and (?:has|have) an? (?:(?:fly|swim|burrow|climb) )?(?:Speed|speed) of (\d+) feet(?: and [^.]+)?|but (?:has|have) no Speed))?\.$|^Your [a-z]+ occupies the space of a creature of your size and has Speeds equal to yours(?: \([^)]*\))?\.$/;
 // (An opening sentence that is only narration: no number, link or rule word — "until" and "each" are common in openings.)
 const OPENING_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must)\b/i;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 
 const BASIC_DAMAGE = /^(.*?\b(?:take|takes|dealing|deal|deals)\s+)((?:@Damage\[[^\]]*\](?:\])?|\d+d\d+ [a-z]+) damage(?: and \d+d\d+ [a-z]+ damage)?)(.*?)\s*\((?:with a )?basic (Fortitude|Reflex|Will) save\)(.*)$/;
 const CRIT_RIDERS = [

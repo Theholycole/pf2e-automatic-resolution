@@ -17,8 +17,8 @@
 // automatically. The thorns' spaces are difficult terrain. The shape, sight, cover and the sections' statistics are notes (with the sections' Hit
 // Points at the cast rank).
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_COVER as NARRATION_RULES, HEIGHTENED_TYPED_DAMAGE_STEP as STEP_DAMAGE } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain|cover)\b/i;
 const NOTES = [
     /^You create (?:either )?an? \d+-foot-thick wall(?: of [a-z ]+)? in a straight line up to \d+ feet long and \d+ feet high(?: \(the wall doesn't have to be vertical, but it must be anchored on both sides to a solid surface\))?(?:,? or an? \d+-foot-thick, \d+-foot[- ]radius (?:ring|hemisphere)(?: of [a-z]+)?(?: with the same height)?)?\.$/,
     // Wall of Virtue's light (a wall isn't a token: the GM's lighting).
@@ -43,7 +43,6 @@ const STEP_TWO = /^Heightened \(\+(\d)\) The ([a-z]+) damage increases by (\d+)d
 const COVER_TERRAIN = /^Everything on each side of the wall has cover from creatures on the opposite side, and the wall's spaces are difficult terrain\.$/;
 const PER_MOVE = /^For every move action a creature uses to enter at least one of the wall's spaces, that creature takes (\d+)d(\d+) ([a-z]+) damage\.$/;
 const RUBBLE = /^A section destroyed by means other than fire leaves behind a chilling mass of ice that is difficult terrain and deals (\d+)d(\d+) ([a-z]+) damage to any creature passing through it\.$/;
-const STEP_DAMAGE = /^Heightened \(\+(\d)\) The ([a-z]+) damage increases by (\d+)d(\d+)\.$/;
 // The trail left by the target's first Stride, its height, its concealment and its damage.
 const FIRST_STRIDE = /^The first time the target Strides during the spell's duration, they leave behind a ([a-z]+) made of magical ([a-z]+) that fills up each space they occupied during that Stride\.$/;
 const TRAIL_NOTES = [/^This [a-z]+ is \d+ feet high\.$/];

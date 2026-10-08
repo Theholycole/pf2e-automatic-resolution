@@ -4,12 +4,12 @@
 // Effect (a TokenMark; the +1 status bonus against the mark; the holy holder's 1d4 spirit, +1 per 2 ranks above 5th): that Effect on the caster and each of
 // its allies on the scene, marking the target (of the stated trait); the target immune to the spell for the stated time.
 import { htmlToPlainText } from "./description-parser.js";
+import { SPELL_EFFECT_LINK_LABEL as LINK } from "./text-patterns.js";
 
 const LEAD = /^You and your allies receive a \+(\d) status bonus to your attack rolls and skill checks against it\.$/;
 const HOLY = /^Anytime an? ([a-z]+) creature damages it, the \1 creature deals an additional (\d)d(\d+) ([a-z]+) damage\.$/;
 const IMMUNE = /^The target is then temporarily immune for (\d+) (minute|hour)s?\.$/;
 const STEP = /^Heightened \(\+(\d)\) The [a-z]+ damage increases by (\d+)\.$/;
-const LINK = /^@UUID\[Compendium\.pf2e\.spell-effects\.Item\.([^\]]+)\]\{([^}]+)\}$/;
 
 /** {brandMark, claimed} or null; the catalog proves PF2e's Effect. */
 export function compileBrandMark(adapted, catalog) {

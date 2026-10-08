@@ -8,16 +8,8 @@
 //     Points that last for 1 minute, and increases its Wounded condition by 1." once, then immune until its next daily preparations;
 //   - Heartbolt: the target healed (a willing living creature) or damaged (undead, basic Fortitude), then "all other creatures within a 20-foot
 //     emanation from the original target" healed or damaged the smaller amount.
-import { htmlToPlainText } from "./description-parser.js";
+import { SPELL_EFFECT_LINK as EFFECT, CONDITION_LINK_HYPHENATED as UUID, blocks, matchAll, minutes, plain, sentenceSplit as split, unread } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(html).replace(/\s+/g, " ").trim();
-const split = text => text.split(/(?<=[.!?])\s+(?=[A-Z@])/).filter(Boolean);
-const blocks = adapted => String(adapted.descriptionHTML ?? "").split(/<hr\s*\/?>/);
-const UUID = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Za-z-]+)(?: (\d+))?\}`;
-const EFFECT = /^@UUID\[Compendium\.pf2e\.spell-effects\.Item\.([^\]]+)\]\{(Spell Effect: [^}]+)\}$/;
-const matchAll = (sentences, patterns) => patterns.map(pattern => sentences.map(sentence => pattern.exec(sentence)).find(Boolean));
-const unread = (sentences, found, allowed = []) => sentences.filter(sentence => !found.some(match => match?.[0] === sentence) && !allowed.some(pattern => pattern.test(sentence)));
-const minutes = adapted => Number(/^(\d+) minutes?$/.exec(adapted.lifecycle?.duration ?? "")?.[1] ?? NaN);
 // (PF2e's Effect the text links, from the catalog: its id and rules.)
 const catalogEffect = (catalog, name) => (catalog instanceof Map ? [...catalog.values()] : Object.values(catalog ?? {})).find(entry => entry?.name === name) ?? null;
 

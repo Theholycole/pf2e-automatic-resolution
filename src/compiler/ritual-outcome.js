@@ -31,14 +31,13 @@
 //     or save." — each caster's first move in each encounter gets the check card (the GM gives the DC; a Step or Crawl is the card's no-check
 //     button); a failure is Prone.
 import { htmlToPlainText } from "./description-parser.js";
+import { HEADINGS, RULE_WORDS_BROAD as RULE_WORDS, trimmedSentences as split } from "./text-patterns.js";
 
-const RULE_WORDS = /\d|@|\[\[|\b(?:damage|saves?|saving throws?|checks?|DCs?|bonus|penalty|conditions?|immune|immunity|Hit Points|attacks?|Speeds?|weakness|resistance)\b/i;
 const CEREMONY = [
     /^This ritual can only be performed once each [a-z ]+\.$/,
     /^If performed [^,]+, the DCs of the ritual's skill checks are reduced by (\d+)\.$/,
     /^This ritual is performed over \d+ (?:hours?|minutes?|days?) of [^.]+\.$/
 ];
-const HEADINGS = { criticalSuccess: "Critical Success", success: "Success", failure: "Failure", criticalFailure: "Critical Failure" };
 const SUCCEEDS = /^The ritual succeeds\.$/;
 const FAILS = /^The ritual (?:fails|has no effect)\.$/;
 const CASTER_BONUS = /^The casters of the ritual gain an? \+(\d+) (status|circumstance) bonus to saves against ([a-z]+(?: and [a-z]+)?) effects (?:until the end of ([a-z]+)|for (\d+) (day|week|month)s?(?: or until the end of ([a-z]+), whichever comes first)?)\.$/;
@@ -65,7 +64,6 @@ const SLIP = /^For (\d+) (day|week|month)s?, the first time each encounter that 
 const SLIP_EXEMPT = /^A caster can (?:@UUID\[[^\]]+\]\{Step\}|Step) or (?:@UUID\[[^\]]+\]\{Crawl\}|Crawl) without having to attempt a check or save\.$/;
 const EFFECT_LINK = /^<p>\s*@UUID\[Compendium\.pf2e\.spell-effects\.Item\.([^\]]+)\]\{[^}]+\}\s*<\/p>$/;
 const DAYS = { day: 1, week: 7, month: 30, year: 365 };
-const split = text => text.replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s+(?=[A-Z@])/).map(sentence => sentence.trim()).filter(Boolean);
 
 /** PF2e's Effect proved against "+N status bonus to saves against X and Y effects" at a degree: the rules active once its choice is that degree. */
 function proveCasterBonus(entry, degree, bonus, type, traits) {

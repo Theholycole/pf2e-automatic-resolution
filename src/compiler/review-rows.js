@@ -6,13 +6,13 @@
 // their attitude toward the creature (or creatures associated with the subject, …) becoming two degrees better (for example, … instead of …).":
 // the save and Dismissal; the failing rows a note for their time (the attitude shift in the critical failure's); what the target notices a reminder.
 import { htmlToPlainText } from "./description-parser.js";
+import { DEGREE_LABEL_PAIRS as DEGREES } from "./text-patterns.js";
 
 const LEAD = /^You enchant a creature to [^.]+\. (Identify a single creature, location, or performance), such as [^.]+(?:\.[^.]+)*?\." The target must attempt (Fortitude|Reflex|Will) save\. (You can Dismiss the spell\.)$/;
 const KNOWS = /^The target is unaffected and knows you tried to trick it\.$/;
 const THINKS = /^The target is unaffected but thinks your spell was something harmless instead of [a-z ]+, unless it identifies the spell \(usually using (?:@UUID\[[^\]]+\]\{Identify Magic\}|Identify Magic)\)\.$/;
 const FAILURE = /^The target cannot speak unfavorably about the subject for (\d+) (day|week)s?\. (This doesn't change the target's opinion about the subject, but the target's attempts to speak ill of the subject-whether in speech, writing, or other communication-always twist into compliments and praise instead\.) (The target likely becomes aware of this effect quickly and can avoid speaking about the subject entirely if they choose\.)$/;
 const CRITICAL = /^As failure, except the duration is permanent and the target genuinely holds a favorable opinion about the subject, with their attitude toward the creature \(or creatures associated with the subject, such as [^)]+\) becoming two degrees better \(for example, (?:@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{Helpful\}|Helpful) instead of (?:@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{Indifferent\}|Indifferent)\)\.$/;
-const DEGREES = [["criticalSuccess", "Critical Success"], ["success", "Success"], ["failure", "Failure"], ["criticalFailure", "Critical Failure"]];
 
 /** {html, notes, reminder, sentences} or null. */
 export function rewriteReviewRows(adapted) {

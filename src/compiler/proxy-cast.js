@@ -14,6 +14,7 @@
 //   –15-foot status penalty to its Speed on a critical failure.": the named spell at this rank; the caster's Effect for the duration shaping each of its casts (this one
 //   too) — the terrain around each target, from 9th the penalty by the target's result (the module's Effect checked against it; the module builds it from the text).
 import { htmlToPlainText } from "./description-parser.js";
+import { ITEM_LINK as LINK, NARRATION_RULES, WORD_NUMBERS_2_4 as NUMBER } from "./text-patterns.js";
 
 const COALESCE = /^You assume the form for your daily anatomical configuration\. You gain the effects of the spell you chose during your daily preparations for the same duration as the original spell\. The spell['’]s effects are heightened to the rank of coalesce form\.$/;
 const UNTAMED = /^You reach within for a different part of yourself, and you set it free, transforming your body into another form\. You can polymorph into any form listed in @UUID\[(Compendium\.[A-Za-z0-9_.-]+?)\.(?:Item\.)?([A-Za-z0-9]{16})\]\{([^}]+)\}, which lasts (\d+) minutes\. All other untamed shift shapes last (\d+) minutes?\. (You can add more shapes to your untamed shift list with druid feats; your feat might grant you some or all of the shapes from a given polymorph spell\.)$/;
@@ -23,9 +24,6 @@ const BOTTLE = /^You Cast a Spell with the hex trait on the triggering target\. 
 
 const FRACTAL = /^You cast @UUID\[(Compendium\.pf2e\.spells-srd\.Item\.[A-Za-z0-9]{16})\]\{([^}]+)\} as part of casting ([a-z ]+)\. For the duration of \3, you can cast ([a-z ]+) with a range of (\d+) feet, targeting up to (three|two|four) different targets within range\. You create difficult terrain in a @Template\[emanation\|distance:(\d+)\] in the area around each of the targets that lasts for 1 round\.$/;
 const FRACTAL_STEP = /^<strong>Heightened \((\d+)(?:st|nd|rd|th)\)<\/strong> For the duration, when you cast ([a-z ]+), the target takes a [–-](\d+)-foot status penalty to its Speed for 1 round on a failure or a [–-](\d+)-foot status penalty to its Speed on a critical failure\.$/;
-const LINK = /^@UUID\[(Compendium\.[A-Za-z0-9_.-]+\.Item\.([A-Za-z0-9]{16}))\]\{([^}]+)\}$/;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
-const NUMBER = { two: 2, three: 3, four: 4 };
 
 /** The module's Effect gives the text's Speed penalty by the result, for 1 round. */
 function speedPenaltyMatches(effect, failure, critical) {

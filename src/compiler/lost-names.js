@@ -8,9 +8,8 @@
 // caster answers on the card whether it named a victim (that enemy's damage is the larger roll, scaled by its result); the immunity the GM's
 // confirmation for each creature; the guessing rule a reminder.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C, NARRATION_RULES } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const LEAD = new RegExp(String.raw`^Enemies in the area take (\d+d\d+) ([a-z]+) damage \(basic (Fortitude|Reflex|Will) save\) and are (${C}[A-Z][a-z]+ \d\}) on a critical failure\.$`);
 const NAMES = /^If you know the names of anyone murdered or grievously wronged by an enemy in the area, you can chant those victims' names when you Cast the Spell to improve the clarity of the visions, increasing the damage to the corresponding enemy from (\d+d\d+) to @Damage\[(\(2\*\(@item\.level - (\d)\)\)d(\d+))\[([a-z]+)\](?:\|shortLabel)?\]; you can do so for multiple enemies if you know specific victims of each enemy\.$/;
 const PERSONAL = /^The visions are personal to each foe in the area, and you can't use this spell to discern a murderer by guessing a name\.$/;

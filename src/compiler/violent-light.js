@@ -5,8 +5,8 @@
 // an enemy ending its turn within the emanation saves (the item's damage, heightened), the radius 5 feet larger on the first Sustain each round up to its
 // maximum; the module's Effect on the ally (its Aura rule's radius 5 × its badge, the badge's labels the text's radii) raised with it.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const LIGHT = /^The creature radiates bright light in an aura with a (\d+)-foot emanation \(and dim light for the next (\d+) feet\)\.$/;
 const GROW = /^On subsequent turns, the first time each round you Sustain the spell, you increase the emanation by (\d+) feet up to a maximum of (\d+) feet\.$/;
 const DEAL = /^While illuminated, the ally radiates powerful energy that deals @Damage\[(.+)\] damage to all enemies that end their turn within the bright light of the emanation \(basic (Fortitude|Reflex|Will) save\)\.$/;

@@ -6,6 +6,7 @@
 // clause, or narration; anything else leaves the spell to other compilers.
 import { htmlToPlainText, stripHeighteningHTML } from "./description-parser.js";
 import { compileBasicDegreeRiders } from "./basic-degree-rider.js";
+import { WORD_NUMBERS_2_5 as COUNTS, DICE_DAMAGE as DICE, MUST_ATTEMPT_SAVE as FIRST_SAVE } from "./text-patterns.js";
 
 // The area's own name ("the storm", "the squall", "the spell's area").
 const NOUN = String.raw`(?:spell's area|[a-z]+(?: [a-z]+)?)`;
@@ -22,7 +23,6 @@ const EVENT = [
 ];
 const UNTIL_NEXT_TURN = /\b(?:is|'s) in the area or enters the area before the start of your next turn\b/i;
 const SUBJECT = /^(?:A|Any|Each|An) (?:creature|enemy)(?: other than you)? (?:that|who)(?:'s)?\b/i;
-const DICE = String.raw`(\d+d\d+) ([a-z]+) damage`;
 const BASIC = String.raw`(?:,? with a basic (Fortitude|Reflex|Will) sav(?:e|ing throw)| \(basic (Fortitude|Reflex|Will) save\))`;
 // A short causal flavour clause may end the damage sentence ("… as the birds peck at it.").
 const FLAVOUR = String.raw`(?: as [a-z' ]{3,40})?`;
@@ -602,7 +602,6 @@ const DEGREE_TAKE_AS = /^(.+?) takes? (\d+d\d+) ([a-z]+) damage(?: as [a-z' ,]{3
 const FLYING_TERRAIN = /^The (?:area|cloud|[a-z]+ cloud) is difficult terrain for flying creatures(?:, and creatures in the (?:area|cloud) (can't [a-z' ]{5,80}))?\.$/i;
 // "<p><strong>Area</strong> three 5-foot bursts that don't overlap</p>": several separate areas of the item's shape and size.
 const AREA_COUNT_PARAGRAPH = /<p>\s*<strong>\s*Area\s*<\/strong>\s*([^<]*?)\s*<\/p>\s*(?:<hr\s*\/?>\s*)?/i;
-const COUNTS = { two: 2, three: 3, four: 4, five: 5 };
 
 export function lingeringTriggerEvents(text) {
     let rest = ` ${text} `;
@@ -650,7 +649,6 @@ function compileTargetTurnSaves(adapted) {
 
 // "The target must attempt a Will save. Each time you Sustain this Spell, the target attempts another Will save.": a sustained single target
 // that saves when cast and again on each Sustain; the degree table says what each save does. One opening sentence of narration.
-const FIRST_SAVE = /^The target must attempt an? (Fortitude|Reflex|Will) save\.$/;
 const SUSTAIN_SAVE = /^Each time you Sustain (?:this|the) Spell, the target attempts another (Fortitude|Reflex|Will) save\.$/;
 
 function compileTargetSustainSaves(adapted) {

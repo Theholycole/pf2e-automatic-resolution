@@ -13,14 +13,13 @@
 // the Strike is resolved (its damage roll, or a miss). Anything the text says about other creatures (saves, areas,
 // conditions on a target) is refused.
 import { htmlToPlainText } from "./description-parser.js";
+import { SPELL_EFFECT_LINK_ANY as EFFECT_LINK, RULE_WORDS_PLAIN as RULE_WORDS } from "./text-patterns.js";
 
 const LINK = /@UUID\[[^\]]+\]\{[^}]+\}/g;
-const EFFECT_LINK = /^@UUID\[Compendium\.pf2e\.spell-effects\.[^\]]+\]\{[^}]+\}$/;
 const STRIKE = /^Make an? (?:(?:melee|ranged|unarmed) )*Strike\b/;
 const AFTER = /^After the attack, regardless of the result, /;
 // Rules this route doesn't carry: other creatures' saves or conditions, areas, movement of others, healing.
 const OTHERS = /\b(?:save|saving throw|@@\d+@@|each creature|all creatures|emanation|cone|burst|push|pull|teleport|regains?|Hit Points)\b|\bthe target (?:is|becomes|takes)\b/i;
-const RULE_WORDS = /\d|\b(?:damage|save|bonus|penalty|Strike|condition|immune)\b/i;
 // Results by degree ("Critical Success You gain …") or an ending the caster must keep up ("ends if … at the end of
 // any turn in which you didn't hit") depend on the Strike's result; these Effects are applied regardless of it.
 const RESULT_DEPENDENT = /\b(?:Critical Success|Critical Failure|Success|Failure)\b|\bends? (?:if|when)\b|\bat the end of any turn\b/;

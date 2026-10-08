@@ -7,8 +7,8 @@
 // area's control (Perception against the spell DC). The object branch: the holder's save rolled on the card, its penalty to checks using the object an Effect
 // behind a toggle (user decision 2026-10-01: objects roll on the card).
 import { htmlToPlainText } from "./description-parser.js";
+import { ITEM_LINK_PLAIN as LINK, NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const AREA = /^<strong>Area \((\d+) cont[a-z]*guous 5-foot squares\)<\/strong> ([\s\S]+)$/;
 const TARGET = /^<strong>Target \((1 object of Bulk 1 or less)\)<\/strong> ([\s\S]+)$/;
 const SAVE = /^Creatures in the area or that enter the area must make a (Fortitude|Reflex|Will) save\.$/;
@@ -17,7 +17,6 @@ const CRITICAL = /^On a critical failure, the creature is @UUID\[(Compendium\.pf
 const DISBELIEVE = [/^A creature can attempt to disbelieve the effect as normal after using a \[\[\/act seek\]\] action\.$/, /^If it successfully disbelieves, it ignores the effect for the remaining duration\.$/];
 const OBJECT = /^If you target an attended object or a creature picks up the unattended object, the creature that has the object must attempt a (Fortitude|Reflex|Will) save\.$/;
 const OBJECT_PENALTY = /^On a failure, the wielder takes a [–-](\d) circumstance penalty to all checks that involve using the object; or a [–-](\d) circumstance on a critical failure\.$/;
-const LINK = /^@UUID\[Compendium\.[A-Za-z0-9_.-]+\.Item\.[A-Za-z0-9]{16}\]\{[^}]+\}$/;
 
 const split = text => text.replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s+(?=[A-Z@\[])/);
 

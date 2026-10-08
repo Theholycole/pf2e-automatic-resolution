@@ -6,9 +6,9 @@
 //   Living Thunderbolt — "… When you move through a creature's space, they take 4d12 electricity damage with a basic Reflex save. On a failure, they're also
 //   {Dazzled} for 1 round. A creature can only take damage this way once per round." with PF2e's Effect for the rest.
 import { htmlToPlainText } from "./description-parser.js";
+import { paragraphSentences as split } from "./text-patterns.js";
 
 const plain = text => htmlToPlainText(text).replace(/@UUID\[[^\]]+\]\{([^}]+)\}/g, "$1").replace(/\s+/g, " ").trim();
-const split = html => html.replace(/<\/?p>/g, " ").replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s+(?=[A-Z@])/).filter(Boolean);
 
 const ARC = {
     plunge: /^When you Cast the Spell, you plunge the required weapon into the ground, where it crackles with [a-z ]+\.$/,

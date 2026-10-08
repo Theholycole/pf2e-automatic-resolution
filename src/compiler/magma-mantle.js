@@ -7,9 +7,8 @@
 // rules) with the picks its choices; the text's Clumsy and reach added to Enlarging Eruption; Heart of Fire's damage the card's control for the creature that
 // touched or hit; the swap the card's (the option-mantle runtime).
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_UUID_START as C, SPELL_EFFECT_LINK as LINK } from "./text-patterns.js";
 
-const LINK = /^@UUID\[Compendium\.pf2e\.spell-effects\.Item\.([^\]]+)\]\{(Spell Effect: [^}]+)\}$/;
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{`;
 const PICK = /^Upon Casting this Spell, pick (two) of the options below\.$/;
 const SWAP = /^You can Sustain this spell once per round to change one of your chosen abilities to a different option\.$/;
 const OPTIONS = {

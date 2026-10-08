@@ -4,15 +4,9 @@
 // created ("After the attack, regardless of the result"), so they don't add to the first Strike's own damage.
 import { loadNativeEffectTemplate, prepareNativeEffectSource, createNativeEffect } from "./native-outcome-effects.js";
 import { isExecutableStrikeEffectsPlan } from "./strike-effects-core.js";
+import { MODULE_ID, escapeHTML, isLeadGM } from "./runtime-utils.js";
 
-const MODULE_ID = "pf2e-automatic-resolution";
 const PENDING = "pendingStrikeEffects";
-const escapeHTML = value => String(value ?? "").replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
-
-function isLeadGM() {
-    const gms = game.users.filter(user => user.active && user.isGM).sort((a, b) => a.id.localeCompare(b.id));
-    return gms[0]?.id === game.user.id;
-}
 
 /** The effect source with the cast's origin (the spell at its cast rank, so heightened rules apply). */
 function effectSource(template, { spell, castRank, castId, sourceActor, plan, phase, removeAfterStrike }) {

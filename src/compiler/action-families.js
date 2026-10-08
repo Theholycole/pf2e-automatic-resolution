@@ -1,7 +1,7 @@
 // Note-only spells whose rule is an action the module can take (Cackle, Friendfetch, Liberating Command, Bone Shield).
 import { htmlToPlainText } from "./description-parser.js";
+import { plainSentencesTrimmed as split } from "./text-patterns.js";
 
-const split = html => htmlToPlainText(html).replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s+(?=[A-Z@])/).map(sentence => sentence.trim()).filter(Boolean);
 const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|checks?|DC|Hit Points|Strikes?)\b/i;
 
 // Cackle: "You Sustain a spell." as a free action — the caster's sustained Ongoing spell is Sustained (the caster picks one if several).

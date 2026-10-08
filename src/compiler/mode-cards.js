@@ -3,13 +3,10 @@
 // inside (generated from the text, or PF2e's own), terrain — and whose modes each set that state and run their own action for the targeted creatures (a
 // save, damage, a launch, a placed terrain); the spell's extra actions (Storm Lord's bolt, the briars' impaling) are buttons of their own. "You can't
 // choose the same effect twice in a row" refuses the last mode again.
-import { htmlToPlainText } from "./description-parser.js";
+import { plain, rows, sentenceSplit as split } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(html).replace(/\s+/g, " ").trim();
-const split = text => text.split(/(?<=[.!?])\s+(?=[A-Z@])/).filter(Boolean);
 const C = (id, name) => `@UUID[Compendium.pf2e.conditionitems.Item.${id}]{${name}}`;
 const CONCEALED = "Compendium.pf2e.conditionitems.Item.DmAIPqOBomZ7H95W", DEAFENED = "9PR9y0bi4JPKnHPR", IMMOBILIZED = "eIcWbB5o3pP6OIMe";
-const rows = list => `<hr />` + ["Critical Success", "Success", "Failure", "Critical Failure"].map((label, index) => `<p><strong>${label}</strong> ${list[index]}</p>`).join("");
 const basicRows = (extra = "") => rows(["The target is unaffected.", "The target takes half damage.", `The target takes full damage${extra}.`, `The target takes double damage${extra}.`]);
 const modeList = html => [...String(html).matchAll(/<li>\s*<strong>([^<]+)<\/strong>([\s\S]*?)<\/li>/g)].map(match => ({ name: match[1].trim(), key: match[1].trim().toLowerCase().replace(/[^a-z]+/g, "-").replace(/^-|-$/g, ""), text: plain(match[2]), raw: match[0] }));
 const generated = (name, text, rules) => ({ all: true, generated: { name, text, rules } });

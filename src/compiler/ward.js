@@ -6,8 +6,8 @@
 // placed region (Ongoing's area rules: the caster's Quickened inside, Slowed outside); the card's Strikes: the caster's spell attack against a creature in the
 // ward (the multiple attack penalty the caster's button), the dice at the cast rank of the physical type picked.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_UUID_START as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{`;
 const RULES = {
     strikes: /^While within the area, you can make ([a-z' ]+) Strikes by [a-z, ]+ to attack enemies\.$/,
     deal: /^These are (melee|ranged) Strikes that use your spell attack modifier, can target any creature within the ward, and deal (\d+)d(\d+) (bludgeoning, piercing, or slashing) damage\.$/,

@@ -9,6 +9,7 @@
 // undead and nindoru creatures (the text's formula at the cast rank), Prone, the push away from the caster (the flow), the river difficult terrain for the
 // creature until its next turn, and on a critical success no exposure until then.
 import { htmlToPlainText } from "./description-parser.js";
+import { HEADINGS, HEIGHTENED_TYPED_DAMAGE_STEP as STEP } from "./text-patterns.js";
 
 const LEAD = [/^You create a flowing river of ghostly water and that sheds dim light for (\d+) feet on each side\.$/,
     /^The river begins in an adjacent square to you and extends in a straight 5-foot path to its maximum range or until it hits a solid barrier, whichever comes first\.$/,
@@ -20,8 +21,6 @@ const ROWS = { criticalSuccess: /^The creature ignores the river's effects until
     success: /^The creature treats all squares occupied by the river as difficult terrain until the start of its next turn\.$/,
     failure: /^As success, but the creature is also knocked (@UUID\[[^\]]+\]\{Prone\})\.$/,
     criticalFailure: /^As failure, but the creature is pushed (\d+) feet along the river's path in the direction of flow\.$/ };
-const STEP = /^Heightened \(\+(\d)\) The ([a-z]+) damage increases by (\d+)d(\d+)\.$/;
-const HEADINGS = { criticalSuccess: "Critical Success", success: "Success", failure: "Failure", criticalFailure: "Critical Failure" };
 
 /** {html, area, formula, damageTraits, lingering, immunity, notes, claimed} or null. */
 export function rewriteRiverRows(adapted) {

@@ -13,9 +13,9 @@
 //     Petrified as if made of gold for the duration. …" — the weaknesses at the rank (Heightened (+1) adds 1), the Stealth penalty, and the
 //     conditions for the spell's duration; what the text says of an object target is the GM's (a note: the module targets creatures).
 import { htmlToPlainText } from "./description-parser.js";
+import { cleanSentences as sentences } from "./text-patterns.js";
 
 const plain = text => String(text ?? "").replace(/@UUID\[[^\]]+\]\{([^}]+)\}/g, "$1").replace(/@Check\[[^\]]*\]\{?([^}]*)\}?/g, "$1").replace(/\s+/g, " ").trim();
-const sentences = text => String(text ?? "").replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s+(?=[A-Z@])/).map(sentence => sentence.trim()).filter(Boolean);
 const MINUS = "[–−-]";
 const time = (value, unit, sourceText) => ({ mode: "fixed", value: Number(value), unit: `${unit}s`, expiry: unit === "round" ? "turn-start" : null, anchor: "effect-start", offset: 0, sourceText });
 // "until the beginning of their next turn": the creature's own next turn start.

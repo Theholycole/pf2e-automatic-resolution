@@ -1,9 +1,7 @@
 // A form's aura around its caster (Monstrosity Form's Shroud of Flame, Qi Form's corona, Arcane Explosion's unfiltered magic): a region on the caster's
 // token that follows it, dealing its damage (or its save) by itself; and what a form does when its Effect ends (its auras end, full Hit Points).
 import { freeSpaceBeside } from "./teleport-runtime.js";
-const MODULE_ID = "pf2e-automatic-resolution";
-const escapeHTML = value => String(value ?? "").replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
-const leadGM = () => game.user?.isGM && game.users.activeGM?.id === game.user.id;
+import { MODULE_ID, escapeHTML, activeGM as leadGM } from "./runtime-utils.js";
 
 /** The aura's region and its lingering record; returns the record's castId. */
 export async function startFollowingAura(ongoing, { spellName, sourceActor, sourceItemUuid, castRank, aura, type = null, dc = null, durationSeconds, parentCastId = null, radius = aura.radius }) {

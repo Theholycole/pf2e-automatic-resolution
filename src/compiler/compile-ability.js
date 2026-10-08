@@ -459,6 +459,7 @@ import { extractRevivalCard } from "./revival-cards.js";
 import { extractPickupCard } from "./pickup-cards.js";
 import { extractSupportCard } from "./support-cards.js";
 import { extractSwapReaction, extractAreaTeleport, extractMagneticRelocation, extractMeldSwap, extractCraterJump, extractHeavingWave, extractSkyLaunch, extractDownpour, extractFusionLeap } from "./teleport-spells.js";
+import { plainUnlinked as plainOfHTML, unique } from "./text-patterns.js";
 
 const STRIKE_PENALTY = /^The target takes an? [-–](\d) (circumstance|status) penalty to Strikes with its ([a-z]+)(?: or ([a-z]+))? while it is taking persistent ([a-z]+) damage\.$/;
 function componentStrikePenalty(adapted, selection) {
@@ -555,10 +556,6 @@ function mergeInheritedOutcome(base, own) {
         decisions: [...cloneJSON(base.decisions), ...own.decisions],
         manualInstructions: [...cloneJSON(base.manualInstructions), ...own.manualInstructions]
     };
-}
-
-function unique(values) {
-    return [...new Set(values)];
 }
 
 function finalizePlan(plan) {
@@ -11873,7 +11870,6 @@ function compileIncarnateParts(item, options) {
 }
 const sentenceOf = text => /[.!?)]$/.test(String(text).trim()) ? String(text).trim() : `${String(text).trim()}.`;
 const lowerFirst = text => /^(?:All|Any|Each|One|Up|The|Allies|Enemies)\b/.test(String(text)) ? `${String(text)[0].toLowerCase()}${String(text).slice(1)}` : String(text);
-const plainOfHTML = html => htmlToPlainText(String(html ?? "")).replace(/@UUID\[[^\]]+\]\{([^}]+)\}/g, "$1").replace(/\s+/g, " ").trim();
 
 /**
  * Third-party content links in the older UUID form, without the document type — "@UUID[Compendium.pf2e.conditionitems.TBSHQspnbcqxsmjL]{Frightened 1}" —

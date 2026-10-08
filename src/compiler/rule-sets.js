@@ -1,11 +1,11 @@
 // Note-only spells whose stated rules are PF2e rule elements on one Effect (Unfetter Eidolon, Healing Plaster, Time Sense, Glamorize, Unbroken
 // Panoply, Whirling Scarves): `ruleSet` = { recipient, seconds, rules, rankRules, toggle, consumeOn, turnOnly, immunity, replacesPrevious, weapon, snag, notes }.
 // A toggle is a PF2e RollOption (off until the player or GM switches it on for a roll the rule covers); the bonuses are predicated on it.
-import { durationSeconds, plainText as plain, splitSentences as split } from "./description-parser.js";
+import { plainText as plain, splitSentences as split } from "./description-parser.js";
+import { secondsOf } from "./text-patterns.js";
 
 const unlink = text => text.replace(/@UUID\[[^\]]+\]\{([^}]+)\}/g, "$1").replace(/\[\[\/act ([a-z-]+)\]\]/g, (_m, slug) => slug.replace(/-/g, " ").replace(/^./, c => c.toUpperCase()));
 const NARRATION_RULES = /\d|\[\[|\b(?:damage|saves?|bonus|penalty|immune|can't|must|checks?|DC|Hit Points|Strikes?)\b/i;
-const secondsOf = text => durationSeconds(text);
 const parts = adapted => { const [body, ...rest] = String(adapted.descriptionHTML ?? "").split(/<hr\s*\/?>/i); return { sentences: split(plain(body)), heightened: plain(rest.join(" ")) }; };
 
 // Unfetter Eidolon: "While the spell is active, your eidolon can travel an unlimited distance away from you and gains a +1 status bonus to saving

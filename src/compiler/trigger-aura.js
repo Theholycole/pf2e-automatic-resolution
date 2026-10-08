@@ -4,11 +4,10 @@
 // rank, its Effect on enemies), and the module watching: an enemy holding the aura's Effect that fails a save with the emotion trait, or newly becomes
 // Frightened, takes the text's persistent damage at the cast rank.
 import { htmlToPlainText } from "./description-parser.js";
+import { ITEM_LINK as LINK, NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const TRIGGER = /^When an enemy in the emanation fails a save against an? ([a-z]+) effect or gains the ([a-z]+) condition from an effect, it also takes (\d+)d(\d+) persistent ([a-z]+) damage\.$/;
 const STEP = /^Heightened \(\+(\d)\) The persistent damage increases by 1d(\d+) and the radius of the emanation increases by (\d+) feet\.$/;
-const LINK = /^@UUID\[(Compendium\.[A-Za-z0-9_.-]+\.Item\.([A-Za-z0-9]{16}))\]\{([^}]+)\}$/;
 
 /** The module's Aura matches the text: its radius at each rank the text's, its one Effect on enemies. */
 export function auraRadiusAt(radius, rank) {

@@ -13,11 +13,8 @@
 //     their maximum Hit Points." — the card's swap and share;
 //   - the caster's own jump with a crater and debris (Proximal Shift): the card's teleport within range, the crater's Reflex save at the origin, the
 //     debris' basic Reflex save at the arrival, and its difficult terrain for 1 minute.
-import { htmlToPlainText } from "./description-parser.js";
+import { capitalize as Stat, plain, sentenceSplit as split } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(html).replace(/\s+/g, " ").trim();
-const split = text => text.split(/(?<=[.!?])\s+(?=[A-Z@])/).filter(Boolean);
-const Stat = name => name[0].toUpperCase() + name.slice(1);
 const unaffectedRows = statistic => `<p>The target must attempt a ${Stat(statistic)} save.</p><hr />` + ["Critical Success", "Success", "Failure", "Critical Failure"].map(label => `<p><strong>${label}</strong> The target is unaffected.</p>`).join("");
 const unit = word => ({ round: "rounds", minute: "minutes", hour: "hours" })[word];
 

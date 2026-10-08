@@ -8,8 +8,8 @@
 // each Sustain the void-healing creatures in it take the damage, and a card lets the GM target the creatures vulnerable to sunlight for the save
 // (a compiled degree save: Slowed 1 for 1 round on a failure). A creature in it that loses Hit Points to damage with fire in it takes 1 vitality.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const LIGHT = /^You shed bright light in an? (\d+)-foot emanation \(and dim light to the next (\d+) feet\)\.$/;
 const PULSE = /^When you Cast or Sustain the spell, each creature with void healing in the aura takes @Damage\[(\d+)\[vitality\](?:\|options:area-damage)?\] damage, and any creature in the aura with a particular vulnerability to sunlight becomes (@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{(Slowed) (\d)\}) for (\d+) rounds? unless it succeeds at an? (Fortitude|Reflex|Will) save\.$/;
 const FIRE = /^After a creature in the aura loses HP due to (fire) damage from any source, it takes (\d+) (vitality) damage\.$/;

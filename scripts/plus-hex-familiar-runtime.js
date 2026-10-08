@@ -7,11 +7,8 @@
 // - the rest a reminder to the GM (terrain, flanking, reactions, flat checks, prolonged effects).
 import { shapeEffect, riderChoice, tokensWithin } from "./spellshape-runtime.js";
 import { forcedMove } from "./forced-movement.js";
+import { MODULE_ID, activeGM, escapeHTML, familiarOf, plainText } from "./runtime-utils.js";
 
-const MODULE_ID = "pf2e-automatic-resolution";
-const activeGM = () => game.user?.isGM && game.users.activeGM?.id === game.user.id;
-const plainText = html => String(html ?? "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().replace(/[’]/g, "'");
-const escapeHTML = text => String(text ?? "").replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[ch]);
 const itemUuid = uuid => uuid.replace(/^(Compendium\.[^.]+\.[^.]+)\.(?!Item\.)/, "$1.Item.");
 const EFFECT = String.raw`@UUID\[([^\]]+)\]\{(Effect: [^}]+)\}`;
 const COND = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.(?:Item\.)?[A-Za-z0-9]+\]\{([A-Za-z-]+)\}`;
@@ -51,7 +48,6 @@ export function readHexFamiliar(source) {
         .replace(/@Damage\[((?:[^\[\]]|\[[^\]]*\])+)\](?:\{([^}]+)\})?/g, (all, formula, label) => label ?? formula);
     return { name: source.name, mode: "note", text: words };
 }
-const familiarOf = caster => game.actors.find(actor => actor.type === "familiar" && (actor.system?.master?.id === caster.id || actor.master?.id === caster.id)) ?? null;
 const abilitiesOf = actor => [...(actor?.itemTypes?.action ?? []), ...(actor?.itemTypes?.feat ?? [])].map(item => readHexFamiliar(item.toObject())).filter(Boolean);
 
 async function moduleEffect(target, effect, caster) {

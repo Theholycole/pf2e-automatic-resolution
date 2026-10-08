@@ -8,8 +8,8 @@
 // save — only once it's outside the zone — succeeds; the critical failure's for the spell); immune for an hour after any result (a creature that keeps the
 // effects isn't asked again); the deafened condition's own 1-action save (popping its ears) on each row's Effect; anatomy immunity a GM reminder.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_HYPHEN_NAME as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Z][a-z-]+)(?: (\d))?\}`;
 const WHO = /^Each living creature in the area of the spell when you cast it or that enters the area during the spell's duration must attempt an? (Fortitude|Reflex|Will) save\.$/;
 const SUCCESS = new RegExp(String.raw`^The creature is ${C} and ${C} until the end of its next turn, after which it's temporarily immune for (\d+) (hour|minute)s?\.$`);
 const FAILURE = new RegExp(String.raw`^The creature is ([a-z]+) and ${C}\. At the end of each of its turns, it can attempt a new save if it's no longer in the [a-z ]+\. On a success, it ends the effects and is temporarily immune for (\d+) (hour|minute)s?\.$`);

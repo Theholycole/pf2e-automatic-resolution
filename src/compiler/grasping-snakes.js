@@ -8,8 +8,8 @@
 // ending a turn in it); each failing row's own damage (the persistent part at the cast rank, doubled with the rest on a critical failure) and the
 // condition until it Escapes at the spell DC; attacking a snake the GM's (a reminder with its HP at the cast rank).
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_UUID_START as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{`;
 const LEAD = new RegExp(String.raw`^A mass of [a-z ]+ rise up to capture creatures in the area\. Each creature in the area when you Cast the Spell takes @Damage\[(\d+d\d+)\[([a-z]+)\]\] damage and @Damage\[(\d)d(\d+)\[persistent,([a-z]+)\]\] damage from a biting [a-z]+, and it's ${C}(Grabbed)\} or ${C}(Restrained)\} depending on its (Fortitude|Reflex|Will) save\. A creature that ends its turn in the area must also attempt this save, even if it's already grabbed or restrained by the [a-z]+\. (You can Dismiss the spell\.)$`);
 const FAILURE = /^The creature takes full damage and is grabbed by a [a-z]+\. The [a-z]+' (?:@UUID\[[^\]]+\]\{Escape\}|Escape) DC is equal to your spell DC\. (A creature can attack a [a-z]+ to release the creature\.) A [a-z]+'s AC is equal to your spell DC, and it's destroyed if it takes (\d+) or more damage at once\. (New [a-z]+ continually regrow as long as the spell lasts, so destroying [a-z]+ doesn't prevent [a-z]+ from capturing more creatures\.)$/;
 const CRITICAL = /^As failure, but the creature takes double damage and is restrained by a [a-z]+\.$/;

@@ -5,12 +5,12 @@
 // fall Prone; on each Sustain the GM moves the region and the creatures it covers (and any it passed through, added on review) take the basic save of the
 // damage at the cast rank.
 import { htmlToPlainText } from "./description-parser.js";
+import { HEIGHTENED_DAMAGE_STEP_ONE as STEP } from "./text-patterns.js";
 
 const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Z][a-z-]+)\}`;
 const APPEARS = new RegExp(String.raw`^When the ([a-z]+) appears, each creature in its area must attempt an? (Fortitude|Reflex|Will) save or be knocked ${C}\.$`);
 const TERRAIN = /^The area of the ([a-z]+) is difficult terrain\.$/;
 const SUSTAIN = /^The ([a-z]+) grows harsher when you Sustain the Spell, moving up to (\d+) feet within your range and dealing each creature whose space it enters or passes through (\d+)d(\d+) damage with a basic (Fortitude|Reflex|Will) save\.$/;
-const STEP = /^Heightened \(\+1\) The damage increases by (\d+)d(\d+)\.$/;
 
 /** {html, lingering, sentences} or null. */
 export function rewriteWhirlwind(adapted) {

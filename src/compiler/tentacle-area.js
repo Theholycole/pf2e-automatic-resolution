@@ -5,8 +5,8 @@
 // the placed area; at the cast, the caster's spell attack against each creature inside's Fortitude DC (a success: Grabbed by the tentacles and the damage); as a
 // creature ends its turn inside, the same attempt if it isn't held, or the held damage if it is; the Escape and the tentacles' grip the card's control.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_UUID_START as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{`;
 const RULES = {
     attack: /^Make spell attack rolls against the (Fortitude|Reflex|Will) DC of each creature in the area\.$/,
     capture: new RegExp(String.raw`^Any creature you succeed against is ${C}Grabbed\} and takes (\d+)d(\d+) ([a-z]+) damage\.$`),

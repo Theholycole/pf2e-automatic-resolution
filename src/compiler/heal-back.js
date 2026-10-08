@@ -5,13 +5,13 @@
 // Each row's Drained lasts that long; after Finalize, the caster targets the creature to heal (itself or an ally within that distance
 // of the thrall), which regains double the Hit Points the saving creature lost (PF2e lowers them for Drained at once), and is then
 // marked for the stated time, during which this spell can't heal it again.
+import { cleanSentences as split } from "./text-patterns.js";
+
 const DRAINED = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{Drained (\d)\}`;
 const RECOVERS = new RegExp(String.raw`^The creature is ${DRAINED} but recovers after (\d+) (minute|round)s?\.$`);
 const HEAL = /^You or an ally of your choice within (\d+) feet of the (thrall|target) regains Hit Points equal to (double|half) the amount the creature lost\.$/;
 const ONCE = /^A creature can be healed by this spell only once every (\d+) (minute|hour)s?\.$/;
 const AS_SUCCESS = new RegExp(String.raw`^As success, but ${DRAINED}\.$`);
-
-const split = text => String(text ?? "").replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s+(?=[A-Z@])/).map(sentence => sentence.trim()).filter(Boolean);
 
 /** Rewrites the rows' Drained durations and returns {healBack, claims} or null. */
 export function compileHealBack(plan, { thrall = null } = {}) {

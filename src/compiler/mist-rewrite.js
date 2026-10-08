@@ -5,8 +5,8 @@
 // those outside to those within), the lingering save as a turn starts inside with the Clumsy rider, and the Speed penalty a rule note on the failing rows for the
 // Clumsy's minute; moving the fog on a Sustain the GM's (move the region).
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES as RULE_WORDS } from "./text-patterns.js";
 
-const RULE_WORDS = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const MIST = /^This has the effects of @UUID\[[^\]]+\]\{Mist\}, except that you can Sustain the spell once per round to move the fog up to (\d+) feet\.$/;
 const STARTS = /^A creature that starts its turn in the area takes (\d+d\d+) ([a-z]+) damage with a basic (Fortitude|Reflex|Will) save\.$/;
 const RIDER = /^A creature that fails its save is also (@UUID\[[^\]]+\]\{Clumsy \d\}) for (\d+) minutes? \((@UUID\[[^\]]+\]\{Clumsy \d\}) on a critical failure\) and takes a [–-](\d+)-foot status penalty to Speeds for as long as it's clumsy\.$/;

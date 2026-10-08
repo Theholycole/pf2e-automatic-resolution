@@ -14,6 +14,7 @@
 // The module whispers the text to the target's owners (and the GM), checks the stated word limits, range and reply
 // window, and holds a dream message until the GM marks the target asleep.
 import { htmlToPlainText } from "./description-parser.js";
+import { plainSentences as sentencesOf } from "./text-patterns.js";
 
 const MOUTH = /^You mouth words quietly, but instead of coming out of your mouth, they're transferred directly to the ears of the target\.$/;
 const PRIVATE = /^While others can't hear your words any better than if you normally mouthed them, the target can hear your words as if they were standing next to you\.$/;
@@ -28,7 +29,6 @@ const DREAM_ENDS = /^As soon as they receive it, the spell ends, and you know th
 const RANGE_UP = /^The spell's range increases to (\d+) feet\.$/;
 const MORE_TARGETS = /^You can target up to (\d+) creatures you know by name and have met in person\. You must send the same message to all of them; the spell ends for each creature individually\.?$/;
 
-const sentencesOf = html => htmlToPlainText(html).replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s+(?=[A-Z])/).filter(Boolean);
 const feet = value => { const match = /^(\d+) feet$/.exec(String(value ?? "").trim()); return match ? Number(match[1]) : null; };
 
 /** A messaging plan's `message` block, or null. */

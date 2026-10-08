@@ -3,9 +3,8 @@
 //   the GM option's Effect carries `gmOption.watch.critPunish`.
 // - Musical Shift (PF2e's Effect, its roll option): flat — "Whenever an enemy critically fails at a Strike, saving throw, or skill check, they fall Prone";
 //   sharp — "Whenever an enemy takes piercing or slashing damage, they also take 2d6 persistent bleed damage".
-const MODULE_ID = "pf2e-automatic-resolution";
-const activeGM = () => game.user?.isGM && game.users.activeGM?.id === game.user.id;
-const escapeHTML = value => String(value ?? "").replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
+
+import { MODULE_ID, activeGM, escapeHTML } from "./runtime-utils.js";
 
 const optionsOf = actor => { try { return new Set(actor?.getRollOptions?.(["all"]) ?? []); } catch (_) { return new Set(); } };
 

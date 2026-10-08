@@ -4,10 +4,10 @@
 //   - endsInDeath: "Creatures animated with this spell die again once the spell ends" — 0 Hit Points and PF2e's Dead status;
 //   - hpShare: "If the creature loses any Hit Points for any reason while it's possessed or stunned by this ability, you lose Hit Points equal to
 //     half that amount" — the caster loses that share (no resistances: lost, not damaged).
-const MODULE_ID = "pf2e-automatic-resolution";
-const leadGM = () => game.user?.isGM && game.users.activeGM?.id === game.user.id;
 
 /** A deleted note's after-effects. */
+import { MODULE_ID, activeGM as leadGM } from "./runtime-utils.js";
+
 export async function noteEndAfter(item, options = {}) {
     if (!leadGM() || item?.type !== "effect") return null;
     const data = item.flags?.[MODULE_ID]?.runtime;

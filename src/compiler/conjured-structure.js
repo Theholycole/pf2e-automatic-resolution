@@ -6,9 +6,8 @@
 // spell: arcane force, divine spirit, occult mental, primal fire."
 // The creature is a token the module makes (user decision 2026-10-01) with those statistics, removed when the spell ends or when it dies; its stated
 // action is the card's button (a basic save of the text's dice, the type the casting tradition names).
-import { htmlToPlainText } from "./description-parser.js";
+import { plainOrEmpty as plain } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(String(html ?? "")).replace(/\s+/g, " ").trim();
 const AREA = /^Area \(continued\) an empty (\d+)-foot radius, (\d+)-foot-tall cylinder$/;
 const CONJURE = /^You conjure forth an? [a-z ]+ with an? (?:tiny|small|medium|large|huge|gargantuan) ([a-z]+) that's bound to [a-z ]+\.$/;
 const SHARE = /^The ([a-z]+) and the ([a-z]+) share the same space, and the \1 intercepts any attack targeting the \2\.$/;

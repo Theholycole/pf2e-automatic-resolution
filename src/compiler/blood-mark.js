@@ -10,8 +10,8 @@
 // the struck creature's save (its card); the outcome gives the creature the mark (ending the caster's earlier mark), whose card's Seek rolls the
 // Perception check (or succeeds) and whispers the direction and distance to the GM and the caster.
 import { htmlToPlainText } from "./description-parser.js";
+import { HEADINGS, NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const NEXT = /^The next creature you successfully Strike with the weapon during the spell's duration takes damage as normal from the attack and must then attempt an? (Fortitude|Reflex|Will) save; regardless of the outcome of this saving throw, the duration of [a-z ]+ ends\.$/;
 const ONE = /^You can have up to one creature cursed by [a-z ]+ at any one time\.$/;
 const DIFFERENT = /^If you use this spell to mark a different creature, the curse afflicting the previous creature ends\.$/;
@@ -21,7 +21,6 @@ const ROWS = {
     failure: /^As success, but you can (?:@UUID\[[^\]]+\]\{Seek\}|Seek) to attempt to know the direction and general distance \(within a mile\) to the marked creature if the creature is alive and both you and the creature are on the same plane of existence\. When you Seek in this way, you attempt a Perception check against the marked creature's (Fortitude|Reflex|Will) DC\. On a success, you gain the information, which is accurate at the moment that you Seek\. On a critical failure, the curse ends, and the creature's mark vanishes\.$/,
     criticalFailure: /^As failure, but your Perception checks to Seek the marked creature are automatically successful\.$/
 };
-const HEADINGS = { criticalSuccess: "Critical Success", success: "Success", failure: "Failure", criticalFailure: "Critical Failure" };
 
 /** Returns {bloodMark, claimed} or null. */
 export function compileBloodMark(adapted) {

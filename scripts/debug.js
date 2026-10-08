@@ -1,4 +1,5 @@
-const MODULE_ID = "pf2e-automatic-resolution";
+import { MODULE_ID } from "./runtime-utils.js";
+
 const DEBUG_SETTING = "debugLogging";
 
 export function registerDebugSetting() {

@@ -8,8 +8,8 @@
 // numbers proved against the text at every rank; its land Speed bonus made every Speed's, as the text says); the card's control for a target's Will save to end
 // it on itself; the concentrate restriction a note.
 import { htmlToPlainText } from "./description-parser.js";
+import { SPELL_EFFECT_LINK as LINK, WORD_NUMBERS_2_5 as WORDS } from "./text-patterns.js";
 
-const LINK = /^@UUID\[Compendium\.pf2e\.spell-effects\.Item\.([^\]]+)\]\{(Spell Effect: [^}]+)\}$/;
 const RULES = {
     gain: /^Targets gain (\d+) temporary Hit Points, a \+(\d+)-foot status bonus to their Speeds, and weakness (\d+) to ([a-z]+)\.$/,
     grow: /^They also grow vicious fangs and claws, which are unarmed attacks\.$/,
@@ -22,7 +22,6 @@ const RULES = {
     reach: /^This increases the reach of a Medium or Tiny creature by (\d+) feet\.$/
 };
 const STEP = /^Heightened \((\d+)(?:st|nd|rd|th)\) The temporary Hit Points increase to (\d+), the ([a-z]+) weakness to (\d+), and the damage dealt by the attacks to (two|three|four|five) dice\.$/;
-const WORDS = { two: 2, three: 3, four: 4, five: 5 };
 
 /** {frenzy, claimed} or null; the catalog proves PF2e's Effect. */
 export function compileFrenzy(adapted, catalog) {

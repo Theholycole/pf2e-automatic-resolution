@@ -9,6 +9,7 @@
 // starting a turn inside is a basic save against both entries (PF2e's, heightened); the allies the caster targets when it starts (up to the count) are spared
 // (each holds the area's immunity); the light and sight rules are the GM's notes.
 import { htmlToPlainText } from "./description-parser.js";
+import { WORD_NUMBERS_1_6 as COUNT } from "./text-patterns.js";
 
 const DARK = [
     /^Shadows pour forth from your eyes, creating a field of darkness that prevents light from emanating within the area\.$/,
@@ -23,7 +24,6 @@ const SIGHT = [
 const DRAIN = /^Creatures who move into the field or start their turn within the field have some of the life and light sucked out of them, taking (\d+d\d+) ([a-z]+) damage and (\d+d\d+) ([a-z]+) damage, with a basic (Fortitude|Reflex|Will) save\.$/;
 const SPARE = /^When you cast this spell, choose up to (\w+) allies in the area to spare from [a-z]+'s effects\.$/;
 const SPARED = /^Until the spell ends, they're immune to damage from [a-z]+ spells and can see through [a-z]+ \(but not other darkness\) as though they had greater darkvision\.$/;
-const COUNT = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6 };
 
 /** {html, lingering, sentences} or null. */
 export function rewriteDarknessField(adapted) {

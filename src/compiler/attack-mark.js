@@ -7,6 +7,7 @@
 // The attack is rewritten to the ordinary one-sentence form (a spell attack's critical hit doubles its damage, PF2e's rule); on a hit, PF2e's Effect goes on the caster marking the target's token; the
 // invisibility rule is a note; Dismissing (when the GM confirms the caster's last action damaged the target) deals the payoff to it.
 import { htmlToPlainText } from "./description-parser.js";
+import { SPELL_EFFECT_LINK_ANY as LINK } from "./text-patterns.js";
 
 const ATTACK = /^Make a spell attack(?: roll)? against the target\.$/;
 const HIT = /^On a hit, you deal (\d+d\d+) ([a-z]+) damage and the target is marked by [a-z ,]{3,80} that only you can see\.$/;
@@ -14,7 +15,6 @@ const BONUS = /^For the duration of your spell, the marked target takes an addit
 const INVISIBLE = /^Invisible targets marked by your [a-z' ]+ are Concealed to you, rather than Undetected\.$/;
 const DISMISS = /^You can Dismiss the spell on your turn if your last action dealt damage to the target with a weapon or unarmed attack, instantly dealing an additional @Damage\[(\(ceil\(@item\.(?:rank|level)\/2\)\+1\)d6|\d+d\d+)\[([a-z]+)\]\] damage to it\.$/;
 const HEIGHTENED = /^<p>\s*<strong>\s*Heightened \(\+2\)\s*<\/strong>\s*The initial damage increases by (\d+d\d+), the additional damage you deal increases by 1, and the damage dealt when the spell is Dismissed increases by 1d6\.\s*<\/p>$/;
-const LINK = /^@UUID\[Compendium\.pf2e\.spell-effects\.[^\]]+\]\{[^}]+\}$/;
 const TARGET = /^your hunted prey$/i;
 
 /** {html, target, predicate, markClaim, dismissPayoff, note, sentences} or null. */

@@ -9,9 +9,9 @@
 // the start of the caster's next turn; the rows' remaining conditions are an ordinary non-basic save (the rewritten description).
 import { extractScopedConditionReferences, htmlToPlainText } from "./description-parser.js";
 import { compileEffectDuration } from "./duration-compiler.js";
+import { DEGREE_LABEL_PAIRS as DEGREES, MUST_ATTEMPT_SAVE as SAVE, plainSentencesTrimmed as sentencesOf } from "./text-patterns.js";
 
 const LEAD = /^You cause the target to [a-z ]+? a specific type of ([a-z]+) you choose from the list below(?:, [a-z ,]+)?\.$/;
-const SAVE = /^The target must attempt an? (Fortitude|Reflex|Will) save\.$/;
 const ITEM = /^<li>\s*<strong>\s*([A-Z][a-z]+)\s*<\/strong>\s*([\s\S]+?)\s*<\/li>$/;
 const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|rounds?|minutes?|reactions?|actions?)\b/i;
 const NO_REACTIONS = /^(?:They|The (?:target|creature)) can't use reactions\.$/;
@@ -19,9 +19,7 @@ const CRITICAL_SUCCESS = /^The target is unaffected\.$/;
 const AFFECTED = noun => new RegExp(`^The target is affected by the ${noun} until the beginning of your next turn(?:\\.| and (.+)\\.)$`);
 const AS_FAILURE = /^As failure, but (.+)\.$/;
 const UNTIL = "until the beginning of your next turn";
-const DEGREES = [["criticalSuccess", "Critical Success"], ["success", "Success"], ["failure", "Failure"], ["criticalFailure", "Critical Failure"]];
 
-const sentencesOf = html => htmlToPlainText(html).replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s+(?=[A-Z@])/).map(sentence => sentence.trim()).filter(Boolean);
 // (The plain text keeps the @UUID links' labels; the item's own HTML keeps the links.)
 const linkedSentences = html => html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s+(?=[A-Z@])/).map(sentence => sentence.trim()).filter(Boolean);
 

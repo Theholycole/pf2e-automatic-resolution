@@ -2,6 +2,7 @@ import { ESCAPE_DC_PATTERN, parseConditionLists } from "./condition-list-lifetim
 import { RECURRING_NEGATION } from "./recurring-save-lifetime.js";
 import { classifyManualSemantics } from "./outcome-semantics.js";
 import { isNoteContinuation } from "./note-effects.js";
+import { unique } from "./text-patterns.js";
 
 const NAMED_CONDITION_GRANT = /\b(?:is|are|becomes?|becoming|gains?|falls?|knocked)\s+(?:also\s+)?(?:knocked\s+)?(blinded|clumsy|confused|controlled|dazzled|deafened|doomed|drained|dying|enfeebled|fascinated|fatigued|fleeing|frightened|grabbed|immobilized|off-guard|paralyzed|petrified|prone|quickened|restrained|sickened|slowed|stunned|stupefied|unconscious|wounded)(?:\s+\d+)?\b/gi;
 
@@ -59,10 +60,6 @@ function nativeEffectMentioned(effect, text) {
         || text.includes(effect.reference)
         || effect.outcomeRule?.claimText === text
         || (effect.outcomeRule?.claims ?? []).includes(text);
-}
-
-function unique(values) {
-    return [...new Set(values)];
 }
 
 function provedInlinePersistentDamage(outcome, degree, proof) {

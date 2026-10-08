@@ -6,8 +6,8 @@
 // leaves — the penalty to saves against mental effects, Fascinated granted with the failure's, the dance a note the GM plays; immune for a minute on a critical
 // success. (The module's Effect picks its row by a degree its own roll options carry; the module builds the rows from the text.)
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const LEAD = /^Enemy creatures in the initial area or that end their turn in the area must make an? (Fortitude|Reflex|Will) save\.$/;
 const CRIT = /^The target is unaffected and is temporarily immune for (\d+) (minute|hour)s?\.$/;
 const SUCCESS = /^The target takes a [–-](\d) status penalty to their saves against ([a-z]+) effects until they leave the area and for (\d) rounds? after\.(?: @UUID\[[^\]]+\]\{[^}]+\})?$/;

@@ -8,14 +8,11 @@
 //     spell by activating the crystal, your Strikes with the weapon deal an additional 1d4 cold damage …" with PF2e's "Effect: Rime Crystal - Weapon".
 // Null when the item casts nothing these forms read.
 import { htmlToPlainText } from "./description-parser.js";
+import { LEGACY_SCHOOLS, SPELL, TRADITIONS } from "./text-patterns.js";
 
 const plain = html => htmlToPlainText(html).replace(/\s+/g, " ").trim()
     // ("[[/r 1d20+7 #Spell Attack Roll]]{+7}": the shown number.)
     .replace(/\[\[\/r [^\]]+\]\]\{([^}]+)\}/g, "$1");
-const SPELL = String.raw`@UUID\[(Compendium\.pf2e\.spells-srd\.Item\.[A-Za-z0-9]+)\]\{([^}]+)\}`;
-const TRADITIONS = ["arcane", "divine", "occult", "primal"];
-// (A legacy school in "After you cast an enchantment spell by activating the horn": no trait any more — the item's own spells are of it, so any.)
-const LEGACY_SCHOOLS = ["abjuration", "conjuration", "divination", "enchantment", "evocation", "necromancy", "transmutation"];
 
 /** The numbers of the spells an item casts: { dc, attack } (either may be null), or null. */
 export function readItemCastNumbers(text) {
@@ -32,6 +29,7 @@ function readWhen(kind) {
     if (!words) return { any: true };
     if (words === "non-cantrip") return { nonCantrip: true };
     const traits = words.split(/ or /).map(word => word.trim());
+    // (A legacy school in "After you cast an enchantment spell by activating the horn": no trait any more — the item's own spells are of it, so any.)
     if (traits.every(trait => LEGACY_SCHOOLS.includes(trait))) return { any: true, school: traits };
     if (traits.every(trait => /^[a-z]+$/.test(trait))) return { anyTraits: traits };
     return null;

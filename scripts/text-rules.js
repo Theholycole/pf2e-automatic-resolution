@@ -5,8 +5,8 @@ import { readTextRules, rulesWithText, readFocusRegain, readActionCast } from ".
 import { loadNativeEffectTemplate, prepareNativeEffectSource, createNativeEffect } from "./native-outcome-effects.js";
 import { levelDC } from "../src/compiler/check-helpers.js";
 import { timedTempHp, riderChoice } from "./spellshape-runtime.js";
+import { MODULE_ID } from "./runtime-utils.js";
 
-const MODULE_ID = "pf2e-automatic-resolution";
 const cache = new Map();
 
 /** The item's text reading, kept while its description and rules are unchanged. */

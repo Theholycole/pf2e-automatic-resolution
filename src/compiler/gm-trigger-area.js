@@ -7,13 +7,12 @@
 // Rewritten to the lingering basic-save area, its exposure being the GM's control (the targeted creatures in the area, once a round each);
 // the conditions are chosen when the area starts (one, and one more each heightened step).
 import { htmlToPlainText } from "./description-parser.js";
+import { DISMISS_THE as DISMISS, NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const CONDITION = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{([A-Z][a-z]+)\}`;
 const CHOOSE = new RegExp(String.raw`^When you Cast this Spell, choose one condition from among ((?:${CONDITION}, )+(?:or )?${CONDITION})\.$`);
 const TRIGGER = /^When a creature in the area inflicts the chosen condition, they take (\d+)d(\d+) ([a-z]+) damage with a basic (Fortitude|Reflex|Will) save\.$/;
 const ONCE = /^A creature can't take this damage more than once per round\.$/;
-const DISMISS = /^You can Dismiss the spell\.$/;
 
 /** {html, gmTrigger, sentences} or null. */
 export function extractGmTriggerArea(adapted) {

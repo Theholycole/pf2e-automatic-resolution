@@ -6,11 +6,11 @@
 // Casting sets a marker tracked in Ongoing spells; its "Trigger" control opens an ordinary save card for the creature the
 // GM targets. What the GM judges (who triggered it, suppression, excluded creatures) is shown as notes.
 import { htmlToPlainText } from "./description-parser.js";
+import { WORD_NUMBERS_1_5 as COUNT, ENDS as THEN_ENDS, WORSE, plainSentences as sentencesOf } from "./text-patterns.js";
 
 const TRIGGER_FIRST = /^The first creature that (.+?) triggers the [a-z' ]+, causing the spell to end\.$/;
 const SAVE_FIRST = /^The [a-z' ]+ deals (\d+d\d+) ([a-z]+) damage to the triggering creature, which must attempt an? (Fortitude|Reflex|Will) save\.$/;
 const TRIGGER_WHEN = /^When a creature (.+?), it takes (\d+d\d+) ([a-z]+) damage and is [a-z]+, depending on the result of its (Fortitude|Reflex|Will) save\.$/;
-const THEN_ENDS = /^The spell then ends\.$/;
 // A trigger that doesn't end the spell: every creature doing it during the duration saves (Crescent Scepter).
 const TRIGGER_REPEAT = /^(?:If|Whenever|Each time) a creature (.+?) during the spell's duration, it must attempt an? (Fortitude|Reflex|Will) save\.$/;
 // "Frightened 1, the penalty applying to its attack roll": the condition comes before the triggering attack.
@@ -25,8 +25,6 @@ const SUPERSEDES = /^If you cast the spell again, the newer casting supersedes t
 const RULE_WORDS = /\d|\b(?:damage|save|condition|bonus|penalty|immune|Sustain|Dismiss|counteract|can't|must|until|whenever|trigger)|\beach (?:turn|round|time)\b|\beach of\b/i;
 // A row sentence about the caster, not the triggering creature ("You're unaffected by the triggering mental effect.").
 const CASTER_ROW = /^You(?:'re| are) unaffected by the triggering [a-z ]+\.$/;
-
-const sentencesOf = html => htmlToPlainText(html).replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s+(?=[A-Z])/).filter(Boolean);
 
 // The marker's duration: a timed spell's, or "until the beginning of your next turn".
 function markerDuration(duration) {
@@ -330,7 +328,6 @@ const PACT_PEACE = /^If the target accepts and doesn't take hostile actions agai
 const PACT_REFUSE = /^If they refuse and take a hostile action against you or an ally during the (?:hex|spell)'s duration, they must first attempt an? (Fortitude|Reflex|Will) save\.$/;
 const PACT_ACCEPTED = /^If they accepted the offer and then take a hostile action against you or an ally during the (?:hex|spell)'s duration, they must first attempt an? (Fortitude|Reflex|Will) save and treat the result as one category worse\.$/;
 const PACT_IMMUNE = /^Regardless of the outcome, the target is then temporarily immune for (\d+) (minute|hour)s?\.$/;
-const WORSE = { criticalSuccess: "success", success: "failure", failure: "criticalFailure", criticalFailure: "criticalFailure" };
 
 export function extractPactTrigger(adapted) {
     if (adapted.defense?.kind !== "save" || adapted.defense.basic || adapted.targeting?.area) return null;
@@ -543,7 +540,6 @@ const IMAGES_HIT = /^Once an image is hit, it is destroyed\.$/;
 const IMAGES_MISS = /^If an attack roll fails to hit your AC but doesn't critically fail, it destroys an? ([a-z]+)\.$/;
 const IMAGES_SAVE = /^If the attacker was within (\d+) feet, they must succeed at a basic (Fortitude|Reflex|Will) save or take (\d+d\d+) ([a-z]+) damage(?: as [^.@\d]+)?\.$/;
 const IMAGES_AREA = /^A damaging effect that affects all targets within your space(?: \(such as [^)]+\))? destroys all of the ([a-z]+)s\.$/;
-const COUNT = { one: 1, two: 2, three: 3, four: 4, five: 5 };
 
 export function extractMirrorTrigger(adapted) {
     if (adapted.defense?.kind !== "save" || adapted.defense.basic !== true || adapted.targeting?.area || String(adapted.targeting?.target ?? "").trim()) return null;

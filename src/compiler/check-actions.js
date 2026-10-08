@@ -1,9 +1,9 @@
 // Note-only spells whose rule is a check or action the module rolls or runs (Dim the Light, Omnidirectional Scan, Reed Whistle, Darkened Forest
 // Form).
 import { plainText as plain, splitSentences as split } from "./description-parser.js";
+import { NARRATION_RULES_CHECKS as NARRATION_RULES } from "./text-patterns.js";
 
 const LINK = name => `(?:@UUID\\[[^\\]]+\\]\\{${name}\\}|${name})`;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|immune|can't|must|checks?|DC|Hit Points|Strikes?)\b/i;
 
 // Dim the Light: "You can immediately attempt a Stealth check to Hide, and you can become Hidden to a creature even if you don't have cover and
 // aren't otherwise concealed from that creature. You cease being hidden at the end of your turn unless you move into cover or become Concealed

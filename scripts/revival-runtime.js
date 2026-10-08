@@ -9,11 +9,8 @@
 //     modifier × twice the level) and conditions (Fatigued gone, Drained and Doomed down by 1, Wounded gone at full Hit Points); immunity for a day.
 import { applyDamageWithReceipt } from "./native-damage-receipt.js";
 import { ONGOING_FLAG } from "./ongoing-core.js";
+import { DamageRollClass, MODULE_ID, escapeHTML, post as say } from "./runtime-utils.js";
 
-const MODULE_ID = "pf2e-automatic-resolution";
-const escapeHTML = value => String(value ?? "").replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
-const DamageRollClass = () => { const found = (CONFIG.Dice?.rolls ?? []).find(candidate => candidate?.name === "DamageRoll"); if (!found) throw new Error("PF2e's DamageRoll class could not be resolved."); return found; };
-const say = (actor, content) => ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content }).catch(() => null);
 const isDead = actor => actor.statuses?.has?.("dead") || Number(actor.hitPoints?.value ?? 1) <= 0;
 const isUndead = actor => { const traits = actor.traits ?? new Set(actor.system?.traits?.value ?? []); return traits.has?.("undead") ?? traits.includes?.("undead"); };
 const recordOf = (ongoing, castId) => { const journal = castId ? ongoing.find(castId) : null; const record = journal?.getFlag(MODULE_ID, ONGOING_FLAG); return record?.status === "active" ? { journal, record } : null; };

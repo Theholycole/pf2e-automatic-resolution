@@ -2,7 +2,6 @@
 // caster picks from when casting a blood magic spell. Each option: { key, label, who: "self" | "target", effect (PF2e's Effect), selection (its ChoiceSet's
 // pick), concealed, damage: { type | alive/undead | elementFlag }, spite }. Null when a sentence isn't one the reader knows.
 const C = String.raw`@UUID\[[^\]]+\]\{([^}]+)\}`;
-const unlink = text => String(text).replace(/@UUID\[[^\]]+\]\{([^}]+)\}/g, "$1");
 
 /** The options of a blood magic text, with its Effect (from PF2e's link). */
 export function readBloodMagic(text, link = null) {
@@ -76,4 +75,3 @@ export function readBloodMagic(text, link = null) {
     return options.length >= 2 ? { options, effect } : null;
 }
 
-export const bloodMagicPlain = unlink;

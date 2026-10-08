@@ -6,16 +6,14 @@
 // weapon; the card rolls that many of its dice (its two-hand die when held in both hands) of its damage type, one more each rank; the critical
 // specialization is a reminder. The area is the caster's choice of the two (a reminder; the cone is placed by default).
 import { htmlToPlainText } from "./description-parser.js";
+import { DEGREE_LABEL_PAIRS as DEGREES, NARRATION_RULES_NO_DAMAGE as NARRATION_RULES, WORD_NUMBERS_2_6 as WORDS } from "./text-patterns.js";
 
-const WORDS = { two: 2, three: 3, four: 4, five: 5, six: 6 };
 const AREA = /^<p>\s*<strong>\s*Area\s*<\/strong>\s*(\d+)-foot (cone|burst|line) or (\d+)-foot (emanation|burst|cone)\s*<\/p>$/i;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const DICE = /^This [a-z]+ deals (two|three|four|five|six) dice of damage to creatures in the area\.$/;
 const SAME = /^This damage has the same type as the weapon and uses the same die size\.$/;
 const TWO_HAND = /^Determine the die size as if you were attacking with the weapon; for instance, if you were wielding a two-hand weapon in both hands, you'd use its two-hand damage die\.$/;
 const ROWS = { criticalSuccess: /^The creature is unaffected\.$/, success: /^The target takes half damage\.$/, failure: /^The target takes full damage\.$/,
     criticalFailure: /^The target takes double damage and is subject to the weapon's critical specialization effect\.$/ };
-const DEGREES = [["criticalSuccess", "Critical Success"], ["success", "Success"], ["failure", "Failure"], ["criticalFailure", "Critical Failure"]];
 const STEP = /^Heightened \(\+1\) Add another damage die\.$/;
 
 /** {html, components, area, weaponDice, reminders, sentences} or null. */

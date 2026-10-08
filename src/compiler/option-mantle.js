@@ -7,9 +7,8 @@
 // a +1 bonus to saves and DCs against mental effects.") — PF2e's Effect (each option proved against its rules) with the two picks set as its choices; the card's
 // control swaps one; its Grab note keyed to the picks (PF2e's names an option that doesn't exist); the rest notes.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_UUID_START as C, SPELL_EFFECT_LINK as LINK } from "./text-patterns.js";
 
-const LINK = /^@UUID\[Compendium\.pf2e\.spell-effects\.Item\.([^\]]+)\]\{(Spell Effect: [^}]+)\}$/;
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{`;
 const LEAD = [/^Upon Casting this Spell, pick (two) of the options below\.$/, /^As a single action, which has the ([a-z]+) trait, you can change one of your chosen abilities to a different option from the list\.$/];
 const OPTIONS = {
     "evergreen-vitality": [/^You gain fast healing (\d+) and a \+(\d) bonus to saves against poison and disease\.$/, /^This effect has the healing and vitality traits\.$/],

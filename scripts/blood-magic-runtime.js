@@ -12,11 +12,9 @@
 import { readBloodMagic } from "../src/compiler/blood-magic.js";
 import { loadNativeEffectTemplate, prepareNativeEffectSource, createNativeEffect } from "./native-outcome-effects.js";
 import { startShapeCard, shapeDC } from "./spellshape-runtime.js";
+import { MODULE_ID, activeGM, escapeHTML } from "./runtime-utils.js";
 
-const MODULE_ID = "pf2e-automatic-resolution";
 const CONCEALED = "Compendium.pf2e.conditionitems.Item.DmAIPqOBomZ7H95W";
-const activeGM = () => game.user?.isGM && game.users.activeGM?.id === game.user.id;
-const escapeHTML = value => String(value ?? "").replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
 const hasFeat = (actor, slug) => (actor.itemTypes?.feat ?? []).some(item => item.slug === slug);
 
 /** The actor's chosen bloodlines: [{ slug, name, read }] — the primary (blood-magic:x) and, with Blood Sovereignty or Ascendancy, the second. */

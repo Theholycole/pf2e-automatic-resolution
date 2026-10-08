@@ -7,8 +7,8 @@
 // The save card's basic save on the creatures the caster targets (within the splashes' radius of where they enter and where they land; each
 // once); the movement is the player's (a note).
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const DIVE = /^You @UUID\[[^\]]+\]\{Leap\} (\d+) feet, and where you would land on the ground, you instead disappear in a splash of ([a-z]+), [a-z ,]+\.$/;
 const EXIT = /^You then exit from an unoccupied surface within (\d+) feet, appearing in another splash of ([a-z]+) as you Leap out, landing (\d+) feet away from where you exited\.$/;
 const SPLASH = /^Each splash deals (\d+d\d+) ([a-z]+) damage to all creatures in an? @Template\[(?:type:)?emanation\|distance:(\d+)\]; creatures in multiple splash zones take damage only once\.$/;

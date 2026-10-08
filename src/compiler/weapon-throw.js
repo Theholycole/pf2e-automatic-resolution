@@ -7,12 +7,12 @@
 // Guided (user decision): the card puts PF2e's Effect on the caster for the chosen weapon, rolls PF2e's spell attack, and on a hit offers
 // the weapon's own Strike damage roll (critical on a critical success); PF2e's damage card applies it.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_ATTACK as NARRATION_RULES } from "./text-patterns.js";
 
 const HURL = /^You hurl a held melee weapon with which you are trained at the target, making a spell attack roll\.$/;
 const HIT = /^On a success, you deal the weapon's damage as if you had hit with a melee Strike, but adding your spellcasting ability modifier to damage, rather than your Strength modifier\.$/;
 const CRIT = /^On a critical success, you deal double damage, and you add the weapon's critical specialization effect\.$/;
 const RETURNS = /^Regardless of the outcome, the weapon flies back to you and returns to your hand\.$/;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|rounds?|minutes?|attack)\b/i;
 
 /** PF2e's Effect: a weapon ChoiceSet, one ability FlatModifier forced on that weapon's damage, and that weapon's critical specialization. */
 export function proveWeaponThrowEffect(mechanics) {

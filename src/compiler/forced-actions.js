@@ -6,11 +6,9 @@
 // Failure As failure, but the target is Slowed 2, and you can force the target to use 2 actions when you Cast or Sustain the spell."
 // The rows keep their conditions; the forced actions are the spell's controls (a Strike with the caster's spell attack, the type the caster picks;
 // a Stride the GM moves); the end-of-turn save a note Effect on the failing target that ends the spell on a success.
-import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK as C, plainOrEmpty as plain } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Z][a-z]+)(?: (\d))?\}`;
 const BARE = /^(clumsy|slowed|stunned|enfeebled|stupefied) (\d)$/i;
-const plain = html => htmlToPlainText(String(html ?? "")).replace(/\s+/g, " ").trim();
 const NARRATION = /\d|@|\b(?:damage|save|bonus|penalty|condition|Stride|Strike|Sustain|actions?|ends?)\b/i;
 
 const FORCE = /^Additionally, when you Cast this Spell and the first time you Sustain it on subsequent turns, you can force the target to (Stride) or (Strike)\.$/;

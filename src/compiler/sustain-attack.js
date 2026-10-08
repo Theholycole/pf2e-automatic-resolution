@@ -10,6 +10,7 @@
 // Each is rewritten to an ordinary spell attack of the text's damage (typed by the caster's pick among the physical types each attack),
 // repeated from the source card once per round while the spell lasts; movement, changing partners and the multiple attack penalty are notes.
 import { htmlToPlainText } from "./description-parser.js";
+import { SIZE_SLUGS_TO_LARGE as SIZES, unlinkText } from "./text-patterns.js";
 
 const PHYSICAL = ["bludgeoning", "piercing", "slashing"];
 const BLADE_CAST = /^When you first Cast the Spell, the [a-z]+ automatically flies to the target and Strikes\.$/;
@@ -189,7 +190,6 @@ const CONJURED = {
 const CONJURED_NOTES = [/^Other creatures can't occupy its space, but allies can pass through its space\.$/,
     /^If the [a-z]+ is in soil and survives to the end of the spell's duration, it remains as an ordinary, non-magical [a-z]+ and continues to grow and thrive\.$/,
     /^The GM might determine that the [a-z]+ disappears immediately in certain inhospitable situations\.$/];
-const SIZES = { Tiny: "tiny", Small: "sm", Medium: "med", Large: "lg" };
 
 function conjuredAttack(adapted, base, heightened, lasting, baseRank) {
     if (adapted.lifecycle?.sustained !== true || (adapted.damageComponents ?? []).length || String(adapted.targeting?.target ?? "").trim()) return undefined;
@@ -423,7 +423,6 @@ function signAttack(adapted, base, heightened, lasting, baseRank) {
         sentences: [claimed.blast, ...Object.values(claimed).filter(sentence => sentence !== claimed.blast), ...narration]
     };
 }
-const unlinkText = text => text.replace(/@UUID\[[^\]]+\]\{([^}]+)\}/g, "$1");
 
 // Bonewall Bulwark (a conjured object as a token, user decision 2026-10-01): "The bulwark is 10 feet high, 10 feet long, and 1 foot thick." / "The
 // bulwark has an AC of 10 and 30 Hit Points." / "You must create the bulwark in an unbroken open space …" / "It must pass within 5 feet of you." /

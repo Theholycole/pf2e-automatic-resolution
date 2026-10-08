@@ -6,8 +6,8 @@
 // lasts for 1 minute.": the rows' damage and Fascinated for their time, the flat check a note for as long; the 1-action cast the GM's answer on the
 // card (one degree better).
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
 const ACTIONS = /^You can Cast this Spell using 1 action if [^.]+, or using 3 actions if [^.]+\.$/;
 const TAKES = /^The target takes (\d+d\d+) ([a-z]+) damage and other effects depending on its (Fortitude|Reflex|Will) saving throw\.$/;
 const QUICK = /^If you Cast the Spell using 1 action, the target gets a result one degree of success better than it rolled\.$/;

@@ -76,11 +76,8 @@
 //     afflicting it with necrotic blood (stage 1; stage 1 recovering after 1 round, its sickened condition staying; stage 2) and the disease's block: the
 //     lingering area's entering and turn-start exposures, the 1 void damage at each (the module's), the affliction handed to the GM (the accepted
 //     affliction exception), the success's recovery a note, a thrall on death the GM's.
-import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_NO_TERRAIN as NARRATION_RULES, plainOrEmpty as plain, sentenceSplitTrimmed as sentencesOf } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(String(html ?? "")).replace(/\s+/g, " ").trim();
-const sentencesOf = text => text.split(/(?<=[.!?])\s+(?=[A-Z@])/).map(sentence => sentence.trim()).filter(Boolean);
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const rowOf = (table, heading) => { const row = new RegExp(String.raw`<strong>\s*${heading}\s*</strong>([\s\S]*?)</p>`).exec(table); return row ? row[1].replace(/\s+/g, " ").trim() : null; };
 const CONDITION = slug => String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{${slug}\}`;
 

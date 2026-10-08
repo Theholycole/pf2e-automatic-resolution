@@ -11,9 +11,8 @@
 //     minute or until it's reduced to 0 Hit Points." / "Failure As success, but the reanimated enemy deals half damage with its Strikes and loses 50 Hit
 //     Points each turn instead of 15." / "Critical Failure You create a thrall in the corpse's space, but you don't spend the Focus Point for casting this spell."
 // The copy is a module token (copyCreature): the stated Hit Points, its statistics, its Strikes without added effects, no special abilities, a minion.
-import { htmlToPlainText } from "./description-parser.js";
+import { plainOrEmpty as plain } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(String(html ?? "")).replace(/\s+/g, " ").trim();
 const rowsOf = html => {
     const rows = {};
     for (const [key, heading] of [["criticalSuccess", "Critical Success"], ["success", "Success"], ["failure", "Failure"], ["criticalFailure", "Critical Failure"]]) {

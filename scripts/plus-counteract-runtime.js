@@ -11,11 +11,8 @@
 //   counteract rank is equal to the half the item level rounded up."
 import { counteracts } from "./affliction-care-core.js";
 import { riderChoice, startShapeCard, highestCastableRank } from "./spellshape-runtime.js";
+import { MODULE_ID, activeGM, escapeHTML, plainText } from "./runtime-utils.js";
 
-const MODULE_ID = "pf2e-automatic-resolution";
-const activeGM = () => game.user?.isGM && game.users.activeGM?.id === game.user.id;
-const plainText = html => String(html ?? "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().replace(/[’]/g, "'");
-const escapeHTML = text => String(text ?? "").replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[ch]);
 const CONDITION_LINK = /@UUID\[Compendium\.pf2e\.conditionitems\.(?:Item\.)?[A-Za-z0-9]+\]\{([A-Za-z]+)\}/g;
 
 const FORMS = [

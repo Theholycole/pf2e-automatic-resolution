@@ -8,14 +8,12 @@
 // every ally in the emanation. PF2e's Effect goes on each with the action count selected; the cast is a sustained Ongoing record (a missed
 // Sustain ends it). PF2e's bonus also covers every spell; the module's Effect keeps only spirit and haunt origins, as the text says.
 import { htmlToPlainText } from "./description-parser.js";
+import { DETERMINES, NARRATION_RULES_TIMED as NARRATION_RULES, TOUCH } from "./text-patterns.js";
 
 const BONUS = /^You grant the target a \+(\d) status bonus to saving throws against spells and effects caused by creatures that have the ([a-z]+) trait and haunts\.$/;
-const DETERMINES = /^The number of actions you spend when Casting this Spell determines its targets, range, area, and other parameters\.$/;
 const MODE = /^<span class="action-glyph">([123])<\/span>\s*(?:\(concentrate\)\s*)?([\s\S]+)$/;
-const TOUCH = /^The spell has a range of touch\.$/;
 const RANGED = /^The spell has a range of (\d+) feet\. If you target a living creature, the bonus increases to \+(\d)\.$/;
 const WARD = /^You create a ward in a @Template\[type:emanation\|distance:(\d+)\]\. This targets you and all your allies in the burst\.$/;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|rounds?|minutes?)\b/i;
 
 /** Returns {actionModeEffect, claimed} or null. */
 export function compileActionModeEffect(adapted, nativeSpellEffects) {

@@ -5,13 +5,10 @@
 //   - "native-effect": PF2e's linked Effect on each target;
 //   - "effect": an Effect of the stated rules on each target (temporary Hit Points, status bonuses, senses, resistances, traits, weaknesses, extra damage).
 // Narrative rules (structures, terrain, fuel, memories) stay the GM's text on the card.
-import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_UUID_START as C, PRONE, plainUnlinked as plain } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{`;
-const plain = html => htmlToPlainText(String(html ?? "")).replace(/@UUID\[[^\]]+\]\{([^}]+)\}/g, "$1").replace(/\s+/g, " ").trim();
 const cap = word => `${word[0].toUpperCase()}${word.slice(1)}`;
 const row = (heading, text) => `<p><strong>${heading}</strong> ${text}</p>`;
-const PRONE = "@UUID[Compendium.pf2e.conditionitems.Item.j91X7x0XSomq8d60]{Prone}";
 
 /** A save option: the sub-spell's system patch (its description, defense and damage) for the save route. */
 function saveOption(key, label, statistic, basic, html, damage = null, extra = {}) {

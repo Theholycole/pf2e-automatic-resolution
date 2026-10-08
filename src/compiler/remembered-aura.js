@@ -15,12 +15,8 @@
 //     1-day immunity, an optional growing Sustain. PF2e's item has no area: the caster picks the radius (60 feet offered).
 // The creatures inside (enemies only when the text says so) get a save card once for the cast; each row's Effect (its conditions, and what PF2e
 // can't do as its note) is held while inside, removed on leaving and restored on re-entering.
-import { htmlToPlainText } from "./description-parser.js";
+import { DEGREE_LABEL_PAIRS as DEGREES, NARRATION_RULES_NO_TERRAIN as NARRATION_RULES, plainOrEmpty as plain, sentenceSplitTrimmed as sentencesOf } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(String(html ?? "")).replace(/\s+/g, " ").trim();
-const sentencesOf = text => text.split(/(?<=[.!?])\s+(?=[A-Z@])/).map(sentence => sentence.trim()).filter(Boolean);
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
-const DEGREES = [["criticalSuccess", "Critical Success"], ["success", "Success"], ["failure", "Failure"], ["criticalFailure", "Critical Failure"]];
 const LINK = /^@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Z][a-z-]+)(?: (\d))?\}$/;
 
 const FIELD = {

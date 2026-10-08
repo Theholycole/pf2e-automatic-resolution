@@ -7,11 +7,10 @@
 // the end of your next turn, or Blinded on a critical hit; roll again and add another color, rerolling 8s) — the caster's spell attack; on a hit the color rolled
 // at the cast rank: the stated damage (doubled on a critical hit) of its type, the green's and violet's saves compiled, the borrowed spells' own resolution.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_UUID_START as C, SPELL as S } from "./text-patterns.js";
 
 const LEAD = [/^Make a spell attack roll\.$/, /^If you hit, roll \[\[\/r 1d(\d)\]\]\{1d\1\} to see which beam you cast\.$/,
     /^If the ray deals damage, that damage is doubled on a critical hit\.$/, /^Any additional traits that apply to a ray are listed in parentheses just after the name of the color\.$/];
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{`;
-const S = String.raw`@UUID\[(Compendium\.pf2e\.spells-srd\.Item\.[A-Za-z0-9]+)\]\{([^}]+)\}`;
 const DEALS = /^The ray deals @Damage\[(\d+)\[([a-z]+)\]\] damage to the target(?:, and the target must succeed at a (Fortitude|Reflex|Will) save or be (@UUID\[[^\]]+\]\{[A-Z][a-z]+ \d\}) for (\d+) minutes? \((@UUID\[[^\]]+\]\{[A-Z][a-z]+ \d\}) on a critical failure\))?\.$/;
 const BORROW = new RegExp(String.raw`^The ray has the effect of the ${S} spell\. On a critical hit, (?:the target is (${C}[A-Z][a-z]+ \d\}) as long as it's ${C}Slowed\} by the <em>[a-z ]+<\/em> effect|it has the effect of ${S} instead)\.$`);
 const SLOWS = new RegExp(String.raw`^The target is (${C}Slowed\}) for (\d+) minutes?\. It must also succeed at an? (will|fortitude|reflex) save or be teleported (\d+) feet directly away from you \(if there isn't room for it to appear there, it appears in the nearest open space\); this is a teleportation effect\.$`, "i");

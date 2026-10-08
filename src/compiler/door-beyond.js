@@ -8,15 +8,13 @@
 // the centre; the squares adjacent to the door a second area whose creatures (not the caster) take PF2e's slashing at the cast rank as their turns end; the
 // objects a reminder; Dismiss.
 import { htmlToPlainText } from "./description-parser.js";
+import { DISMISS_THE as DISMISS, NARRATION_RULES, HEIGHTENED_DAMAGE_STEP as STEP } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const DRAW = /^Air rushes through the cracks, drawing (Large) or smaller creatures and (objects of light Bulk or less) toward the center\.$/;
 const WHO = /^(Large) or smaller creatures in the area must attempt an? (Fortitude|Reflex|Will) save at the start of their turn; creatures that move into the area must attempt the save upon entering\.$/;
 const THIN = /^The cracks of the [a-z ]+ are too thin for anything to fully slip through, but decompressive effects deal (\d+)d(\d+) ([a-z]+) damage to any creature or object that ends its turn adjacent to the door\.$/;
 const SELF = /^You are unaffected by your own [a-z ]+\.$/;
-const DISMISS = /^You can Dismiss the spell\.$/;
 const ROWS = { success: /^The creature is unaffected\.$/, failure: /^The creature is pulled (\d+) feet toward the door\.$/, criticalFailure: /^The creature is pulled (\d+) feet toward the door\.$/ };
-const STEP = /^Heightened \(\+(\d)\) The damage increases by (\d)d(\d+)\.$/;
 
 /** {html, hazard, notes, sentences} or null. */
 export function rewriteDoorBeyond(adapted) {

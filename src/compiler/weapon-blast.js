@@ -10,8 +10,8 @@
 // holds (picked when cast), a critically failing creature takes PF2e's critical damage roll for it instead of double (its critical
 // specialization is the GM's reminder), one immune to critical hits takes the failure's; the caster says whether undead take vitality.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const WIELD = /^You must be wielding a melee weapon, and you perform this spell's somatic component by swinging the weapon in a downward arc\.$/;
 const DEAL = /^You deal normal melee damage for your weapon, including all appropriate bonuses, penalties, modifiers, and properties, to each creature in the spell's area; they must each attempt a basic (Fortitude|Reflex|Will) save\.$/;
 const CRITICAL = /^A creature that critically fails this save also suffers any additional effect you would normally inflict with your weapon on a critical hit; if the creature that critically fails its save is also immune to critical hits, it merely fails the save instead\.$/;

@@ -8,8 +8,8 @@
 // against the creature's DC (Huge or smaller: a Large creature's reach), its results applied (Prone and the critical Trip's 1d6; the Disarm penalty; the Reposition's
 // feet a note); the square a qualifying hit clears cut from the region; the squares' AC and saves a note.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES, named } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const LEAD = [/^When you Cast the Spell, and each time you Sustain the spell, the ([a-z ]+) make an Athletics check to @UUID\[[^\]]+\]\{Disarm\}, @UUID\[[^\]]+\]\{Reposition\}, or @UUID\[[^\]]+\]\{Trip\} a creature in the area or an adjacent square using your spell attack roll modifier\.$/,
     /^The \1 cannot leave the area and are treated as a (Small|Medium|Large|Huge) creature for the purposes of determining what creatures it can make Athletics checks against\.$/,
     /^If you Sustain the spell multiple times in a round, you gain this effect each time\.$/, /^The \1 use your multiple attack penalty\.$/,
@@ -18,7 +18,6 @@ const LEAD = [/^When you Cast the Spell, and each time you Sustain the spell, th
     /^(A square has AC (\d+), and it automatically fails its saving throws\.)$/, /^(The \1 don't grant flanking, or have any other attributes a creature would\.)$/,
     /^The \1 can't make any other attacks other than the specified Athletics maneuvers\.$/];
 const STEP = /^Heightened \(\+1\) The slashing damage is increased by (\d+) and the fire damage is increased by (\d+)\.$/;
-const named = (pattern, name) => new RegExp(pattern.source.replaceAll("\\1", name));
 
 /** {creepers, sentences} or null. */
 export function extractCreepers(item) {

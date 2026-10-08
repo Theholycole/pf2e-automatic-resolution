@@ -7,12 +7,11 @@
 // Rewritten to the ordinary basic save of the enemies in the area (the critical failure's Dazzled as its rider), with the damage type as the
 // caster's choice; the cast picks the constellation, which sets the save and the damage type (and says the area and traits).
 import { htmlToPlainText } from "./description-parser.js";
+import { TYPES as DAMAGE_TYPES, NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
 
-const DAMAGE_TYPES = new Set(["acid", "bludgeoning", "cold", "electricity", "fire", "force", "mental", "piercing", "poison", "slashing", "sonic", "spirit", "vitality", "void"]);
 const BLAST = /^The constellation then releases a powerful blast that deals (\d+)d(\d+) damage to all enemies in either a @Template\[type:(line|cone)\|distance:(\d+)\] or @Template\[type:(line|cone)\|distance:(\d+)\], with a basic save against your [a-z]+ spell DC\.$/;
 const RIDER = /^Enemies that critically fail are (@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{[A-Za-z]+\}) until the start of your next turn\.$/;
 const DETERMINED = /^The damage type, traits, area, and saving throw are determined by your zodiac constellation \(see below\)\.$/;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 
 /** One table row: "Volcanic vents (line, Reflex, fire)" / "Storming petals and pollen (line, Fortitude; poison, plant, wood)". */
 function parseRow(name, text, areas) {

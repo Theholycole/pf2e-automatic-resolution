@@ -1959,12 +1959,16 @@ Hooks.on("deleteItem", item => {
     }
 });
 Hooks.on("deleteItem", item => { if (item.flags?.[MODULE_ID]?.intervalHeal) void runtime.intervalHealTick(item).catch(error => notifyError("Interval healing failed", error)); });
-Hooks.on("updateCombat", () => { void ongoing.reconcile({ clockEvent: true }).catch(error => notifyError("Ongoing turn reconciliation failed", error)); });
+// (Only when the encounter's clock moves: a flag-only Combat update cost every client up to a second of reconciling.)
+Hooks.on("updateCombat", (_combat, changes) => { if ("turn" in changes || "round" in changes) void ongoing.reconcile({ clockEvent: true }).catch(error => notifyError("Ongoing turn reconciliation failed", error)); });
 Hooks.on("deleteCombat", () => { void ongoing.reconcile({ clockEvent: true }).catch(error => notifyError("Ongoing encounter review failed", error)); });
 Hooks.on("userConnected", () => { void ongoing.reconcile({ recover: true }).catch(error => notifyError("Ongoing GM handoff failed", error)); });
-Hooks.on("updateUser", () => { void ongoing.reconcile({ recover: true }).catch(error => notifyError("Ongoing authority refresh failed", error)); });
+// (Who coordinates follows the GMs' roles and presence, not a user's flags.)
+Hooks.on("updateUser", (_user, changes) => { if ("role" in changes || "active" in changes) void ongoing.reconcile({ recover: true }).catch(error => notifyError("Ongoing authority refresh failed", error)); });
 
-Hooks.on("updateToken", () => { void ongoing.reconcile().catch(error => notifyError("Ongoing target review failed", error)); });
+// (Membership follows where a token is, its size and height, whether it's hidden, its side and its actor; not a flag-only update.)
+const MEMBERSHIP_KEYS = ["x", "y", "elevation", "width", "height", "hidden", "disposition", "actorId", "actorLink", "delta"];
+Hooks.on("updateToken", (_token, changes) => { if (MEMBERSHIP_KEYS.some(key => key in changes)) void ongoing.reconcile().catch(error => notifyError("Ongoing target review failed", error)); });
 // (Promised Renewal: the growth around a creature its save killed.)
 Hooks.on(`${MODULE_ID}.saveApplied`, ({ card, state }) => {
     if (!state?.renewalGrowth || !game.user?.isGM || game.users.activeGM?.id !== game.user.id) return;

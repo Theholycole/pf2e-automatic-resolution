@@ -7,8 +7,8 @@
 // the step as each of the target's turns begins, to the maximum, where the further condition is granted for the rest of the spell; a critical failure's
 // Interact lowers it by 1 instead, and at 0 the growths stay (the next turn's growth starts again from 1).
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_HYPHEN_NAME as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Z][a-z-]+)(?: (\d))?\}`;
 const IS = new RegExp(String.raw`^The target is ${C}\.$`);
 const SCRAPE = /^The target can Interact to ([a-z ]+), decreasing the ([a-z-]+) condition to 0 and ending the spell\.$/;
 const GROW = /^Each round at the beginning of its turn, the target becomes ([a-z-]+) 1 or increases its ([a-z-]+) condition by (\d), to a maximum of (\d)\.$/;

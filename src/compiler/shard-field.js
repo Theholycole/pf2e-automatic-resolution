@@ -5,8 +5,8 @@
 // spell's duration; the GM's control when a creature ends a move action through it — the squares it traversed — opens its basic save card of 1d4 (+1 every
 // 2 ranks) per square; PF2e's area heightening widens it.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const TERRAIN = /^The area is difficult terrain, even to flying or incorporeal creatures\.$/;
 const MOVES = /^Any creature that moves through the area takes 1d(\d+) ([a-z]+) damage per square traversed, with a basic (Fortitude|Reflex|Will) save made at the end of each move action they take through the area\.$/;
 const STEP = /^Heightened \(\+(\d)\) The spell's area increases by (\d+) feet, and the ([a-z]+) damage increases by (\d+)\.$/;

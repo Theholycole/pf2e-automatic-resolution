@@ -1,3 +1,5 @@
+import { DURATION_ROW, DEGREE_LABEL as FLAG_LABEL } from "./text-patterns.js";
+
 const DEGREE_LABEL = Object.freeze({
     success: 'success', failure: 'failure', criticalFailure: 'criticalFailure'
 });
@@ -132,7 +134,6 @@ export function compileDegreeSpeedNativeEffects(compilation, {sections = {}, lif
 //   turn, whichever comes first." / Critical Failure "As failure, but the penalty to Speeds (except Swim speed) is -15 feet."
 // with a ChoiceSet (failure / critical failure values), one FlatModifier on the listed Speeds reading it, and one GrantItem condition.
 const SPEEDS = ['land-speed', 'burrow-speed', 'climb-speed', 'fly-speed', 'swim-speed'];
-const FLAG_LABEL = /^PF2E\.Check\.Result\.Degree\.Check\.(success|failure|criticalFailure)$/;
 
 /** The Effect's shape: {flag, offered, modifierType, selectors, conditionId}, or null. */
 export function speedConditionShape(rules) {
@@ -313,7 +314,6 @@ export function compileWeaknessCurseEffects(compilation, { sections = {} } = {})
 // A penalty Effect per result, told apart by duration (Infectious Melody): the success row "For 1 round, … In addition, the creature takes a -2 status
 // penalty on linguistic Intimidation checks, …" with "As success, but the duration is 3 rounds." / "… 1 hour.", and PF2e's three Effects whose only
 // rule is that penalty: each row gets the Effect lasting its stated time.
-const DURATION_ROW = /^As success, but the duration is (\d+) (round|minute|hour)s?\.$/;
 const LINGUISTIC_PENALTY = /\bthe creature takes a -(\d) (status|circumstance) penalty on linguistic ([A-Z][a-z]+) checks\b/;
 export function compileDurationBoundPenaltyEffects(compilation, { sections = {} } = {}) {
     const linked = Object.values(compilation.outcomes ?? {}).flat().filter((entry, index, all) => all.findIndex(other => other.uuid === entry.uuid) === index);

@@ -8,9 +8,8 @@
 // The rows written out plainly; the failing rows' Slowed carries an "escalate" end-of-turn save (failure +1, critical failure +2, success −1,
 // at most 4; at 0 it ends). The encasing ice is a GM note on those rows.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C, NARRATION_RULES_NO_TERRAIN as NARRATION_RULES, PETRIFIED_UUID } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const DEALS = /^The [a-z ]+ deals (\d+d\d+) ([a-z]+) damage, subject to the target's (Fortitude|Reflex|Will) save\.$/;
 const IMMUNE = /^After the effects are resolved, the target is temporarily immune for (?:1|one) (day|hour|minute)\.$/;
 const SUCCESS = /^The target takes half damage and is slowed (\d) for (\d+) (round|minute)s?\. The spell ends\.$/;
@@ -65,7 +64,6 @@ const STONE = {
     critical: new RegExp(String.raw`^As failure, but the target is initially (${C}Slowed (\d)\})\.$`),
     plantBonus: /^Creatures with the ([a-z]+) trait have a \+(\d) circumstance bonus to saves against this spell\.$/
 };
-const PETRIFIED_UUID = "Compendium.pf2e.conditionitems.Item.dTwPJuKgBQCMxixg";
 
 /** {html, recurring, saveBonus, claimed} or null. */
 export function rewritePetrifyingRows(adapted) {

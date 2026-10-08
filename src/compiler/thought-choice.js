@@ -8,6 +8,7 @@
 // Terrifying: the degree table is compiled as its own save plan (the module's save card for the targets). The targets are checked: one or two,
 // never the caster, the first within the range and the second within the stated distance of the first.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_TIMED as NARRATION_RULES } from "./text-patterns.js";
 
 const LEAD = [
     /^You place either a ([a-z]+) thought or a ([a-z]+) one in a creature's mind\.$/,
@@ -18,7 +19,6 @@ const LEAD = [
 const PLEASANT = /^<li>\s*<strong>\s*([A-Z][a-z]+) Thought\s*<\/strong>\s*The target is soothed by a [a-z ]+, gaining (\d+) temporary Hit Points that last for (\d+) minutes?\.\s*(@UUID\[Compendium\.pf2e\.spell-effects\.[^\]]+\]\{[^}]+\})\s*<\/li>/;
 const TERRIFYING = /<li>\s*<p>\s*<strong>\s*([A-Z][a-z]+) Thought\s*<\/strong>\s*([\s\S]*?)<\/p>\s*(<ul>[\s\S]*?<\/ul>)\s*<\/li>\s*<\/ul>\s*$/;
 const HEIGHTENED = /^<p>\s*<strong>\s*Heightened \(\+1\)\s*<\/strong>\s*The temporary Hit Points for a ([a-z]+) thought increase by (\d+)\.\s*<\/p>$/;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|rounds?|minutes?)\b/i;
 
 /** Returns {branchHTML, thoughtChoice, claimed} or null; the caller compiles `branchHTML` as the second thought's save. */
 export function extractThoughtChoice(adapted, nativeSpellEffects) {

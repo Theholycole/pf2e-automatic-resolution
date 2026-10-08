@@ -7,6 +7,7 @@
 // are compiled, each row's conditions must be exactly the table's (value and lifetime), and they're marked as the roll's
 // choice. The card rolls once for the cast and applies only the rolled result's condition.
 import { htmlToPlainText } from "./description-parser.js";
+import { unlinkText as labelOf } from "./text-patterns.js";
 
 const ROLL = /^Roll \[\[\/r (1d(\d+))(?: #[^\]]*)?\]\] to determine the ([a-z]+) of the [a-z]+\.$/;
 const SAVE = /^Each creature in the area must succeed at an? (Fortitude|Reflex|Will) save or take the effect listed on the table for the ([a-z]+)\.$/;
@@ -116,7 +117,6 @@ const SPEED_ROW = /^(.*?)For 1 round, it takes a [–-](\d+)-foot status penalty
 const NOTE_BLOCKERS = /\d|\b(?:damage|save|bonus|immune|resistance|weakness)\b|conditionitems\.|@Damage|@Check/i;
 const NEXT_TURN = { mode: "fixed", value: 1, unit: "rounds", expiry: "turn-end", anchor: "target-turn", offset: 1, sourceText: "its next turn" };
 const ONE_ROUND = { mode: "fixed", value: 1, unit: "rounds", expiry: "turn-start", anchor: "effect-start", offset: 0, sourceText: "For 1 round" };
-const labelOf = text => text.replace(/@UUID\[[^\]]+\]\{([^}]+)\}/g, "$1");
 
 export function expandRolledNoteTable(adapted) {
     if (adapted.defense?.kind !== "save" || adapted.defense.basic || (adapted.damageComponents ?? []).length) return null;

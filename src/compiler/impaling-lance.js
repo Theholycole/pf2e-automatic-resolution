@@ -5,8 +5,8 @@
 // the persistent bleed damage for Escapes by 1.": the spell attack's rows — the hit's damage and the Speed penalty until it Escapes (the spell's time at
 // most), the critical hit's Immobilized too (a creature off the ground: the GM's) — and the persistent bleed dealt when it Escapes, heightened.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_UNVALUED as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Z][a-z]+)\}`;
 const ATTACK = /^Make a spell attack roll against the target\.$/;
 const HIT = /^On a hit, you deal (\d+)d(\d+) ([a-z]+) damage and the [a-z]+ impales the creature, giving it a [–-](\d+)-foot (circumstance|status) penalty to its Speeds unless it Escapes\.$/;
 const CRIT = new RegExp(String.raw`^On a critical hit, if the creature is on the ground, the [a-z]+ also embeds into the ground and ${C} the creature until it Escapes\.$`);

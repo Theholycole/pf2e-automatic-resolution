@@ -7,8 +7,8 @@
 // version the opponent's save card; at Finalize the caster's Effect for 4 rounds — the defense its ChoiceSet, the row's bonus (one more from 5th rank) against that
 // opponent; the one-action version's bonus behind a toggle (that one action), the three-action version's one change of defense a note.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const LEAD = /^You gain a status bonus to your choice of AC, Fortitude saves, Reflex saves, or Will saves against that opponent based on the results of the opponent['’]s (Fortitude|Reflex|Will) save\.$/;
 const VERSIONS = /^The number of actions you spend determines when the bonus applies\.$/;
 const ROWS = { criticalSuccess: /^You do not gain a bonus\.$/, success: /^The status bonus is \+(\d)\.$/, failure: /^The status bonus is \+(\d)\.$/, criticalFailure: /^The status bonus is \+(\d)\.$/ };

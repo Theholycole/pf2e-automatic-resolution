@@ -6,12 +6,12 @@
 // the blessed (the cast's targets, up to the number) hold the module's Effect — its light and fast healing the text's — while inside the emanation; the
 // light it puts out and counteracts the GM's note.
 import { htmlToPlainText } from "./description-parser.js";
+import { ITEM_LINK as LINK } from "./text-patterns.js";
 
 const LEAD = /^You extinguish all non-magical light effects and attempt to counteract any other magical light in the area\.$/;
 const BLESS = /^Select up to (\d+) creatures in the area; you grant them the [a-z' ’]+, they exude bright light in a (\d+)-foot emanation \(and dim light (\d+) feet thereafter\) and gain fast healing (\d+) while within the emanation\.$/;
 const DARK = /^All other creatures in the area that end their turn in an area of dim light or darkness take (\d+d\d+) ([a-z]+) damage with a basic (Fortitude|Reflex|Will) save\.$/;
 const STEP = /^Heightened \(\+1\) The ([a-z]+) damage increases by (\d+d\d+) and the fast healing increases by (\d+)\.$/;
-const LINK = /^@UUID\[(Compendium\.[A-Za-z0-9_.-]+\.Item\.([A-Za-z0-9]{16}))\]\{([^}]+)\}$/;
 
 /** The module's Effect gives the stated light and fast healing (at the rank, one more a rank). */
 export function blessingMatches(effect, { bright, dim, healing, step, rank }) {

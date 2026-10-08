@@ -7,12 +7,10 @@
 // against by each such creature (the GM confirms) as its turn begins; the critical failure's Slowed lasting while the aura does; a critical success immune
 // for the minute; the light and resistance PF2e's Effect on the caster.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C, SPELL_EFFECT_LINK_INLINE as LINK, NARRATION_RULES } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const BENEFIT = /^(You radiate bright light in a \d+-foot radius \(and dim light for the next \d+ feet\) and gain ([a-z]+) resistance (\d+))\.$/;
 const WHO = /^Any (nindoru fiend or undead) that begins its turn adjacent to you must attempt an? (Fortitude|Reflex|Will) save with the following results\.$/;
-const LINK = /@UUID\[Compendium\.pf2e\.spell-effects\.Item\.[^\]]+\]\{[^}]+\}/;
 const ROWS = {
     criticalSuccess: /^The creature is unaffected and immune to this spell's effects for the remainder of the spell's duration\.$/,
     success: new RegExp(String.raw`^The creature is (${C}Sickened 1\}) until the end of its turn\.$`),

@@ -6,12 +6,11 @@
 // The foe's save is an ordinary non-basic save on one enemy (the rows' foe parts). After Finalize, the card offers the other target's condition
 // for the foe's result: the caster targets itself or an ally and grants it (once), with the action restriction as a note.
 import { htmlToPlainText } from "./description-parser.js";
+import { DEGREE_LABEL_PAIRS as DEGREES, NARRATION_RULES_TIMED as NARRATION_RULES } from "./text-patterns.js";
 
 const TARGET = /^(?:1|one) foe, and either yourself or (?:1|one) ally$/i;
 const LEAD = /^The effects depend on the foe's (Fortitude|Reflex|Will) save\.$/;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|rounds?|minutes?)\b/i;
 const LINK = /@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Z][a-z]+)(?: (\d))?\}/g;
-const DEGREES = [["criticalSuccess", "Critical Success"], ["success", "Success"], ["failure", "Failure"], ["criticalFailure", "Critical Failure"]];
 const BOTH_UNAFFECTED = /^The targets are unaffected\.$/;
 const FOE_ONLY = /^The foe is (.+?),? and the other target is unaffected\.$/;
 const BOTH = /^The foe is (.+?),? and the other target is (@UUID\[[^\]]+\]\{[A-Z][a-z]+\}|[a-z]+) for (\d+) (round|minute)s?\.(?: It can use the extra action to ([A-Z][a-z]+(?:, [A-Z][a-z]+)*,? or [A-Z][a-z]+)\.)?$/;

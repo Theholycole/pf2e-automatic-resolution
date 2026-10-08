@@ -6,9 +6,8 @@
 // name corrected to the one its rules check); the card's control for a creature that damaged a wearer in melee or touched it: its save card (the item's damage, the
 // stated rows; then immune for the stated time), and the wearer's Effect ends; the information the GM's.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_UUID_START as C, LABELS, SPELL_EFFECT_LINK as LINK } from "./text-patterns.js";
 
-const LINK = /^@UUID\[Compendium\.pf2e\.spell-effects\.Item\.([^\]]+)\]\{(Spell Effect: [^}]+)\}$/;
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{`;
 const RULES = {
     bonus: /^The shroud settles about each target's shoulders, granting a \+(\d) status bonus to AC and a \+(\d) status bonus to Stealth checks, both only while the target is in dim light or darkness\.$/,
     trigger: /^If a creature deals damage in melee to or touches a cloaked creature, the cloak wraps around the attacker, temporarily connecting the psyches of the cloaked creature and the attacker and violently prying a random piece of interesting information from the attacker's mind\.$/,
@@ -21,7 +20,6 @@ const ROWS = {
     failure: new RegExp(String.raw`^The attacker takes full damage and is ${C}Sickened (\d)\}\. In addition, the cloaked creature gleans a piece of information from the attacker's mind\. The details and extent of this information are at the GM's discretion\.$`),
     criticalFailure: new RegExp(String.raw`^As failure, but the attacker takes double damage and is ${C}Sickened (\d)\}\.$`)
 };
-const LABELS = { "Critical Success": "criticalSuccess", Success: "success", Failure: "failure", "Critical Failure": "criticalFailure" };
 
 /** {mireCloak, claimed} or null; the catalog proves PF2e's Effect. */
 export function compileMireCloak(adapted, catalog) {

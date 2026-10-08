@@ -5,12 +5,7 @@
 // - Outsider Caller (Clerics): "When you Cast the Spell, you can choose to deal twice the spell rank in spirit damage in a 15-foot emanation around the summoned creature on a basic
 //   Reflex save against your spell DC." — a card after a summon spell; its button for the summoned creature the GM targets.
 import { startShapeCard, tokensWithin, shapeDC } from "./spellshape-runtime.js";
-
-const MODULE_ID = "pf2e-automatic-resolution";
-const activeGM = () => game.user?.isGM && game.users.activeGM?.id === game.user.id;
-const plainText = html => String(html ?? "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().replace(/[’]/g, "'");
-const escapeHTML = text => String(text ?? "").replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[ch]);
-const say = (actor, text) => ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content: `<p>${text}</p>` }).catch(() => null);
+import { MODULE_ID, activeGM, escapeHTML, plainText, say } from "./runtime-utils.js";
 
 const STIGMATA_HEAL = /Heal When you cast @UUID\[[^\]]+\]\{Heal\} on a single target other than yourself, they automatically end any ongoing persistent damage they are suffering from\. If you use the 3-action cast, targets instead get an immediate attempt to end any ongoing persistent damage they are suffering from by succeeding at a @Check\[type:flat\|dc:(\d+)\]\./;
 const OUTSIDER = /When you Cast the Spell, you can choose to deal twice the spell rank in (spirit) damage in a @Template\[type:emanation\|distance:(\d+)\] around the summoned creature on a basic (Reflex|Fortitude|Will) save against your spell DC\./;

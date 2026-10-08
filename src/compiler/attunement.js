@@ -8,6 +8,7 @@
 // healing is increased by healing boosts); the damage variant is the Will save on an undead (or void-healing) target, its failing rows starting
 // the same turn-end damage (doubled after a critical failure).
 import { htmlToPlainText } from "./description-parser.js";
+import { DEGREE_LABEL_PAIRS as DEGREES } from "./text-patterns.js";
 
 const HEAL = /^If the creature is living, it heals (\d+d\d+) Hit Points immediately and at the end of each of your turns\.$/;
 const BOOST = /^Effects that increase healing only increase the initial healing\.$/;
@@ -20,7 +21,6 @@ const ROWS = {
 };
 const STEP = /^Heightened \(\+(\d)\) The damage and healing each increase by (\d+d\d+)\.$/;
 const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|heals?)\b/i;
-const DEGREES = [["criticalSuccess", "Critical Success"], ["success", "Success"], ["failure", "Failure"], ["criticalFailure", "Critical Failure"]];
 
 function read(adapted) {
     if (!/^(?:1|one) living or undead creature$/i.test(String(adapted.targeting?.target ?? "").trim()) || adapted.lifecycle?.sustained !== true) return null;

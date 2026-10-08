@@ -5,9 +5,8 @@
 // lingering area exposes each creature as its turn starts (it spends that action on its turn); the save's rows are the basic save's, each
 // with the condition, which follows whatever the result. Who breathes and holds its breath is the GM's at review.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C, NARRATION_RULES } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const TERRAIN = /^The [a-z, ]+ air becomes an area of difficult terrain\.$/;
 const STRAIN = new RegExp(String.raw`^Creatures in the area that breathe air and aren't holding their breath must spend a single action on their turn straining to breathe the [a-z ]+ air; once they do, they [a-z ]+, taking (\d+d\d+) ([a-z]+) damage \(basic (Fortitude|Reflex|Will) save\) and becoming (${C}[A-Z][a-z]+\})\.$`);
 

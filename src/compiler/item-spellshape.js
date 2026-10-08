@@ -6,14 +6,11 @@
 //   - arm: what happens as the item is activated, before the spell (Hundred-Moth Caress's damage to the wielder, Djezet Dose's choice of feat,
 //     Star Chart Tattoo's constellation on a creature).
 // Any sentence these forms don't read leaves the item unread (null): rules from the text, never from names.
-import { htmlToPlainText } from "./description-parser.js";
 import { readSpellshapeFeat } from "./spellshape-readers.js";
 import { readCatalyst } from "./catalysts.js";
+import { CONDITION_LINK_HYPHENATED as COND, plain, sentenceSplit as split } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(html).replace(/\s+/g, " ").trim();
-const split = text => text.split(/(?<=[.!?])\s+(?=[A-Z@])/).filter(Boolean);
 const LINK = String.raw`@UUID\[(Compendium\.pf2e\.[a-z-]+\.Item\.[A-Za-z0-9]+)\]\{([^}]+)\}`;
-const COND = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Za-z-]+)(?: (\d+))?\}`;
 const unlinkAction = text => text.replace(/@UUID\[Compendium\.pf2e\.actionspf2e\.Item\.[A-Za-z0-9]+\]\{([^}]+)\}/g, "$1");
 const ORDINAL = String.raw`(\d+)(?:st|nd|rd|th)`;
 const cond = (uuid, slug, value = null, extra = {}) => ({ uuid, slug: slug.toLowerCase(), value: value == null ? null : Number(value), ...extra });

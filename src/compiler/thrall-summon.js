@@ -4,11 +4,9 @@
 //   more base thralls (the graveyard's five as it appears, five more on each Stride; four on the perfected thrall's critical hit);
 //   the nightmare summoned again (once per round, on a Sustain); the lancers' 5 piercing to an enemy that Strikes near them.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK as C, SIZE_SLUGS as SIZES, WORD_NUMBERS_1_6 as WORDS } from "./text-patterns.js";
 
-const SIZES = { Tiny: "tiny", Small: "sm", Medium: "med", Large: "lg", Huge: "huge", Gargantuan: "grg" };
-const WORDS = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6 };
 const count = text => WORDS[String(text).toLowerCase()] ?? Number(text);
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Z][a-z]+)(?: (\d))?\}`;
 const NARRATION = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|Strikes?|Speed)\b/i;
 
 // Each reader: a sentence and what it sets on the read (r).

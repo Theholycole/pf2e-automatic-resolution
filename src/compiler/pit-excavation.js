@@ -9,6 +9,7 @@
 // Prone on a failure; Prone and the fall from the pit's 5 feet (half the distance, PF2e's falling damage) on a critical failure. That a creature
 // may use Acrobatics instead, where it ends up, and a deeper pit of stacked cubes, are reminders.
 import { htmlToPlainText } from "./description-parser.js";
+import { SIZE_SLUGS_TO_LARGE as SIZES } from "./text-patterns.js";
 
 const AREA = /^<p>\s*<strong>\s*Area\s*<\/strong>\s*\(continued\) cube of dirt (\d+) feet across or smaller\s*<\/p>$/;
 const REMOVE = /^You remove loose dirt, dust, gravel, sand, and the like \(though not solid stone\) up to the size of a (\d+)-foot cube\.$/;
@@ -17,7 +18,6 @@ const SUCCESS = /^The creature is unaffected and can choose to either descend th
 const FAILURE = /^The creature falls (@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{Prone\}) in the nearest available space of its choice or falls into the pit if it prefers\.$/;
 const CRITICAL = /^The creature falls into the pit excavated by the spell and lands prone, taking falling damage as normal\.$/;
 const STEP = /^<p>\s*<strong>\s*Heightened \(\+(\d)\)\s*<\/strong>\s*The spell can excavate an additional (\d+)-foot cube of earth\. If you excavate all four \2-foot cubes beneath a Large creature, it must attempt a (Fortitude|Reflex|Will) save or (Acrobatics|Athletics) check, as above\.\s*<\/p>$/;
-const SIZES = { Tiny: "tiny", Small: "sm", Medium: "med", Large: "lg" };
 
 /** {html, target, sizeLimit, reminders, claimed} or null. */
 export function extractPitExcavation(adapted) {

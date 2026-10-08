@@ -6,8 +6,8 @@
 // token moved beside the target; PF2e's Effect (its extra dice on the chosen weapon proved at the rank) for the Strike, PF2e's attack and damage; a failure's force
 // damage to the target, a critical failure's to the caster; the critical success's teleport of the target the GM's.
 import { htmlToPlainText } from "./description-parser.js";
+import { LABELS, SPELL_EFFECT_LINK as LINK } from "./text-patterns.js";
 
-const LINK = /^@UUID\[Compendium\.pf2e\.spell-effects\.Item\.([^\]]+)\]\{(Spell Effect: [^}]+)\}$/;
 const LEAD = [/^You teleport to an empty space adjacent to a creature you can see within range, then make a Strike against the creature with a weapon you're wielding\.$/,
     /^The Strike deals damage, plus an additional (\d+)d(\d+) ([a-z]+) damage, depending on the result of your Strike\.$/];
 const ROWS = {
@@ -17,7 +17,6 @@ const ROWS = {
     criticalFailure: /^The Strike deals no damage, and you take (\d+)d(\d+) ([a-z]+) damage\.$/
 };
 const STEP = /^Heightened \(\+(\d)\) The spell's range increases by (\d+) feet, and any ([a-z]+) damage the spell deals is increased by (\d+)d(\d+)\.$/;
-const LABELS = { "Critical Success": "criticalSuccess", Success: "success", Failure: "failure", "Critical Failure": "criticalFailure" };
 
 /** {blinkStrike, claimed} or null; the catalog proves PF2e's Effect. */
 export function compileBlinkStrike(adapted, catalog) {

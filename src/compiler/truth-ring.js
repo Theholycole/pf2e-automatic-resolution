@@ -5,12 +5,12 @@
 // creature (immune for the spell); each result a note while the creature is in the area — the bell's behaviour for it (the GM's) and the area's penalty to
 // Deception (PF2e's modifier); re-entry a reminder.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_SHORT as NARRATION_RULES } from "./text-patterns.js";
 
 const LEAD = /^You designate an area in which [a-z ]+\.$/;
 const PENALTY = /^Creatures in the area also take a [–-](\d) (status|circumstance) penalty to ([A-Z][a-z]+) checks\.$/;
 const WHO = /^If a creature is in the area when the spell is cast or later enters the area, that creature attempts an? (Fortitude|Reflex|Will) save\.$/;
 const SAME = /^It uses the results of this initial save if it leaves and reenters the area\.$/;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|must|until|terrain)\b/i;
 const SKILLS = new Set(["Acrobatics", "Arcana", "Athletics", "Crafting", "Deception", "Diplomacy", "Intimidation", "Medicine", "Nature", "Occultism", "Performance", "Religion", "Society", "Stealth", "Survival", "Thievery"]);
 
 /** {html, immunity, notes, reminder, sentences} or null. */

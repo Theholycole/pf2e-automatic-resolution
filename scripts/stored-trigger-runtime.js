@@ -4,7 +4,7 @@
 // trigger any number of creatures can set off, stays set).
 import { assertSpellNotLost, dropMissedTargets } from "./casting-rules-runtime.js";
 import { isExecutableStoredTriggerPlan, storedPoolHp, storedTriggerExposurePlan, detonationPlan } from "./basic-save-core.js";
-import { escapeHTML, randomID } from "./runtime-utils.js";
+import { escapeHTML, randomID, MODULE_ID } from "./runtime-utils.js";
 import { ONGOING_FLAG } from "./ongoing-core.js";
 import { nativeConditionTiming } from "./condition-timing.js";
 import { applyDamageWithReceipt } from "./native-damage-receipt.js";
@@ -13,8 +13,6 @@ import { tokenDistance } from "./token-distance.js";
 import { createNativeEffect, loadNativeEffectTemplate, prepareNativeEffectSource } from "./native-outcome-effects.js";
 import { prepareConditionGrantSource } from "./note-effects.js";
 import { castSpellFromUuid } from './cast-spell.js';
-
-const MODULE_ID = "pf2e-automatic-resolution";
 
 function markerDuration(seconds) {
     for (const [unit, size] of [["days", 86400], ["hours", 3600], ["minutes", 60]]) if (seconds % size === 0) return { value: seconds / size, unit };

@@ -7,14 +7,13 @@
 // for the spell's 4 rounds — difficult terrain, and fast healing for the minions of those traits inside (both grown by the Heightened entry); other creations with
 // Hit Points the GM's note. (The inline roll grows the fast healing by 2 a rank; the Heightened entry by 2 every 2 ranks — the module follows the Heightened entry.)
 import { htmlToPlainText } from "./description-parser.js";
+import { ITEM_LINK_PLAIN as LINK, NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const SAVE = /^If the target was a living creature with the dying condition, it must attempt a (Fortitude|Reflex|Will) save against your spell DC or it increases its dying condition by (\d) \(or by (\d) if it critically failed\)\.$/;
 const GROWTH = /^If the target was a corpse or a living creature that died from failing its \1 save, you immediately create an abundant growth of natural plant life in a @Template\[emanation\|distance:(\d+)\] of the target, including enveloping the target\.$/;
 const TERRAIN = /^The area becomes difficult terrain and minions with the ([a-z]+), ([a-z]+), or ([a-z]+) traits gain fast healing \[\[\/r (\d+) \+ \d+ \* \(@item\.level - \d+\)\]\] while within the emanation\.$/;
 const CREATIONS = /^This fast healing applies to effects you create with these traits as well if they have Hit Points, such as the @UUID\[[^\]]+\]\{([^}]+)\} spell\.$/;
 const STEP = /^Heightened \(\+(\d)\) Increase the emanation by (\d+) feet and the fast healing by (\d+)\.$/;
-const LINK = /^@UUID\[Compendium\.[A-Za-z0-9_.-]+\.Item\.[A-Za-z0-9]{16}\]\{[^}]+\}$/;
 const DYING = "@UUID[Compendium.pf2e.conditionitems.Item.yZRUzMqrMmfLu0V1]{Dying}";
 
 /** {saveHTML, statistic, growth, sentences} or null. */

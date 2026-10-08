@@ -7,9 +7,8 @@
 //   of void damage from this spell." — one roll; for undead and void-healing creatures the void part is vitality.
 // The GM convenience rolls PF2e adds ("@Damage[(@item.level+2)d6[void],(@item.level+2)d6[spirit]]{Leveled …}") restate
 // the damage for levelled creatures and are set aside.
-import { htmlToPlainText } from "./description-parser.js";
+import { SAVE_NAME_GROUP as SAVE, plainSentences as sentencesOf } from "./text-patterns.js";
 
-const SAVE = String.raw`(Fortitude|Reflex|Will)`;
 const PAIR = new RegExp(String.raw`^The target takes (\d+d\d+|\d+) void damage with a basic ${SAVE} save\. If the target is undead or otherwise has void healing, the spell loses the death and void traits and gains the vitality trait, and the target takes \1 vitality damage with a basic \2 save\.$`);
 const SWAP = /^A creature harmed by vitality damage, such as one with void healing, takes vitality damage instead of void damage from this spell\.$/;
 // A paragraph holding only a "Leveled …" inline roll (its terms nest one level of brackets) of void or vitality damage.
@@ -18,7 +17,6 @@ const CONVENIENCE = /<p>\s*@Damage\[(?:[^\[\]]|\[[^\]]*\])*\[(?:void|vitality)\]
 const CASTER_BLAST = /^You release your [a-z ]+ in a [a-z ]+ of energy, dealing (\d+d\d+) damage\.$/;
 const CASTER_LIVING = /^If you're a living creature, this spell deals vitality damage and gains the vitality trait\.$/;
 const CASTER_UNDEAD = /^If you're an undead creature, this spell deals void damage and gains the void trait\.$/;
-const sentencesOf = html => htmlToPlainText(html).replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s+(?=[A-Z])/).filter(Boolean);
 const statName = statistic => statistic[0].toUpperCase() + statistic.slice(1).toLowerCase();
 
 export function rewriteEnergyByCreature(adapted) {

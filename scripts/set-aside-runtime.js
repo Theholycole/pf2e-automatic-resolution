@@ -4,14 +4,9 @@
 // the marker's time is up (or the GM deletes the marker) the source is recreated. Its start moves forward by the time
 // it was set aside, so its own duration doesn't elapse meanwhile.
 import { nativeConditionTiming } from "./condition-timing.js";
+import { MODULE_ID, isLeadGM } from "./runtime-utils.js";
 
-const MODULE_ID = "pf2e-automatic-resolution";
 const RESTORING = new Set();
-
-function isLeadGM() {
-    const gms = game.users.filter(user => user.active && user.isGM).sort((a, b) => a.id.localeCompare(b.id));
-    return gms[0]?.id === game.user.id;
-}
 
 /** The marker's PF2e duration: a fixed time, or until the start of the caster's next turn. */
 export function setAsideDuration(setAside, casterUuid, targetUuid, combat = globalThis.game?.combat) {

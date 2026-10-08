@@ -4,10 +4,10 @@
 //   Effect whose only rule is exactly that bonus, lasting that long.
 // The card asks the GM, for each target, whether it's one of them: yes, no save and PF2e's Effect at Finalize; no, it saves.
 import { htmlToPlainText } from "./description-parser.js";
+import { SPELL_EFFECT_LINK_ANY as LINK } from "./text-patterns.js";
 
 const BOLSTER = /^([A-Z][A-Za-z ,']{3,150}?) are bolstered by [a-z' ]{3,80} and gain a \+(\d) (status|circumstance) bonus to ([A-Za-z ]+?) for (\d+) (minute|round)s?, while all other creatures must attempt an? (Fortitude|Reflex|Will) saving throw\.$/;
 const STATISTICS = { "Will saving throws": "will", "Fortitude saving throws": "fortitude", "Reflex saving throws": "reflex", "saving throws": "saving-throw", "attack rolls": "attack-roll", "AC": "ac", "skill checks": "skill-check", "Perception checks": "perception" };
-const LINK = /^@UUID\[Compendium\.pf2e\.spell-effects\.[^\]]+\]\{[^}]+\}$/;
 
 /** The Effect's only rule is exactly the bonus, lasting exactly that long. */
 export function proveBolsterEffect(mechanics, claim) {

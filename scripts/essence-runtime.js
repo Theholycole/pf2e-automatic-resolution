@@ -8,10 +8,8 @@
 //   - "All essence spells end as soon as the encounter ends."
 // The cast is read as its message is made: Magic+ changes the pool after it, so the pool then is the one before the cast.
 import { riderChoice, shapeEffect, timedTempHp, castTargetActors } from "./spellshape-runtime.js";
+import { MODULE_ID, activeGM, escapeHTML, plainText } from "./runtime-utils.js";
 
-const MODULE_ID = "pf2e-automatic-resolution";
-const escapeHTML = value => String(value ?? "").replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
-const activeGM = () => game.user?.isGM && game.users.activeGM?.id === game.user.id;
 const actionsOf = spell => String(spell?.system?.time?.value ?? "");
 
 /** The actor's essence pool (Magic+'s special resource), or null. */
@@ -325,7 +323,6 @@ const ACTIVATIONS = [
     [/At the end of the incantation, you cast an essence spell with a rank up to your current essence pool without needing essence to do so\. However, this comes at a cost: an incantation reduces both your essence draw and your essence pool by 1/,
         () => ({ kind: "incantation", inEncounter: false })]
 ];
-const plainText = html => String(html ?? "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().replace(/[’]/g, "'");
 export function readEssenceActivation(source) {
     const text = plainText(source?.system?.description?.value);
     for (const [pattern, build] of ACTIVATIONS) { const m = pattern.exec(text); if (m) return { name: source.name, ...build(m) }; }

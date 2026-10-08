@@ -3,9 +3,10 @@
 // damage roll by a PF2e damage-dice Effect on the caster, so it combines with the Strike's damage before
 // resistances and doubles on a critical hit. The Effect lasts until the end of the caster's turn and is removed after
 // the caster's next Strike damage roll.
-const MODULE_ID = "pf2e-automatic-resolution";
 
 /** A card reminder's text for the card. */
+import { MODULE_ID } from "./runtime-utils.js";
+
 export function reminderHTML(reminder, escapeHTML) {
     if (reminder.kind === "strike-prelude") return `<p class="pf2e-auto-gm-reminder"><strong>Strike:</strong> ${escapeHTML(reminder.text)} <em>Make it with PF2e's own Strike; PF2e rolls and applies its damage.</em></p>`;
     if (reminder.kind === "lodged-removal") return `<p class="pf2e-auto-gm-reminder"><strong>GM:</strong> ${escapeHTML(reminder.text)}</p>`;

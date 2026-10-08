@@ -9,8 +9,8 @@
 // The lingering area exposed when cast and on the first Sustain each turn (the creatures the GM confirms it passed over in the review); the GM
 // moves the region. The rows written plainly.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C, DEGREE_LABEL_PAIRS as DEGREES } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
 const LEAD = [
     /^You transform an unoccupied @Template\[(?:type:)?burst\|distance:(\d+)\] of ground into [a-z ,]+\.$/,
     /^When you Cast the Spell and the first time you Sustain it each turn on subsequent rounds, you can move the [a-z ]+ up to (\d+) feet in a straight line along the ground; you can't move it onto water or other liquids\.$/,
@@ -22,7 +22,6 @@ const ROWS = {
     failure: new RegExp(String.raw`^The target takes full damage, is knocked (${C}Prone\}), and is ([a-z]+) (\d) until the beginning of your next turn\.$`),
     criticalFailure: new RegExp(String.raw`^The target takes double damage, is knocked prone, and is (${C}([A-Z][a-z]+) (\d)\}) until the beginning of your next turn\.$`)
 };
-const DEGREES = [["criticalSuccess", "Critical Success"], ["success", "Success"], ["failure", "Failure"], ["criticalFailure", "Critical Failure"]];
 
 /** {html, notes, claimed} or null. */
 export function rewriteMovingTerrain(adapted) {

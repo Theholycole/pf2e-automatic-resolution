@@ -8,10 +8,8 @@
 // hazardous terrain increases by 1d6.": PF2e's variant (2 to 3 actions, or the two rounds, told apart by its data) as the basic save of the caster's
 // damage type; the 3 actions' difficult terrain, or the two rounds' difficult and hazardous terrain (its damage on entering or ending a turn there, once a
 // turn, of the chosen type, heightened), the card's terrain after the save.
-import { htmlToPlainText } from "./description-parser.js";
+import { plain, sentenceSplit as split } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(html).replace(/\s+/g, " ").trim();
-const split = text => text.split(/(?<=[.!?])\s+(?=[A-Z@])/).filter(Boolean);
 const TYPES = /^Choose ([a-z]+), ([a-z]+), or ([a-z]+)\.$/;
 const DEALS = /^The [a-z]+ deals @Damage\[(\d+)d(\d+)\[untyped\]\] damage of the chosen type to creatures in the area with a basic (Fortitude|Reflex|Will) save\.$/;
 const ACTIONS = /^The number of actions you spend when Casting this Spell determines the area and other parameters\.$/;

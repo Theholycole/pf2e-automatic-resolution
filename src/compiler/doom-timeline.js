@@ -5,11 +5,10 @@
 // each row's immediate conditions applied by the save (for the spell's duration); the later rounds' conditions a timeline the cast's Ongoing record applies as
 // each of the spell's rounds begins (at the caster's turn); the damage, half, full or double, rolled once when the spell's duration ends.
 import { htmlToPlainText } from "./description-parser.js";
+import { DEGREE_LABEL_PAIRS as DEGREES, ROUND_WORDS } from "./text-patterns.js";
 
 const LINK = /@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Za-z-]+)(?: (\d))?\}/g;
-const ROUND_WORDS = { second: 2, third: 3, fourth: 4, fifth: 5 };
 const MULTIPLIERS = { half: 0.5, full: 1, double: 2 };
-const DEGREES = [["criticalSuccess", "Critical Success"], ["success", "Success"], ["failure", "Failure"], ["criticalFailure", "Critical Failure"]];
 
 /** "off-guard and @UUID[…]{Frightened 3}" → [{slug, value?, uuid, name}] using the table's own links; null if any part isn't a known condition. */
 function conditionList(text, links) {

@@ -10,13 +10,13 @@
 //   - damage only (the 2-action damage variant): an ordinary basic save.
 // The item offering all action counts ("1 to 3") is the variants' base and is left alone.
 import { htmlToPlainText } from "./description-parser.js";
+import { DETERMINES as INTRO } from "./text-patterns.js";
 
 const DICE = String.raw`(\d+d\d+)`;
 const KIND = String.raw`(?:an? )?(willing )?(living|undead)(?: creature)?`;
 const NARRATION = /^You channel (void|vital) energy to (?:harm|damage|heal) the (?:living|undead) or (?:harm|damage|heal) the (?:living|undead)\.$/;
 const HARM = new RegExp(String.raw`^If the target is ${KIND}, you deal (?:${DICE}|that amount of) (void|vitality) damage to it, and it gets a basic (Fortitude|Reflex|Will) save\.$`);
 const HEAL = new RegExp(String.raw`^If the target is ${KIND}, you restore (?:${DICE}|that amount of) Hit Points\.$`);
-const INTRO = /^The number of actions you spend when Casting this Spell determines its targets, range, area, and other parameters\.$/;
 const ONE = /^1 The spell has a range of touch\.$/;
 const TWO = /^2(?: \([a-z, ]+\))? The spell has a range of (\d+) feet\. If you're healing an? (living|undead) creature, increase the Hit Points restored by (\d+)\.$/;
 const THREE = /^3(?: \([a-z, ]+\))? You disperse (void|vital) energy in an? @Template\[emanation\|distance:(\d+)\]\. This targets all living and undead creatures in the (?:area|burst|emanation)\.$/;

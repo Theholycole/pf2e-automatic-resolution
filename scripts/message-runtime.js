@@ -4,9 +4,7 @@
 import { isExecutableMessagePlan } from "./message-core.js";
 import { messageAtRank, wordCount } from "../src/compiler/message-compiler.js";
 import { tokenDistance } from "./token-distance.js";
-import { actorFromTarget, escapeHTML, randomID } from "./runtime-utils.js";
-
-const MODULE_ID = "pf2e-automatic-resolution";
+import { actorFromTarget, escapeHTML, randomID, MODULE_ID } from "./runtime-utils.js";
 
 function recipients(...actors) {
     return game.users.filter(user => user.isGM || actors.some(actor => actor?.testUserPermission?.(user, "OWNER"))).map(user => user.id);

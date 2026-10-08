@@ -10,8 +10,8 @@
 // on a failure), then it's immune for 1 minute; each Sustain grows the emanation 10 feet. The alignment chosen (and the deity requirement) is the GM's note:
 // PF2e's creatures no longer carry alignment traits, so "opposite" is the GM's call (the toggles).
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_UNVALUED as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Z][a-z]+)\}`;
 const WARDS = /^Divine power wards the targets, granting each a \+(\d) status bonus to AC and saves while in the area\.$/;
 const CHOOSE = /^Choose an alignment your deity has \(chaotic, evil, good, or lawful\)\.$/;
 const DEITY = /^You can't cast this spell if you don't have a deity or your deity is true neutral\.$/;

@@ -7,14 +7,8 @@
 //     caster's pick per creature) — the area's own basic save as creatures are caught in it, move through it or end their turn there, difficult terrain;
 //   - Prismatic Wall: the light's Will save (Dazzled, Blinded for 1 round or 1 minute, then immune for 1 hour) and the seven layers, each a color of
 //     Chromatic Wall (5th rank for red to green, 7th for the others), run in order for a creature passing through.
-import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK as COND, SPELL, capitalize as Stat, plain, rows, sentenceSplit as split } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(html).replace(/\s+/g, " ").trim();
-const split = text => text.split(/(?<=[.!?])\s+(?=[A-Z@])/).filter(Boolean);
-const Stat = name => name[0].toUpperCase() + name.slice(1);
-const rows = list => `<hr />` + ["Critical Success", "Success", "Failure", "Critical Failure"].map((label, index) => `<p><strong>${label}</strong> ${list[index]}</p>`).join("");
-const SPELL = String.raw`@UUID\[(Compendium\.pf2e\.spells-srd\.Item\.[A-Za-z0-9]+)\]\{([^}]+)\}`;
-const COND = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Z][a-z]+)(?: (\d))?\}`;
 const tableRows = html => [...String(html).matchAll(/<tr>([\s\S]*?)<\/tr>/g)].map(match => [...match[1].matchAll(/<td>([\s\S]*?)<\/td>/g)].map(cell => plain(cell[1]))).filter(cells => cells.length);
 // "Negates the effect": a save that hits only on a failure (the same on a critical failure, nothing more stated).
 const negatedSave = (statistic, failure, damage) => ({ type: "save", statistic, basic: false, ...(damage ? { damage } : {}),

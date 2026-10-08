@@ -6,9 +6,8 @@
 // increases by 1d6.": the target's save; on a success or worse a note for the minute whose controls (one per type) the GM uses when such a Strike
 // wounds it — the added damage of that type, once a round, and on a failure the persistent bleed too.
 import { htmlToPlainText } from "./description-parser.js";
+import { MUST_ATTEMPT_SAVE as LEAD, NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
-const LEAD = /^The target must attempt an? (Fortitude|Reflex|Will) save\.$/;
 const SUCCESS = /^For (\d+) minutes?, the first time each round that the target would take at least (\d+) ([a-z]+) or ([a-z]+) damage from a single Strike, the strike deals an additional @Damage\[([^\[\]]+)\[\3\]\] or @Damage\[\5\[\4\]\] damage of the same type\.$/;
 const FAILURE = /^As success, but the Strike also deals an additional @Damage\[([^\[\]]+)\[([a-z]+)\]\] damage\.$/;
 const STEP = /^Heightened \(\+2\) The additional damage increases by 1d6, and the persistent ([a-z]+) damage increases by 1d6\.$/;

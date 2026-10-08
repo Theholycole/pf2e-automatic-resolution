@@ -1,7 +1,8 @@
 // Forced movement (pushes and pulls the module carries out): square by square in the nearest of the 8 directions away from or toward a point, stopping
 // at walls and the scene's edge; diagonals count 5 then 10 feet, as PF2e's do. No two creatures end in the same space: a creature that would end in
 // another's space ends instead in the free space adjacent to that creature nearest where it was going (the user's rule, 2026-10-05).
-const MODULE_ID = "pf2e-automatic-resolution";
+
+import { MODULE_ID } from "./runtime-utils.js";
 
 const DIRECTIONS = [[1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1], [0, -1], [1, -1]];
 

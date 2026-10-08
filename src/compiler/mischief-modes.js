@@ -9,10 +9,8 @@
 //   "Tumultuous Gymnastics … must attempt a Reflex save." with rows (… / For 1 round, a DC 5 flat check on each manipulate action / as failure,
 //   lasting until the spell ends) — the flat check is a note Effect for the row's time (to the spell's end on a critical failure).
 // The caster's Effect (sustained) carries the cast; its end ends the clinging notes. Calm, the area's move and the stolen items are notes.
-import { htmlToPlainText } from "./description-parser.js";
+import { LABELS as DEGREES, plain, slug as slugOf, sentenceSplitTrimmed as split, unlinkText as unlink } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(html).replace(/\s+/g, " ").trim();
-const split = text => text.split(/(?<=[.!?])\s+(?=[A-Z@])/).map(sentence => sentence.trim()).filter(Boolean);
 const CHOOSE = /^Choose the kind of mischief your ([a-z]+) make when you Cast the Spell\.$/;
 const PRODUCE = /^They produce the effect listed for that mischief when you Cast the Spell and the first time each round when you Sustain the Spell\.$/;
 const MOVE = /^The first time each round when you Sustain the Spell, you can move the area of the [a-z]+ by (\d+) feet\.$/;
@@ -25,7 +23,6 @@ const TIMED = /^The creature is (?:@UUID\[(Compendium\.pf2e\.conditionitems\.Ite
 const FLAT = /^For 1 round, the creature must succeed at a @Check\[flat\|dc:(\d+)\] whenever it attempts a manipulate action\. If it fails this check, the creature loses that action\.$/;
 const CLING = /^As failure, but the [a-z]+ cling to the creature tenaciously, and the effect lasts until the spell ends, even if the creature leaves the spell's area\.$/;
 const ROW = /<p>\s*<strong>\s*(Critical Success|Success|Failure|Critical Failure)\s*<\/strong>\s*([\s\S]*?)<\/p>/g;
-const DEGREES = { "Critical Success": "criticalSuccess", Success: "success", Failure: "failure", "Critical Failure": "criticalFailure" };
 
 function rowsOf(html) {
     const rows = Object.fromEntries([...html.matchAll(ROW)].map(match => [DEGREES[match[1]], match[2].replace(/\s+/g, " ").trim()]));
@@ -82,5 +79,3 @@ export function compileMischiefModes(adapted) {
     if (modes.length < 2 || modes.filter(mode => mode.kind === "steal").length > 1) return null;
     return { mischief: { seconds: Number(minutes[1]) * 60, moveFeet: Number(MOVE.exec(lead[at + 2])[1]), modes, notes: [...narration.map(unlink), unlink(lead[at + 2])] }, claimed };
 }
-const slugOf = text => text.toLowerCase().replace(/[^a-z]+/g, "-").replace(/^-|-$/g, "");
-const unlink = text => text.replace(/@UUID\[[^\]]+\]\{([^}]+)\}/g, "$1");

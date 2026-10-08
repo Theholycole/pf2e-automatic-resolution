@@ -1,6 +1,6 @@
 import { assertSpellNotLost, dropMissedTargets } from './casting-rules-runtime.js';
 import { MODULE_ID } from './effect-runtime.js';
-import { clone, randomID, escapeHTML as esc, activeUsers } from './runtime-utils.js';
+import { clone, randomID, escapeHTML as esc, activeUsers, actorOf } from './runtime-utils.js';
 import { applyDamageWithReceipt, confirmedDamageSummary } from './native-damage-receipt.js';
 import { isDying, recoverFromDying, revivedNote } from './dying-recovery.js';
 import { coordinatorId } from './ongoing-core.js';
@@ -8,7 +8,6 @@ import { IMMEDIATE_FLAG, PROFILES, DEGREES, degree, effectiveCheck, saveDegree, 
 import { castSpellFromUuid } from './cast-spell.js';
 import { shapeDisintegrated } from './spellshape-runtime.js';
 const stateOf = card => clone(card.getFlag(MODULE_ID, IMMEDIATE_FLAG));
-const actorOf = target => target.actor ?? target;
 const tokenOf = target => target.documentName === 'Token' ? target : target.document?.documentName === 'Token' ? target.document : null;
 const owns = (user,actor) => user.isGM || actor?.testUserPermission(user,'OWNER');
 const gmId = () => coordinatorId(activeUsers());

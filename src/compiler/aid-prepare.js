@@ -6,12 +6,12 @@
 // success; legendary is a critical success), and puts the Aid result on the ally as a circumstance modifier to that skill's next check
 // (critical success +2, +3 master, +4 legendary; success +1; critical failure −1). PF2e's own Effect (built around the caster) isn't applied.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_TIMED as NARRATION_RULES } from "./text-patterns.js";
 
 const PREPARED = /^This counts as having prepared to (?:@UUID\[Compendium\.pf2e\.actionspf2e\.Item\.[A-Za-z0-9]+\]\{Aid\}|Aid) your ally on a skill check of your choice\.$/;
 const LATER = /^When you later use the Aid reaction, you can roll ([A-Z][a-z]+) instead of the normal skill check, and if you roll a failure, you get a success instead\.$/;
 const LEGENDARY = /^If you are legendary in ([A-Z][a-z]+), you automatically critically succeed\.$/;
 const GM_RULE = /^The GM might rule that you can't use this ability if the act of encouraging your ally would interfere with the skill check \(such as [^)]{5,120}\)\.$/;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|rounds?|minutes?)\b/i;
 
 /** Returns {aidPrepare, claimed} or null. */
 export function compileAidPrepare(adapted, nativeSpellEffects) {

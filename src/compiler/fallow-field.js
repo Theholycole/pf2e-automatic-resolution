@@ -6,8 +6,8 @@
 // regain Hit Points while inside, save — the module holds the healing, rolls the save and restores the row's share (all, all, half, none); a critical
 // success makes the creature immune for the minute.
 import { htmlToPlainText } from "./description-parser.js";
+import { DEGREE_LABEL_PAIRS as DEGREES, NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const LEAD = /^When a creature within the area would regain Hit Points, such as from a healing effect or an ability like fast healing or regeneration, it must attempt an? (Fortitude|Reflex|Will) save\.$/;
 const ROWS = {
     criticalSuccess: /^The creature regains the full number of Hit Points that would be restored by the healing effect and is temporarily immune for (\d+) (minute|round)s?\.$/,
@@ -16,7 +16,6 @@ const ROWS = {
     criticalFailure: /^The creature doesn't regain Hit Points from the healing effect\.$/
 };
 const SHARE = { criticalSuccess: 1, success: 1, failure: 0.5, criticalFailure: 0 };
-const DEGREES = [["criticalSuccess", "Critical Success"], ["success", "Success"], ["failure", "Failure"], ["criticalFailure", "Critical Failure"]];
 
 /** {html, healingSave, sentences} or null. */
 export function rewriteFallowField(adapted) {

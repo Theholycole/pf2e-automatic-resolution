@@ -5,8 +5,8 @@
 // formula written out (doubled on a critical failure), and the type swapped for each creature that PF2e's immunities, weaknesses and resistances
 // make the second type worse for (its persistent part too).
 import { htmlToPlainText } from "./description-parser.js";
+import { DEGREE_LABEL_PAIRS as DEGREES, NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const TAKES = /^Creatures take (\d+d\d+) ([a-z]+) damage and @Damage\[\(@item\.level -(\d)\)d(\d+)\[persistent,([a-z]+)\]\] damage\.$/;
 const INSTEAD = /^The [a-z ]+ scorches the spirit as well; a creature takes ([a-z]+) damage instead of ([a-z]+) damage from [a-z ]+ if that would be more detrimental to the creature \(as determined by the GM\)\.$/;
 const ROWS = {
@@ -15,7 +15,6 @@ const ROWS = {
     failure: /^The creature takes full damage and persistent damage\.$/,
     criticalFailure: /^The creature takes double damage and double persistent damage\.$/
 };
-const DEGREES = [["criticalSuccess", "Critical Success"], ["success", "Success"], ["failure", "Failure"], ["criticalFailure", "Critical Failure"]];
 const STEP = /^Heightened \(\+1\) The damage increases by 1d(\d+) and persistent damage increases by 1d(\d+)\.$/;
 
 /** {html, damageSwap, sentences} or null. */

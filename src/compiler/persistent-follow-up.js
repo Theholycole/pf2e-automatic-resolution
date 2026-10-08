@@ -8,12 +8,12 @@
 // each creature taking that persistent damage gets an Ongoing record exposing it at the end of each of its turns (the GM confirms it didn't
 // drink), ending when its persistent damage does.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_TIMED as NARRATION_RULES } from "./text-patterns.js";
 
 const DAMAGE = /^All creatures in the (?:area|burst|emanation|cone|line) take (\d+d\d+) persistent ([a-z]+) damage with a basic (Fortitude|Reflex|Will) save(?:; (creatures with the [a-z]+(?: or [a-z]+)? traits? get a result one degree of success (?:worse|better) than they rolled))?\.$/;
 const ENDS = /^The spell ends for a creature when its persistent damage ends\.$/;
 const AGAIN = /^A creature affected by [a-z' ]+ attempts an additional (Fortitude|Reflex|Will) save at the end of each of its turns, before rolling to recover from the persistent damage\.$/;
 const FORGO = /^It can forgo this additional save if it (consumed [a-z ,]+) within the last round(?: \([^)]{1,80}\))?\.$/;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|rounds?|minutes?)\b/i;
 
 /** Returns {mainHTML, followHTML, followUp, claimed} or null. */
 export function extractPersistentFollowUp(adapted) {

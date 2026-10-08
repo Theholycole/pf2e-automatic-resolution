@@ -1,10 +1,8 @@
 // Impossible spells (Pyroclastic Truth): the creatures a cast damaged are marked for the spell's duration (Effects in one Ongoing record),
 // Fuel deals the persistent damage to every creature still marked, and the caster carries the lethologic mark (fire damage frightens; fire
 // damage to 0 Hit Points kills). Healing the mark is a note on it.
-import { escapeHTML, randomID } from "./runtime-utils.js";
+import { escapeHTML, randomID, MODULE_ID } from "./runtime-utils.js";
 import { applyDamageWithReceipt } from "./native-damage-receipt.js";
-
-const MODULE_ID = "pf2e-automatic-resolution";
 
 /** The marks on the damaged creatures, their Ongoing record (with Fuel), and the caster's lethologic mark (once). */
 export async function startImpossibleMarks(ongoing, { spellName, spellSlug, sourceActor, sourceItemUuid, castRank, img, impossible, damaged, durationSeconds }) {

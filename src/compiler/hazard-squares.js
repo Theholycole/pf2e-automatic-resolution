@@ -10,6 +10,7 @@
 // the rows; a critical success immune for the spell; a success's later saves at least a success (PF2e's degree adjustment on its Will saves against this
 // spell); a failure's or critical failure's squares difficult terrain for it; the critical failure's barrier and the damage type the GM's notes.
 import { htmlToPlainText } from "./description-parser.js";
+import { WORD_NUMBERS_2_5 as COUNTS, HEADINGS } from "./text-patterns.js";
 
 const AREA = /^Area \(continued\) (four|three|two|five) (\d+)-foot-by-(\d+)-foot spaces$/;
 const LEAD = [/^You create illusory hazards, such as [a-z ,]+, in (four|three|two|five) (\d+)-foot-by[-–](\d+)-foot spaces within range\.$/,
@@ -22,8 +23,6 @@ const ROWS = { criticalSuccess: /^The creature is unaffected by the hazards and 
     success: /^The creature realizes the hazards aren't real but still takes half damage from them; on future Will saves against the hazards, the creature continues to use this result unless it rolls a critical success\.$/,
     failure: /^The target takes full damage and treats the square as difficult terrain\.$/,
     criticalFailure: /^The target takes double damage and can't pass through a square containing a hazard\.$/ };
-const HEADINGS = { criticalSuccess: "Critical Success", success: "Success", failure: "Failure", criticalFailure: "Critical Failure" };
-const COUNTS = { two: 2, three: 3, four: 4, five: 5 };
 
 /** {html, lingering additions, successLock, immunity, notes, claimed} or null. */
 export function rewriteHazardSquares(adapted) {

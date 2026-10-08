@@ -10,10 +10,8 @@
 // spaces that's difficult terrain for Medium and larger creatures only. When it's broken it's removed and the creatures adjacent to or in it
 // get the save (a degree save: the failure's persistent damage). Cover and climbing are notes.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_NO_TERRAIN as NARRATION_RULES, SIZE_SLUGS_TO_HUGE as SIZES, WORD_NUMBERS_1_5 as WORDS } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
-const WORDS = { one: 1, two: 2, three: 3, four: 4, five: 5 };
-const SIZES = { Tiny: "tiny", Small: "sm", Medium: "med", Large: "lg", Huge: "huge" };
 const CREATE = /^You (?:create|creature|conjure) up to (one|two|three|four|five) (Tiny|Small|Medium|Large|Huge) structures within range in unoccupied squares; each ([a-z]+) is \d+ feet long, \d+ feet wide, and \d+ feet tall\.$/;
 const ROOM = /^There must be enough room for an? ([a-z]+) in order to conjure it\.$/;
 const STATS = /^A single ([a-z]+) has an AC of (\d+) and is immune to critical hits and precision damage\.$/;

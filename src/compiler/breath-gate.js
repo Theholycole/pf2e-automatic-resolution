@@ -7,8 +7,8 @@
 // Rewritten to the ordinary basic save of the creatures in the cone, repeatable from the card while the spell lasts (window "duration", two
 // actions) once the card's counteract check succeeds (the gate), and not again until the recharge's rounds have passed.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const COUNTER = /^Attempt a counteract check against the ([a-z ]+)\.$/;
 const GAIN = /^If you successfully counteract it, you gain a breath weapon(?: of [a-z ]+)? you can use until the spell ends\.$/;
 const ACTIONS = /^Exhaling the breath is a (two|three)-action activity\.$/;

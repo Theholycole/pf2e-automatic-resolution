@@ -4,6 +4,7 @@
 // Casting places the area and starts the lingering cloud (startCloud): creatures inside are Concealed, with the flat-check note for creatures
 // outside, synced as they move; the caster can Dismiss it (Ongoing spells' End).
 import { htmlToPlainText } from "./description-parser.js";
+import { HEIGHTENED_DAMAGE_ROW as HAZARD_STEP } from "./text-patterns.js";
 
 const CONCEAL = /^All creatures within the (?:area of the )?([a-z]+) become (?:@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{Concealed\}|concealed), and all creatures outside the ([a-z]+) become concealed to creatures within it\.$/;
 const DISMISS = /^You can Dismiss the ([a-z]+)\.$/;
@@ -25,7 +26,6 @@ const ACTION_AREA = /^<p>\s*<span class="action-glyph">([123])<\/span>\s*\([a-z,
 const HAZARD = /^Creatures entering or starting their turn in the ([a-z ]+) take (\d+)d(\d+) ([a-z]+) damage\.$/;
 const DOUBLE_TRAIT = /^Creatures that have the ([a-z]+) trait or that are made primarily of liquid take double damage\.$/;
 const BREATH = /^The [a-z]+ also makes the air unbreathable; creatures in the area must hold their breath, though wearing a scarf or similar clothing over the mouth increases the time the creature can hold its breath to (\d+) rounds\.$/;
-const HAZARD_STEP = /^<p>\s*<strong>\s*Heightened \(\+(\d)\)\s*<\/strong>\s*The damage increases by (\d+)d(\d+)\.\s*<\/p>$/;
 const NARRATION_RULES = /\d|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|terrain|rounds?|minutes?|concealed|hidden|invisible)\b/i;
 
 /** Returns {concealingArea, claimed} or null. */

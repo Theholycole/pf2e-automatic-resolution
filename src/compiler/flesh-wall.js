@@ -8,8 +8,8 @@
 // feet of it): as a creature ends its turn in it, the mouths' Strike (the caster's spell attack against its AC, the dice at the cast rank) or the arms' save (the
 // condition for 1 round); the eyes the caster's Effect (its bonus toggled on within the wall's sight); the sections' statistics and the rest notes.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_UUID_START as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{`;
 const WALL = /^You craft a (\d+)-foot-tall wall of living flesh in a straight line up to (\d+) feet long\.$/;
 const SECTION = /^The wall is (\d+) feet thick, and each (\d+)-foot-long section has AC (\d+) and (\d+) Hit Points\.$/;
 const NOTES = [/^If you wish, the wall can be of a smaller length or height\.$/, /^You must create the wall in an unbroken open space so its edges don't pass through any creatures or objects, or the spell is lost\.$/,

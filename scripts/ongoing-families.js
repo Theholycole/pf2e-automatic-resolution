@@ -2,7 +2,7 @@ import { assertSpellNotLost } from "./casting-rules-runtime.js";
 import { forcedMove, nearestRegionPoint } from "./forced-movement.js";
 import { MODULE_ID } from "./effect-runtime.js";
 import { ONGOING_FLAG, turnAdvance, boundaryKey, addObligation, dueWorldTime, petrifyProgress } from "./ongoing-core.js";
-import { clone, randomID, escapeHTML, confirmAction, spellAtCastRank, terrainDifficulties } from "./runtime-utils.js";
+import { clone, randomID, escapeHTML, confirmAction, spellAtCastRank, terrainDifficulties, actorOf } from "./runtime-utils.js";
 import { ConditionSpellRuntime } from './condition-spell-runtime.js';
 import { makeThralls, isThrall, destroyThrall } from './thrall-tokens.js';
 import { prepareSickenedRecovery,assertSickenedRecovery,finalizeSickenedRecovery,sickenedControls } from './sickened-recovery.js';
@@ -39,7 +39,6 @@ const state = journal => journal.getFlag(MODULE_ID, ONGOING_FLAG);
 const SAVE_DEGREES = ["criticalSuccess", "success", "failure", "criticalFailure"];
 // (Petrify left this list 2026-10-03: its text compiles to the save card's escalating Slowed, Petrified at the creature's action count — escalating-rows.js.)
 const IDS = { "floating-flame": "2ZdHjnpEQJuqOYSG", bless: "XSujb7EsSwKl19Uu" };
-const actorOf = target => target.actor ?? target;
 // Casts whose caster must Sustain each turn.
 const sustainable = record => ["floating-flame", "bless"].includes(record.kind) || (record.kind === "lingering" && (record.declaration?.sustained === true || record.declaration?.optionalSustain === true))
     || (record.kind === "native" && record.sustained === true);

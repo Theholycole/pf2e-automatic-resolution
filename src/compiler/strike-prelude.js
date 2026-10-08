@@ -6,6 +6,7 @@
 // ("if you hit, you deal an additional 3d8 sonic damage"): it's added to the Strike's own damage roll by a generated
 // PF2e damage-dice Effect on the caster, removed after the caster's next Strike damage roll.
 import { htmlToPlainText } from "./description-parser.js";
+import { RULE_WORDS_PLAIN as RULE_WORDS } from "./text-patterns.js";
 
 const LINK = /@UUID\[[^\]]+\]\{[^}]+\}/g;
 // "Make a melee Strike with your two-handed weapon." / "Make a ranged firearm Strike." /
@@ -19,7 +20,6 @@ const STRIKE_DURING = /^You can make a Strike at any point during your Stride\.$
 // A rider that depends on the Strike's result: "If your Strike hits and deals damage, the wave flows after you to
 // batter the target of your Strike, dealing 2d10 bludgeoning damage and pushing it 10 feet in a direction of your choice."
 const ON_HIT = /^If (?:your|the) Strike hits( and deals damage)?, (?:[^.]+?, )?(?:dealing|the target takes) (\d+d\d+) ([a-z]+) damage(?: and pushing it (\d+) feet (in a direction of your choice|away from you))?\.$/;
-const RULE_WORDS = /\d|\b(?:damage|save|bonus|penalty|Strike|condition|immune)\b/i;
 
 /** The spell's rules, with the Strike set aside; null for anything outside the grammar. */
 export function extractStrikePrelude(adapted) {

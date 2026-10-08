@@ -6,8 +6,8 @@
 // divine spellcaster? its dice d8, heightened ones too); the failure's Stupefied only on a yes; the critical failure's Stupefied and its ban a note;
 // the anathema a reminder.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
 const LEAD = /^You assault the target's faith, riddling the creature with doubt and mental turmoil that deal (\d+)d(\d+) ([a-z]+) damage, or \1d(\d+) \3 damage if it can cast divine spells\. The effects are determined by its (Fortitude|Reflex|Will) save\.$/;
 const ANATHEMA = /^To many deities, casting this spell on a follower of your own deity without significant cause is anathema\.$/;
 const FAILURE = new RegExp(String.raw`^The target takes full damage; if the target can cast divine spells, it's (${C}Stupefied (\d)\}) for (\d+) rounds?\.$`);

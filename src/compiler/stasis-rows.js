@@ -7,8 +7,8 @@
 // note for its rounds (the critical failure's with PF2e's end-of-turn save shortening it); the unattended object's automatic critical failure a
 // reminder. (The module can't stop PF2e's own timers: the note says so.)
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
 const LEAD = /^The flow of time congeals around an object or creature, holding it in place\. The target must attempt a (Fortitude|Reflex|Will) save \((an unattended object automatically critically fails its save)\)\.$/;
 const SUCCESS = new RegExp(String.raw`^The target is (${C}Stunned (\d)\}) as time thickens around it\.$`);
 const FAILURE = /^Time ceases to pass for the target for (\d+) rounds?\. (It is invulnerable to all damage, it can't be targeted or affected by anything, and no rounds elapse for any timed durations, conditions, afflictions, and other effects it has\.) (While in stasis, the target can't be moved, and it remains fixed in place, defying gravity if need be\.)$/;

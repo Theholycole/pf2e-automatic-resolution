@@ -8,8 +8,8 @@
 // increases by 1d6.": the lingering area's cast and Sustain exposures (living creatures, not the caster), its concealment, and the caster's
 // temporary Hit Points from each Sustain's exposures (the most any one creature lost, halved; the higher amount kept).
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const CAST = /^Each living creature in the area when you Cast the Spell, aside from you, takes @Damage\[(\d+d\d+)\[([a-z]+)\]\] damage with a basic (Fortitude|Reflex|Will) save\.$/;
 const CONCEALED = /^Creatures in the area are @UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{Concealed\}, and all creatures outside the cloud become concealed to creatures within it\.$/;
 const SUSTAIN = /^The first time each round you Sustain this spell on subsequent turns, living creatures in the area take an additional @Damage\[\(@item\.rank -(\d)\)d(\d+)\[([a-z]+)\]\] damage with another basic (Fortitude|Reflex|Will) save\.$/;

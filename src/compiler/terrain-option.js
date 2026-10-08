@@ -2,9 +2,9 @@
 // in the area, eliminating non-magical undergrowth and any resulting difficult terrain, cover, and concealment." optionally followed by
 // "<Spell> attempts to counteract any magical effect on the plants before withering them." The module resolves creatures; the terrain
 // is the GM's. The sentences leave the description and become a card reminder.
-const OPTION = /You can also direct the [a-z]+ to [a-z]+ all [A-Za-z ,]+ non-creature plants in the area, eliminating [^.<@\d]+\.(?:\s*(?:<em>)?[A-Za-z' ]+(?:<\/em>)? attempts to counteract any magical effect on the plants before withering them\.)?/;
+import { stripTags as plain } from "./text-patterns.js";
 
-const plain = html => String(html).replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+const OPTION = /You can also direct the [a-z]+ to [a-z]+ all [A-Za-z ,]+ non-creature plants in the area, eliminating [^.<@\d]+\.(?:\s*(?:<em>)?[A-Za-z' ]+(?:<\/em>)? attempts to counteract any magical effect on the plants before withering them\.)?/;
 
 /** {html, text, sourceText} without the option's sentences, or null. */
 export function extractTerrainOption(html) {

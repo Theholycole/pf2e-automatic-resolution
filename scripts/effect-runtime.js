@@ -26,7 +26,7 @@ import { servitorDice } from "../src/compiler/servitor.js";
 import { tokenDistance } from "./token-distance.js";
 import { levelTierAt } from "../src/compiler/level-tiers.js";
 import { thrallChargeDice } from "../src/compiler/thrall-summon.js";
-import { makeThralls, thrallDice, destroyThrall, isThrall } from "./thrall-tokens.js";
+import { makeThralls, destroyThrall, isThrall } from "./thrall-tokens.js";
 import { prophecyValue } from "../src/compiler/prophecy.js";
 import { applyDamageWithReceipt } from "./native-damage-receipt.js";
 import { isDying, recoverFromDying, revivedNote } from "./dying-recovery.js";

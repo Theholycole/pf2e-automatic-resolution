@@ -5,6 +5,7 @@
 // The cast rolls the caster's check against the targeted creature's DC; on a success, PF2e's Effect goes on the caster with the toggle replaced by a
 // mark on that creature (the dice only against it — the text over the data), removed after the first damage roll against it that adds the dice.
 import { htmlToPlainText } from "./description-parser.js";
+import { SPELL_EFFECT_LINK_LABEL as LINK } from "./text-patterns.js";
 
 // Organsight: "For the duration, you gain a +2 circumstance bonus on Medicine checks against the target that depend on its organs, but a -2
 // circumstance penalty on Medicine checks depending on seeing its skin." / "When you Cast the Spell, attempt a special Recall Knowledge check using
@@ -52,7 +53,6 @@ function organsight(adapted, catalog) {
 
 const CHECK = /^When you Cast the Spell, make a @Check\[(perception|[a-z]+)\|defense:(fortitude|reflex|will)\] check against the target's (Fortitude|Reflex|Will) DC\.$/;
 const SUCCEED = /^If you succeed, the next time you deal damage to the target with a Strike or ([a-z]+) spell, you deal (\d+)d(\d+) additional ([a-z]+) damage\.$/;
-const LINK = /^@UUID\[Compendium\.pf2e\.spell-effects\.Item\.([^\]]+)\]\{([^}]+)\}$/;
 const STEP = /^Heightened \(\+1\) The ([a-z]+) damage increases by 1d(\d+)\.$/;
 
 /** {checkMark, claimed} or null; the catalog proves PF2e's Effect. */

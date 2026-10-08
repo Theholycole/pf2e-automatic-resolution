@@ -10,16 +10,10 @@
 //     supercharge (Quickened; Thunderstrike at will) and the cloud (Hidden) until the end of its next turn;
 //   - a day's recovery: "… detrimental effects that would be gone after 24 hours end …" / "The targets regain Hit Points and recover from conditions as
 //     if they had taken 24 hours of rest …" / "The targets are then temporarily immune for 1 day."
-import { htmlToPlainText } from "./description-parser.js";
 import { adaptSpellSource } from "./spell-source-adapter.js";
+import { CONDITION_LINK_HYPHENATED as UUID, blocks, matchAll, plain, sentenceSplit as split, unread } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(html).replace(/\s+/g, " ").trim();
-const split = text => text.split(/(?<=[.!?])\s+(?=[A-Z@])/).filter(Boolean);
-const blocks = adapted => String(adapted.descriptionHTML ?? "").split(/<hr\s*\/?>/);
-const UUID = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Za-z-]+)(?: (\d+))?\}`;
 const SPELL = String.raw`@UUID\[(Compendium\.pf2e\.spells-srd\.Item\.[A-Za-z0-9]+)\]\{([A-Za-z' ]+)\}`;
-const matchAll = (sentences, patterns) => patterns.map(pattern => sentences.map(sentence => pattern.exec(sentence)).find(Boolean));
-const unread = (sentences, found, allowed = []) => sentences.filter(sentence => !found.some(match => match?.[0] === sentence) && !allowed.some(pattern => pattern.test(sentence)));
 
 /** {parts, notes, claimed, lasting?} or null. */
 export function extractRevivalCard(adapted, referencedSpells = null) {

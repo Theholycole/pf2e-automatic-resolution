@@ -8,8 +8,8 @@
 // can't attempt a save to end the fascination if it disagrees with you.": the GM's bonus asked per target; Fascinated for the sustained spell; the failure's
 // save on disagreement a control ending only that creature's part, then its hour's immunity; the newcomers' saves a card for each Sustain.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
 const FIRST = /^Your words fascinate your targets\. You speak or sing without interruption throughout the casting and duration\. Targets who notice your speech or song might give their undivided attention; each target must attempt a (Fortitude|Reflex|Will) save\. The GM might grant a circumstance bonus \(to a maximum of \+(\d)\) if the target is of an opposing religion, ancestry, or political leaning, or is otherwise unlikely to agree with what you're saying\.$/;
 const SECOND = /^(Each creature that comes within range has to attempt a save when you Sustain the spell\.) (If you're speaking, [a-z]+ gains the linguistic trait\.)$/;
 const FAILURE = new RegExp(String.raw`^The target is (${C}Fascinated\}) with you\. It can attempt another (Fortitude|Reflex|Will) save if it witnesses actions or speech with which it disagrees\. If it succeeds, it's no longer fascinated and is temporarily immune for (\d+) (hour|minute)s?\. (If the target is subject to a hostile act, or if another creature succeeds at a Diplomacy or Intimidation check against it, the fascination ends immediately\.)$`);

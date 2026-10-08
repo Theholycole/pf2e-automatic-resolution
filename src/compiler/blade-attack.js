@@ -8,8 +8,8 @@
 // gives it, a critical hit also deals the entry's persistent damage (a heightened variant of the rows).
 import { htmlToPlainText } from "./description-parser.js";
 import { ruleValueAt } from "./effect-note-proof.js";
+import { NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const WINDOW = /^While the spell lasts, you can use a single action, which has the attack and concentrate traits, to [a-z ]+ with the ([a-z ]+)\.$/;
 const ROLL = /^When you do, make a spell attack roll\.$/;
 const HIT = /^On a success, the ([a-z ]+) deals (\d+d\d+) ([a-z]+) damage plus (\d+d\d+) ([a-z]+) damage plus your spellcasting ability modifier\.$/;

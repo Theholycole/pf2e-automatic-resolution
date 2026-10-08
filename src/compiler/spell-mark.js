@@ -7,10 +7,10 @@
 // Weakness (PF2e's IWR `definition`: `item:type:spell` and `self:signature:<caster>` in the damage's options) that the module removes
 // after the caster's first spell damage to the target.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_TIMED as NARRATION_RULES } from "./text-patterns.js";
 
 const MARK = /^Until the end of the current turn, the target is (@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{Off-Guard\}) against your spells and takes a [-–−](\d) circumstance penalty to saving throws against your spells\.$/;
 const WEAKNESS = /^In addition, the first time this turn the target takes damage from one of your spells, it has weakness to that damage equal to (double|triple) the rank of [a-z' ]+\.$/;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|rounds?|minutes?)\b/i;
 
 // "The first ally that hits the target with a successful Strike deals additional precision damage equal to 1 + this spell's rank, and then the
 // spell ends." (Glimpse Weakness; user decision): on the foe, a weakness to Strike damage of that amount, removed after the first Strike damage.

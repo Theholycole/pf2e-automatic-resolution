@@ -9,9 +9,8 @@
 // wall; the card's control for a creature that passed through: the color's save (its damage at the rank), the borrowed spell's own resolution, the Slowed save;
 // what the wall stops, its light and the counteracting spells notes.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_UUID_START as C, SPELL as S, squashedSentences as split } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{`;
-const S = String.raw`@UUID\[(Compendium\.pf2e\.spells-srd\.Item\.[A-Za-z0-9]+)\]\{([^}]+)\}`;
 const LEAD = [/^You create an opaque wall of light in a single vibrant color\.$/, /^The wall is straight and vertical, stretching (\d+) feet long and (\d+) feet high\.$/,
     /^If the wall would pass through a creature, the spell is lost\.$/, /^The wall sheds bright light for (\d+) feet on each side, and dim light for the next (\d+) feet\.$/,
     /^You can ignore the wall's effects\.$/, /^Roll \[\[\/r 1d(\d)\]\] to determine the color of the wall\.$/,
@@ -30,7 +29,6 @@ const REROLL = /^, and creatures that pass through the wall take a -(\d) (circum
 const STEP = [/^Heightened \((\d+)(?:st|nd|rd|th)\) The spell's duration increases to (\d+) hours?\.$/, /^Roll \[\[\/r 1d(\d)\]\] to determine the wall's color; the results for (\d)-(\d) are below\.$/,
     /^A (.+) wall deals an extra (\d+) damage\.$/];
 
-const split = text => text.replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s+(?=[A-Z@])/).filter(Boolean);
 const items = html => [...html.matchAll(/<li>\s*<strong>([^<]+)<\/strong>\s*([\s\S]*?)<\/li>/g)].map(match => ({ name: match[1].trim(), text: match[2].replace(/\s+/g, " ").trim() }));
 
 /** {colorWall, claimed} or null. */

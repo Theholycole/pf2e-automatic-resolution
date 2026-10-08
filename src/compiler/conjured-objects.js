@@ -7,10 +7,8 @@
 //     Creatures can move through the confluence; creatures within the confluence are Concealed, and all creatures outside the confluence are concealed to
 //     creatures within it. When you Cast or Sustain this Spell, you can move the confluence up to 20 feet and choose up to two different types of elementals
 //     to act." with the listed elementals: its token, the concealing area that follows it, and each elemental's action as a button.
-import { htmlToPlainText } from "./description-parser.js";
+import { plainOrEmpty as plain, sentenceSplitCapital as sentencesOf } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(String(html ?? "")).replace(/\s+/g, " ").trim();
-const sentencesOf = text => text.split(/(?<=[.!?])\s+(?=[A-Z])/).filter(Boolean);
 const DMG = String.raw`@Damage\[(\d+d\d+)\[(persistent,)?([a-z]+)\]\]`;
 
 const CAGE = [

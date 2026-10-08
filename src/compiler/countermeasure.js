@@ -4,8 +4,8 @@
 // bonus proved; its rules keyed to an "against the countered spell" option, on by default, as the text limits it to that spell; the DCs added); the rank reduction
 // the GM's (the spell's card corrects its rank), its minimum a note.
 import { htmlToPlainText } from "./description-parser.js";
+import { SPELL_EFFECT_LINK as LINK } from "./text-patterns.js";
 
-const LINK = /^@UUID\[Compendium\.pf2e\.spell-effects\.Item\.([^\]]+)\]\{(Spell Effect: [^}]+)\}$/;
 const RULES = {
     trigger: /^Trigger A creature within range that you can see Casts a Spell\.$/,
     core: /^You reduce the spell's rank by (\d), and targets of the spell gain a \+(\d) (status|circumstance) bonus to any saving throws, skill checks, AC, or DC against it\.$/,

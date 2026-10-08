@@ -21,7 +21,6 @@ async function catalog() {
 }
 const effects = await catalog();
 const compile = source => compileAbility(source, {nativeEffectCatalog: effects});
-const withText = (source, replace) => { const copy = structuredClone(source); copy.system.description.value = replace(copy.system.description.value); return copy; };
 
 
 

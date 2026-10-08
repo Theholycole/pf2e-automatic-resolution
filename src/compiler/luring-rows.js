@@ -7,8 +7,8 @@
 // Off-Guard.": the lingering area's saves (in it at the cast, or entering it); the named creature's penalty the GM's answer; Fascinated (and the
 // critical failure's Off-Guard) until it leaves the area, the compulsion a note while it's fascinated; hearing the GM's review.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
 const LEAD = /^You emit a [a-z ]+ to lure your enemies closer\. Each creature in the emanation that can hear you must attempt a (Fortitude|Reflex|Will) save\. (If you speak a creature's name as part of the casting of the spell, that creature takes a [–−-]\d circumstance penalty to its saving throw\.) Each creature that enters the area on its turn must attempt a save\. (If you attack or take a hostile action, the (?:@UUID\[[^\]]+\]\{Fascinated\}|Fascinated) condition ends only for the creature that's attacked\.)$/;
 const SUCCESS = new RegExp(String.raw`^The creature is (${C}Slowed \d\}) for 1 round\.$`);
 const FAILURE = /^The creature becomes fascinated and compelled to move toward the sound of your cry on its turn\. (As long as it is in the emanation and can hear, it must spend at least one of its actions on each of its turns to move closer to you\.)$/;

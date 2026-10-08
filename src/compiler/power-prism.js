@@ -8,8 +8,8 @@
 // region for the minute with the mode chosen; its card's control — Scatter: one spell attack against the AC of each of up to 2 creatures within 5 feet of it; Diffract:
 // the cone's size from the feet the line had left, its template placed from the prism; Refract: the GM's measuring from the prism (a note).
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const LEAD = [/^You create a prism that occupies a @Template\[square\|distance:(\d+)\] within range\.$/, /^When you create the prism, select one of the following options\.$/];
 const DIFFRACT = /^Diffract (Magic enters the prism and is split into a spectrum\.) If a line spell enters the area of the prism, the area changes from a line to a cone and its size is equal to half the remaining feet the line could travel before it entered the prism in the same direction the line could travel \(minimum (\d+) feet\)\.$/;
 const REFRACT = /^Refract (Magic entering the prism can change directions, even around corners\.) (If a spell attack targets the prism or a line spell passes through its space, and doing so does not require all of the spell['’]s range, it can alter directions\. Determine your spell's line of effect and line of sight from the prism, as well as whether creatures have cover against the spell\. The spell can exceed its normal range as measured from you, as long as it['’]s within its normal range from the prism\.)$/;

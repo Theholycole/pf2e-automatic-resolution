@@ -3,15 +3,13 @@
 //     added (`add`), or the module's rules found to say what the text says (`verified`); applied in memory by scripts/text-rules.js, never saved;
 //   - readPassiveCastRider: "When you Cast a Spell …" rules on every cast the holder makes, as spellshape riders (scripts/spellshape-runtime.js).
 // A text no form reads stays unread: rules from the text, never from names.
-import { htmlToPlainText } from "./description-parser.js";
+import { condUuidLate as condUuid, condUuidLate, plainApostrophes as plain } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(String(html ?? "")).replace(/\s+/g, " ").trim().replace(/[’]/g, "'");
 const rulesOf = source => source?.system?.rules ?? [];
 const selectors = rule => [rule?.selector ?? rule?.selectors ?? []].flat();
 
 // (A condition linked, for the forms below the wickets' own helpers: "@UUID[Compendium.pf2e.conditionitems.xYTAsEpcJE1Ccni3]{Slowed 1}".)
 const COND_LINK_LATE = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.(?:Item\.)?[A-Za-z0-9]+)\]\{([A-Z][A-Za-z-]+(?: \d+)?)\}`;
-const condUuidLate = uuid => uuid.replace(/conditionitems\.(?!Item\.)/, "conditionitems.Item.");
 // Text-rule forms: [pattern over the whole text, (match, source) => {add, drop, verified, notes} | null].
 const TEXT_RULES = [
     // Rudimentary Perfectionism: "when you Cast a heightened Spell that either deals damage or restores Hit Points, you gain a status bonus to that spell's damage or
@@ -218,7 +216,6 @@ const PASSIVE = [
 // tethered magic effect once per round." and Through the Wicket's "At 11th level, you gain the Overwhelming Wicket ability while within the area of your
 // wicket's dominion." — each part's riders, gated by the spell's traits (`ifTraits`), threaded (once a round) or overwhelming (11th level).
 const COND_LINK = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.(?:Item\.)?[A-Za-z0-9]+)\]\{([A-Z][A-Za-z-]+)\}`;
-const condUuid = uuid => uuid.replace(/conditionitems\.(?!Item\.)/, "conditionitems.Item.");
 const unlink = text => text.replace(/@UUID\[[^\]]+\]\{([^}]+)\}/g, "$1").replace(/@Template\[[^\]]*\]\{([^}]+)\}/g, "$1");
 const WICKET_PARTS = [
     // Luminor (threaded): "All of your fire spells gain the light trait. When you successfully make a spell attack roll or a creature fails its save against a spell with

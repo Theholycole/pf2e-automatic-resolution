@@ -16,14 +16,8 @@
 import { counters, loseSpell } from "./casting-rules-runtime.js";
 import { castTargetActors } from "./spellshape-runtime.js";
 import { tokenDistance } from "./token-distance.js";
+import { DEGREES, MODULE_ID, activeGM, castRankOf, escapeHTML, gmIds, isCastMessage, degreeOf } from "./runtime-utils.js";
 
-const MODULE_ID = "pf2e-automatic-resolution";
-const escapeHTML = value => String(value ?? "").replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
-const activeGM = () => game.user?.isGM && game.users.activeGM?.id === game.user.id;
-const gmIds = () => game.users.filter(user => user.isGM).map(user => user.id);
-const isCastMessage = message => message?.flags?.pf2e?.context?.type === "spell-cast" || (!message?.flags?.pf2e?.context?.type && message?.flags?.pf2e?.origin?.type === "spell" && message?.flags?.pf2e?.casting);
-const castRankOf = message => Number(message.flags?.pf2e?.origin?.castRank ?? message.flags?.pf2e?.casting?.castRank ?? message.item?.rank ?? 1);
-const DEGREES = ["criticalFailure", "failure", "success", "criticalSuccess"];
 const plain = html => String(html ?? "").replace(/\[\[\/r [^\]]+\]\]\{([^}]+)\}/g, "$1").replace(/@UUID\[[^\]]+\]\{([^}]+)\}/g, "$1").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
 
 /** A creature ability's rule on spells, from its text: { type, ... } or null. */
@@ -56,13 +50,6 @@ function sceneAbilities() {
         if (rule) found.push({ actor: token.actor, token, ability: item, rule });
     }
     return found;
-}
-
-function degreeOf(total, dc, natural) {
-    let degree = total >= dc + 10 ? 3 : total >= dc ? 2 : total <= dc - 10 ? 0 : 1;
-    if (natural === 20) degree = Math.min(3, degree + 1);
-    if (natural === 1) degree = Math.max(0, degree - 1);
-    return degree;
 }
 
 async function counteract(actor, cast, { name, modifier, rank }) {

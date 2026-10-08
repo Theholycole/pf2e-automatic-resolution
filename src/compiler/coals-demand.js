@@ -8,8 +8,8 @@
 // result; on a success or worse a note whose control the GM uses if it hasn't complied by the end of its next turn — the row's persistent damage and
 // conditions, once; the demand's limits, the cantrip immunity, a later compliance and the 9th rank's second target reminders.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_UUID_START as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{`;
 const LEAD = /^The target must attempt an? (Fortitude|Reflex|Will) save\. Regardless of the result of its save, the target is temporarily immune for (\d+) (day|hour)s?\.$/;
 const LIMIT = /^The demand can't be obviously self-destructive, or the spell fails\.$/;
 const CRIT_SUCCESS = /^The target is unaffected and (is immune to your [a-z ]+ for \d+ (?:day|hour)s?)\.$/;

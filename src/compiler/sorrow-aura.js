@@ -7,8 +7,8 @@
 // the caster's sustained emanation (the caster out of it); each creature saves once (immune for the spell after any result); the success's penalty PF2e's
 // modifier and the failing rows' rules notes, each lasting while the creature is in the area; re-entry and the optional larger area reminders.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const FIRST = /^The first time a creature begins its turn in the area or enters the area, it must attempt an? (Fortitude|Reflex|Will) save\.$/;
 const SAME = /^If it later leaves and reenters the area, it uses the same effect as before\.$/;
 const SUCCESS = /^The creature takes a –(\d) (status|circumstance) penalty to skill checks and Perception checks as long as it remains in the area\.$/;

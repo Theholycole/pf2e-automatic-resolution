@@ -4,8 +4,8 @@
 // use reactions." / "As failure, and all spaces are difficult terrain for the target.": Stupefied 2 for each row's time; the reaction penalty, the lost
 // reactions and the difficult terrain notes for the same time.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
 const LEAD = /^You surround your target with wondrous illusions of their greatest desires, which distract them from reality\. The target must attempt a (Fortitude|Reflex|Will) save\.$/;
 const SUCCESS = new RegExp(String.raw`^For (\d+) (round|minute)s?, the target is (${C}Stupefied (\d)\}) and takes a [-–−](\d) (status|circumstance) penalty to any checks it makes to determine the effects of reactions\.$`);
 const FAILURE = /^For (\d+) (round|minute)s?, the target is stupefied (\d) and can't use reactions\.$/;

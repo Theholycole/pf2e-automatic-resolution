@@ -9,8 +9,8 @@
 // PF2e's Effect (no rules) goes on the caster with the image count; the Ongoing controls (an attack hit, critically hit, or missed without
 // critically failing) roll the stated die, destroy images and say what the attack does; the spell ends with the last image.
 import { htmlToPlainText } from "./description-parser.js";
+import { WORD_NUMBERS_1_5 as WORDS } from "./text-patterns.js";
 
-const WORDS = { one: 1, two: 2, three: 3, four: 4, five: 5 };
 const SENTENCES = {
     swirl: /^(Three|Four|Five) illusory images of you swirl about your space, potentially causing those who attack you to hit one of the images instead of you\.$/,
     chance: /^Any attack that would hit you has a random chance of hitting one of your images instead of you\.$/,

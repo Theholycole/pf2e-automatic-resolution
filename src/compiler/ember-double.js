@@ -6,8 +6,8 @@
 // Points, and the damage increases by 1d6." — the duplicate a token with its statistics at the cast rank (its 0 HP ending the spell), removed with the caster's
 // sustained Effect; the card's blast (the cast and each turn's first Sustain): the targeted creatures' basic save card (a compiled plan of the damage at the rank).
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
 const STATS = new RegExp(String.raw`^It has AC (\d+); (\d+) Hit Points; is immune to critical hits, precision damage, and the ${C}(Immobilized)\}, ${C}(Prone)\}, and ${C}(Restrained)\} conditions; and has weakness (\d+) to ([a-z]+) and ([a-z]+)\.$`);
 const FAILS = /^This creature doesn't provide or benefit from flanking and automatically fails all skill checks and saving throws, and all skill checks attempted against it automatically succeed\.$/;
 const BLAST = /^When you Cast the Spell and the first time you Sustain it each turn on subsequent rounds, the duplicate Strides up to (\d+) feet and launches a blast of fire in a @Template\[type:burst\|distance:(\d+)\] up to (\d+) feet away\.$/;

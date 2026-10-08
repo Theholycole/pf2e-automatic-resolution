@@ -3,9 +3,8 @@
 // make its limbs grasp your foes. If you do, each enemy in the area must succeed at a Fortitude saving throw or be Immobilized for 1 round or until it
 // Escapes; the Escape DC is your spell DC." — a card of parts: destroy the thrall, the cone's greater difficult terrain for the spell's time (placed from
 // the thrall's space), and the second thrall's grasp: destroy it, then the enemies in the cone save (Immobilized for 1 round or until it Escapes).
-import { htmlToPlainText } from "./description-parser.js";
+import { plainOrEmpty as plain } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(String(html ?? "")).replace(/\s+/g, " ").trim();
 const LEAD = [
     /^You melt one of your thralls into a [a-z ]+\.$/,
     /^Destroy the target thrall to create an area of (greater )?difficult terrain in an? (\d+)-foot (cone|burst|line|emanation) originating from the thrall's former space\.$/,

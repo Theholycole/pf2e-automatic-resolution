@@ -5,8 +5,8 @@
 // whose creatures are exposed as their turns begin — Heal's dual mode: a living creature regains the roll, an undead one saves against it (PF2e's one
 // vitality entry, heightened); the caster's light a TokenLight Effect for the spell.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const GLOW = /^You glow with bright light in a (\d+)-foot radius and dim light to the next (\d+) feet\.$/;
 const LIVING = /^Living creatures that begin their turn adjacent to you recover (\d+d\d+) Hit Points\.$/;
 const UNDEAD = /^Undead creatures that begin their turn adjacent to you take (\d+d\d+) ([a-z]+) damage \(basic (Fortitude|Reflex|Will) save\)\.$/;

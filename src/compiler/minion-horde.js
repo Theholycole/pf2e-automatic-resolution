@@ -10,6 +10,7 @@
 // card's control) each moves up to the stated distance toward the nearest enemy and deals the damage to an adjacent one. Their kind, their place
 // in the area and the difficult terrain are notes.
 import { htmlToPlainText } from "./description-parser.js";
+import { unlinkText } from "./text-patterns.js";
 
 const NUMBERS = { two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10 };
 const HORDE = {
@@ -47,7 +48,6 @@ export function compileMinionHorde(adapted) {
         notes: [`Choose what kind of creatures the ${name} are.`, `Move them to unoccupied squares of your choice within the area.`, unlinkText(claimed.terrain)] },
         claimed: [...sentences, heightened].filter(Boolean) };
 }
-const unlinkText = text => text.replace(/@UUID\[[^\]]+\]\{([^}]+)\}/g, "$1");
 
 /** The number of minions at a cast rank. */
 export function hordeCount(data, castRank, baseRank) {

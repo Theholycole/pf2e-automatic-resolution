@@ -6,12 +6,12 @@
 //   for a creature void doesn't affect (PF2e's own reading), the region growing on each Sustain up to the maximum, and the dice stepping to the next listed
 //   formula each time. Narration (no rule words) is set aside.
 import { htmlToPlainText } from "./description-parser.js";
+import { HEIGHTENED_DAMAGE_ROW as STEP } from "./text-patterns.js";
 
 const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|until)\b/i;
 const ENTROPY = /^Any creature that enters or begins its turn in the area takes (\d+d\d+) ([a-z]+) damage with a basic (Fortitude|Reflex|Will) save, or \1 ([a-z]+) damage if the creature normally doesn't take \2 damage, such as if the creature is a construct or undead\.$/;
 const STRONGER = /^The first time you Sustain the Spell on each subsequent turn, the [a-z ]+ grows stronger in addition to having its duration increased\.$/;
 const GROWS = /^The radius of the burst increases by (\d+) feet \(to a maximum of (\d+) feet\), and the size of the damage dice increases by one step \(from d(\d+) to @Damage\[([^\]]+\])(?:\|[^\]]*)?\], then to @Damage\[([^\]]+\])(?:\|[^\]]*)?\], and finally to @Damage\[([^\]]+\])(?:\|[^\]]*)?\]\)\.$/;
-const STEP = /^<p>\s*<strong>\s*Heightened \(\+(\d)\)\s*<\/strong>\s*The damage increases by (\d+)d(\d+)\.\s*<\/p>$/;
 
 /** {html, growth, damageSwap, sentences} or null. */
 export function rewriteGrowingEntropy(adapted) {

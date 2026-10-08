@@ -8,9 +8,8 @@
 // rank's limit); the row's condition until the end of the caster's next turn, the Sustain's control trying again; the critical failure's choice the target's
 // (asked); the required weapon and the Escape notes.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES, SIZE_SLUGS as SIZE } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
-const SIZE = { Tiny: "tiny", Small: "sm", Medium: "med", Large: "lg", Huge: "huge", Gargantuan: "grg" };
 const LEAD = [/^You @UUID\[[^\]]+\]\{Grapple\} the target with the required weapon even if it would be outside the weapons normal reach using your @UUID\[[^\]]+\]\{Athletics\} modifier or your @UUID\[[^\]]+\]\{spell attack roll modifier\}, whichever is higher\.$/,
     /^When you @UUID\[[^\]]+\]\{Sustain a Spell\}, you attempt to maintain the Grapple against the target of the spell\.$/,
     /^(The target can attempt to @UUID\[[^\]]+\]\{Escape\} as normal\.)$/,

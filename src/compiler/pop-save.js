@@ -6,10 +6,8 @@
 // popped blister increases by 1d6.": the target's save sets the count; after Finalize a card pops one at a time — a basic save of its own for the
 // target and the creatures the GM targets in the cone — until none are left or the duration runs out.
 import { htmlToPlainText } from "./description-parser.js";
+import { WORD_NUMBERS_1_6 as COUNTS, NARRATION_RULES, MUST_ATTEMPT_SAVE as SAVE } from "./text-patterns.js";
 
-const COUNTS = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6 };
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
-const SAVE = /^The target must attempt an? (Fortitude|Reflex|Will) save\.$/;
 const GROWS = /^The target grows (one|two|three|four) ([a-z]+?)s?\.$/;
 const POP = /^You can spend a single action, which has the concentrate trait, to pop an? ([a-z]+)\.$/;
 const BURST = /^The target and each creature in a @Template\[(cone|emanation|burst)\|distance:(\d+)\] originating from the target takes (\d+d\d+) ([a-z]+) damage \(basic (Fortitude|Reflex|Will) save\)\.$/;

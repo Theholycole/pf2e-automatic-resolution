@@ -6,8 +6,8 @@
 // by the source adapter). The rows' Clumsy until it Escapes (the spell DC); the held distance a note an Escape ends; the chain's statistics a reminder (its
 // destruction the GM's: delete the Effects).
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
 const BODY = [/^A steel chain materializes from the surface, fettered to one space of your choice that the target occupies, weaving itself around the creature's limbs\.$/,
     /^The chain continuously pulls on the target and impedes its movement\.$/];
 const CHAIN = /^The chain has AC (\d+), Hardness (\d+), and (\d+) Hit Points, and it's immune to critical hits and precision damage\.$/;

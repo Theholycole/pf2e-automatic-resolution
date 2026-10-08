@@ -5,9 +5,8 @@
 // with no Effect, must be narration). Action-count paragraphs are accepted
 // only when the item is the PF2e variant whose healing entry matches them.
 import { htmlToPlainText, stripHeighteningHTML } from "./description-parser.js";
+import { DICE_OR_FLAT as DICE } from "./text-patterns.js";
 
-// Dice ("1d10+4") or a flat amount ("6").
-const DICE = String.raw`(\d+d\d+(?:\+\d+)?|\d+)`;
 const HEALS = [
     // "The target regains 1d10+4 Hit Points when you Cast the Spell and gains a +2 status bonus … for the duration."
     new RegExp(String.raw`^The target regains ${DICE} Hit Points(?: when you Cast the Spell)?(?:,? and (.+?))?\.$`),

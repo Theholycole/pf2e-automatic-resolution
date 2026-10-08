@@ -5,8 +5,8 @@
 // increase by 1d8." — Arrive: PF2e's Effect (its temporary Hit Points proved at both ranks) on the targeted allies until the departure; Depart (the card's, at the end
 // of the caster's next turn): the targeted living creatures heal the rolled amount, the undead among them its basic save card (a compiled plan); the Effects end.
 import { htmlToPlainText } from "./description-parser.js";
+import { SPELL_EFFECT_LINK as LINK } from "./text-patterns.js";
 
-const LINK = /^@UUID\[Compendium\.pf2e\.spell-effects\.Item\.([^\]]+)\]\{(Spell Effect: [^}]+)\}$/;
 const SPACE = /^The [a-z]+ occupies the space of an? (Small|Medium|Large|Huge|Gargantuan) creature and has a speed of (\d+) feet\.$/;
 const ARRIVE = /^<strong>Arrive<\/strong>\s*\(([a-z, ]+)\)\s*<em>([^<]+)<\/em>\s*([\s\S]+)$/;
 const DEPART = /^<strong>Depart<\/strong>\s*\(([a-z, ]+)\)\s*<em>([^<]+)<\/em>\s*([\s\S]+)$/;

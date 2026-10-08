@@ -6,8 +6,8 @@
 // PF2e's Effect adds the dice to every Strike, which the text doesn't (each wisp is spent): the module removes that rule (the text over the
 // data) and counts the wisps; its controls send a wisp at the targeted creature (the dice at the cast rank) and add one for a fire spell.
 import { htmlToPlainText } from "./description-parser.js";
+import { WORD_NUMBERS_2_5 as WORDS } from "./text-patterns.js";
 
-const WORDS = { two: 2, three: 3, four: 4, five: 5 };
 const FLOAT = /^(Two|Three|Four|Five) faintly glowing wisps of ([a-z]+) float around your head, dancing along to your movements\.$/;
 const STRIKE = /^After you deal damage to a creature with a Strike, one of the wisps goes hurtling toward that creature, destroying the wisp and dealing (\d+)d(\d+) ([a-z]+) damage\.$/;
 const REGROW = /^If you Cast a Spell with the ([a-z]+) trait while you have fewer than (two|three|four|five) wisps, a new wisp appears\.$/;

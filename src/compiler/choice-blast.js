@@ -7,10 +7,10 @@
 // basic save of the first statistic, with the target's choice between the two: each target rolls its better save (user-facing note). The area
 // choice is the caster's placement (a note).
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
 
 const AREA = /^<p>\s*<strong>\s*Area\s*<\/strong>\s*varies\s*<\/p>\s*/;
 const DEFENSE = /^<p>\s*<strong>\s*Defense\s*<\/strong>\s*@Check\[(fortitude|reflex|will)\|basic[^\]]*\] or @Check\[(fortitude|reflex|will)\|basic[^\]]*\] \(target's choice\)\s*<\/p>\s*<hr\s*\/?>\s*/;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const INLINE = /^@Damage\[\(@item\.rank\+(\d+)\)d(\d+)\[([a-z]+)\](?:\|[^\]]*)?\]$/;
 const TEMPLATE = /^an? @Template\[(?:type:)?(cone|burst|line|emanation)\|distance:(\d+)\](?: within (\d+) feet)?$/;
 const DEALS = /^The [a-z]+ deals (\d+)d(\d+) damage of the type you chose to each creature in the area\.$/;

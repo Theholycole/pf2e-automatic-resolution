@@ -5,10 +5,10 @@
 // while taking this penalty, the penalty increases to –2." / "As success, but the duration is 10 minutes." / "… 24 hours.": the save's immunity; each
 // failing row a note for its time whose GM control (the creature failed such a roll) gives the penalty, raised on a second failure.
 import { htmlToPlainText } from "./description-parser.js";
+import { DURATION_ROW as LATER } from "./text-patterns.js";
 
 const LEAD = /^The target attempts an? (Fortitude|Reflex|Will) save to determine the spell's duration and is temporarily immune for (\d+) (hour|minute|day)s regardless of the save's result\.$/;
 const SUCCESS = /^The duration is (\d+) (round|minute|hour)s?\. If the target fails at an attack roll or skill check, it takes a [–-](\d) (status|circumstance) penalty to attack rolls and skill checks until the end of its turn \(or the end of its next turn, if it attempted the roll outside its turn\)\. If the creature fails a second time while taking this penalty, the penalty increases to [–-](\d)\.$/;
-const LATER = /^As success, but the duration is (\d+) (round|minute|hour)s?\.$/;
 
 const length = (value, unit) => ({ mode: "fixed", value: Number(value), unit: `${unit}s`, expiry: unit === "round" ? "turn-start" : null, anchor: "effect-start", offset: 0, sourceText: `${value} ${unit}${Number(value) === 1 ? "" : "s"}` });
 

@@ -10,8 +10,8 @@
 // becomes a critical failure). A card moves the wave on at the start of the caster's next turn: the GM places its next 60 feet, and the
 // creatures there save the same way.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_NO_TERRAIN as NARRATION_RULES, SIZE_SLUGS_TO_HUGE as SIZES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const WALL = /^The water forms a flat, \d+-foot-thick, \d+-foot-high wall of water between \d+ and \d+ feet wide \(you decide\)\.$/;
 const MOVES = /^It moves (\d+) feet in a direction of your choice along the struck surface, extinguishing all non-magical fires, carrying along unattended objects of \d+ Bulk or less, and pushing larger objects\.$/;
 const AGAIN = /^The wave moves another (\d+) feet in the same direction at the start of your next turn, then vanishes\.$/;
@@ -21,7 +21,6 @@ const ROWS = {
     failure: /^The creature is knocked (@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{Prone\})\. If the creature was Swimming, it gets a critical failure instead\.$/,
     criticalFailure: /^The creature is pushed (\d+) feet in the wave's direction, is knocked Prone, and takes (\d+d\d+) ([a-z]+) damage\.$/
 };
-const SIZES = { Tiny: "tiny", Small: "sm", Medium: "med", Large: "lg", Huge: "huge" };
 
 /** {html, area, sizeLimit, degreeAdjustment, reminder, waveRepeat, sentences} or null. */
 export function extractWaveSurge(adapted) {

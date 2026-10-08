@@ -7,8 +7,8 @@
 // illusion for 1 minute instead of 1 round.": the rows' Stupefied, Fascinated from the cast for the moving round and its own time after (2 rounds;
 // 1 minute on a critical failure), and the movement a note for its round.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
 const LEAD = /^You create a phantasmal image of [^.]+ at a location somewhere within the spell's range\. Only the spell's target can see [^.]+\. The effect of the vision is based on the outcome of the target's (Fortitude|Reflex|Will) save\.$/;
 const SUCCESS = new RegExp(String.raw`^The target is intrigued by the vision, becoming (${C}Stupefied (\d)\}) for 1 round\.$`);
 const FAILURE = new RegExp(String.raw`^The target is entranced by the vision, becoming stupefied (\d) for 1 round and (moving toward the image's location via the most direct route possible) for 1 round, (bypassing any obvious hazards and enemies in the way)\. The target is then (${C}Fascinated\}) by the illusion for 1 round\.$`);

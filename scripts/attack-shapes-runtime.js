@@ -5,10 +5,8 @@
 //   - "When a marked creature is reduced to 0 Hit Points, all other marked creatures become Off-Guard and Clumsy 1 for 1 round." (Doom Mark).
 import { ONGOING_FLAG } from "./ongoing-core.js";
 import { destinationProblem } from "./teleport-runtime.js";
+import { DEGREES, MODULE_ID, docOf } from "./runtime-utils.js";
 
-const MODULE_ID = "pf2e-automatic-resolution";
-const DEGREES = ["criticalFailure", "failure", "success", "criticalSuccess"];
-const docOf = token => token?.document ?? token;
 const centre = doc => ({ x: doc.x + (Number(doc.width) || 1) * canvas.grid.size / 2, y: doc.y + (Number(doc.height) || 1) * canvas.grid.size / 2 });
 
 /** The caster's spell attack: against the defender's AC (PF2e's own attack roll), or against one of its save DCs ("against the Fortitude DC"). */

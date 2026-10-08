@@ -7,6 +7,7 @@
 // The lingering area's rows: each row's own damage; the failing rows' PF2e Effect (proved: exactly those two penalties) until the creature leaves
 // the area; the critical failure's pull down is the GM's (a note); the water's depth and Swim DC are the area's notes.
 import { htmlToPlainText } from "./description-parser.js";
+import { DEGREE_LABEL_PAIRS as DEGREES } from "./text-patterns.js";
 
 const LEAD = [
     /^You create an area of water (\d+) feet deep\.$/,
@@ -21,7 +22,6 @@ const ROWS = {
     criticalFailure: /^As failure, and the creature is pulled (\d+) feet down\.$/
 };
 const LINK = /<p>\s*(@UUID\[Compendium\.pf2e\.spell-effects\.Item\.[^\]]+\]\{[^}]+\})\s*<\/p>/;
-const DEGREES = [["criticalSuccess", "Critical Success"], ["success", "Success"], ["failure", "Failure"], ["criticalFailure", "Critical Failure"]];
 
 /** {html, swimRow, notes, pullNote, claimed} or null. */
 export function rewriteUndertow(adapted) {

@@ -6,12 +6,12 @@
 // unaffected; failure and critical failure: the condition for its time), the item's save set from the text; the attacks passing through are the
 // GM's (a note).
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_NO_UNTIL as NARRATION_RULES } from "./text-patterns.js";
 
 const OR_BECOME = /^Creatures who end their turn in the area must succeed at an? (Fortitude|Reflex|Will) save or become (@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{[A-Z][a-z]+(?: \d)?\}) for (\d+) rounds?\.$/;
 const PASSING = /^Ranged attacks that pass through the area take an? [–−-](\d) (circumstance|status) penalty to attack rolls\.$/;
 const KEPT = [/^The area is difficult terrain\.$/, /^You can Dismiss this spell\.$/];
 const LEAD = /^The affected area has the following effects\.$/;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|terrain)\b/i;
 
 /** {html, defense, notes} or null. */
 export function extractTextAreaSave(adapted) {

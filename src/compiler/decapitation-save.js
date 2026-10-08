@@ -6,8 +6,8 @@
 // row; the critical failure's second Fortitude save (death, incapacitation) that kills on a failure, which the GM skips for a creature without a head it needs
 // (the card's reminder).
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const TAKES = /^Each creature in the area takes (\d+d\d+) ([a-z]+) damage and (\d+d\d+) persistent ([a-z]+) damage, with an? (Fortitude|Reflex|Will) save\.$/;
 const HEAD = /^<p>\s*<strong>\s*Critical Failure\s*<\/strong>\s*The creature takes double damage\. If the creature has a head, it must succeed at a @Check\[(fortitude|reflex|will)\|against:spell\|traits:([a-z,]+)\] save or be decapitated; this kills any creature except ones that don't require a head to live\. For creatures with multiple heads, this usually kills the creature only if you sever its last head\. This second save has the ([a-z]+) and ([a-z]+) traits\.\s*<\/p>$/;
 const SUCCESS = /^<p>\s*<strong>\s*Success\s*<\/strong>\s*The creature is unaffected\.\s*<\/p>$/;

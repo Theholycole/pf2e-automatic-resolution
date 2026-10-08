@@ -4,9 +4,8 @@
 import { applyDamageWithReceipt } from "./native-damage-receipt.js";
 import { isDying, recoverFromDying, revivedNote } from "./dying-recovery.js";
 import { prepareNoteEffectSource } from "./note-effects.js";
+import { MODULE_ID, escapeHTML } from "./runtime-utils.js";
 
-const MODULE_ID = "pf2e-automatic-resolution";
-const escapeHTML = value => String(value ?? "").replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
 const damageRollClass = () => {
     const DamageRoll = (CONFIG.Dice?.rolls ?? []).find(candidate => candidate?.name === "DamageRoll");
     if (!DamageRoll) throw new Error("PF2e's DamageRoll class could not be resolved.");

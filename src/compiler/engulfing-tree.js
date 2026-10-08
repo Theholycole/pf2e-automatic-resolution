@@ -9,8 +9,8 @@
 // the creature's Reflex DC, with the multiple attack penalty): Grabbed or Restrained until the end of the caster's next turn, Escape or Force Open at the spell DC; the
 // tree that outlasts the spell a note.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES, named as withName } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const CREATE = /^You create a ([a-z]+) in the designated area, and creatures in the area are immediately moved to an adjacent square of their choice they could occupy\.$/;
 const STATS = /^The \1 is \[\[\/r (\d+) \+ \(@item\.level - (\d+)\) \*(\d+)\]\] feet high and has \[\[\/r (\d+) \+ \(@item\.level - \2\) \*(\d+)\]\] Hit Points, AC \[\[\/r (\d+) \+ \(@item\.level - \2\) \*(\d+)\]\], a reach of (\d+) feet, and is permanently @UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{Immobilized\}\.$/;
 const ATTACK = /^When you first Cast the Spell and each time you Sustain the spell, you can attempt a spell attack roll against the (Fortitude|Reflex|Will) DC of a target within the \1['’]s reach\.$/;
@@ -18,7 +18,6 @@ const HOLD = /^If your spell attack roll is successful, the target is @UUID\[(Co
 const FREE = /^(The creature grabbed or restrained by the \1 can attempt to \[\[\/act escape\]\] and other creatures can attempt to free the grabbed or restrained creature by attempting a \[\[\/act force-open\]\], using your spell DC for the DC of both checks\.)$/;
 const MAP = /^(The \1 uses and contributes to your multiple attack penalty\.)$/;
 const STEP = /^Heightened \(\+1\) The \1['’]s height increases by (\d+) feet, its Hit Points increases by (\d+), and its AC increases by (\d+)\.$/;
-const withName = (pattern, name) => new RegExp(pattern.source.replaceAll("\\1", name));
 
 /** {tree, sentences} or null. */
 export function extractEngulfingTree(item) {

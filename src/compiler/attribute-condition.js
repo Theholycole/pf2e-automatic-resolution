@@ -4,7 +4,7 @@
 //   decides which of the conditions associated with the tied attributes to take." with rows "The condition's value is 1."
 // Optionally "At the start of each of your turns, the target can attempt another Will save, ending the effect on a
 // success." The conditions last the spell's fixed duration. Each row gets the options marked `choiceGroup: "attribute"`.
-import { htmlToPlainText } from "./description-parser.js";
+import { plainOrEmpty as plain, sentenceSplitCapital as sentences } from "./text-patterns.js";
 
 const ATTRIBUTES = { strength: "str", dexterity: "dex", constitution: "con", intelligence: "int", wisdom: "wis", charisma: "cha" };
 const LEAD = /^The target is cursed with an adverse condition depending on its highest attribute modifier: (.+)\.$/;
@@ -12,9 +12,6 @@ const TIE = /^On a tie, the creature decides which of the conditions associated 
 const RECUR = /^At the start of each of your turns, the target can attempt another (Fortitude|Reflex|Will) save, ending the effect on a success\.$/;
 const VALUE = /^The condition's value is (\d+)\.?$/;
 const CONDITION = /@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[^\]]+)\]\{([A-Za-z-]+)\}/;
-
-const plain = html => htmlToPlainText(String(html ?? "")).replace(/\s+/g, " ").trim();
-const sentences = text => text.split(/(?<=[.!?])\s+(?=[A-Z])/).filter(Boolean);
 
 export function compileAttributeCondition(plan, preambleHTML, adapted) {
     const raw = String(preambleHTML ?? "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();

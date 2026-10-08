@@ -7,7 +7,7 @@
 //   failure, but the duration is 1 hour." (PF2e's Critical Failure Effect)
 // Casting puts PF2e's Effect on the target. The GM's control rolls the target's save when it kills the albatross: the success's condition, or
 // the row's PF2e Effect (roll twice on the next Will save, removed after that roll — PF2e's Effects keep it for every save: the text wins).
-import { htmlToPlainText } from "./description-parser.js";
+import { plainOrEmpty as plain } from "./text-patterns.js";
 
 const NARRATION = /^You create a spectral ([a-z]+), a guiding bird for sailors, to hover around the target\.$/;
 const BONUS = /^You and allies within (\d+) feet of the target gain a \+(\d) circumstance bonus to attacks against the target\.$/;
@@ -16,8 +16,6 @@ const SAVE = /^The target must then attempt an? (Fortitude|Reflex|Will) save aga
 const SUCCESS = /^The guilt of slaughtering a bird of good fortune weighs on the target's mind\. The target is @UUID\[Compendium\.pf2e\.conditionitems\.Item\.([A-Za-z0-9]+)\]\{([A-Za-z]+) (\d)\} for 1 round\.$/;
 const FAILURE = /^The [a-z]+ hangs around a cord from the target's neck \(or closest equivalent\) for (\d+) minutes?, cursing them for their transgression\. During this time, the target must roll twice and take the worse result on their next (Will|Fortitude|Reflex) save, after which the [a-z]+ disappears\.$/;
 const CRITICAL = /^As failure, but the duration is (\d+) hours?\.$/;
-
-const plain = text => htmlToPlainText(String(text ?? "")).replace(/\s+/g, " ").trim();
 
 /** Returns {deferredSave, claimed} or null. */
 export function compileDeferredSave(adapted, nativeSpellEffects, catalog = null) {

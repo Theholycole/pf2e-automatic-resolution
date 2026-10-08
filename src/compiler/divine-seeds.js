@@ -9,8 +9,8 @@
 // one a round old — its square hazardous terrain (each creature entering it takes the piercing and poison damage), or a fruit that a creature eats for the temporary Hit
 // Points and the damage bonus until the spell ends; the bushes' concealment a note.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const LEAD = [/^You create (\d) seeds of negligible Bulk which appear in one of your open hands, or immediately in \1 squares adjacent to you when you Cast the Spell\.$/,
     /^You can Release a seed into an adjacent square or Interact to throw the seed at a space within (\d+) feet\.$/,
     /^When a seed comes in contact with the ground, it sprouts into a small bush which occupies a 5-foot square and provides concealment\.$/,

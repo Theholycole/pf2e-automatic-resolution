@@ -10,25 +10,11 @@
 import { counters, loseSpell } from "./casting-rules-runtime.js";
 import { castTargetActors, tokensWithin } from "./spellshape-runtime.js";
 import { loadNativeEffectTemplate, prepareNativeEffectSource, createNativeEffect } from "./native-outcome-effects.js";
+import { MODULE_ID, activeGM, castRankOf, escapeHTML, gmIds, isCastMessage, ownerIds, degreeOf } from "./runtime-utils.js";
 
-const MODULE_ID = "pf2e-automatic-resolution";
-const escapeHTML = value => String(value ?? "").replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
-const activeGM = () => game.user?.isGM && game.users.activeGM?.id === game.user.id;
-const gmIds = () => game.users.filter(user => user.isGM).map(user => user.id);
-const ownerIds = actor => game.users.filter(user => actor?.testUserPermission?.(user, "OWNER")).map(user => user.id);
-const isCastMessage = message => message?.flags?.pf2e?.context?.type === "spell-cast" || (!message?.flags?.pf2e?.context?.type && message?.flags?.pf2e?.origin?.type === "spell" && message?.flags?.pf2e?.casting);
-const castRankOf = message => Number(message.flags?.pf2e?.origin?.castRank ?? message.flags?.pf2e?.casting?.castRank ?? message.item?.rank ?? 1);
 const traditionOf = message => message.flags?.pf2e?.casting?.tradition ?? message.item?.spellcasting?.tradition ?? null;
 const held = (actor, slug) => [...(actor?.itemTypes?.equipment ?? []), ...(actor?.itemTypes?.shield ?? []), ...(actor?.itemTypes?.armor ?? [])].find(item => item.slug === slug && item.isInvested !== false) ?? null;
 const WARDING_EFFECT = "Compendium.pf2e.equipment-effects.Item.GqXIV46JqB8x8eEN";
-
-/** A degree of success: a total against a DC, the natural 20 or 1 a step better or worse. */
-export function degreeOf(total, dc, natural) {
-    let degree = total >= dc + 10 ? 3 : total >= dc ? 2 : total <= dc - 10 ? 0 : 1;
-    if (natural === 20) degree = Math.min(3, degree + 1);
-    if (natural === 1) degree = Math.max(0, degree - 1);
-    return degree;
-}
 
 /** A spell cast: the caster's items that act on it, and the targets' reactions offered. */
 export async function spellTriggerItemsOnCast(message) {

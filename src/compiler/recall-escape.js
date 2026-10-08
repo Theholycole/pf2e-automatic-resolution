@@ -7,10 +7,9 @@
 // failing rows the creature's Recall Knowledge control (the chosen skill against the spell DC) ends it, frightens it, and on a failed check keeps
 // its frightened at least 1 until the spell's minute is over.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C, MUST_ATTEMPT_SAVE as SAVE } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
 const CHOOSE = /^When you Cast this Spell, choose ([A-Z][a-z]+(?:, [A-Z][a-z]+)*,? or [A-Z][a-z]+) as the focus of this knowledge\.$/;
-const SAVE = /^The target must attempt an? (Fortitude|Reflex|Will) save\.$/;
 const SUCCESS = new RegExp(String.raw`^The target is (${C}Fascinated\}) by the knowledge you shared for 1 round\.$`);
 const FAILURE = new RegExp(String.raw`^The target is fascinated by the knowledge for (\d+) minutes?\. The target can end this fascination early by attempting a skill check to Recall Knowledge to understand the knowledge using the chosen skill \(using your spell DC as the DC\); regardless of the result, the target becomes ${C}Frightened (\d)\}, but if they failed the check, they can't reduce their frightened condition below (\d) for the remainder of the spell's duration\.$`);
 const CRITICAL = new RegExp(String.raw`^As failure, but the target becomes ${C}Frightened (\d)\} if they attempt to Recall Knowledge\.$`);

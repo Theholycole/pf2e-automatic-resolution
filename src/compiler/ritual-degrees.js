@@ -11,11 +11,9 @@
 //   - "As critical success, but …" / "As failure, and …" / "As failure, but in addition, …": that result's actions, then the rest;
 //   - a stated outcome the GM tracks (the portal's, the plane's, the food's) — the GM's note, read by its own pattern.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK as C, LABELS, RULE_WORDS_BROAD as RULE_WORDS, trimmedSentences as sentencesOf } from "./text-patterns.js";
 
-const RULE_WORDS = /\d|@|\[\[|\b(?:damage|saves?|saving throws?|checks?|DCs?|bonus|penalty|conditions?|immune|immunity|Hit Points|attacks?|Speeds?|weakness|resistance)\b/i;
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Z][a-z]+)(?: (\d))?\}`;
 const UNIT = { hour: 3600, hours: 3600, day: 86400, days: 86400, week: 604800, weeks: 604800, month: 2592000, months: 2592000, year: 31536000, years: 31536000 };
-const LABELS = { "Critical Success": "criticalSuccess", Success: "success", Failure: "failure", "Critical Failure": "criticalFailure" };
 // (A note's text with PF2e's links read as their labels.)
 const plain = text => htmlToPlainText(text).replace(/@UUID\[[^\]]+\]\{([^}]+)\}/g, "$1").replace(/\s+([,.])/g, "$1");
 const G = String.raw`(?:<em>)?geas(?:<\/em>)?`;
@@ -356,8 +354,6 @@ const H_RANK_NOTES = [/^A cleanse affliction spell can counteract a geas on an u
 // (Imprisonment: "You can use the object form of imprisonment in addition to the other options, and you can target a creature of up to 18th level.")
 const H_FORMS = /^You can use the [a-z ]+ forms? of [a-z]+ in addition to the other options, and you can target a creature of up to (\d+)(?:st|nd|rd|th) level\.$/;
 const H_NOTES = [/^The base cost increases to [\d,]+ gp\.$/, /^The cost is the target's level \(minimum 1\) × \d+ gp\.$/, /^The interval becomes \d+ (?:months?|years?), and spending Mythic Points increases it to \d+ years\.$/];
-
-const sentencesOf = text => text.replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s+(?=[A-Z@])/).map(sentence => sentence.trim()).filter(Boolean);
 
 /** One sentence's actions, or null when a sentence with rule words has no reader. */
 export function readSentence(raw, context) {

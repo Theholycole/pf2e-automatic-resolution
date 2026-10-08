@@ -9,8 +9,8 @@
 // hand (else dropped), its damage fire and its versatile and modular traits removed, with the rank's runes. The card's button deals the touch
 // damage to the creature the GM targets.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const STRIKING = { striking: 1, "greater striking": 2, "major striking": 3 };
 const PROPERTY = { flaming: "flaming", "greater flaming": "greaterFlaming" };
 const RUNES = /\+(\d) (striking|greater striking|major striking)(?: (flaming|greater flaming))? weapons?/;

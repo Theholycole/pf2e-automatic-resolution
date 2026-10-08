@@ -6,10 +6,8 @@
 // creature Escapes, the minute at most) and the persistent damage at the cast rank (the item's entry, the text's step); the body parts are
 // narration.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C, NARRATION_RULES, MUST_ATTEMPT_SAVE as SAVE } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
-const SAVE = /^The target must attempt an? (Fortitude|Reflex|Will) save\.$/;
 const SUCCESS = new RegExp(String.raw`^The target's [a-z, ]+ (?:is|are) encased in [a-z]+, causing them to be (${C}Dazzled\}) for 1 round and take (\d+)d(\d+) persistent ([a-z]+) damage\.$`);
 const FAILURE = new RegExp(String.raw`^The target's [a-z, ]+ are all encased\. The target is dazzled and (${C}Enfeebled \d\}) for 1 minute or until they Escape\. They also take (\d+)d(\d+) persistent ([a-z]+) damage\.$`);
 const CRITICAL = new RegExp(String.raw`^The target's [a-z, ]+ are also encased\. The target is dazzled, (${C}Enfeebled \d\}), and (${C}Immobilized\}) for 1 minute or until they Escape\. They also take (\d+)d(\d+) persistent ([a-z]+) damage\.$`);

@@ -4,7 +4,6 @@ import test from 'node:test';
 
 import {compileAbility} from '../src/compiler/index.js';
 import {spellNoteDuration} from '../src/compiler/spell-note.js';
-import {SUPPORTED_RESOLUTION_KINDS} from '../scripts/runtime-core.js';
 
 const base = new URL('../.cache/pf2e-test-fixtures/', import.meta.url);
 const spell = async path => JSON.parse(await readFile(new URL(`spells/spells/${path}.json`, base), 'utf8'));

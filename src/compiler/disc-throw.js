@@ -7,9 +7,8 @@
 // attack with its proficiency raised to mythic against the target's AC; a hit's damage at the cast rank (the persistent part not doubled) and Dazzled for the rounds;
 // the darkness counteract the GM's.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_UUID_START as C, SPELL_EFFECT_LINK as LINK } from "./text-patterns.js";
 
-const LINK = /^@UUID\[Compendium\.pf2e\.spell-effects\.Item\.([^\]]+)\]\{(Spell Effect: [^}]+)\}$/;
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{`;
 const RULES = {
     light: /^You don a diadem of radiant light, which sheds bright light to a range of (\d+) feet and dim light to a further (\d+) feet\.$/,
     throw: /^When you Cast the Spell and when you Sustain it during the duration, you can draw a disc of spiraling light from the diadem and throw it at a creature within (\d+) feet\.$/,

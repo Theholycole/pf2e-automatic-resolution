@@ -8,8 +8,8 @@
 // take at the end of their turns increases by 1.": the save card's damage when cast; after Finalize the GM selects the area and the card
 // places the storm (difficult terrain, the turn-end damage at the cast rank, no save, Sustained); the two clouds are notes.
 import { htmlToPlainText, stripHeighteningHTML } from "./description-parser.js";
+import { NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const CAST = /^When you Cast the Spell, a burst of [a-z ]+ deals (\d+d\d+) ([a-z]+) damage and (\d+d\d+) ([a-z]+) damage to each creature in the area below the cloud \(basic (Fortitude|Reflex|Will) save\)\.$/;
 const TERRAIN = /^[A-Z][a-z ]+ continue to [a-z ]+ in the area for the remainder of the spell's duration, making the area difficult terrain\.$/;
 const TURN_END = /^Any creature that ends its turn in the storm takes @Damage\[\(floor\(@item\.(?:level|rank)\/2\)\)\[([a-z]+)\]\] damage\.$/;

@@ -7,10 +7,8 @@
 // Escapes; each later round's first Sustain deals the flat damage to each target still held by this cast and renews its hold to the end of the caster's
 // next turn.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C, MUST_ATTEMPT_SAVE_LEAD as LEAD, NARRATION_RULES } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
-const LEAD = /^(.+) The target must attempt an? (Fortitude|Reflex|Will) save\.$/;
 const SUCCESS = /^The target takes @Damage\[(\d+d\d+)\[([a-z]+)\]\] damage\.$/;
 const FAILURE = new RegExp(String.raw`^The target takes @Damage\[(\d+d\d+)\[([a-z]+)\]\] damage and is (${C}(Immobilized)\}) until the end of your next turn, but it can Escape\. On subsequent turns, if the target is still immobilized by the [a-z]+, you can Sustain the spell to deal @Damage\[(\(@item\.rank -(\d)\)\*(\d))\[([a-z]+)\]\] damage and keep the target immobilized until the end of your next turn\.$`);
 const CRITICAL = new RegExp(String.raw`^As failure, but the target is also (${C}([A-Z][a-z]+)\})\.$`);

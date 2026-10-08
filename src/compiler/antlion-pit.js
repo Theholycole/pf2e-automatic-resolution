@@ -8,8 +8,8 @@
 // The lingering area (difficult terrain; a save on entering and at the start of a turn inside), the rows written plainly (Immobilized until it
 // Escapes); the heightened step grows the burst and the failing rows' pull. Unsecured objects and the blocked-space rule are GM notes.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C, DEGREE_LABEL_PAIRS as DEGREES } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
 const LEAD = [
     /^You transmute the ground into a conical pit trap of loose sand that becomes difficult terrain for the duration\.$/,
     /^A creature or unsecured object that enters the sand or starts its turn in the sand is moved toward the center, depending on the result of its (Fortitude|Reflex|Will) save\.$/,
@@ -23,7 +23,6 @@ const ROWS = {
     criticalFailure: new RegExp(String.raw`^As failure, and the creature becomes (${C}Immobilized\}) in the pit\. It can attempt to @UUID\[Compendium\.pf2e\.actionspf2e\.Item\.[A-Za-z0-9]+\]\{Escape\} against your spell DC\.$`)
 };
 const STEP = /^Heightened \(\+(\d)\) Increase the area of the spell and the amount a creature moves on a failure by (\d+) feet\.$/;
-const DEGREES = [["criticalSuccess", "Critical Success"], ["success", "Success"], ["failure", "Failure"], ["criticalFailure", "Critical Failure"]];
 
 /** {html, areaStep, moveStep, notes, claimed} or null. */
 export function rewriteAntlionPit(adapted) {

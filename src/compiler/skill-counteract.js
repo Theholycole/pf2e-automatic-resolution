@@ -4,12 +4,12 @@
 // (9th) You can target up to four creatures." — for each target, the caster's check against the source's DC (the GM's, with the effect's counteract rank), PF2e's
 // counteract rule at the cast rank; a success removes the condition (and the Effects granting it); a failure locks that condition on that target for the stated time.
 import { htmlToPlainText } from "./description-parser.js";
+import { WORD_NUMBERS_2_5 as WORDS } from "./text-patterns.js";
 
 const CHECK = /^Attempt an? ([A-Z][a-z]+) check to counteract an effect applying one of the following conditions to the target: (.+)\.$/;
 const FAIL = /^If you fail, you can't target the same effect on the target for (\d+) (day|hour|minute)s?\.$/;
 const DC = /^Use the condition's source to determine the counteract DC \(for example, the (?:@UUID\[[^\]]+\]\{)?Escape\}? DC for grabbed\)\.$/;
 const STEP = /^Heightened \((\d+)(?:st|nd|rd|th)\) You can target up to (two|three|four|five) creatures\.$/;
-const WORDS = { two: 2, three: 3, four: 4, five: 5 };
 const SECONDS = { day: 86400, hour: 3600, minute: 60 };
 
 /** {skillCounteract, claimed} or null. */

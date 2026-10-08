@@ -1,10 +1,8 @@
 // Mark of Mystery: a creature targeting the caster or the marked ally with a harmful effect — an attack roll on either, or a save card the module starts against
 // either — gets the spell's Will save card (Frightened 1 or 2, then immune for the hour), once until its immunity; a creature of a type of the caster's tradition
 // (or a dragon or spellcaster of it) holds the module's −1 status penalty Effect for that save. The active GM runs it.
-import { escapeHTML } from "./runtime-utils.js";
+import { escapeHTML, MODULE_ID } from "./runtime-utils.js";
 import { createNativeEffect, loadNativeEffectTemplate, prepareNativeEffectSource } from "./native-outcome-effects.js";
-
-const MODULE_ID = "pf2e-automatic-resolution";
 
 const wardOf = actor => (actor?.itemTypes?.effect ?? []).find(effect => effect.flags?.[MODULE_ID]?.markWard && !effect.isExpired);
 

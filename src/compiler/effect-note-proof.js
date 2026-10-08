@@ -2,6 +2,7 @@
 // module covers what the Effect doesn't). Each rule sentence must match one of the Effect's rules exactly; the other sentences must be the
 // known non-mechanical notes (or the opening narration); a heightened duration is applied to the Effect by the runtime.
 import { htmlToPlainText } from "./description-parser.js";
+import { WORD_NUMBERS_1_3 as NUMBER_WORDS } from "./text-patterns.js";
 
 // A rule value at a rank: a number, or a formula of @item.level with + - * / floor ceil (nothing else).
 // (Or PF2e's table form: "match(when(btwn(@item.level, 2, 3), 1), when(gte(@item.level, 8), 4))", or "ternary(gte(@item.level,7),15,10)".)
@@ -842,7 +843,6 @@ const BENEFIT_ITEMS = [
         rule: (rule, match) => rule.key === "FlatModifier" && rule.selector === "saving-throw" && rule.type === match[2]
             && Object.keys(rule).every(key => ["key", "predicate", "selector", "type", "value"].includes(key)) }
 ];
-const NUMBER_WORDS = { one: 1, two: 2, three: 3 };
 function proveBenefitChoice(sentences, entries, rules, baseRank) {
     const start = sentences.findIndex(sentence => /^Choose one of the benefits listed below\.$/.test(sentence));
     if (start < 0) return null;

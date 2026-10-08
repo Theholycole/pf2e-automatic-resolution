@@ -8,9 +8,8 @@
 // a damage multiplier on persistent damage, so the card scales the persistent formula itself (sharedDamage.persistentScaled). The fire-trait
 // escape is a GM note on the failing rows.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C, DEGREE_LABEL_PAIRS as DEGREES, NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const LEAD = /^The target takes (\d+d\d+) persistent ([a-z]+) damage and must attempt an? (Fortitude|Reflex|Will) save\.$/;
 const ROWS = {
     criticalSuccess: /^The target is unaffected\.$/,
@@ -18,7 +17,6 @@ const ROWS = {
     failure: new RegExp(String.raw`^The target takes the full persistent ([a-z]+) damage and is (${C}Immobilized\}) for (\d+) (round|minute)s? or until it Escapes\. (Once per round, if the target uses or is affected by an effect with the ([a-z]+) trait, it can attempt to Escape as a free action or immediately roll a flat check to end the persistent \1 damage \([^)]*\)\.)$`),
     criticalFailure: new RegExp(String.raw`^As a failure, but double the persistent ([a-z]+) damage, and the creature is (${C}Off-Guard\}) for as long as it's immobilized\.$`)
 };
-const DEGREES = [["criticalSuccess", "Critical Success"], ["success", "Success"], ["failure", "Failure"], ["criticalFailure", "Critical Failure"]];
 
 /** {html, note, claimed} or null. */
 export function rewritePersistentRows(adapted) {

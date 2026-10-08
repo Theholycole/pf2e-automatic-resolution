@@ -9,13 +9,12 @@
 // On the cast and each Sustain a card offers the Escape: the targeted ally inside, with one of those conditions, rolls PF2e's Escape, raised to
 // the caster's better skill modifier when that's higher.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_NO_TERRAIN as NARRATION_RULES, SKILLS } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const HOLY = /^Your allies in the area are filled with sacred energy, making their spells and attacks (holy|unholy)\.$/;
 const EXCEPT = /^Creatures or effects that would be (holy|unholy) don't gain this benefit\.?$/;
 const CHOOSE = /^When you cast or Sustain this spell, you can choose an ally in the area that's @UUID\[[^\]]+\]\{(Grabbed)\}, @UUID\[[^\]]+\]\{(Immobilized)\}, or @UUID\[[^\]]+\]\{(Restrained)\}\.$/;
 const ESCAPE = /^They can immediately use a reaction to (?:@UUID\[[^\]]+\]\{Escape\}|Escape); they can use your ([A-Z][a-z]+) or ([A-Z][a-z]+) modifier for the check instead of their unarmed attack, Acrobatics, or Athletics modifier if that would be better\.$/;
-const SKILLS = ["acrobatics", "arcana", "athletics", "crafting", "deception", "diplomacy", "intimidation", "medicine", "nature", "occultism", "performance", "religion", "society", "stealth", "survival", "thievery"];
 
 /** Returns {escapeAura, claimed} or null. */
 export function compileEscapeAura(adapted, nativeSpellEffects) {

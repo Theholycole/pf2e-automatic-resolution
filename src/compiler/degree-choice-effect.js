@@ -2,6 +2,8 @@
 // "failure", "critical-failure", and rules predicated on "R:<degree>" (Distracting Decoy, Ill Omen). The Effect is
 // applied on each degree it offers, with that degree preset, when its rules for the degree state exactly what the row
 // says; a condition it grants is the row's own condition (carried by the Effect, not applied twice).
+import { DEGREE_LABEL } from "./text-patterns.js";
+
 const DEGREE_VALUE = Object.freeze({ criticalSuccess: "critical-success", success: "success", failure: "failure", criticalFailure: "critical-failure" });
 const CONDITION_SLUG = Object.freeze({
     "Compendium.pf2e.conditionitems.Item.AJh5ex99aV6VTggg": "off-guard",
@@ -333,7 +335,6 @@ export function compileDegreeChoiceNativeEffects(compilation, { sections = {}, l
 // A ChoiceSet that stores a number in a flag, one choice per degree ("PF2E.Check.Result.Degree.Check.failure": 1,
 // "…criticalFailure": 2), and Weakness rules scaled by that number (Fungal Infestation:
 // "floor(@item.level/2)*{item|flags.system.rulesSelections.fungalInfestation}").
-const DEGREE_LABEL = /^PF2E\.Check\.Result\.Degree\.Check\.(success|failure|criticalFailure)$/;
 
 /** The flag ChoiceSet, the value it offers per degree, and the rules at one degree's value; null when not this shape. */
 export function degreeFlagRules(rules, degree) {

@@ -8,13 +8,12 @@
 // (its weapon choice and toggle for the first Strike each round); holding it aloft a reminder.
 import { htmlToPlainText } from "./description-parser.js";
 import { casterRowEffectMatches } from "./caster-row-effect.js";
+import { SPELL_EFFECT_LINK_ANY as LINK, NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const ALOFT = /^You must hold your weapon or an empty hand aloft as part of Casting this Spell\.$/;
 const BOLT = /^When you do, a bolt of lightning descends from a storm cloud in the air above you and through the target, dealing (\d+d\d+) ([a-z]+) damage with a basic (Fortitude|Reflex|Will) save\.$/;
 const CHARGE = /^For the rest of the spell's duration, your first Strike each round with the weapon you held aloft \(or with your unarmed attacks if you held an empty hand aloft\) deals an additional 1d(\d+) ([a-z]+) damage\.$/;
 const STORM = /^If [a-z ]+ is cast outside under a cloudy or stormy sky, increase the bolt's damage by @Damage\[(\d+)d(\d+)\[([a-z]+)\]\]\.$/;
-const LINK = /^@UUID\[Compendium\.pf2e\.spell-effects\.[^\]]+\]\{[^}]+\}$/;
 const TARGET = /^1 creature that is either (taller than you or higher than you)$/;
 const STEP = /^Heightened \((\d)th\) The damage dealt to the initial target increases by (\d+d\d+), and the additional damage dealt on the first Strike each turn increases by 1d(\d+)\.$/;
 

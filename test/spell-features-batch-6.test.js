@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import {degreeOf} from '../scripts/spell-trigger-items-runtime.js';
+import {degreeOf} from '../scripts/runtime-utils.js';
 import {counters} from '../scripts/casting-rules-runtime.js';
 
 // Spell features batch F6 (2026-10-05): the counteract checks of Reflecting Shield (+30, rank 9) and Spell Duelist's Siphon.

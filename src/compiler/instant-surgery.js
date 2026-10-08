@@ -6,8 +6,8 @@
 // named spell's Effect on it); on a hit the caster's two picks — each a boost or a penalty on a critical hit, one of each on a hit — as the target's Effect for the
 // duration (a status modifier to the rolls of each attribute); the willing creature's Aid a note.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const ATTACK = /^Make a spell attack roll against the target['’]s AC\.$/;
 const BONUS = /^If you have ([a-z ]+) active on the creature, your spell attack roll has a \+(\d) circumstance bonus\.$/;
 const AID = /^(If the creature is willing, they can Aid you using Medicine without having to spend the preparatory action normally required to Aid\.)$/;

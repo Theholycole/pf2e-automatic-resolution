@@ -5,9 +5,9 @@
 // damage to targets within 10 feet of the target increases by 1d6.": the target's basic save (the item's damage); on a failure, a card for the creatures
 // around it (not the target) — the text's (rank)d6 with the same basic save, halved for those beyond the inner distance — only when one is within it.
 import { htmlToPlainText } from "./description-parser.js";
+// (Its narration's "until the area around the target is filled" is flavour: the rule words without "until".)
+import { NARRATION_RULES_NO_UNTIL as NARRATION_RULES } from "./text-patterns.js";
 
-// (Its narration's "until the area around the target is filled" is flavour: no "until" in this list.)
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|terrain)\b/i;
 const DEALS = /^You create an arc of ([a-z]+) that deals (\d+d\d+) ([a-z]+) damage to the target\.$/;
 const SPREAD = /^If the target fails its save, each creature within (\d+) feet of the target also takes @Damage\[\(@item\.level\)d(\d+)\[([a-z]+)\]\] damage with a basic (Fortitude|Reflex|Will) save, or half this amount if the creature was further than (\d+) feet but within (\d+) feet of the target\.$/;
 const AT_LEAST = /^There must be at least 1 creature within (\d+) feet of the target for you to deal damage to creatures other than the target\.$/;

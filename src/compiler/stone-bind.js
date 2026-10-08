@@ -6,8 +6,8 @@
 // DC.": Clumsy as a note granting it until the creature moves (the GM ends it); Immobilized or Restrained until it Escapes at the spell DC; the
 // adjacent difficult terrain a card reminder.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_UUID_START as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{`;
 const TERRAIN = /^When you Cast this Spell, every square adjacent to the target becomes difficult terrain from [^.]+ for (\d+) (minute|round)s?\. The target also attempts a (Fortitude|Reflex|Will) save\.$/;
 const SUCCESS = new RegExp(String.raw`^The target is ${C}(Clumsy) (\d)\} as their feet are bound within stone\. This condition lasts until they move from their current position\.$`);
 const FAILURE = new RegExp(String.raw`^The target is ${C}Clumsy (\d)\} and (${C}(Immobilized)\}) as their legs are encased in rock\. The clumsy condition lasts until they move from their current position, and they can (?:@UUID\[[^\]]+\]\{Escape\}|Escape) from being immobilized with a check against your spell DC\.$`);

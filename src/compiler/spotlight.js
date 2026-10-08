@@ -8,8 +8,8 @@
 // creature outside it and within 15 feet saves, a failure Fascinated and Off-Guard while fascinated, for as long as the spell lasts; the card's control for a creature
 // inside Performing — its Performance against each such creature's Will DC.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const LEAD = [/^You shine a spotlight of magical nature in the area and the area must include at least one creature\.$/,
     /^Non-allied creatures within (\d+) feet of the burst must make a (Fortitude|Reflex|Will) Save or become @UUID\[(Compendium\.pf2e\.conditionitems\.(?:Item\.)?[A-Za-z0-9]+)\]\{Fascinated\} with the subjects of the spotlight and @UUID\[(Compendium\.pf2e\.conditionitems\.(?:Item\.)?[A-Za-z0-9]+)\]\{Off-Guard\} while fascinated\.$/,
     /^(If a hostile action would end the fascination, the off-guard condition remains until the hostile action is resolved\.)$/, /^Creatures inside the spotlight are not subject to this effect\.$/];

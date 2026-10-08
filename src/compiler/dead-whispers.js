@@ -5,8 +5,8 @@
 // you stop sustaining the spell or the creature leaves the area.": the lingering burst's saves (in it at the cast, or entering it); Stunned 1; the
 // critical success's immunity; staying in the area a note for its round; the suggestion a note for the sustained time; hearing the GM's review.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
 const LEAD = /^The mysterious whispers [^.]+, become audible\. A creature in the area when this Spell is Cast or who enters the area must attempt a (Fortitude|Reflex|Will) save\.$/;
 const SUCCESS = new RegExp(String.raw`^The target becomes (${C}Stunned (\d)\}), listening to the whispers\.$`);
 const FAILURE = /^As success, and the creature will not voluntarily leave the area for (\d+) rounds?\.$/;

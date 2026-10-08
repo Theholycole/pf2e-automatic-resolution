@@ -1,4 +1,5 @@
 import { isExecutableBasicSavePlan } from "./basic-save-core.js";
+import { UNITS } from "./runtime-utils.js";
 
 // Pure rules for affliction care: plan validation, rank application and
 // PF2e affliction-save arithmetic. No Foundry globals.
@@ -9,7 +10,6 @@ const OPS = new Set(["suppress-condition", "decrease-conditions", "affliction-sa
 // "triggering-spell": the spell a reaction answers; "other": an item or ward the GM names.
 const COUNTERACT_SOURCES = new Set(["effect", "affliction", "chosen-affliction", "spell-effect", "triggering-spell", "other"]);
 const TRAIT = /^[a-z-]+$/;
-const UNITS = new Set(["rounds", "minutes", "hours", "days"]);
 const duration = d => d && Number.isInteger(d.value) && d.value > 0 && UNITS.has(d.unit);
 const SECONDS = { rounds: 6, minutes: 60, hours: 3600, days: 86400 };
 

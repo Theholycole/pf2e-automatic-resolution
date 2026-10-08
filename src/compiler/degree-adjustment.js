@@ -4,9 +4,8 @@
 // PF2e traits; fuzzy creature states become a GM question per target. Each
 // sentence must match exactly; the map is kept as written.
 import { htmlToPlainText, stripHeighteningHTML } from "./description-parser.js";
+import { BETTER, WORSE } from "./text-patterns.js";
 
-const WORSE = { criticalSuccess: "success", success: "failure", failure: "criticalFailure", criticalFailure: "criticalFailure" };
-const BETTER = { criticalSuccess: "criticalSuccess", success: "criticalSuccess", failure: "success", criticalFailure: "failure" };
 const TRAIT_WORDS = { water: "water", plant: "plant", air: "air", fire: "fire", earth: "earth", metal: "metal", wood: "wood", undead: "undead" };
 
 // "X creatures and Y creatures", "Creatures made of X (such as X elementals) and Y creatures",

@@ -9,6 +9,7 @@
 // The caster picks the suit and boon or bane on the card (the draw is the caster's: a note); a failed save gives the target the module's Effect with it for
 // the duration, its control the target's save again (an action; a success ends it — two at 6th); from 6th the doubled values and a minute.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK as C } from "./text-patterns.js";
 
 const LEAD = [/^You draw a card from the harrow, either one from a deck you have in hand or magically produce one as part of the spell\.$/,
     /^You use the power of the card's suit to influence a creature around you\.$/,
@@ -19,7 +20,6 @@ const LEAD = [/^You draw a card from the harrow, either one from a deck you have
     /^The target can attempt to remove the card's influence by using an action, which has the concentrate trait, to attempt the saving throw again; on a success, the effect ends\.$/,
     /^To determine the card, draw a card from a harrow deck\.$/,
     /^If you don't have a harrow deck available, you can roll 1d6 to randomly determine the suit you draw\.$/];
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Z][a-z]+)(?: (\d))?\}`;
 const SUITS = [
     ["hammers", new RegExp(String.raw`^1\. Hammers \(Str\) Boon: The target gains a \+(\d) status bonus to damage rolls; Bane: The target is ${C}\.$`), "damage"],
     ["keys", new RegExp(String.raw`^2\. Keys \(Dex\) Boon: The target gains a \+(\d) status bonus to AC; Bane: The target is ${C}\.$`), "ac"],

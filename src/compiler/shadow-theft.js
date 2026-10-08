@@ -7,10 +7,8 @@
 // rows' damage as PF2e's item damage; on the first Sustain of each later round, a basic save card for each target that failed (the same damage
 // at the cast rank); the missing shadow a reminder.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C, MUST_ATTEMPT_SAVE_LEAD as LEAD, NARRATION_RULES } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
-const LEAD = /^(.+) The target must attempt an? (Fortitude|Reflex|Will) save\.$/;
 const SUCCESS = new RegExp(String.raw`^The target is (${C}[A-Z][a-z]+ \d\}) for 1 round\.$`);
 const FAILURE = new RegExp(String.raw`^The target takes @Damage\[(\d+d\d+)\[([a-z]+)\]\] damage and is (${C}([A-Z][a-z]+) (\d)\}) for the spell's duration as [^.@]+\. On subsequent rounds, the first time each round you @UUID\[Compendium\.pf2e\.actionspf2e\.Item\.[A-Za-z0-9]+\]\{Sustain the Spell\}, you can throttle the [a-z]+ to deal @Damage\[(\d+d\d+)\[([a-z]+)\]\] damage to the target \(basic (Fortitude|Reflex|Will) save\)\. (Until the spell ends, the target doesn't cast a shadow\.)$`);
 const CRITICAL = new RegExp(String.raw`^As failure, but the target is (${C}([A-Z][a-z]+) (\d)\})\.$`);

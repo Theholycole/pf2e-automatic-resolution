@@ -1,8 +1,7 @@
 // The third-party ("+" modules) spellshape feats and actions, worded their own way (docs/planning/third-party-features-audit.md): each read from its whole text into
 // the spellshape runtime's requirements and riders. A text no form here reads stays unread.
-import { htmlToPlainText } from "./description-parser.js";
+import { plainApostrophes as plain } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(String(html ?? "")).replace(/\s+/g, " ").trim().replace(/[’]/g, "'");
 // (The leading Frequency: the table's. A leading Requirements: the table's too, unless the form reads it — Storm Spell's cursebound value.)
 // (Conditions a "+" text names without a link: PF2e's.)
 const CONDITIONS = { frightened: "Compendium.pf2e.conditionitems.Item.TBSHQspnbcqxsmjL", fleeing: "Compendium.pf2e.conditionitems.Item.sDPxOjQ9kx2RZE8D" };

@@ -8,8 +8,8 @@
 // descends to it and takes twice the falling damage for that distance (the distance itself, PF2e's falling damage being half), to the stated maximum, whatever
 // its save. The area's bottom is the ground: a raised area is the GM's (the card's reminder).
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_UUID_START as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{`;
 const AREA = /^Area (\d+)-foot tall, (\d+)-foot radius cylinder$/;
 const DESCEND = /^All flying creatures in the area descend to the bottom of the spell's area, taking twice as much ([a-z]+) damage as if they had fallen the distance moved, to a maximum of (\d+) falling damage if they fall \2 feet\.$/;
 const EVEN_IN_AIR = /^They take this falling damage even if the spell's area is entirely in the air and they don't hit the ground, as they concuss against the bottom of the spell's area at great speed\.$/;

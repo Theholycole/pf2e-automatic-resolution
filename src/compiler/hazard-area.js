@@ -8,13 +8,13 @@
 // and the squares it passed through, rolling the damage for each square; the ignite control gives each targeted creature standing on it the
 // persistent damage and ends the spell. The rest of the text is the GM's notes.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES, HAZARD_MOVE as PER_SQUARE_FLAT, WORD_NUMBERS_2_6 as TIMES } from "./text-patterns.js";
 
 const PER_SQUARE = /^You and your allies can pass through it safely, but enemies who move into the [a-z]+ trigger explosions, taking (\d+)d(\d+) ([a-z]+) damage for every square they pass through\.$/;
 const IGNITE = /^When a creature within the area uses a ([a-z]+) effect or receives \1 damage, the [a-z]+ ignites, dealing @Damage\[floor\(@item\.rank ?\/ ?(\d)\)d(\d+)\[persistent,([a-z]+)\]\] damage to anyone standing on it; this burns up the [a-z]+, removing it and its difficult terrain\.$/;
 const TERRAIN = /^(?:(?:This|The) area becomes|The covered area is) difficult terrain( and hazardous terrain)?\.$/;
 // Spike Stones: "A creature that moves on the ground through the area takes 3 piercing damage for every square of that area it moves into." with
 // "Heightened (+1) Increase the damage by 1." — any creature on the ground, a flat amount per square.
-const PER_SQUARE_FLAT = /^A creature that moves on the ground through the area takes (\d+) ([a-z]+) damage for every square of that area it moves into\.$/;
 const STEP_FLAT = /^<p>\s*<strong>\s*Heightened \(\+(\d)\)\s*<\/strong>\s*(?:Increase the damage by|The [a-z]+ damage of the hazardous terrain increases by|The damage per square increases by) (\d+)\.\s*<\/p>$/;
 // Field of Razors: "The covered area is difficult terrain. A creature that moves through the area takes @Damage[5[slashing]] damage per square traversed." /
 // "If a creature takes slashing, piercing, or persistent bleed damage while inside the thicket, you can spend a reaction to grow the iron in the shed blood into
@@ -27,7 +27,6 @@ const BLOOD_GROWTH = /^If a creature takes ([a-z]+), ([a-z]+), or persistent ([a
 const GROWTH_LIMIT = /^You can grow the area (two|three|four|five|six) times in this way, to a maximum of an? (?:@Template\[(?:type:)?burst\|distance:(\d+)\]|(\d+)-foot burst)\.$/;
 const METAL_NOTES = [/^The metal must be of a type you currently have in your possession\.$/, /^The barbed wires are made of the metal you chose and activate resistances, weaknesses, and the like normally\.$/,
     /^The metal reforms in your possession when the spell ends\.$/];
-const TIMES = { two: 2, three: 3, four: 4, five: 5, six: 6 };
 // Nature's Reprisal: "To your enemies, the area becomes difficult terrain, and areas that were naturally difficult terrain due to plants become greater difficult
 // terrain as well as hazardous terrain, dealing 6 poison damage to an enemy each time it enters an affected square." with "Target all squares on the ground that
 // contain plants in an 80-foot burst" — a flat amount per hazardous square an enemy enters; which squares have plants, and the terrain (enemies only), the GM's.
@@ -38,7 +37,6 @@ const NOTES = [
     /^If all the [a-z]+ explodes, the spell ends\.$/
 ];
 const STEP = /^<p>\s*<strong>\s*Heightened \(\+(\d)\)\s*<\/strong>\s*The (?:damage an enemy takes by passing through a square increases?|persistent ([a-z]+) damage increases|damage increases) by (\d+)d(\d+)\.\s*<\/p>$/;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 // Sacred Nimbus: "The rain deals 5d6 spirit damage to fiends, undead, and creatures that have a weakness to spirit damage in the area at the end of
 // your turn." with "When you Sustain the spell, you can move the cloud at a fly speed of 15 feet to anywhere in the spell's range." — the area deals
 // the damage itself as the caster's turn ends (only to creatures with those traits or PF2e's weakness to that type), with no save (the text states

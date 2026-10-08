@@ -6,6 +6,7 @@
 // PF2e has no rule that suppresses a sense: the suppression is a note Effect for its duration (the GM plays it). The critical failure's
 // Blinded is PF2e's condition with the end-of-turn save that ends it (the recurring-save lifetime).
 import { htmlToPlainText } from "./description-parser.js";
+import { DEGREE_LABEL_PAIRS as DEGREES } from "./text-patterns.js";
 
 const SENSES = "darkvision or low-light vision";
 const ROWS = {
@@ -14,7 +15,6 @@ const ROWS = {
     failure: /^As success, but the duration is (\d+) (round|minute)s?\.$/,
     criticalFailure: new RegExp(`^As success, but the duration is (\\d+) (round|minute)s?, and the target is also (@UUID\\[Compendium\\.pf2e\\.conditionitems\\.Item\\.[A-Za-z0-9]+\\]\\{Blinded\\}) for the duration\\. It can attempt a new save at the end of each of its turns\\. If it succeeds, it's no longer Blinded, but its ${SENSES} remains suppressed\\.$`)
 };
-const DEGREES = [["criticalSuccess", "Critical Success"], ["success", "Success"], ["failure", "Failure"], ["criticalFailure", "Critical Failure"]];
 
 /** {html, notes: {degree: note}, claimed} or null. */
 export function rewriteSenseSuppression(adapted) {

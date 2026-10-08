@@ -6,10 +6,9 @@
 // additional 10-foot burst.": separate lingering areas (one more each 2 ranks) of greater difficult terrain, a creature exposed once a round as it
 // starts its turn in one or enters one, by the save's rows (the persistent acid on a critical failure). PF2e's item has no area: the text's.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES } from "./text-patterns.js";
 
-const COUNTS = { two: 2, three: 3 };
 const AREA = /^<p>\s*<strong>\s*Area\s*<\/strong>\s*all squares in (two|three) @Template\[burst\|distance:(\d+)\]\{\2-foot bursts\}\.\s*<\/p>$/i;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const TERRAIN = /^The area of each pool becomes greater difficult terrain\.$/;
 const STRIKE = /^Each round that a creature starts its turn in one of the pools or enters a pool during a move action it's using, it takes (\d+d\d+) ([a-z]+) damage with a basic (Fortitude|Reflex|Will) save\.$/;
 const CRIT = /^A creature that critically fails its saving throw also takes (@Damage\[\d+d\d+\[(?:[a-z]+,persistent|persistent,[a-z]+)\]\])(?: damage)?\.$/;

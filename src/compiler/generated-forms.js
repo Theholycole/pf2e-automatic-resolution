@@ -8,12 +8,9 @@
 //   - Two options picked from a list and swapped (Mantle of Heaven's Slopes): "Upon Casting this Spell, pick two different options below. As a single
 //     action, which has the concentrate trait, you can lose one of the options you chose and select a different one …" — two option slots on the
 //     Effect (as PF2e's own mantles: each slot a toggle with the options as its choices), every option's rules behind either slot.
-import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_UNVALUED as COND, plain, sentenceSplit as split } from "./text-patterns.js";
 
 const ACTION = name => String.raw`@UUID\[Compendium\.pf2e\.actionspf2e\.Item\.[A-Za-z0-9]+\]\{${name}\}`;
-const COND = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Z][a-z]+)\}`;
-const plain = html => htmlToPlainText(html).replace(/\s+/g, " ").trim();
-const split = text => text.split(/(?<=[.!?])\s+(?=[A-Z@])/).filter(Boolean);
 // A narration sentence: nothing a rule could hide in.
 const narration = sentence => !/\d|@|\[\[|\b(?:damage|save|bonus|penalty|condition|immune|can't|must|each|whenever|until|attack|gain|resistance|weakness|speed)\b/i.test(sentence);
 const seconds = duration => { const match = /^(\d+) (minute|round|hour)s?$/.exec(String(duration ?? "").trim()); return match ? Number(match[1]) * { round: 6, minute: 60, hour: 3600 }[match[2]] : null; };

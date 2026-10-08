@@ -7,9 +7,8 @@
 // enemy's save; each row a note on it whose controls the GM uses when the weapon hits it (the success's damage once; the failing rows' persistent
 // damage each hit) or critically hits it (the same damage and Doomed 1 — while it takes that persistent damage after a failure); the weapon a reminder.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_UUID_START as C, NARRATION_RULES } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{`;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const LEAD = /^The effect is based on the target enemy's (Fortitude|Reflex|Will) save\.$/;
 const TARGET = /^1 enemy, and (1 weapon that is either unattended or wielded by you or a willing ally)$/;
 const SUCCESS = /^The target weapon deals an additional @Damage\[(\d+)d(\d+)\[([a-z]+)\]\] damage the first time it hits the target enemy before the end of the spell's duration\.$/;

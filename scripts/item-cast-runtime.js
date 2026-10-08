@@ -10,14 +10,9 @@ import { readItemCasts } from "../src/compiler/item-casts.js";
 import { loadNativeEffectTemplate, prepareNativeEffectSource, createNativeEffect } from "./native-outcome-effects.js";
 import { shapeEffect, timedConditions } from "./spellshape-runtime.js";
 import { loseSpell } from "./casting-rules-runtime.js";
+import { MODULE_ID, activeGM, escapeHTML, gmIds, isCastMessage, ownerIds } from "./runtime-utils.js";
 
-const MODULE_ID = "pf2e-automatic-resolution";
-const escapeHTML = value => String(value ?? "").replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
-const activeGM = () => game.user?.isGM && game.users.activeGM?.id === game.user.id;
-const gmIds = () => game.users.filter(user => user.isGM).map(user => user.id);
-const ownerIds = actor => game.users.filter(user => actor?.testUserPermission?.(user, "OWNER")).map(user => user.id);
 const unlink = text => String(text ?? "").replace(/@UUID\[[^\]]+\]\{([^}]+)\}/g, "$1").replace(/@(?:Damage|Check|Template)\[([^\]]+)\](?:\{([^}]+)\})?/g, (all, inner, label) => label ?? inner.split("|")[0]);
-const isCastMessage = message => message?.flags?.pf2e?.context?.type === "spell-cast" || (!message?.flags?.pf2e?.context?.type && message?.flags?.pf2e?.origin?.type === "spell" && message?.flags?.pf2e?.casting);
 
 /** The cast's rank: stated, else the spell's own — a cantrip at half the item's level. */
 function castRank(read, cast, spellSource) {

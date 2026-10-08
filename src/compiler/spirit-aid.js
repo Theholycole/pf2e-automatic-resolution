@@ -7,8 +7,8 @@
 // Distract rolls the caster's foes' saves in the area (Off-Guard while inside, until the next aid); Obstacle makes the area difficult terrain
 // until the next aid; Search rolls the caster's Perception to Seek (the GM tells what's found). Moving the area is the GM's (move the region).
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const CHOOSE = /^Choose the kind of aid your [a-z ]+ supply from the list below when you Cast the Spell\.$/;
 const SUSTAIN = /^The first time each round you Sustain the spell, you can move the area occupied by the apparitions up to (\d+) feet and you can choose the kind of aid they provide this round\.$/;
 const ITEMS = {

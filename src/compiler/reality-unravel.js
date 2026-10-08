@@ -5,9 +5,8 @@
 // the sustained area's save at the cast and on each Sustain, as rows; the failing rows' persistent damage and Off-Guard (ending with it) only
 // for a creature the GM says isn't native to the plane; the dust a reminder.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C, NARRATION_RULES } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const LEAD = /^When you Cast this Spell and the first time you Sustain it on subsequent rounds, each creature in the area takes (\d+d\d+) ([a-z]+) damage with a basic (Fortitude|Reflex|Will) save\.$/;
 const RIDER = new RegExp(String.raw`^On a failed save, a creature that isn't a native inhabitant of the plane also takes (@Damage\[[^\]]*\[persistent,([a-z]+)\]\]) damage and becomes (${C}Off-Guard\}) until it recovers from this persistent damage\.$`);
 const DUST = /^A target reduced to 0 Hit Points by either damage scatters into fine dust; its gear remains\.$/;

@@ -7,8 +7,8 @@
 //     circumstance penalty to AC (PF2e's off-guard slug) against the caster's attacks only, until the caster's next turn starts.
 // Returns { remainderHTML, sentences, damageTypeFrom, areaChoice, reminders, noteEffects } when at least one is read, else null.
 import { htmlToPlainText, stripHeighteningHTML } from "./description-parser.js";
+import { cleanSentences as split } from "./text-patterns.js";
 
-const split = text => String(text ?? "").replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s+(?=[A-Z@])/).map(sentence => sentence.trim()).filter(Boolean);
 const CASCADE_TYPE = /^(?:The damage (?:dealt by this spell|of your [a-z ]+)|This spell's damage) is (?:of )?the same (?:damage )?type as your (?:@UUID\[[^\]]+\]\{)?Arcane Cascade\}?\.$/;
 const TEMPLATE = String.raw`@Template\[(?:type:)?(burst|cone|emanation|line)\|distance:(\d+)\]`;
 const TEMPLATE_CHOICE = new RegExp(String.raw`^Creatures in an? ${TEMPLATE}, ${TEMPLATE},? or ?${TEMPLATE} of you take (\d+d\d+) damage\.$`);

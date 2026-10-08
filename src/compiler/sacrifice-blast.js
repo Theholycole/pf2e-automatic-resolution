@@ -12,8 +12,8 @@
 // it), or reminds the GM to remove the thrall (thralls are marks on the map); Bony Barrage's card asks whether a second thrall is destroyed —
 // then the caster and its allies among the targets take no damage and get the AC bonus until the start of the caster's next turn.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const MINION_BLAST = /^The target is immediately slain, and the explosion deals (\d+)d(\d+) ([a-z]+) damage to creatures within (\d+) feet of it with a basic (Fortitude|Reflex|Will) save\.$/;
 const TRAIT_TYPE = /^If the target has the ([a-z]+) or ([a-z]+) trait, the spell deals ([a-z]+) damage and has the \3 trait instead of the ([a-z]+) trait\.$/;
 const SEIZED = /^Attempting to cast this spell targeting a creature that you temporarily seized control of, such as [^,]+, automatically fails and breaks the controlling effect\.$/;

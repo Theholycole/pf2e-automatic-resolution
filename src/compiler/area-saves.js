@@ -1,8 +1,6 @@
 // Note-only spells with a save or an area the module can run (Verminous Lure, Extradimensional Cover, Perfected Mind).
-import { durationSeconds, plainText as plain, splitSentences as split } from "./description-parser.js";
-
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|immune|can't|must|checks?|DC|Hit Points|Strikes?)\b/i;
-const secondsOf = text => durationSeconds(text);
+import { plainText as plain, splitSentences as split } from "./description-parser.js";
+import { NARRATION_RULES_CHECKS as NARRATION_RULES, secondsOf } from "./text-patterns.js";
 
 // Verminous Lure: "Upon casting, the target emits a musk that's captivating to certain animals. Tiny animals and animal swarms of any size within
 // range must attempt a Will save. On a failure, non-hostile animals or animal swarms try to touch the target. If hostile, such creatures choose to

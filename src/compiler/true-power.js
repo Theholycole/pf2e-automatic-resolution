@@ -6,8 +6,8 @@
 // sustained duration shaping every other spell it casts one rank higher (to 10th); its card's control for a spell cast through the patron — the caster's basic save
 // against its own spell DC and 1d6 spirit a rank of that spell; its end the 10d6 spirit save card for the caster and every creature within 10 feet.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const TEXT = [/^When you Cast this spell, you may immediately cast another spell with a cast time of (\d) actions or less as a single action as your patrons cast directly through you\.$/,
     /^When you do so, you take @Damage\[1d(\d+)\[([a-z]+)\]\] damage per rank of the spell as fate itself pulls at your life \(basic (Fortitude|Reflex|Will)\)\.$/,
     /^Spells you cast while this hex is active are heightened by (one|two) spell ranks?, up to a maximum of (\d+)(?:st|nd|rd|th)-rank\.$/,

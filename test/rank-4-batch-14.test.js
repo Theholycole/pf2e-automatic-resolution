@@ -3,7 +3,6 @@ import {readFile, readdir} from 'node:fs/promises';
 import test from 'node:test';
 
 import {compileAbility} from '../src/compiler/index.js';
-import {inspectSavePlan} from '../scripts/basic-save-core.js';
 
 const base = new URL('../.cache/pf2e-test-fixtures/', import.meta.url);
 const spell = async path => JSON.parse(await readFile(new URL(`spells/spells/${path}.json`, base), 'utf8'));

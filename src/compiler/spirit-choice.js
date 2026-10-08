@@ -4,12 +4,12 @@
 // Spell Effect and "Heightened (+2) The amount of damage increases by 1d6 and the amount of resistance increases by 2.": the targets' basic save; for each
 // target the caster's answer on the card — shielded: no save, PF2e's Effect (its resistance heightened); attacked: it saves.
 import { htmlToPlainText } from "./description-parser.js";
+import { SPELL_EFFECT_LINK_ANY as LINK } from "./text-patterns.js";
 
 // (The spirits' arrival names "each target": narration here.)
 const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|until|terrain)\b/i;
 const EITHER = /^The spirits then either strike their designated targets with magical energy, dealing each one (\d+d\d+) ([a-z]+) damage with a basic (Fortitude|Reflex|Will) save, or shield them, granting their target resistance (\d+) to ([a-z]+) and ([a-z]+) damage until the beginning of your next turn\.$/;
 const DESIGNATE = /^You designate which targets are attacked and which are shielded\.$/;
-const LINK = /^@UUID\[Compendium\.pf2e\.spell-effects\.[^\]]+\]\{[^}]+\}$/;
 const STEP = /^Heightened \(\+(\d)\) The amount of damage increases by (\d+d\d+) and the amount of resistance increases by (\d+)\.$/;
 
 /** {html, bolster(links), sentences} or null: the Effect's link stays in the text; `bolster` takes the spell's resolved unscoped / on-use links. */

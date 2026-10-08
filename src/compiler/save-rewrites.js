@@ -7,6 +7,7 @@
 //   basic Reflex save. Creatures who critically fail are also knocked {Prone}." — the jump the caster's reminder, the basic save in the emanation where they land,
 //   Prone on a critical failure.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_NO_TERRAIN as NARRATION, paragraphSentences as split } from "./text-patterns.js";
 
 const MOISTURE = {
     pull: /^You pull the moisture from the targets' bodies, dealing (\d+d\d+) ([a-z]+) damage\.$/,
@@ -32,8 +33,6 @@ const FOES = /^The [a-z]+ deals (\d+d\d+) ([a-z]+) damage and (\d+d\d+) ([a-z]+)
 const CARRIED = /^The wind then picks you up and carries you to the other end of the area\.$/;
 const CARRY_IMMUNE = /^While carried this way, you temporarily transform into [^,]+ and become immune to all damage and effects except ([a-z]+) damage, effects with the \1 trait, and any other effect the GM decides would affect [a-z]+\.$/;
 const AREA_LEAD = /^<p>\s*<strong>Area<\/strong>\s*\(continued\) line up to (\d+) feet\s*<\/p>$/;
-const NARRATION = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
-const split = html => html.replace(/<\/?p>/g, " ").replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s+(?=[A-Z@])/).filter(Boolean);
 const matches = (adapted, formula, type, statistic) => (adapted.damageComponents ?? []).length === 1 && String(adapted.damageComponents[0].formula).replace(/\s+/g, "") === formula
     && String(adapted.damageComponents[0].type).toLowerCase() === type && statistic.toLowerCase() === adapted.defense.statistic;
 

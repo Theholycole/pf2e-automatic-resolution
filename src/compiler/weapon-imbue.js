@@ -6,11 +6,11 @@
 // Both Effects go on the weapon's wielder (the targeted creature, or the caster) with the weapon picked; the dice are persistent (the text over the
 // data), on a toggle for a creature with a skeleton or exoskeleton (the roller's); the wielder's eligibility is the GM's.
 import { htmlToPlainText } from "./description-parser.js";
+import { SPELL_EFFECT_LINK_LABEL as LINK } from "./text-patterns.js";
 
 const BLEED = /^The creature takes an additional (\d+)d(\d+) persistent ([a-z]+) damage from the Strike\.$/;
 const WHEN = /^When a creature with a skeleton or exoskeleton takes damage from a Strike delivered by this weapon, [^.@\d]+\.$/;
 const REACTION = /^You can use the @UUID\[(Compendium\.pf2e\.actionspf2e\.Item\.[A-Za-z0-9]+)\]\{([^}]+)\} reaction\.$/;
-const LINK = /^@UUID\[Compendium\.pf2e\.spell-effects\.Item\.([^\]]+)\]\{([^}]+)\}$/;
 const STEP = /^Heightened \(\+(\d)\) The persistent ([a-z]+) damage increases by (\d+)d(\d+)\. The damage from ([A-Za-z ]+) increases by (\d+)d(\d+)\.$/;
 
 /** {weaponImbue, claimed} or null; the catalog proves PF2e's Effects. */

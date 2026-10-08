@@ -1,7 +1,7 @@
 // Lingering areas the general reader (lingering-area-compiler.js) doesn't take, each read whole by its own sentences.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES as RULE_WORDS } from "./text-patterns.js";
 
-const RULE_WORDS = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const sentencesOf = html => htmlToPlainText(html).replace(/@UUID\[[^\]]+\]\{([^}]+)\}/g, "$1").replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s+(?=[A-Z@])/).map(value => value.trim()).filter(Boolean);
 const minutesOf = adapted => { const match = /^(\d+) minutes?$/.exec(String(adapted.lifecycle?.duration ?? "").trim()); return match ? Number(match[1]) * 60 : null; };
 

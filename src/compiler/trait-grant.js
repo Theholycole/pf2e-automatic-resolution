@@ -4,11 +4,11 @@
 // The creatures with the trait get the condition (an Effect, its use limited by a note) and don't save; the saving creatures are the stated
 // ones (living); the traits the spell gains for them are the GM's reminder (immunities and bonuses against those traits).
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
 
 const GRANT = /^([A-Z][a-z]+) creatures within the area gain the @UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Z][a-z]+)\} condition for (\d+) (round|minute)s?, which they can use only to ([A-Z][a-z]+)\.$/;
 const SAVERS = /^(Living) creatures in the area must attempt an? (Fortitude|Reflex|Will) save\.$/;
 const GAINS = /^This gains the ([a-z]+(?:, [a-z]+)*,? and [a-z]+) traits for living creatures\.$/;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 
 /** {html, traitGrant, reminder, predicate, sentences} or null. */
 export function rewriteTraitGrant(adapted) {

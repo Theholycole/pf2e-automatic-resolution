@@ -5,8 +5,8 @@
 // the target's Fortitude save; the descent a note (60 feet, +20 a rank); the GM's answer for each creature whether it hit a surface — if so the falling
 // damage (half the descent, doubled on a critical failure) and, on a failure, Prone and a minute's note that it can't leave the ground.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
 const TRIGGER = /^Trigger You make a successful unarmed Strike against a flying creature\.$/;
 const SUCCESS = /^The target descends (\d+) feet\. If it hits a surface, it takes bludgeoning damage as if it had fallen\.$/;
 const FAILURE = new RegExp(String.raw`^As success; if the target hits a surface, it falls (${C}Prone\}) and (can't Fly, levitate, or otherwise leave the ground) for (\d+) minutes?\.$`);

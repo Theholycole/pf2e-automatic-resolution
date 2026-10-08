@@ -1,7 +1,8 @@
 // A temporary PF2e shield item from a spell (Shielded Arm): the Effect holds the duration and the shield item does the blocking. Removing
 // either removes the other; the spell ends when the shield's Hit Points above its Broken Threshold are gone (PF2e sets the threshold to half
 // the maximum, so the item carries twice the spell's Hit Points).
-const MODULE_ID = "pf2e-automatic-resolution";
+
+import { MODULE_ID } from "./runtime-utils.js";
 
 const link = item => item?.flags?.[MODULE_ID]?.temporaryShield ?? null;
 

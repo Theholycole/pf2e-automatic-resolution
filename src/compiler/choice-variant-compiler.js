@@ -1,9 +1,6 @@
 import { analyzeNativeEffectCompleteness } from "./direct-effect-resolution-compiler.js";
 import { htmlToPlainText, stripHeighteningHTML } from "./description-parser.js";
-
-function baseReference(reference) {
-    return String(reference ?? "").replace(/\s*\([^)]*\)\s*$/, "").trim();
-}
+import { baseReference } from "./text-patterns.js";
 
 function optionLabel(effect) {
     const suffix = String(effect.reference ?? "").match(/\(([^()]*)\)\s*$/)?.[1]?.trim();

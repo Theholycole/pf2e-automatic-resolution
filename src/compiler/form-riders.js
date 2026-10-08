@@ -13,10 +13,9 @@
 //     creature whose space you enter. A trampled creature takes foot damage with a basic Reflex save against your spell DC." — a button on the
 //     form's card for the creatures the GM targets (the foot's damage from its Strike line).
 // Each ability belongs to the option heading it sits under (PF2e's choice values); it's used only when that option is picked.
-import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK as COND, plain } from "./text-patterns.js";
 
 const LINK = /@UUID\[Compendium\.pf2e\.spell-effects\.Item\.([^\]]+)\]\{(Spell Effect: [^}]+)\}/;
-const COND = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Z][a-z]+)(?: (\d))?\}`;
 const DAMAGE_AURA = /^\(aura, ([a-z, ]+)\) (\d+) feet\. You gain an aura of ([a-z]+) that extends out from you\. A creature that enters or ends its turn within the aura takes (\d+d\d+) ([a-z]+) damage\. A creature can take this damage only once per turn\. You can activate or deactivate this aura with a Sustain action\.$/;
 const SAVE_AURA = new RegExp(String.raw`^\(aura, ([a-z, ]+)\) (\d+) feet\. Enemies other than ([a-z]+)s must succeed at a @Check\[(fortitude|reflex|will)\|against:spell\] against your spell DC or become ${COND} for (\d+) rounds? \(${COND} on a critical failure\)\.$`);
 const RECOVERY = new RegExp(String.raw`^You automatically recover from the ${COND}, ${COND}, and ${COND} conditions at the end of each of your turns\. You're also immune to being ${COND} and ignore difficult terrain and greater difficult terrain\.$`);
@@ -50,7 +49,6 @@ const LAND = [/You immediately become aware of the surrounding terrain features,
     /You can cast spells while in the feature as long as they don't require line of effect beyond the feature\./];
 
 const slug = text => String(text).trim().toLowerCase().replace(/[^a-z]+/g, "-").replace(/^-|-$/g, "");
-const plain = html => htmlToPlainText(html).replace(/\s+/g, " ").trim();
 const cond = (match, at) => ({ uuid: match[at], slug: match[at + 1].toLowerCase(), ...(match[at + 2] ? { value: Number(match[at + 2]) } : {}) });
 
 /** {remainingHTML, formRiders, claimed, actionSources} or null; the catalog proves PF2e's Effect (its choice values and choice flag). */

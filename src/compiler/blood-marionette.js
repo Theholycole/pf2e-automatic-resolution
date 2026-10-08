@@ -7,8 +7,8 @@
 // time (until the caster's next turn, or the sustained duration); the target's Effect holds them, its card's controls for the GM — the prohibited action taken
 // (the persistent bleed at the cast rank and share, unless the directed action protects it) and the directed action taken (immune until its next turn).
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const CHOOSE = /^Choose two actions or activities the creature can take that have either the ([a-z]+), ([a-z]+), or ([a-z]+) traits, one is prohibited and the other is directed\.$/;
 const PROHIBITED = /^If the creature takes the prohibited action or activity, it takes (\d+)d(\d+) persistent ([a-z]+) damage\.$/;
 const DIRECTED = /^If the creature takes the directed action or activity, it is immune to the \3 damage from this spell until the beginning of its next turn\.$/;

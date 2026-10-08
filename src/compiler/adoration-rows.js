@@ -8,8 +8,8 @@
 // end of its next turn (the reminder: only its next action); each creature is exposed once (an immunity: an hour after a success, the spell's
 // minute otherwise); the exclusions, the re-entry and the attitude reminders.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C, DEGREE_LABEL_PAIRS as DEGREES } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
 const LEAD = /^You become intensely entrancing, and creatures are distracted by you as long as they remain within the area\.$/;
 const EXCLUDE = /^You can exclude any creatures you choose from the effects\.$/;
 const WHEN = /^If a creature is in the aura when you Cast the Spell or when a creature enters the area for the first time, it must attempt an? (Fortitude|Reflex|Will) saving throw\.$/;
@@ -21,7 +21,6 @@ const ROWS = {
     criticalFailure: /^The creature is ([A-Z][a-z]+) with you, and (its attitude toward you improves by one step)\.$/
 };
 const STEP = /^Heightened \(\+(\d)\) Increase the size of the emanation by (\d+) feet\.$/;
-const DEGREES = [["criticalSuccess", "Critical Success"], ["success", "Success"], ["failure", "Failure"], ["criticalFailure", "Critical Failure"]];
 
 /** {html, immunity, areaStep, reminders, sentences} or null. */
 export function rewriteAdorationRows(adapted) {

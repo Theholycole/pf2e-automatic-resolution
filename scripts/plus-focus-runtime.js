@@ -5,11 +5,8 @@
 // - Revitalizing Bun (Alchemists+): "After eating the bun, you feel revitalized for 1 hour. During this time, you can restore a Focus Point as a single action … After you restore a
 //   Focus Point from this effect, you are temporarily immune to its effects for 1 day."
 import { shapeEffect, riderChoice, refundSlot } from "./spellshape-runtime.js";
+import { MODULE_ID, activeGM, escapeHTML, plainText, say } from "./runtime-utils.js";
 
-const MODULE_ID = "pf2e-automatic-resolution";
-const activeGM = () => game.user?.isGM && game.users.activeGM?.id === game.user.id;
-const plainText = html => String(html ?? "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().replace(/[’]/g, "'");
-const escapeHTML = text => String(text ?? "").replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[ch]);
 const STUPEFIED = "Compendium.pf2e.conditionitems.Item.e1XGnhKNSQIm5IXg";
 
 const FORMS = [
@@ -28,7 +25,6 @@ export function readFocusFeature(source) {
     return null;
 }
 const featureOf = (actor, kind) => [...(actor?.itemTypes?.feat ?? []), ...(actor?.itemTypes?.consumable ?? [])].map(item => ({ item, read: readFocusFeature(item.toObject()) })).find(entry => entry.read?.kind === kind) ?? null;
-const say = (actor, text) => ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content: `<p>${text}</p>` }).catch(() => null);
 const pool = actor => actor?.system?.resources?.focus ?? null;
 async function gainFocus(actor, amount) {
     const focus = pool(actor);

@@ -8,6 +8,7 @@
 // Rewritten to an ordinary spell attack of the base damage, with: each trait's extra damage (PF2e traits, scaled like the hit), the weapon
 // requirement as the GM's cast question, and the sunlight upgrade as the caster's question (every die, the extras too).
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
 
 const REQUIRE = /^You must be wielding an? ([a-z]+) or ([a-z]+) to cast [a-z ]+, and you perform this spell's somatic component with the weapon\.$/;
 const ATTACK = /^Make a spell attack roll\.$/;
@@ -16,7 +17,6 @@ const EXTRAS = /^If the target is ([a-z]+), the [a-z]+ deals an additional (\d+)
 const UPGRADE = /^If you are in an area of bright natural sunlight, increase the die size of each damage die by one step \(from d(\d+) to d(\d+)\)\.$/;
 const CRITICAL = /^<p>\s*<strong>\s*Critical Success\s*<\/strong>\s*The [a-z]+ deals double damage\.\s*<\/p>$/;
 const SUCCESS = /^<p>\s*<strong>\s*Success\s*<\/strong>\s*The [a-z]+ deals full damage\.\s*<\/p>$/;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 
 /** {html, extras, gate, upgrade, sentences} or null. */
 export function extractTraitRay(adapted) {

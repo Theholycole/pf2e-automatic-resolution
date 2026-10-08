@@ -7,9 +7,8 @@
 // (user decision 2026-10-01: a conjured thing is a token the module makes; what it can't detect is a GM control): the duplicate a token beside the caster
 // for the spell's duration; the GM's control, with the attacker targeted, rolls its save — a failing row's misfortune on its next attack rolls (that many, for
 // an hour) — and the duplicate shatters, ending the spell.
-import { htmlToPlainText } from "./description-parser.js";
+import { WORD_NUMBERS_2_5 as WORDS, plain } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(html).replace(/\s+/g, " ").trim();
 const SPLIT = /^When you cast this spell, you seem to split in two\.$/;
 const STEP = /^As you do, you can Step to any adjacent square\.$/;
 const APPEARS = /^In either your initial square, or another square adjacent to your initial square, an exact illusory duplicate of you appears\.$/;
@@ -19,7 +18,6 @@ const HOSTILE = /^If a creature takes a hostile action against the duplicate, th
 const SAVE = /^The attacker must attempt an? (Fortitude|Reflex|Will) save with the following effects; this is a curse and misfortune effect\.$/;
 const ENDS = /^When the duplicate shatters, the spell ends\.$/;
 const ROW = /^Within the next (hour|minute), the creature must roll its next (two|three|four|five) attack rolls twice and take the lower result\.$/;
-const WORDS = { two: 2, three: 3, four: 4, five: 5 };
 
 /** Returns {mirrorDuplicate, claimed} or null. */
 export function compileMirrorDuplicate(adapted) {

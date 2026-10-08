@@ -1,0 +1,1214 @@
+{
+ "label": "spellModuleCleanup",
+ "at": "2026-10-08T12:45:33.495Z",
+ "cases": 99,
+ "firstPassPassed": 94,
+ "perCase": [
+  {
+   "name": "notesBatch1",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "notesBatch2",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "notesBatch3",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "notesBatch4",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "notesBatch5",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "notesBatch6",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "notesBatch7",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "notesBatch9",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "notesBatch10",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "notesBatch11",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "spellFeaturesBatch1",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "spellFeaturesBatch2",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "spellFeaturesBatch3",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "spellFeaturesBatch4a",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "spellFeaturesBatch4b",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "spellFeaturesBatch5",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "spellFeaturesBatch6",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "spellFeaturesBatch7",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "spellFeaturesBatch8",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "spellFeaturesBatch9",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "spellFeaturesBatch10",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch1",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch2",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch3",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch4",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch5",
+   "first": false,
+   "later": [
+    true
+   ]
+  },
+  {
+   "name": "thirdPartyFeaturesBatch6",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch7",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch8",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch9",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch10",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch11",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch12",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch13",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch14",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch15",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch16",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch17",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch18",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch19",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch20",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch21",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch22",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch23",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch24",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch25",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch26",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch27",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch28",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch29",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch30",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch31",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch32",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch33",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch34",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch35",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch36",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch37",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch38",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch39",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch40",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch41",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch42",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch43a",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch43b",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch43c",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch43d",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyFeaturesBatch43e",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "spellshapeBatch4",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "spellshapeBatch9",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyBatch1",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "spellshapeBatch14",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "spellshapeBatch18",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "rank5Batch13",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "rank3Batch21",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "rank8Batch2",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "rank6Batch10",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "rank2Batch38",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "cr1Batch22",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "rank3Batch100",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "rank7Batch16",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyBatch23",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "longTailBatch2",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "rank2Batch78",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "rank10Batch4",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "messaging",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "care",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "rank5Batch94",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "longTailBatch3",
+   "first": false,
+   "later": [
+    false,
+    false,
+    false,
+    false
+   ]
+  },
+  {
+   "name": "rank3Batch3",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "rank6Batch25",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "attackConditionRiders",
+   "first": false,
+   "later": [
+    false,
+    false,
+    false,
+    false
+   ]
+  },
+  {
+   "name": "lingering",
+   "first": false,
+   "later": [
+    false,
+    false,
+    false,
+    false
+   ]
+  },
+  {
+   "name": "thirdPartyBatch30",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "cr1Batch162",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "rank5Batch74",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "thirdPartyBatch65",
+   "first": false,
+   "later": [
+    false,
+    true
+   ]
+  },
+  {
+   "name": "healingRiders",
+   "first": true,
+   "later": []
+  },
+  {
+   "name": "rank7Batch6",
+   "first": true,
+   "later": []
+  }
+ ],
+ "records": [
+  {
+   "label": "notesBatch1",
+   "passed": true,
+   "at": "2026-10-08T11:50:04.197Z",
+   "error": null
+  },
+  {
+   "label": "notesBatch2",
+   "passed": true,
+   "at": "2026-10-08T11:50:22.121Z",
+   "error": null
+  },
+  {
+   "label": "notesBatch3",
+   "passed": true,
+   "at": "2026-10-08T11:50:26.785Z",
+   "error": null
+  },
+  {
+   "label": "notesBatch4",
+   "passed": true,
+   "at": "2026-10-08T11:50:51.651Z",
+   "error": null
+  },
+  {
+   "label": "notesBatch5",
+   "passed": true,
+   "at": "2026-10-08T11:51:10.767Z",
+   "error": null
+  },
+  {
+   "label": "notesBatch6",
+   "passed": true,
+   "at": "2026-10-08T11:51:11.917Z",
+   "error": null
+  },
+  {
+   "label": "notesBatch7",
+   "passed": true,
+   "at": "2026-10-08T11:51:12.799Z",
+   "error": null
+  },
+  {
+   "label": "notesBatch9",
+   "passed": true,
+   "at": "2026-10-08T11:51:13.938Z",
+   "error": null
+  },
+  {
+   "label": "notesBatch10",
+   "passed": true,
+   "at": "2026-10-08T11:51:14.823Z",
+   "error": null
+  },
+  {
+   "label": "notesBatch11",
+   "passed": true,
+   "at": "2026-10-08T11:51:15.884Z",
+   "error": null
+  },
+  {
+   "label": "spellFeaturesBatch1",
+   "passed": true,
+   "at": "2026-10-08T11:51:16.671Z",
+   "error": null
+  },
+  {
+   "label": "spellFeaturesBatch2",
+   "passed": true,
+   "at": "2026-10-08T11:51:23.208Z",
+   "error": null
+  },
+  {
+   "label": "spellFeaturesBatch3",
+   "passed": true,
+   "at": "2026-10-08T11:51:40.942Z",
+   "error": null
+  },
+  {
+   "label": "spellFeaturesBatch4a",
+   "passed": true,
+   "at": "2026-10-08T11:51:57.682Z",
+   "error": null
+  },
+  {
+   "label": "spellFeaturesBatch4b",
+   "passed": true,
+   "at": "2026-10-08T11:52:47.461Z",
+   "error": null
+  },
+  {
+   "label": "spellFeaturesBatch5",
+   "passed": true,
+   "at": "2026-10-08T11:53:39.792Z",
+   "error": null
+  },
+  {
+   "label": "spellFeaturesBatch6",
+   "passed": true,
+   "at": "2026-10-08T11:54:11.628Z",
+   "error": null
+  },
+  {
+   "label": "spellFeaturesBatch7",
+   "passed": true,
+   "at": "2026-10-08T11:54:38.174Z",
+   "error": null
+  },
+  {
+   "label": "spellFeaturesBatch8",
+   "passed": true,
+   "at": "2026-10-08T11:54:50.972Z",
+   "error": null
+  },
+  {
+   "label": "spellFeaturesBatch9",
+   "passed": true,
+   "at": "2026-10-08T11:55:21.217Z",
+   "error": null
+  },
+  {
+   "label": "spellFeaturesBatch10",
+   "passed": true,
+   "at": "2026-10-08T11:55:49.649Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch1",
+   "passed": true,
+   "at": "2026-10-08T11:56:07.369Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch2",
+   "passed": true,
+   "at": "2026-10-08T11:56:39.724Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch3",
+   "passed": true,
+   "at": "2026-10-08T11:57:02.012Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch4",
+   "passed": true,
+   "at": "2026-10-08T11:57:46.250Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch5",
+   "passed": false,
+   "at": null,
+   "error": "Third-party features batch 5: {\"drain\":{\"shapes\":[[\"Drain Destiny\",true,null]],\"caster\":2,\"foe\":1},\"report\":{\"shapes\":[[\"Reporting Spell\",true,null]],\"text\":\"Reporting Spell — PFTEST P23 Affliction tpf5 foe: its lowest save is fortitude (+10); it is weak to fire 5 (the spell's damage); reflex is both its weakest and its highest save (all equal).\",\"whisper\":1,\"immune\":true},\"enlightening\":{\"shapes\":[[\"Enlightening Spell\",true,null]],\"heroism\":true,\"effect\":true},\"feint\":{\"shapes\":[[\"Beguiling Feint\",true,null]],\"feint\":{\"degree\":\"success\",\"dc\":-20,\"total\":5,\"actorUuid\":\"Actor.numGEjPeDGM9US5V\",\"offGuardUuid\":\"Actor.numGEjPeDGM9US5V.Item.xU2nDLo3jzLNUdDe\"},\"int\":[\"Beguiling Feint: Intelligence instead of Charisma 4\"],\"during\":true,\"after\":false,\"concealed\":\"<p>you are Concealed to the creature until the end of your next turn. You can use this concealment to Hide. (the concealment ends after you take a hostile action.)</p>\"}}"
+  },
+  {
+   "label": "thirdPartyFeaturesBatch6",
+   "passed": true,
+   "at": "2026-10-08T11:58:42.857Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch7",
+   "passed": true,
+   "at": "2026-10-08T11:58:57.416Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch8",
+   "passed": true,
+   "at": "2026-10-08T11:59:24.976Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch9",
+   "passed": true,
+   "at": "2026-10-08T11:59:38.906Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch10",
+   "passed": true,
+   "at": "2026-10-08T11:59:52.593Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch11",
+   "passed": true,
+   "at": "2026-10-08T12:00:00.823Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch12",
+   "passed": true,
+   "at": "2026-10-08T12:00:20.046Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch13",
+   "passed": true,
+   "at": "2026-10-08T12:01:02.149Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch14",
+   "passed": true,
+   "at": "2026-10-08T12:01:49.212Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch15",
+   "passed": true,
+   "at": "2026-10-08T12:01:54.616Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch16",
+   "passed": true,
+   "at": "2026-10-08T12:02:03.363Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch17",
+   "passed": true,
+   "at": "2026-10-08T12:02:10.420Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch18",
+   "passed": true,
+   "at": "2026-10-08T12:02:24.009Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch19",
+   "passed": true,
+   "at": "2026-10-08T12:02:32.639Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch20",
+   "passed": true,
+   "at": "2026-10-08T12:02:40.766Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch21",
+   "passed": true,
+   "at": "2026-10-08T12:03:11.982Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch22",
+   "passed": true,
+   "at": "2026-10-08T12:03:23.716Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch23",
+   "passed": true,
+   "at": "2026-10-08T12:04:14.498Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch24",
+   "passed": true,
+   "at": "2026-10-08T12:04:55.935Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch25",
+   "passed": true,
+   "at": "2026-10-08T12:05:24.803Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch26",
+   "passed": true,
+   "at": "2026-10-08T12:05:43.536Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch27",
+   "passed": true,
+   "at": "2026-10-08T12:05:58.053Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch28",
+   "passed": true,
+   "at": "2026-10-08T12:06:28.126Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch29",
+   "passed": true,
+   "at": "2026-10-08T12:06:56.936Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch30",
+   "passed": true,
+   "at": "2026-10-08T12:07:38.557Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch31",
+   "passed": true,
+   "at": "2026-10-08T12:08:14.387Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch32",
+   "passed": true,
+   "at": "2026-10-08T12:09:16.022Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch33",
+   "passed": true,
+   "at": "2026-10-08T12:09:36.454Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch34",
+   "passed": true,
+   "at": "2026-10-08T12:10:11.649Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch35",
+   "passed": true,
+   "at": "2026-10-08T12:10:42.546Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch36",
+   "passed": true,
+   "at": "2026-10-08T12:10:55.138Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch37",
+   "passed": true,
+   "at": "2026-10-08T12:11:22.824Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch38",
+   "passed": true,
+   "at": "2026-10-08T12:11:43.561Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch39",
+   "passed": true,
+   "at": "2026-10-08T12:12:16.058Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch40",
+   "passed": true,
+   "at": "2026-10-08T12:12:26.245Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch41",
+   "passed": true,
+   "at": "2026-10-08T12:12:40.987Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch42",
+   "passed": true,
+   "at": "2026-10-08T12:13:28.352Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch43a",
+   "passed": true,
+   "at": "2026-10-08T12:14:20.753Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch43b",
+   "passed": true,
+   "at": "2026-10-08T12:15:24.277Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch43c",
+   "passed": true,
+   "at": "2026-10-08T12:17:48.908Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch43d",
+   "passed": true,
+   "at": "2026-10-08T12:19:34.997Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch43e",
+   "passed": true,
+   "at": "2026-10-08T12:21:06.570Z",
+   "error": null
+  },
+  {
+   "label": "spellshapeBatch4",
+   "passed": true,
+   "at": "2026-10-08T12:22:13.458Z",
+   "error": null
+  },
+  {
+   "label": "spellshapeBatch9",
+   "passed": true,
+   "at": "2026-10-08T12:23:34.542Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyBatch1",
+   "passed": true,
+   "at": "2026-10-08T12:25:00.912Z",
+   "error": null
+  },
+  {
+   "label": "spellshapeBatch14",
+   "passed": true,
+   "at": "2026-10-08T12:25:19.448Z",
+   "error": null
+  },
+  {
+   "label": "spellshapeBatch18",
+   "passed": true,
+   "at": "2026-10-08T12:26:17.110Z",
+   "error": null
+  },
+  {
+   "label": "rank5Batch13",
+   "passed": true,
+   "at": "2026-10-08T12:26:57.362Z",
+   "error": null
+  },
+  {
+   "label": "rank3Batch21",
+   "passed": true,
+   "at": "2026-10-08T12:27:17.558Z",
+   "error": null
+  },
+  {
+   "label": "rank8Batch2",
+   "passed": true,
+   "at": "2026-10-08T12:27:27.308Z",
+   "error": null
+  },
+  {
+   "label": "rank6Batch10",
+   "passed": true,
+   "at": "2026-10-08T12:27:37.569Z",
+   "error": null
+  },
+  {
+   "label": "rank2Batch38",
+   "passed": true,
+   "at": "2026-10-08T12:27:49.791Z",
+   "error": null
+  },
+  {
+   "label": "cr1Batch22",
+   "passed": true,
+   "at": "2026-10-08T12:27:59.748Z",
+   "error": null
+  },
+  {
+   "label": "rank3Batch100",
+   "passed": true,
+   "at": "2026-10-08T12:28:05.507Z",
+   "error": null
+  },
+  {
+   "label": "rank7Batch16",
+   "passed": true,
+   "at": "2026-10-08T12:28:14.377Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyBatch23",
+   "passed": true,
+   "at": "2026-10-08T12:28:57.683Z",
+   "error": null
+  },
+  {
+   "label": "longTailBatch2",
+   "passed": true,
+   "at": "2026-10-08T12:29:48.799Z",
+   "error": null
+  },
+  {
+   "label": "rank2Batch78",
+   "passed": true,
+   "at": "2026-10-08T12:30:25.306Z",
+   "error": null
+  },
+  {
+   "label": "rank10Batch4",
+   "passed": true,
+   "at": "2026-10-08T12:30:38.746Z",
+   "error": null
+  },
+  {
+   "label": "messaging",
+   "passed": true,
+   "at": "2026-10-08T12:31:26.492Z",
+   "error": null
+  },
+  {
+   "label": "care",
+   "passed": true,
+   "at": "2026-10-08T12:31:32.493Z",
+   "error": null
+  },
+  {
+   "label": "rank5Batch94",
+   "passed": true,
+   "at": "2026-10-08T12:31:54.009Z",
+   "error": null
+  },
+  {
+   "label": "longTailBatch3",
+   "passed": false,
+   "at": null,
+   "error": "Leaden Steps: the degree Effect gives Encumbered and weakness; success ends at your next turn's end; a missed Sustain ends it: {\"failure\":{\"effect\":\"Spell Effect: Leaden Steps (Failure)\",\"selection\":\"failure\",\"weakness\":2,\"encumbered\":true,\"moduleEncumbered\":0},\"success\":{\"effect\":\"Spell Effect: Leaden Steps (Success)\",\"duration\":{\"value\":1,\"unit\":\"rounds\",\"expiry\":\"turn-end\",\"sustained\":false},\"weakness\":2},\"sustained\":true,\"missed\":{\"effect\":false,\"weakness\":null}}"
+  },
+  {
+   "label": "rank3Batch3",
+   "passed": true,
+   "at": "2026-10-08T12:32:52.649Z",
+   "error": null
+  },
+  {
+   "label": "rank6Batch25",
+   "passed": true,
+   "at": "2026-10-08T12:33:03.948Z",
+   "error": null
+  },
+  {
+   "label": "attackConditionRiders",
+   "passed": false,
+   "at": null,
+   "error": "Blinding Foam incapacitation: one degree worse only against the level-12 creature: {\"high\":{\"degree\":\"success\",\"total\":25,\"natural\":11,\"expected\":\"failure\"},\"low\":{\"degree\":\"success\",\"total\":26,\"natural\":12,\"expected\":\"success\"}}"
+  },
+  {
+   "label": "lingering",
+   "passed": false,
+   "at": null,
+   "error": "Only the creature inside is a member at cast"
+  },
+  {
+   "label": "thirdPartyBatch30",
+   "passed": true,
+   "at": "2026-10-08T12:34:10.435Z",
+   "error": null
+  },
+  {
+   "label": "cr1Batch162",
+   "passed": true,
+   "at": "2026-10-08T12:34:28.255Z",
+   "error": null
+  },
+  {
+   "label": "rank5Batch74",
+   "passed": true,
+   "at": "2026-10-08T12:34:44.250Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyBatch65",
+   "passed": false,
+   "at": null,
+   "error": "Third-party batch 65: {\"sprout\":{\"count\":2,\"left\":2,\"hp\":30,\"ac\":16},\"early\":\"Seeds of Divinity: a bush grows only after a round has passed since it sprouted.\",\"hazard\":{\"grown\":\"hazardous\",\"region\":true,\"lost\":0},\"fruit\":{\"grown\":\"bountiful\",\"tempHP\":8,\"rules\":[\"TempHP 8\",\"FlatModifier 2\"]},\"secondFruit\":\"Seeds of Divinity: no bountiful bush has a fruit.\",\"more\":0,\"none\":\"Seeds of Divinity: only 0 seeds left.\",\"ended\":{\"left\":0}}"
+  },
+  {
+   "label": "healingRiders",
+   "passed": true,
+   "at": "2026-10-08T12:35:21.878Z",
+   "error": null
+  },
+  {
+   "label": "rank7Batch6",
+   "passed": true,
+   "at": "2026-10-08T12:35:37.865Z",
+   "error": null
+  },
+  {
+   "label": "thirdPartyFeaturesBatch5",
+   "passed": true,
+   "at": "2026-10-08T12:36:22.709Z",
+   "error": null
+  },
+  {
+   "label": "longTailBatch3",
+   "passed": false,
+   "at": null,
+   "error": "Leaden Steps: the degree Effect gives Encumbered and weakness; success ends at your next turn's end; a missed Sustain ends it: {\"failure\":{\"effect\":\"Spell Effect: Leaden Steps (Failure)\",\"selection\":\"failure\",\"weakness\":2,\"encumbered\":true,\"moduleEncumbered\":0},\"success\":{\"effect\":\"Spell Effect: Leaden Steps (Success)\",\"duration\":{\"value\":1,\"unit\":\"rounds\",\"expiry\":\"turn-end\",\"sustained\":false},\"weakness\":2},\"sustained\":true,\"missed\":{\"effect\":false,\"weakness\":null}}"
+  },
+  {
+   "label": "attackConditionRiders",
+   "passed": false,
+   "at": null,
+   "error": "Blinding Foam incapacitation: one degree worse only against the level-12 creature: {\"high\":{\"degree\":\"success\",\"total\":24,\"natural\":10,\"expected\":\"failure\"},\"low\":{\"degree\":\"success\",\"total\":27,\"natural\":13,\"expected\":\"success\"}}"
+  },
+  {
+   "label": "lingering",
+   "passed": false,
+   "at": null,
+   "error": "Only the creature inside is a member at cast"
+  },
+  {
+   "label": "thirdPartyBatch65",
+   "passed": false,
+   "at": null,
+   "error": "Third-party batch 65: {\"sprout\":{\"count\":2,\"left\":2,\"hp\":30,\"ac\":16},\"early\":\"Seeds of Divinity: a bush grows only after a round has passed since it sprouted.\",\"hazard\":{\"grown\":\"hazardous\",\"region\":true,\"lost\":0},\"fruit\":{\"grown\":\"bountiful\",\"tempHP\":8,\"rules\":[\"TempHP 8\",\"FlatModifier 2\"]},\"secondFruit\":\"Seeds of Divinity: no bountiful bush has a fruit.\",\"more\":0,\"none\":\"Seeds of Divinity: only 0 seeds left.\",\"ended\":{\"left\":0}}"
+  },
+  {
+   "label": "lingering",
+   "passed": false,
+   "at": null,
+   "error": "Cannot read properties of undefined (reading 'status')"
+  },
+  {
+   "label": "longTailBatch3",
+   "passed": false,
+   "at": null,
+   "error": "Leaden Steps: the degree Effect gives Encumbered and weakness; success ends at your next turn's end; a missed Sustain ends it: {\"failure\":{\"effect\":\"Spell Effect: Leaden Steps (Failure)\",\"selection\":\"failure\",\"weakness\":2,\"encumbered\":true,\"moduleEncumbered\":0},\"success\":{\"effect\":\"Spell Effect: Leaden Steps (Success)\",\"duration\":{\"value\":1,\"unit\":\"rounds\",\"expiry\":\"turn-end\",\"sustained\":false},\"weakness\":2},\"sustained\":true,\"missed\":{\"effect\":false,\"weakness\":null}}"
+  },
+  {
+   "label": "attackConditionRiders",
+   "passed": false,
+   "at": null,
+   "error": "Blinding Foam incapacitation: one degree worse only against the level-12 creature: {\"high\":{\"degree\":\"success\",\"total\":26,\"natural\":12,\"expected\":\"failure\"},\"low\":{\"degree\":\"criticalSuccess\",\"total\":30,\"natural\":16,\"expected\":\"criticalSuccess\"}}"
+  },
+  {
+   "label": "thirdPartyBatch65",
+   "passed": true,
+   "at": "2026-10-08T12:40:22.721Z",
+   "error": null
+  },
+  {
+   "label": "lingering",
+   "passed": false,
+   "at": null,
+   "error": "Cannot read properties of undefined (reading 'status')"
+  },
+  {
+   "label": "longTailBatch3",
+   "passed": false,
+   "at": null,
+   "error": "Leaden Steps: the degree Effect gives Encumbered and weakness; success ends at your next turn's end; a missed Sustain ends it: {\"failure\":{\"effect\":\"Spell Effect: Leaden Steps (Failure)\",\"selection\":\"failure\",\"weakness\":2,\"encumbered\":true,\"moduleEncumbered\":0},\"success\":{\"effect\":\"Spell Effect: Leaden Steps (Success)\",\"duration\":{\"value\":1,\"unit\":\"rounds\",\"expiry\":\"turn-end\",\"sustained\":false},\"weakness\":2},\"sustained\":true,\"missed\":{\"effect\":false,\"weakness\":null}}"
+  },
+  {
+   "label": "attackConditionRiders",
+   "passed": false,
+   "at": null,
+   "error": "Blinding Foam incapacitation: one degree worse only against the level-12 creature: {\"high\":{\"degree\":\"failure\",\"total\":19,\"natural\":5,\"expected\":\"criticalFailure\"},\"low\":{\"degree\":\"failure\",\"total\":19,\"natural\":5,\"expected\":\"failure\"}}"
+  },
+  {
+   "label": "longTailBatch3",
+   "passed": false,
+   "at": null,
+   "error": "Leaden Steps: the degree Effect gives Encumbered and weakness; success ends at your next turn's end; a missed Sustain ends it: {\"failure\":{\"effect\":\"Spell Effect: Leaden Steps (Failure)\",\"selection\":\"failure\",\"weakness\":2,\"encumbered\":true,\"moduleEncumbered\":0},\"success\":{\"effect\":\"Spell Effect: Leaden Steps (Success)\",\"duration\":{\"value\":1,\"unit\":\"rounds\",\"expiry\":\"turn-end\",\"sustained\":false},\"weakness\":2},\"sustained\":true,\"missed\":{\"effect\":false,\"weakness\":null}}"
+  },
+  {
+   "label": "lingering",
+   "passed": false,
+   "at": null,
+   "error": "Cannot read properties of undefined (reading 'status')"
+  },
+  {
+   "label": "attackConditionRiders",
+   "passed": false,
+   "at": null,
+   "error": "Blinding Foam incapacitation: one degree worse only against the level-12 creature: {\"high\":{\"degree\":\"success\",\"total\":23,\"natural\":9,\"expected\":\"failure\"},\"low\":{\"degree\":\"criticalSuccess\",\"total\":34,\"natural\":20,\"expected\":\"criticalSuccess\"}}"
+  }
+ ],
+ "notes": [
+  "thirdPartyFeaturesBatch5: a natural 1 turned the expected critical success into a success; it passes alone.",
+  "thirdPartyBatch65 and the lingering membership check: orphaned summon tokens from earlier test runs (their casters deleted) stood inside the test areas; removed, thirdPartyBatch65 passes.",
+  "longTailBatch3, lingering (record lookup) and attackConditionRiders fail the same way with the three old unguarded hooks restored in memory, and the cleanup changed only identical-helper imports in the code they use: pre-existing failures, not from the cleanup."
+ ]
+}

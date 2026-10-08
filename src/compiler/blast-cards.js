@@ -10,12 +10,8 @@
 //   - Cataclysm: "Each creature attempts one basic Reflex save that applies to all five types of damage." with the list (acid; bludgeoning on the ground;
 //     cold; electricity; bludgeoning to flying creatures; the tsunami's bludgeoning, doubled for swimmers; fire) — a part for creatures on the ground,
 //     flying, and swimming.
-import { htmlToPlainText } from "./description-parser.js";
+import { capitalize as Stat, plain, rows, sentenceSplit as split } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(html).replace(/\s+/g, " ").trim();
-const split = text => text.split(/(?<=[.!?])\s+(?=[A-Z@])/).filter(Boolean);
-const Stat = name => name[0].toUpperCase() + name.slice(1);
-const rows = list => `<hr />` + ["Critical Success", "Success", "Failure", "Critical Failure"].map((label, index) => `<p><strong>${label}</strong> ${list[index]}</p>`).join("");
 const basicRows = (failure = "", critical = failure) => rows(["The creature is unaffected.", "The creature takes half damage.", `The creature takes full damage${failure}.`, `The creature takes double damage${critical}.`]);
 // "(6 + 1 * (@item.rank - 9))d10": the stated dice at the rank, with the heightened step.
 const ranked = (base, step, rank) => step ? `(${base} + ${step} * (@item.rank - ${rank}))` : String(base);

@@ -6,8 +6,8 @@
 // creature's space.": the placed square's basic save when cast and on each Sustain (the GM moves the region first, up to the stated distance); the caster
 // and its allies standing in it hold the Recall Knowledge bonus while there, and the caster leaves them out of the damage on review; the light a note.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const LIGHT = /^The [a-z ]+ sheds bright light in a (\d+)-foot radius \(and dim light to the next (\d+) feet\)\.$/;
 const DEALS = /^The [a-z ]+ deals (\d+d\d+) ([a-z]+) damage to each creature in the square in which it appears, with a basic (Fortitude|Reflex|Will) save, and creatures that critically fail their save are (@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{Fascinated\}) by the [a-z ]+\.$/;
 const BLINK = /^The first time you Sustain this spell each turn, you blink your [a-z ]+ to a square within (\d+) feet and in range of the spell\.$/;

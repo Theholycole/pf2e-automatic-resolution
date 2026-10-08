@@ -9,10 +9,9 @@
 // Rewritten to the plain rows: Immobilized until it Escapes (spell DC), and on a critical failure Off-Guard for as long as it's immobilized. The
 // solid-ground condition and the weakness damage at the end of its turns are the GM's (a note on the failing rows).
 import { htmlToPlainText } from "./description-parser.js";
+import { DEGREE_LABEL_PAIRS as DEGREES, NARRATION_RULES_NO_TERRAIN as NARRATION_RULES, MUST_ATTEMPT_SAVE as SAVE } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const MADE_OF = /^The ([a-z]+) is made of ([a-z ]+) and deals (\d+d\d+) ([a-z]+) damage\.$/;
-const SAVE = /^The target must attempt an? (Fortitude|Reflex|Will) save\.$/;
 const LINK = String.raw`@UUID\[Compendium\.pf2e\.[a-z0-9-]+\.Item\.[A-Za-z0-9]+\]\{`;
 const ROWS = {
     criticalSuccess: /^The target [a-z ]+ the ([a-z]+) and is unaffected\.$/,
@@ -20,7 +19,6 @@ const ROWS = {
     failure: new RegExp(String.raw`^The target is impaled through [a-z ,]+\. The creature takes full damage and, if it's standing on solid ground, becomes (${LINK}Immobilized\})\. It can attempt to ${LINK}Escape\} \(the DC is your spell DC\)\. While it remains impaled, it takes damage from any weakness to ([a-z ]+) it has at the end of each of its turns\.$`),
     criticalFailure: new RegExp(String.raw`^As failure, but the creature is impaled through [a-z ,]+, taking double damage, and it is (${LINK}Off-Guard\}) as long as it's impaled\.$`)
 };
-const DEGREES = [["criticalSuccess", "Critical Success"], ["success", "Success"], ["failure", "Failure"], ["criticalFailure", "Critical Failure"]];
 
 /** {html, note, claimed} or null. */
 export function rewriteImpaleRows(adapted) {

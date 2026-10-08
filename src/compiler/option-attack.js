@@ -8,18 +8,16 @@
 // The attack is the ordinary one-sentence form of the text's damage (PF2e's item has none), typed by the form picked when casting; on a
 // hit the form's extra applies: PF2e's Effect (proved), the caster's Reposition (a reminder), or a note Effect on the target.
 import { htmlToPlainText } from "./description-parser.js";
+import { SPELL_EFFECT_LINK_ANY as EFFECT_LINK, HEIGHTENED_DAMAGE_ROW as HEIGHTENED, TYPES } from "./text-patterns.js";
 
 const ATTACK = /^Make a melee spell attack roll\.$/;
 const HIT = /^On a hit, the target takes (\d+)d(\d+) damage; the type of damage dealt and any additional effect depends on the form you choose\.$/;
 const CRIT = /^On a critical hit, double the damage\.$/;
-const TYPES = new Set(["acid", "bludgeoning", "cold", "electricity", "fire", "force", "mental", "piercing", "poison", "slashing", "sonic", "spirit", "vitality", "void"]);
 const DEALS = /^The [a-z]+ deals ([a-z]+) damage,? and (.+?)\.$/;
 const SPEED = /^the target takes a [–−-](\d+)-foot (status|circumstance) penalty to its Speeds until the start of your next turn$/;
 const REPOSITION = /^you can (?:@UUID\[Compendium\.pf2e\.actionspf2e\.Item\.[A-Za-z0-9]+\]\{Reposition\}|Reposition) the target up to (\d+) feet$/;
 const CLINGS = /^([a-z]+) clings to the target, making all creatures (?:@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{Concealed\}|Concealed) to them until the start of your next turn or they perform an Interact action to [a-z ]+ away$/;
 const TRAIT = /^This spell gains the ([a-z]+) trait\.$/;
-const EFFECT_LINK = /^@UUID\[Compendium\.pf2e\.spell-effects\.[^\]]+\]\{[^}]+\}$/;
-const HEIGHTENED = /^<p>\s*<strong>\s*Heightened \(\+(\d)\)\s*<\/strong>\s*The damage increases by (\d+)d(\d+)\.\s*<\/p>$/;
 
 /** {html, component, formula, options, choiceLabel, links, claimed, note} or null. */
 export function extractOptionAttack(adapted) {

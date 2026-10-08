@@ -8,8 +8,8 @@
 // GM leaves the accepting creatures out at review; the refusers' rows are their condition, with the floor as a note for the spell's duration; who
 // understood, and the agreement among those who accepted, are notes.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
 const DECLINE = /^Those creatures who decline the choice or do not understand it must attempt an? (Fortitude|Reflex|Will) save\.$/;
 const UNDERSTOOD = /^The invitation is understood by creatures in the area with telepathy and any who understand [A-Za-z, ]+\.$/;
 const ACCEPT = /^Those who accept the invitation cannot take hostile action against others who agreed until (\d+) minutes pass and can communicate telepathically with them during that time\.$/;

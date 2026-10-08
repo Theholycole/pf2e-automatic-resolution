@@ -6,16 +6,14 @@
 // adjacent space; a creature adjacent to a cluster holds the critical force dice (the module's Effect checked against the text at every rank); no duration — the
 // crystals stay until the GM ends the spell.
 import { htmlToPlainText } from "./description-parser.js";
+import { DOMAIN, ITEM_LINK as LINK, WORD_NUMBERS_2_4 as NUMBER } from "./text-patterns.js";
 
-const DOMAIN = /^<strong>Domain<\/strong> ([a-z]+(?: \([a-z]+\))?)$/;
 const LEAD = /^You cause crystals to grow from the ground around you\.$/;
 const TERRAIN = /^(The area becomes difficult terrain), (though you can ignore it)\.$/;
 const CLUSTERS = /^Select (three|two|four) @Template\[burst\|distance:(\d+)\]s at least partially within the area; enormous clusters of crystals grow here, filled with magic energy\.$/;
 const OCCUPY = /^These crystalline structures are (\d+) feet high and occupy the area, moving any creatures in the area to the nearest adjacent space\.$/;
 const CRIT = /^When standing adjacent to one of these clusters, creatures['’] critical hits are empowered, dealing (\d+)d(\d+) ([a-z]+) damage\.$/;
 const STEP = /^Heightened \(\+(\d)\) The \3 damage increases by (\d+)d\2\.$/;
-const LINK = /^@UUID\[(Compendium\.[A-Za-z0-9_.-]+\.Item\.([A-Za-z0-9]{16}))\]\{([^}]+)\}$/;
-const NUMBER = { two: 2, three: 3, four: 4 };
 
 /** Dice at a rank. */
 export function gardenDice(crit, rank) {

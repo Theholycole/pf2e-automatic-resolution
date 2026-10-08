@@ -4,10 +4,10 @@
 // creature's resistance to that type, and a creature immune to it takes the damage (untyped) with its result one degree better.
 // Both sentences must be present and name the spell's one damage type.
 import { htmlToPlainText } from "./description-parser.js";
+import { BETTER } from "./text-patterns.js";
 
 const HALF = /^(?:[A-Z][^.]*?, )?creatures in the area apply only half their usual ([a-z]+) resistance\.$/;
 const IMMUNE = /^Creatures that are immune to ([a-z]+), instead of gaining the usual benefit of immunity, treat the results of their saving throws as one degree of success better\.$/;
-const BETTER = { criticalSuccess: "criticalSuccess", success: "criticalSuccess", failure: "success", criticalFailure: "failure" };
 
 /** `sentences`: the description's plain sentences. Returns null unless both are there for the spell's one damage type. */
 export function compileResistanceHalving(sentences, damageComponents) {

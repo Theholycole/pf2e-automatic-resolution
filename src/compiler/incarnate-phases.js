@@ -7,9 +7,8 @@
 //   - the GM's reminders: who the phase reaches, terrain, objects, and rules only the GM can play.
 // A sentence none of these reads refuses the spell (`unread` names it, for debugging).
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_HYPHEN_NAME as COND, SPELL as SPELL_LINK, condition as condLink } from "./text-patterns.js";
 
-const COND = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Z][a-z-]+)(?: (\d))?\}`;
-const condLink = (uuid, name, value) => `@UUID[${uuid}]{${name}${value ? ` ${value}` : ""}}`;
 const CONDITION_UUIDS = { prone: "j91X7x0XSomq8d60", stunned: "dfCMdR4wnpbYNTix", sickened: "fesd1n5eVhpCSS18", deafened: "9PR9y0bi4JPKnHPR", slowed: "xYTAsEpcJE1Ccni3",
     frightened: "TBSHQspnbcqxsmjL", clumsy: "i3OJZU2nk64Df3xm", drained: "4D2KBtexWXa6oUMR", enfeebled: "MIRkyAjyBeXivMa7", blinded: "XgEqL1kFApUbl5Z2", immobilized: "eIcWbB5o3pP6OIMe",
     restrained: "VcDeM8A5oI6VqhbM", grabbed: "kWc1fhmv9LBiTuei", confused: "yblD8fOR1J8rDwEQ", fleeing: "sDPxOjQ9kx2RZE8D", dazzled: "TkIyaNPgTZFBCCuh", stupefied: "e1XGnhKNSQIm5IXg",
@@ -17,7 +16,6 @@ const CONDITION_UUIDS = { prone: "j91X7x0XSomq8d60", stunned: "dfCMdR4wnpbYNTix"
 const bare = (name, value) => condLink(`Compendium.pf2e.conditionitems.Item.${CONDITION_UUIDS[name.toLowerCase()]}`, name.toLowerCase() === "off-guard" ? "Off-Guard" : name[0].toUpperCase() + name.slice(1).toLowerCase(), value);
 const DURATION = String.raw`(?: for (\d+) (round|minute|hour)s?)?`;
 const STATS = "(Fortitude|Reflex|Will|fortitude|reflex|will)";
-const CHECK = String.raw`(?:@Check\[${STATS}(\|basic)?(?:\|[^\]]*)?\](?:\{[^}]*\})?|(?:a |an )?(basic )?${STATS})`;
 // (Plain text for a reader: links by their labels, inline rolls by their dice and type, checks by their save.)
 const plainOf = html => htmlToPlainText(String(html ?? ""))
     .replace(/@UUID\[[^\]]+\]\{([^}]+)\}/g, "$1")
@@ -103,7 +101,6 @@ function cond(m, at, durAt) {
 }
 
 // Lead sentences: {statistic, basic, damage?, failure?/criticalFailure? (conditions), rows?}.
-const WHO = String.raw`(?:[Aa]ll |[Ee]ach )?(?:living )?(?:enemies|enemy|foes?|creatures?|enemy creatures)(?: [^.@]*?)?`;
 const LEADS = [
     // "<who> take(s) @Damage[…] damage (@Check[reflex|basic] save)" / "… takes 6d12 electricity damage with a basic Reflex save" / "dealing @Damage[…] damage to <who> with a @Check[fortitude|basic] save"
     [new RegExp(String.raw`^.*?\b(?:takes?|dealing|deals?)\s+((?:@Damage\[(?:[^\[\]]|\[[^\]]*\])*\](?:\{[^}]*\})?|\d+d\d+ [a-z]+(?: energy)?)(?: damage)?(?:,? (?:and|plus) (?:@Damage\[(?:[^\[\]]|\[[^\]]*\])*\]|\d+d\d+ [a-z]+) damage)*)(?: damage)?(?: (?:[^.()@]|@Template\[[^\]]*\](?:\{[^}]*\})?)*?)?,? (?:\(|with an? )(?:@Check\[${STATS}\|basic(?:\|[^\]]*)?\]|basic ${STATS})(?: save| saving throw)?\)?(?: (?:[^.@]|@Template\[[^\]]*\](?:\{[^}]*\})?)*)?\.?$`),
@@ -378,7 +375,6 @@ function readEffectSentence(sentence, next) {
                 { uuid: m[8], slug: m[9].toLowerCase(), value: null, predicate: [`self:condition:${m[6].toLowerCase()}`] }], duration: { ...untilSpellEnds } } };
     return null;
 }
-const SPELL_LINK = String.raw`@UUID\[(Compendium\.pf2e\.spells-srd\.Item\.[A-Za-z0-9]+)\]\{([^}]+)\}`;
 function readCastSentence(sentence, next) {
     let m;
     if ((m = new RegExp(String.raw`^The [a-z]+ casts an? (\d+)(?:st|nd|rd|th)-rank ${SPELL_LINK} that has an? @Template\[(?:type:)?([a-z]+)\|distance:(\d+)\] instead of the usual range and area\.$`).exec(sentence)))

@@ -11,8 +11,8 @@
 // Athletics check or Reflex save against the spell DC (its choice); the outcome's penalty (lost on leaving the web) or Immobilized is applied, a
 // critical success frees it for the rest of the turn; clearing squares is the GM's (edit the region).
 import { htmlToPlainText } from "./description-parser.js";
+import { HEADINGS, NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const TERRAIN = /^Squares filled with the web are difficult terrain\.$/;
 const CHECK = /^Each time a creature in the web begins to use a move action or enters the web during a move action it's using, it must attempt an @Check\[(athletics)\] check or (Fortitude|Reflex|Will) save against your spell DC to avoid taking a circumstance penalty to its Speeds or becoming (@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{Immobilized\})\.$/;
 const LEAVES = /^A creature that gets out of the web ceases to take a circumstance penalty to its Speed from the web\.$/;
@@ -24,7 +24,6 @@ const ROWS = {
     failure: /^The creature takes a [–−-](\d+)-foot circumstance penalty to its Speeds until the start of its next turn\.$/,
     criticalFailure: /^The creature is immobilized until the start of its next turn, after which it takes a [–−-](\d+)-foot circumstance penalty to its Speeds for (\d+) rounds?\. It can attempt to (?:@UUID\[[^\]]+\]\{Escape\}|Escape) to remove its immobilized condition\.$/
 };
-const HEADINGS = { criticalSuccess: "Critical Success", success: "Success", failure: "Failure", criticalFailure: "Critical Failure" };
 const HEIGHTENED = /^<p>\s*<strong>\s*Heightened \((\d+)(?:st|nd|rd|th)\)\s*<\/strong>\s*The spell's area increases to an? @Template\[burst\|distance:(\d+)\], and its range increases to \d+ feet\.\s*<\/p>$/;
 
 /** Returns {webArea, claimed} or null. */

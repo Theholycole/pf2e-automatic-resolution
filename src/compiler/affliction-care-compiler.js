@@ -8,8 +8,8 @@
 // rank. The runtime applies these operations to the affliction handler's
 // Effects (Pseudo Afflictions: stage = badge) under PF2e's affliction rules.
 import { htmlToPlainText } from "./description-parser.js";
+import { WORD_NUMBERS_1_3 as WORD } from "./text-patterns.js";
 
-const WORD = { one: 1, two: 2, three: 3 };
 const num = value => WORD[String(value).toLowerCase()] ?? Number(value);
 const unitOf = value => ({ day: "days", hour: "hours", minute: "minutes", round: "rounds" })[String(value).toLowerCase().replace(/s$/, "")];
 const slug = value => String(value).trim().toLowerCase();

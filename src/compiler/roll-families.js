@@ -1,7 +1,7 @@
 // Note-only spells whose rule is a roll (Diviner's Sight, Read Fate, Fact Check, Nudge Fate).
 import { htmlToPlainText } from "./description-parser.js";
+import { ENDS, plainSentencesTrimmed as split } from "./text-patterns.js";
 
-const split = html => htmlToPlainText(html).replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s+(?=[A-Z@])/).map(sentence => sentence.trim()).filter(Boolean);
 const RULE_WORDS = /\d|@|\[\[|\b(?:damage|saves?|saving throws?|bonus|penalty|conditions?|immune|Sustain|can't|must|checks?|DC|Hit Points|terrain|rolls?)\b/i;
 const narration = sentences => sentences.every(sentence => !RULE_WORDS.test(sentence));
 
@@ -64,7 +64,6 @@ export function compileRepeatCheck(adapted) {
 // The spell then ends. If you cast nudge fate while a previous casting of this hex is still in effect, the previous effect ends" — a watcher
 // Effect on the target: the module re-grades the first failed roll the +1 improves, and the Effect ends.
 const NUDGE = /^When the target fails an attack roll, skill check, or saving throw and a \+(\d) status bonus would turn a critical failure into a failure, or failure into a success, you grant the target a \+\d status bonus to the check retroactively, changing the outcome appropriately\.$/;
-const ENDS = /^The spell then ends\.$/;
 const HEX_RECAST = /^If you cast [a-z' ]+ while a previous casting of this hex is still in effect, the previous effect ends\.?$/;
 export function compileRetroBonus(adapted) {
     if (adapted.defense?.kind !== "none" || !/^1 creature$/i.test(String(adapted.targeting?.target ?? "").trim())) return null;

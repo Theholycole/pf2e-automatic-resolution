@@ -14,9 +14,9 @@
 // damage is tracked; a hit on the image or a failed save by it ends the spell, as does its being more than 500 feet from the caster. The card's
 // Disbelieve rolls a creature's Perception against the spell DC: a success heals half the damage it took from the image and makes it immune.
 import { htmlToPlainText } from "./description-parser.js";
+import { SIZE_SLUGS as NAMES, NARRATION_RULES } from "./text-patterns.js";
 
 const SIZES = ["tiny", "sm", "med", "lg", "huge", "grg"];
-const NAMES = { Tiny: "tiny", Small: "sm", Medium: "med", Large: "lg", Huge: "huge", Gargantuan: "grg" };
 const RULES = [
     /^You create an illusory image of an? (Tiny|Small|Medium|Large|Huge) or smaller creature\.$/,
     /^It generates the appropriate sounds, smells, and feels believable to the touch\.$/,
@@ -88,7 +88,6 @@ const FAMED = [
     /^When a creature disbelieves the illusion or if the spell ends while the illusion is observed, it recovers from half the damage it had taken from it \(if any\) and doesn't take any further damage from it\.$/
 ];
 const FAMED_STEP = /^<p>\s*<strong>\s*Heightened \(\+(\d)\)\s*<\/strong>\s*The damage of the image's melee and ranged Strikes increases by (\d+)d(\d+), and the maximum size of the creature you can create increases by one \(to a maximum of (Gargantuan|Huge)\)\.\s*<\/p>$/;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 
 /** Famed Figure: {illusoryCreature, claimed} or null. */
 export function compileFamedFigure(adapted) {

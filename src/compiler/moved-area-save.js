@@ -6,9 +6,8 @@
 //   the same effects as above."
 // The lingering area exposed when cast and on that Sustain (living creatures only); moving it is the GM's (a note).
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C, DEGREE_LABEL_PAIRS as DEGREES, NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const TAKES = /^Living creatures in the area take (.+) and must attempt an? (Fortitude|Reflex|Will) save\.$/;
 const IMMUNE = /^Nonliving creatures are immune to this spell's effects\.$/;
 const DAMAGE_PART = /^(\d+d\d+) ([a-z]+) damage$/;
@@ -19,7 +18,6 @@ const ROWS = {
     criticalFailure: new RegExp(String.raw`^As failure, but the creature takes double damage and is (${C}[A-Z][a-z]+(?: \d)?\})\.$`)
 };
 const MOVE = /^The first time each round you Sustain the spell, you can move the area up to (\d+) feet within the range of the spell\. Living creatures in the new area must attempt saves with the same effects as above\.$/;
-const DEGREES = [["criticalSuccess", "Critical Success"], ["success", "Success"], ["failure", "Failure"], ["criticalFailure", "Critical Failure"]];
 
 // Invoke Spirits: "They deal 2d4 mental damage and 2d4 void damage to each living creature in the area, with a basic Will save." / "Additionally,
 // creatures that critically fail the save are @UUID[…]{Frightened 2} and are @UUID[…]{Fleeing} for 1 round." / "On subsequent rounds, the first

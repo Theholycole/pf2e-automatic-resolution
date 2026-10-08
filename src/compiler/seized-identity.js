@@ -5,10 +5,8 @@
 // also becomes Enfeebled 1 or increases the value of its enfeebled condition by 1." with "Heightened (9th) The mental damage increases by 4d6, and the void
 // damage increases by 1d8." — the rows' damage; the spell's controls card (from a success or worse): PF2e's Illusory Disguise Effect on the caster, PF2e's
 // Silence Effect on the target, and the aging's basic save the GM presses on the first Sustain each round.
-import { htmlToPlainText } from "./description-parser.js";
+import { plainOrEmpty as plain, rowOf } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(String(html ?? "")).replace(/\s+/g, " ").trim();
-const rowOf = (html, heading) => { const row = new RegExp(String.raw`<strong>\s*${heading}\s*</strong>([\s\S]*?)</p>`).exec(html); return row ? row[1].replace(/\s+/g, " ").trim() : null; };
 const LEAD = [/^With a gleeful cackle, you seize an individual's voice and swallow it\.$/, /^For the duration, you look and sound like the target, and the target can't speak\.$/,
     /^The effects depend on the result of the target's (Fortitude|Reflex|Will) saving throw\.$/];
 const SUCCESS = /^You take on the target's appearance, with the same effects of a (\d)(?:st|nd|rd|th)-rank @UUID\[(Compendium\.pf2e\.spells-srd\.Item\.[A-Za-z0-9]+)\]\{Illusory Disguise\} spell, and the target can't speak, with the same effects of a (\d)(?:st|nd|rd|th)-rank @UUID\[(Compendium\.pf2e\.spells-srd\.Item\.[A-Za-z0-9]+)\]\{Silence\} spell\.$/;

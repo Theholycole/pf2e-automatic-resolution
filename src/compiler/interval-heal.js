@@ -5,8 +5,8 @@
 // Wounds increases by 2d4." — the caster's Effect for the duration: the item's healing every 10 minutes of world time; the extra healing is a
 // button, used once (PF2e's Treat Wounds names no patient); the sense, which no PF2e sense matches, is a note.
 import { durationSeconds, plainText as plain, splitSentences as split } from "./description-parser.js";
+import { unlinkText as unlink } from "./text-patterns.js";
 
-const unlink = text => text.replace(/@UUID\[[^\]]+\]\{([^}]+)\}/g, "$1");
 const EVERY = /^You heal (\d+d\d+) Hit Points every (\d+) (minutes|hours)\.$/;
 const TREATED = /^The first time during the duration when someone successfully Treats your Wounds, you regain an additional (\d+)d(\d+) Hit Points\.$/;
 const SENSE = /^You gain an? (imprecise|precise) sense out to (\d+) feet that senses only [a-z ,]+\.$/;

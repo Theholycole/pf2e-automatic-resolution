@@ -4,6 +4,7 @@
 // behaviour as the GM's note on each failing row: until the end of the target's next turn (success), the spell's duration with an end-of-turn save that ends
 // it (failure), or the spell's whole duration (critical failure). The behaviour must be the row's only rule (no condition, damage or number).
 import { htmlToPlainText } from "./description-parser.js";
+import { UNIT as UNITS } from "./text-patterns.js";
 
 const ROW = /<p>\s*<strong>\s*(Critical Success|Success|Failure|Critical Failure)\s*<\/strong>([\s\S]*?)<\/p>/gi;
 const UNAFFECTED = /^The (?:creature|target) is unaffected\.$/;
@@ -47,7 +48,6 @@ export function rewriteLastingNoteRows(adapted) {
 // an opening paragraph describing the hallway, its doors (the checks to pass them) and the counteract against teleportation inside — each row's GM note for its
 // own time (the GM ends it early when the doors are passed), and the opening as the card's GM reminder (the doors and the teleport rule are played off the map).
 const TRAPPED = /^The target is trapped for (\d+) (round|minute|hour)s?, or until it bypasses (\d+) doors?\.$/;
-const UNITS = { round: "rounds", minute: "minutes", hour: "hours" };
 
 /** {durations: {degree: {value, unit, doors}}, reminder, sentences} or null. */
 export function readTrappedRows(adapted) {

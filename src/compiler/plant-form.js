@@ -11,12 +11,11 @@
 // battle form (AC 20, Large, the plant trait) whose Reflex successes are failures; merged, the caster is Blinded (hearing only). The record's
 // controls expel a merged caster: the plant took damage (10d6) or Magic Passage (none); either ends the spell. The rest are notes.
 import { htmlToPlainText } from "./description-parser.js";
+import { DISMISS_THIS as DISMISS, SIZE_SLUGS_TO_HUGE as SIZES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 // (One with Stone the same with "stone": "You become a Large stone." and "As a stone, your AC is 23, …".)
 const EITHER = /^You can either transform into an? (plant|stone) or merge with (?:plant matter|stone)\.$/;
 const WHILE = /^While transformed, you can't move or affect anything outside the (plant|stone), but you can cast spells as long as they don't require line of effect beyond the (?:plant|stone)\.$/;
-const DISMISS = /^You can Dismiss this spell\.$/;
 const MERGE = [
     /^The spell's duration is (\d+) (minutes|hours)\.$/,
     /^While casting the spell, you must touch an? (?:plant|stone) with enough volume to fit you and your possessions or the spell is disrupted\.$/,
@@ -33,7 +32,6 @@ const TREE = [
     /^As an? (?:plant|stone), your AC is (\d+), and only status bonuses, status penalties, circumstance bonuses, and circumstance penalties affect you\.$/,
     /^Any successes and critical successes you roll on (Fortitude|Reflex|Will) saves are failures\.?$/
 ];
-const SIZES = { Tiny: "tiny", Small: "sm", Medium: "med", Large: "lg", Huge: "huge" };
 const seconds = (value, unit) => Number(value) * (unit === "hours" ? 3600 : 60);
 
 /** Returns {plantForm, claimed} or null. */

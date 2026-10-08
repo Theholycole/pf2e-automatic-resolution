@@ -6,12 +6,12 @@
 // Rewritten to an ordinary spell attack of the initial damage, with the ground hazard on each hit: the runtime draws the puddle (the target's
 // space and the squares adjacent to it) for its duration, and a creature entering it or starting its turn in it takes its damage (no save).
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
 
 const ATTACK = /^Make a (ranged|melee) spell attack against the target\.$/;
 const HIT = /^On a success, the target takes (\d+)d(\d+) ([a-z]+) damage, and ([a-z]+) splatters to the ground in the target's space and all spaces adjacent to the target\.$/;
 const CRIT = /^On a critical hit, the target takes double damage\.$/;
 const PUDDLE = /^The ([a-z]+) puddle lasts for (\d+) (round|minute)s?; a creature that enters or starts its turn in the \1 puddle takes @Damage\[\(floor\(@item\.(?:level|rank) ?\/ ?(\d)\)\)d(\d+)\[([a-z]+)\]\] damage\.$/;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 
 /** {html, groundHazard, sentences} or null. */
 export function extractPuddleAttack(adapted) {

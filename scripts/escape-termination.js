@@ -4,10 +4,9 @@
 // `action:escape` roll option and no DC, so the module grades the roll against
 // each candidate. A creature Escapes from one restraint at a time, so the GM
 // confirms which matching Effect ends.
-import { activeUsers, escapeHTML } from "./runtime-utils.js";
+import { activeUsers, escapeHTML, DEGREES } from "./runtime-utils.js";
 
 export const ESCAPE_MODULE_ID = "pf2e-automatic-resolution";
-const DEGREES = ["criticalFailure", "failure", "success", "criticalSuccess"];
 
 /** PF2e degree of success, including the natural 20/1 step. */
 export function escapeDegree(total, natural, dc) {

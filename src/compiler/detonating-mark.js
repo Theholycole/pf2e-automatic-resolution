@@ -7,9 +7,8 @@
 // explosion's Reflex); Fatigued, held, for the row's time; a note whose controls detonate the mark — a basic save card of PF2e's damage at the cast rank
 // for the creatures within the emanation, with or without the marked one — ending the spell; the sensed direction and the lapse reminders.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C, NARRATION_RULES, HEIGHTENED_DAMAGE_STEP as STEP } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const SENSE = /^The mark gives off a heat that only you can sense; as long as you're on the same plane as the target, you can sense the direction it's in\.$/;
 const HELD = new RegExp(String.raw`^The target is (${C}([A-Z][a-z]+)\}) and can't reduce the value of this condition normally\.$`);
 const DETONATE = /^You can detonate the mark at any point during its duration by Dismissing the spell\.$/;
@@ -18,7 +17,6 @@ const CHOOSE = /^You choose whether the mark's target is included in the explosi
 const DURATION = /^When you cast the spell, the target attempts an? (Fortitude|Reflex|Will) save to determine how long the mark lasts\.$/;
 const LAPSE = /^If the spell's duration elapses, the rune doesn't detonate\.$/;
 const ROWS = { success: /^The duration is (\d+) (minute|hour|day|week)s?\.$/, failure: /^The duration is (\d+) (minute|hour|day|week)s?\.$/, criticalFailure: /^The duration is unlimited\.$/ };
-const STEP = /^Heightened \(\+(\d)\) The damage increases by (\d)d(\d+)\.$/;
 
 /** {html, defense, held, note, detonation, reminders, sentences} or null. */
 export function rewriteDetonatingMark(adapted) {

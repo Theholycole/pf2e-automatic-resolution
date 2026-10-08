@@ -7,12 +7,12 @@
 // target ends with its Escape against the spell DC, which ends every Effect of the cast; the same size is a difficult-terrain note on both.
 // Being pulled along is the GM's (moving the tokens). An object target is the GM's.
 import { htmlToPlainText, stripHeighteningHTML } from "./description-parser.js";
+import { DISMISS_THIS as DISMISS } from "./text-patterns.js";
 
 const BOND = /^You and the target become inseparable for the spell's duration or until the target (?:\[\[\/act escape\]\]\{Escapes\}|@UUID\[[^\]]+\]\{Escapes?\}|Escapes)\.$/;
 const SMALLER = /^If the (?:creature|target) is smaller than you, it's (@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{Immobilized\}) and pulled along with you as you move\.$/;
 const SAME = /^If the (?:creature|target) is the same size as you, you're both pulled along with each other as either moves, but you both treat all spaces as difficult terrain\.$/;
 const LARGER = /^If the (?:creature|target) is larger than you, you're (?:immobilized|@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{Immobilized\}) and pulled along as the target moves\.$/;
-const DISMISS = /^You can Dismiss this spell\.$/;
 const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|rounds?|minutes?|Escape\w*|immobilized|difficult)\b/i;
 
 /** Returns {sizeBond, claimed} or null. */

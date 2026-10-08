@@ -7,10 +7,8 @@
 // critically succeeds, it forces you out and the spell ends."); full control ("The target is controlled by you.").
 // Each possessed creature holds a note for the spell's time (the partial control's start-of-turn save; the full control's Controlled and the caster's
 // ownership of its token); the caster's body is Unconscious while that note lasts; the body's death is the controls card's Fortitude save.
-import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_UNVALUED as C, plainOrEmpty as plain } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(String(html ?? "")).replace(/\s+/g, " ").trim();
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Z][a-z]+)\}`;
 const INTRO = [
     [/^You send your mind and soul into the target's body, attempting to take control\.$/, "narration"],
     [/^The target must attempt an? (Fortitude|Reflex|Will) save\.$/, "lead"],

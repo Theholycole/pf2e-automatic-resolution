@@ -9,6 +9,7 @@
 import { htmlToPlainText } from "./description-parser.js";
 import { adaptSpellSource } from "./spell-source-adapter.js";
 import { compileConcealingArea } from "./concealing-area.js";
+import { unlinkText } from "./text-patterns.js";
 
 const FUNCTIONS = /^The ([a-z]+) functions as @UUID\[(Compendium\.pf2e\.spells-srd\.Item\.[A-Za-z0-9]+)\]\{([^}]+)\} except it [a-z]+ creatures that (end|start) their turns within the \1\.$/;
 const NOT_POISON = /^\(The @UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{Concealed\} condition is not an? ([a-z]+) effect\.\)$/;
@@ -184,4 +185,3 @@ export function rewriteBorrowedCriticalRider(adapted, referencedSpells) {
     return { html: String(referenced.system?.description?.value ?? ""), referenced: { uuid: with_[1], name: referenced.name },
         rider: { formula: `${crit[1].trim()}[persistent,${crit[2]}]`, type: crit[2], sourceText: sentences[1], note: unlinkText(sentences[2]) }, sentences };
 }
-const unlinkText = text => text.replace(/@UUID\[[^\]]+\]\{([^}]+)\}/g, "$1");

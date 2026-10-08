@@ -1,9 +1,7 @@
 // Note Effects (user decision): what the module can't carry out mechanically — behaviour, attitude, a choice — is a rule-less
 // Effect on the creature naming what to do, for as long as the spell's text says. It is a reminder, not automation.
 import { nativeConditionTiming } from "./condition-timing.js";
-
-const MODULE_ID = "pf2e-automatic-resolution";
-const UNITS = new Set(["rounds", "minutes", "hours", "days"]);
+import { MODULE_ID, UNITS } from "./runtime-utils.js";
 
 /** A note the compiler certified: a label, the rule text, the clause it came from, and a fixed duration. */
 export function validNoteEffect(note) {

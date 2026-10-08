@@ -5,8 +5,8 @@
 // Rewritten to the ordinary basic save of the one targeted creature (the critical failure's condition as its rider); the caster's move, with
 // its distance at the cast rank and the critical failure's no-reactions part, is the caster's reminder on the card.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const BLAST = /^You deal (\d+)d(\d+) ([a-z]+) damage to the triggering creature, with a basic (Fortitude|Reflex|Will) save, and (Fly|Stride|Step) up to (\d+) feet in a straight line directly away from it\.$/;
 const CRITICAL = /^If the creature critically fails its saving throw, your movement does not provoke reactions from it, and it's (@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{[A-Za-z]+\}) until the end of its next turn\.$/;
 

@@ -9,8 +9,8 @@
 // The form is PF2e's BattleForm rule (its brackets for the heightened ranks) plus the save bonus and the untrained proficiency; Fuel is an Ongoing
 // control (the temporary Hit Points at the cast rank); the mark is a lasting Effect with the weakness behind a night toggle.
 import { htmlToPlainText } from "./description-parser.js";
+import { SIZE_SLUGS_TO_HUGE as SIZES } from "./text-patterns.js";
 
-const SIZES = { Tiny: "tiny", Small: "sm", Medium: "med", Large: "lg", Huge: "huge" };
 const FORM = /^You transform yourself into an? (Tiny|Small|Medium|Large|Huge) [a-z ]+ battle form\.$/;
 const TRAIT = /^While in this form, you gain the ([a-z]+) trait\.$/;
 const FREE = /^This battle form doesn't prevent you from speaking, casting spells, or using your hands\.$/;

@@ -6,8 +6,8 @@
 // death at 0 Hit Points (the compiler's post-damage death); the success row the item's damage (PF2e's heightening gives 10d6); and, once the card is finalized
 // with no creature killed, the backlash: the stated damage to every living creature on the card, the level-excluded ones too, and to the caster.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const WHO = /^Each living creature of (\d+)(?:st|nd|rd|th) level or lower in the (line|cone|burst|emanation) must attempt an? (Fortitude|Reflex|Will) save\.$/;
 const KILLS = /^If the damage from [a-z' ]+ reduces a creature to 0 Hit Points, that creature dies instantly\.$/;
 const BACKLASH = /^If [a-z' ]+ doesn't kill even a single creature, the [a-z ]+ turns backward toward you, dealing an additional @Damage\[(\d+)\[([a-z]+)\]\] damage to every living creature in the (?:line|cone|burst|emanation) \(even those above (\d+)(?:st|nd|rd|th) level\) and (\d+) ([a-z]+) damage to you\.$/;

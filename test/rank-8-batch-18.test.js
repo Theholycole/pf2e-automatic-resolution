@@ -20,8 +20,6 @@ async function catalog() {
     return map;
 }
 const effects = await catalog();
-const compile = source => compileAbility(source, {nativeEffectCatalog: effects});
-const withText = (source, replace) => { const copy = structuredClone(source); copy.system.description.value = replace(copy.system.description.value); return copy; };
 
 const supported = plan => inspectSavePlan(plan).supported;
 

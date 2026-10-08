@@ -6,13 +6,12 @@
 // Each phase's sentences are read into a save's own text (the damage, the save, the rows the riders state); "exposed to <the listed affliction>" is a
 // further phase, that affliction's own save at its stated DC; "becomes difficult terrain for 1 round" is the phase's terrain, placed by the card.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_ID_LINK as C, NARRATION_RULES_NO_TERRAIN as NARRATION, capitalize as STAT, link } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.([A-Za-z0-9]+)\]\{([A-Z][a-z]+)(?: (\d))?\}`;
 const DAMAGE = String.raw`@Damage\[((?:\d+d\d+\[[a-z]+\],?)+)(?:\|[^\]]*)?\]`;
 const CHECK = String.raw`@Check\[(fortitude|reflex|will)(\|basic)?(?:\|[^\]]*)?\]`;
 const SPACE = /^The ([a-z ]+) occupies the space of an? (Small|Medium|Large|Huge) creature, and like a swarm, they can occupy the same space as other creatures\.$/;
 const CHOOSE = /^When you Cast this Spell, choose one of the ([a-z ]+) below to summon\.$/;
-const NARRATION = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const WHO = String.raw`(?:[Aa]ll enemies|[Ee]ach enemy|enemies|[Aa]ll creatures|[Ee]ach creature) (?:with)?in their space(?: and (?:with)?in an? @Template\[(?:type:)?emanation\|distance:(\d+)\])?`;
 // The lead sentence: damage with a basic save, or a save the creatures attempt (non-basic).
 const LEADS = [
@@ -49,8 +48,6 @@ const RIDERS = [
 ];
 
 const rows = (cs, s, f, cf) => `<hr /><p><strong>Critical Success</strong> ${cs}</p><p><strong>Success</strong> ${s}</p><p><strong>Failure</strong> ${f}</p><p><strong>Critical Failure</strong> ${cf}</p>`;
-const link = c => `@UUID[Compendium.pf2e.conditionitems.Item.${c.id}]{${c.name}${c.value != null ? ` ${c.value}` : ""}}`;
-const STAT = statistic => `${statistic[0].toUpperCase()}${statistic.slice(1)}`;
 
 /** One phase's text → {html, statistic, basic, damage: [{formula, type}], area, reminder, terrain, exposure, sentences} or null. */
 function readPhase(raw) {

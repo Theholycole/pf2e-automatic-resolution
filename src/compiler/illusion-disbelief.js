@@ -8,6 +8,7 @@
 // Rewritten to the plain rows (Fascinated until the end of its turn, or for 1 minute); each affected row gets the disbelief note (its control
 // ends the spell on a success), and the critical failure its behaviour note.
 import { htmlToPlainText } from "./description-parser.js";
+import { plainOrEmpty as plain } from "./text-patterns.js";
 
 const CONDITION = String.raw`(@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{Fascinated\})`;
 const SUCCESS = new RegExp(String.raw`^The target becomes ${CONDITION} with the ([a-z]+), and the duration is until the end of its turn\. (The target can also try to disbelieve the illusion if it touches the \2, @UUID\[[^\]]+\]\{Seeks\} to examine it, or speaks to it if the illusion appears to be a person or the like\.) If the target disbelieves the illusion, the spell ends\.$`);
@@ -18,8 +19,6 @@ const PREAMBLE = [
     /^The target's response to the [a-z]+ is based on the outcome of the target's (Fortitude|Reflex|Will) save\.$/
 ];
 const NARRATION_RULES = /\d|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
-
-const plain = text => htmlToPlainText(String(text ?? "")).replace(/\s+/g, " ").trim();
 
 /** {html, rows: {degree: notes}, notes, sentences} or null. */
 export function extractIllusionDisbelief(adapted) {

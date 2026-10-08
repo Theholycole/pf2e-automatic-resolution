@@ -1,13 +1,11 @@
 // Hooks for self-spell Effects: a climbing rope's fall check (Inside Ropes: when a creature bearing the Effect critically fails a Climb
 // check, the active GM's client rolls the stated flat check; a success prevents the fall), and an Effect ending when its bearer gains a
 // condition (Eat Fire).
-import { escapeHTML } from "./runtime-utils.js";
+import { escapeHTML, MODULE_ID } from "./runtime-utils.js";
 import { tokenDistance } from "./token-distance.js";
 import { flatCheckPasses } from "../src/compiler/climb-aid.js";
 import { regradeCheck } from "../src/compiler/check-bonus-reaction.js";
 import { createNativeEffect, loadNativeEffectTemplate, prepareNativeEffectSource } from "./native-outcome-effects.js";
-
-const MODULE_ID = "pf2e-automatic-resolution";
 
 export async function climbAidOnCheck(message) {
     const context = message?.flags?.pf2e?.context;

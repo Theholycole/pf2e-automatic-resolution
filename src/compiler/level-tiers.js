@@ -7,12 +7,12 @@
 // with "Heightened (+1)" or "Heightened (10th)" "The levels at which each outcome applies increase by 2." — the target's tier at the cast rank, its outcome applied,
 // and the target's temporary immunity Effect.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
 
 const LINK = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Z][a-z]+)(?: (\d+))?\}`;
 const IMMUNE = /^Once targeted, the (?:target is then|creature becomes) temporarily immune for (\d+) (minute|hour|day)s?\.$/;
 const DEPENDS = /^The effect of the spell depends on the target's level( and current Hit Points)?\.$/;
 const WORD = new RegExp(`^You utter an arcane word of power that can make the target ${LINK} upon hearing it\\.$`);
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const TIER = /^(\d+)(?:st|nd|rd|th)(?: or (Lower|Higher)|-(\d+)(?:st|nd|rd|th))?$/;
 const OUTCOMES = [
     [new RegExp(`^The target is (?:${LINK}|([A-Z][a-z]+)) for \\[\\[/r (\\d+d\\d+) #(rounds|minutes)\\]\\]\\{\\5 \\6\\}\\.$`), m => ({ kind: "condition", uuid: m[1], name: m[2] ?? m[4], value: m[3] ? Number(m[3]) : null, rolled: { formula: m[5], unit: m[6] } })],

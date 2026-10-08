@@ -7,8 +7,8 @@
 // stated size, Hit Points and Speed, immune to bleed, death effects, disease, mental and poison, every check of its own a failure, its Strike the caster's spell attack
 // for 1d6 (+1d6 at the caster's 5th level and every 4 after); the caster's control for the two Strikes (one multiple attack penalty for both) and each hit's save.
 import { htmlToPlainText } from "./description-parser.js";
+import { SIZE_SLUGS as SIZES } from "./text-patterns.js";
 
-const SIZES = { Tiny: "tiny", Small: "sm", Medium: "med", Large: "lg", Huge: "huge", Gargantuan: "grg" };
 const RULES = [
     [/^You conjure forth [a-z ]+ thrall consisting solely of [a-z ]+\.$/, null],
     [/^You create an? (Tiny|Small|Medium|Large|Huge|Gargantuan) thrall within range\.$/, "size"],

@@ -7,9 +7,8 @@
 // ranks); the card's control for the target's Demoralize with the skill: its check against the foe's Will DC (Frightened 1, 2 on a critical success; at the
 // heightened rank a critical success also Fleeing from it for 1 round).
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_UUID_START as C, SPELL_EFFECT_LINK as LINK } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{`;
-const LINK = /^@UUID\[Compendium\.pf2e\.spell-effects\.Item\.([^\]]+)\]\{(Spell Effect: [^}]+)\}$/;
 const STRIKES = /^The target's unarmed Strikes deal an additional (\d+)d(\d+) ([a-z]+) damage\.$/;
 const CRIT = /^Critical hits with these Strikes also deal (\d+)d(\d+) persistent ([a-z]+) damage\.$/;
 const SKILL = /^Additionally, when the target attempts to @UUID\[[^\]]+\]\{Demoralize\} a foe, they can use ([A-Z][a-z]+) instead of Intimidation; when using \1 to Demoralize, the action loses the auditory trait but gains the visual trait, and the target doesn't take a penalty when attempting to Demoralize a creature that doesn't understand its language\.$/;

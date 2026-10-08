@@ -7,12 +7,12 @@
 // "As failure, but the spell's duration is 8 hours, and the creature is not temporarily immune.": the save; each row's immunity to this caster for
 // its own time (none on a critical failure); the obedience a note for its time; what the target learns a card reminder.
 import { htmlToPlainText } from "./description-parser.js";
+import { DEGREE_LABEL_PAIRS as DEGREES } from "./text-patterns.js";
 
 const LEAD = /^You instruct the target to do something, compelling obedience by calling it by its true name\. (Your instructions can't be self-destructive\.) (Though this spell has the linguistic trait, this applies only to the instructions; the creature doesn't need to know its own true name to be affected\.) The target must attempt a (Fortitude|Reflex|Will) saving throw\.$/;
 const UNAFFECTED = /^The target is unaffected, is temporarily immune to further castings of this spell by you for (\d+) (hour|day|week)s?, and learns (your true name|a fragment of your true name)\.$/;
 const FAILURE = /^The target does as you command\. The spell has a duration of (\d+) (minute|hour)s?, or until the target has completed a finite instruction or the instructions become self-?destructive\. The creature is temporarily immune to further castings of this spell by you for (\d+) (hour|day)s?\.$/;
 const CRITICAL = /^As failure, but the spell's duration is (\d+) (minute|hour)s?, and the creature is not temporarily immune\.$/;
-const DEGREES = [["criticalSuccess", "Critical Success"], ["success", "Success"], ["failure", "Failure"], ["criticalFailure", "Critical Failure"]];
 
 const span = (value, unit) => unit === "week" ? { value: Number(value) * 7, unit: "days" } : { value: Number(value), unit: `${unit}s` };
 

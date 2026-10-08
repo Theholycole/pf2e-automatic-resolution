@@ -7,6 +7,7 @@
 // (hidden from players), for the duration; the GM's control when one is triggered opens one basic Reflex card of PF2e's two damage entries (heightened) for
 // the creatures it catches; after the last mine the spell ends; seeing and finding the mines notes.
 import { htmlToPlainText } from "./description-parser.js";
+import { WORD_NUMBERS_2_6 as COUNTS } from "./text-patterns.js";
 
 const CHOOSE = /^Choose up to (\d+) unoccupied squares within range\.$/;
 const TRIGGER = /^A creature who enters a square with an invisible mine triggers it, causing an explosion that deals (\d+d\d+) ([a-z]+) damage and (\d+d\d+) ([a-z]+) damage \(basic (Fortitude|Reflex|Will) save\) to the creature and every creature in a @Template\[emanation\|distance:(\d+)\] from the mine's square\.$/;
@@ -43,7 +44,6 @@ export function rewriteMinefield(adapted) {
 // the bulb blossoms and releases pollen in a @Template[emanation|distance:15]. Creatures in the area take 8d8 poison damage and must attempt a Fortitude save
 // with the following results." — the minefield route with the rows' table: the bulbs the squares of a region the GM draws; the GM's control when one blossoms
 // opens the save card for the creatures within 15 feet of it.
-const COUNTS = { two: 2, three: 3, four: 4, five: 5, six: 6 };
 const BULB_AREA = /^Area (two|three|four|five|six) unoccupied 5-foot squares, each of which is at least (\d+) feet apart$/;
 const BULB_NARRATION = /^You cultivate (two|three|four|five|six) [a-z ]+ bulbs, each filled with [a-z ]+ and sensitive to motion\.$/;
 const BULB_TRIGGER = /^When a creature enters a space adjacent to a bulb, or when a bulb is touched or damaged \(each bulb has AC (\d+)\), the bulb blossoms and releases [a-z]+ in a @Template\[emanation\|distance:(\d+)\]\.$/;

@@ -1,8 +1,8 @@
 // Note-only spells whose rule is an item (Summon Instrument, Arms of Nature, Mending): a conjured item held for the duration, or an item's Hit
 // Points restored.
-import { durationSeconds, plainText as plain, splitSentences as split } from "./description-parser.js";
+import { plainText as plain, splitSentences as split } from "./description-parser.js";
+import { secondsOf } from "./text-patterns.js";
 
-const secondsOf = text => durationSeconds(text);
 const ITEM = /@UUID\[(Compendium\.[^\]]+\.Item\.[^\]]+)\]\{([^}]+)\}/;
 
 // Summon Instrument: "You materialize a @UUID[…]{Musical Instrument (Handheld)} in your grasp. … It vanishes when the spell ends. If you cast

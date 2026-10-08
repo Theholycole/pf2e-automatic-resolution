@@ -13,16 +13,9 @@
 //     speak a word of death" with its Fortitude rows (immunity for 24 hours; the spell ending; death);
 //   - an emblem: "Attack rolls against the target gain a +1 status bonus, and successful Strikes against the target deal 1d6 fire damage, and 1d10
 //     persistent fire damage on a critical hit." with "you're Off-Guard against other enemies" and the new casting replacing the old.
-import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_HYPHENATED as UUID, blocks, matchAll, plain, sentenceSplit as split, unread } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(html).replace(/\s+/g, " ").trim();
-const split = text => text.split(/(?<=[.!?])\s+(?=[A-Z@])/).filter(Boolean);
-const blocks = adapted => String(adapted.descriptionHTML ?? "").split(/<hr\s*\/?>/);
-const UUID = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Za-z-]+)(?: (\d+))?\}`;
 const minutes = text => Number(/^(\d+) minutes?$/.exec(text ?? "")?.[1] ?? NaN);
-// (Every sentence read: those stated claimed; nothing with a number, a roll, damage or a save left behind.)
-const matchAll = (sentences, patterns) => patterns.map(pattern => sentences.map(sentence => pattern.exec(sentence)).find(Boolean));
-const unread = (sentences, found, allowed = []) => sentences.filter(sentence => !found.some(match => match?.[0] === sentence) && !allowed.some(pattern => pattern.test(sentence)));
 
 /** {parts, notes, claimed, lasting?, replaces?} or null. */
 export function extractTriggerCard(adapted) {

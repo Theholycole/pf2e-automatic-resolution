@@ -7,13 +7,13 @@
 // Effect (spell damage + the spell's rank, status) while inside; the GM's control when an enemy casts a spell inside opens its basic Reflex card against the
 // bolts (PF2e's force damage, heightened); a recast ends the previous one; Dismiss; the amplification's "no duration" limit a note.
 import { htmlToPlainText } from "./description-parser.js";
+import { SPELL_EFFECT_LINK_INLINE as LINK } from "./text-patterns.js";
 
 const AREA = /^Area \(continued\) (\d+)-foot radius, (\d+)-foot-tall cylinder$/;
 const WHENEVER = /Whenever any creature Casts a Spell within your [a-z ]+, the well resonates, with your choice of effects\.$/;
 const AMPLIFY = /^The runewell amplifies the power of your spells, as well as those of your allies\. (If the spell deals damage and doesn't have a duration, the well adds a status bonus to damage equal to the spell's rank\.)$/;
 const PUNISH = /^The runewell punishes enemies foolish enough to attempt magic in your seat of power, firing arcane bolts at the spell's caster that deal (\d+d\d+) ([a-z]+) damage, with a basic (Fortitude|Reflex|Will) save\.$/;
 const RECAST = /^If you cast [a-z ]+ a second time, your previous [a-z ]+ vanishes\. You can Dismiss the spell\.$/;
-const LINK = /@UUID\[Compendium\.pf2e\.spell-effects\.Item\.[^\]]+\]\{[^}]+\}/;
 
 /** {html, lingering(link), sentences} or null. */
 export function rewriteRunewell(adapted) {

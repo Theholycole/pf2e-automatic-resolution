@@ -9,10 +9,9 @@
 // can't tell); the sense the target is invisible to is the Effect's note. A Dismissable Ongoing record holds them for the duration; its
 // control rolls a touching creature's Perception against the spell DC (whispered to the GM and the caster).
 import { htmlToPlainText } from "./description-parser.js";
+import { DISMISS_THE as DISMISS, NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const SENSES = /^This illusion applies to all senses, and a creature that touches the target can attempt to disbelieve the illusion\.$/;
-const DISMISS = /^You can Dismiss the spell\.$/;
 const CHOOSE = /^Choose an illusory ([a-z ]+) when you cast the spell\.$/;
 const BONUS = /(?:giving the target|gaining) a \+(\d) (circumstance|status) bonus to (Deception) checks to (?:@UUID\[[^\]]+\]\{Impersonate\}|Impersonate) (an? [a-z-]+(?: creature)?(?:, an? [a-z-]+ creature)?(?:, or an? [a-z ]+)?(?: \(such as an? [a-z]+\))?)\.$/;
 const INVISIBLE = /^The target is also (@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{Invisible\}) to ([a-z]+) and other abilities that sense ([a-z]+) similarly\.$/;

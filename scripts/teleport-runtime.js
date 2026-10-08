@@ -4,10 +4,8 @@
 //   - two tokens swapping places;
 //   - a token raised or lowered (elevation), with the fall's distance.
 import { footprintSquares } from "./token-distance.js";
+import { MODULE_ID, docOf } from "./runtime-utils.js";
 
-const MODULE_ID = "pf2e-automatic-resolution";
-
-const docOf = token => token?.document ?? token;
 const footprint = (doc, at = doc) => ({ x: at.x, y: at.y, width: Number(doc.width) || 1, height: Number(doc.height) || 1 });
 const feet = (a, b) => footprintSquares(a, b, canvas.grid.size) * canvas.dimensions.distance;
 

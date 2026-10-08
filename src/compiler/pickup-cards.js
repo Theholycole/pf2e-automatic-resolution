@@ -6,16 +6,8 @@
 //     damage type depends on the season of the pod: electricity for spring, fire for summer, poison for autumn, or cold for winter.";
 //   - gifts from the sky: "You or an ally in the area can Interact to collect one of these gifts …" with the three benefits a character selects (Hit
 //     Points; an affliction's stage; Clumsy, Drained, Enfeebled or Stupefied down by 2, or two of them by 1).
-import { htmlToPlainText } from "./description-parser.js";
+import { WORD_NUMBERS_2_6 as NUMBER, capitalize as Stat, blocks, matchAll, minutes, plain, sentenceSplit as split, unread } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(html).replace(/\s+/g, " ").trim();
-const split = text => text.split(/(?<=[.!?])\s+(?=[A-Z@])/).filter(Boolean);
-const blocks = adapted => String(adapted.descriptionHTML ?? "").split(/<hr\s*\/?>/);
-const Stat = name => name[0].toUpperCase() + name.slice(1);
-const NUMBER = { two: 2, three: 3, four: 4, five: 5, six: 6 };
-const matchAll = (sentences, patterns) => patterns.map(pattern => sentences.map(sentence => pattern.exec(sentence)).find(Boolean));
-const unread = (sentences, found, allowed = []) => sentences.filter(sentence => !found.some(match => match?.[0] === sentence) && !allowed.some(pattern => pattern.test(sentence)));
-const minutes = adapted => Number(/^(\d+) minutes?$/.exec(adapted.lifecycle?.duration ?? "")?.[1] ?? NaN);
 // (Fixed Heightened entries: "(ternary(gte(@item.rank,9),6,ternary(gte(@item.rank,8),5,4)))" from the base dice and each entry's.)
 // (The highest rank's test outermost: each lower entry nested inside it.)
 const fixedDice = (base, entries) => entries.sort((a, b) => a.rank - b.rank).reduce((inner, entry) => `ternary(gte(@item.rank,${entry.rank}),${entry.dice},${inner})`, String(base));

@@ -8,8 +8,8 @@
 // The record's controls spend a command: the attack command rolls PF2e's spell attack against the target's Reflex DC and applies PF2e's
 // Effect with the degree's penalty (ended by an Escape against the spell DC, or with the spell); the other commands post what the object does.
 import { htmlToPlainText } from "./description-parser.js";
+import { WORD_NUMBERS_1_3 as COUNTS } from "./text-patterns.js";
 
-const COUNTS = { one: 1, two: 2, three: 3 };
 const COMMANDS = /^You can give it (one|two|three) commands? when you (?:@UUID\[[^\]]+\]\{Cast the Spell\}|Cast the Spell), and (one|two) commands? each time you (?:@UUID\[[^\]]+\]\{Sustain the Spell\}|Sustain the Spell)\.$/;
 const ATTACK = /^The ([A-Z][a-z]+) attempts to partially bind a creature\. Attempt a spell attack roll against the target's (Fortitude|Reflex|Will) DC\. If you succeed, the target takes a [–-](\d+)-foot circumstance penalty to its Speed \([–-](\d+)-foot on a critical success\)\. This ends if the target (?:@UUID\[[^\]]+\]\{Escapes\}|Escapes) against your spell DC or breaks the [A-Z][a-z]+\. \(A standard adventuring [A-Z][a-z]+ has Hardness (\d+), HP (\d+), and a Broken Threshold of (\d+)\.\)$/;
 const NARRATION_RULES = /\d|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|can't|must|each|until|rounds?|minutes?|DC|attack|Speed)\b/i;

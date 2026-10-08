@@ -17,14 +17,9 @@ import { refundSlot, timedConditions, highestCastableRank, readCasterWicketTrait
 import { readCastReaction } from "../src/compiler/plus-feature-rules.js";
 import { loadNativeEffectTemplate, prepareNativeEffectSource, createNativeEffect } from "./native-outcome-effects.js";
 import { tokenDistance } from "./token-distance.js";
-const MODULE_ID = "pf2e-automatic-resolution";
-const activeGM = () => game.user?.isGM && game.users.activeGM?.id === game.user.id;
-const escapeHTML = value => String(value ?? "").replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
+import { MODULE_ID, activeGM, castRankOf, escapeHTML, gmIds, isCastMessage } from "./runtime-utils.js";
 const hasFeat = (actor, slug) => (actor?.itemTypes?.feat ?? []).some(item => item.slug === slug);
 const hasAbility = (actor, slug) => [...(actor?.itemTypes?.action ?? []), ...(actor?.itemTypes?.feat ?? [])].some(item => item.slug === slug);
-const isCastMessage = message => message?.flags?.pf2e?.context?.type === "spell-cast" || (!message?.flags?.pf2e?.context?.type && message?.flags?.pf2e?.origin?.type === "spell" && message?.flags?.pf2e?.casting);
-const castRankOf = message => Number(message.flags?.pf2e?.origin?.castRank ?? message.flags?.pf2e?.casting?.castRank ?? message.item?.rank ?? 1);
-const gmIds = () => game.users.filter(user => user.isGM).map(user => user.id);
 
 /** A cast message's spell lost (disrupted, countered): the reason. */
 export async function loseSpell(message, reason) {

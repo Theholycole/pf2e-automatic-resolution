@@ -7,8 +7,8 @@
 // (to a maximum of @UUID[…]{Sickened 4}).": the rows' Sickened (the spell lasting while it does); the flat check a note while the creature is
 // sickened; the critical failure's increase the GM's control (the module raises the value, to the stated maximum); who may be targeted a note.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
 const WHO = /^You call on your patron to reprimand a creature that has attempted a ([A-Z][a-z]+) or ([A-Z][a-z]+) check against you or an ally within the past month\.$/;
 const AWARE = /^You must be aware they did so\.$/;
 const SAVE = /^The target attempts an? (Fortitude|Reflex|Will) saving throw\.$/;

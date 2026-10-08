@@ -6,7 +6,8 @@
 // every 4 levels thereafter, the damage increases by 1d6." A spell's own numbers (size, Hit Points, Speed, immunities, reach) replace the defaults. Each creation is
 // owned by an Effect on the caster for the thralls' time (ending it removes them); a thrall at 0 HP is removed on its own. PF2e can't make checks against a creature
 // succeed automatically: the thrall's AC is 0, and its description tells the GM to treat a critical success against it as a success.
-const MODULE_ID = "pf2e-automatic-resolution";
+
+import { MODULE_ID } from "./runtime-utils.js";
 
 export const THRALL = { level: -1, hp: 1, speed: 15, traits: ["mindless", "undead"], immunities: ["bleed", "death-effects", "disease", "mental", "poison"], seconds: 60,
     strike: { die: 6, firstStepLevel: 5, every: 4 } };

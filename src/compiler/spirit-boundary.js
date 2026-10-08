@@ -6,8 +6,8 @@
 // as the two-action version, and Dismissed as a reaction) and "Heightened (+1) …": the burst a region for the minute; damage a creature takes from an origin on the other
 // side of its edge reduced (the Hit Points given back), the shield losing what it reduced — once per damaging effect; destroyed at 0; the Dismiss reaction the card's.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const LEAD = [/^The spirits do not impede sight, movement, or line of effect\.$/,
     /^When an effect that deals damage passes through the spirit shield, reduce the damage that the effect deals by the listed amount; the shield takes the same amount of damage that it reduced\.$/,
     /^If the crossing effect deals damage to multiple creatures, the shield only takes damage once\.$/, /^When the shield is reduced to 0 Hit Points, it is destroyed\.$/,

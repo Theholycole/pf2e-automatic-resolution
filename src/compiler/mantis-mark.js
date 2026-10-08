@@ -5,8 +5,8 @@
 // to 20 (15 with particularly effective assistance).": the target's save; on a success or worse a note (1 minute, or unlimited) whose control the GM
 // uses when it gains persistent bleed damage — that amount as slashing damage, once a round; the critical failure's flat-check DC in its note.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const SUCCESS = /^The target is marked by [A-Za-z' ]+\. For (\d+) minutes?, the first time per round that the target gains @UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{Persistent ([A-Z][a-z]+) Damage\}, they immediately take that amount of ([a-z]+) damage as [^.@]+\.$/;
 const FAILURE = /^As success, but the curse has an unlimited duration\.$/;
 const CRITICAL = /^As failure, but (the DC on the target's flat check to remove persistent ([a-z]+) damage increases to (\d+) \((\d+) with particularly effective assistance\))\.$/;

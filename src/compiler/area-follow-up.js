@@ -6,9 +6,8 @@
 // then, unless it critically succeeded, a card starts the second save for the creatures within that distance of it (its own table, with the
 // hour's immunity). Who has a mutable anatomy or no limbs is the GM's (a note).
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C, NARRATION_RULES_NO_UNTIL as NARRATION_RULES } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|terrain)\b/i;
 const TAKES = /^The target takes (\d+d\d+) ([a-z]+) damage \(basic (Fortitude|Reflex|Will) save\)(?: as [a-z ]+)?\.$/;
 const NO_EFFECT = /^This spell has no effect on a target with a mutable anatomy or no limbs, such as an ooze or a protean\.$/;
 const ROT = /^The growths rot rapidly and fall away after 1 round\.$/;

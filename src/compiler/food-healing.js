@@ -8,8 +8,8 @@
 // Each piece heals the item's healing entry (PF2e's roll at the cast rank). The food lasts the spell's duration, or
 // the time the text gives.
 import { htmlToPlainText } from "./description-parser.js";
+import { WORD_NUMBERS_2_6 as COUNT, DICE_OR_FLAT as DICE, plainSentences as sentencesOf } from "./text-patterns.js";
 
-const DICE = String.raw`(\d+d\d+(?:\+\d+)?|\d+)`;
 const FOOD = String.raw`(?:produce|food)`;
 const EAT = [
     new RegExp(String.raw`^A creature who eats the ${FOOD} with an Interact action regains ${DICE} (?:HP|Hit Points)()\.$`),
@@ -27,7 +27,6 @@ const RULE_WORDS = /\d|\b(?:damage|save|condition|bonus|penalty|immune|Sustain|D
 // PF2e's GM convenience roll for eating everything ("@Damage[…]{Consume all produce}").
 const CONVENIENCE = /<p>\s*@Damage\[(?:[^\[\]]|\[[^\]]*\])*\]\{Consume all [a-z ]+\}\s*<\/p>/gi;
 
-const sentencesOf = html => htmlToPlainText(html).replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s+(?=[A-Z])/).filter(Boolean);
 const SECONDS = { round: 6, minute: 60, hour: 3600 };
 
 function itemDuration(adapted) {
@@ -45,7 +44,6 @@ const WELL_NOTES = [
     /^The [a-z]+ is made of insubstantial energy, allowing creatures to move through it and even end their turn in its space\.$/,
     /^If you use an ability that increases the amount of healing this spell grants, that increase applies only to the first time someone taps into the [a-z]+\.$/
 ];
-const COUNT = { two: 2, three: 3, four: 4, five: 5, six: 6 };
 function compileWell(adapted, components, base, heightened) {
     let tap = null, taps = null;
     const notes = [], narration = [];

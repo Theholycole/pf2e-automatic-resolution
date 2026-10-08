@@ -10,8 +10,8 @@
 // (per-creature terrain); the caster's Effect carries Slowed 1 when it wears metal armor, and the extra Interact as a note. The record's control
 // gives a creature attacking the caster with a metal object a one-roll status penalty (−1, −2 if made of metal, +1 per step).
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const FIRST = /^Attacks made with metal objects against you take an? [-–−](\d) status penalty, and the squares adjacent to you are difficult terrain for creatures wearing metal armor\.$/;
 const SECOND = /^For creatures made entirely of metal, the penalty to their attack rolls is [-–−](\d) and the squares adjacent to you are greater difficult terrain\.$/;
 const THIRD = /^While this spell is active, you require an additional Interact action before using a metal object \(including to Strike with a metal weapon\), and if you're wearing metal armor, you're (@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{Slowed (\d)\})\.$/;

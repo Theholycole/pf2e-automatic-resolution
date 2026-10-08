@@ -24,7 +24,7 @@ import { forcedMove, forcedElevation, moveToFreeSpace } from "./forced-movement.
 import { textSpellDamage } from "./text-spell-damage.js";
 import { catalystOrigins, swapAfflictionConditions } from "./catalyst-runtime.js";
 import { shapeRidersFor, applyShapeRiders, finishShapeRiders, shapeSpellFacts, shapeTypeSwapFor, shapeSplitFor, shapeDualFor, shapeCoverReduceFor, powerRingBonus, shapeMaterialFor, shapeResistanceLowersFor, assignShapeTargets, shapedCastRank, mythicDC, shapeWatchSave, shapeRerollOnesFor, attackDefenseFor } from "./spellshape-runtime.js";
-import { heightenedPlanAt, gmQuestionGate, gmQuestionGates, gateAnswerFor, isPrimaryDeath, isCasterConditionEnd, isCasterConditionOnly, isCasterConditionTimed } from "./basic-save-core.js";
+import { heightenedPlanAt, gmQuestionGates, gateAnswerFor, isPrimaryDeath, isCasterConditionEnd, isCasterConditionOnly, isCasterConditionTimed } from "./basic-save-core.js";
 import { killEffectMatches } from "../src/compiler/kill-effect.js";
 import { casterRowEffectMatches } from "../src/compiler/caster-row-effect.js";
 import { counteracts } from "./affliction-care-core.js";
@@ -100,6 +100,7 @@ import { castSpellFromUuid, rememberCastSpell, spellFromSource } from './cast-sp
 import { CASTER_SAVE_ACTIONS } from './chat-card-controls.js';
 import { postControlsCard, copyCreature } from './incarnate-parts-runtime.js';
 import { startFollowingAura } from './form-aura-runtime.js';
+import { AFFLICTION_HANDLER } from "./runtime-utils.js";
 
 const SAVE_SCHEMA = 9;
 const SAVE_OPTION_PREFIX = "pf2e-auto-basic-save";
@@ -1255,8 +1256,6 @@ function cardForCast(castId) {
     return game.messages.find(message =>
         message.getFlag(MODULE_ID, "basicSaveState")?.castId === castId) ?? null;
 }
-
-const AFFLICTION_HANDLER = "pseudo-afflictions";
 
 function afflictionHandlerActive() {
     return game.modules.get(AFFLICTION_HANDLER)?.active === true;

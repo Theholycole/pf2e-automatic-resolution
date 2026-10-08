@@ -10,6 +10,7 @@
 // becomes the attack's four rows. The text's type is rolled when PF2e's variant types the entry otherwise (text over data). The paragraph's
 // reach ("an adjacent target", "a target within 30 feet") is a note for the player's targeting.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_ATTACK as NARRATION_RULES, trimmedSentences as sentencesOf } from "./text-patterns.js";
 
 const GLYPH = /<p>\s*<span class="action-glyph">\s*([1-3])\s*<\/span>([\s\S]*?)<\/p>/gi;
 const LEAD = [
@@ -18,14 +19,12 @@ const LEAD = [
     /^On a critical success, the target takes double damage\.$/,
     /^The number of actions you spend when Casting this Spell determines the range, damage, and other parameters\.$/
 ];
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|rounds?|minutes?|attack)\b/i;
 const ADJACENT = /^An adjacent target takes (\d+d\d+) ([a-z]+) damage(?:, and on a hit, it becomes (@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{[A-Z][a-z]+(?: \d)?\}) for (\d+) rounds?)?\.$/;
 const FLIES = /^The [a-z]+ flies out from you and attacks a target within (\d+) feet, dealing (\d+d\d+) ([a-z]+) damage\.$/;
 const HALF = /^The spell deals half damage on a failure \(but not a critical failure\)(?:, as [a-z' ]+)?\.$/;
 const UNLESS = /^Unless you critically fail, the target becomes ([a-z]+(?: \d)?) for (\d+) rounds?\.$/;
 const STEP = /^Heightened \(\+(\d)\) The damage increases by (\d+)d(\d+) for the 1-action version, or by (\d+)d(\d+) for the 2- and 3-action versions\.$/;
 
-const sentencesOf = text => text.replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s+(?=[A-Z@])/).map(sentence => sentence.trim()).filter(Boolean);
 const rounds = value => `${value} round${value === 1 ? "" : "s"}`;
 
 /** Returns {html, typeOverride, note, claimed} or null. */

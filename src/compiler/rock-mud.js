@@ -7,8 +7,8 @@
 // caster's option and (for the mud) where: the area's region (PF2e's template or the GM's) made difficult (or greater difficult) terrain that stays; a ceiling's
 // basic save for the creatures under it (a compiled plan of the text's damage); mud to rock: the creatures inside's save of the stated rows (a compiled plan).
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_UUID_START as C, LABELS } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{`;
 const LEAD = [/^You warp the structure of earthen material, turning rock into mud or mud into rock\.$/, /^Choose one of these two options when you Cast the Spell\.$/];
 const MUD = [/^You transform non-magical, unworked, and unattended stone in the area into an equal volume of mud\.$/,
     /^If you Cast this Spell on a stone floor, it becomes difficult terrain; if the resulting mud is at least (\d+) feet deep, it is greater difficult terrain, or the creature can try to (?:@UUID\[[^\]]+\]\{)?Swim\}? through it \(@Check\[athletics\|dc:(\d+)\|traits:action:swim\]\)\.$/,
@@ -23,7 +23,6 @@ const ROWS = {
     criticalFailure: new RegExp(String.raw`^The creature is entirely stuck\. It is ${C}Restrained\} for (\d+) rounds? or until it Escapes, whichever comes first\.$`)
 };
 const STEP = /^Heightened \(\+(\d)\) Add an additional (\d+)-foot cube to the area, adjacent to at least one of the other cubes\.$/;
-const LABELS = { "Critical Success": "criticalSuccess", Success: "success", Failure: "failure", "Critical Failure": "criticalFailure" };
 
 /** {rockMud, claimed} or null. */
 export function compileRockMud(adapted) {

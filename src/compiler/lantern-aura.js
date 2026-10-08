@@ -11,8 +11,8 @@
 // holds an Effect that halves the healing it gets, and a failed undead one Enfeebled 1; leaving removes them, re-entering restores them. An
 // optional Sustain (once a round, from the next) grows the radius and its light.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const LIGHT = /^It sheds bright light in the spell's area and dim light to twice that area\.$/;
 const FLOATS = /^The [a-z]+ is insubstantial and floats near you, suspended from an? [a-z, ]+\.$/;
 const WHO = /^Living creatures and undead in the area when you Cast the Spell, or that enter the area later, must attempt (Fortitude|Reflex|Will) saves\.$/;

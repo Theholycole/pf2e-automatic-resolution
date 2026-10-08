@@ -3,9 +3,9 @@
 // roughly the same shape." with "Target petrified creature or human-size stone object" — the targeted creature's condition removed (with the Effect that grants it);
 // no target creature: the object's change the GM's note.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
 
 const RESTORE = /^You restore an? @UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Z][a-z]+)\} creature to its normal state or (transform an? [a-z ]+ object into [^.]+)\.$/;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 
 /** {restoreCondition, claimed} or null. */
 export function compileRestoreCondition(adapted) {

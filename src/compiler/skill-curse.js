@@ -4,6 +4,7 @@
 // generated Effect — PF2e's RollTwice (keep the lower) on those skills and its degree adjustment (a failure becomes a critical failure) on each —
 // for the row's time. PF2e has no Effect for it.
 import { htmlToPlainText } from "./description-parser.js";
+import { DURATION_ROW as LONGER } from "./text-patterns.js";
 
 const SUCCESS = /^For (\d+) (round|minute|hour)s?, the target must roll twice and use the worse result whenever attempting an? ([A-Z][a-z]+(?:, [A-Z][a-z]+)*,? or [A-Z][a-z]+) check\. If the target rolls a failure at an? \3 check, it gets a critical failure instead\.$/;
 const FAILURE = /^As success, but the effect is (\d+) (round|minute|hour)s?\.$/;
@@ -40,7 +41,6 @@ function compileDaydreamCurse(rowRaw) {
 // skill check, it gets a critical failure instead." / "As success, but the duration is 1 hour." / "As success, but the duration is unlimited." — the same generated
 // Effect for each row's time (any skill check's degrees adjusted), with the lead's musicians narration (invisible, can't be reasoned with or harmed).
 const ORCHESTRA = /^Until the start of your next turn, the target must roll twice and use the worse result when it attempts an? ([A-Z][a-z]+(?:, [A-Z][a-z]+)*,? or [A-Z][a-z]+) check\. When the target rolls a critical success on any skill check, it gets a success instead\. When the target rolls a failure on any skill check, it gets a critical failure instead\.$/;
-const LONGER = /^As success, but the duration is (\d+) (round|minute|hour)s?\.$/;
 const UNLIMITED = /^As success, but the duration is unlimited\.$/;
 const MUSICIANS = [/^You summon an? @UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{Invisible\}, insubstantial group of [a-z ]+ who follow the target and play distracting music to hinder its actions\.$/,
     /^The music the musicians play is as inappropriate to the action as possible \(for example, [^)]+\)\.$/, /^The musicians can't be reasoned with or harmed\.$/];

@@ -6,12 +6,11 @@
 // traits (the traits its wicket feat sets); the once-per-spell and initial-only limits a note. (The module's Effect asks for the target in the area and slot
 // spells only; the module builds the rules from the text.)
 import { htmlToPlainText } from "./description-parser.js";
+import { ITEM_LINK as LINK, NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const AREA = /^You create a stationary area of your wicket['’]s dominion\.$/;
 const BONUS = /^When you Cast a Spell from Focus Points or your spell slots with your wicket traits while within the area and the spell deals damage or restores Hit Points, you gain a status bonus to that spell['’]s damage or healing equal to the spell['’]s rank\.$/;
 const LIMITS = [/^This applies only to the initial damage or healing the spell deals when cast\.$/, /^An individual creature takes this damage or benefits from this healing only once per spell, even if the spell would damage or heal that creature multiple times\.$/];
-const LINK = /^@UUID\[(Compendium\.[A-Za-z0-9_.-]+\.Item\.([A-Za-z0-9]{16}))\]\{([^}]+)\}$/;
 const SPECIAL = /^<strong>Special<\/strong> (This activity gains the trait of your magical tradition and your wicket traits\.)$/;
 
 /** {dominion, sentences} or null. */

@@ -6,16 +6,13 @@
 // rows' damage and Stunned; what the caster learns the GM's to tell (a card reminder per result). When PF2e's item has no damage, the text's is
 // used (with its "Heightened (+N) The damage increases by 1dX." step).
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C, DEGREE_LABEL_PAIRS as DEGREES, HEIGHTENED_DAMAGE_STEP as STEP } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
 const TAKES = /^The target takes (\d+d\d+) ([a-z]+) damage and must attempt a (Fortitude|Reflex|Will) save\.$/;
 const NONE = /^The creature takes no damage\.$/;
 const HALF = /^The creature takes half damage, and (you gain [^.]+)\.$/;
 const FULL = /^The creature takes full damage, and (you learn [^.]+)\.$/;
 const DOUBLE = new RegExp(String.raw`^As failure, except the creature takes double damage and is (${C}([A-Z][a-z]+)(?: (\d))?\})\. (You can attempt a skill check to (?:@UUID\[[^\]]+\]\{Recall Knowledge\}|Recall Knowledge) about the creature the next time you Refocus [^.]+)\.$`);
-const DEGREES = [["criticalSuccess", "Critical Success"], ["success", "Success"], ["failure", "Failure"], ["criticalFailure", "Critical Failure"]];
-
-const STEP = /^Heightened \(\+(\d)\) The damage increases by (\d)d(\d+)\.$/;
 
 /** {html, reminder, textDamage, sentences} or null. */
 export function rewriteInsightRows(adapted) {

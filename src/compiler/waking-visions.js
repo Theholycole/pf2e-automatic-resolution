@@ -6,8 +6,8 @@
 // for the sustained spell (ending early on the failure's end-of-turn save); everything Concealed *to it* a note (the success's round; after the
 // confusion, a round); the success's no-Sustain a reminder.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_LINK_START as C } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{`;
 const SUCCESS = new RegExp(String.raw`^The target is distracted by the visions and treats all other creatures as ${C}Concealed\} for (\d+) rounds?, and you can't Sustain the Spell to increase the duration\.$`);
 const FAILURE = new RegExp(String.raw`^The target is (${C}Confused\})\. (In addition to the creatures present, the target might also attack wildly at thin air, attempting to fend off the dreams\.) (It can attempt a new save at the end of each of its turns to end the confusion\.) Even if the confused effect ends early, the target treats all other creatures as concealed for (\d+) rounds?\.$`);
 

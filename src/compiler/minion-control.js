@@ -8,7 +8,7 @@
 //   Failure "The target becomes your shadowy minion for 1 minute." / Critical Failure "As failure, but for 10 minutes."
 // The rows' note carries the resistance, the immunity and the fly Speed as PF2e rules (the restrictions as its text) and the minion control;
 // the already-a-minion and controller rules are the GM's (it sets the result on the card).
-import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_NO_TERRAIN as NARRATION_RULES, plainOrEmpty as plain } from "./text-patterns.js";
 
 const STATE = /^While in this vaporous state, the ([a-z]+) is a minion under your control, gains resistance (\d+) to (physical) damage, and is immune to (precision) damage\.$/;
 const LIMITS = /^It can't cast spells, activate items, or use actions that have the attack or manipulate traits\.$/;
@@ -19,9 +19,6 @@ const CONTROLLER = /^If it's already under someone else's command, the controlli
 const FAILURE = /^The target becomes your shadowy minion for (\d+) (minute|minutes)\.$/;
 const CRITICAL = /^As failure, but for (\d+) minutes\.$/;
 const TARGET = /^(?:1|one) ([a-z]+) of level (\d+) or lower$/;
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
-
-const plain = text => htmlToPlainText(String(text ?? "")).replace(/\s+/g, " ").trim();
 
 // Subjugate Undead: "You attempt to seize control of the target." / "It can attempt a Will save to resist the effect." / "If the target is already
 // being controlled by another creature, the controlling creature also rolls a saving throw and the undead uses the better result." / "Casting

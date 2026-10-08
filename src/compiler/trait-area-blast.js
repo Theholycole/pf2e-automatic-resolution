@@ -9,8 +9,8 @@
 // (the GM names the effect); the fires, the item, the artifact, the Sustain's move (which only puts out fires) and the Counterspell rule are
 // the GM's reminder.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
 const DAMAGE = /^([A-Z][a-z]+) creatures within the area take (\d+)d(\d+) damage \(basic (Fortitude|Reflex|Will) save\)\.$/;
 const COUNTERACT = /^Choose one magical ([a-z]+), \1 spell, or \1 item in the area and attempt to counteract it\.$/;
 const SURROUNDINGS = [

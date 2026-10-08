@@ -8,6 +8,7 @@
 // attack against each target instead of a save.
 
 import { isDamageBenefitSentence } from "./damage-benefit-compiler.js";
+import { CONDITION, DICE_DAMAGE as DICE, ROUND_WORDS as ORDINAL } from "./text-patterns.js";
 
 // (ATTACK_DEBUG=1 names the line a spell attack was refused at.)
 const nope = line => { if (globalThis.process?.env?.ATTACK_DEBUG) console.error("spell-attack refused at line", line); return null; };
@@ -28,7 +29,6 @@ const SHARED_MAP = /^(?:(?:If you're attacking (?:two|several|multiple) creature
 const ACTION_TARGETS = /^(?:For each additional action you use when Casting the Spell, you can fire an additional [a-z]+ at a different target, to a maximum of (?:two|three) [a-z]+ targeting (?:two|three) different targets for [23] actions|You can spend a third action while casting this spell to fire [a-z]+ at two different targets instead of one)\.$/i;
 // "If you spend 2 or more actions Casting the Spell, the damage increases to 4d6 fire damage on a hit, and it still deals double damage on a critical hit."
 const ACTION_DAMAGE = /^If you spend ([23]) or more actions Casting the Spell, the damage increases to (\d+d\d+) ([a-z]+) damage on a hit, and it still deals double damage on a critical hit\.$/i;
-const DICE = String.raw`(\d+d\d+) ([a-z]+) damage`;
 const FORMS = [
     // "On a hit, the target takes 2d6 fire damage, and on a critical hit, the target takes double damage."
     new RegExp(String.raw`^${ATTACK}\. On a hit, the target takes ${DICE}, and on a critical hit, the target takes double damage\.$`),
@@ -127,7 +127,6 @@ const materialStated = (adapted, sentence) => {
 const HIT_THEN_CRIT_EXTRA = new RegExp(String.raw`^${ATTACK}\. On a hit, the [a-z]+ deals? ${DICE}\. The [a-z]+ deals? double damage on a critical hit and (@Damage\[[^\[\]]+\[(?:bleed|persistent,[a-z]+)\]\]) damage\.$`);
 const ATTACK_IN_DAMAGE = /\bdepending on (?:the result of )?your spell attack roll\b/;
 // "On a hit, the target takes 6d4 piercing damage and is Dazzled for 1 round (double damage and Blinded for 1 round on a critical hit)."
-const CONDITION = String.raw`(?:@@\d+@@|[A-Za-z]+(?: \d+)?)(?: for \d+ (?:round|minute)s?)?`;
 // "If you hit, you deal <damage>. On a critical success, you deal double damage and double bleed damage." — the second
 // "double" names the spell's persistent entry, which doubles with the rest.
 const HIT_DOUBLE_NAMED = new RegExp(String.raw`^${ATTACK}\. (?:If you hit|On a hit|On a success), you deal ${DICE}\. On a critical (?:success|hit), you deal double damage and double ([a-z]+) damage\.$`);
@@ -183,7 +182,6 @@ const REPEAT_ATTACK = /^When you do so, attempt a ranged spell attack roll\.$/;
 const REPEAT_TURNS = /^You can [a-z ]{3,40}? once (?:when )?you finish Casting the Spell,? and can repeat the attack once on each of your subsequent turns by taking a single action, which has the ([a-z, ]+?) traits\.$/i;
 const REPEAT_TOTAL = /^After your (second|third|fourth|fifth) (?:[a-z]+ )?attack(?: total)?, the spell ends\.$/i;
 const WHEN_ATTACK = /^When you attack with [a-z' ]+, (make an? (?:ranged |melee )?spell attack .+)$/i;
-const ORDINAL = { second: 2, third: 3, fourth: 4, fifth: 5 };
 
 const matchesDamage = (adapted, formula, type) => formula === LIST_FORMULA && type === LIST_TYPE
     ? adapted.damageComponents.length >= 1

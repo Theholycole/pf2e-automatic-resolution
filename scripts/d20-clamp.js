@@ -1,7 +1,8 @@
 // A d20 limit a module Effect gives ("… who roll below 10 on a d20 for an attack roll, Perception check, saving throw, or skill check get a 10
 // instead", "any time it rolls above 10 … it gets a 10 instead"): PF2e's check roll is marked with the limit when its actor holds such an Effect,
 // and the marked roll's d20 is set to the limit before PF2e reads the total and grades the check.
-const MODULE_ID = "pf2e-automatic-resolution";
+import { MODULE_ID } from "./runtime-utils.js";
+
 const MARK = "pf2e-auto-d20:";
 
 /** The d20 limits on the actor's Effects for a check type: {min, max} (the tightest of each), or null. */

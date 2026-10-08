@@ -8,14 +8,10 @@
 //   - a familiar's form (Patron's Protector): its AC, size and temporary Hit Points (by rank), 1 HP instead of 0, and its two actions;
 //   - a weapon that Strikes on a trigger (Weapon of Judgment): the caster's melee spell attack, the GM's report of war or peace;
 //   - a shell the GM reports creatures crossing (Blessed Boundary): its basic save and push, each time.
-import { htmlToPlainText } from "./description-parser.js";
+import { SIZE_SLUGS as SIZE, SPELL, plainOrEmpty as plain, sentenceSplit as sentencesOf } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(String(html ?? "")).replace(/\s+/g, " ").trim();
-const sentencesOf = text => text.split(/(?<=[.!?])\s+(?=[A-Z@])/).filter(Boolean);
 const ACTOR = String.raw`@UUID\[(Compendium\.pf2e\.[a-z-]+\.Actor\.[A-Za-z0-9]+)\]\{([^}]+)\}`;
-const SPELL = String.raw`@UUID\[(Compendium\.pf2e\.spells-srd\.Item\.[A-Za-z0-9]+)\]\{([^}]+)\}`;
 const EFFECT = String.raw`@UUID\[(Compendium\.pf2e\.spell-effects\.Item\.[^\]]+)\]\{(Spell Effect: [^}]+)\}`;
-const SIZE = { Tiny: "tiny", Small: "sm", Medium: "med", Large: "lg", Huge: "huge", Gargantuan: "grg" };
 
 /** Shadow Illusion: {uuid, dice, faces, step: {interval, dice}, notes} or null. */
 export function extractBorrowedIllusion(adapted) {

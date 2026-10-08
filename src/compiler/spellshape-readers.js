@@ -7,16 +7,11 @@
 //       extra damage scaled with the spell's ("the spell deals an additional 1d8 sonic damage"),
 //       pushes by degree ("Each creature that failed its save against the spell is pushed 5 feet, …").
 // A feat or wand with any sentence these forms don't read is left unread (null): rules from the text, never from names.
-import { htmlToPlainText } from "./description-parser.js";
 import { readPlusSpellshape } from "./plus-spellshapes.js";
+import { CONDITION_LINK_HYPHENATED as COND, LEGACY_SCHOOLS, plain, sentenceSplit as split } from "./text-patterns.js";
 
-const plain = html => htmlToPlainText(html).replace(/\s+/g, " ").trim();
-const split = text => text.split(/(?<=[.!?])\s+(?=[A-Z@])/).filter(Boolean);
-const COND = String.raw`@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Za-z-]+)(?: (\d+))?\}`;
 const condition = (match, at, rounds = null) => ({ uuid: match[at], slug: match[at + 1].toLowerCase(), value: match[at + 2] ? Number(match[at + 2]) : null, ...(rounds ? { rounds } : {}) });
 const duration = (count, unit) => Number(count) * (/minute/.test(unit) ? 10 : 1);
-
-const LEGACY_SCHOOLS = ["abjuration", "conjuration", "divination", "enchantment", "evocation", "necromancy", "transmutation"];
 
 /** The spell's requirements from "… Cast a Spell that …" (null when a clause isn't one the module checks). */
 export function readRequirements(text) {

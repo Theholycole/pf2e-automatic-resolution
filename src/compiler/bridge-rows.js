@@ -8,6 +8,7 @@
 // entering it saves; a success or worse makes the bridge difficult terrain for that creature (the region's own per-creature cost); Prone; Grabbed until it
 // Escapes (ending with the spell); the bridge's statistics a note.
 import { htmlToPlainText } from "./description-parser.js";
+import { HEADINGS } from "./text-patterns.js";
 
 const LEAD = [/^Vines sprout beneath your feet and extend away from you in a straight line up to (\d+) feet, forming a (\d+)-foot-wide bridge that can cross over difficult terrain and low obstacles, as well as reach higher ground\.$/,
     /^The bridge has an AC equal to your spell DC, Hardness (\d+), and (\d+) Hit Points\.$/, /^It is immune to critical hits and precision damage\.$/,
@@ -19,7 +20,6 @@ const ROWS = { criticalSuccess: /^The target is unaffected\.$/, success: /^The t
     failure: /^As success, and the target is knocked (@UUID\[[^\]]+\]\{Prone\})\.$/,
     criticalFailure: /^As success, and the target is knocked prone and (@UUID\[[^\]]+\]\{Grabbed\}) until it Escapes \(with a DC equal to your spell DC\) or the spell ends\.$/ };
 const STEP = /^Heightened \(\+(\d)\) The bridge's Hit Points increase by (\d+)\.$/;
-const HEADINGS = { criticalSuccess: "Critical Success", success: "Success", failure: "Failure", criticalFailure: "Critical Failure" };
 
 /** {html, lingering additions, notes, claimed} or null. */
 export function rewriteBridgeRows(adapted) {

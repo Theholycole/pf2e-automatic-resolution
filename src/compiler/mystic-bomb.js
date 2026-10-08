@@ -10,8 +10,8 @@
 // or stays — the caster's Effect for the sustained duration with its controls: explode after a Sustain's move (the creatures then in it), grow by 5 feet (to 20), and an
 // ally's Aid (the higher of Athletics and Arcana against the level's DC; the dice and the uses kept); Expansive Spellstrike a note.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const TEXT = [/^Your mystic bomb appears in the location and deals (\d+)d(\d+) damage to each creature within the area on a basic (Fortitude|Reflex|Will) save and the bomb disappears\.$/,
     /^The damage of your mystic bomb is of the same damage type as your Arcane Cascade\.$/, /^If no creatures are in the area, the bomb remains in the area\.$/,
     /^On subsequent rounds, the first time you Sustain this Spell each round, you can leave the mystic bomb in its space or move it to another square within range, immediately exploding after this action is completed if any creatures are in its area\.$/,

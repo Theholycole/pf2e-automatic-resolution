@@ -6,8 +6,8 @@
 // save).") and a Heightened entry that is each damage formula's own step: each effect a save of its own text (the damage the inline formula at the
 // cast rank); the card's button per effect, once a round, while the caster's sustained Effect lasts.
 import { htmlToPlainText } from "./description-parser.js";
+import { CONDITION_ID_LINK as C, NARRATION_RULES_NO_TERRAIN as NARRATION, capitalize as STAT, link } from "./text-patterns.js";
 
-const C = String.raw`@UUID\[Compendium\.pf2e\.conditionitems\.Item\.([A-Za-z0-9]+)\]\{([A-Z][a-z]+)(?: (\d))?\}`;
 const DAMAGE = String.raw`@Damage\[(\(\d+ \+ floor\(\(@item\.rank - \d+\)\/\d\)\)d\d+|\d+d\d+)\[([a-z]+)\]\]`;
 const CHECK = String.raw`@Check\[(fortitude|reflex|will)(?:\|name:[^|\]]+)?(?:\|traits:[a-z,]+)?(\|basic)?\]`;
 const WHEN = /^When you Cast the Spell, and the first time you Sustain it on subsequent rounds, the ([a-z]+) creates your choice of one of the following effects\.$/;
@@ -19,10 +19,6 @@ const OPTION_LEADS = [
     // "Creatures in the area must attempt a @Check save, becoming {Frightened 2} on a failure."
     [new RegExp(String.raw`^Creatures in the area must attempt an? ${CHECK} save, becoming ${C} on a failure\.$`), m => ({ target: "all", statistic: m[1], basic: !!m[2], failure: { id: m[3], name: m[4], value: m[5] ? Number(m[5]) : null } })]
 ];
-// Narration a listed effect may carry: what the manifestation does or looks like (no rules).
-const NARRATION = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
-const STAT = statistic => `${statistic[0].toUpperCase()}${statistic.slice(1)}`;
-const link = c => `@UUID[Compendium.pf2e.conditionitems.Item.${c.id}]{${c.name}${c.value != null ? ` ${c.value}` : ""}}`;
 
 /** {seconds, options: [{key, label, traits, html, statistic, basic, formula, type, target, notes}], notes, claimed} or null. */
 export function extractSustainOptions(adapted) {

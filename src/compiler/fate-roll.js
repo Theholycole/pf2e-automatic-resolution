@@ -8,8 +8,8 @@
 // is the kept result (PF2e's SubstituteRoll, a fortune effect), or the enemy's Will save and its next such roll's penalty (and the kept result on a failure);
 // either ends the spell.
 import { htmlToPlainText } from "./description-parser.js";
+import { NARRATION_RULES } from "./text-patterns.js";
 
-const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
 const LEAD = [/^As part of casting this spell roll a d20 and make note of the result\.$/, /^For the duration of the spell you gain the ([A-Z][a-z]+(?: [A-Z][a-z]+)*) and ([A-Z][a-z]+(?: [A-Z][a-z]+)*) reactions\.$/,
     /^If you use either reaction the spell ends immediately\.$/];
 const GOOD = /^(.+?) r \(manipulate\) Trigger (You are about to attempt a non-secret attack roll, saving throw, or skill check); Effect You insert the fate you have made for yourself\. Instead of rolling a d20, you use the result you rolled when casting this spell for your roll\. This is a fortune effect\.$/;
