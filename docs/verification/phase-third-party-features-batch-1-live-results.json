@@ -1,0 +1,38 @@
+{
+ "label": "thirdPartyFeaturesBatch1",
+ "passed": true,
+ "at": "2026-10-07T09:26:14.034Z",
+ "details": {
+  "thirdPartyFeatures1": {
+   "persistentShapes": [
+    [
+     "Persistent Spell",
+     true,
+     null
+    ]
+   ],
+   "persistent": [
+    "(2 * 2) bludgeoning"
+   ],
+   "bleeding": [
+    [
+     "1 bleed"
+    ],
+    []
+   ],
+   "trepidation": {
+    "frightened": 2,
+    "riders": "null"
+   },
+   "trepidationHigh": [
+    "it isn't 2 ranks below the highest you can cast"
+   ],
+   "heightened": 5,
+   "dueling": [
+    "spell-attack 2"
+   ],
+   "draining": 2,
+   "befuddling": true
+  }
+ }
+}

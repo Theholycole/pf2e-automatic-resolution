@@ -1,0 +1,44 @@
+{
+  "label": "spellshapeBatch2",
+  "passed": true,
+  "at": "2026-10-05T09:59:17.154Z",
+  "details": {
+    "spellshape2": {
+      "overburdening": true,
+      "portentous": [
+        true,
+        false
+      ],
+      "tender": 1,
+      "branding": [
+        true,
+        false
+      ],
+      "dizzying": 3,
+      "noisome": 1,
+      "rime": [
+        true,
+        false
+      ],
+      "sorrows": [
+        {
+          "stupefied": 2,
+          "slowed": false,
+          "rounds": 2
+        },
+        {
+          "stupefied": 2,
+          "slowed": true,
+          "rounds": 2
+        }
+      ],
+      "crackling": {
+        "offGuard": [
+          true,
+          false
+        ],
+        "width": 200
+      }
+    }
+  }
+}

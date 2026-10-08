@@ -22,7 +22,7 @@ export function rewriteStoneGarden(adapted) {
     if (components.length !== 1 || components[0].category || String(components[0].formula).replace(/\s+/g, "") !== first[5] || String(components[0].type).toLowerCase() !== first[6]) return null;
     return {
         html: `<p>You deal ${first[5]} ${first[6]} damage to all creatures in the area, with a basic ${first[7]} save.</p><hr />${heightened}`,
-        reminder: { kind: "spell-note", text: `Push each creature in the area to the nearest unoccupied space. A ${first[1]}-foot-tall stalagmite fills the area (AC ${first[2]}, Hardness ${first[3]}, ${first[4]} Hit Points, +${step[1]} per rank above ${adapted.rank}); the ${first[8]}-foot emanation around it is difficult terrain while the spell lasts (mark it). If the stalagmite survives the duration, it stays as an ordinary stalagmite.`,
+        reminder: { kind: "spell-note", text: `Each creature in the area is pushed to the nearest unoccupied space (the module moves it). A ${first[1]}-foot-tall stalagmite fills the area (AC ${first[2]}, Hardness ${first[3]}, ${first[4]} Hit Points, +${step[1]} per rank above ${adapted.rank}); the ${first[8]}-foot emanation around it is difficult terrain while the spell lasts (mark it). If the stalagmite survives the duration, it stays as an ordinary stalagmite.`,
             sourceText: paragraphs[0] },
         sentences: [...paragraphs, step[0]]
     };

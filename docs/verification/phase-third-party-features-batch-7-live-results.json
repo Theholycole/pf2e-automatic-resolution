@@ -1,0 +1,87 @@
+{
+ "label": "thirdPartyFeaturesBatch7",
+ "passed": true,
+ "at": "2026-10-07T10:19:49.599Z",
+ "details": {
+  "thirdPartyFeatures7": {
+   "ringCard": {
+    "shapes": [
+     [
+      "Power Ring (Silver)",
+      true,
+      null
+     ]
+    ],
+    "bonus": [
+     "spell-attack item 2"
+    ]
+   },
+   "ringSelector": {
+    "shapes": [
+     [
+      "Power Ring (Silver)",
+      true,
+      null
+     ]
+    ],
+    "bonus": [
+     "spell-attack item 2"
+    ],
+    "off": true
+   },
+   "sicken": {
+    "shapes": [
+     [
+      "Scepter of Sickening",
+      true,
+      null
+     ]
+    ],
+    "sickened": [
+     1,
+     2
+    ]
+   },
+   "ablation": {
+    "shapes": [
+     [
+      "Scepter of Energy Ablation",
+      true,
+      null
+     ]
+    ],
+    "effect": [
+     "Resistance fire 3"
+    ]
+   },
+   "heighten": {
+    "shapes": [
+     [
+      "Scepter of Heightening",
+      true,
+      null
+     ]
+    ],
+    "castRank": 3
+   },
+   "read": {
+    "distances": [
+     "Scepter of Greater Distances",
+     true,
+     null
+    ],
+    "chances": [
+     "Scepter of Second Chances",
+     true,
+     null
+    ],
+    "purifying": [
+     "Scepter of Purifying",
+     true,
+     null
+    ],
+    "note": true
+   }
+  }
+ }
+}

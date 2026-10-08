@@ -8,139 +8,10 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 
 | Rule family | Spells | Not enabled | Wording cohorts |
 | --- | --- | --- | --- |
-| Creature transformation | 63 | 9 | 33 |
+| Creature transformation | 63 | 0 | 33 |
 
 
-## P5-001 — Creature transformation: Monstrosity Form
-
-**5 spells; 2 not enabled.** Suggested source-reading anchor: Monstrosity Form. This is not a verified-test designation.
-
-**Test contract:** Every form/rank option; native statistics; restrictions; granted actions; space; recharge; preserve unrelated changes on reversion.
-
-**Shared signals:** Ending or dismissal, Native condition, Creature transformation
-
-**Anchor wording:** ou transform into the shape of a legendary monster, assuming a Huge battle form.
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Monstrosity Form](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/monstrosity-form.json) | 8 | Not enabled | 2, 3 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
-| [Element Embodied](../../.cache/pf2e-test-fixtures/spells/spells/rank-10/element-embodied.json) | 10 | Partial Effect | 2, 3, 4, 7 | 0.21 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
-| [Primal Herd](../../.cache/pf2e-test-fixtures/spells/spells/rank-10/primal-herd.json) | 10 | Enabled route | 2, 3 | 0.16 | no primary save; non-basic/no save; duration 1 minute; target you and up to 5 willing targets |
-| [Ooze Form](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/ooze-form.json) | 3 | Partial Effect | 2, 3, 4 | 0.16 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
-| [Nature Incarnate](../../.cache/pf2e-test-fixtures/spells/spells/rank-10/nature-incarnate.json) | 10 | Effect + note | 2, 3 | 0.16 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
-
-
-## P5-002 — Creature transformation: One with Stone
-
-**5 spells; 1 not enabled.** Suggested source-reading anchor: One with Stone. This is not a verified-test designation.
-
-**Test contract:** Every form/rank option; native statistics; restrictions; granted actions; space; recharge; preserve unrelated changes on reversion.
-
-**Shared signals:** Ending or dismissal
-
-**Anchor wording:** You can Dismiss this spell..
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [One with Stone](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/one-with-stone.json) | 3 | Enabled route | 3, 4 | 1.00 | no primary save; non-basic/no save; duration 10 minutes or 8 hours; target source/area/text |
-| [One with Plants](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/one-with-plants.json) | 2 | Enabled route | 3, 4 | 1.00 | no primary save; non-basic/no save; duration 10 minutes or 8 hours; target source/area/text |
-| [Humanoid Form](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/humanoid-form.json) | 2 | Enabled route | 2, 3 | 0.17 | no primary save; non-basic/no save; duration 10 minutes; target source/area/text |
-| [Avatar](../../.cache/pf2e-test-fixtures/spells/spells/rank-10/avatar.json) | 10 | Not enabled | 2, 3 | 0.16 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
-| [Threefold Aspect](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/threefold-aspect.json) | 3 | Note only (resolved) | 2, 3, 4 | 0.16 | no primary save; non-basic/no save; duration until the next time you make your daily preparations; target source/area/text |
-
-
-## P5-003 — Creature transformation: Bestial Curse
-
-**2 spells; 1 not enabled.** Suggested source-reading anchor: Bestial Curse. This is not a verified-test designation.
-
-**Test contract:** Every form/rank option; native statistics; restrictions; granted actions; space; recharge; preserve unrelated changes on reversion.
-
-**Shared signals:** Save-result condition rider, Native condition
-
-**Anchor wording:** Failure The target transforms into a bestial form for 1 hour.
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Bestial Curse](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/bestial-curse.json) | 4 | Enabled route | 2, 3 | 1.00 | fortitude; non-basic/no save; duration varies; target 1 living humanoid |
-| [Cursed Metamorphosis](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/cursed-metamorphosis.json) | 6 | Not enabled | 2, 3 | 0.44 | fortitude; non-basic/no save; duration varies; target 1 creature |
-
-
-## P5-004 — Creature transformation: Amalgamizing Leap
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Amalgamizing Leap. This is not a verified-test designation.
-
-**Test contract:** Every form/rank option; native statistics; restrictions; granted actions; space; recharge; preserve unrelated changes on reversion.
-
-**Shared signals:** Turn trigger or boundary, Save-result condition rider, Granted movement speed, Native condition, Choice / casting variant, Teleportation
-
-**Anchor wording:** The target becomes Enfeebled 1, and you gain 20 temporary Hit Points until the end of your next turn..
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Amalgamizing Leap](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/amalgamizing-leap.json) | 8 | Not enabled | 2, 3, 4, 7 | 1.00 | fortitude; non-basic/no save; duration until the end of your next turn; target 1 creature |
-
-
-## P5-005 — Creature transformation: Corrosive Body
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Corrosive Body. This is not a verified-test designation.
-
-**Test contract:** Every form/rank option; native statistics; restrictions; granted actions; space; recharge; preserve unrelated changes on reversion.
-
-**Shared signals:** Ending or dismissal, Creature transformation
-
-**Anchor wording:** ou exhale corrosive gas, and acidic secretions coat your skin as you transform into a being of living acid.
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Corrosive Body](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/corrosive-body.json) | 7 | Not enabled | 2, 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
-
-
-## P5-006 — Creature transformation: Metamorphosis
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Metamorphosis. This is not a verified-test designation.
-
-**Test contract:** Every form/rank option; native statistics; restrictions; granted actions; space; recharge; preserve unrelated changes on reversion.
-
-**Shared signals:** Sustain, Area exposure, Creature transformation
-
-**Anchor wording:** You transform yourself into any form you could choose with a polymorph spell in your spell repertoire or that you could prepare of 8th-rank or lower (including any 8th-rank or lower heightened versions of spells you know).
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Metamorphosis](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/metamorphosis.json) | 9 | Not enabled | 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
-
-
-## P5-007 — Creature transformation: Patron's Protector
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Patron's Protector. This is not a verified-test designation.
-
-**Test contract:** Every form/rank option; native statistics; restrictions; granted actions; space; recharge; preserve unrelated changes on reversion.
-
-**Shared signals:** Sustain, Save-result condition rider, Basic-save damage, Forced movement, Modifier / resistance
-
-**Anchor wording:** You can use Command an Animal on the target as part of Casting or Sustaining this spell.
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Patron's Protector](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/patrons-protector.json) | 6 | Not enabled | 2, 3, 7 | 1.00 | fortitude; basic; duration 1 minute; target your familiar |
-
-
-## P5-008 — Creature transformation: Qi Form
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Qi Form. This is not a verified-test designation.
-
-**Test contract:** Every form/rank option; native statistics; restrictions; granted actions; space; recharge; preserve unrelated changes on reversion.
-
-**Shared signals:** Sustain, Aura membership, Area exposure, Granted movement speed, Counteract, Creature transformation, Modifier / resistance
-
-**Anchor wording:** rawing from deep wells of spiritual power, you take on a special qi form.
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Qi Form](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/qi-form.json) | 9 | Not enabled | 2, 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
-
-
-## P5-009 — Creature transformation: Animal Form
+## P5-001 — Creature transformation: Animal Form
 
 **12 spells; 0 not enabled.** Suggested source-reading anchor: Animal Form. This is not a verified-test designation.
 
@@ -166,7 +37,45 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Dragon Form](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/dragon-form.json) | 6 | Enabled route | 2, 3, 4 | 0.27 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P5-010 — Creature transformation: Sudden Swarm
+## P5-002 — Creature transformation: Monstrosity Form
+
+**5 spells; 0 not enabled.** Suggested source-reading anchor: Monstrosity Form. This is not a verified-test designation.
+
+**Test contract:** Every form/rank option; native statistics; restrictions; granted actions; space; recharge; preserve unrelated changes on reversion.
+
+**Shared signals:** Ending or dismissal, Native condition, Creature transformation
+
+**Anchor wording:** ou transform into the shape of a legendary monster, assuming a Huge battle form.
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Monstrosity Form](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/monstrosity-form.json) | 8 | Enabled route | 2, 3 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
+| [Element Embodied](../../.cache/pf2e-test-fixtures/spells/spells/rank-10/element-embodied.json) | 10 | Partial Effect | 2, 3, 4, 7 | 0.21 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
+| [Primal Herd](../../.cache/pf2e-test-fixtures/spells/spells/rank-10/primal-herd.json) | 10 | Enabled route | 2, 3 | 0.16 | no primary save; non-basic/no save; duration 1 minute; target you and up to 5 willing targets |
+| [Ooze Form](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/ooze-form.json) | 3 | Partial Effect | 2, 3, 4 | 0.16 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
+| [Nature Incarnate](../../.cache/pf2e-test-fixtures/spells/spells/rank-10/nature-incarnate.json) | 10 | Enabled route | 2, 3 | 0.16 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
+
+
+## P5-003 — Creature transformation: One with Stone
+
+**5 spells; 0 not enabled.** Suggested source-reading anchor: One with Stone. This is not a verified-test designation.
+
+**Test contract:** Every form/rank option; native statistics; restrictions; granted actions; space; recharge; preserve unrelated changes on reversion.
+
+**Shared signals:** Ending or dismissal
+
+**Anchor wording:** You can Dismiss this spell..
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [One with Stone](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/one-with-stone.json) | 3 | Enabled route | 3, 4 | 1.00 | no primary save; non-basic/no save; duration 10 minutes or 8 hours; target source/area/text |
+| [One with Plants](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/one-with-plants.json) | 2 | Enabled route | 3, 4 | 1.00 | no primary save; non-basic/no save; duration 10 minutes or 8 hours; target source/area/text |
+| [Humanoid Form](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/humanoid-form.json) | 2 | Enabled route | 2, 3 | 0.17 | no primary save; non-basic/no save; duration 10 minutes; target source/area/text |
+| [Avatar](../../.cache/pf2e-test-fixtures/spells/spells/rank-10/avatar.json) | 10 | Enabled route | 2, 3 | 0.16 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
+| [Threefold Aspect](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/threefold-aspect.json) | 3 | Note only (resolved) | 2, 3, 4 | 0.16 | no primary save; non-basic/no save; duration until the next time you make your daily preparations; target source/area/text |
+
+
+## P5-004 — Creature transformation: Sudden Swarm
 
 **4 spells; 0 not enabled.** Suggested source-reading anchor: Sudden Swarm. This is not a verified-test designation.
 
@@ -184,7 +93,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Unusual Anatomy](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/unusual-anatomy.json) | 5 | Enabled route | 2, 3, 4 | 0.16 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P5-011 — Creature transformation: Darkened Forest Form
+## P5-005 — Creature transformation: Darkened Forest Form
 
 **3 spells; 0 not enabled.** Suggested source-reading anchor: Darkened Forest Form. This is not a verified-test designation.
 
@@ -201,7 +110,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Mantis Form](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/mantis-form.json) | 4 | Note only (resolved) | 3, 4 | 0.16 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P5-012 — Creature transformation: Pest Form
+## P5-006 — Creature transformation: Pest Form
 
 **3 spells; 0 not enabled.** Suggested source-reading anchor: Pest Form. This is not a verified-test designation.
 
@@ -218,7 +127,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Magic Warrior Transformation](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/magic-warrior-transformation.json) | 2 | Note only (resolved) | 3, 4 | 0.16 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P5-013 — Creature transformation: Apex Companion
+## P5-007 — Creature transformation: Apex Companion
 
 **2 spells; 0 not enabled.** Suggested source-reading anchor: Apex Companion. This is not a verified-test designation.
 
@@ -234,7 +143,23 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Enlarge Companion](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/enlarge-companion.json) | 2 | Enabled route | 2, 3 | 0.22 | no primary save; non-basic/no save; duration 1 minute; target your animal companion |
 
 
-## P5-014 — Creature transformation: Elemental Form
+## P5-008 — Creature transformation: Bestial Curse
+
+**2 spells; 0 not enabled.** Suggested source-reading anchor: Bestial Curse. This is not a verified-test designation.
+
+**Test contract:** Every form/rank option; native statistics; restrictions; granted actions; space; recharge; preserve unrelated changes on reversion.
+
+**Shared signals:** Save-result condition rider, Native condition
+
+**Anchor wording:** Failure The target transforms into a bestial form for 1 hour.
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Bestial Curse](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/bestial-curse.json) | 4 | Enabled route | 2, 3 | 1.00 | fortitude; non-basic/no save; duration varies; target 1 living humanoid |
+| [Cursed Metamorphosis](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/cursed-metamorphosis.json) | 6 | Enabled route | 2, 3 | 0.44 | fortitude; non-basic/no save; duration varies; target 1 creature |
+
+
+## P5-009 — Creature transformation: Elemental Form
 
 **2 spells; 0 not enabled.** Suggested source-reading anchor: Elemental Form. This is not a verified-test designation.
 
@@ -250,7 +175,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Fey Form](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/fey-form.json) | 4 | Partial Effect | 2, 3 | 0.15 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P5-015 — Creature transformation: Vapor Form
+## P5-010 — Creature transformation: Vapor Form
 
 **2 spells; 0 not enabled.** Suggested source-reading anchor: Vapor Form. This is not a verified-test designation.
 
@@ -266,7 +191,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Tempest Form](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/tempest-form.json) | 6 | Partial Effect | 2, 3, 4 | 0.22 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P5-016 — Creature transformation: Aberrant Form
+## P5-011 — Creature transformation: Aberrant Form
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Aberrant Form. This is not a verified-test designation.
 
@@ -281,7 +206,22 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Aberrant Form](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/aberrant-form.json) | 5 | Partial Effect | 2, 3 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P5-017 — Creature transformation: Ancestral Form
+## P5-012 — Creature transformation: Amalgamizing Leap
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Amalgamizing Leap. This is not a verified-test designation.
+
+**Test contract:** Every form/rank option; native statistics; restrictions; granted actions; space; recharge; preserve unrelated changes on reversion.
+
+**Shared signals:** Turn trigger or boundary, Save-result condition rider, Granted movement speed, Native condition, Choice / casting variant, Teleportation
+
+**Anchor wording:** The target becomes Enfeebled 1, and you gain 20 temporary Hit Points until the end of your next turn..
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Amalgamizing Leap](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/amalgamizing-leap.json) | 8 | Enabled route | 2, 3, 4, 7 | 1.00 | fortitude; non-basic/no save; duration until the end of your next turn; target 1 creature |
+
+
+## P5-013 — Creature transformation: Ancestral Form
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Ancestral Form. This is not a verified-test designation.
 
@@ -296,7 +236,22 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Ancestral Form](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/ancestral-form.json) | 6 | Partial Effect | 2, 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P5-018 — Creature transformation: Devouring Dark Form
+## P5-014 — Creature transformation: Corrosive Body
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Corrosive Body. This is not a verified-test designation.
+
+**Test contract:** Every form/rank option; native statistics; restrictions; granted actions; space; recharge; preserve unrelated changes on reversion.
+
+**Shared signals:** Ending or dismissal, Creature transformation
+
+**Anchor wording:** ou exhale corrosive gas, and acidic secretions coat your skin as you transform into a being of living acid.
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Corrosive Body](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/corrosive-body.json) | 7 | Enabled route | 2, 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
+
+
+## P5-015 — Creature transformation: Devouring Dark Form
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Devouring Dark Form. This is not a verified-test designation.
 
@@ -311,7 +266,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Devouring Dark Form](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/devouring-dark-form.json) | 1 | Partial Effect | 2, 3 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P5-019 — Creature transformation: Disperse into Air
+## P5-016 — Creature transformation: Disperse into Air
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Disperse into Air. This is not a verified-test designation.
 
@@ -326,7 +281,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Disperse into Air](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/disperse-into-air.json) | 4 | Note only (resolved) | 4 | 1.00 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
 
 
-## P5-020 — Creature transformation: Elephant Form
+## P5-017 — Creature transformation: Elephant Form
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Elephant Form. This is not a verified-test designation.
 
@@ -341,7 +296,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Elephant Form](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/elephant-form.json) | 4 | Enabled route | 2, 3 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P5-021 — Creature transformation: Enlarge
+## P5-018 — Creature transformation: Enlarge
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Enlarge. This is not a verified-test designation.
 
@@ -356,7 +311,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Enlarge](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/enlarge.json) | 2 | Enabled route | 2, 3 | 1.00 | no primary save; non-basic/no save; duration 5 minutes; target 1 willing creature |
 
 
-## P5-022 — Creature transformation: Ferrous Form
+## P5-019 — Creature transformation: Ferrous Form
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Ferrous Form. This is not a verified-test designation.
 
@@ -371,7 +326,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Ferrous Form](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/ferrous-form.json) | 8 | Partial Effect | 2, 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 hour; target source/area/text |
 
 
-## P5-023 — Creature transformation: Fiery Body
+## P5-020 — Creature transformation: Fiery Body
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Fiery Body. This is not a verified-test designation.
 
@@ -386,7 +341,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Fiery Body](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/fiery-body.json) | 7 | Partial Effect | 2, 3 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P5-024 — Creature transformation: Juvenile Companion
+## P5-021 — Creature transformation: Juvenile Companion
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Juvenile Companion. This is not a verified-test designation.
 
@@ -401,7 +356,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Juvenile Companion](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/juvenile-companion.json) | 1 | Enabled route | 2, 3 | 1.00 | no primary save; non-basic/no save; duration 10 minutes; target your companion |
 
 
-## P5-025 — Creature transformation: Living Thunderbolt
+## P5-022 — Creature transformation: Living Thunderbolt
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Living Thunderbolt. This is not a verified-test designation.
 
@@ -416,7 +371,22 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Living Thunderbolt](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/living-thunderbolt.json) | 6 | Enabled route | 2, 3, 4 | 1.00 | reflex; basic; duration 1 minute; target source/area/text |
 
 
-## P5-026 — Creature transformation: Migration
+## P5-023 — Creature transformation: Metamorphosis
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Metamorphosis. This is not a verified-test designation.
+
+**Test contract:** Every form/rank option; native statistics; restrictions; granted actions; space; recharge; preserve unrelated changes on reversion.
+
+**Shared signals:** Sustain, Area exposure, Creature transformation
+
+**Anchor wording:** You transform yourself into any form you could choose with a polymorph spell in your spell repertoire or that you could prepare of 8th-rank or lower (including any 8th-rank or lower heightened versions of spells you know).
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Metamorphosis](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/metamorphosis.json) | 9 | Enabled route | 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
+
+
+## P5-024 — Creature transformation: Migration
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Migration. This is not a verified-test designation.
 
@@ -429,6 +399,36 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
 | --- | --- | --- | --- | --- | --- |
 | [Migration](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/migration.json) | 8 | Note only (resolved) | 3, 4 | 1.00 | no primary save; non-basic/no save; duration 8 hours; target you and up to 5 willing creatures |
+
+
+## P5-025 — Creature transformation: Patron's Protector
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Patron's Protector. This is not a verified-test designation.
+
+**Test contract:** Every form/rank option; native statistics; restrictions; granted actions; space; recharge; preserve unrelated changes on reversion.
+
+**Shared signals:** Sustain, Save-result condition rider, Basic-save damage, Forced movement, Modifier / resistance
+
+**Anchor wording:** You can use Command an Animal on the target as part of Casting or Sustaining this spell.
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Patron's Protector](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/patrons-protector.json) | 6 | Enabled route | 2, 3, 7 | 1.00 | fortitude; basic; duration 1 minute; target your familiar |
+
+
+## P5-026 — Creature transformation: Qi Form
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Qi Form. This is not a verified-test designation.
+
+**Test contract:** Every form/rank option; native statistics; restrictions; granted actions; space; recharge; preserve unrelated changes on reversion.
+
+**Shared signals:** Sustain, Aura membership, Area exposure, Granted movement speed, Counteract, Creature transformation, Modifier / resistance
+
+**Anchor wording:** rawing from deep wells of spiritual power, you take on a special qi form.
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Qi Form](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/qi-form.json) | 9 | Enabled route | 2, 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
 
 
 ## P5-027 — Creature transformation: Sacred Form

@@ -1,0 +1,46 @@
+{
+  "label": "rank9Batch8",
+  "passed": true,
+  "at": "2026-10-05T03:02:16.300Z",
+  "details": {
+    "batch8": {
+      "blossom": {
+        "fascinated": true,
+        "drawn": true,
+        "immune": true,
+        "steadyFascinated": false,
+        "petals": 16
+      },
+      "song": {
+        "failure": {
+          "rolled": 2,
+          "result": 2,
+          "expected": [
+            "confused"
+          ],
+          "held": [
+            "confused"
+          ]
+        },
+        "criticalFailure": {
+          "rolled": 4,
+          "result": 5,
+          "expected": [
+            "stunned",
+            "stupefied"
+          ],
+          "held": [
+            "stunned",
+            "stupefied"
+          ]
+        }
+      },
+      "mosquito": {
+        "exposed": true,
+        "event": "enter",
+        "bite": 1,
+        "afflicted": true
+      }
+    }
+  }
+}

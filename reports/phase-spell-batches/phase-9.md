@@ -8,27 +8,12 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 
 | Rule family | Spells | Not enabled | Wording cohorts |
 | --- | --- | --- | --- |
-| review | 50 | 1 | 42 |
+| review | 50 | 0 | 42 |
 
 
 Phase 9 acceptance covers **all 1,870 spells** in the [master list](all-spells.md). The primary entries below are only the unresolved classification queue, not the complete Phase 9 scope.
 
-## P9-001 — Review: All is One, One is All
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: All is One, One is All. This is not a verified-test designation.
-
-**Test contract:** Read full source and referenced rules; decide owning workflow before implementation; identify missing mechanic or accepted exception.
-
-**Shared signals:** Structured source family; inspect the descriptions.
-
-**Anchor wording:** You meld the targets' matter and life force into one and then, in an instant, sift them back out into their component selves. When you separate the targets back into themselves, you can choose to switch the positions of any number of target
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [All is One, One is All](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/all-is-one-one-is-all.json) | 8 | Not enabled | 4 | 1.00 | no primary save; non-basic/no save; duration outcome/text; target You and up to 10 willing living allies |
-
-
-## P9-002 — Review: Primal Phenomenon
+## P9-001 — Review: Primal Phenomenon
 
 **4 spells; 0 not enabled.** Suggested source-reading anchor: Primal Phenomenon. This is not a verified-test designation.
 
@@ -46,7 +31,7 @@ Phase 9 acceptance covers **all 1,870 spells** in the [master list](all-spells.m
 | [Manifestation](../../.cache/pf2e-test-fixtures/spells/spells/rank-10/manifestation.json) | 10 | Note only (resolved) | 4 | 0.19 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
 
 
-## P9-003 — Review: Create Food
+## P9-002 — Review: Create Food
 
 **3 spells; 0 not enabled.** Suggested source-reading anchor: Create Food. This is not a verified-test designation.
 
@@ -63,7 +48,7 @@ Phase 9 acceptance covers **all 1,870 spells** in the [master list](all-spells.m
 | [Foraging Friends](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/foraging-friends.json) | 1 | Note only (resolved) | 4 | 0.17 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
 
 
-## P9-004 — Review: Ancestral Defense
+## P9-003 — Review: Ancestral Defense
 
 **2 spells; 0 not enabled.** Suggested source-reading anchor: Ancestral Defense. This is not a verified-test designation.
 
@@ -79,7 +64,7 @@ Phase 9 acceptance covers **all 1,870 spells** in the [master list](all-spells.m
 | [Hunter's Luck](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/hunters-luck.json) | 2 | Note only (resolved) | 4 | 0.23 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
 
 
-## P9-005 — Review: Extend Spell
+## P9-004 — Review: Extend Spell
 
 **2 spells; 0 not enabled.** Suggested source-reading anchor: Extend Spell. This is not a verified-test designation.
 
@@ -95,7 +80,7 @@ Phase 9 acceptance covers **all 1,870 spells** in the [master list](all-spells.m
 | [Extend Blood Magic](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/extend-blood-magic.json) | 3 | Note only (resolved) | 4 | 0.27 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
 
 
-## P9-006 — Review: Lingering Composition
+## P9-005 — Review: Lingering Composition
 
 **2 spells; 0 not enabled.** Suggested source-reading anchor: Lingering Composition. This is not a verified-test designation.
 
@@ -109,6 +94,21 @@ Phase 9 acceptance covers **all 1,870 spells** in the [master list](all-spells.m
 | --- | --- | --- | --- | --- | --- |
 | [Lingering Composition](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/lingering-composition.json) | 1 | Enabled route | 4 | 1.00 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
 | [Extend Boost](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/extend-boost.json) | 1 | Enabled route | 4 | 0.49 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
+
+
+## P9-006 — Review: All is One, One is All
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: All is One, One is All. This is not a verified-test designation.
+
+**Test contract:** Read full source and referenced rules; decide owning workflow before implementation; identify missing mechanic or accepted exception.
+
+**Shared signals:** Structured source family; inspect the descriptions.
+
+**Anchor wording:** You meld the targets' matter and life force into one and then, in an instant, sift them back out into their component selves. When you separate the targets back into themselves, you can choose to switch the positions of any number of target
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [All is One, One is All](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/all-is-one-one-is-all.json) | 8 | Enabled route | 4 | 1.00 | no primary save; non-basic/no save; duration outcome/text; target You and up to 10 willing living allies |
 
 
 ## P9-007 — Review: Augury

@@ -1,0 +1,47 @@
+{
+  "generatedAt": "2026-10-05T12:17:47.308Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "spellshapeBatch11",
+      "passed": true,
+      "at": "2026-10-05T12:13:05.496Z",
+      "details": {
+        "spellshape11": {
+          "charred": {
+            "made": true,
+            "difficult": true,
+            "behaviors": [
+              "modifyMovementCost"
+            ],
+            "rider": true,
+            "minutes": 1,
+            "damage": 3,
+            "keptAfterTemplate": true
+          },
+          "snow": {
+            "made": true,
+            "covers": true,
+            "gone": true
+          },
+          "garland": {
+            "made": true,
+            "type": "piercing",
+            "formula": "2d6",
+            "lost": 8,
+            "casterExempt": true
+          },
+          "echo": {
+            "afterFirst": 2,
+            "echo": true,
+            "afterSecond": 2,
+            "spent": true
+          },
+          "formControl": 1,
+          "read": "true:ok,true:ok"
+        }
+      }
+    }
+  ]
+}

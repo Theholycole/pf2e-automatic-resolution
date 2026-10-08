@@ -1,0 +1,19 @@
+{
+ "label": "thirdPartyBatch18",
+ "passed": true,
+ "at": "2026-10-07T01:10:21.622Z",
+ "details": {
+  "thirdParty18": {
+   "wish": {
+    "status": "applied",
+    "reflex": 1,
+    "effect": true
+   },
+   "party": {
+    "status": "applied",
+    "temp": 7,
+    "damage": 2
+   }
+  }
+ }
+}

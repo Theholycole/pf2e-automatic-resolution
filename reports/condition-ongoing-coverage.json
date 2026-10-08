@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-03T21:23:43.192Z",
+  "generatedAt": "2026-10-05T09:24:06.428Z",
   "baseline": "PF2e 8.5.0 installed fixtures",
   "scope": "Structural candidate audit across installed spells, including rituals; later-phase mechanics are not silently counted as Phase 2/3 support.",
   "rows": [
@@ -5076,38 +5076,15 @@
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
     {
-      "id": "wLIvH0AT1u7oa64N",
-      "name": "Cataclysm",
-      "file": "spells/spells/rank-10/cataclysm.json",
-      "kind": "save",
-      "lifecycle": "instantaneous",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
-      "liveEvidence": null,
-      "pending": [
-        "description-effects",
-        "description-target-predicates",
-        "description-lifecycle"
-      ],
-      "conditions": [],
-      "family": "save-outcomes",
-      "evidence": "Requires spell/variant evidence; executable does not mean live verified"
-    },
-    {
       "id": "eAOClJ1KRSPik8SX",
       "name": "Dragon Turret",
       "file": "spells/spells/rank-10/dragon-turret.json",
-      "kind": "save",
+      "kind": "incarnate",
       "lifecycle": "sustained",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "description-effects",
-        "description-target-predicates",
-        "description-lifecycle",
-        "area-paragraph"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "sustained",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -5117,16 +5094,11 @@
       "name": "Fabricated Truth",
       "file": "spells/spells/rank-10/fabricated-truth.json",
       "kind": "save",
-      "lifecycle": "text",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
+      "lifecycle": "outcome",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
       "liveEvidence": null,
-      "pending": [
-        "residual-prose",
-        "preamble:counteract",
-        "preamble:restriction",
-        "item-duration-grammar"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "save-outcomes",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -5146,43 +5118,17 @@
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
     {
-      "id": "Um0aaJotqMKGmAlR",
-      "name": "Pied Piping",
-      "file": "spells/spells/rank-10/pied-piping.json",
-      "kind": "save",
+      "id": "ZXwxs5tRjEGrjAJT",
+      "name": "Nature Incarnate",
+      "file": "spells/spells/rank-10/nature-incarnate.json",
+      "kind": "effect",
       "lifecycle": "fixed",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "residual-prose",
-        "preamble:temporary-immunity",
-        "preamble:conditional-eligibility",
-        "preamble:ongoing-trigger",
-        "preamble:modifier"
-      ],
-      "conditions": [
-        "fascinated"
-      ],
-      "family": "save-outcomes",
-      "evidence": "Requires spell/variant evidence; executable does not mean live verified"
-    },
-    {
-      "id": "A125k5hYixepbzNb",
-      "name": "Planar Collision",
-      "file": "spells/spells/rank-10/planar-collision.json",
-      "kind": "save",
-      "lifecycle": "instantaneous",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
-      "liveEvidence": null,
-      "pending": [
-        "description-effects",
-        "description-target-predicates",
-        "description-lifecycle"
-      ],
+      "pending": [],
       "conditions": [],
-      "family": "save-outcomes",
+      "family": "native-effects",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
     {
@@ -5205,16 +5151,12 @@
       "id": "HpIJTVqgXorH9X0L",
       "name": "Revival",
       "file": "spells/spells/rank-10/revival.json",
-      "kind": "unsupported",
+      "kind": "incarnate",
       "lifecycle": "sustained",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "no-primary-save",
-        "description-semantics",
-        "target-eligibility"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "sustained",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -5228,11 +5170,13 @@
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "residual-prose",
-        "preamble:additional-condition"
+      "pending": [],
+      "conditions": [
+        "clumsy",
+        "enfeebled",
+        "off-guard",
+        "slowed"
       ],
-      "conditions": [],
       "family": "save-outcomes",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
@@ -5240,16 +5184,12 @@
       "id": "IGXGs9PlqUCvODcH",
       "name": "Song of the Fallen",
       "file": "spells/spells/rank-10/song-of-the-fallen.json",
-      "kind": "unsupported",
+      "kind": "incarnate",
       "lifecycle": "sustained",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "basic-save-without-structured-damage",
-        "description-semantics",
-        "target-eligibility"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "sustained",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -5263,16 +5203,8 @@
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "manual:forced-movement",
-        "manual:conditional-effect",
-        "residual-prose",
-        "preamble:terrain",
-        "preamble:recipient-qualifier"
-      ],
-      "conditions": [
-        "drained"
-      ],
+      "pending": [],
+      "conditions": [],
       "family": "sustained",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
@@ -5280,22 +5212,16 @@
       "id": "VbP3EPkHDvDKX3eM",
       "name": "Veil of Broken Reality",
       "file": "spells/spells/rank-10/veil-of-broken-reality.json",
-      "kind": "save",
+      "kind": "spell-note",
       "lifecycle": "fixed",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "residual-prose",
-        "preamble:temporary-immunity",
-        "preamble:conditional-eligibility",
-        "preamble:ongoing-trigger",
-        "area-paragraph"
-      ],
+      "pending": [],
       "conditions": [
         "slowed"
       ],
-      "family": "save-outcomes",
+      "family": "native-effects",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
     {
@@ -13916,13 +13842,12 @@
       "id": "VUMtDHr8CRwwr3Mj",
       "name": "Aura of the Unremarkable",
       "file": "spells/spells/rank-6/aura-of-the-unremarkable.json",
-      "kind": "save",
+      "kind": "spell-note",
       "lifecycle": "sustained",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
       "pending": [
-        "residual-prose",
         "preamble:recipient-qualifier"
       ],
       "conditions": [],
@@ -13958,84 +13883,15 @@
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
     {
-      "id": "m34WOIGZCEg1h76G",
-      "name": "Blanket of Stars",
-      "file": "spells/spells/rank-6/blanket-of-stars.json",
-      "kind": "save",
-      "lifecycle": "fixed",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
-      "liveEvidence": null,
-      "pending": [
-        "preamble:ongoing-trigger",
-        "preamble:modifier",
-        "preamble:additional-condition"
-      ],
-      "conditions": [
-        "dazzled",
-        "confused"
-      ],
-      "family": "save-outcomes",
-      "evidence": "Requires spell/variant evidence; executable does not mean live verified"
-    },
-    {
-      "id": "jj5d830iUi2ZlQfs",
-      "name": "Blessed Boundary",
-      "file": "spells/spells/rank-6/blessed-boundary.json",
-      "kind": "save",
-      "lifecycle": "fixed",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
-      "liveEvidence": null,
-      "pending": [
-        "description-effects",
-        "description-target-predicates",
-        "description-lifecycle",
-        "manual:forced-movement",
-        "manual:gm-choice"
-      ],
-      "conditions": [],
-      "family": "save-outcomes",
-      "evidence": "Requires spell/variant evidence; executable does not mean live verified"
-    },
-    {
-      "id": "NhGXgmI3AjkkwnPk",
-      "name": "Blinding Fury",
-      "file": "spells/spells/rank-6/blinding-fury.json",
-      "kind": "save",
-      "lifecycle": "text",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
-      "liveEvidence": null,
-      "pending": [
-        "manual:conditional-effect",
-        "condition-duration-scope",
-        "residual-prose",
-        "item-duration-grammar"
-      ],
-      "conditions": [
-        "observe",
-        "hidden"
-      ],
-      "family": "save-outcomes",
-      "evidence": "Requires spell/variant evidence; executable does not mean live verified"
-    },
-    {
       "id": "B0Ng2VlhEJMuUXUH",
       "name": "Bound in Death",
       "file": "spells/spells/rank-6/bound-in-death.json",
-      "kind": "save",
+      "kind": "incarnate",
       "lifecycle": "sustained",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "residual-prose",
-        "sustain-effect",
-        "preamble:ongoing-trigger",
-        "preamble:ends-early",
-        "preamble:damage"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "sustained",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -14108,14 +13964,10 @@
       "file": "spells/spells/rank-6/collective-transposition.json",
       "kind": "save",
       "lifecycle": "instantaneous",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
       "liveEvidence": null,
-      "pending": [
-        "manual:forced-movement",
-        "manual:conditional-effect",
-        "residual-prose"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "save-outcomes",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -14140,14 +13992,10 @@
       "file": "spells/spells/rank-6/cursed-metamorphosis.json",
       "kind": "save",
       "lifecycle": "outcome",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
       "liveEvidence": null,
-      "pending": [
-        "manual:conditional-effect",
-        "manual:transformation-or-form",
-        "residual-prose"
-      ],
+      "pending": [],
       "conditions": [
         "sickened"
       ],
@@ -14245,15 +14093,11 @@
       "name": "Dread Secret",
       "file": "spells/spells/rank-6/dread-secret.json",
       "kind": "save",
-      "lifecycle": "turn-boundary",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
+      "lifecycle": "outcome",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
       "liveEvidence": null,
-      "pending": [
-        "manual:conditional-effect",
-        "residual-prose",
-        "preamble:modifier"
-      ],
+      "pending": [],
       "conditions": [
         "frightened"
       ],
@@ -14266,15 +14110,13 @@
       "file": "spells/spells/rank-6/earth-and-sky.json",
       "kind": "save",
       "lifecycle": "instantaneous",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
       "liveEvidence": null,
-      "pending": [
-        "residual-prose",
-        "preamble:ends-early",
-        "preamble:recipient-qualifier"
+      "pending": [],
+      "conditions": [
+        "prone"
       ],
-      "conditions": [],
       "family": "save-outcomes",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
@@ -14282,15 +14124,12 @@
       "id": "Cpj05laa7ogqGwS3",
       "name": "Elemental Confluence",
       "file": "spells/spells/rank-6/elemental-confluence.json",
-      "kind": "unsupported",
+      "kind": "incarnate",
       "lifecycle": "sustained",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "no-primary-save",
-        "description-semantics"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "sustained",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -14333,13 +14172,10 @@
       "file": "spells/spells/rank-6/expunge-blood.json",
       "kind": "save",
       "lifecycle": "outcome",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
       "liveEvidence": null,
-      "pending": [
-        "preamble:ongoing-trigger",
-        "preamble:modifier"
-      ],
+      "pending": [],
       "conditions": [
         "drained",
         "clumsy"
@@ -14353,13 +14189,10 @@
       "file": "spells/spells/rank-6/fateful-condemnation.json",
       "kind": "save",
       "lifecycle": "fixed",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
       "liveEvidence": null,
-      "pending": [
-        "condition-duration-scope",
-        "residual-prose"
-      ],
+      "pending": [],
       "conditions": [
         "slowed"
       ],
@@ -14378,24 +14211,6 @@
       "pending": [],
       "conditions": [],
       "family": "sustained",
-      "evidence": "Requires spell/variant evidence; executable does not mean live verified"
-    },
-    {
-      "id": "kuoYff1csM5eAcAP",
-      "name": "Fire Seeds",
-      "file": "spells/spells/rank-6/fire-seeds.json",
-      "kind": "save",
-      "lifecycle": "fixed",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
-      "liveEvidence": null,
-      "pending": [
-        "description-effects",
-        "description-target-predicates",
-        "description-lifecycle"
-      ],
-      "conditions": [],
-      "family": "save-outcomes",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
     {
@@ -14476,37 +14291,14 @@
       "id": "rTvNWcKNpOnGklGF",
       "name": "Gray Shadow",
       "file": "spells/spells/rank-6/gray-shadow.json",
-      "kind": "unsupported",
+      "kind": "incarnate",
       "lifecycle": "sustained",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "no-primary-save",
-        "description-semantics",
-        "native-spell-effect-scope"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "sustained",
-      "evidence": "Requires spell/variant evidence; executable does not mean live verified"
-    },
-    {
-      "id": "ugysbQQWGvVq7iu8",
-      "name": "Heartbolt",
-      "file": "spells/spells/rank-6/heartbolt.json",
-      "kind": "save",
-      "lifecycle": "instantaneous",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
-      "liveEvidence": null,
-      "pending": [
-        "description-effects",
-        "description-target-predicates",
-        "description-lifecycle",
-        "target-eligibility"
-      ],
-      "conditions": [],
-      "family": "save-outcomes",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
     {
@@ -14686,16 +14478,12 @@
       "id": "x1YwD1E9LW8upBj6",
       "name": "Patron's Protector",
       "file": "spells/spells/rank-6/patrons-protector.json",
-      "kind": "save",
+      "kind": "incarnate",
       "lifecycle": "sustained",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "description-effects",
-        "description-target-predicates",
-        "description-lifecycle"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "sustained",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -14773,24 +14561,6 @@
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
     {
-      "id": "yrZA4k2VAqEP8xx7",
-      "name": "Repulsion",
-      "file": "spells/spells/rank-6/repulsion.json",
-      "kind": "save",
-      "lifecycle": "fixed",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
-      "liveEvidence": null,
-      "pending": [
-        "manual:terrain",
-        "residual-prose",
-        "preamble:ongoing-trigger"
-      ],
-      "conditions": [],
-      "family": "save-outcomes",
-      "evidence": "Requires spell/variant evidence; executable does not mean live verified"
-    },
-    {
       "id": "Eed8QBWBtpufl1iP",
       "name": "Revel in Retribution",
       "file": "spells/spells/rank-6/revel-in-retribution.json",
@@ -14854,16 +14624,12 @@
       "id": "r784cIz17eWujtQj",
       "name": "Scrying",
       "file": "spells/spells/rank-6/scrying.json",
-      "kind": "save",
+      "kind": "spell-note",
       "lifecycle": "sustained",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "manual:temporary-immunity",
-        "manual:conditional-effect",
-        "residual-prose"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "sustained",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -14874,18 +14640,11 @@
       "file": "spells/spells/rank-6/seize-identity.json",
       "kind": "save",
       "lifecycle": "sustained",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
       "liveEvidence": null,
-      "pending": [
-        "residual-prose",
-        "sustain-effect",
-        "preamble:restriction",
-        "target-eligibility"
-      ],
-      "conditions": [
-        "enfeebled"
-      ],
+      "pending": [],
+      "conditions": [],
       "family": "sustained",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
@@ -14893,15 +14652,12 @@
       "id": "EOWh6VVcSjB3WPjX",
       "name": "Shadow Illusion",
       "file": "spells/spells/rank-6/shadow-illusion.json",
-      "kind": "unsupported",
+      "kind": "illusory-creature",
       "lifecycle": "sustained",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "no-primary-save",
-        "description-semantics"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "sustained",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -14983,16 +14739,17 @@
       "name": "Tanglecurse",
       "file": "spells/spells/rank-6/tanglecurse.json",
       "kind": "save",
-      "lifecycle": "instantaneous",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
+      "lifecycle": "outcome",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
       "liveEvidence": null,
-      "pending": [
-        "manual:terrain",
-        "manual:conditional-effect",
-        "residual-prose"
+      "pending": [],
+      "conditions": [
+        "enfeebled",
+        "clumsy",
+        "drained",
+        "stupefied"
       ],
-      "conditions": [],
       "family": "save-outcomes",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
@@ -15017,18 +14774,29 @@
       "id": "kLxJx7BECVgHh2vb",
       "name": "Temporal Ward",
       "file": "spells/spells/rank-6/temporal-ward.json",
-      "kind": "save",
+      "kind": "spell-note",
       "lifecycle": "fixed",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "dismissal",
-        "target-eligibility"
-      ],
+      "pending": [],
       "conditions": [
         "confused"
       ],
+      "family": "native-effects",
+      "evidence": "Requires spell/variant evidence; executable does not mean live verified"
+    },
+    {
+      "id": "OOMQ8Z6EIrGt5NJ6",
+      "name": "Unexpected Transposition",
+      "file": "spells/spells/rank-6/unexpected-transposition.json",
+      "kind": "save",
+      "lifecycle": "instantaneous",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
+      "liveEvidence": null,
+      "pending": [],
+      "conditions": [],
       "family": "save-outcomes",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
@@ -15083,14 +14851,11 @@
       "name": "Vitrifying Blast",
       "file": "spells/spells/rank-6/vitrifying-blast.json",
       "kind": "save",
-      "lifecycle": "text",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
+      "lifecycle": "outcome",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
       "liveEvidence": null,
-      "pending": [
-        "residual-prose",
-        "item-duration-grammar"
-      ],
+      "pending": [],
       "conditions": [
         "slowed"
       ],
@@ -15150,8 +14915,8 @@
       "file": "spells/spells/rank-7/beheading-buzz-saw.json",
       "kind": "save",
       "lifecycle": "instantaneous",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
       "liveEvidence": null,
       "pending": [],
       "conditions": [],
@@ -15173,38 +14938,15 @@
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
     {
-      "id": "rillrYLb7V2mRyU7",
-      "name": "Call of the Quenching",
-      "file": "spells/spells/rank-7/call-of-the-quenching.json",
-      "kind": "save",
-      "lifecycle": "fixed",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
-      "liveEvidence": null,
-      "pending": [
-        "description-effects",
-        "description-target-predicates",
-        "description-lifecycle",
-        "area-paragraph"
-      ],
-      "conditions": [],
-      "family": "save-outcomes",
-      "evidence": "Requires spell/variant evidence; executable does not mean live verified"
-    },
-    {
       "id": "hvV6IruyW4MAr0Ub",
       "name": "Chrysopoetic Curse",
       "file": "spells/spells/rank-7/chrysopoetic-curse.json",
       "kind": "save",
       "lifecycle": "fixed",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
       "liveEvidence": null,
-      "pending": [
-        "manual:conditional-effect",
-        "manual:terrain",
-        "residual-prose"
-      ],
+      "pending": [],
       "conditions": [
         "encumbered",
         "clumsy"
@@ -15216,15 +14958,12 @@
       "id": "oahqARSgOGDRybBQ",
       "name": "Control Sand",
       "file": "spells/spells/rank-7/control-sand.json",
-      "kind": "unsupported",
+      "kind": "incarnate",
       "lifecycle": "sustained",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "no-primary-save",
-        "description-semantics"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "sustained",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -15233,15 +14972,12 @@
       "id": "9aFg4EuOBVz0i3Lb",
       "name": "Corrosive Body",
       "file": "spells/spells/rank-7/corrosive-body.json",
-      "kind": "unsupported",
+      "kind": "effect",
       "lifecycle": "fixed",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "no-primary-save",
-        "description-semantics"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "native-effects",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -15280,17 +15016,12 @@
       "id": "smiVuoFMSgY2FTOO",
       "name": "Dancing Fountain",
       "file": "spells/spells/rank-7/dancing-fountain.json",
-      "kind": "save",
+      "kind": "incarnate",
       "lifecycle": "sustained",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "description-effects",
-        "description-target-predicates",
-        "description-lifecycle",
-        "area-paragraph"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "sustained",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -15304,11 +15035,7 @@
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "description-effects",
-        "description-target-predicates",
-        "description-lifecycle"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "save-outcomes",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -15327,25 +15054,6 @@
         "drained",
         "stupefied"
       ],
-      "family": "save-outcomes",
-      "evidence": "Requires spell/variant evidence; executable does not mean live verified"
-    },
-    {
-      "id": "x9RIFhquazom4p02",
-      "name": "Deity's Strike",
-      "file": "spells/spells/rank-7/deitys-strike.json",
-      "kind": "save",
-      "lifecycle": "instantaneous",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
-      "liveEvidence": null,
-      "pending": [
-        "description-effects",
-        "description-target-predicates",
-        "description-lifecycle",
-        "target-eligibility"
-      ],
-      "conditions": [],
       "family": "save-outcomes",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
@@ -15385,17 +15093,10 @@
       "file": "spells/spells/rank-7/duplicate-foe.json",
       "kind": "save",
       "lifecycle": "sustained",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
       "liveEvidence": null,
-      "pending": [
-        "residual-prose",
-        "sustain-effect",
-        "preamble:conditional-eligibility",
-        "preamble:ongoing-trigger",
-        "preamble:modifier",
-        "target-eligibility"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "sustained",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -15529,16 +15230,13 @@
       "file": "spells/spells/rank-7/heaving-earth.json",
       "kind": "save",
       "lifecycle": "instantaneous",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
       "liveEvidence": null,
-      "pending": [
-        "description-effects",
-        "description-target-predicates",
-        "description-lifecycle",
-        "target-eligibility"
+      "pending": [],
+      "conditions": [
+        "prone"
       ],
-      "conditions": [],
       "family": "save-outcomes",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
@@ -15565,10 +15263,7 @@
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "manual:conditional-effect",
-        "residual-prose"
-      ],
+      "pending": [],
       "conditions": [
         "prone",
         "unconscious"
@@ -15594,19 +15289,13 @@
       "id": "29tJyuEfFP43lMcM",
       "name": "Infinitesimal Collapse Field",
       "file": "spells/spells/rank-7/infinitesimal-collapse-field.json",
-      "kind": "save",
+      "kind": "lantern-aura",
       "lifecycle": "sustained",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "residual-prose",
-        "preamble:ongoing-trigger"
-      ],
-      "conditions": [
-        "encumbered",
-        "slowed"
-      ],
+      "pending": [],
+      "conditions": [],
       "family": "sustained",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
@@ -15628,34 +15317,14 @@
       "id": "HES5jvGiNZZnJycK",
       "name": "Lifewood Cage",
       "file": "spells/spells/rank-7/lifewood-cage.json",
-      "kind": "unsupported",
+      "kind": "incarnate",
       "lifecycle": "sustained",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "non-basic-save",
-        "description-semantics"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "sustained",
-      "evidence": "Requires spell/variant evidence; executable does not mean live verified"
-    },
-    {
-      "id": "flKde7BHrZnRheMl",
-      "name": "Love's Sacrifice",
-      "file": "spells/spells/rank-7/loves-sacrifice.json",
-      "kind": "save",
-      "lifecycle": "instantaneous",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
-      "liveEvidence": null,
-      "pending": [
-        "manual:conditional-effect",
-        "residual-prose"
-      ],
-      "conditions": [],
-      "family": "save-outcomes",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
     {
@@ -15680,12 +15349,10 @@
       "file": "spells/spells/rank-7/maze-of-locked-doors.json",
       "kind": "save",
       "lifecycle": "sustained",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
       "liveEvidence": null,
-      "pending": [
-        "preamble:counteract"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "sustained",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -15712,12 +15379,10 @@
       "file": "spells/spells/rank-7/orb-of-twisting-fate.json",
       "kind": "save",
       "lifecycle": "fixed",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
       "liveEvidence": null,
-      "pending": [
-        "residual-prose"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "save-outcomes",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -15745,18 +15410,10 @@
       "file": "spells/spells/rank-7/possession.json",
       "kind": "save",
       "lifecycle": "fixed",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
       "liveEvidence": null,
-      "pending": [
-        "manual:conditional-effect",
-        "residual-prose",
-        "preamble:ongoing-trigger",
-        "preamble:ends-early",
-        "preamble:additional-condition",
-        "preamble:restriction",
-        "preamble:degree-adjustment"
-      ],
+      "pending": [],
       "conditions": [
         "controlled"
       ],
@@ -15797,38 +15454,15 @@
       "file": "spells/spells/rank-7/puppet-strings.json",
       "kind": "save",
       "lifecycle": "sustained",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
       "liveEvidence": null,
-      "pending": [
-        "manual:action-restriction",
-        "manual:conditional-effect",
-        "residual-prose",
-        "sustain-effect"
-      ],
+      "pending": [],
       "conditions": [
         "clumsy",
         "slowed"
       ],
       "family": "sustained",
-      "evidence": "Requires spell/variant evidence; executable does not mean live verified"
-    },
-    {
-      "id": "nPxYYID5JARKouSV",
-      "name": "Ray of Corruption",
-      "file": "spells/spells/rank-7/ray-of-corruption.json",
-      "kind": "save",
-      "lifecycle": "instantaneous",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
-      "liveEvidence": null,
-      "pending": [
-        "description-effects",
-        "description-target-predicates",
-        "description-lifecycle"
-      ],
-      "conditions": [],
-      "family": "save-outcomes",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
     {
@@ -15851,14 +15485,10 @@
       "file": "spells/spells/rank-7/shadow-raid.json",
       "kind": "save",
       "lifecycle": "fixed",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
       "liveEvidence": null,
-      "pending": [
-        "description-effects",
-        "description-target-predicates",
-        "description-lifecycle"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "save-outcomes",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -15923,15 +15553,7 @@
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "manual:terrain",
-        "manual:forced-movement",
-        "native-spell-effect-scope",
-        "sustain-effect",
-        "preamble:ongoing-trigger",
-        "preamble:modifier",
-        "preamble:collision"
-      ],
+      "pending": [],
       "conditions": [
         "prone"
       ],
@@ -15961,16 +15583,10 @@
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "residual-prose",
-        "sustain-effect",
-        "preamble:conditional-eligibility",
-        "preamble:ongoing-trigger",
-        "preamble:modifier",
-        "preamble:degree-adjustment"
-      ],
+      "pending": [],
       "conditions": [
-        "stunned"
+        "stunned",
+        "unconscious"
       ],
       "family": "sustained",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -15979,22 +15595,13 @@
       "id": "tPtTKe0X1dDwoDmQ",
       "name": "Vibrant Vibrato",
       "file": "spells/spells/rank-7/vibrant-vibrato.json",
-      "kind": "save",
+      "kind": "incarnate",
       "lifecycle": "sustained",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "manual:conditional-effect",
-        "residual-prose",
-        "sustain-effect",
-        "preamble:ongoing-trigger",
-        "preamble:restriction"
-      ],
-      "conditions": [
-        "stunned",
-        "deafened"
-      ],
+      "pending": [],
+      "conditions": [],
       "family": "sustained",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
@@ -16008,28 +15615,6 @@
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
       "pending": [],
-      "conditions": [],
-      "family": "save-outcomes",
-      "evidence": "Requires spell/variant evidence; executable does not mean live verified"
-    },
-    {
-      "id": "O7ZEqWjwdKyo2CUv",
-      "name": "Volcanic Eruption",
-      "file": "spells/spells/rank-7/volcanic-eruption.json",
-      "kind": "save",
-      "lifecycle": "instantaneous",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
-      "liveEvidence": null,
-      "pending": [
-        "native-spell-effect-scope",
-        "native-spell-effect-recipient",
-        "preamble:ends-early",
-        "preamble:terrain",
-        "preamble:modifier",
-        "preamble:additional-condition",
-        "area-paragraph"
-      ],
       "conditions": [],
       "family": "save-outcomes",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -16055,14 +15640,11 @@
       "name": "Amalgamizing Leap",
       "file": "spells/spells/rank-8/amalgamizing-leap.json",
       "kind": "save",
-      "lifecycle": "turn-boundary",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
+      "lifecycle": "instantaneous",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
       "liveEvidence": null,
-      "pending": [
-        "manual:conditional-effect",
-        "residual-prose"
-      ],
+      "pending": [],
       "conditions": [
         "enfeebled",
         "sickened"
@@ -16118,29 +15700,6 @@
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
     {
-      "id": "kWDt0JcKPgX6MvdD",
-      "name": "Burning Blossoms",
-      "file": "spells/spells/rank-8/burning-blossoms.json",
-      "kind": "save",
-      "lifecycle": "fixed",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
-      "liveEvidence": null,
-      "pending": [
-        "manual:conditional-effect",
-        "manual:attitude-or-hostility",
-        "residual-prose",
-        "preamble:ongoing-trigger",
-        "preamble:additional-condition",
-        "area-paragraph"
-      ],
-      "conditions": [
-        "fascinated"
-      ],
-      "family": "save-outcomes",
-      "evidence": "Requires spell/variant evidence; executable does not mean live verified"
-    },
-    {
       "id": "qlxM7Ik3uUeUIOcv",
       "name": "Canticle of Everlasting Grief",
       "file": "spells/spells/rank-8/canticle-of-everlasting-grief.json",
@@ -16183,6 +15742,20 @@
         "stunned"
       ],
       "family": "sustained",
+      "evidence": "Requires spell/variant evidence; executable does not mean live verified"
+    },
+    {
+      "id": "8fEfjvC01gNclDKJ",
+      "name": "Deluge",
+      "file": "spells/spells/rank-8/deluge.json",
+      "kind": "save",
+      "lifecycle": "instantaneous",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
+      "liveEvidence": null,
+      "pending": [],
+      "conditions": [],
+      "family": "save-outcomes",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
     {
@@ -16260,41 +15833,15 @@
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
     {
-      "id": "x7SPrsRxGb2Vy2nu",
-      "name": "Earthquake",
-      "file": "spells/spells/rank-8/earthquake.json",
-      "kind": "save",
-      "lifecycle": "fixed",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
-      "liveEvidence": null,
-      "pending": [
-        "description-effects",
-        "description-target-predicates",
-        "description-lifecycle",
-        "native-spell-effect-scope",
-        "native-spell-effect-recipient"
-      ],
-      "conditions": [],
-      "family": "save-outcomes",
-      "evidence": "Requires spell/variant evidence; executable does not mean live verified"
-    },
-    {
       "id": "vm9O7ne48NM72yrJ",
       "name": "Falling Sky",
       "file": "spells/spells/rank-8/falling-sky.json",
       "kind": "save",
       "lifecycle": "instantaneous",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
       "liveEvidence": null,
-      "pending": [
-        "manual:conditional-effect",
-        "residual-prose",
-        "preamble:damage",
-        "area-paragraph",
-        "preamble:recipient-qualifier"
-      ],
+      "pending": [],
       "conditions": [
         "prone",
         "stunned"
@@ -16355,34 +15902,29 @@
       "id": "oGV6YdpZLIG4G4gH",
       "name": "Impaling Briars",
       "file": "spells/spells/rank-8/impaling-briars.json",
-      "kind": "unsupported",
+      "kind": "incarnate",
       "lifecycle": "sustained",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "non-basic-save",
-        "description-semantics"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "sustained",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
     {
-      "id": "moTWtlU84IScjnCh",
-      "name": "Metallic Meteorite Glyph",
-      "file": "spells/spells/rank-8/metallic-meteorite-glyph.json",
+      "id": "wTYxxYJWN348oV15",
+      "name": "Medusa's Wrath",
+      "file": "spells/spells/rank-8/medusas-wrath.json",
       "kind": "save",
       "lifecycle": "instantaneous",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
       "liveEvidence": null,
-      "pending": [
-        "description-effects",
-        "description-target-predicates",
-        "description-lifecycle"
+      "pending": [],
+      "conditions": [
+        "slowed"
       ],
-      "conditions": [],
       "family": "save-outcomes",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
@@ -16390,15 +15932,12 @@
       "id": "8AMvNVOUEtxBCDvJ",
       "name": "Monstrosity Form",
       "file": "spells/spells/rank-8/monstrosity-form.json",
-      "kind": "unsupported",
+      "kind": "effect",
       "lifecycle": "fixed",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "no-primary-save",
-        "description-semantics"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "native-effects",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -16407,16 +15946,12 @@
       "id": "3ZxaIw1FOOocJboH",
       "name": "Musical Shift",
       "file": "spells/spells/rank-8/musical-shift.json",
-      "kind": "unsupported",
+      "kind": "incarnate",
       "lifecycle": "sustained",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "no-primary-save",
-        "description-semantics",
-        "native-spell-effect-scope"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "sustained",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -16471,21 +16006,16 @@
       "id": "5uWwusDkfmOOlZjK",
       "name": "Shipwreck",
       "file": "spells/spells/rank-8/shipwreck.json",
-      "kind": "save",
+      "kind": "spell-note",
       "lifecycle": "instantaneous",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "manual:terrain",
-        "manual:conditional-effect",
-        "residual-prose",
-        "target-eligibility"
-      ],
+      "pending": [],
       "conditions": [
         "broken"
       ],
-      "family": "save-outcomes",
+      "family": "native-effects",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
     {
@@ -16530,15 +16060,7 @@
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "manual:temporary-immunity",
-        "manual:conditional-effect",
-        "manual:attitude-or-hostility",
-        "condition-duration-scope",
-        "residual-prose",
-        "sustain-effect",
-        "preamble:ongoing-trigger"
-      ],
+      "pending": [],
       "conditions": [
         "fascinated"
       ],
@@ -16583,39 +16105,11 @@
       "file": "spells/spells/rank-8/temporary-possession.json",
       "kind": "save",
       "lifecycle": "instantaneous",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
       "liveEvidence": null,
-      "pending": [
-        "manual:gm-choice",
-        "manual:conditional-effect",
-        "residual-prose",
-        "target-eligibility"
-      ],
-      "conditions": [
-        "controlled",
-        "stunned"
-      ],
-      "family": "save-outcomes",
-      "evidence": "Requires spell/variant evidence; executable does not mean live verified"
-    },
-    {
-      "id": "Ovvflf5aFbmBxqq8",
-      "name": "Touch of Death",
-      "file": "spells/spells/rank-8/touch-of-death.json",
-      "kind": "save",
-      "lifecycle": "fixed",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
-      "liveEvidence": null,
-      "pending": [
-        "manual:temporary-immunity",
-        "condition-duration-scope",
-        "residual-prose"
-      ],
-      "conditions": [
-        "stunned"
-      ],
+      "pending": [],
+      "conditions": [],
       "family": "save-outcomes",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
@@ -16640,17 +16134,11 @@
       "name": "Undermine Reality",
       "file": "spells/spells/rank-8/undermine-reality.json",
       "kind": "save",
-      "lifecycle": "text",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
+      "lifecycle": "outcome",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
       "liveEvidence": null,
-      "pending": [
-        "residual-prose",
-        "preamble:ongoing-trigger",
-        "preamble:restriction",
-        "preamble:degree-adjustment",
-        "item-duration-grammar"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "save-outcomes",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -16664,13 +16152,7 @@
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "residual-prose",
-        "sustain-effect",
-        "preamble:ongoing-trigger",
-        "preamble:terrain",
-        "area-paragraph"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "sustained",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -16684,14 +16166,7 @@
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "manual:conditional-effect",
-        "residual-prose",
-        "sustain-effect",
-        "preamble:ongoing-trigger",
-        "preamble:terrain",
-        "area-paragraph"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "sustained",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -16702,16 +16177,10 @@
       "file": "spells/spells/rank-9/arcane-explosion.json",
       "kind": "save",
       "lifecycle": "instantaneous",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
       "liveEvidence": null,
-      "pending": [
-        "description-effects",
-        "description-target-predicates",
-        "description-lifecycle",
-        "native-spell-effect-scope",
-        "dismissal"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "save-outcomes",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -16720,45 +16189,16 @@
       "id": "BI4iwu3nApyIG0zY",
       "name": "Astral Labyrinth",
       "file": "spells/spells/rank-9/astral-labyrinth.json",
-      "kind": "save",
+      "kind": "spell-note",
       "lifecycle": "fixed",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "residual-prose",
-        "preamble:counteract",
-        "preamble:restriction"
-      ],
+      "pending": [],
       "conditions": [
         "stunned"
       ],
-      "family": "save-outcomes",
-      "evidence": "Requires spell/variant evidence; executable does not mean live verified"
-    },
-    {
-      "id": "L13n9NKvfGLApse1",
-      "name": "Calcification",
-      "file": "spells/spells/rank-9/calcification.json",
-      "kind": "save",
-      "lifecycle": "text",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
-      "liveEvidence": null,
-      "pending": [
-        "manual:secondary-save",
-        "manual:conditional-effect",
-        "residual-prose",
-        "preamble:conditional-eligibility",
-        "preamble:modifier",
-        "item-duration-grammar",
-        "target-eligibility"
-      ],
-      "conditions": [
-        "slowed",
-        "petrified"
-      ],
-      "family": "save-outcomes",
+      "family": "native-effects",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
     {
@@ -16779,18 +16219,13 @@
       "id": "T5Mt4jXFuh14uREv",
       "name": "Divinity Leech",
       "file": "spells/spells/rank-9/divinity-leech.json",
-      "kind": "save",
+      "kind": "incarnate",
       "lifecycle": "sustained",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "preamble:ongoing-trigger",
-        "preamble:additional-condition"
-      ],
-      "conditions": [
-        "stunned"
-      ],
+      "pending": [],
+      "conditions": [],
       "family": "sustained",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
@@ -16803,11 +16238,7 @@
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "affliction-handoff:lifecycle",
-        "residual-prose",
-        "preamble:ongoing-trigger"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "save-outcomes",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -16826,25 +16257,6 @@
       ],
       "conditions": [],
       "family": "native-effects",
-      "evidence": "Requires spell/variant evidence; executable does not mean live verified"
-    },
-    {
-      "id": "jrBa9deU2ULFWvSl",
-      "name": "Falling Stars",
-      "file": "spells/spells/rank-9/falling-stars.json",
-      "kind": "save",
-      "lifecycle": "instantaneous",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
-      "liveEvidence": null,
-      "pending": [
-        "description-effects",
-        "description-target-predicates",
-        "description-lifecycle",
-        "area-paragraph"
-      ],
-      "conditions": [],
-      "family": "save-outcomes",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
     {
@@ -16895,16 +16307,12 @@
       "id": "AsRd1gNRSkHDq2Jx",
       "name": "Magnetic Dominion",
       "file": "spells/spells/rank-9/magnetic-dominion.json",
-      "kind": "unsupported",
+      "kind": "save",
       "lifecycle": "sustained",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
       "liveEvidence": null,
-      "pending": [
-        "non-basic-save",
-        "description-semantics",
-        "target-eligibility"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "sustained",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -16915,15 +16323,26 @@
       "file": "spells/spells/rank-9/massacre.json",
       "kind": "save",
       "lifecycle": "instantaneous",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
+      "liveEvidence": null,
+      "pending": [],
+      "conditions": [],
+      "family": "save-outcomes",
+      "evidence": "Requires spell/variant evidence; executable does not mean live verified"
+    },
+    {
+      "id": "TbYqDhlNRiWHe146",
+      "name": "One with the Land",
+      "file": "spells/spells/rank-9/one-with-the-land.json",
+      "kind": "effect",
+      "lifecycle": "fixed",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "residual-prose",
-        "preamble:damage"
-      ],
+      "pending": [],
       "conditions": [],
-      "family": "save-outcomes",
+      "family": "native-effects",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
     {
@@ -16931,19 +16350,12 @@
       "name": "Overwhelming Presence",
       "file": "spells/spells/rank-9/overwhelming-presence.json",
       "kind": "save",
-      "lifecycle": "text",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
+      "lifecycle": "outcome",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
       "liveEvidence": null,
-      "pending": [
-        "manual:attitude-or-hostility",
-        "manual:conditional-effect",
-        "residual-prose",
-        "item-duration-grammar"
-      ],
-      "conditions": [
-        "fascinated"
-      ],
+      "pending": [],
+      "conditions": [],
       "family": "save-outcomes",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
@@ -16984,15 +16396,12 @@
       "id": "YDMOqndvYFu3OjA6",
       "name": "Qi Form",
       "file": "spells/spells/rank-9/qi-form.json",
-      "kind": "unsupported",
+      "kind": "effect",
       "lifecycle": "fixed",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "no-primary-save",
-        "description-semantics"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "native-effects",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -17002,17 +16411,11 @@
       "name": "Remake Physiology",
       "file": "spells/spells/rank-9/remake-physiology.json",
       "kind": "save",
-      "lifecycle": "text",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
+      "lifecycle": "outcome",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
       "liveEvidence": null,
-      "pending": [
-        "residual-prose",
-        "preamble:ongoing-trigger",
-        "preamble:modifier",
-        "preamble:additional-condition",
-        "item-duration-grammar"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "save-outcomes",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -17021,16 +16424,12 @@
       "id": "XYhU3Wi94n1RKxTa",
       "name": "Storm Lord",
       "file": "spells/spells/rank-9/storm-lord.json",
-      "kind": "save",
+      "kind": "incarnate",
       "lifecycle": "sustained",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "description-effects",
-        "description-target-predicates",
-        "description-lifecycle"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "sustained",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -17039,15 +16438,12 @@
       "id": "r4HLQcYwB62bTayl",
       "name": "Storm of Vengeance",
       "file": "spells/spells/rank-9/storm-of-vengeance.json",
-      "kind": "unsupported",
+      "kind": "incarnate",
       "lifecycle": "sustained",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "no-primary-save",
-        "description-semantics"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "sustained",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -17070,39 +16466,31 @@
       "id": "A7NXFVgENRVtYoe3",
       "name": "Trim the Blight",
       "file": "spells/spells/rank-9/trim-the-blight.json",
-      "kind": "save",
+      "kind": "spell-note",
       "lifecycle": "outcome",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
       "pending": [
-        "condition-duration-scope",
-        "residual-prose",
-        "preamble:terrain",
-        "preamble:gm-adjudication",
         "preamble:recipient-qualifier"
       ],
       "conditions": [
         "sickened",
         "slowed"
       ],
-      "family": "save-outcomes",
+      "family": "native-effects",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
     {
       "id": "axYqY70kYu2lN20R",
       "name": "Unbreaking Wave Containment",
       "file": "spells/spells/rank-9/unbreaking-wave-containment.json",
-      "kind": "save",
+      "kind": "incarnate",
       "lifecycle": "sustained",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "description-effects",
-        "description-target-predicates",
-        "description-lifecycle"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "sustained",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
@@ -17112,17 +16500,11 @@
       "name": "Undertaker",
       "file": "spells/spells/rank-9/undertaker.json",
       "kind": "save",
-      "lifecycle": "instantaneous",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
+      "lifecycle": "outcome",
+      "executableSave": true,
+      "runtimeRoute": "compiled-save",
       "liveEvidence": null,
-      "pending": [
-        "manual:terrain",
-        "manual:conditional-effect",
-        "residual-prose",
-        "preamble:modifier",
-        "preamble:degree-adjustment"
-      ],
+      "pending": [],
       "conditions": [
         "prone"
       ],
@@ -17138,17 +16520,12 @@
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "manual:temporary-immunity",
-        "residual-prose",
-        "sustain-effect",
-        "preamble:ongoing-trigger"
-      ],
+      "pending": [],
       "conditions": [
-        "frightened",
         "confused",
         "stupefied",
         "blinded",
+        "frightened",
         "stunned"
       ],
       "family": "sustained",
@@ -17201,24 +16578,6 @@
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"
     },
     {
-      "id": "sbhjhvWaqyXJKvpH",
-      "name": "Vampiric Revelry",
-      "file": "spells/spells/rank-9/vampiric-revelry.json",
-      "kind": "save",
-      "lifecycle": "instantaneous",
-      "executableSave": false,
-      "runtimeRoute": "not-executable-save",
-      "liveEvidence": null,
-      "pending": [
-        "description-effects",
-        "description-target-predicates",
-        "description-lifecycle"
-      ],
-      "conditions": [],
-      "family": "save-outcomes",
-      "evidence": "Requires spell/variant evidence; executable does not mean live verified"
-    },
-    {
       "id": "drmvQJETA3WZzXyw",
       "name": "Voracious Gestalt",
       "file": "spells/spells/rank-9/voracious-gestalt.json",
@@ -17268,17 +16627,12 @@
       "id": "yLJROsQtyrPIKcDx",
       "name": "Wrathful Storm",
       "file": "spells/spells/rank-9/wrathful-storm.json",
-      "kind": "unsupported",
+      "kind": "incarnate",
       "lifecycle": "sustained",
       "executableSave": false,
       "runtimeRoute": "not-executable-save",
       "liveEvidence": null,
-      "pending": [
-        "no-primary-save",
-        "description-semantics",
-        "native-spell-effect-scope",
-        "native-spell-effect-recipient"
-      ],
+      "pending": [],
       "conditions": [],
       "family": "sustained",
       "evidence": "Requires spell/variant evidence; executable does not mean live verified"

@@ -1,0 +1,31 @@
+{
+ "batch28": {
+  "label": "thirdPartyFeaturesBatch28",
+  "passed": true,
+  "at": "2026-10-08T00:25:51.216Z",
+  "details": {
+   "thirdPartyFeatures28": {
+    "draw": 2,
+    "leak": 0,
+    "channel": 1,
+    "redraw": 2,
+    "conduit": {
+     "temp": 7,
+     "armed": true,
+     "after": 3,
+     "leaks": 1
+    },
+    "reservoirMax": {
+     "rank": 1,
+     "value": 12,
+     "max": 12
+    },
+    "healed": {
+     "hp": 17,
+     "reservoir": 0
+    },
+    "refocus": 4
+   }
+  }
+ }
+}

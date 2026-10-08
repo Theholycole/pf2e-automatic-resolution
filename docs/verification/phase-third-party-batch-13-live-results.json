@@ -1,0 +1,27 @@
+{
+ "label": "thirdPartyBatch13",
+ "passed": true,
+ "at": "2026-10-07T00:25:53.162Z",
+ "details": {
+  "thirdParty13": {
+   "beguile": {
+    "fascinated": true,
+    "deafened": true,
+    "dazzled": false,
+    "note": true
+   },
+   "dream": {
+    "offGuard": true,
+    "stupefied": 1,
+    "frightened": 0,
+    "stupefiedAfter": 0
+   },
+   "nightmare": {
+    "frightened": 2,
+    "confused": true,
+    "floor": true,
+    "stupefied": 0
+   }
+  }
+ }
+}

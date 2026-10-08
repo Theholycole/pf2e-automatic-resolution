@@ -1,6 +1,6 @@
 # Phase 2: Outcome-specific Effects and conditions
 
-595 primary worklist entries; 1329 entries with this phase signal including cross-phase dependencies. Assignments are planning candidates, not verified semantic classifications.
+595 primary worklist entries; 1330 entries with this phase signal including cross-phase dependencies. Assignments are planning candidates, not verified semantic classifications.
 
 Descriptions are grouped first by rule family, then by normalized word/bigram similarity. Each cohort has at most 12 entries. Similarity is a discovery aid; check the full source and differing values/branches before sharing implementation or evidence.
 
@@ -9,13 +9,13 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | Rule family | Spells | Not enabled | Wording cohorts |
 | --- | --- | --- | --- |
 | Delegated affliction | 24 | 0 | 8 |
-| Basic-save damage | 58 | 3 | 32 |
-| Native condition | 162 | 10 | 70 |
+| Basic-save damage | 58 | 0 | 32 |
+| Native condition | 162 | 0 | 70 |
 | Save-result condition rider | 32 | 0 | 15 |
-| degree-outcome | 68 | 5 | 49 |
-| native-effect | 159 | 2 | 76 |
-| Persistent damage | 53 | 3 | 19 |
-| Temporary immunity | 39 | 1 | 12 |
+| degree-outcome | 68 | 0 | 49 |
+| native-effect | 159 | 0 | 76 |
+| Persistent damage | 53 | 0 | 19 |
+| Temporary immunity | 39 | 0 | 12 |
 
 
 ## P2-001 — Delegated affliction: Spider Sting
@@ -154,63 +154,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Take its Course](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/take-its-course.json) | 4 | Enabled route | 3 | 1.00 | will; non-basic/no save; duration outcome/text; target 1 creature |
 
 
-## P2-009 — Basic-save damage: Vampiric Exsanguination
-
-**12 spells; 1 not enabled.** Suggested source-reading anchor: Vampiric Exsanguination. This is not a verified-test designation.
-
-**Test contract:** All four multipliers; damage components/types; legal ranks; native IWR; persistent damage; extra mechanics remain gated.
-
-**Shared signals:** Basic-save damage
-
-**Anchor wording:** You deal 12d6 void damage to living creatures in the area with a basic Fortitude save..
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Vampiric Exsanguination](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/vampiric-exsanguination.json) | 6 | Enabled route | — | 1.00 | fortitude; basic; duration outcome/text; target source/area/text |
-| [Vampiric Revelry](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/vampiric-revelry.json) | 9 | Not enabled | — | 0.78 | fortitude; basic; duration outcome/text; target source/area/text |
-| [Breathe Fire](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/breathe-fire.json) | 1 | Enabled route | — | 0.62 | reflex; basic; duration outcome/text; target source/area/text |
-| [All-Encompassing Hunger](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/all-encompassing-hunger.json) | 1 | Enabled route | — | 0.49 | fortitude; basic; duration outcome/text; target 1 living creature |
-| [Shatter Mind](../../.cache/pf2e-test-fixtures/spells/spells/cantrip/shatter-mind.json) | 3 | Enabled route | — | 0.48 | will; basic; duration outcome/text; target source/area/text |
-| [Life-Draining Roots](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/life-draining-roots.json) | 4 | Enabled route | — | 0.38 | reflex; basic; duration outcome/text; target source/area/text |
-| [Telekinetic Rend](../../.cache/pf2e-test-fixtures/spells/spells/cantrip/telekinetic-rend.json) | 1 | Enabled route | — | 0.38 | fortitude; basic; duration outcome/text; target 2 non-overlapping 5-foot bursts |
-| [Drain Life](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/drain-life.json) | 3 | Enabled route | — | 0.35 | fortitude; basic; duration outcome/text; target 1 living creature |
-| [Pulverizing Cascade](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/pulverizing-cascade.json) | 3 | Enabled route | — | 0.35 | reflex; basic; duration outcome/text; target source/area/text |
-| [Necrotic Bomb](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/necrotic-bomb.json) | 1 | Enabled route | — | 0.28 | fortitude; basic; duration outcome/text; target 1 of your thralls |
-| [Force Rain](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/force-rain.json) | 4 | Enabled route | — | 0.26 | reflex; basic; duration outcome/text; target source/area/text |
-| [Chain Lightning](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/chain-lightning.json) | 6 | Enabled route | — | 0.23 | reflex; basic; duration outcome/text; target 1 creature, plus any number of additional creatures |
-
-
-## P2-010 — Basic-save damage: Cataclysm
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Cataclysm. This is not a verified-test designation.
-
-**Test contract:** All four multipliers; damage components/types; legal ranks; native IWR; persistent damage; extra mechanics remain gated.
-
-**Shared signals:** Basic-save damage
-
-**Anchor wording:** Each creature attempts one basic Reflex save that applies to all five types of damage..
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Cataclysm](../../.cache/pf2e-test-fixtures/spells/spells/rank-10/cataclysm.json) | 10 | Not enabled | — | 1.00 | reflex; basic; duration outcome/text; target source/area/text |
-
-
-## P2-011 — Basic-save damage: Metallic Meteorite Glyph
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Metallic Meteorite Glyph. This is not a verified-test designation.
-
-**Test contract:** All four multipliers; damage components/types; legal ranks; native IWR; persistent damage; extra mechanics remain gated.
-
-**Shared signals:** Turn trigger or boundary, Basic-save damage
-
-**Anchor wording:** The meteor collides with the target, dealing 8d12[bludgeoning] damage with a basic Reflex save.
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Metallic Meteorite Glyph](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/metallic-meteorite-glyph.json) | 8 | Not enabled | 3 | 1.00 | reflex; basic; duration outcome/text; target 1 creature |
-
-
-## P2-012 — Basic-save damage: Electric Arc
+## P2-009 — Basic-save damage: Electric Arc
 
 **12 spells; 0 not enabled.** Suggested source-reading anchor: Electric Arc. This is not a verified-test designation.
 
@@ -236,7 +180,33 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Whirling Flames](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/whirling-flames.json) | 3 | Enabled route | — | 0.16 | reflex; basic; duration outcome/text; target source/area/text |
 
 
-## P2-013 — Basic-save damage: Cone of Cold
+## P2-010 — Basic-save damage: Vampiric Exsanguination
+
+**12 spells; 0 not enabled.** Suggested source-reading anchor: Vampiric Exsanguination. This is not a verified-test designation.
+
+**Test contract:** All four multipliers; damage components/types; legal ranks; native IWR; persistent damage; extra mechanics remain gated.
+
+**Shared signals:** Basic-save damage
+
+**Anchor wording:** You deal 12d6 void damage to living creatures in the area with a basic Fortitude save..
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Vampiric Exsanguination](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/vampiric-exsanguination.json) | 6 | Enabled route | — | 1.00 | fortitude; basic; duration outcome/text; target source/area/text |
+| [Vampiric Revelry](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/vampiric-revelry.json) | 9 | Enabled route | — | 0.78 | fortitude; basic; duration outcome/text; target source/area/text |
+| [Breathe Fire](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/breathe-fire.json) | 1 | Enabled route | — | 0.62 | reflex; basic; duration outcome/text; target source/area/text |
+| [All-Encompassing Hunger](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/all-encompassing-hunger.json) | 1 | Enabled route | — | 0.49 | fortitude; basic; duration outcome/text; target 1 living creature |
+| [Shatter Mind](../../.cache/pf2e-test-fixtures/spells/spells/cantrip/shatter-mind.json) | 3 | Enabled route | — | 0.48 | will; basic; duration outcome/text; target source/area/text |
+| [Life-Draining Roots](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/life-draining-roots.json) | 4 | Enabled route | — | 0.38 | reflex; basic; duration outcome/text; target source/area/text |
+| [Telekinetic Rend](../../.cache/pf2e-test-fixtures/spells/spells/cantrip/telekinetic-rend.json) | 1 | Enabled route | — | 0.38 | fortitude; basic; duration outcome/text; target 2 non-overlapping 5-foot bursts |
+| [Drain Life](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/drain-life.json) | 3 | Enabled route | — | 0.35 | fortitude; basic; duration outcome/text; target 1 living creature |
+| [Pulverizing Cascade](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/pulverizing-cascade.json) | 3 | Enabled route | — | 0.35 | reflex; basic; duration outcome/text; target source/area/text |
+| [Necrotic Bomb](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/necrotic-bomb.json) | 1 | Enabled route | — | 0.28 | fortitude; basic; duration outcome/text; target 1 of your thralls |
+| [Force Rain](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/force-rain.json) | 4 | Enabled route | — | 0.26 | reflex; basic; duration outcome/text; target source/area/text |
+| [Chain Lightning](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/chain-lightning.json) | 6 | Enabled route | — | 0.23 | reflex; basic; duration outcome/text; target 1 creature, plus any number of additional creatures |
+
+
+## P2-011 — Basic-save damage: Cone of Cold
 
 **3 spells; 0 not enabled.** Suggested source-reading anchor: Cone of Cold. This is not a verified-test designation.
 
@@ -253,7 +223,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Holy Cascade](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/holy-cascade.json) | 4 | Enabled route | — | 0.18 | reflex; basic; duration outcome/text; target source/area/text |
 
 
-## P2-014 — Basic-save damage: Fireball
+## P2-012 — Basic-save damage: Fireball
 
 **3 spells; 0 not enabled.** Suggested source-reading anchor: Fireball. This is not a verified-test designation.
 
@@ -270,7 +240,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Eradicate Undeath](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/eradicate-undeath.json) | 4 | Enabled route | — | 0.15 | fortitude; basic; duration outcome/text; target source/area/text |
 
 
-## P2-015 — Basic-save damage: Acidic Burst
+## P2-013 — Basic-save damage: Acidic Burst
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Acidic Burst. This is not a verified-test designation.
 
@@ -285,7 +255,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Acidic Burst](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/acidic-burst.json) | 1 | Enabled route | — | 1.00 | reflex; basic; duration outcome/text; target source/area/text |
 
 
-## P2-016 — Basic-save damage: Animal Allies
+## P2-014 — Basic-save damage: Animal Allies
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Animal Allies. This is not a verified-test designation.
 
@@ -300,7 +270,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Animal Allies](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/animal-allies.json) | 1 | Enabled route | — | 1.00 | reflex; basic; duration outcome/text; target source/area/text |
 
 
-## P2-017 — Basic-save damage: Bony Barrage
+## P2-015 — Basic-save damage: Bony Barrage
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Bony Barrage. This is not a verified-test designation.
 
@@ -315,7 +285,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Bony Barrage](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/bony-barrage.json) | 2 | Enabled route | 3 | 1.00 | reflex; basic; duration outcome/text; target 1 of your thralls |
 
 
-## P2-018 — Basic-save damage: Brain Drain
+## P2-016 — Basic-save damage: Brain Drain
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Brain Drain. This is not a verified-test designation.
 
@@ -330,7 +300,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Brain Drain](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/brain-drain.json) | 1 | Enabled route | 4 | 1.00 | will; basic; duration outcome/text; target 1 creature |
 
 
-## P2-019 — Basic-save damage: Call the Ten
+## P2-017 — Basic-save damage: Call the Ten
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Call the Ten. This is not a verified-test designation.
 
@@ -345,7 +315,22 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Call the Ten](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/call-the-ten.json) | 4 | Enabled route | 3 | 1.00 | fortitude; basic; duration outcome/text; target up to 10 creatures, including yourself |
 
 
-## P2-020 — Basic-save damage: Chthonian Wrath
+## P2-018 — Basic-save damage: Cataclysm
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Cataclysm. This is not a verified-test designation.
+
+**Test contract:** All four multipliers; damage components/types; legal ranks; native IWR; persistent damage; extra mechanics remain gated.
+
+**Shared signals:** Basic-save damage
+
+**Anchor wording:** Each creature attempts one basic Reflex save that applies to all five types of damage..
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Cataclysm](../../.cache/pf2e-test-fixtures/spells/spells/rank-10/cataclysm.json) | 10 | Enabled route | — | 1.00 | reflex; basic; duration outcome/text; target source/area/text |
+
+
+## P2-019 — Basic-save damage: Chthonian Wrath
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Chthonian Wrath. This is not a verified-test designation.
 
@@ -360,7 +345,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Chthonian Wrath](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/chthonian-wrath.json) | 5 | Enabled route | — | 1.00 | reflex; basic; duration outcome/text; target source/area/text |
 
 
-## P2-021 — Basic-save damage: Cry of Destruction
+## P2-020 — Basic-save damage: Cry of Destruction
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Cry of Destruction. This is not a verified-test designation.
 
@@ -375,7 +360,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Cry of Destruction](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/cry-of-destruction.json) | 1 | Enabled route | — | 1.00 | fortitude; basic; duration outcome/text; target source/area/text |
 
 
-## P2-022 — Basic-save damage: Desiccate
+## P2-021 — Basic-save damage: Desiccate
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Desiccate. This is not a verified-test designation.
 
@@ -390,7 +375,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Desiccate](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/desiccate.json) | 8 | Enabled route | — | 1.00 | fortitude; basic; duration outcome/text; target any number of living creatures |
 
 
-## P2-023 — Basic-save damage: Eidolon's Wrath
+## P2-022 — Basic-save damage: Eidolon's Wrath
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Eidolon's Wrath. This is not a verified-test designation.
 
@@ -405,7 +390,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Eidolon's Wrath](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/eidolons-wrath.json) | 3 | Enabled route | — | 1.00 | reflex; basic; duration outcome/text; target source/area/text |
 
 
-## P2-024 — Basic-save damage: Elemental Blast
+## P2-023 — Basic-save damage: Elemental Blast
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Elemental Blast. This is not a verified-test designation.
 
@@ -420,7 +405,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Elemental Blast](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/elemental-blast.json) | 5 | Enabled route | — | 1.00 | reflex; basic; duration outcome/text; target source/area/text |
 
 
-## P2-025 — Basic-save damage: Final Sacrifice
+## P2-024 — Basic-save damage: Final Sacrifice
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Final Sacrifice. This is not a verified-test designation.
 
@@ -435,7 +420,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Final Sacrifice](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/final-sacrifice.json) | 2 | Enabled route | — | 1.00 | reflex; basic; duration outcome/text; target 1 creature with the minion trait that you summoned or permanently control |
 
 
-## P2-026 — Basic-save damage: Flame Strike
+## P2-025 — Basic-save damage: Flame Strike
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Flame Strike. This is not a verified-test designation.
 
@@ -450,7 +435,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Flame Strike](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/flame-strike.json) | 5 | Enabled route | — | 1.00 | reflex; basic; duration outcome/text; target source/area/text |
 
 
-## P2-027 — Basic-save damage: Frigid Flurry
+## P2-026 — Basic-save damage: Frigid Flurry
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Frigid Flurry. This is not a verified-test designation.
 
@@ -465,7 +450,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Frigid Flurry](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/frigid-flurry.json) | 7 | Enabled route | — | 1.00 | reflex; basic; duration outcome/text; target source/area/text |
 
 
-## P2-028 — Basic-save damage: Hallowed Ground
+## P2-027 — Basic-save damage: Hallowed Ground
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Hallowed Ground. This is not a verified-test designation.
 
@@ -480,7 +465,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Hallowed Ground](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/hallowed-ground.json) | 1 | Enabled route | 3, 4 | 1.00 | fortitude; basic; duration 1 minute; target source/area/text |
 
 
-## P2-029 — Basic-save damage: Ibex's Harvest
+## P2-028 — Basic-save damage: Ibex's Harvest
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Ibex's Harvest. This is not a verified-test designation.
 
@@ -495,7 +480,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Ibex's Harvest](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/ibexs-harvest.json) | 3 | Enabled route | 4 | 1.00 | will; basic; duration outcome/text; target 1 or more creature |
 
 
-## P2-030 — Basic-save damage: Inevitable Disaster
+## P2-029 — Basic-save damage: Inevitable Disaster
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Inevitable Disaster. This is not a verified-test designation.
 
@@ -510,7 +495,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Inevitable Disaster](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/inevitable-disaster.json) | 5 | Enabled route | — | 1.00 | fortitude; basic; duration outcome/text; target 1 creature |
 
 
-## P2-031 — Basic-save damage: Invoke the Crimson Oath
+## P2-030 — Basic-save damage: Invoke the Crimson Oath
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Invoke the Crimson Oath. This is not a verified-test designation.
 
@@ -525,7 +510,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Invoke the Crimson Oath](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/invoke-the-crimson-oath.json) | 2 | Enabled route | — | 1.00 | fortitude; basic; duration outcome/text; target source/area/text |
 
 
-## P2-032 — Basic-save damage: Lament
+## P2-031 — Basic-save damage: Lament
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Lament. This is not a verified-test designation.
 
@@ -538,6 +523,21 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
 | --- | --- | --- | --- | --- | --- |
 | [Lament](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/lament.json) | 1 | Enabled route | 4 | 1.00 | will; basic; duration outcome/text; target 1 or more creatures |
+
+
+## P2-032 — Basic-save damage: Metallic Meteorite Glyph
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Metallic Meteorite Glyph. This is not a verified-test designation.
+
+**Test contract:** All four multipliers; damage components/types; legal ranks; native IWR; persistent damage; extra mechanics remain gated.
+
+**Shared signals:** Turn trigger or boundary, Basic-save damage
+
+**Anchor wording:** The meteor collides with the target, dealing 8d12[bludgeoning] damage with a basic Reflex save.
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Metallic Meteorite Glyph](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/metallic-meteorite-glyph.json) | 8 | Enabled route | 3 | 1.00 | reflex; basic; duration outcome/text; target 1 creature |
 
 
 ## P2-033 — Basic-save damage: Powerful Inhalation
@@ -660,183 +660,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Vampiric Feast](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/vampiric-feast.json) | 3 | Enabled route | — | 1.00 | fortitude; basic; duration outcome/text; target 1 living creature |
 
 
-## P2-041 — Native condition: Magical Fetters
-
-**12 spells; 1 not enabled.** Suggested source-reading anchor: Magical Fetters. This is not a verified-test designation.
-
-**Test contract:** All degrees; value and duration; overlap; native immunity; per-cast ownership; correction/recovery; selective cleanup.
-
-**Shared signals:** Native condition
-
-**Anchor wording:** Success The target is Clumsy 1 and takes a –10-foot status penalty to its Speed for 1 round..
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Magical Fetters](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/magical-fetters.json) | 3 | Enabled route | 3 | 1.00 | reflex; non-basic/no save; duration outcome/text; target 1 creature |
-| [Envenom Companion](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/envenom-companion.json) | 3 | Enabled route | 3 | 0.26 | fortitude; non-basic/no save; duration 1 minute; target your companion or eidolon |
-| [Albatross Curse](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/albatross-curse.json) | 2 | Enabled route | 3 | 0.26 | will; non-basic/no save; duration 1 minute (see text); target 1 creature |
-| [Synesthesia](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/synesthesia.json) | 5 | Enabled route | 3 | 0.22 | will; non-basic/no save; duration varies; target 1 creature |
-| [Vision of Beauty](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/vision-of-beauty.json) | 4 | Enabled route | 3 | 0.22 | will; non-basic/no save; duration varies; target 1 creature |
-| [Chroma Leach](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/chroma-leach.json) | 4 | Enabled route | 3 | 0.21 | fortitude; non-basic/no save; duration outcome/text; target 1 living creature |
-| [Heinous Future](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/heinous-future.json) | 6 | Enabled route | 3 | 0.20 | will; non-basic/no save; duration outcome/text; target 1 creature |
-| [Debilitating Terror](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/debilitating-terror.json) | 1 | Enabled route | 3 | 0.19 | will; non-basic/no save; duration until the start of your next turn; target 1 creature |
-| [Charming Push](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/charming-push.json) | 1 | Enabled route | 3 | 0.19 | will; non-basic/no save; duration until the start of your next turn; target 1 creature |
-| [Mercurial Stride](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/mercurial-stride.json) | 4 | Enabled route | — | 0.18 | fortitude; non-basic/no save; duration outcome/text; target source/area/text |
-| [Remake Physiology](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/remake-physiology.json) | 9 | Not enabled | 3 | 0.17 | fortitude; non-basic/no save; duration varies; target 1 living creature |
-| [Ghoulish Cravings](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/ghoulish-cravings.json) | 2 | Enabled route | 3 | 0.16 | will; non-basic/no save; duration varies; target 1 creature |
-
-
-## P2-042 — Native condition: Stormburst
-
-**12 spells; 1 not enabled.** Suggested source-reading anchor: Stormburst. This is not a verified-test designation.
-
-**Test contract:** All degrees; value and duration; overlap; native immunity; per-cast ownership; correction/recovery; selective cleanup.
-
-**Shared signals:** Save-result condition rider, Native condition
-
-**Anchor wording:** Failure The creature takes full damage and is knocked Prone..
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Stormburst](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/stormburst.json) | 5 | Enabled route | 3 | 1.00 | reflex; non-basic/no save; duration outcome/text; target source/area/text |
-| [Unraveling Blast](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/unraveling-blast.json) | 1 | Enabled route | 3 | 0.42 | will; non-basic/no save; duration outcome/text; target 1 creature |
-| [Arctic Rift](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/arctic-rift.json) | 8 | Enabled route | 3 | 0.40 | fortitude; non-basic/no save; duration outcome/text; target source/area/text |
-| [Chastising Retort](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/chastising-retort.json) | 1 | Enabled route | 3 | 0.37 | will; non-basic/no save; duration outcome/text; target the triggering creature |
-| [Blazing Fissure](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/blazing-fissure.json) | 5 | Enabled route | 3 | 0.36 | reflex; non-basic/no save; duration outcome/text; target source/area/text |
-| [Falling Sky](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/falling-sky.json) | 8 | Not enabled | 3 | 0.30 | fortitude; non-basic/no save; duration outcome/text; target source/area/text |
-| [Gravity Wave](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/gravity-wave.json) | 3 | Enabled route | 3 | 0.28 | fortitude; non-basic/no save; duration outcome/text; target source/area/text |
-| [Bandit's Doom](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/bandits-doom.json) | 5 | Enabled route | 3 | 0.24 | will; non-basic/no save; duration 1 month; target 1 item of 2 Bulk or less |
-| [Crisis of Faith](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/crisis-of-faith.json) | 3 | Enabled route | 3 | 0.22 | will; non-basic/no save; duration outcome/text; target 1 creature |
-| [Phantasmagoria](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/phantasmagoria.json) | 9 | Enabled route | 3, 4 | 0.21 | will; non-basic/no save; duration outcome/text; target any number of creatures |
-| [Slime Spit](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/slime-spit.json) | 1 | Enabled route | 3 | 0.21 | reflex; non-basic/no save; duration outcome/text; target 1 creature |
-| [Unsettling Perspective](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/unsettling-perspective.json) | 4 | Enabled route | 4 | 0.21 | will; non-basic/no save; duration outcome/text; target 1 creature |
-
-
-## P2-043 — Native condition: You're Mine
-
-**3 spells; 1 not enabled.** Suggested source-reading anchor: You're Mine. This is not a verified-test designation.
-
-**Test contract:** All degrees; value and duration; overlap; native immunity; per-cast ownership; correction/recovery; selective cleanup.
-
-**Shared signals:** Turn trigger or boundary, Save-result condition rider, Native condition
-
-**Anchor wording:** Success The target is Stunned 1..
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [You're Mine](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/youre-mine.json) | 5 | Enabled route | 3 | 1.00 | will; non-basic/no save; duration 1 round; target 1 creature |
-| [Dominate](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/dominate.json) | 6 | Enabled route | 3 | 0.28 | will; non-basic/no save; duration until the next time you make your daily preparations; target 1 creature |
-| [Temporary Possession](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/temporary-possession.json) | 8 | Not enabled | 3, 4 | 0.18 | will; non-basic/no save; duration outcome/text; target 1 of your thralls |
-
-
-## P2-044 — Native condition: Creative Splash
-
-**2 spells; 1 not enabled.** Suggested source-reading anchor: Creative Splash. This is not a verified-test designation.
-
-**Test contract:** All degrees; value and duration; overlap; native immunity; per-cast ownership; correction/recovery; selective cleanup.
-
-**Shared signals:** Save-result condition rider, Native condition
-
-**Anchor wording:** 1d4 Color Failure Critical Failure 1 White Dazzled for 1 round Dazzled for 1 minute 2 Red Enfeebled 1 for 1 round Enfeebled 2 for 1 round 3 Yellow Frightened 1 Frightened 2 4 Blue Clumsy 1 for 1 round Clumsy 2 for 1 round
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Creative Splash](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/creative-splash.json) | 1 | Enabled route | 3 | 1.00 | will; non-basic/no save; duration varies; target source/area/text |
-| [Prismatic Spray](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/prismatic-spray.json) | 7 | Not enabled | — | 0.20 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
-
-
-## P2-045 — Native condition: Vampiric Maiden
-
-**2 spells; 1 not enabled.** Suggested source-reading anchor: Vampiric Maiden. This is not a verified-test designation.
-
-**Test contract:** All degrees; value and duration; overlap; native immunity; per-cast ownership; correction/recovery; selective cleanup.
-
-**Shared signals:** Native condition
-
-**Anchor wording:** The target takes full damage and is Immobilized by the iron maiden for 1 round or until it uses an Interact action to extricate itself, whichever comes first..
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Vampiric Maiden](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/vampiric-maiden.json) | 4 | Enabled route | 3 | 1.00 | fortitude; non-basic/no save; duration outcome/text; target 1 creature |
-| [Flesh Tsunami](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/flesh-tsunami.json) | 8 | Not enabled | 3 | 0.29 | fortitude; non-basic/no save; duration 1 minute; target 1 of your thralls |
-
-
-## P2-046 — Native condition: Astral Labyrinth
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Astral Labyrinth. This is not a verified-test designation.
-
-**Test contract:** All degrees; value and duration; overlap; native immunity; per-cast ownership; correction/recovery; selective cleanup.
-
-**Shared signals:** Save-result condition rider, Native condition, Counteract, Choice / casting variant, Incarnate arrival/departure
-
-**Anchor wording:** Success The creature is Stunned 1..
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Astral Labyrinth](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/astral-labyrinth.json) | 9 | Not enabled | 3, 4 | 1.00 | will; non-basic/no save; duration 1 day; target source/area/text |
-
-
-## P2-047 — Native condition: Dread Secret
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Dread Secret. This is not a verified-test designation.
-
-**Test contract:** All degrees; value and duration; overlap; native immunity; per-cast ownership; correction/recovery; selective cleanup.
-
-**Shared signals:** Turn trigger or boundary, Save-result condition rider, Native condition, Choice / casting variant, Information / adjudication, Modifier / resistance
-
-**Anchor wording:** Failure As success, and the creature becomes Frightened 1 from the revelation of its dread secret..
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Dread Secret](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/dread-secret.json) | 6 | Not enabled | 3, 4 | 1.00 | will; non-basic/no save; duration until the end of your next turn; target up to 6 creatures |
-
-
-## P2-048 — Native condition: Nature's Enmity
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Nature's Enmity. This is not a verified-test designation.
-
-**Test contract:** All degrees; value and duration; overlap; native immunity; per-cast ownership; correction/recovery; selective cleanup.
-
-**Shared signals:** Turn trigger or boundary, Basic-save damage, Native condition, Modifier / resistance
-
-**Anchor wording:** The target attempts a basic Reflex save and is Off-Guard for 1 round on any outcome other than a critical success..
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Nature's Enmity](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/natures-enmity.json) | 9 | Not enabled | 3 | 1.00 | reflex; non-basic/no save; duration 10 minutes; target up to 5 creatures |
-
-
-## P2-049 — Native condition: Raise Dead
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Raise Dead. This is not a verified-test designation.
-
-**Test contract:** All degrees; value and duration; overlap; native immunity; per-cast ownership; correction/recovery; selective cleanup.
-
-**Shared signals:** Native condition
-
-**Anchor wording:** The time spent in the Boneyard leaves the target temporarily debilitated, making it Clumsy 2, Drained 2, and Enfeebled 2 for 1 week; these conditions can't be removed or reduced by any means until the week has passed.
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Raise Dead](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/raise-dead.json) | 6 | Not enabled | — | 1.00 | no primary save; non-basic/no save; duration outcome/text; target 1 dead creature of 13th level or lower |
-
-
-## P2-050 — Native condition: Temporal Ward
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Temporal Ward. This is not a verified-test designation.
-
-**Test contract:** All degrees; value and duration; overlap; native immunity; per-cast ownership; correction/recovery; selective cleanup.
-
-**Shared signals:** Turn trigger or boundary, Save-result condition rider, Native condition
-
-**Anchor wording:** Critical Failure As failure, but the temporal displacement also causes the creature to lose their bearings, making them Confused for 1 minute..
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Temporal Ward](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/temporal-ward.json) | 6 | Not enabled | 3 | 1.00 | will; non-basic/no save; duration 10 minutes; target 1 container or doorway |
-
-
-## P2-051 — Native condition: Attacked from Within
+## P2-041 — Native condition: Attacked from Within
 
 **12 spells; 0 not enabled.** Suggested source-reading anchor: Attacked from Within. This is not a verified-test designation.
 
@@ -862,7 +686,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Spiritual Epidemic](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/spiritual-epidemic.json) | 8 | Enabled route | 3 | 0.42 | will; non-basic/no save; duration varies; target 1 creature |
 
 
-## P2-052 — Native condition: Dizzying Colors
+## P2-042 — Native condition: Dizzying Colors
 
 **12 spells; 0 not enabled.** Suggested source-reading anchor: Dizzying Colors. This is not a verified-test designation.
 
@@ -888,7 +712,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Roar of the Dragon](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/roar-of-the-dragon.json) | 4 | Enabled route | 3 | 0.27 | will; non-basic/no save; duration varies; target source/area/text |
 
 
-## P2-053 — Native condition: Gritty Wheeze
+## P2-043 — Native condition: Gritty Wheeze
 
 **12 spells; 0 not enabled.** Suggested source-reading anchor: Gritty Wheeze. This is not a verified-test designation.
 
@@ -914,7 +738,33 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Mantis's Grasp](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/mantiss-grasp.json) | 4 | Enabled route | 3 | 0.61 | reflex; non-basic/no save; duration outcome/text; target 1 creature |
 
 
-## P2-054 — Native condition: Shockwave
+## P2-044 — Native condition: Magical Fetters
+
+**12 spells; 0 not enabled.** Suggested source-reading anchor: Magical Fetters. This is not a verified-test designation.
+
+**Test contract:** All degrees; value and duration; overlap; native immunity; per-cast ownership; correction/recovery; selective cleanup.
+
+**Shared signals:** Native condition
+
+**Anchor wording:** Success The target is Clumsy 1 and takes a –10-foot status penalty to its Speed for 1 round..
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Magical Fetters](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/magical-fetters.json) | 3 | Enabled route | 3 | 1.00 | reflex; non-basic/no save; duration outcome/text; target 1 creature |
+| [Envenom Companion](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/envenom-companion.json) | 3 | Enabled route | 3 | 0.26 | fortitude; non-basic/no save; duration 1 minute; target your companion or eidolon |
+| [Albatross Curse](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/albatross-curse.json) | 2 | Enabled route | 3 | 0.26 | will; non-basic/no save; duration 1 minute (see text); target 1 creature |
+| [Synesthesia](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/synesthesia.json) | 5 | Enabled route | 3 | 0.22 | will; non-basic/no save; duration varies; target 1 creature |
+| [Vision of Beauty](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/vision-of-beauty.json) | 4 | Enabled route | 3 | 0.22 | will; non-basic/no save; duration varies; target 1 creature |
+| [Chroma Leach](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/chroma-leach.json) | 4 | Enabled route | 3 | 0.21 | fortitude; non-basic/no save; duration outcome/text; target 1 living creature |
+| [Heinous Future](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/heinous-future.json) | 6 | Enabled route | 3 | 0.20 | will; non-basic/no save; duration outcome/text; target 1 creature |
+| [Debilitating Terror](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/debilitating-terror.json) | 1 | Enabled route | 3 | 0.19 | will; non-basic/no save; duration until the start of your next turn; target 1 creature |
+| [Charming Push](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/charming-push.json) | 1 | Enabled route | 3 | 0.19 | will; non-basic/no save; duration until the start of your next turn; target 1 creature |
+| [Mercurial Stride](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/mercurial-stride.json) | 4 | Enabled route | — | 0.18 | fortitude; non-basic/no save; duration outcome/text; target source/area/text |
+| [Remake Physiology](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/remake-physiology.json) | 9 | Enabled route | 3 | 0.17 | fortitude; non-basic/no save; duration varies; target 1 living creature |
+| [Ghoulish Cravings](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/ghoulish-cravings.json) | 2 | Enabled route | 3 | 0.16 | will; non-basic/no save; duration varies; target 1 creature |
+
+
+## P2-045 — Native condition: Shockwave
 
 **12 spells; 0 not enabled.** Suggested source-reading anchor: Shockwave. This is not a verified-test designation.
 
@@ -940,7 +790,33 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Equal Footing](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/equal-footing.json) | 1 | Enabled route | 3 | 0.16 | will; non-basic/no save; duration varies; target 1 creature with a land Speed greater than yours |
 
 
-## P2-055 — Native condition: Quicken Time
+## P2-046 — Native condition: Stormburst
+
+**12 spells; 0 not enabled.** Suggested source-reading anchor: Stormburst. This is not a verified-test designation.
+
+**Test contract:** All degrees; value and duration; overlap; native immunity; per-cast ownership; correction/recovery; selective cleanup.
+
+**Shared signals:** Save-result condition rider, Native condition
+
+**Anchor wording:** Failure The creature takes full damage and is knocked Prone..
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Stormburst](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/stormburst.json) | 5 | Enabled route | 3 | 1.00 | reflex; non-basic/no save; duration outcome/text; target source/area/text |
+| [Unraveling Blast](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/unraveling-blast.json) | 1 | Enabled route | 3 | 0.42 | will; non-basic/no save; duration outcome/text; target 1 creature |
+| [Arctic Rift](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/arctic-rift.json) | 8 | Enabled route | 3 | 0.40 | fortitude; non-basic/no save; duration outcome/text; target source/area/text |
+| [Chastising Retort](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/chastising-retort.json) | 1 | Enabled route | 3 | 0.37 | will; non-basic/no save; duration outcome/text; target the triggering creature |
+| [Blazing Fissure](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/blazing-fissure.json) | 5 | Enabled route | 3 | 0.36 | reflex; non-basic/no save; duration outcome/text; target source/area/text |
+| [Falling Sky](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/falling-sky.json) | 8 | Enabled route | 3 | 0.30 | fortitude; non-basic/no save; duration outcome/text; target source/area/text |
+| [Gravity Wave](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/gravity-wave.json) | 3 | Enabled route | 3 | 0.28 | fortitude; non-basic/no save; duration outcome/text; target source/area/text |
+| [Bandit's Doom](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/bandits-doom.json) | 5 | Enabled route | 3 | 0.24 | will; non-basic/no save; duration 1 month; target 1 item of 2 Bulk or less |
+| [Crisis of Faith](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/crisis-of-faith.json) | 3 | Enabled route | 3 | 0.22 | will; non-basic/no save; duration outcome/text; target 1 creature |
+| [Phantasmagoria](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/phantasmagoria.json) | 9 | Enabled route | 3, 4 | 0.21 | will; non-basic/no save; duration outcome/text; target any number of creatures |
+| [Slime Spit](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/slime-spit.json) | 1 | Enabled route | 3 | 0.21 | reflex; non-basic/no save; duration outcome/text; target 1 creature |
+| [Unsettling Perspective](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/unsettling-perspective.json) | 4 | Enabled route | 4 | 0.21 | will; non-basic/no save; duration outcome/text; target 1 creature |
+
+
+## P2-047 — Native condition: Quicken Time
 
 **6 spells; 0 not enabled.** Suggested source-reading anchor: Quicken Time. This is not a verified-test designation.
 
@@ -960,7 +836,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Allegro](../../.cache/pf2e-test-fixtures/spells/spells/cantrip/allegro.json) | 7 | Enabled route | 3 | 0.21 | no primary save; non-basic/no save; duration 1 round; target 1 ally |
 
 
-## P2-056 — Native condition: Command
+## P2-048 — Native condition: Command
 
 **3 spells; 0 not enabled.** Suggested source-reading anchor: Command. This is not a verified-test designation.
 
@@ -977,7 +853,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Sleep](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/sleep.json) | 1 | Enabled route | 3 | 0.16 | will; non-basic/no save; duration outcome/text; target source/area/text |
 
 
-## P2-057 — Native condition: Guided Introspection
+## P2-049 — Native condition: Guided Introspection
 
 **3 spells; 0 not enabled.** Suggested source-reading anchor: Guided Introspection. This is not a verified-test designation.
 
@@ -994,7 +870,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Strength of Mind](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/strength-of-mind.json) | 3 | Partial Effect | 3 | 0.17 | no primary save; non-basic/no save; duration 10 minutes; target 1 willing creature |
 
 
-## P2-058 — Native condition: Sunburst
+## P2-050 — Native condition: Sunburst
 
 **3 spells; 0 not enabled.** Suggested source-reading anchor: Sunburst. This is not a verified-test designation.
 
@@ -1011,7 +887,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Eclipse Burst](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/eclipse-burst.json) | 7 | Enabled route | 3, 4 | 0.52 | reflex; non-basic/no save; duration outcome/text; target source/area/text |
 
 
-## P2-059 — Native condition: Sure Footing
+## P2-051 — Native condition: Sure Footing
 
 **3 spells; 0 not enabled.** Suggested source-reading anchor: Sure Footing. This is not a verified-test designation.
 
@@ -1028,7 +904,24 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Symphony of the Unfettered Heart](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/symphony-of-the-unfettered-heart.json) | 5 | Enabled route | 4 | 0.18 | no primary save; non-basic/no save; duration outcome/text; target you or 1 ally |
 
 
-## P2-060 — Native condition: Coral Scourge
+## P2-052 — Native condition: You're Mine
+
+**3 spells; 0 not enabled.** Suggested source-reading anchor: You're Mine. This is not a verified-test designation.
+
+**Test contract:** All degrees; value and duration; overlap; native immunity; per-cast ownership; correction/recovery; selective cleanup.
+
+**Shared signals:** Turn trigger or boundary, Save-result condition rider, Native condition
+
+**Anchor wording:** Success The target is Stunned 1..
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [You're Mine](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/youre-mine.json) | 5 | Enabled route | 3 | 1.00 | will; non-basic/no save; duration 1 round; target 1 creature |
+| [Dominate](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/dominate.json) | 6 | Enabled route | 3 | 0.28 | will; non-basic/no save; duration until the next time you make your daily preparations; target 1 creature |
+| [Temporary Possession](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/temporary-possession.json) | 8 | Enabled route | 3, 4 | 0.18 | will; non-basic/no save; duration outcome/text; target 1 of your thralls |
+
+
+## P2-053 — Native condition: Coral Scourge
 
 **2 spells; 0 not enabled.** Suggested source-reading anchor: Coral Scourge. This is not a verified-test designation.
 
@@ -1044,7 +937,23 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Peaceful Bubble](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/peaceful-bubble.json) | 4 | Note only (resolved) | 3 | 0.16 | no primary save; non-basic/no save; duration 24 hours; target source/area/text |
 
 
-## P2-061 — Native condition: Dirge of Doom
+## P2-054 — Native condition: Creative Splash
+
+**2 spells; 0 not enabled.** Suggested source-reading anchor: Creative Splash. This is not a verified-test designation.
+
+**Test contract:** All degrees; value and duration; overlap; native immunity; per-cast ownership; correction/recovery; selective cleanup.
+
+**Shared signals:** Save-result condition rider, Native condition
+
+**Anchor wording:** 1d4 Color Failure Critical Failure 1 White Dazzled for 1 round Dazzled for 1 minute 2 Red Enfeebled 1 for 1 round Enfeebled 2 for 1 round 3 Yellow Frightened 1 Frightened 2 4 Blue Clumsy 1 for 1 round Clumsy 2 for 1 round
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Creative Splash](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/creative-splash.json) | 1 | Enabled route | 3 | 1.00 | will; non-basic/no save; duration varies; target source/area/text |
+| [Prismatic Spray](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/prismatic-spray.json) | 7 | Enabled route | — | 0.20 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
+
+
+## P2-055 — Native condition: Dirge of Doom
 
 **2 spells; 0 not enabled.** Suggested source-reading anchor: Dirge of Doom. This is not a verified-test designation.
 
@@ -1060,7 +969,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Menacing Lament](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/menacing-lament.json) | 2 | Enabled route | 3 | 0.18 | no primary save; non-basic/no save; duration 1 round; target source/area/text |
 
 
-## P2-062 — Native condition: Euphoric Renewal
+## P2-056 — Native condition: Euphoric Renewal
 
 **2 spells; 0 not enabled.** Suggested source-reading anchor: Euphoric Renewal. This is not a verified-test designation.
 
@@ -1076,7 +985,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Cutting Eye](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/cutting-eye.json) | 1 | Enabled route | 3 | 0.26 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
 
 
-## P2-063 — Native condition: Horrific Visage
+## P2-057 — Native condition: Horrific Visage
 
 **2 spells; 0 not enabled.** Suggested source-reading anchor: Horrific Visage. This is not a verified-test designation.
 
@@ -1092,7 +1001,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Temporal Distortion](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/temporal-distortion.json) | 1 | Enabled route | 3 | 0.15 | will; non-basic/no save; duration outcome/text; target 1 creature |
 
 
-## P2-064 — Native condition: Rallying Banner
+## P2-058 — Native condition: Rallying Banner
 
 **2 spells; 0 not enabled.** Suggested source-reading anchor: Rallying Banner. This is not a verified-test designation.
 
@@ -1108,7 +1017,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Death Ward](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/death-ward.json) | 5 | Partial Effect | 3 | 0.15 | no primary save; non-basic/no save; duration 10 minutes; target 1 living creature touched |
 
 
-## P2-065 — Native condition: Schadenfreude
+## P2-059 — Native condition: Schadenfreude
 
 **2 spells; 0 not enabled.** Suggested source-reading anchor: Schadenfreude. This is not a verified-test designation.
 
@@ -1124,7 +1033,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Perfected Body](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/perfected-body.json) | 4 | Enabled route | — | 0.17 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
 
 
-## P2-066 — Native condition: Uncontrollable Dance
+## P2-060 — Native condition: Uncontrollable Dance
 
 **2 spells; 0 not enabled.** Suggested source-reading anchor: Uncontrollable Dance. This is not a verified-test designation.
 
@@ -1140,7 +1049,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Unspeakable Shadow](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/unspeakable-shadow.json) | 9 | Enabled route | 3, 4 | 0.15 | will; non-basic/no save; duration varies; target 1 creature |
 
 
-## P2-067 — Native condition: Unfettered Movement
+## P2-061 — Native condition: Unfettered Movement
 
 **2 spells; 0 not enabled.** Suggested source-reading anchor: Unfettered Movement. This is not a verified-test designation.
 
@@ -1156,7 +1065,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Unimpeded Stride](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/unimpeded-stride.json) | 1 | Enabled route | — | 0.29 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
 
 
-## P2-068 — Native condition: Unrelenting Gravity
+## P2-062 — Native condition: Unrelenting Gravity
 
 **2 spells; 0 not enabled.** Suggested source-reading anchor: Unrelenting Gravity. This is not a verified-test designation.
 
@@ -1172,7 +1081,23 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Shape Stone](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/shape-stone.json) | 4 | Enabled route | 3 | 0.15 | reflex; non-basic/no save; duration outcome/text; target cube of stone 10 feet across or smaller |
 
 
-## P2-069 — Native condition: Annunciation of the Outer Gate
+## P2-063 — Native condition: Vampiric Maiden
+
+**2 spells; 0 not enabled.** Suggested source-reading anchor: Vampiric Maiden. This is not a verified-test designation.
+
+**Test contract:** All degrees; value and duration; overlap; native immunity; per-cast ownership; correction/recovery; selective cleanup.
+
+**Shared signals:** Native condition
+
+**Anchor wording:** The target takes full damage and is Immobilized by the iron maiden for 1 round or until it uses an Interact action to extricate itself, whichever comes first..
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Vampiric Maiden](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/vampiric-maiden.json) | 4 | Enabled route | 3 | 1.00 | fortitude; non-basic/no save; duration outcome/text; target 1 creature |
+| [Flesh Tsunami](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/flesh-tsunami.json) | 8 | Enabled route | 3 | 0.29 | fortitude; non-basic/no save; duration 1 minute; target 1 of your thralls |
+
+
+## P2-064 — Native condition: Annunciation of the Outer Gate
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Annunciation of the Outer Gate. This is not a verified-test designation.
 
@@ -1187,7 +1112,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Annunciation of the Outer Gate](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/annunciation-of-the-outer-gate.json) | 3 | Enabled route | 3, 4 | 1.00 | will; non-basic/no save; duration 10 minutes (see text); target source/area/text |
 
 
-## P2-070 — Native condition: Aromatic Lure
+## P2-065 — Native condition: Aromatic Lure
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Aromatic Lure. This is not a verified-test designation.
 
@@ -1202,7 +1127,22 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Aromatic Lure](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/aromatic-lure.json) | 4 | Enabled route | 3 | 1.00 | will; non-basic/no save; duration Varies; target 1 creature |
 
 
-## P2-071 — Native condition: Banishment
+## P2-066 — Native condition: Astral Labyrinth
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Astral Labyrinth. This is not a verified-test designation.
+
+**Test contract:** All degrees; value and duration; overlap; native immunity; per-cast ownership; correction/recovery; selective cleanup.
+
+**Shared signals:** Save-result condition rider, Native condition, Counteract, Choice / casting variant, Incarnate arrival/departure
+
+**Anchor wording:** Success The creature is Stunned 1..
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Astral Labyrinth](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/astral-labyrinth.json) | 9 | Note only (resolved) | 3, 4 | 1.00 | will; non-basic/no save; duration 1 day; target source/area/text |
+
+
+## P2-067 — Native condition: Banishment
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Banishment. This is not a verified-test designation.
 
@@ -1217,7 +1157,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Banishment](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/banishment.json) | 5 | Enabled route | — | 1.00 | will; non-basic/no save; duration outcome/text; target 1 creature that isn't on its home plane |
 
 
-## P2-072 — Native condition: Befuddle
+## P2-068 — Native condition: Befuddle
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Befuddle. This is not a verified-test designation.
 
@@ -1232,7 +1172,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Befuddle](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/befuddle.json) | 1 | Enabled route | 3 | 1.00 | will; non-basic/no save; duration 1 round; target 1 creature |
 
 
-## P2-073 — Native condition: Cast into Time
+## P2-069 — Native condition: Cast into Time
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Cast into Time. This is not a verified-test designation.
 
@@ -1247,7 +1187,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Cast into Time](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/cast-into-time.json) | 6 | Enabled route | 3, 4 | 1.00 | fortitude; non-basic/no save; duration outcome/text; target source/area/text |
 
 
-## P2-074 — Native condition: Channel Arrogance
+## P2-070 — Native condition: Channel Arrogance
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Channel Arrogance. This is not a verified-test designation.
 
@@ -1262,7 +1202,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Channel Arrogance](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/channel-arrogance.json) | 4 | Enabled route | 3, 4 | 1.00 | will; non-basic/no save; duration outcome/text; target 1 creature |
 
 
-## P2-075 — Native condition: Chromatic Image
+## P2-071 — Native condition: Chromatic Image
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Chromatic Image. This is not a verified-test designation.
 
@@ -1277,7 +1217,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Chromatic Image](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/chromatic-image.json) | 6 | Enabled route | 3 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P2-076 — Native condition: Cleansing Flames
+## P2-072 — Native condition: Cleansing Flames
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Cleansing Flames. This is not a verified-test designation.
 
@@ -1292,7 +1232,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Cleansing Flames](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/cleansing-flames.json) | 5 | Enabled route | 4 | 1.00 | no primary save; non-basic/no save; duration outcome/text; target 1 creature |
 
 
-## P2-077 — Native condition: Crescent Scepter
+## P2-073 — Native condition: Crescent Scepter
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Crescent Scepter. This is not a verified-test designation.
 
@@ -1307,7 +1247,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Crescent Scepter](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/crescent-scepter.json) | 1 | Enabled route | 3 | 1.00 | will; non-basic/no save; duration until the beginning of your next turn; target source/area/text |
 
 
-## P2-078 — Native condition: Curse of Recoil
+## P2-074 — Native condition: Curse of Recoil
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Curse of Recoil. This is not a verified-test designation.
 
@@ -1322,7 +1262,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Curse of Recoil](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/curse-of-recoil.json) | 1 | Enabled route | 3 | 1.00 | will; non-basic/no save; duration 1 round; target 1 creature |
 
 
-## P2-079 — Native condition: Defy the Gods
+## P2-075 — Native condition: Defy the Gods
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Defy the Gods. This is not a verified-test designation.
 
@@ -1337,7 +1277,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Defy the Gods](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/defy-the-gods.json) | 7 | Enabled route | 3 | 1.00 | will; non-basic/no save; duration outcome/text; target 1 creature |
 
 
-## P2-080 — Native condition: Distracting Chatter
+## P2-076 — Native condition: Distracting Chatter
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Distracting Chatter. This is not a verified-test designation.
 
@@ -1352,7 +1292,22 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Distracting Chatter](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/distracting-chatter.json) | 3 | Enabled route | 3 | 1.00 | will; non-basic/no save; duration varies; target 1 creature |
 
 
-## P2-081 — Native condition: Déjà Vu
+## P2-077 — Native condition: Dread Secret
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Dread Secret. This is not a verified-test designation.
+
+**Test contract:** All degrees; value and duration; overlap; native immunity; per-cast ownership; correction/recovery; selective cleanup.
+
+**Shared signals:** Turn trigger or boundary, Save-result condition rider, Native condition, Choice / casting variant, Information / adjudication, Modifier / resistance
+
+**Anchor wording:** Failure As success, and the creature becomes Frightened 1 from the revelation of its dread secret..
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Dread Secret](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/dread-secret.json) | 6 | Enabled route | 3, 4 | 1.00 | will; non-basic/no save; duration until the end of your next turn; target up to 6 creatures |
+
+
+## P2-078 — Native condition: Déjà Vu
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Déjà Vu. This is not a verified-test designation.
 
@@ -1367,7 +1322,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Déjà Vu](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/déjà-vu.json) | 1 | Enabled route | 3 | 1.00 | will; non-basic/no save; duration 2 rounds; target 1 creature |
 
 
-## P2-082 — Native condition: Eject Soul
+## P2-079 — Native condition: Eject Soul
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Eject Soul. This is not a verified-test designation.
 
@@ -1382,7 +1337,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Eject Soul](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/eject-soul.json) | 1 | Enabled route | 3, 4 | 1.00 | fortitude; non-basic/no save; duration outcome/text; target 1 living creature that has a soul |
 
 
-## P2-083 — Native condition: Expeditious Excavation
+## P2-080 — Native condition: Expeditious Excavation
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Expeditious Excavation. This is not a verified-test designation.
 
@@ -1397,7 +1352,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Expeditious Excavation](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/expeditious-excavation.json) | 2 | Enabled route | — | 1.00 | reflex; non-basic/no save; duration outcome/text; target source/area/text |
 
 
-## P2-084 — Native condition: Flames of Ego
+## P2-081 — Native condition: Flames of Ego
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Flames of Ego. This is not a verified-test designation.
 
@@ -1412,7 +1367,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Flames of Ego](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/flames-of-ego.json) | 5 | Enabled route | 3 | 1.00 | will; non-basic/no save; duration varies; target 1 creature |
 
 
-## P2-085 — Native condition: Foresight
+## P2-082 — Native condition: Foresight
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Foresight. This is not a verified-test designation.
 
@@ -1427,7 +1382,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Foresight](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/foresight.json) | 9 | Partial Effect | 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 hour; target 1 creature |
 
 
-## P2-086 — Native condition: Grease
+## P2-083 — Native condition: Grease
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Grease. This is not a verified-test designation.
 
@@ -1442,7 +1397,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Grease](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/grease.json) | 1 | Enabled route | 3 | 1.00 | reflex; non-basic/no save; duration 1 minute; target 1 object of Bulk 1 or less |
 
 
-## P2-087 — Native condition: Hollow Heart
+## P2-084 — Native condition: Hollow Heart
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Hollow Heart. This is not a verified-test designation.
 
@@ -1457,7 +1412,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Hollow Heart](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/hollow-heart.json) | 1 | Enabled route | 3 | 1.00 | will; non-basic/no save; duration varies; target 1 creature |
 
 
-## P2-088 — Native condition: Hypnopompic Terrors
+## P2-085 — Native condition: Hypnopompic Terrors
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Hypnopompic Terrors. This is not a verified-test designation.
 
@@ -1472,7 +1427,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Hypnopompic Terrors](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/hypnopompic-terrors.json) | 8 | Enabled route | 3 | 1.00 | will; non-basic/no save; duration outcome/text; target up to 10 creatures |
 
 
-## P2-089 — Native condition: Impending Doom
+## P2-086 — Native condition: Impending Doom
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Impending Doom. This is not a verified-test designation.
 
@@ -1487,7 +1442,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Impending Doom](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/impending-doom.json) | 3 | Enabled route | 3 | 1.00 | will; non-basic/no save; duration 3 round; target 1 living creature |
 
 
-## P2-090 — Native condition: Invoke True Name
+## P2-087 — Native condition: Invoke True Name
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Invoke True Name. This is not a verified-test designation.
 
@@ -1502,7 +1457,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Invoke True Name](../../.cache/pf2e-test-fixtures/spells/spells/cantrip/invoke-true-name.json) | 1 | Enabled route | — | 1.00 | no primary save; non-basic/no save; duration outcome/text; target 1 creature whose true name you know |
 
 
-## P2-091 — Native condition: Invoke the Harrow
+## P2-088 — Native condition: Invoke the Harrow
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Invoke the Harrow. This is not a verified-test designation.
 
@@ -1517,7 +1472,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Invoke the Harrow](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/invoke-the-harrow.json) | 3 | Enabled route | 3 | 1.00 | will; non-basic/no save; duration 1 round; target 1 creature |
 
 
-## P2-092 — Native condition: Liberating Command
+## P2-089 — Native condition: Liberating Command
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Liberating Command. This is not a verified-test designation.
 
@@ -1532,7 +1487,22 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Liberating Command](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/liberating-command.json) | 1 | Enabled route | — | 1.00 | no primary save; non-basic/no save; duration outcome/text; target 1 creature |
 
 
-## P2-093 — Native condition: Necrotize
+## P2-090 — Native condition: Nature's Enmity
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Nature's Enmity. This is not a verified-test designation.
+
+**Test contract:** All degrees; value and duration; overlap; native immunity; per-cast ownership; correction/recovery; selective cleanup.
+
+**Shared signals:** Turn trigger or boundary, Basic-save damage, Native condition, Modifier / resistance
+
+**Anchor wording:** The target attempts a basic Reflex save and is Off-Guard for 1 round on any outcome other than a critical success..
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Nature's Enmity](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/natures-enmity.json) | 9 | Enabled route | 3 | 1.00 | reflex; non-basic/no save; duration 10 minutes; target up to 5 creatures |
+
+
+## P2-091 — Native condition: Necrotize
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Necrotize. This is not a verified-test designation.
 
@@ -1547,7 +1517,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Necrotize](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/necrotize.json) | 6 | Enabled route | 3 | 1.00 | fortitude; non-basic/no save; duration varies; target 1 living creature |
 
 
-## P2-094 — Native condition: Never Mind
+## P2-092 — Native condition: Never Mind
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Never Mind. This is not a verified-test designation.
 
@@ -1562,7 +1532,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Never Mind](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/never-mind.json) | 6 | Enabled route | 3 | 1.00 | will; non-basic/no save; duration varies; target 1 creature |
 
 
-## P2-095 — Native condition: Prismatic Armor
+## P2-093 — Native condition: Prismatic Armor
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Prismatic Armor. This is not a verified-test designation.
 
@@ -1577,7 +1547,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Prismatic Armor](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/prismatic-armor.json) | 7 | Enabled route | 3 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target 1 willing creature |
 
 
-## P2-096 — Native condition: Radiant Field
+## P2-094 — Native condition: Radiant Field
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Radiant Field. This is not a verified-test designation.
 
@@ -1592,7 +1562,22 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Radiant Field](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/radiant-field.json) | 2 | Enabled route | 3 | 1.00 | fortitude; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P2-097 — Native condition: Ranger's Bramble
+## P2-095 — Native condition: Raise Dead
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Raise Dead. This is not a verified-test designation.
+
+**Test contract:** All degrees; value and duration; overlap; native immunity; per-cast ownership; correction/recovery; selective cleanup.
+
+**Shared signals:** Native condition
+
+**Anchor wording:** The time spent in the Boneyard leaves the target temporarily debilitated, making it Clumsy 2, Drained 2, and Enfeebled 2 for 1 week; these conditions can't be removed or reduced by any means until the week has passed.
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Raise Dead](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/raise-dead.json) | 6 | Enabled route | — | 1.00 | no primary save; non-basic/no save; duration outcome/text; target 1 dead creature of 13th level or lower |
+
+
+## P2-096 — Native condition: Ranger's Bramble
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Ranger's Bramble. This is not a verified-test designation.
 
@@ -1607,7 +1592,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Ranger's Bramble](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/rangers-bramble.json) | 3 | Enabled route | 3 | 1.00 | reflex; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P2-098 — Native condition: Rapid Adaptation
+## P2-097 — Native condition: Rapid Adaptation
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Rapid Adaptation. This is not a verified-test designation.
 
@@ -1622,7 +1607,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Rapid Adaptation](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/rapid-adaptation.json) | 2 | Partial Effect | 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 hour; target your companion or eidolon |
 
 
-## P2-099 — Native condition: Restraining Chains
+## P2-098 — Native condition: Restraining Chains
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Restraining Chains. This is not a verified-test designation.
 
@@ -1637,7 +1622,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Restraining Chains](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/restraining-chains.json) | 3 | Enabled route | 3 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target 1 creature touching or standing on a solid surface |
 
 
-## P2-100 — Native condition: Revealing Light
+## P2-099 — Native condition: Revealing Light
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Revealing Light. This is not a verified-test designation.
 
@@ -1652,7 +1637,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Revealing Light](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/revealing-light.json) | 2 | Enabled route | 3, 4 | 1.00 | reflex; non-basic/no save; duration varies; target source/area/text |
 
 
-## P2-101 — Native condition: Share Vision
+## P2-100 — Native condition: Share Vision
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Share Vision. This is not a verified-test designation.
 
@@ -1667,7 +1652,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Share Vision](../../.cache/pf2e-test-fixtures/spells/spells/cantrip/share-vision.json) | 1 | Enabled route | 3 | 1.00 | no primary save; non-basic/no save; duration 10 minutes; target 1 willing creature |
 
 
-## P2-102 — Native condition: Shared Nightmare
+## P2-101 — Native condition: Shared Nightmare
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Shared Nightmare. This is not a verified-test designation.
 
@@ -1682,7 +1667,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Shared Nightmare](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/shared-nightmare.json) | 4 | Enabled route | 3 | 1.00 | will; non-basic/no save; duration varies; target 1 creature |
 
 
-## P2-103 — Native condition: Shock and Awe
+## P2-102 — Native condition: Shock and Awe
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Shock and Awe. This is not a verified-test designation.
 
@@ -1697,7 +1682,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Shock and Awe](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/shock-and-awe.json) | 5 | Enabled route | 3, 4 | 1.00 | will; non-basic/no save; duration 1 round; target source/area/text |
 
 
-## P2-104 — Native condition: Soul Siphon
+## P2-103 — Native condition: Soul Siphon
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Soul Siphon. This is not a verified-test designation.
 
@@ -1712,7 +1697,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Soul Siphon](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/soul-siphon.json) | 1 | Enabled route | — | 1.00 | fortitude; non-basic/no save; duration outcome/text; target 1 living creature |
 
 
-## P2-105 — Native condition: Sparkleskin
+## P2-104 — Native condition: Sparkleskin
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Sparkleskin. This is not a verified-test designation.
 
@@ -1727,7 +1712,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Sparkleskin](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/sparkleskin.json) | 3 | Enabled route | 3 | 1.00 | fortitude; non-basic/no save; duration 10 minutes; target 1 willing creature |
 
 
-## P2-106 — Native condition: Spiritual Anamnesis
+## P2-105 — Native condition: Spiritual Anamnesis
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Spiritual Anamnesis. This is not a verified-test designation.
 
@@ -1742,7 +1727,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Spiritual Anamnesis](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/spiritual-anamnesis.json) | 4 | Enabled route | 3, 4 | 1.00 | will; non-basic/no save; duration varies; target 1 creature |
 
 
-## P2-107 — Native condition: Stone to Flesh
+## P2-106 — Native condition: Stone to Flesh
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Stone to Flesh. This is not a verified-test designation.
 
@@ -1755,6 +1740,21 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
 | --- | --- | --- | --- | --- | --- |
 | [Stone to Flesh](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/stone-to-flesh.json) | 6 | Enabled route | — | 1.00 | no primary save; non-basic/no save; duration outcome/text; target petrified creature or human-size stone object |
+
+
+## P2-107 — Native condition: Temporal Ward
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Temporal Ward. This is not a verified-test designation.
+
+**Test contract:** All degrees; value and duration; overlap; native immunity; per-cast ownership; correction/recovery; selective cleanup.
+
+**Shared signals:** Turn trigger or boundary, Save-result condition rider, Native condition
+
+**Anchor wording:** Critical Failure As failure, but the temporal displacement also causes the creature to lose their bearings, making them Confused for 1 minute..
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Temporal Ward](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/temporal-ward.json) | 6 | Note only (resolved) | 3 | 1.00 | will; non-basic/no save; duration 10 minutes; target 1 container or doorway |
 
 
 ## P2-108 — Native condition: Unsettling Knowledge
@@ -2044,82 +2044,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Vomit Swarm](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/vomit-swarm.json) | 2 | Enabled route | — | 1.00 | reflex; basic; duration outcome/text; target source/area/text |
 
 
-## P2-126 — Degree Outcome: Blinding Fury
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Blinding Fury. This is not a verified-test designation.
-
-**Test contract:** All degrees including omitted-branch inheritance; independent/secondary saves; condition/damage timing and terminal outcomes.
-
-**Shared signals:** Turn trigger or boundary, Save-result condition rider
-
-**Anchor wording:** Success The target can't Observe you until the end of its turn, and if you're currently observed by it, you become Hidden to it..
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Blinding Fury](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/blinding-fury.json) | 6 | Not enabled | 3 | 1.00 | will; non-basic/no save; duration varies; target The triggering creature |
-
-
-## P2-127 — Degree Outcome: Fabricated Truth
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Fabricated Truth. This is not a verified-test designation.
-
-**Test contract:** All degrees including omitted-branch inheritance; independent/secondary saves; condition/damage timing and terminal outcomes.
-
-**Shared signals:** Save-result condition rider, Counteract, Choice / casting variant
-
-**Anchor wording:** Critical Failure The target believes the statement with unlimited duration..
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Fabricated Truth](../../.cache/pf2e-test-fixtures/spells/spells/rank-10/fabricated-truth.json) | 10 | Not enabled | 3, 4 | 1.00 | will; non-basic/no save; duration varies; target up to 5 creatures |
-
-
-## P2-128 — Degree Outcome: Hag's Fruit
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Hag's Fruit. This is not a verified-test designation.
-
-**Test contract:** All degrees including omitted-branch inheritance; independent/secondary saves; condition/damage timing and terminal outcomes.
-
-**Shared signals:** Save-result condition rider
-
-**Anchor wording:** Effect You fall asleep for 1 round (or permanently on a critical failure) and seem to be dead; a creature must succeed at a medicine|dc:30 check to realize you're alive.
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Hag's Fruit](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/hags-fruit.json) | 6 | Not enabled | 3 | 1.00 | fortitude; non-basic/no save; duration 1 day; target 1 non-magical fruit |
-
-
-## P2-129 — Degree Outcome: Love's Sacrifice
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Love's Sacrifice. This is not a verified-test designation.
-
-**Test contract:** All degrees including omitted-branch inheritance; independent/secondary saves; condition/damage timing and terminal outcomes.
-
-**Shared signals:** Structured source family; inspect the descriptions.
-
-**Anchor wording:** Trigger You take damage that would reduce you to 0 Hit Points.. You cry out for aid, and a creature near you feels compelled to throw itself in front of the threat as the ultimate expression of their love. A target that genuinely loves the 
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Love's Sacrifice](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/loves-sacrifice.json) | 7 | Not enabled | — | 1.00 | will; non-basic/no save; duration outcome/text; target one creature |
-
-
-## P2-130 — Degree Outcome: Massacre
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Massacre. This is not a verified-test designation.
-
-**Test contract:** All degrees including omitted-branch inheritance; independent/secondary saves; condition/damage timing and terminal outcomes.
-
-**Shared signals:** Save-result condition rider
-
-**Anchor wording:** Critical Failure The creature dies..
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Massacre](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/massacre.json) | 9 | Not enabled | — | 1.00 | fortitude; non-basic/no save; duration outcome/text; target source/area/text |
-
-
-## P2-131 — Degree Outcome: Subconscious Suggestion
+## P2-126 — Degree Outcome: Subconscious Suggestion
 
 **12 spells; 0 not enabled.** Suggested source-reading anchor: Subconscious Suggestion. This is not a verified-test designation.
 
@@ -2145,7 +2070,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Wish-Twisted Form](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/wish-twisted-form.json) | 5 | Enabled route | 3 | 0.16 | will; non-basic/no save; duration varies; target 1 creature |
 
 
-## P2-132 — Degree Outcome: Chilling Spray
+## P2-127 — Degree Outcome: Chilling Spray
 
 **4 spells; 0 not enabled.** Suggested source-reading anchor: Chilling Spray. This is not a verified-test designation.
 
@@ -2163,7 +2088,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Incendiary Ashes](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/incendiary-ashes.json) | 3 | Enabled route | 3 | 0.16 | fortitude; non-basic/no save; duration outcome/text; target source/area/text |
 
 
-## P2-133 — Degree Outcome: Curse of the Spirit Orchestra
+## P2-128 — Degree Outcome: Curse of the Spirit Orchestra
 
 **4 spells; 0 not enabled.** Suggested source-reading anchor: Curse of the Spirit Orchestra. This is not a verified-test designation.
 
@@ -2181,7 +2106,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Defensive Prescience](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/defensive-prescience.json) | 3 | Enabled route | — | 0.29 | will; non-basic/no save; duration outcome/text; target the triggering creature |
 
 
-## P2-134 — Degree Outcome: Forge
+## P2-129 — Degree Outcome: Forge
 
 **2 spells; 0 not enabled.** Suggested source-reading anchor: Forge. This is not a verified-test designation.
 
@@ -2197,7 +2122,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Weaken Earth](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/weaken-earth.json) | 1 | Enabled route | 3 | 0.27 | fortitude; non-basic/no save; duration 1 minute; target 1 creature, unattended object, or hazard or structure made of stone or earth |
 
 
-## P2-135 — Degree Outcome: Lock Item
+## P2-130 — Degree Outcome: Lock Item
 
 **2 spells; 0 not enabled.** Suggested source-reading anchor: Lock Item. This is not a verified-test designation.
 
@@ -2213,7 +2138,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Exchange Image](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/exchange-image.json) | 1 | Enabled route | 3 | 0.24 | will; non-basic/no save; duration varies; target you and 1 other humanoid |
 
 
-## P2-136 — Degree Outcome: Binding Muzzle
+## P2-131 — Degree Outcome: Binding Muzzle
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Binding Muzzle. This is not a verified-test designation.
 
@@ -2228,7 +2153,22 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Binding Muzzle](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/binding-muzzle.json) | 2 | Enabled route | — | 1.00 | fortitude; non-basic/no save; duration outcome/text; target 1 creature |
 
 
-## P2-137 — Degree Outcome: Brand the Impenitent
+## P2-132 — Degree Outcome: Blinding Fury
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Blinding Fury. This is not a verified-test designation.
+
+**Test contract:** All degrees including omitted-branch inheritance; independent/secondary saves; condition/damage timing and terminal outcomes.
+
+**Shared signals:** Turn trigger or boundary, Save-result condition rider
+
+**Anchor wording:** Success The target can't Observe you until the end of its turn, and if you're currently observed by it, you become Hidden to it..
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Blinding Fury](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/blinding-fury.json) | 6 | Enabled route | 3 | 1.00 | will; non-basic/no save; duration varies; target The triggering creature |
+
+
+## P2-133 — Degree Outcome: Brand the Impenitent
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Brand the Impenitent. This is not a verified-test designation.
 
@@ -2243,7 +2183,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Brand the Impenitent](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/brand-the-impenitent.json) | 2 | Enabled route | 3 | 1.00 | fortitude; non-basic/no save; duration varies; target 1 creature |
 
 
-## P2-138 — Degree Outcome: Caster's Imposition
+## P2-134 — Degree Outcome: Caster's Imposition
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Caster's Imposition. This is not a verified-test designation.
 
@@ -2258,7 +2198,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Caster's Imposition](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/casters-imposition.json) | 3 | Enabled route | 3 | 1.00 | will; non-basic/no save; duration 1 minute; target 1 creature within 60 feet |
 
 
-## P2-139 — Degree Outcome: Catch Your Name
+## P2-135 — Degree Outcome: Catch Your Name
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Catch Your Name. This is not a verified-test designation.
 
@@ -2273,7 +2213,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Catch Your Name](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/catch-your-name.json) | 6 | Enabled route | 4 | 1.00 | will; non-basic/no save; duration outcome/text; target source/area/text |
 
 
-## P2-140 — Degree Outcome: Celestial Accord
+## P2-136 — Degree Outcome: Celestial Accord
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Celestial Accord. This is not a verified-test designation.
 
@@ -2288,7 +2228,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Celestial Accord](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/celestial-accord.json) | 1 | Enabled route | 3 | 1.00 | will; non-basic/no save; duration 1 minute; target 2 creatures that each have an unfriendly or worse attitude toward the other |
 
 
-## P2-141 — Degree Outcome: Clouded Focus
+## P2-137 — Degree Outcome: Clouded Focus
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Clouded Focus. This is not a verified-test designation.
 
@@ -2303,7 +2243,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Clouded Focus](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/clouded-focus.json) | 1 | Enabled route | 3, 4 | 1.00 | will; non-basic/no save; duration varies; target 1 creature |
 
 
-## P2-142 — Degree Outcome: Containment
+## P2-138 — Degree Outcome: Containment
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Containment. This is not a verified-test designation.
 
@@ -2318,7 +2258,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Containment](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/containment.json) | 4 | Enabled route | 3 | 1.00 | reflex; non-basic/no save; duration 1 minute; target 1 creature |
 
 
-## P2-143 — Degree Outcome: Control Water
+## P2-139 — Degree Outcome: Control Water
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Control Water. This is not a verified-test designation.
 
@@ -2333,7 +2273,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Control Water](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/control-water.json) | 5 | Enabled route | 3 | 1.00 | fortitude; non-basic/no save; duration 1 hour; target source/area/text |
 
 
-## P2-144 — Degree Outcome: Daydreamer's Curse
+## P2-140 — Degree Outcome: Daydreamer's Curse
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Daydreamer's Curse. This is not a verified-test designation.
 
@@ -2348,7 +2288,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Daydreamer's Curse](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/daydreamers-curse.json) | 4 | Enabled route | 3 | 1.00 | will; non-basic/no save; duration varies; target 1 creature |
 
 
-## P2-145 — Degree Outcome: Death Knell
+## P2-141 — Degree Outcome: Death Knell
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Death Knell. This is not a verified-test designation.
 
@@ -2363,7 +2303,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Death Knell](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/death-knell.json) | 2 | Enabled route | — | 1.00 | will; non-basic/no save; duration outcome/text; target 1 living creature that has 0 HP |
 
 
-## P2-146 — Degree Outcome: Earthbind
+## P2-142 — Degree Outcome: Earthbind
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Earthbind. This is not a verified-test designation.
 
@@ -2378,7 +2318,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Earthbind](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/earthbind.json) | 3 | Enabled route | 3 | 1.00 | fortitude; non-basic/no save; duration varies; target 1 flying creature |
 
 
-## P2-147 — Degree Outcome: Ephemeral Hazards
+## P2-143 — Degree Outcome: Ephemeral Hazards
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Ephemeral Hazards. This is not a verified-test designation.
 
@@ -2393,7 +2333,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Ephemeral Hazards](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/ephemeral-hazards.json) | 4 | Enabled route | 3, 4 | 1.00 | will; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P2-148 — Degree Outcome: Excise Lexicon
+## P2-144 — Degree Outcome: Excise Lexicon
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Excise Lexicon. This is not a verified-test designation.
 
@@ -2408,7 +2348,22 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Excise Lexicon](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/excise-lexicon.json) | 3 | Enabled route | 3, 4 | 1.00 | will; non-basic/no save; duration varies; target 1 creature |
 
 
-## P2-149 — Degree Outcome: Fate's Travels
+## P2-145 — Degree Outcome: Fabricated Truth
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Fabricated Truth. This is not a verified-test designation.
+
+**Test contract:** All degrees including omitted-branch inheritance; independent/secondary saves; condition/damage timing and terminal outcomes.
+
+**Shared signals:** Save-result condition rider, Counteract, Choice / casting variant
+
+**Anchor wording:** Critical Failure The target believes the statement with unlimited duration..
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Fabricated Truth](../../.cache/pf2e-test-fixtures/spells/spells/rank-10/fabricated-truth.json) | 10 | Enabled route | 3, 4 | 1.00 | will; non-basic/no save; duration varies; target up to 5 creatures |
+
+
+## P2-146 — Degree Outcome: Fate's Travels
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Fate's Travels. This is not a verified-test designation.
 
@@ -2423,7 +2378,22 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Fate's Travels](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/fates-travels.json) | 3 | Note only (resolved) | 4 | 1.00 | will; non-basic/no save; duration outcome/text; target 1 corpse |
 
 
-## P2-150 — Degree Outcome: Ignite Ambition
+## P2-147 — Degree Outcome: Hag's Fruit
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Hag's Fruit. This is not a verified-test designation.
+
+**Test contract:** All degrees including omitted-branch inheritance; independent/secondary saves; condition/damage timing and terminal outcomes.
+
+**Shared signals:** Save-result condition rider
+
+**Anchor wording:** Effect You fall asleep for 1 round (or permanently on a critical failure) and seem to be dead; a creature must succeed at a medicine|dc:30 check to realize you're alive.
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Hag's Fruit](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/hags-fruit.json) | 6 | Note only (resolved) | 3 | 1.00 | fortitude; non-basic/no save; duration 1 day; target 1 non-magical fruit |
+
+
+## P2-148 — Degree Outcome: Ignite Ambition
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Ignite Ambition. This is not a verified-test designation.
 
@@ -2438,7 +2408,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Ignite Ambition](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/ignite-ambition.json) | 1 | Enabled route | — | 1.00 | will; non-basic/no save; duration outcome/text; target one creature being influenced |
 
 
-## P2-151 — Degree Outcome: Illuminate
+## P2-149 — Degree Outcome: Illuminate
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Illuminate. This is not a verified-test designation.
 
@@ -2453,7 +2423,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Illuminate](../../.cache/pf2e-test-fixtures/spells/spells/cantrip/illuminate.json) | 1 | Note only (resolved) | — | 1.00 | reflex; non-basic/no save; duration outcome/text; target source/area/text |
 
 
-## P2-152 — Degree Outcome: Impart Empathy
+## P2-150 — Degree Outcome: Impart Empathy
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Impart Empathy. This is not a verified-test designation.
 
@@ -2468,7 +2438,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Impart Empathy](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/impart-empathy.json) | 2 | Note only (resolved) | 3 | 1.00 | will; non-basic/no save; duration 1 day; target 1 animal |
 
 
-## P2-153 — Degree Outcome: Isolation
+## P2-151 — Degree Outcome: Isolation
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Isolation. This is not a verified-test designation.
 
@@ -2483,7 +2453,22 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Isolation](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/isolation.json) | 4 | Enabled route | 3 | 1.00 | will; non-basic/no save; duration 3 rounds; target 1 creature |
 
 
-## P2-154 — Degree Outcome: Magnetize
+## P2-152 — Degree Outcome: Love's Sacrifice
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Love's Sacrifice. This is not a verified-test designation.
+
+**Test contract:** All degrees including omitted-branch inheritance; independent/secondary saves; condition/damage timing and terminal outcomes.
+
+**Shared signals:** Structured source family; inspect the descriptions.
+
+**Anchor wording:** Trigger You take damage that would reduce you to 0 Hit Points.. You cry out for aid, and a creature near you feels compelled to throw itself in front of the threat as the ultimate expression of their love. A target that genuinely loves the 
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Love's Sacrifice](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/loves-sacrifice.json) | 7 | Enabled route | — | 1.00 | will; non-basic/no save; duration outcome/text; target one creature |
+
+
+## P2-153 — Degree Outcome: Magnetize
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Magnetize. This is not a verified-test designation.
 
@@ -2498,7 +2483,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Magnetize](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/magnetize.json) | 4 | Note only (resolved) | 3 | 1.00 | reflex; non-basic/no save; duration 1 minute; target 1 willing creature |
 
 
-## P2-155 — Degree Outcome: Mark of Blood
+## P2-154 — Degree Outcome: Mark of Blood
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Mark of Blood. This is not a verified-test designation.
 
@@ -2511,6 +2496,21 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
 | --- | --- | --- | --- | --- | --- |
 | [Mark of Blood](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/mark-of-blood.json) | 2 | Enabled route | 3, 4 | 1.00 | will; non-basic/no save; duration 1 minute; target 1 piercing or slashing weapon you're wielding |
+
+
+## P2-155 — Degree Outcome: Massacre
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Massacre. This is not a verified-test designation.
+
+**Test contract:** All degrees including omitted-branch inheritance; independent/secondary saves; condition/damage timing and terminal outcomes.
+
+**Shared signals:** Save-result condition rider
+
+**Anchor wording:** Critical Failure The creature dies..
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Massacre](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/massacre.json) | 9 | Enabled route | — | 1.00 | fortitude; non-basic/no save; duration outcome/text; target source/area/text |
 
 
 ## P2-156 — Degree Outcome: Mental Map
@@ -2800,7 +2800,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 
 ## P2-175 — Native Effect: Mountain Resilience
 
-**12 spells; 1 not enabled.** Suggested source-reading anchor: Mountain Resilience. This is not a verified-test designation.
+**12 spells; 0 not enabled.** Suggested source-reading anchor: Mountain Resilience. This is not a verified-test designation.
 
 **Test contract:** Effect choice and rank; native rule execution; unrelated overlap; configuration; ownership and expiry.
 
@@ -2821,28 +2821,10 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Rebounding Barrier](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/rebounding-barrier.json) | 4 | Enabled route | — | 0.19 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
 | [Energy Aegis](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/energy-aegis.json) | 7 | Enabled route | 3 | 0.18 | no primary save; non-basic/no save; duration until your next daily preparations; target 1 creature |
 | [Rallying Anthem](../../.cache/pf2e-test-fixtures/spells/spells/cantrip/rallying-anthem.json) | 2 | Enabled route | 3 | 0.17 | no primary save; non-basic/no save; duration 1 round; target source/area/text |
-| [Primal Summons](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/primal-summons.json) | 6 | Not enabled | 4 | 0.16 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
+| [Primal Summons](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/primal-summons.json) | 6 | Enabled route | 4 | 0.16 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
 
 
-## P2-176 — Native Effect: Weapon Surge
-
-**4 spells; 1 not enabled.** Suggested source-reading anchor: Weapon Surge. This is not a verified-test designation.
-
-**Test contract:** Effect choice and rank; native rule execution; unrelated overlap; configuration; ownership and expiry.
-
-**Shared signals:** Structured source family; inspect the descriptions.
-
-**Anchor wording:** On your next Strike with that weapon before the start of your next turn, you gain a +1 status bonus to the attack roll and the weapon deals an additional 1d6 spirit damage, and the Strike gains the sanctified trait.
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Weapon Surge](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/weapon-surge.json) | 1 | Enabled route | 3 | 1.00 | no primary save; non-basic/no save; duration outcome/text; target 1 weapon you're wielding |
-| [Serrate](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/serrate.json) | 1 | Enabled route | 3 | 0.23 | no primary save; non-basic/no save; duration outcome/text; target 1 metal weapon |
-| [Theogeny](../../.cache/pf2e-test-fixtures/spells/spells/rank-10/theogeny.json) | 10 | Not enabled | 3, 4 | 0.17 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
-| [Precious Gleam](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/precious-gleam.json) | 1 | Enabled route | 3 | 0.16 | no primary save; non-basic/no save; duration until the beginning of your next turn; target 1 weapon that is unattended or wielded by a willing creature. |
-
-
-## P2-177 — Native Effect: Tailwind
+## P2-176 — Native Effect: Tailwind
 
 **12 spells; 0 not enabled.** Suggested source-reading anchor: Tailwind. This is not a verified-test designation.
 
@@ -2868,7 +2850,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Discern Lies](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/discern-lies.json) | 4 | Note only (resolved) | 3 | 0.22 | no primary save; non-basic/no save; duration 10 minutes; target source/area/text |
 
 
-## P2-178 — Native Effect: Energy Absorption
+## P2-177 — Native Effect: Energy Absorption
 
 **11 spells; 0 not enabled.** Suggested source-reading anchor: Energy Absorption. This is not a verified-test designation.
 
@@ -2893,7 +2875,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Thermal Remedy](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/thermal-remedy.json) | 2 | Enabled route | 3, 4 | 0.15 | no primary save; non-basic/no save; duration 1 hour; target up to 1 gallon of non-magical liquid or up to 5 pounds of food |
 
 
-## P2-179 — Native Effect: Muscle Barrier
+## P2-178 — Native Effect: Muscle Barrier
 
 **9 spells; 0 not enabled.** Suggested source-reading anchor: Muscle Barrier. This is not a verified-test designation.
 
@@ -2916,7 +2898,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Blessing of Defiance](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/blessing-of-defiance.json) | 5 | Enabled route | 3, 4 | 0.16 | no primary save; non-basic/no save; duration 1 round; target varies |
 
 
-## P2-180 — Native Effect: Runic Weapon
+## P2-179 — Native Effect: Runic Weapon
 
 **8 spells; 0 not enabled.** Suggested source-reading anchor: Runic Weapon. This is not a verified-test designation.
 
@@ -2938,7 +2920,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Mystic Armor](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/mystic-armor.json) | 1 | Enabled route | 3 | 0.16 | no primary save; non-basic/no save; duration until your next daily preparations; target source/area/text |
 
 
-## P2-181 — Native Effect: Courageous Anthem
+## P2-180 — Native Effect: Courageous Anthem
 
 **6 spells; 0 not enabled.** Suggested source-reading anchor: Courageous Anthem. This is not a verified-test designation.
 
@@ -2958,7 +2940,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Boost Eidolon](../../.cache/pf2e-test-fixtures/spells/spells/cantrip/boost-eidolon.json) | 1 | Enabled route | 3 | 0.16 | no primary save; non-basic/no save; duration 1 round; target your eidolon |
 
 
-## P2-182 — Native Effect: Gecko Grip
+## P2-181 — Native Effect: Gecko Grip
 
 **6 spells; 0 not enabled.** Suggested source-reading anchor: Gecko Grip. This is not a verified-test designation.
 
@@ -2978,7 +2960,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Adapt Self](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/adapt-self.json) | 1 | Enabled route | 3, 4 | 0.17 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P2-183 — Native Effect: Inscrutable Mask
+## P2-182 — Native Effect: Inscrutable Mask
 
 **5 spells; 0 not enabled.** Suggested source-reading anchor: Inscrutable Mask. This is not a verified-test designation.
 
@@ -2997,7 +2979,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Illusory Shroud](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/illusory-shroud.json) | 2 | Partial Effect | 3, 4 | 0.16 | no primary save; non-basic/no save; duration 1 minute; target 1 willing creature |
 
 
-## P2-184 — Native Effect: Beseech the Sphinx
+## P2-183 — Native Effect: Beseech the Sphinx
 
 **4 spells; 0 not enabled.** Suggested source-reading anchor: Beseech the Sphinx. This is not a verified-test designation.
 
@@ -3013,6 +2995,24 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Soothing Words](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/soothing-words.json) | 1 | Partial Effect | 3, 4 | 0.19 | no primary save; non-basic/no save; duration 1 minute; target 1 ally |
 | [Fortify Summoning](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/fortify-summoning.json) | 1 | Enabled route | — | 0.15 | no primary save; non-basic/no save; duration outcome/text; target 1 creature you summoned |
 | [Heroism](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/heroism.json) | 3 | Enabled route | 3 | 0.15 | no primary save; non-basic/no save; duration 10 minutes; target 1 creature |
+
+
+## P2-184 — Native Effect: Weapon Surge
+
+**4 spells; 0 not enabled.** Suggested source-reading anchor: Weapon Surge. This is not a verified-test designation.
+
+**Test contract:** Effect choice and rank; native rule execution; unrelated overlap; configuration; ownership and expiry.
+
+**Shared signals:** Structured source family; inspect the descriptions.
+
+**Anchor wording:** On your next Strike with that weapon before the start of your next turn, you gain a +1 status bonus to the attack roll and the weapon deals an additional 1d6 spirit damage, and the Strike gains the sanctified trait.
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Weapon Surge](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/weapon-surge.json) | 1 | Enabled route | 3 | 1.00 | no primary save; non-basic/no save; duration outcome/text; target 1 weapon you're wielding |
+| [Serrate](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/serrate.json) | 1 | Enabled route | 3 | 0.23 | no primary save; non-basic/no save; duration outcome/text; target 1 metal weapon |
+| [Theogeny](../../.cache/pf2e-test-fixtures/spells/spells/rank-10/theogeny.json) | 10 | Note only (resolved) | 3, 4 | 0.17 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
+| [Precious Gleam](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/precious-gleam.json) | 1 | Enabled route | 3 | 0.16 | no primary save; non-basic/no save; duration until the beginning of your next turn; target 1 weapon that is unattended or wielded by a willing creature. |
 
 
 ## P2-185 — Native Effect: Wild Winds Stance
@@ -4023,7 +4023,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 
 ## P2-251 — Persistent damage: Cutting Insult
 
-**12 spells; 1 not enabled.** Suggested source-reading anchor: Cutting Insult. This is not a verified-test designation.
+**12 spells; 0 not enabled.** Suggested source-reading anchor: Cutting Insult. This is not a verified-test designation.
 
 **Test contract:** Initial damage versus later ticks; recovery DC; type/stacking; no future ticks in immediate damage totals.
 
@@ -4039,7 +4039,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Glass Sand](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/glass-sand.json) | 3 | Enabled route | 3 | 0.44 | reflex; non-basic/no save; duration outcome/text; target source/area/text |
 | [Bursting Bloom](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/bursting-bloom.json) | 4 | Enabled route | 3 | 0.40 | fortitude; non-basic/no save; duration 1 minute; target 1 creature |
 | [Weight of the World](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/weight-of-the-world.json) | 5 | Enabled route | 3 | 0.38 | fortitude; non-basic/no save; duration outcome/text; target 1 creature |
-| [Beheading Buzz Saw](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/beheading-buzz-saw.json) | 7 | Not enabled | 3 | 0.36 | reflex; non-basic/no save; duration outcome/text; target source/area/text |
+| [Beheading Buzz Saw](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/beheading-buzz-saw.json) | 7 | Enabled route | 3 | 0.36 | reflex; non-basic/no save; duration outcome/text; target source/area/text |
 | [Calcium Rain](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/calcium-rain.json) | 5 | Enabled route | 3 | 0.34 | reflex; basic; duration outcome/text; target source/area/text |
 | [Ignite Fireworks](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/ignite-fireworks.json) | 2 | Enabled route | 3 | 0.28 | reflex; non-basic/no save; duration outcome/text; target source/area/text |
 | [Bone Spray](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/bone-spray.json) | 2 | Enabled route | 3 | 0.26 | reflex; basic; duration outcome/text; target source/area/text |
@@ -4047,47 +4047,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Teeth to Terror](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/teeth-to-terror.json) | 2 | Enabled route | 3 | 0.24 | will; non-basic/no save; duration 1 minute; target 1 creature with teeth |
 
 
-## P2-252 — Persistent damage: Combustion
-
-**7 spells; 1 not enabled.** Suggested source-reading anchor: Combustion. This is not a verified-test designation.
-
-**Test contract:** Initial damage versus later ticks; recovery DC; type/stacking; no future ticks in immediate damage totals.
-
-**Shared signals:** Persistent damage
-
-**Anchor wording:** The fire deals 4d8 fire damage and 2d6[persistent,fire] damage to the creature, which must attempt a Fortitude save..
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Combustion](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/combustion.json) | 3 | Enabled route | 3 | 1.00 | fortitude; non-basic/no save; duration outcome/text; target 1 creature |
-| [Heat Metal](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/heat-metal.json) | 2 | Enabled route | 3 | 0.43 | reflex; non-basic/no save; duration outcome/text; target 1 metal item or metal creature |
-| [Blistering Invective](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/blistering-invective.json) | 2 | Enabled route | 3 | 0.23 | will; non-basic/no save; duration outcome/text; target 1 creature |
-| [Savor the Sting](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/savor-the-sting.json) | 1 | Enabled route | 3 | 0.22 | will; non-basic/no save; duration outcome/text; target 1 creature |
-| [Vengeful Glare](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/vengeful-glare.json) | 1 | Enabled route | 3 | 0.18 | fortitude; basic; duration outcome/text; target one creature you can see |
-| [Unblinking Flame Emblem](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/unblinking-flame-emblem.json) | 7 | Not enabled | 3, 4 | 0.15 | no primary save; non-basic/no save; duration 3 rounds; target 1 creature |
-| [Blood Runs Cold](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/blood-runs-cold.json) | 2 | Enabled route | 3 | 0.15 | fortitude; non-basic/no save; duration varies; target 1 creature |
-
-
-## P2-253 — Persistent damage: Bloodspray Curse
-
-**5 spells; 1 not enabled.** Suggested source-reading anchor: Bloodspray Curse. This is not a verified-test designation.
-
-**Test contract:** Initial damage versus later ticks; recovery DC; type/stacking; no future ticks in immediate damage totals.
-
-**Shared signals:** Persistent damage
-
-**Anchor wording:** Heightened (+2) The additional damage increases by 1d6, and the persistent bleed damage increases by 1d6..
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Bloodspray Curse](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/bloodspray-curse.json) | 4 | Enabled route | 3 | 1.00 | fortitude; non-basic/no save; duration varies; target 1 creature |
-| [Flourishing Flora](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/flourishing-flora.json) | 1 | Enabled route | 3 | 0.38 | reflex; basic; duration outcome/text; target source/area/text |
-| [Mutilate](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/mutilate.json) | 4 | Enabled route | 3, 4 | 0.23 | fortitude; basic; duration outcome/text; target 1 creature in line of sight |
-| [Expunge Blood](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/expunge-blood.json) | 6 | Not enabled | 3 | 0.20 | fortitude; non-basic/no save; duration varies; target 1 creature |
-| [Blood Vendetta](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/blood-vendetta.json) | 2 | Enabled route | 3 | 0.16 | will; non-basic/no save; duration varies; target The triggering creature |
-
-
-## P2-254 — Persistent damage: Whispers of the Void
+## P2-252 — Persistent damage: Whispers of the Void
 
 **12 spells; 0 not enabled.** Suggested source-reading anchor: Whispers of the Void. This is not a verified-test designation.
 
@@ -4111,6 +4071,46 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Scouring Pulse](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/scouring-pulse.json) | 5 | Enabled route | 3 | 0.18 | reflex; basic; duration outcome/text; target source/area/text |
 | [Phantom Pain](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/phantom-pain.json) | 1 | Enabled route | 3 | 0.18 | will; non-basic/no save; duration 1 minute; target 1 creature |
 | [Reblooded](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/reblooded.json) | 3 | Enabled route | 3 | 0.17 | fortitude; non-basic/no save; duration 1 minute; target 1 undead creature |
+
+
+## P2-253 — Persistent damage: Combustion
+
+**7 spells; 0 not enabled.** Suggested source-reading anchor: Combustion. This is not a verified-test designation.
+
+**Test contract:** Initial damage versus later ticks; recovery DC; type/stacking; no future ticks in immediate damage totals.
+
+**Shared signals:** Persistent damage
+
+**Anchor wording:** The fire deals 4d8 fire damage and 2d6[persistent,fire] damage to the creature, which must attempt a Fortitude save..
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Combustion](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/combustion.json) | 3 | Enabled route | 3 | 1.00 | fortitude; non-basic/no save; duration outcome/text; target 1 creature |
+| [Heat Metal](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/heat-metal.json) | 2 | Enabled route | 3 | 0.43 | reflex; non-basic/no save; duration outcome/text; target 1 metal item or metal creature |
+| [Blistering Invective](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/blistering-invective.json) | 2 | Enabled route | 3 | 0.23 | will; non-basic/no save; duration outcome/text; target 1 creature |
+| [Savor the Sting](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/savor-the-sting.json) | 1 | Enabled route | 3 | 0.22 | will; non-basic/no save; duration outcome/text; target 1 creature |
+| [Vengeful Glare](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/vengeful-glare.json) | 1 | Enabled route | 3 | 0.18 | fortitude; basic; duration outcome/text; target one creature you can see |
+| [Unblinking Flame Emblem](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/unblinking-flame-emblem.json) | 7 | Enabled route | 3, 4 | 0.15 | no primary save; non-basic/no save; duration 3 rounds; target 1 creature |
+| [Blood Runs Cold](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/blood-runs-cold.json) | 2 | Enabled route | 3 | 0.15 | fortitude; non-basic/no save; duration varies; target 1 creature |
+
+
+## P2-254 — Persistent damage: Bloodspray Curse
+
+**5 spells; 0 not enabled.** Suggested source-reading anchor: Bloodspray Curse. This is not a verified-test designation.
+
+**Test contract:** Initial damage versus later ticks; recovery DC; type/stacking; no future ticks in immediate damage totals.
+
+**Shared signals:** Persistent damage
+
+**Anchor wording:** Heightened (+2) The additional damage increases by 1d6, and the persistent bleed damage increases by 1d6..
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Bloodspray Curse](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/bloodspray-curse.json) | 4 | Enabled route | 3 | 1.00 | fortitude; non-basic/no save; duration varies; target 1 creature |
+| [Flourishing Flora](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/flourishing-flora.json) | 1 | Enabled route | 3 | 0.38 | reflex; basic; duration outcome/text; target source/area/text |
+| [Mutilate](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/mutilate.json) | 4 | Enabled route | 3, 4 | 0.23 | fortitude; basic; duration outcome/text; target 1 creature in line of sight |
+| [Expunge Blood](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/expunge-blood.json) | 6 | Enabled route | 3 | 0.20 | fortitude; non-basic/no save; duration varies; target 1 creature |
+| [Blood Vendetta](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/blood-vendetta.json) | 2 | Enabled route | 3 | 0.16 | will; non-basic/no save; duration varies; target The triggering creature |
 
 
 ## P2-255 — Persistent damage: Entropic Wheel
@@ -4340,22 +4340,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Wronged Monk's Wrath](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/wronged-monks-wrath.json) | 5 | Enabled route | 3 | 1.00 | reflex; basic; duration outcome/text; target source/area/text |
 
 
-## P2-270 — Temporary immunity: Overwhelming Presence
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Overwhelming Presence. This is not a verified-test designation.
-
-**Test contract:** Who is immune to what; degree trigger; duration; repeated casts; expiry and source identity.
-
-**Shared signals:** Temporary immunity, Save-result condition rider, Native condition
-
-**Anchor wording:** Regardless of the outcome, the target is then temporarily immune for 1 minute..
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Overwhelming Presence](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/overwhelming-presence.json) | 9 | Not enabled | 3 | 1.00 | will; non-basic/no save; duration until full tribute is paid; target any number of creatures |
-
-
-## P2-271 — Temporary immunity: Deafness
+## P2-270 — Temporary immunity: Deafness
 
 **12 spells; 0 not enabled.** Suggested source-reading anchor: Deafness. This is not a verified-test designation.
 
@@ -4381,7 +4366,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Tame](../../.cache/pf2e-test-fixtures/spells/spells/cantrip/tame.json) | 1 | Enabled route | 3 | 0.27 | will; non-basic/no save; duration 1 minute; target 1 non-hostile domesticated animal |
 
 
-## P2-272 — Temporary immunity: Shadow Projectile
+## P2-271 — Temporary immunity: Shadow Projectile
 
 **7 spells; 0 not enabled.** Suggested source-reading anchor: Shadow Projectile. This is not a verified-test designation.
 
@@ -4402,7 +4387,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Grisly Growths](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/grisly-growths.json) | 5 | Enabled route | 3 | 0.17 | fortitude; basic; duration outcome/text; target 1 corporeal creature |
 
 
-## P2-273 — Temporary immunity: Subjugate Undead
+## P2-272 — Temporary immunity: Subjugate Undead
 
 **7 spells; 0 not enabled.** Suggested source-reading anchor: Subjugate Undead. This is not a verified-test designation.
 
@@ -4423,7 +4408,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Telepathic Demand](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/telepathic-demand.json) | 9 | Enabled route | 3, 4 | 0.17 | will; non-basic/no save; duration varies; target 1 creature you've telepathically contacted before |
 
 
-## P2-274 — Temporary immunity: Sure Strike
+## P2-273 — Temporary immunity: Sure Strike
 
 **3 spells; 0 not enabled.** Suggested source-reading anchor: Sure Strike. This is not a verified-test designation.
 
@@ -4440,7 +4425,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Vision of Weakness](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/vision-of-weakness.json) | 2 | Enabled route | 3, 4 | 0.17 | no primary save; non-basic/no save; duration outcome/text; target 1 creature |
 
 
-## P2-275 — Temporary immunity: Anathematic Reprisal
+## P2-274 — Temporary immunity: Anathematic Reprisal
 
 **2 spells; 0 not enabled.** Suggested source-reading anchor: Anathematic Reprisal. This is not a verified-test designation.
 
@@ -4456,7 +4441,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Forbidden Thought](../../.cache/pf2e-test-fixtures/spells/spells/cantrip/forbidden-thought.json) | 1 | Enabled route | 3 | 0.22 | will; basic; duration outcome/text; target 1 creature |
 
 
-## P2-276 — Temporary immunity: Fear the Sun
+## P2-275 — Temporary immunity: Fear the Sun
 
 **2 spells; 0 not enabled.** Suggested source-reading anchor: Fear the Sun. This is not a verified-test designation.
 
@@ -4472,7 +4457,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Mask of Terror](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/mask-of-terror.json) | 7 | Enabled route | 3 | 0.16 | will; non-basic/no save; duration 1 minute; target 1 creature |
 
 
-## P2-277 — Temporary immunity: Cloak of Colors
+## P2-276 — Temporary immunity: Cloak of Colors
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Cloak of Colors. This is not a verified-test designation.
 
@@ -4487,7 +4472,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Cloak of Colors](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/cloak-of-colors.json) | 5 | Enabled route | 3 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target 1 creature |
 
 
-## P2-278 — Temporary immunity: Nightmare
+## P2-277 — Temporary immunity: Nightmare
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Nightmare. This is not a verified-test designation.
 
@@ -4500,6 +4485,21 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
 | --- | --- | --- | --- | --- | --- |
 | [Nightmare](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/nightmare.json) | 4 | Enabled route | 3 | 1.00 | will; non-basic/no save; duration 1 day; target 1 creature you know by name |
+
+
+## P2-278 — Temporary immunity: Overwhelming Presence
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Overwhelming Presence. This is not a verified-test designation.
+
+**Test contract:** Who is immune to what; degree trigger; duration; repeated casts; expiry and source identity.
+
+**Shared signals:** Temporary immunity, Save-result condition rider, Native condition
+
+**Anchor wording:** Regardless of the outcome, the target is then temporarily immune for 1 minute..
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Overwhelming Presence](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/overwhelming-presence.json) | 9 | Enabled route | 3 | 1.00 | will; non-basic/no save; duration until full tribute is paid; target any number of creatures |
 
 
 ## P2-279 — Temporary immunity: Power Word Blind
@@ -4553,60 +4553,60 @@ These spells are owned by another primary worklist; reuse their listed batch ins
 
 | Spell | Primary phase / batch | Matched signals |
 | --- | --- | --- |
-| Frost Pillar | P3 / P3-001 | Native condition, Modifier / resistance |
-| Lifewood Cage | P3 / P3-001 | Modifier / resistance |
-| Fateful Condemnation | P3 / P3-002 | Aura membership, Save-result condition rider, Native condition, Modifier / resistance |
-| Scrying | P3 / P3-005 | Temporary immunity, Save-result condition rider, Choice / casting variant |
-| Song of the Fallen | P3 / P3-006 | Save-result condition rider, Basic-save damage, Native condition |
-| Competitive Edge | P3 / P3-007 | Modifier / resistance |
-| Girzanje's March | P3 / P3-007 | Modifier / resistance |
-| Radiant Heart of Devotion | P3 / P3-007 | Native condition, Modifier / resistance |
-| Stoke the Heart | P3 / P3-007 | Modifier / resistance |
-| Veil of Dreams | P3 / P3-007 | Modifier / resistance |
-| Cycle of Retribution | P3 / P3-008 | Save-result condition rider |
-| Hot Air | P3 / P3-008 | Basic-save damage |
-| Needle of Vengeance | P3 / P3-008 | Basic-save damage |
-| Blood Ward | P3 / P3-009 | Modifier / resistance |
-| Forbidding Ward | P3 / P3-009 | Modifier / resistance |
-| Spirit Ward | P3 / P3-009 | Modifier / resistance |
-| Dirge of Remembrance | P3 / P3-010 | Save-result condition rider |
-| Unexpected Windfall | P3 / P3-010 | Save-result condition rider, Native condition |
-| Wilding Word | P3 / P3-010 | Save-result condition rider, Native condition, Modifier / resistance |
-| Captivating Adoration | P3 / P3-011 | Aura membership, Area exposure, Temporary immunity, Save-result condition rider, Native condition |
-| Nymph's Grace | P3 / P3-011 | Aura membership, Area exposure, Native condition |
-| Radiant Globe | P3 / P3-011 | Save-result condition rider, Native condition |
-| Buzzing Bites | P3 / P3-012 | Temporary immunity, Save-result condition rider, Native condition |
-| Clinging Ice | P3 / P3-012 | Save-result condition rider, Modifier / resistance |
-| Dawnflower's Light | P3 / P3-013 | Modifier / resistance |
-| Light of Revelation | P3 / P3-013 | Aura membership, Information / adjudication, Modifier / resistance |
-| Evil Eye | P3 / P3-014 | Save-result condition rider, Native condition |
-| Information Overload | P3 / P3-014 | Save-result condition rider, Native condition, Information / adjudication |
-| Ghostly Shift | P3 / P3-015 | Modifier / resistance |
-| Protector's Sphere | P3 / P3-015 | Aura membership, Modifier / resistance |
-| Laughing Fit | P3 / P3-016 | Save-result condition rider, Native condition |
-| Roaring Applause | P3 / P3-016 | Turn trigger or boundary, Save-result condition rider, Native condition |
-| Sting of the Sea | P3 / P3-017 | Turn trigger or boundary, Save-result condition rider, Native condition |
-| Tomorrow's Dawn | P3 / P3-017 | Turn trigger or boundary, Save-result condition rider, Native condition, Modifier / resistance |
-| Angelic Halo | P3 / P3-018 | Aura membership, Healing / recipient mode, Modifier / resistance |
-| Burrow Ward | P3 / P3-020 |  |
-| Calm | P3 / P3-021 | Save-result condition rider, Modifier / resistance |
-| Carrion Mire | P3 / P3-022 | Native condition, Healing / recipient mode, Counteract |
-| Cloak of Light | P3 / P3-024 | Basic-save damage, Healing / recipient mode |
-| Discomfiting Whispers | P3 / P3-030 | Aura membership, Area exposure |
-| Elemental Betrayal | P3 / P3-032 | Choice / casting variant, Modifier / resistance |
-| Embodiment of Battle | P3 / P3-033 | Attack and dependent result, Modifier / resistance |
-| Fallow Field | P3 / P3-034 | Temporary immunity, Save-result condition rider, Healing / recipient mode |
-| Foresee the Path | P3 / P3-035 | Temporary immunity, Attack and dependent result, Modifier / resistance |
-| Glimmer of Charm | P3 / P3-037 | Aura membership, Area exposure, Temporary immunity, Save-result condition rider |
-| Hedge Prison | P3 / P3-039 | Save-result condition rider |
-| Incendiary Aura | P3 / P3-041 | Aura membership, Persistent damage |
-| Manifest Will | P3 / P3-044 | Aura membership, Modifier / resistance |
-| Osseous Cage | P3 / P3-045 | Native condition |
-| Pact Broker | P3 / P3-047 | Temporary immunity, Save-result condition rider, Modifier / resistance |
-| Rainbow's End | P3 / P3-051 | Basic-save damage, Native condition |
-| Safe Passage | P3 / P3-053 | Native condition, Modifier / resistance |
-| Shroud of Night | P3 / P3-055 |  |
-| Silence | P3 / P3-056 | Aura membership |
+| Competitive Edge | P3 / P3-001 | Modifier / resistance |
+| Girzanje's March | P3 / P3-001 | Modifier / resistance |
+| Radiant Heart of Devotion | P3 / P3-001 | Native condition, Modifier / resistance |
+| Stoke the Heart | P3 / P3-001 | Modifier / resistance |
+| Veil of Dreams | P3 / P3-001 | Modifier / resistance |
+| Cycle of Retribution | P3 / P3-002 | Save-result condition rider |
+| Hot Air | P3 / P3-002 | Basic-save damage |
+| Needle of Vengeance | P3 / P3-002 | Basic-save damage |
+| Blood Ward | P3 / P3-003 | Modifier / resistance |
+| Forbidding Ward | P3 / P3-003 | Modifier / resistance |
+| Spirit Ward | P3 / P3-003 | Modifier / resistance |
+| Dirge of Remembrance | P3 / P3-004 | Save-result condition rider |
+| Unexpected Windfall | P3 / P3-004 | Save-result condition rider, Native condition |
+| Wilding Word | P3 / P3-004 | Save-result condition rider, Native condition, Modifier / resistance |
+| Captivating Adoration | P3 / P3-005 | Aura membership, Area exposure, Temporary immunity, Save-result condition rider, Native condition |
+| Nymph's Grace | P3 / P3-005 | Aura membership, Area exposure, Native condition |
+| Radiant Globe | P3 / P3-005 | Save-result condition rider, Native condition |
+| Buzzing Bites | P3 / P3-006 | Temporary immunity, Save-result condition rider, Native condition |
+| Clinging Ice | P3 / P3-006 | Save-result condition rider, Modifier / resistance |
+| Dawnflower's Light | P3 / P3-007 | Modifier / resistance |
+| Light of Revelation | P3 / P3-007 | Aura membership, Information / adjudication, Modifier / resistance |
+| Evil Eye | P3 / P3-008 | Save-result condition rider, Native condition |
+| Information Overload | P3 / P3-008 | Save-result condition rider, Native condition, Information / adjudication |
+| Ghostly Shift | P3 / P3-009 | Modifier / resistance |
+| Protector's Sphere | P3 / P3-009 | Aura membership, Modifier / resistance |
+| Laughing Fit | P3 / P3-010 | Save-result condition rider, Native condition |
+| Roaring Applause | P3 / P3-010 | Turn trigger or boundary, Save-result condition rider, Native condition |
+| Frost Pillar | P3 / P3-011 | Native condition, Modifier / resistance |
+| Lifewood Cage | P3 / P3-011 | Modifier / resistance |
+| Sting of the Sea | P3 / P3-012 | Turn trigger or boundary, Save-result condition rider, Native condition |
+| Tomorrow's Dawn | P3 / P3-012 | Turn trigger or boundary, Save-result condition rider, Native condition, Modifier / resistance |
+| Angelic Halo | P3 / P3-013 | Aura membership, Healing / recipient mode, Modifier / resistance |
+| Burrow Ward | P3 / P3-015 |  |
+| Calm | P3 / P3-016 | Save-result condition rider, Modifier / resistance |
+| Carrion Mire | P3 / P3-017 | Native condition, Healing / recipient mode, Counteract |
+| Cloak of Light | P3 / P3-019 | Basic-save damage, Healing / recipient mode |
+| Discomfiting Whispers | P3 / P3-025 | Aura membership, Area exposure |
+| Elemental Betrayal | P3 / P3-027 | Choice / casting variant, Modifier / resistance |
+| Embodiment of Battle | P3 / P3-028 | Attack and dependent result, Modifier / resistance |
+| Fallow Field | P3 / P3-029 | Temporary immunity, Save-result condition rider, Healing / recipient mode |
+| Fateful Condemnation | P3 / P3-030 | Aura membership, Save-result condition rider, Native condition, Modifier / resistance |
+| Foresee the Path | P3 / P3-031 | Temporary immunity, Attack and dependent result, Modifier / resistance |
+| Glimmer of Charm | P3 / P3-033 | Aura membership, Area exposure, Temporary immunity, Save-result condition rider |
+| Hedge Prison | P3 / P3-036 | Save-result condition rider |
+| Incendiary Aura | P3 / P3-038 | Aura membership, Persistent damage |
+| Manifest Will | P3 / P3-041 | Aura membership, Modifier / resistance |
+| Osseous Cage | P3 / P3-042 | Native condition |
+| Pact Broker | P3 / P3-044 | Temporary immunity, Save-result condition rider, Modifier / resistance |
+| Rainbow's End | P3 / P3-048 | Basic-save damage, Native condition |
+| Safe Passage | P3 / P3-051 | Native condition, Modifier / resistance |
+| Scrying | P3 / P3-052 | Temporary immunity, Save-result condition rider, Choice / casting variant |
+| Shroud of Night | P3 / P3-054 |  |
+| Silence | P3 / P3-055 | Aura membership |
+| Song of the Fallen | P3 / P3-057 | Save-result condition rider, Basic-save damage, Native condition |
 | Spiral of Horrors | P3 / P3-059 | Aura membership, Native condition |
 | Stumbling Curse | P3 / P3-062 | Save-result condition rider, Modifier / resistance |
 | Suffocate | P3 / P3-063 | Save-result condition rider |
@@ -4614,77 +4614,77 @@ These spells are owned by another primary worklist; reuse their listed batch ins
 | Unblinking Flame Ignition | P3 / P3-067 | Aura membership, Area exposure, Granted movement speed, Native condition |
 | Unravel Knowledge | P3 / P3-068 | Save-result condition rider, Choice / casting variant, Modifier / resistance |
 | Voracious Gestalt | P3 / P3-070 | Aura membership, Turn trigger or boundary, Area exposure, Basic-save damage |
-| Blanket of Stars | P3 / P3-071 | Turn trigger or boundary, Area exposure, Save-result condition rider, Native condition, Modifier / resistance |
-| Bralani Referendum | P3 / P3-071 | Area exposure, Ending or dismissal, Basic-save damage, Native condition, Choice / casting variant |
-| Shadow Army | P3 / P3-071 | Turn trigger or boundary, Area exposure, Save-result condition rider, Native condition, Choice / casting variant |
-| Falling Stars | P3 / P3-072 | Area exposure, Basic-save damage |
-| Shadow Raid | P3 / P3-072 | Area exposure, Basic-save damage, Choice / casting variant |
-| Ravenous Darkness | P3 / P3-073 | Area exposure, Ending or dismissal, Attack and dependent result, Modifier / resistance |
-| Slither | P3 / P3-073 | Area exposure, Ending or dismissal, Save-result condition rider, Persistent damage, Native condition |
-| Darklight | P3 / P3-074 | Area exposure, Basic-save damage |
-| Deluge | P3 / P3-075 | Area exposure, Native condition |
-| Fire Seeds | P3 / P3-076 | Area exposure, Ending or dismissal |
-| Indolent Haze | P3 / P3-077 | Area exposure, Ending or dismissal, Save-result condition rider, Native condition |
-| Infinitesimal Collapse Field | P3 / P3-078 | Area exposure, Save-result condition rider, Native condition |
-| Under Sunless Skies | P3 / P3-079 | Turn trigger or boundary, Area exposure, Native condition, Modifier / resistance |
-| Veil of Broken Reality | P3 / P3-080 | Area exposure, Temporary immunity, Ending or dismissal, Save-result condition rider, Native condition, Information / adjudication |
-| Life's Fresh Bloom | P3 / P3-081 | Turn trigger or boundary, Area exposure, Granted movement speed, Native condition, Modifier / resistance |
-| Petal Storm | P3 / P3-081 | Area exposure, Basic-save damage |
-| Rust Cloud | P3 / P3-081 | Area exposure, Basic-save damage, Persistent damage |
-| Sepulchral Mask | P3 / P3-081 | Area exposure, Save-result condition rider, Modifier / resistance |
-| Toxic Cloud | P3 / P3-081 | Area exposure, Ending or dismissal |
-| Tree of Life and Death | P3 / P3-081 | Area exposure, Basic-save damage, Healing / recipient mode |
-| Ash Cloud | P3 / P3-082 | Area exposure, Save-result condition rider, Native condition, Information / adjudication |
-| Incendiary Fog | P3 / P3-082 | Area exposure, Basic-save damage |
-| Ring of Truth | P3 / P3-082 | Area exposure, Modifier / resistance |
-| Stinking Cloud | P3 / P3-082 | Area exposure, Save-result condition rider, Native condition |
-| Asterism | P3 / P3-083 | Area exposure, Ending or dismissal, Basic-save damage |
-| Astral Rain | P3 / P3-083 | Turn trigger or boundary, Area exposure, Basic-save damage |
-| Spout | P3 / P3-083 | Turn trigger or boundary, Area exposure, Save-result condition rider, Basic-save damage, Native condition |
-| Fire Ray | P3 / P3-084 | Area exposure, Save-result condition rider, Attack and dependent result |
-| Murmuration | P3 / P3-084 | Area exposure, Save-result condition rider, Modifier / resistance |
-| Rend Magic | P3 / P3-084 | Area exposure, Attack and dependent result |
-| Corpse Bloom | P3 / P3-085 | Area exposure, Save-result condition rider, Native condition |
-| Pollen Pods | P3 / P3-085 | Area exposure, Save-result condition rider, Native condition |
-| The Queen's Rainbow | P3 / P3-088 | Area exposure, Save-result condition rider, Native condition |
-| Unbounded Sphere | P3 / P3-088 | Area exposure, Save-result condition rider |
-| Call to Arms | P3 / P3-091 | Area exposure, Modifier / resistance |
-| Circle of Protection | P3 / P3-092 | Area exposure, Modifier / resistance |
-| Croak Voice | P3 / P3-093 | Area exposure, Save-result condition rider |
-| Disintegrating Puddle | P3 / P3-096 | Area exposure, Attack and dependent result |
-| Downpour | P3 / P3-099 | Area exposure, Modifier / resistance |
-| Elysian Whimsy | P3 / P3-101 | Area exposure, Save-result condition rider, Modifier / resistance |
-| Font of Serenity | P3 / P3-103 | Area exposure, Temporary immunity, Counteract, Modifier / resistance |
-| Foul Miasma | P3 / P3-104 | Area exposure, Save-result condition rider |
-| Freezing Touch | P3 / P3-105 | Area exposure, Save-result condition rider, Persistent damage, Native condition |
-| Gravity Well | P3 / P3-106 | Area exposure, Save-result condition rider |
-| Hallucination | P3 / P3-107 | Area exposure, Save-result condition rider, Information / adjudication, Modifier / resistance |
-| Home Among Mulberry Leaves | P3 / P3-109 | Turn trigger or boundary, Area exposure, Native condition, Attack and dependent result |
-| Impaling Spike | P3 / P3-110 | Turn trigger or boundary, Area exposure, Save-result condition rider, Native condition, Modifier / resistance |
-| Inner Radiance Torrent | P3 / P3-111 | Area exposure, Save-result condition rider, Basic-save damage, Native condition, Counteract |
-| Instant Minefield | P3 / P3-112 | Area exposure, Basic-save damage |
-| Luring Wail | P3 / P3-113 | Area exposure, Save-result condition rider, Native condition, Modifier / resistance |
-| Overflowing Sorrow | P3 / P3-115 | Area exposure, Save-result condition rider, Counteract, Modifier / resistance |
-| Safeguard Secret | P3 / P3-117 | Area exposure, Choice / casting variant, Information / adjudication, Modifier / resistance |
-| Shields of the Spirit | P3 / P3-118 | Turn trigger or boundary, Area exposure, Modifier / resistance |
-| Silver's Refrain | P3 / P3-119 | Area exposure, Counteract |
-| Slough Skin | P3 / P3-120 | Turn trigger or boundary, Area exposure, Persistent damage, Modifier / resistance |
-| Songbird's Call | P3 / P3-121 | Area exposure |
-| Vector Screen | P3 / P3-124 | Area exposure, Modifier / resistance |
+| Life's Fresh Bloom | P3 / P3-071 | Turn trigger or boundary, Area exposure, Granted movement speed, Native condition, Modifier / resistance |
+| Petal Storm | P3 / P3-071 | Area exposure, Basic-save damage |
+| Rust Cloud | P3 / P3-071 | Area exposure, Basic-save damage, Persistent damage |
+| Sepulchral Mask | P3 / P3-071 | Area exposure, Save-result condition rider, Modifier / resistance |
+| Toxic Cloud | P3 / P3-071 | Area exposure, Ending or dismissal |
+| Tree of Life and Death | P3 / P3-071 | Area exposure, Basic-save damage, Healing / recipient mode |
+| Ash Cloud | P3 / P3-072 | Area exposure, Save-result condition rider, Native condition, Information / adjudication |
+| Incendiary Fog | P3 / P3-072 | Area exposure, Basic-save damage |
+| Ring of Truth | P3 / P3-072 | Area exposure, Modifier / resistance |
+| Stinking Cloud | P3 / P3-072 | Area exposure, Save-result condition rider, Native condition |
+| Asterism | P3 / P3-073 | Area exposure, Ending or dismissal, Basic-save damage |
+| Astral Rain | P3 / P3-073 | Turn trigger or boundary, Area exposure, Basic-save damage |
+| Spout | P3 / P3-073 | Turn trigger or boundary, Area exposure, Save-result condition rider, Basic-save damage, Native condition |
+| Ravenous Darkness | P3 / P3-074 | Area exposure, Ending or dismissal, Attack and dependent result, Modifier / resistance |
+| Slither | P3 / P3-074 | Area exposure, Ending or dismissal, Save-result condition rider, Persistent damage, Native condition |
+| Fire Ray | P3 / P3-075 | Area exposure, Save-result condition rider, Attack and dependent result |
+| Murmuration | P3 / P3-075 | Area exposure, Save-result condition rider, Modifier / resistance |
+| Rend Magic | P3 / P3-075 | Area exposure, Attack and dependent result |
+| Blanket of Stars | P3 / P3-076 | Turn trigger or boundary, Area exposure, Save-result condition rider, Native condition, Modifier / resistance |
+| Bralani Referendum | P3 / P3-076 | Area exposure, Ending or dismissal, Basic-save damage, Native condition, Choice / casting variant |
+| Shadow Army | P3 / P3-076 | Turn trigger or boundary, Area exposure, Save-result condition rider, Native condition, Choice / casting variant |
+| Corpse Bloom | P3 / P3-077 | Area exposure, Save-result condition rider, Native condition |
+| Pollen Pods | P3 / P3-077 | Area exposure, Save-result condition rider, Native condition |
+| Darklight | P3 / P3-079 | Area exposure, Basic-save damage |
+| Falling Stars | P3 / P3-080 | Area exposure, Basic-save damage |
+| Shadow Raid | P3 / P3-080 | Area exposure, Basic-save damage, Choice / casting variant |
+| The Queen's Rainbow | P3 / P3-082 | Area exposure, Save-result condition rider, Native condition |
+| Unbounded Sphere | P3 / P3-082 | Area exposure, Save-result condition rider |
+| Call to Arms | P3 / P3-085 | Area exposure, Modifier / resistance |
+| Circle of Protection | P3 / P3-086 | Area exposure, Modifier / resistance |
+| Croak Voice | P3 / P3-087 | Area exposure, Save-result condition rider |
+| Deluge | P3 / P3-088 | Area exposure, Native condition |
+| Disintegrating Puddle | P3 / P3-091 | Area exposure, Attack and dependent result |
+| Downpour | P3 / P3-094 | Area exposure, Modifier / resistance |
+| Elysian Whimsy | P3 / P3-096 | Area exposure, Save-result condition rider, Modifier / resistance |
+| Fire Seeds | P3 / P3-098 | Area exposure, Ending or dismissal |
+| Font of Serenity | P3 / P3-099 | Area exposure, Temporary immunity, Counteract, Modifier / resistance |
+| Foul Miasma | P3 / P3-100 | Area exposure, Save-result condition rider |
+| Freezing Touch | P3 / P3-101 | Area exposure, Save-result condition rider, Persistent damage, Native condition |
+| Gravity Well | P3 / P3-102 | Area exposure, Save-result condition rider |
+| Hallucination | P3 / P3-103 | Area exposure, Save-result condition rider, Information / adjudication, Modifier / resistance |
+| Home Among Mulberry Leaves | P3 / P3-105 | Turn trigger or boundary, Area exposure, Native condition, Attack and dependent result |
+| Impaling Spike | P3 / P3-106 | Turn trigger or boundary, Area exposure, Save-result condition rider, Native condition, Modifier / resistance |
+| Indolent Haze | P3 / P3-107 | Area exposure, Ending or dismissal, Save-result condition rider, Native condition |
+| Infinitesimal Collapse Field | P3 / P3-108 | Area exposure, Save-result condition rider, Native condition |
+| Inner Radiance Torrent | P3 / P3-109 | Area exposure, Save-result condition rider, Basic-save damage, Native condition, Counteract |
+| Instant Minefield | P3 / P3-110 | Area exposure, Basic-save damage |
+| Luring Wail | P3 / P3-111 | Area exposure, Save-result condition rider, Native condition, Modifier / resistance |
+| Overflowing Sorrow | P3 / P3-113 | Area exposure, Save-result condition rider, Counteract, Modifier / resistance |
+| Safeguard Secret | P3 / P3-115 | Area exposure, Choice / casting variant, Information / adjudication, Modifier / resistance |
+| Shields of the Spirit | P3 / P3-116 | Turn trigger or boundary, Area exposure, Modifier / resistance |
+| Silver's Refrain | P3 / P3-117 | Area exposure, Counteract |
+| Slough Skin | P3 / P3-118 | Turn trigger or boundary, Area exposure, Persistent damage, Modifier / resistance |
+| Songbird's Call | P3 / P3-119 | Area exposure |
+| Under Sunless Skies | P3 / P3-122 | Turn trigger or boundary, Area exposure, Native condition, Modifier / resistance |
+| Vector Screen | P3 / P3-123 | Area exposure, Modifier / resistance |
+| Veil of Broken Reality | P3 / P3-124 | Area exposure, Temporary immunity, Ending or dismissal, Save-result condition rider, Native condition, Information / adjudication |
 | Vicious Jealousy | P3 / P3-125 | Area exposure, Save-result condition rider |
 | Visions of Danger | P3 / P3-126 | Area exposure, Basic-save damage |
 | Wall of Water | P3 / P3-128 | Area exposure, Counteract, Modifier / resistance |
 | Ymeri's Mark | P3 / P3-129 | Area exposure, Ending or dismissal, Save-result condition rider, Basic-save damage, Native condition, Information / adjudication |
-| Calcification | P3 / P3-130 | Condition-dependent lifetime, Recurring saving throw, Turn trigger or boundary, Save-result condition rider, Native condition, Choice / casting variant, Modifier / resistance |
-| Call of the Grave | P3 / P3-131 | Condition-dependent lifetime, Native condition, Attack and dependent result |
-| Chromatic Ray | P3 / P3-131 | Condition-dependent lifetime, Turn trigger or boundary, Save-result condition rider, Native condition, Attack and dependent result |
-| Divine Wrath | P3 / P3-131 | Condition-dependent lifetime, Save-result condition rider, Native condition |
-| Friends to Foes | P3 / P3-131 | Condition-dependent lifetime, Save-result condition rider, Native condition |
-| Frozen Fog | P3 / P3-131 | Condition-dependent lifetime, Sustain, Area exposure, Save-result condition rider, Basic-save damage, Native condition, Modifier / resistance |
-| Missed Cue | P3 / P3-131 | Condition-dependent lifetime, Save-result condition rider, Native condition |
-| Scramble Body | P3 / P3-131 | Condition-dependent lifetime, Save-result condition rider, Native condition |
-| Vision of Death | P3 / P3-131 | Condition-dependent lifetime, Save-result condition rider, Native condition |
-| With Friends like These | P3 / P3-131 | Condition-dependent lifetime, Save-result condition rider, Native condition |
+| Call of the Grave | P3 / P3-130 | Condition-dependent lifetime, Native condition, Attack and dependent result |
+| Chromatic Ray | P3 / P3-130 | Condition-dependent lifetime, Turn trigger or boundary, Save-result condition rider, Native condition, Attack and dependent result |
+| Divine Wrath | P3 / P3-130 | Condition-dependent lifetime, Save-result condition rider, Native condition |
+| Friends to Foes | P3 / P3-130 | Condition-dependent lifetime, Save-result condition rider, Native condition |
+| Frozen Fog | P3 / P3-130 | Condition-dependent lifetime, Sustain, Area exposure, Save-result condition rider, Basic-save damage, Native condition, Modifier / resistance |
+| Missed Cue | P3 / P3-130 | Condition-dependent lifetime, Save-result condition rider, Native condition |
+| Scramble Body | P3 / P3-130 | Condition-dependent lifetime, Save-result condition rider, Native condition |
+| Vision of Death | P3 / P3-130 | Condition-dependent lifetime, Save-result condition rider, Native condition |
+| With Friends like These | P3 / P3-130 | Condition-dependent lifetime, Save-result condition rider, Native condition |
+| Calcification | P3 / P3-131 | Condition-dependent lifetime, Recurring saving throw, Turn trigger or boundary, Save-result condition rider, Native condition, Choice / casting variant, Modifier / resistance |
 | Censure Falsehoods | P3 / P3-132 | Condition-dependent lifetime, Save-result condition rider, Native condition |
 | Entrancing Eyes | P3 / P3-133 | Condition-dependent lifetime, Sustain, Turn trigger or boundary, Area exposure, Save-result condition rider, Native condition |
 | Focusing Hum | P3 / P3-134 | Condition-dependent lifetime, Sustain, Native condition |
@@ -4717,73 +4717,74 @@ These spells are owned by another primary worklist; reuse their listed batch ins
 | Haunting Spirit | P3 / P3-143 | Recurring saving throw, Turn trigger or boundary, Save-result condition rider, Native condition |
 | Orb of Twisting Fate | P3 / P3-143 | Recurring saving throw, Turn trigger or boundary, Save-result condition rider |
 | Possession | P3 / P3-143 | Recurring saving throw, Turn trigger or boundary, Area exposure, Ending or dismissal, Save-result condition rider, Native condition, Information / adjudication |
-| Divinity Leech | P3 / P3-144 | Recurring saving throw, Save-result condition rider, Native condition, Healing / recipient mode |
-| Wave of Despair | P3 / P3-144 | Recurring saving throw, Turn trigger or boundary, Save-result condition rider, Native condition |
-| Puppet Strings | P3 / P3-145 | Recurring saving throw, Sustain, Turn trigger or boundary, Save-result condition rider, Native condition, Attack and dependent result |
-| Confusing Colors | P3 / P3-146 | Recurring saving throw, Area exposure, Save-result condition rider, Native condition |
-| Hypnotize | P3 / P3-146 | Recurring saving throw, Area exposure, Save-result condition rider, Native condition |
-| Bane | P3 / P3-147 | Recurring saving throw, Sustain, Area exposure, Counteract, Modifier / resistance |
-| Enthrall | P3 / P3-148 | Recurring saving throw, Sustain, Temporary immunity, Save-result condition rider, Native condition, Modifier / resistance |
-| Inexhaustible Cynicism | P3 / P3-149 | Recurring saving throw, Turn trigger or boundary, Save-result condition rider, Information / adjudication |
-| Jealous Hex | P3 / P3-150 | Recurring saving throw, Turn trigger or boundary, Save-result condition rider, Native condition |
-| Mind Games | P3 / P3-151 | Recurring saving throw, Sustain, Save-result condition rider, Native condition |
-| Part the Mists to Paradise | P3 / P3-152 | Recurring saving throw, Ending or dismissal, Healing / recipient mode, Incarnate arrival/departure, Modifier / resistance |
-| Aura of the Unremarkable | P3 / P3-154 | Ending or dismissal, Save-result condition rider, Information / adjudication, Modifier / resistance |
-| Chrysopoetic Curse | P3 / P3-155 | Ending or dismissal, Save-result condition rider, Native condition |
-| Tree of Seasons | P3 / P3-157 | Ending or dismissal, Basic-save damage |
-| Charming Touch | P3 / P3-158 | Ending or dismissal, Save-result condition rider, Modifier / resistance |
-| Crushing Ground | P3 / P3-158 | Ending or dismissal, Save-result condition rider, Native condition, Modifier / resistance |
-| Cup of Dust | P3 / P3-158 | Temporary immunity, Ending or dismissal, Save-result condition rider, Native condition |
-| Fashionista | P3 / P3-158 | Ending or dismissal, Modifier / resistance |
-| Feast of Ashes | P3 / P3-158 | Temporary immunity, Ending or dismissal, Save-result condition rider, Native condition |
-| Frozen Lungs | P3 / P3-158 | Ending or dismissal, Save-result condition rider |
-| Musical Accompaniment | P3 / P3-158 | Ending or dismissal, Modifier / resistance |
-| Sculpt Sound | P3 / P3-158 | Ending or dismissal, Save-result condition rider, Native condition |
-| Shifting Form | P3 / P3-158 | Ending or dismissal, Granted movement speed, Modifier / resistance |
-| Stick On | P3 / P3-158 | Ending or dismissal, Native condition |
-| Tether | P3 / P3-158 | Ending or dismissal, Save-result condition rider, Native condition, Modifier / resistance |
-| Glass Shield | P3 / P3-160 | Turn trigger or boundary, Ending or dismissal, Basic-save damage, Modifier / resistance |
-| Protect Companion | P3 / P3-160 | Turn trigger or boundary, Ending or dismissal, Modifier / resistance |
-| Shield | P3 / P3-160 | Turn trigger or boundary, Ending or dismissal, Modifier / resistance |
-| Guidance | P3 / P3-161 | Temporary immunity, Ending or dismissal, Modifier / resistance |
-| Wash Your Luck | P3 / P3-161 | Temporary immunity, Ending or dismissal |
-| Anticipate Peril | P3 / P3-162 | Ending or dismissal, Modifier / resistance |
-| Bullhorn | P3 / P3-163 | Ending or dismissal, Modifier / resistance |
-| Nymph's Token | P3 / P3-163 | Ending or dismissal, Modifier / resistance |
-| Biting Words | P3 / P3-164 | Ending or dismissal, Attack and dependent result |
-| Camel Spit | P3 / P3-164 | Ending or dismissal, Persistent damage, Native condition, Attack and dependent result |
-| Charm | P3 / P3-165 | Ending or dismissal, Save-result condition rider, Modifier / resistance |
-| Curse of Death | P3 / P3-166 | Temporary immunity, Ending or dismissal, Save-result condition rider, Native condition, Delegated affliction |
-| Mycological Malady | P3 / P3-166 | Ending or dismissal, Save-result condition rider, Native condition, Delegated affliction |
-| Snake Fangs | P3 / P3-167 | Ending or dismissal |
-| Funeral Flames | P3 / P3-168 | Ending or dismissal, Persistent damage |
-| Oaken Resilience | P3 / P3-168 | Ending or dismissal, Modifier / resistance |
-| Illusory Disguise | P3 / P3-169 | Ending or dismissal, Choice / casting variant, Modifier / resistance |
-| Imitate Fauna | P3 / P3-169 | Ending or dismissal, Information / adjudication, Modifier / resistance |
-| Bridge of Vines | P3 / P3-172 | Ending or dismissal, Save-result condition rider, Native condition |
-| Skyglass Prison | P3 / P3-172 | Turn trigger or boundary, Ending or dismissal, Save-result condition rider, Native condition |
-| Blister | P3 / P3-174 | Ending or dismissal, Save-result condition rider, Basic-save damage, Choice / casting variant |
-| Chosen Gravity | P3 / P3-176 | Ending or dismissal, Modifier / resistance |
-| Confetti Cloud | P3 / P3-178 | Ending or dismissal, Modifier / resistance |
-| Detonate Magic | P3 / P3-181 | Ending or dismissal, Basic-save damage, Counteract |
-| Dutiful Challenge | P3 / P3-184 | Ending or dismissal, Modifier / resistance |
-| Elemental Absorption | P3 / P3-186 | Ending or dismissal, Basic-save damage, Choice / casting variant, Modifier / resistance |
-| Falsify Heat | P3 / P3-187 | Ending or dismissal, Choice / casting variant, Information / adjudication, Modifier / resistance |
-| Favorable Review | P3 / P3-188 | Ending or dismissal, Save-result condition rider |
-| Imprinting Hand | P3 / P3-195 | Ending or dismissal, Save-result condition rider, Healing / recipient mode |
-| Life-Giving Form | P3 / P3-198 | Temporary immunity, Ending or dismissal, Healing / recipient mode, Modifier / resistance |
-| Lock | P3 / P3-199 | Ending or dismissal, Modifier / resistance |
-| Mirecloak | P3 / P3-201 | Temporary immunity, Ending or dismissal, Save-result condition rider, Native condition, Information / adjudication, Modifier / resistance |
-| Personal Blizzard | P3 / P3-202 | Ending or dismissal, Save-result condition rider, Persistent damage |
-| Personal Ocean | P3 / P3-203 | Ending or dismissal, Granted movement speed, Counteract, Modifier / resistance |
-| Personal Runewell | P3 / P3-204 | Ending or dismissal, Basic-save damage, Modifier / resistance |
-| Phantasmal Treasure | P3 / P3-205 | Turn trigger or boundary, Ending or dismissal, Save-result condition rider, Native condition |
-| Purifying Veil | P3 / P3-207 | Ending or dismissal, Basic-save damage |
-| Scrounger's Glee | P3 / P3-210 | Ending or dismissal, Save-result condition rider, Native condition, Healing / recipient mode |
-| Shaken Confidence | P3 / P3-212 | Turn trigger or boundary, Ending or dismissal, Save-result condition rider |
-| Stone Lance | P3 / P3-216 | Ending or dismissal, Persistent damage, Attack and dependent result, Modifier / resistance |
-| Sudden Recollection | P3 / P3-217 | Ending or dismissal, Choice / casting variant, Information / adjudication |
-| Suspended Retribution | P3 / P3-219 | Ending or dismissal, Basic-save damage, Attack and dependent result |
+| Confusing Colors | P3 / P3-144 | Recurring saving throw, Area exposure, Save-result condition rider, Native condition |
+| Hypnotize | P3 / P3-144 | Recurring saving throw, Area exposure, Save-result condition rider, Native condition |
+| Divinity Leech | P3 / P3-145 | Recurring saving throw, Save-result condition rider, Native condition, Healing / recipient mode |
+| Wave of Despair | P3 / P3-145 | Recurring saving throw, Turn trigger or boundary, Save-result condition rider, Native condition |
+| Bane | P3 / P3-146 | Recurring saving throw, Sustain, Area exposure, Counteract, Modifier / resistance |
+| Enthrall | P3 / P3-147 | Recurring saving throw, Sustain, Temporary immunity, Save-result condition rider, Native condition, Modifier / resistance |
+| Inexhaustible Cynicism | P3 / P3-148 | Recurring saving throw, Turn trigger or boundary, Save-result condition rider, Information / adjudication |
+| Jealous Hex | P3 / P3-149 | Recurring saving throw, Turn trigger or boundary, Save-result condition rider, Native condition |
+| Mind Games | P3 / P3-150 | Recurring saving throw, Sustain, Save-result condition rider, Native condition |
+| Part the Mists to Paradise | P3 / P3-151 | Recurring saving throw, Ending or dismissal, Healing / recipient mode, Incarnate arrival/departure, Modifier / resistance |
+| Puppet Strings | P3 / P3-153 | Recurring saving throw, Sustain, Turn trigger or boundary, Save-result condition rider, Native condition, Attack and dependent result |
+| Charming Touch | P3 / P3-154 | Ending or dismissal, Save-result condition rider, Modifier / resistance |
+| Crushing Ground | P3 / P3-154 | Ending or dismissal, Save-result condition rider, Native condition, Modifier / resistance |
+| Cup of Dust | P3 / P3-154 | Temporary immunity, Ending or dismissal, Save-result condition rider, Native condition |
+| Fashionista | P3 / P3-154 | Ending or dismissal, Modifier / resistance |
+| Feast of Ashes | P3 / P3-154 | Temporary immunity, Ending or dismissal, Save-result condition rider, Native condition |
+| Frozen Lungs | P3 / P3-154 | Ending or dismissal, Save-result condition rider |
+| Musical Accompaniment | P3 / P3-154 | Ending or dismissal, Modifier / resistance |
+| Sculpt Sound | P3 / P3-154 | Ending or dismissal, Save-result condition rider, Native condition |
+| Shifting Form | P3 / P3-154 | Ending or dismissal, Granted movement speed, Modifier / resistance |
+| Stick On | P3 / P3-154 | Ending or dismissal, Native condition |
+| Tether | P3 / P3-154 | Ending or dismissal, Save-result condition rider, Native condition, Modifier / resistance |
+| Glass Shield | P3 / P3-156 | Turn trigger or boundary, Ending or dismissal, Basic-save damage, Modifier / resistance |
+| Protect Companion | P3 / P3-156 | Turn trigger or boundary, Ending or dismissal, Modifier / resistance |
+| Shield | P3 / P3-156 | Turn trigger or boundary, Ending or dismissal, Modifier / resistance |
+| Guidance | P3 / P3-157 | Temporary immunity, Ending or dismissal, Modifier / resistance |
+| Wash Your Luck | P3 / P3-157 | Temporary immunity, Ending or dismissal |
+| Anticipate Peril | P3 / P3-158 | Ending or dismissal, Modifier / resistance |
+| Bullhorn | P3 / P3-159 | Ending or dismissal, Modifier / resistance |
+| Nymph's Token | P3 / P3-159 | Ending or dismissal, Modifier / resistance |
+| Biting Words | P3 / P3-160 | Ending or dismissal, Attack and dependent result |
+| Camel Spit | P3 / P3-160 | Ending or dismissal, Persistent damage, Native condition, Attack and dependent result |
+| Charm | P3 / P3-161 | Ending or dismissal, Save-result condition rider, Modifier / resistance |
+| Curse of Death | P3 / P3-162 | Temporary immunity, Ending or dismissal, Save-result condition rider, Native condition, Delegated affliction |
+| Mycological Malady | P3 / P3-162 | Ending or dismissal, Save-result condition rider, Native condition, Delegated affliction |
+| Snake Fangs | P3 / P3-163 | Ending or dismissal |
+| Funeral Flames | P3 / P3-164 | Ending or dismissal, Persistent damage |
+| Oaken Resilience | P3 / P3-164 | Ending or dismissal, Modifier / resistance |
+| Illusory Disguise | P3 / P3-165 | Ending or dismissal, Choice / casting variant, Modifier / resistance |
+| Imitate Fauna | P3 / P3-165 | Ending or dismissal, Information / adjudication, Modifier / resistance |
+| Bridge of Vines | P3 / P3-168 | Ending or dismissal, Save-result condition rider, Native condition |
+| Skyglass Prison | P3 / P3-168 | Turn trigger or boundary, Ending or dismissal, Save-result condition rider, Native condition |
+| Aura of the Unremarkable | P3 / P3-169 | Ending or dismissal, Save-result condition rider, Information / adjudication, Modifier / resistance |
+| Blister | P3 / P3-171 | Ending or dismissal, Save-result condition rider, Basic-save damage, Choice / casting variant |
+| Chosen Gravity | P3 / P3-173 | Ending or dismissal, Modifier / resistance |
+| Chrysopoetic Curse | P3 / P3-174 | Ending or dismissal, Save-result condition rider, Native condition |
+| Confetti Cloud | P3 / P3-176 | Ending or dismissal, Modifier / resistance |
+| Detonate Magic | P3 / P3-179 | Ending or dismissal, Basic-save damage, Counteract |
+| Dutiful Challenge | P3 / P3-182 | Ending or dismissal, Modifier / resistance |
+| Elemental Absorption | P3 / P3-184 | Ending or dismissal, Basic-save damage, Choice / casting variant, Modifier / resistance |
+| Falsify Heat | P3 / P3-185 | Ending or dismissal, Choice / casting variant, Information / adjudication, Modifier / resistance |
+| Favorable Review | P3 / P3-186 | Ending or dismissal, Save-result condition rider |
+| Imprinting Hand | P3 / P3-193 | Ending or dismissal, Save-result condition rider, Healing / recipient mode |
+| Life-Giving Form | P3 / P3-196 | Temporary immunity, Ending or dismissal, Healing / recipient mode, Modifier / resistance |
+| Lock | P3 / P3-197 | Ending or dismissal, Modifier / resistance |
+| Mirecloak | P3 / P3-199 | Temporary immunity, Ending or dismissal, Save-result condition rider, Native condition, Information / adjudication, Modifier / resistance |
+| One with the Land | P3 / P3-200 | Ending or dismissal, Attack and dependent result, Choice / casting variant, Information / adjudication |
+| Personal Blizzard | P3 / P3-201 | Ending or dismissal, Save-result condition rider, Persistent damage |
+| Personal Ocean | P3 / P3-202 | Ending or dismissal, Granted movement speed, Counteract, Modifier / resistance |
+| Personal Runewell | P3 / P3-203 | Ending or dismissal, Basic-save damage, Modifier / resistance |
+| Phantasmal Treasure | P3 / P3-204 | Turn trigger or boundary, Ending or dismissal, Save-result condition rider, Native condition |
+| Purifying Veil | P3 / P3-206 | Ending or dismissal, Basic-save damage |
+| Scrounger's Glee | P3 / P3-209 | Ending or dismissal, Save-result condition rider, Native condition, Healing / recipient mode |
+| Shaken Confidence | P3 / P3-211 | Turn trigger or boundary, Ending or dismissal, Save-result condition rider |
+| Stone Lance | P3 / P3-215 | Ending or dismissal, Persistent damage, Attack and dependent result, Modifier / resistance |
+| Sudden Recollection | P3 / P3-216 | Ending or dismissal, Choice / casting variant, Information / adjudication |
+| Suspended Retribution | P3 / P3-218 | Ending or dismissal, Basic-save damage, Attack and dependent result |
+| Tree of Seasons | P3 / P3-221 | Ending or dismissal, Basic-save damage |
 | Unfetter Eidolon | P3 / P3-222 | Ending or dismissal, Native condition, Modifier / resistance |
 | Vindicator's Mark | P3 / P3-224 | Ending or dismissal, Attack and dependent result, Information / adjudication |
 | Whirling Scarves | P3 / P3-226 | Turn trigger or boundary, Ending or dismissal, Modifier / resistance |
@@ -4801,193 +4802,193 @@ These spells are owned by another primary worklist; reuse their listed batch ins
 | Quench | P3 / P3-231 | Sustain, Basic-save damage, Counteract, Choice / casting variant |
 | Steal Shadow | P3 / P3-231 | Sustain, Save-result condition rider, Basic-save damage, Native condition |
 | Vibrant Vibrato | P3 / P3-231 | Sustain, Aura membership, Turn trigger or boundary, Area exposure, Save-result condition rider, Persistent damage, Native condition |
-| Benediction | P3 / P3-232 | Sustain, Area exposure, Counteract, Modifier / resistance |
-| Bless | P3 / P3-232 | Sustain, Area exposure, Counteract, Modifier / resistance |
-| Hungry Depths | P3 / P3-232 | Sustain, Area exposure, Basic-save damage |
-| Malediction | P3 / P3-232 | Sustain, Area exposure, Counteract, Modifier / resistance |
-| Pied Piping | P3 / P3-232 | Sustain, Area exposure, Temporary immunity, Ending or dismissal, Save-result condition rider, Native condition |
-| Protective Wards | P3 / P3-232 | Sustain, Aura membership, Modifier / resistance |
-| Reaper's Lantern | P3 / P3-232 | Sustain, Area exposure, Native condition, Healing / recipient mode |
-| Bone Shield | P3 / P3-233 | Sustain, Modifier / resistance |
-| Doom Mark | P3 / P3-233 | Sustain, Native condition, Attack and dependent result |
-| For Love, For Lightning | P3 / P3-233 | Sustain, Basic-save damage |
-| Metal Reverberation | P3 / P3-233 | Sustain, Basic-save damage |
-| Overload Connection | P3 / P3-233 | Sustain, Basic-save damage, Information / adjudication |
-| Spectral Blade | P3 / P3-233 | Sustain, Attack and dependent result |
-| Spiritual Armament | P3 / P3-233 | Sustain, Attack and dependent result |
-| Dancing Fountain | P3 / P3-234 | Sustain, Turn trigger or boundary, Area exposure, Basic-save damage |
-| Phantom Orchestra | P3 / P3-234 | Sustain, Basic-save damage |
-| Spiritual Weapon | P3 / P3-234 | Sustain, Attack and dependent result |
-| Infectious Comedy | P3 / P3-235 | Sustain, Save-result condition rider, Native condition |
-| Mad Monkeys | P3 / P3-235 | Sustain, Temporary immunity, Ending or dismissal, Save-result condition rider, Native condition, Choice / casting variant |
-| Unfathomable Song | P3 / P3-235 | Sustain, Temporary immunity, Save-result condition rider, Native condition |
-| Impaling Briars | P3 / P3-236 | Sustain, Area exposure, Save-result condition rider, Native condition, Attack and dependent result, Modifier / resistance |
-| Pernicious Poltergeist | P3 / P3-236 | Sustain, Native condition |
-| Control Sand | P3 / P3-237 | Sustain, Area exposure, Temporary immunity, Save-result condition rider, Basic-save damage, Native condition, Choice / casting variant |
-| Scouring Sand | P3 / P3-237 | Sustain, Area exposure, Temporary immunity, Save-result condition rider, Native condition, Counteract |
-| Spirit Object | P3 / P3-238 | Sustain, Area exposure, Ending or dismissal, Attack and dependent result |
-| Tangling Creepers | P3 / P3-238 | Sustain, Area exposure, Native condition, Attack and dependent result, Modifier / resistance |
-| Bound in Death | P3 / P3-239 | Sustain, Save-result condition rider |
-| Call of the Quenching | P3 / P3-240 | Sustain, Area exposure, Basic-save damage, Granted movement speed, Modifier / resistance |
-| Dragon Turret | P3 / P3-241 | Sustain, Area exposure, Basic-save damage |
-| Duplicate Foe | P3 / P3-242 | Sustain, Healing / recipient mode |
-| Magnetic Dominion | P3 / P3-243 | Sustain |
-| Musical Shift | P3 / P3-245 | Sustain, Save-result condition rider, Persistent damage, Native condition, Modifier / resistance |
-| Seize Identity | P3 / P3-246 | Sustain, Save-result condition rider, Basic-save damage, Native condition |
-| Stars of Another Sky | P3 / P3-247 | Sustain, Area exposure, Temporary immunity, Save-result condition rider, Native condition |
-| Unbreaking Wave Containment | P3 / P3-248 | Sustain, Basic-save damage, Native condition, Attack and dependent result |
-| Vacuum | P3 / P3-249 | Sustain, Area exposure, Save-result condition rider, Native condition, Modifier / resistance |
-| Animated Assault | P3 / P3-250 | Sustain, Basic-save damage |
-| Circle of Weakness | P3 / P3-250 | Sustain, Save-result condition rider, Native condition, Choice / casting variant, Modifier / resistance |
-| Devouring Void | P3 / P3-250 | Sustain, Basic-save damage |
-| Earth's Bile | P3 / P3-250 | Sustain, Persistent damage, Choice / casting variant |
-| Ember Doppelgänger | P3 / P3-250 | Sustain, Basic-save damage, Native condition, Modifier / resistance |
-| Fiendish Rift | P3 / P3-250 | Sustain, Save-result condition rider, Native condition |
-| Grasping Earth | P3 / P3-250 | Sustain, Area exposure, Save-result condition rider, Native condition |
-| Hymn of Healing | P3 / P3-250 | Sustain, Healing / recipient mode |
-| Sanguine Mist | P3 / P3-250 | Sustain, Basic-save damage |
-| Shroud of Flame | P3 / P3-250 | Sustain, Basic-save damage |
-| Swarmsense | P3 / P3-250 | Sustain, Granted movement speed, Modifier / resistance |
-| Unravel Existence | P3 / P3-250 | Sustain, Basic-save damage, Persistent damage, Native condition |
-| Avenging Wildwood | P3 / P3-251 | Sustain, Attack and dependent result, Choice / casting variant |
-| Malicious Shadow | P3 / P3-251 | Sustain, Area exposure, Attack and dependent result, Counteract, Choice / casting variant |
-| Blood in the Water | P3 / P3-252 | Sustain, Basic-save damage, Persistent damage |
-| Coiling Dance | P3 / P3-252 | Sustain, Native condition, Choice / casting variant |
-| Figment | P3 / P3-252 | Sustain, Modifier / resistance |
-| Crown of Prophets | P3 / P3-253 | Sustain, Turn trigger or boundary, Basic-save damage |
-| Discern Secrets | P3 / P3-253 | Sustain, Temporary immunity, Information / adjudication, Modifier / resistance |
-| Wish Market | P3 / P3-253 | Sustain, Modifier / resistance |
-| Beastmaster Trance | P3 / P3-254 | Sustain, Area exposure, Native condition, Information / adjudication |
-| Eyes of the Dead | P3 / P3-254 | Sustain, Area exposure, Native condition, Information / adjudication |
-| Leaden Steps | P3 / P3-257 | Sustain, Turn trigger or boundary, Save-result condition rider, Modifier / resistance |
-| Lightning Lasso | P3 / P3-257 | Sustain, Turn trigger or boundary, Save-result condition rider, Native condition |
-| Mantle of the Frozen Heart | P3 / P3-258 | Sustain, Area exposure, Granted movement speed, Modifier / resistance |
-| Mantle of the Magma Heart | P3 / P3-258 | Sustain, Area exposure, Persistent damage, Native condition, Modifier / resistance |
-| Lightning Storm | P3 / P3-259 | Sustain, Basic-save damage |
-| Poltergeist's Fury | P3 / P3-259 | Sustain, Basic-save damage |
-| Animal Vision | P3 / P3-260 | Sustain, Information / adjudication |
-| Animate Rope | P3 / P3-261 | Sustain, Attack and dependent result, Modifier / resistance |
-| Appearance of Wealth | P3 / P3-262 | Sustain, Area exposure, Native condition |
-| Aqueous Orb | P3 / P3-263 | Sustain, Save-result condition rider, Counteract |
-| Awaken Entropy | P3 / P3-264 | Sustain, Area exposure, Basic-save damage |
-| Confront Selves | P3 / P3-269 | Sustain, Turn trigger or boundary, Basic-save damage, Native condition |
-| Dancing Blade | P3 / P3-271 | Sustain, Attack and dependent result |
-| Diadem of Divine Radiance | P3 / P3-273 | Sustain, Persistent damage, Native condition, Attack and dependent result, Counteract |
-| Diamond Dust | P3 / P3-274 | Sustain, Aura membership, Area exposure, Ending or dismissal, Modifier / resistance |
-| Divine Aura | P3 / P3-275 | Sustain, Aura membership, Temporary immunity, Native condition, Choice / casting variant, Modifier / resistance |
-| Domora's Defense | P3 / P3-276 | Sustain, Modifier / resistance |
-| Draconic Barrage | P3 / P3-277 | Sustain, Basic-save damage |
-| Fallen Soldier's Lament | P3 / P3-278 | Sustain, Save-result condition rider, Native condition |
-| Floating Flame | P3 / P3-280 | Sustain, Area exposure, Basic-save damage |
-| Garden of Healing | P3 / P3-281 | Sustain, Healing / recipient mode, Modifier / resistance |
-| Gasping Marsh | P3 / P3-282 | Sustain, Area exposure, Temporary immunity, Save-result condition rider, Persistent damage, Native condition |
-| Gift of the Anemos | P3 / P3-283 | Sustain, Aura membership, Turn trigger or boundary, Save-result condition rider, Native condition, Attack and dependent result |
-| Glamorize | P3 / P3-284 | Sustain, Modifier / resistance |
-| Grasping Vine | P3 / P3-285 | Sustain, Turn trigger or boundary, Save-result condition rider |
-| Halcyon Mists | P3 / P3-286 | Sustain, Turn trigger or boundary, Persistent damage, Choice / casting variant |
-| Implosion | P3 / P3-287 | Sustain, Choice / casting variant |
-| Infectious Ennui | P3 / P3-288 | Sustain, Turn trigger or boundary, Temporary immunity, Save-result condition rider, Native condition, Choice / casting variant, Information / adjudication |
-| Interstellar Void | P3 / P3-289 | Sustain, Basic-save damage, Native condition |
-| Lashing Rope | P3 / P3-290 | Sustain, Turn trigger or boundary, Save-result condition rider, Attack and dependent result |
-| Levitate | P3 / P3-291 | Sustain, Modifier / resistance |
-| Light | P3 / P3-292 | Sustain, Ending or dismissal, Choice / casting variant |
-| Magic's Vessel | P3 / P3-293 | Sustain, Turn trigger or boundary, Modifier / resistance |
-| Mind Probe | P3 / P3-294 | Sustain, Save-result condition rider, Information / adjudication, Modifier / resistance |
-| Mind Reading | P3 / P3-295 | Sustain, Temporary immunity, Save-result condition rider, Information / adjudication |
-| Movanic Glimmer | P3 / P3-298 | Sustain, Choice / casting variant, Modifier / resistance |
-| Painted Scout | P3 / P3-299 | Sustain |
-| Palm-Held Sun | P3 / P3-300 | Sustain, Aura membership, Native condition, Healing / recipient mode |
-| Persistent Servant | P3 / P3-302 | Sustain, Native condition, Choice / casting variant |
-| Phantasmal Protagonist | P3 / P3-304 | Sustain, Turn trigger or boundary, Save-result condition rider, Native condition, Attack and dependent result |
-| Pillars of Sand | P3 / P3-306 | Sustain, Area exposure, Native condition |
-| Pyrotechnics | P3 / P3-309 | Sustain, Turn trigger or boundary, Area exposure, Temporary immunity, Save-result condition rider, Native condition, Information / adjudication, Modifier / resistance |
-| Rewrite Memory | P3 / P3-311 | Sustain, Area exposure |
-| Sacred Nimbus | P3 / P3-312 | Sustain, Turn trigger or boundary, Modifier / resistance |
-| Shielding Formation | P3 / P3-315 | Sustain, Area exposure, Temporary immunity, Modifier / resistance |
-| Sign of Conviction | P3 / P3-317 | Sustain, Native condition, Attack and dependent result, Modifier / resistance |
-| Song of Marching | P3 / P3-319 | Sustain, Area exposure, Temporary immunity, Modifier / resistance |
-| Spellsurge | P3 / P3-320 | Sustain, Persistent damage, Native condition, Choice / casting variant, Modifier / resistance |
-| Swear Oath | P3 / P3-322 | Sustain, Modifier / resistance |
-| Trade Death for Life | P3 / P3-324 | Sustain, Basic-save damage, Healing / recipient mode |
-| Traveling Workshop | P3 / P3-325 | Sustain |
-| Trickster's Mirrors | P3 / P3-326 | Sustain, Save-result condition rider, Basic-save damage |
+| Animated Assault | P3 / P3-232 | Sustain, Basic-save damage |
+| Circle of Weakness | P3 / P3-232 | Sustain, Save-result condition rider, Native condition, Choice / casting variant, Modifier / resistance |
+| Devouring Void | P3 / P3-232 | Sustain, Basic-save damage |
+| Earth's Bile | P3 / P3-232 | Sustain, Persistent damage, Choice / casting variant |
+| Ember Doppelgänger | P3 / P3-232 | Sustain, Basic-save damage, Native condition, Modifier / resistance |
+| Fiendish Rift | P3 / P3-232 | Sustain, Save-result condition rider, Native condition |
+| Grasping Earth | P3 / P3-232 | Sustain, Area exposure, Save-result condition rider, Native condition |
+| Hymn of Healing | P3 / P3-232 | Sustain, Healing / recipient mode |
+| Sanguine Mist | P3 / P3-232 | Sustain, Basic-save damage |
+| Shroud of Flame | P3 / P3-232 | Sustain, Basic-save damage |
+| Swarmsense | P3 / P3-232 | Sustain, Granted movement speed, Modifier / resistance |
+| Unravel Existence | P3 / P3-232 | Sustain, Basic-save damage, Persistent damage, Native condition |
+| Benediction | P3 / P3-233 | Sustain, Area exposure, Counteract, Modifier / resistance |
+| Bless | P3 / P3-233 | Sustain, Area exposure, Counteract, Modifier / resistance |
+| Hungry Depths | P3 / P3-233 | Sustain, Area exposure, Basic-save damage |
+| Malediction | P3 / P3-233 | Sustain, Area exposure, Counteract, Modifier / resistance |
+| Pied Piping | P3 / P3-233 | Sustain, Area exposure, Temporary immunity, Ending or dismissal, Save-result condition rider, Native condition |
+| Protective Wards | P3 / P3-233 | Sustain, Aura membership, Modifier / resistance |
+| Reaper's Lantern | P3 / P3-233 | Sustain, Area exposure, Native condition, Healing / recipient mode |
+| Bone Shield | P3 / P3-234 | Sustain, Modifier / resistance |
+| Doom Mark | P3 / P3-234 | Sustain, Native condition, Attack and dependent result |
+| For Love, For Lightning | P3 / P3-234 | Sustain, Basic-save damage |
+| Metal Reverberation | P3 / P3-234 | Sustain, Basic-save damage |
+| Overload Connection | P3 / P3-234 | Sustain, Basic-save damage, Information / adjudication |
+| Spectral Blade | P3 / P3-234 | Sustain, Attack and dependent result |
+| Spiritual Armament | P3 / P3-234 | Sustain, Attack and dependent result |
+| Avenging Wildwood | P3 / P3-235 | Sustain, Attack and dependent result, Choice / casting variant |
+| Malicious Shadow | P3 / P3-235 | Sustain, Area exposure, Attack and dependent result, Counteract, Choice / casting variant |
+| Blood in the Water | P3 / P3-236 | Sustain, Basic-save damage, Persistent damage |
+| Coiling Dance | P3 / P3-236 | Sustain, Native condition, Choice / casting variant |
+| Figment | P3 / P3-236 | Sustain, Modifier / resistance |
+| Dancing Fountain | P3 / P3-237 | Sustain, Turn trigger or boundary, Area exposure, Basic-save damage |
+| Phantom Orchestra | P3 / P3-237 | Sustain, Basic-save damage |
+| Spiritual Weapon | P3 / P3-237 | Sustain, Attack and dependent result |
+| Infectious Comedy | P3 / P3-238 | Sustain, Save-result condition rider, Native condition |
+| Mad Monkeys | P3 / P3-238 | Sustain, Temporary immunity, Ending or dismissal, Save-result condition rider, Native condition, Choice / casting variant |
+| Unfathomable Song | P3 / P3-238 | Sustain, Temporary immunity, Save-result condition rider, Native condition |
+| Crown of Prophets | P3 / P3-239 | Sustain, Turn trigger or boundary, Basic-save damage |
+| Discern Secrets | P3 / P3-239 | Sustain, Temporary immunity, Information / adjudication, Modifier / resistance |
+| Wish Market | P3 / P3-239 | Sustain, Modifier / resistance |
+| Beastmaster Trance | P3 / P3-240 | Sustain, Area exposure, Native condition, Information / adjudication |
+| Eyes of the Dead | P3 / P3-240 | Sustain, Area exposure, Native condition, Information / adjudication |
+| Leaden Steps | P3 / P3-243 | Sustain, Turn trigger or boundary, Save-result condition rider, Modifier / resistance |
+| Lightning Lasso | P3 / P3-243 | Sustain, Turn trigger or boundary, Save-result condition rider, Native condition |
+| Mantle of the Frozen Heart | P3 / P3-244 | Sustain, Area exposure, Granted movement speed, Modifier / resistance |
+| Mantle of the Magma Heart | P3 / P3-244 | Sustain, Area exposure, Persistent damage, Native condition, Modifier / resistance |
+| Impaling Briars | P3 / P3-245 | Sustain, Area exposure, Save-result condition rider, Native condition, Attack and dependent result, Modifier / resistance |
+| Pernicious Poltergeist | P3 / P3-245 | Sustain, Native condition |
+| Lightning Storm | P3 / P3-246 | Sustain, Basic-save damage |
+| Poltergeist's Fury | P3 / P3-246 | Sustain, Basic-save damage |
+| Control Sand | P3 / P3-247 | Sustain, Area exposure, Temporary immunity, Save-result condition rider, Basic-save damage, Native condition, Choice / casting variant |
+| Scouring Sand | P3 / P3-247 | Sustain, Area exposure, Temporary immunity, Save-result condition rider, Native condition, Counteract |
+| Spirit Object | P3 / P3-248 | Sustain, Area exposure, Ending or dismissal, Attack and dependent result |
+| Tangling Creepers | P3 / P3-248 | Sustain, Area exposure, Native condition, Attack and dependent result, Modifier / resistance |
+| Animal Vision | P3 / P3-249 | Sustain, Information / adjudication |
+| Animate Rope | P3 / P3-250 | Sustain, Attack and dependent result, Modifier / resistance |
+| Appearance of Wealth | P3 / P3-251 | Sustain, Area exposure, Native condition |
+| Aqueous Orb | P3 / P3-252 | Sustain, Save-result condition rider, Counteract |
+| Awaken Entropy | P3 / P3-253 | Sustain, Area exposure, Basic-save damage |
+| Bound in Death | P3 / P3-255 | Sustain, Save-result condition rider |
+| Call of the Quenching | P3 / P3-258 | Sustain, Area exposure, Basic-save damage, Granted movement speed, Modifier / resistance |
+| Confront Selves | P3 / P3-260 | Sustain, Turn trigger or boundary, Basic-save damage, Native condition |
+| Dancing Blade | P3 / P3-262 | Sustain, Attack and dependent result |
+| Diadem of Divine Radiance | P3 / P3-264 | Sustain, Persistent damage, Native condition, Attack and dependent result, Counteract |
+| Diamond Dust | P3 / P3-265 | Sustain, Aura membership, Area exposure, Ending or dismissal, Modifier / resistance |
+| Divine Aura | P3 / P3-266 | Sustain, Aura membership, Temporary immunity, Native condition, Choice / casting variant, Modifier / resistance |
+| Domora's Defense | P3 / P3-267 | Sustain, Modifier / resistance |
+| Draconic Barrage | P3 / P3-268 | Sustain, Basic-save damage |
+| Dragon Turret | P3 / P3-269 | Sustain, Area exposure, Basic-save damage |
+| Duplicate Foe | P3 / P3-270 | Sustain, Healing / recipient mode |
+| Fallen Soldier's Lament | P3 / P3-271 | Sustain, Save-result condition rider, Native condition |
+| Floating Flame | P3 / P3-273 | Sustain, Area exposure, Basic-save damage |
+| Garden of Healing | P3 / P3-274 | Sustain, Healing / recipient mode, Modifier / resistance |
+| Gasping Marsh | P3 / P3-275 | Sustain, Area exposure, Temporary immunity, Save-result condition rider, Persistent damage, Native condition |
+| Gift of the Anemos | P3 / P3-276 | Sustain, Aura membership, Turn trigger or boundary, Save-result condition rider, Native condition, Attack and dependent result |
+| Glamorize | P3 / P3-277 | Sustain, Modifier / resistance |
+| Grasping Vine | P3 / P3-278 | Sustain, Turn trigger or boundary, Save-result condition rider |
+| Halcyon Mists | P3 / P3-279 | Sustain, Turn trigger or boundary, Persistent damage, Choice / casting variant |
+| Implosion | P3 / P3-280 | Sustain, Choice / casting variant |
+| Infectious Ennui | P3 / P3-281 | Sustain, Turn trigger or boundary, Temporary immunity, Save-result condition rider, Native condition, Choice / casting variant, Information / adjudication |
+| Interstellar Void | P3 / P3-282 | Sustain, Basic-save damage, Native condition |
+| Lashing Rope | P3 / P3-283 | Sustain, Turn trigger or boundary, Save-result condition rider, Attack and dependent result |
+| Levitate | P3 / P3-284 | Sustain, Modifier / resistance |
+| Light | P3 / P3-285 | Sustain, Ending or dismissal, Choice / casting variant |
+| Magic's Vessel | P3 / P3-286 | Sustain, Turn trigger or boundary, Modifier / resistance |
+| Magnetic Dominion | P3 / P3-287 | Sustain |
+| Mind Probe | P3 / P3-289 | Sustain, Save-result condition rider, Information / adjudication, Modifier / resistance |
+| Mind Reading | P3 / P3-290 | Sustain, Temporary immunity, Save-result condition rider, Information / adjudication |
+| Movanic Glimmer | P3 / P3-293 | Sustain, Choice / casting variant, Modifier / resistance |
+| Musical Shift | P3 / P3-294 | Sustain, Save-result condition rider, Persistent damage, Native condition, Modifier / resistance |
+| Painted Scout | P3 / P3-295 | Sustain |
+| Palm-Held Sun | P3 / P3-296 | Sustain, Aura membership, Native condition, Healing / recipient mode |
+| Persistent Servant | P3 / P3-298 | Sustain, Native condition, Choice / casting variant |
+| Phantasmal Protagonist | P3 / P3-300 | Sustain, Turn trigger or boundary, Save-result condition rider, Native condition, Attack and dependent result |
+| Pillars of Sand | P3 / P3-302 | Sustain, Area exposure, Native condition |
+| Pyrotechnics | P3 / P3-305 | Sustain, Turn trigger or boundary, Area exposure, Temporary immunity, Save-result condition rider, Native condition, Information / adjudication, Modifier / resistance |
+| Rewrite Memory | P3 / P3-307 | Sustain, Area exposure |
+| Sacred Nimbus | P3 / P3-308 | Sustain, Turn trigger or boundary, Modifier / resistance |
+| Seize Identity | P3 / P3-311 | Sustain, Save-result condition rider, Basic-save damage, Native condition |
+| Shielding Formation | P3 / P3-312 | Sustain, Area exposure, Temporary immunity, Modifier / resistance |
+| Sign of Conviction | P3 / P3-314 | Sustain, Native condition, Attack and dependent result, Modifier / resistance |
+| Song of Marching | P3 / P3-316 | Sustain, Area exposure, Temporary immunity, Modifier / resistance |
+| Spellsurge | P3 / P3-317 | Sustain, Persistent damage, Native condition, Choice / casting variant, Modifier / resistance |
+| Stars of Another Sky | P3 / P3-318 | Sustain, Area exposure, Temporary immunity, Save-result condition rider, Native condition |
+| Swear Oath | P3 / P3-320 | Sustain, Modifier / resistance |
+| Trade Death for Life | P3 / P3-322 | Sustain, Basic-save damage, Healing / recipient mode |
+| Traveling Workshop | P3 / P3-323 | Sustain |
+| Trickster's Mirrors | P3 / P3-324 | Sustain, Save-result condition rider, Basic-save damage |
+| Unbreaking Wave Containment | P3 / P3-325 | Sustain, Basic-save damage, Native condition, Attack and dependent result |
+| Vacuum | P3 / P3-326 | Sustain, Area exposure, Save-result condition rider, Native condition, Modifier / resistance |
 | Whispers of a Dead Goddess | P3 / P3-328 | Sustain, Area exposure, Temporary immunity, Save-result condition rider, Native condition |
 | Zenith Star | P3 / P3-329 | Sustain, Save-result condition rider, Native condition, Information / adjudication |
-| Blazing Blade | P4 / P4-001 | Persistent damage, Attack and dependent result |
-| Deity's Strike | P4 / P4-001 | Basic-save damage, Attack and dependent result |
-| Disintegrate | P4 / P4-002 | Basic-save damage, Attack and dependent result |
-| Ray of Corruption | P4 / P4-002 | Save-result condition rider, Basic-save damage, Persistent damage, Attack and dependent result |
-| Touch of Death | P4 / P4-003 | Temporary immunity, Save-result condition rider, Native condition, Attack and dependent result |
-| Acid Splash | P4 / P4-005 | Persistent damage, Attack and dependent result |
-| Blinding Foam | P4 / P4-005 | Persistent damage, Native condition, Attack and dependent result |
-| Elemental Toss | P4 / P4-005 | Attack and dependent result |
-| Flense | P4 / P4-005 | Persistent damage, Native condition, Attack and dependent result |
-| Live Wire | P4 / P4-005 | Save-result condition rider, Persistent damage, Attack and dependent result |
-| Moonbeam | P4 / P4-005 | Native condition, Attack and dependent result |
-| Murder of Crows | P4 / P4-005 | Native condition, Attack and dependent result |
-| Purifying Icicle | P4 / P4-005 | Attack and dependent result, Modifier / resistance |
-| Ray of Frost | P4 / P4-005 | Attack and dependent result, Modifier / resistance |
-| Snowball | P4 / P4-005 | Attack and dependent result, Modifier / resistance |
-| Threefold Limb | P4 / P4-005 | Turn trigger or boundary, Attack and dependent result, Modifier / resistance |
-| Warshard Shot | P4 / P4-005 | Save-result condition rider, Persistent damage, Attack and dependent result, Modifier / resistance |
-| Acid Arrow | P4 / P4-006 | Persistent damage, Attack and dependent result |
-| Glutton's Jaws | P4 / P4-006 | Turn trigger or boundary, Attack and dependent result |
-| Hurtling Stone | P4 / P4-006 | Attack and dependent result |
-| Inkshot | P4 / P4-006 | Native condition, Attack and dependent result |
-| Scorching Blast | P4 / P4-006 | Persistent damage, Attack and dependent result |
-| Shocking Grasp | P4 / P4-006 | Persistent damage, Attack and dependent result, Modifier / resistance |
-| Soul Cutter | P4 / P4-006 | Save-result condition rider, Native condition, Attack and dependent result |
-| Spiked Carapace | P4 / P4-006 | Persistent damage, Attack and dependent result, Modifier / resistance |
-| Sticky Fire | P4 / P4-006 | Persistent damage, Native condition, Attack and dependent result |
-| Widow’s Bite | P4 / P4-006 | Persistent damage, Native condition, Attack and dependent result |
-| Withering Grasp | P4 / P4-006 | Persistent damage, Attack and dependent result |
-| Admonishing Ray | P4 / P4-007 | Attack and dependent result |
-| Boomerang Shot | P4 / P4-007 | Attack and dependent result |
-| Divine Lance | P4 / P4-007 | Attack and dependent result |
-| Flurry of Claws | P4 / P4-007 | Attack and dependent result |
-| Ignition | P4 / P4-007 | Persistent damage, Attack and dependent result |
-| Percussive Impact | P4 / P4-007 | Native condition, Attack and dependent result |
-| Polar Ray | P4 / P4-007 | Native condition, Attack and dependent result |
-| Slashing Gust | P4 / P4-007 | Persistent damage, Attack and dependent result |
-| Sun Blade | P4 / P4-007 | Attack and dependent result |
-| Tangle Vine | P4 / P4-007 | Native condition, Attack and dependent result, Modifier / resistance |
-| Force Fling | P4 / P4-008 | Attack and dependent result |
-| Fulminating Impact | P4 / P4-008 | Attack and dependent result |
-| Pulverizing Wake | P4 / P4-008 | Basic-save damage, Attack and dependent result |
-| Tentacular Innervation | P4 / P4-008 | Native condition, Attack and dependent result |
-| Thunderous Strike | P4 / P4-008 | Save-result condition rider, Basic-save damage, Native condition, Attack and dependent result |
-| Warding Aggression | P4 / P4-008 | Save-result condition rider, Attack and dependent result, Modifier / resistance |
-| Brine Dragon Bile | P4 / P4-009 | Persistent damage, Attack and dependent result |
-| Briny Bolt | P4 / P4-009 | Native condition, Attack and dependent result |
-| Horizon Thunder Sphere | P4 / P4-009 | Save-result condition rider, Basic-save damage, Native condition, Attack and dependent result |
-| Propelling Air Stream | P4 / P4-009 | Turn trigger or boundary, Granted movement speed, Attack and dependent result |
-| Chilling Darkness | P4 / P4-010 | Attack and dependent result, Counteract |
-| Holy Light | P4 / P4-010 | Attack and dependent result, Counteract |
-| Moonlight Ray | P4 / P4-010 | Attack and dependent result, Counteract |
-| Blood Feast | P4 / P4-011 | Persistent damage, Attack and dependent result |
-| Needle Darts | P4 / P4-011 | Persistent damage, Attack and dependent result, Modifier / resistance |
-| Splinter Volley | P4 / P4-011 | Persistent damage, Attack and dependent result |
-| Ancestral Memories | P4 / P4-012 | Turn trigger or boundary, Attack and dependent result, Modifier / resistance |
-| Vindicator's Judgment | P4 / P4-012 | Turn trigger or boundary, Save-result condition rider, Native condition, Attack and dependent result, Modifier / resistance |
-| Magnetic Acceleration | P4 / P4-013 | Attack and dependent result, Modifier / resistance |
-| Phase Bolt | P4 / P4-013 | Attack and dependent result |
-| Aqueous Blast | P4 / P4-015 | Native condition, Attack and dependent result |
-| Barbed Spear | P4 / P4-016 | Native condition, Attack and dependent result |
-| Belittling Boast | P4 / P4-017 | Native condition, Attack and dependent result, Modifier / resistance |
-| Bonewall Bulwark | P4 / P4-019 | Turn trigger or boundary, Attack and dependent result |
-| Booming Blast | P4 / P4-020 | Save-result condition rider, Native condition, Attack and dependent result |
-| Bottle the Storm | P4 / P4-021 | Attack and dependent result, Modifier / resistance |
-| Charged Javelin | P4 / P4-022 | Persistent damage, Attack and dependent result, Modifier / resistance |
-| Draw Blood | P4 / P4-024 | Persistent damage, Healing / recipient mode, Attack and dependent result |
-| Establish Ward | P4 / P4-026 | Native condition, Attack and dependent result |
-| Exploding Earth | P4 / P4-027 | Native condition, Attack and dependent result |
-| Helpful Reload | P4 / P4-031 | Attack and dependent result, Modifier / resistance |
-| Inner Upheaval | P4 / P4-032 | Attack and dependent result, Modifier / resistance |
-| Shielded Arm | P4 / P4-034 | Attack and dependent result, Modifier / resistance |
-| Steal the Sky | P4 / P4-037 | Save-result condition rider, Native condition, Attack and dependent result |
-| Thrall Charge | P4 / P4-038 | Attack and dependent result, Modifier / resistance |
-| Tracking Mayflies | P4 / P4-039 | Native condition, Attack and dependent result |
-| Victory Cry | P4 / P4-040 | Attack and dependent result, Modifier / resistance |
+| Acid Splash | P4 / P4-001 | Persistent damage, Attack and dependent result |
+| Blinding Foam | P4 / P4-001 | Persistent damage, Native condition, Attack and dependent result |
+| Elemental Toss | P4 / P4-001 | Attack and dependent result |
+| Flense | P4 / P4-001 | Persistent damage, Native condition, Attack and dependent result |
+| Live Wire | P4 / P4-001 | Save-result condition rider, Persistent damage, Attack and dependent result |
+| Moonbeam | P4 / P4-001 | Native condition, Attack and dependent result |
+| Murder of Crows | P4 / P4-001 | Native condition, Attack and dependent result |
+| Purifying Icicle | P4 / P4-001 | Attack and dependent result, Modifier / resistance |
+| Ray of Frost | P4 / P4-001 | Attack and dependent result, Modifier / resistance |
+| Snowball | P4 / P4-001 | Attack and dependent result, Modifier / resistance |
+| Threefold Limb | P4 / P4-001 | Turn trigger or boundary, Attack and dependent result, Modifier / resistance |
+| Warshard Shot | P4 / P4-001 | Save-result condition rider, Persistent damage, Attack and dependent result, Modifier / resistance |
+| Acid Arrow | P4 / P4-002 | Persistent damage, Attack and dependent result |
+| Glutton's Jaws | P4 / P4-002 | Turn trigger or boundary, Attack and dependent result |
+| Hurtling Stone | P4 / P4-002 | Attack and dependent result |
+| Inkshot | P4 / P4-002 | Native condition, Attack and dependent result |
+| Scorching Blast | P4 / P4-002 | Persistent damage, Attack and dependent result |
+| Shocking Grasp | P4 / P4-002 | Persistent damage, Attack and dependent result, Modifier / resistance |
+| Soul Cutter | P4 / P4-002 | Save-result condition rider, Native condition, Attack and dependent result |
+| Spiked Carapace | P4 / P4-002 | Persistent damage, Attack and dependent result, Modifier / resistance |
+| Sticky Fire | P4 / P4-002 | Persistent damage, Native condition, Attack and dependent result |
+| Widow’s Bite | P4 / P4-002 | Persistent damage, Native condition, Attack and dependent result |
+| Withering Grasp | P4 / P4-002 | Persistent damage, Attack and dependent result |
+| Admonishing Ray | P4 / P4-003 | Attack and dependent result |
+| Boomerang Shot | P4 / P4-003 | Attack and dependent result |
+| Divine Lance | P4 / P4-003 | Attack and dependent result |
+| Flurry of Claws | P4 / P4-003 | Attack and dependent result |
+| Ignition | P4 / P4-003 | Persistent damage, Attack and dependent result |
+| Percussive Impact | P4 / P4-003 | Native condition, Attack and dependent result |
+| Polar Ray | P4 / P4-003 | Native condition, Attack and dependent result |
+| Slashing Gust | P4 / P4-003 | Persistent damage, Attack and dependent result |
+| Sun Blade | P4 / P4-003 | Attack and dependent result |
+| Tangle Vine | P4 / P4-003 | Native condition, Attack and dependent result, Modifier / resistance |
+| Force Fling | P4 / P4-004 | Attack and dependent result |
+| Fulminating Impact | P4 / P4-004 | Attack and dependent result |
+| Pulverizing Wake | P4 / P4-004 | Basic-save damage, Attack and dependent result |
+| Tentacular Innervation | P4 / P4-004 | Native condition, Attack and dependent result |
+| Thunderous Strike | P4 / P4-004 | Save-result condition rider, Basic-save damage, Native condition, Attack and dependent result |
+| Warding Aggression | P4 / P4-004 | Save-result condition rider, Attack and dependent result, Modifier / resistance |
+| Brine Dragon Bile | P4 / P4-005 | Persistent damage, Attack and dependent result |
+| Briny Bolt | P4 / P4-005 | Native condition, Attack and dependent result |
+| Horizon Thunder Sphere | P4 / P4-005 | Save-result condition rider, Basic-save damage, Native condition, Attack and dependent result |
+| Propelling Air Stream | P4 / P4-005 | Turn trigger or boundary, Granted movement speed, Attack and dependent result |
+| Chilling Darkness | P4 / P4-006 | Attack and dependent result, Counteract |
+| Holy Light | P4 / P4-006 | Attack and dependent result, Counteract |
+| Moonlight Ray | P4 / P4-006 | Attack and dependent result, Counteract |
+| Blood Feast | P4 / P4-007 | Persistent damage, Attack and dependent result |
+| Needle Darts | P4 / P4-007 | Persistent damage, Attack and dependent result, Modifier / resistance |
+| Splinter Volley | P4 / P4-007 | Persistent damage, Attack and dependent result |
+| Ancestral Memories | P4 / P4-008 | Turn trigger or boundary, Attack and dependent result, Modifier / resistance |
+| Vindicator's Judgment | P4 / P4-008 | Turn trigger or boundary, Save-result condition rider, Native condition, Attack and dependent result, Modifier / resistance |
+| Blazing Blade | P4 / P4-009 | Persistent damage, Attack and dependent result |
+| Deity's Strike | P4 / P4-009 | Basic-save damage, Attack and dependent result |
+| Magnetic Acceleration | P4 / P4-010 | Attack and dependent result, Modifier / resistance |
+| Phase Bolt | P4 / P4-010 | Attack and dependent result |
+| Disintegrate | P4 / P4-011 | Basic-save damage, Attack and dependent result |
+| Ray of Corruption | P4 / P4-011 | Save-result condition rider, Basic-save damage, Persistent damage, Attack and dependent result |
+| Aqueous Blast | P4 / P4-013 | Native condition, Attack and dependent result |
+| Barbed Spear | P4 / P4-014 | Native condition, Attack and dependent result |
+| Belittling Boast | P4 / P4-015 | Native condition, Attack and dependent result, Modifier / resistance |
+| Bonewall Bulwark | P4 / P4-017 | Turn trigger or boundary, Attack and dependent result |
+| Booming Blast | P4 / P4-018 | Save-result condition rider, Native condition, Attack and dependent result |
+| Bottle the Storm | P4 / P4-019 | Attack and dependent result, Modifier / resistance |
+| Charged Javelin | P4 / P4-020 | Persistent damage, Attack and dependent result, Modifier / resistance |
+| Draw Blood | P4 / P4-022 | Persistent damage, Healing / recipient mode, Attack and dependent result |
+| Establish Ward | P4 / P4-024 | Native condition, Attack and dependent result |
+| Exploding Earth | P4 / P4-025 | Native condition, Attack and dependent result |
+| Helpful Reload | P4 / P4-029 | Attack and dependent result, Modifier / resistance |
+| Inner Upheaval | P4 / P4-030 | Attack and dependent result, Modifier / resistance |
+| Shielded Arm | P4 / P4-032 | Attack and dependent result, Modifier / resistance |
+| Steal the Sky | P4 / P4-035 | Save-result condition rider, Native condition, Attack and dependent result |
+| Thrall Charge | P4 / P4-036 | Attack and dependent result, Modifier / resistance |
+| Touch of Death | P4 / P4-037 | Temporary immunity, Save-result condition rider, Native condition, Attack and dependent result |
+| Tracking Mayflies | P4 / P4-038 | Native condition, Attack and dependent result |
+| Victory Cry | P4 / P4-039 | Attack and dependent result, Modifier / resistance |
 | Weaponize Secret | P4 / P4-042 | Save-result condition rider, Persistent damage, Attack and dependent result |
 | Winter Bolt | P4 / P4-044 | Turn trigger or boundary, Attack and dependent result |
 | Bounty of the Sky | P4 / P4-103 | Native condition, Healing / recipient mode, Delegated affliction |
@@ -5008,154 +5009,154 @@ These spells are owned by another primary worklist; reuse their listed batch ins
 | Heal | P4 / P4-105 | Basic-save damage, Healing / recipient mode |
 | Heartbolt | P4 / P4-105 | Basic-save damage, Healing / recipient mode |
 | Soothing Mist | P4 / P4-105 | Basic-save damage, Persistent damage, Healing / recipient mode |
-| Shock to the System | P4 / P4-107 | Turn trigger or boundary, Native condition, Healing / recipient mode |
-| Blood-Feasting Breath | P4 / P4-108 | Basic-save damage, Healing / recipient mode |
-| Call The Blood | P4 / P4-108 | Native condition, Healing / recipient mode, Modifier / resistance |
-| Devour Life | P4 / P4-108 | Basic-save damage, Healing / recipient mode, Modifier / resistance |
-| Fearful Feast | P4 / P4-108 | Save-result condition rider, Native condition, Healing / recipient mode |
-| Phoenix Ward | P4 / P4-108 | Healing / recipient mode, Modifier / resistance |
-| Vicious Howl | P4 / P4-108 | Healing / recipient mode, Modifier / resistance |
-| Lay on Hands | P4 / P4-109 | Basic-save damage, Healing / recipient mode, Modifier / resistance |
-| Touch of the Void | P4 / P4-109 | Basic-save damage, Healing / recipient mode, Modifier / resistance |
-| Consecrate Flesh | P4 / P4-111 | Healing / recipient mode, Modifier / resistance |
-| Curse of Lost Time | P4 / P4-112 | Save-result condition rider, Basic-save damage, Native condition, Healing / recipient mode, Counteract, Delegated affliction |
-| Divine Armageddon | P4 / P4-114 | Healing / recipient mode |
-| Gentle Breeze | P4 / P4-115 | Healing / recipient mode, Modifier / resistance |
-| Healing Plaster | P4 / P4-117 | Healing / recipient mode, Modifier / resistance |
-| Life Tap | P4 / P4-120 | Save-result condition rider, Native condition, Healing / recipient mode |
-| Rejuvenating Flames | P4 / P4-128 | Basic-save damage, Healing / recipient mode, Modifier / resistance |
+| Blood-Feasting Breath | P4 / P4-106 | Basic-save damage, Healing / recipient mode |
+| Call The Blood | P4 / P4-106 | Native condition, Healing / recipient mode, Modifier / resistance |
+| Devour Life | P4 / P4-106 | Basic-save damage, Healing / recipient mode, Modifier / resistance |
+| Fearful Feast | P4 / P4-106 | Save-result condition rider, Native condition, Healing / recipient mode |
+| Phoenix Ward | P4 / P4-106 | Healing / recipient mode, Modifier / resistance |
+| Vicious Howl | P4 / P4-106 | Healing / recipient mode, Modifier / resistance |
+| Lay on Hands | P4 / P4-107 | Basic-save damage, Healing / recipient mode, Modifier / resistance |
+| Touch of the Void | P4 / P4-107 | Basic-save damage, Healing / recipient mode, Modifier / resistance |
+| Consecrate Flesh | P4 / P4-109 | Healing / recipient mode, Modifier / resistance |
+| Curse of Lost Time | P4 / P4-110 | Save-result condition rider, Basic-save damage, Native condition, Healing / recipient mode, Counteract, Delegated affliction |
+| Divine Armageddon | P4 / P4-112 | Healing / recipient mode |
+| Gentle Breeze | P4 / P4-113 | Healing / recipient mode, Modifier / resistance |
+| Healing Plaster | P4 / P4-115 | Healing / recipient mode, Modifier / resistance |
+| Life Tap | P4 / P4-118 | Save-result condition rider, Native condition, Healing / recipient mode |
+| Rejuvenating Flames | P4 / P4-127 | Basic-save damage, Healing / recipient mode, Modifier / resistance |
+| Shock to the System | P4 / P4-129 | Turn trigger or boundary, Native condition, Healing / recipient mode |
 | Sound Body | P4 / P4-131 | Turn trigger or boundary, Native condition, Healing / recipient mode, Counteract |
 | Unblinking Flame Aura | P4 / P4-132 | Healing / recipient mode, Modifier / resistance |
-| Element Embodied | P5 / P5-001 | Area exposure, Ending or dismissal, Basic-save damage, Persistent damage, Native condition, Healing / recipient mode, Choice / casting variant, Creature transformation, Terrain, Modifier / resistance |
-| Monstrosity Form | P5 / P5-001 | Sustain, Aura membership, Turn trigger or boundary, Area exposure, Ending or dismissal, Basic-save damage, Persistent damage, Native condition, Creature transformation |
-| Nature Incarnate | P5 / P5-001 | Area exposure, Ending or dismissal, Save-result condition rider, Native condition, Creature transformation, Modifier / resistance |
-| Ooze Form | P5 / P5-001 | Ending or dismissal, Save-result condition rider, Native condition, Creature transformation, Information / adjudication, Modifier / resistance |
-| Primal Herd | P5 / P5-001 | Area exposure, Ending or dismissal, Basic-save damage, Native condition, Creature transformation |
-| Avatar | P5 / P5-002 | Ending or dismissal, Native condition, Creature transformation |
-| Humanoid Form | P5 / P5-002 | Ending or dismissal, Modifier / resistance |
-| Threefold Aspect | P5 / P5-002 | Sustain, Ending or dismissal, Choice / casting variant, Modifier / resistance |
-| Bestial Curse | P5 / P5-003 | Save-result condition rider, Native condition, Creature transformation, Modifier / resistance |
-| Cursed Metamorphosis | P5 / P5-003 | Save-result condition rider, Native condition |
-| Amalgamizing Leap | P5 / P5-004 | Turn trigger or boundary, Save-result condition rider, Granted movement speed, Native condition, Choice / casting variant, Teleportation |
-| Corrosive Body | P5 / P5-005 | Ending or dismissal, Creature transformation |
-| Patron's Protector | P5 / P5-007 | Sustain, Save-result condition rider, Basic-save damage, Forced movement, Modifier / resistance |
-| Qi Form | P5 / P5-008 | Sustain, Aura membership, Area exposure, Granted movement speed, Counteract, Creature transformation, Modifier / resistance |
-| Aerial Form | P5 / P5-009 | Ending or dismissal, Persistent damage, Native condition, Choice / casting variant, Creature transformation, Modifier / resistance |
-| Angel Form | P5 / P5-009 | Ending or dismissal, Native condition, Creature transformation, Information / adjudication, Modifier / resistance |
-| Animal Form | P5 / P5-009 | Ending or dismissal, Native condition, Choice / casting variant, Creature transformation |
-| Cosmic Form | P5 / P5-009 | Ending or dismissal, Persistent damage, Native condition, Creature transformation |
-| Daemon Form | P5 / P5-009 | Ending or dismissal, Native condition, Creature transformation, Information / adjudication, Modifier / resistance |
-| Demon Form | P5 / P5-009 | Ending or dismissal, Native condition, Choice / casting variant, Creature transformation, Modifier / resistance |
-| Devil Form | P5 / P5-009 | Ending or dismissal, Native condition, Creature transformation, Modifier / resistance |
-| Dinosaur Form | P5 / P5-009 | Ending or dismissal, Persistent damage, Native condition, Choice / casting variant, Creature transformation |
-| Dragon Form | P5 / P5-009 | Ending or dismissal, Granted movement speed, Native condition, Choice / casting variant, Creature transformation, Modifier / resistance |
-| Insect Form | P5 / P5-009 | Ending or dismissal, Persistent damage, Native condition, Choice / casting variant, Creature transformation |
-| Plant Form | P5 / P5-009 | Ending or dismissal, Native condition, Choice / casting variant, Creature transformation, Modifier / resistance |
-| The Everfull Moon | P5 / P5-009 | Native condition, Creature transformation, Information / adjudication, Modifier / resistance |
-| Ash Form | P5 / P5-010 | Healing / recipient mode, Creature transformation, Modifier / resistance |
-| Sudden Swarm | P5 / P5-010 | Sustain, Basic-save damage, Native condition, Modifier / resistance |
-| Swarm Form | P5 / P5-010 | Ending or dismissal, Save-result condition rider, Native condition, Modifier / resistance |
-| Unusual Anatomy | P5 / P5-010 | Modifier / resistance |
-| Untamed Form | P5 / P5-011 | Creature transformation, Modifier / resistance |
-| Pest Form | P5 / P5-012 | Ending or dismissal, Granted movement speed, Creature transformation, Modifier / resistance |
-| Apex Companion | P5 / P5-013 | Creature transformation, Modifier / resistance |
-| Enlarge Companion | P5 / P5-013 |  |
-| Elemental Form | P5 / P5-014 | Ending or dismissal, Persistent damage, Choice / casting variant, Creature transformation, Forced movement, Modifier / resistance |
-| Fey Form | P5 / P5-014 | Ending or dismissal, Creature transformation, Modifier / resistance |
-| Tempest Form | P5 / P5-015 | Granted movement speed, Choice / casting variant, Modifier / resistance |
-| Vapor Form | P5 / P5-015 | Ending or dismissal, Granted movement speed, Creature transformation, Modifier / resistance |
-| Aberrant Form | P5 / P5-016 | Ending or dismissal, Native condition, Creature transformation, Modifier / resistance |
-| Ancestral Form | P5 / P5-017 | Sustain, Granted movement speed, Creature transformation, Modifier / resistance |
-| Devouring Dark Form | P5 / P5-018 | Sustain, Creature transformation |
-| Elephant Form | P5 / P5-020 | Creature transformation |
-| Enlarge | P5 / P5-021 | Native condition, Modifier / resistance |
-| Ferrous Form | P5 / P5-022 | Ending or dismissal, Native condition, Healing / recipient mode, Modifier / resistance |
-| Fiery Body | P5 / P5-023 | Modifier / resistance |
-| Juvenile Companion | P5 / P5-024 | Modifier / resistance |
-| Living Thunderbolt | P5 / P5-025 | Area exposure, Basic-save damage, Granted movement speed, Native condition, Creature transformation, Modifier / resistance |
+| Aerial Form | P5 / P5-001 | Ending or dismissal, Persistent damage, Native condition, Choice / casting variant, Creature transformation, Modifier / resistance |
+| Angel Form | P5 / P5-001 | Ending or dismissal, Native condition, Creature transformation, Information / adjudication, Modifier / resistance |
+| Animal Form | P5 / P5-001 | Ending or dismissal, Native condition, Choice / casting variant, Creature transformation |
+| Cosmic Form | P5 / P5-001 | Ending or dismissal, Persistent damage, Native condition, Creature transformation |
+| Daemon Form | P5 / P5-001 | Ending or dismissal, Native condition, Creature transformation, Information / adjudication, Modifier / resistance |
+| Demon Form | P5 / P5-001 | Ending or dismissal, Native condition, Choice / casting variant, Creature transformation, Modifier / resistance |
+| Devil Form | P5 / P5-001 | Ending or dismissal, Native condition, Creature transformation, Modifier / resistance |
+| Dinosaur Form | P5 / P5-001 | Ending or dismissal, Persistent damage, Native condition, Choice / casting variant, Creature transformation |
+| Dragon Form | P5 / P5-001 | Ending or dismissal, Granted movement speed, Native condition, Choice / casting variant, Creature transformation, Modifier / resistance |
+| Insect Form | P5 / P5-001 | Ending or dismissal, Persistent damage, Native condition, Choice / casting variant, Creature transformation |
+| Plant Form | P5 / P5-001 | Ending or dismissal, Native condition, Choice / casting variant, Creature transformation, Modifier / resistance |
+| The Everfull Moon | P5 / P5-001 | Native condition, Creature transformation, Information / adjudication, Modifier / resistance |
+| Element Embodied | P5 / P5-002 | Area exposure, Ending or dismissal, Basic-save damage, Persistent damage, Native condition, Healing / recipient mode, Choice / casting variant, Creature transformation, Terrain, Modifier / resistance |
+| Monstrosity Form | P5 / P5-002 | Sustain, Aura membership, Turn trigger or boundary, Area exposure, Ending or dismissal, Basic-save damage, Persistent damage, Native condition, Creature transformation |
+| Nature Incarnate | P5 / P5-002 | Area exposure, Ending or dismissal, Save-result condition rider, Native condition, Creature transformation, Modifier / resistance |
+| Ooze Form | P5 / P5-002 | Ending or dismissal, Save-result condition rider, Native condition, Creature transformation, Information / adjudication, Modifier / resistance |
+| Primal Herd | P5 / P5-002 | Area exposure, Ending or dismissal, Basic-save damage, Native condition, Creature transformation |
+| Avatar | P5 / P5-003 | Ending or dismissal, Native condition, Creature transformation |
+| Humanoid Form | P5 / P5-003 | Ending or dismissal, Modifier / resistance |
+| Threefold Aspect | P5 / P5-003 | Sustain, Ending or dismissal, Choice / casting variant, Modifier / resistance |
+| Ash Form | P5 / P5-004 | Healing / recipient mode, Creature transformation, Modifier / resistance |
+| Sudden Swarm | P5 / P5-004 | Sustain, Basic-save damage, Native condition, Modifier / resistance |
+| Swarm Form | P5 / P5-004 | Ending or dismissal, Save-result condition rider, Native condition, Modifier / resistance |
+| Unusual Anatomy | P5 / P5-004 | Modifier / resistance |
+| Untamed Form | P5 / P5-005 | Creature transformation, Modifier / resistance |
+| Pest Form | P5 / P5-006 | Ending or dismissal, Granted movement speed, Creature transformation, Modifier / resistance |
+| Apex Companion | P5 / P5-007 | Creature transformation, Modifier / resistance |
+| Enlarge Companion | P5 / P5-007 |  |
+| Bestial Curse | P5 / P5-008 | Save-result condition rider, Native condition, Creature transformation, Modifier / resistance |
+| Cursed Metamorphosis | P5 / P5-008 | Save-result condition rider, Native condition |
+| Elemental Form | P5 / P5-009 | Ending or dismissal, Persistent damage, Choice / casting variant, Creature transformation, Forced movement, Modifier / resistance |
+| Fey Form | P5 / P5-009 | Ending or dismissal, Creature transformation, Modifier / resistance |
+| Tempest Form | P5 / P5-010 | Granted movement speed, Choice / casting variant, Modifier / resistance |
+| Vapor Form | P5 / P5-010 | Ending or dismissal, Granted movement speed, Creature transformation, Modifier / resistance |
+| Aberrant Form | P5 / P5-011 | Ending or dismissal, Native condition, Creature transformation, Modifier / resistance |
+| Amalgamizing Leap | P5 / P5-012 | Turn trigger or boundary, Save-result condition rider, Granted movement speed, Native condition, Choice / casting variant, Teleportation |
+| Ancestral Form | P5 / P5-013 | Sustain, Granted movement speed, Creature transformation, Modifier / resistance |
+| Corrosive Body | P5 / P5-014 | Ending or dismissal, Creature transformation |
+| Devouring Dark Form | P5 / P5-015 | Sustain, Creature transformation |
+| Elephant Form | P5 / P5-017 | Creature transformation |
+| Enlarge | P5 / P5-018 | Native condition, Modifier / resistance |
+| Ferrous Form | P5 / P5-019 | Ending or dismissal, Native condition, Healing / recipient mode, Modifier / resistance |
+| Fiery Body | P5 / P5-020 | Modifier / resistance |
+| Juvenile Companion | P5 / P5-021 | Modifier / resistance |
+| Living Thunderbolt | P5 / P5-022 | Area exposure, Basic-save damage, Granted movement speed, Native condition, Creature transformation, Modifier / resistance |
+| Patron's Protector | P5 / P5-025 | Sustain, Save-result condition rider, Basic-save damage, Forced movement, Modifier / resistance |
+| Qi Form | P5 / P5-026 | Sustain, Aura membership, Area exposure, Granted movement speed, Counteract, Creature transformation, Modifier / resistance |
 | Sacred Form | P5 / P5-027 | Ending or dismissal, Creature transformation, Modifier / resistance |
 | Sand Form | P5 / P5-028 | Creature transformation, Modifier / resistance |
 | Shrink | P5 / P5-029 |  |
 | Spectral Advance | P5 / P5-031 | Movement action, Modifier / resistance |
 | Summoner's Visage | P5 / P5-032 | Ending or dismissal, Modifier / resistance |
 | Tiny Wings | P5 / P5-033 | Granted movement speed, Modifier / resistance |
-| Dread Mosquito Storm | P6 / P6-001 | Area exposure, Save-result condition rider, Native condition, Created entities, Delegated affliction, Modifier / resistance |
-| Conglomerate of Limbs | P6 / P6-003 | Save-result condition rider, Native condition, Attack and dependent result, Created entities |
-| Living Graveyard | P6 / P6-003 | Native condition, Created entities |
-| Recurring Nightmare | P6 / P6-003 | Sustain, Turn trigger or boundary, Area exposure, Save-result condition rider, Native condition, Attack and dependent result, Created entities |
-| Bind Heroic Spirit | P6 / P6-004 | Created entities, Modifier / resistance |
-| Bloody Tendrils | P6 / P6-005 | Basic-save damage, Created entities |
-| Blossoming Gore | P6 / P6-006 | Area exposure, Ending or dismissal, Save-result condition rider, Persistent damage, Native condition, Created entities |
+| Conglomerate of Limbs | P6 / P6-001 | Save-result condition rider, Native condition, Attack and dependent result, Created entities |
+| Living Graveyard | P6 / P6-001 | Native condition, Created entities |
+| Recurring Nightmare | P6 / P6-001 | Sustain, Turn trigger or boundary, Area exposure, Save-result condition rider, Native condition, Attack and dependent result, Created entities |
+| Bind Heroic Spirit | P6 / P6-002 | Created entities, Modifier / resistance |
+| Bloody Tendrils | P6 / P6-003 | Basic-save damage, Created entities |
+| Blossoming Gore | P6 / P6-004 | Area exposure, Ending or dismissal, Save-result condition rider, Persistent damage, Native condition, Created entities |
+| Dread Mosquito Storm | P6 / P6-006 | Area exposure, Save-result condition rider, Native condition, Created entities, Delegated affliction, Modifier / resistance |
 | Holy Host | P6 / P6-011 | Save-result condition rider, Basic-save damage, Persistent damage, Native condition, Healing / recipient mode, Choice / casting variant, Incarnate arrival/departure, Forced movement, Information / adjudication, Modifier / resistance |
 | Incarnate Kaiju | P6 / P6-011 | Turn trigger or boundary, Area exposure, Save-result condition rider, Basic-save damage, Persistent damage, Native condition, Choice / casting variant, Incarnate arrival/departure, Forced movement, Modifier / resistance |
 | Incarnate Wild Rose | P6 / P6-011 | Save-result condition rider, Persistent damage, Native condition, Incarnate arrival/departure |
 | Pest Swarm | P6 / P6-011 | Save-result condition rider, Basic-save damage, Persistent damage, Native condition, Choice / casting variant, Incarnate arrival/departure, Terrain, Delegated affliction, Modifier / resistance |
 | Unholy Army | P6 / P6-011 | Area exposure, Save-result condition rider, Basic-save damage, Persistent damage, Native condition, Choice / casting variant, Incarnate arrival/departure, Modifier / resistance |
-| Incarnate Deific Herald | P6 / P6-012 | Save-result condition rider, Basic-save damage, Native condition, Healing / recipient mode, Counteract, Incarnate arrival/departure |
-| Summon Elemental Herald | P6 / P6-012 | Save-result condition rider, Basic-save damage, Persistent damage, Native condition, Choice / casting variant, Incarnate arrival/departure, Terrain, Forced movement, Modifier / resistance |
-| Beseech Arcanotheign | P6 / P6-013 | Save-result condition rider, Basic-save damage, Native condition, Healing / recipient mode, Incarnate arrival/departure |
-| Call Fluxwraith | P6 / P6-014 | Condition-dependent lifetime, Turn trigger or boundary, Save-result condition rider, Native condition, Incarnate arrival/departure, Information / adjudication |
-| Conquering Soldiers | P6 / P6-015 | Save-result condition rider, Native condition, Healing / recipient mode, Incarnate arrival/departure, Modifier / resistance |
-| Final Fate of the Locust Host | P6 / P6-016 | Save-result condition rider, Basic-save damage, Persistent damage, Granted movement speed, Native condition, Incarnate arrival/departure |
-| Garden of the Green Man's Growth | P6 / P6-017 | Save-result condition rider, Basic-save damage, Native condition, Incarnate arrival/departure, Terrain, Forced movement |
-| Incarnate Ancient Specter | P6 / P6-018 | Save-result condition rider, Basic-save damage, Persistent damage, Native condition, Incarnate arrival/departure |
-| Incarnate Archmage | P6 / P6-019 | Native condition, Choice / casting variant, Incarnate arrival/departure |
-| Incarnate Draconic Legion | P6 / P6-020 | Basic-save damage, Choice / casting variant, Incarnate arrival/departure |
-| Jassim's Allegiance | P6 / P6-021 | Save-result condition rider, Basic-save damage, Persistent damage, Native condition, Incarnate arrival/departure |
-| Summon Ancient Fleshforged | P6 / P6-022 | Save-result condition rider, Basic-save damage, Native condition, Attack and dependent result, Choice / casting variant, Incarnate arrival/departure |
-| Summon Warden of the Wild | P6 / P6-025 | Temporary immunity, Save-result condition rider, Basic-save damage, Native condition, Incarnate arrival/departure, Terrain, Forced movement |
-| Clockwork Devotion | P6 / P6-026 | Save-result condition rider, Basic-save damage, Persistent damage, Incarnate arrival/departure |
-| Skeleton Army | P6 / P6-026 | Save-result condition rider, Basic-save damage, Persistent damage, Native condition, Incarnate arrival/departure |
-| Incarnate Faerie Revelers | P6 / P6-027 | Save-result condition rider, Native condition, Incarnate arrival/departure |
-| Incarnate Shadow Minuet | P6 / P6-028 | Area exposure, Save-result condition rider, Native condition, Incarnate arrival/departure |
-| Incarnate Skeletal Giant | P6 / P6-029 | Save-result condition rider, Basic-save damage, Native condition, Incarnate arrival/departure |
-| Incarnate Tempest of Shades | P6 / P6-030 | Condition-dependent lifetime, Save-result condition rider, Native condition, Incarnate arrival/departure |
-| Summon Healing Servitor | P6 / P6-031 | Basic-save damage, Healing / recipient mode, Incarnate arrival/departure |
-| Summon Stampede | P6 / P6-032 | Area exposure, Save-result condition rider, Basic-save damage, Native condition, Counteract, Incarnate arrival/departure |
-| Blastback | P7 / P7-001 | Forced movement |
-| Elemental Annihilation Wave | P7 / P7-001 | Save-result condition rider, Basic-save damage, Native condition, Forced movement |
-| Heaving Earth | P7 / P7-001 | Basic-save damage, Native condition, Forced movement |
-| Unfolding Wind Buffet | P7 / P7-001 | Save-result condition rider, Native condition, Forced movement |
-| Arcane Explosion | P7 / P7-002 | Area exposure, Basic-save damage, Native condition, Forced movement, Modifier / resistance |
-| Blessed Boundary | P7 / P7-003 | Turn trigger or boundary, Save-result condition rider, Forced movement |
-| Airburst | P7 / P7-004 | Turn trigger or boundary, Save-result condition rider, Forced movement, Modifier / resistance |
-| Begone | P7 / P7-004 | Save-result condition rider, Forced movement |
-| Gale Blast | P7 / P7-004 | Save-result condition rider, Forced movement |
-| Geyser | P7 / P7-004 | Save-result condition rider, Forced movement |
-| Glacial Skewer | P7 / P7-004 | Native condition, Attack and dependent result, Forced movement |
-| Kinetic Ram | P7 / P7-004 | Save-result condition rider, Native condition, Forced movement |
-| Pummeling Rubble | P7 / P7-004 | Save-result condition rider, Forced movement |
-| Pushing Gust | P7 / P7-004 | Save-result condition rider, Native condition, Forced movement |
-| Qi Blast | P7 / P7-004 | Save-result condition rider, Forced movement |
-| Repelling Pulse | P7 / P7-004 | Save-result condition rider, Native condition, Forced movement |
-| Tornadic Gale | P7 / P7-004 | Save-result condition rider, Native condition, Forced movement |
-| Unbreaking Wave Advance | P7 / P7-004 | Save-result condition rider, Forced movement |
-| Buffeting Winds | P7 / P7-005 | Save-result condition rider, Basic-save damage, Forced movement |
-| Gravitational Pull | P7 / P7-005 | Save-result condition rider, Native condition, Forced movement |
-| Hydraulic Torrent | P7 / P7-005 | Save-result condition rider, Basic-save damage, Forced movement |
-| Psychic Outburst | P7 / P7-005 | Save-result condition rider, Basic-save damage, Forced movement |
-| Door to Beyond | P7 / P7-006 | Recurring saving throw, Turn trigger or boundary, Area exposure, Ending or dismissal, Save-result condition rider, Forced movement |
-| Inevitable Destination | P7 / P7-006 | Turn trigger or boundary, Ending or dismissal, Save-result condition rider, Native condition, Forced movement, Modifier / resistance |
-| Retrieving Hook | P7 / P7-006 | Save-result condition rider, Native condition, Forced movement |
-| Shadow Strike | P7 / P7-006 | Attack and dependent result, Forced movement |
-| Undertow | P7 / P7-006 | Area exposure, Save-result condition rider, Forced movement, Modifier / resistance |
-| Gust of Wind | P7 / P7-007 | Area exposure, Save-result condition rider, Native condition, Forced movement |
-| Hydraulic Push | P7 / P7-007 | Attack and dependent result, Forced movement |
-| Unseasonable Squall | P7 / P7-007 | Area exposure, Save-result condition rider, Native condition, Forced movement |
-| Turbulent Tide | P7 / P7-008 | Save-result condition rider, Attack and dependent result, Forced movement, Movement action |
+| Clockwork Devotion | P6 / P6-012 | Save-result condition rider, Basic-save damage, Persistent damage, Incarnate arrival/departure |
+| Skeleton Army | P6 / P6-012 | Save-result condition rider, Basic-save damage, Persistent damage, Native condition, Incarnate arrival/departure |
+| Incarnate Deific Herald | P6 / P6-013 | Save-result condition rider, Basic-save damage, Native condition, Healing / recipient mode, Counteract, Incarnate arrival/departure |
+| Summon Elemental Herald | P6 / P6-013 | Save-result condition rider, Basic-save damage, Persistent damage, Native condition, Choice / casting variant, Incarnate arrival/departure, Terrain, Forced movement, Modifier / resistance |
+| Beseech Arcanotheign | P6 / P6-014 | Save-result condition rider, Basic-save damage, Native condition, Healing / recipient mode, Incarnate arrival/departure |
+| Call Fluxwraith | P6 / P6-015 | Condition-dependent lifetime, Turn trigger or boundary, Save-result condition rider, Native condition, Incarnate arrival/departure, Information / adjudication |
+| Conquering Soldiers | P6 / P6-016 | Save-result condition rider, Native condition, Healing / recipient mode, Incarnate arrival/departure, Modifier / resistance |
+| Final Fate of the Locust Host | P6 / P6-017 | Save-result condition rider, Basic-save damage, Persistent damage, Granted movement speed, Native condition, Incarnate arrival/departure |
+| Garden of the Green Man's Growth | P6 / P6-018 | Save-result condition rider, Basic-save damage, Native condition, Incarnate arrival/departure, Terrain, Forced movement |
+| Incarnate Ancient Specter | P6 / P6-019 | Save-result condition rider, Basic-save damage, Persistent damage, Native condition, Incarnate arrival/departure |
+| Incarnate Archmage | P6 / P6-020 | Native condition, Choice / casting variant, Incarnate arrival/departure |
+| Incarnate Draconic Legion | P6 / P6-021 | Basic-save damage, Choice / casting variant, Incarnate arrival/departure |
+| Incarnate Faerie Revelers | P6 / P6-022 | Save-result condition rider, Native condition, Incarnate arrival/departure |
+| Incarnate Shadow Minuet | P6 / P6-023 | Area exposure, Save-result condition rider, Native condition, Incarnate arrival/departure |
+| Incarnate Skeletal Giant | P6 / P6-024 | Save-result condition rider, Basic-save damage, Native condition, Incarnate arrival/departure |
+| Incarnate Tempest of Shades | P6 / P6-025 | Condition-dependent lifetime, Save-result condition rider, Native condition, Incarnate arrival/departure |
+| Jassim's Allegiance | P6 / P6-026 | Save-result condition rider, Basic-save damage, Persistent damage, Native condition, Incarnate arrival/departure |
+| Summon Ancient Fleshforged | P6 / P6-027 | Save-result condition rider, Basic-save damage, Native condition, Attack and dependent result, Choice / casting variant, Incarnate arrival/departure |
+| Summon Healing Servitor | P6 / P6-028 | Basic-save damage, Healing / recipient mode, Incarnate arrival/departure |
+| Summon Stampede | P6 / P6-031 | Area exposure, Save-result condition rider, Basic-save damage, Native condition, Counteract, Incarnate arrival/departure |
+| Summon Warden of the Wild | P6 / P6-032 | Temporary immunity, Save-result condition rider, Basic-save damage, Native condition, Incarnate arrival/departure, Terrain, Forced movement |
+| Airburst | P7 / P7-001 | Turn trigger or boundary, Save-result condition rider, Forced movement, Modifier / resistance |
+| Begone | P7 / P7-001 | Save-result condition rider, Forced movement |
+| Gale Blast | P7 / P7-001 | Save-result condition rider, Forced movement |
+| Geyser | P7 / P7-001 | Save-result condition rider, Forced movement |
+| Glacial Skewer | P7 / P7-001 | Native condition, Attack and dependent result, Forced movement |
+| Kinetic Ram | P7 / P7-001 | Save-result condition rider, Native condition, Forced movement |
+| Pummeling Rubble | P7 / P7-001 | Save-result condition rider, Forced movement |
+| Pushing Gust | P7 / P7-001 | Save-result condition rider, Native condition, Forced movement |
+| Qi Blast | P7 / P7-001 | Save-result condition rider, Forced movement |
+| Repelling Pulse | P7 / P7-001 | Save-result condition rider, Native condition, Forced movement |
+| Tornadic Gale | P7 / P7-001 | Save-result condition rider, Native condition, Forced movement |
+| Unbreaking Wave Advance | P7 / P7-001 | Save-result condition rider, Forced movement |
+| Buffeting Winds | P7 / P7-002 | Save-result condition rider, Basic-save damage, Forced movement |
+| Gravitational Pull | P7 / P7-002 | Save-result condition rider, Native condition, Forced movement |
+| Hydraulic Torrent | P7 / P7-002 | Save-result condition rider, Basic-save damage, Forced movement |
+| Psychic Outburst | P7 / P7-002 | Save-result condition rider, Basic-save damage, Forced movement |
+| Door to Beyond | P7 / P7-003 | Recurring saving throw, Turn trigger or boundary, Area exposure, Ending or dismissal, Save-result condition rider, Forced movement |
+| Inevitable Destination | P7 / P7-003 | Turn trigger or boundary, Ending or dismissal, Save-result condition rider, Native condition, Forced movement, Modifier / resistance |
+| Retrieving Hook | P7 / P7-003 | Save-result condition rider, Native condition, Forced movement |
+| Shadow Strike | P7 / P7-003 | Attack and dependent result, Forced movement |
+| Undertow | P7 / P7-003 | Area exposure, Save-result condition rider, Forced movement, Modifier / resistance |
+| Blastback | P7 / P7-004 | Forced movement |
+| Elemental Annihilation Wave | P7 / P7-004 | Save-result condition rider, Basic-save damage, Native condition, Forced movement |
+| Heaving Earth | P7 / P7-004 | Basic-save damage, Native condition, Forced movement |
+| Unfolding Wind Buffet | P7 / P7-004 | Save-result condition rider, Native condition, Forced movement |
+| Gust of Wind | P7 / P7-005 | Area exposure, Save-result condition rider, Native condition, Forced movement |
+| Hydraulic Push | P7 / P7-005 | Attack and dependent result, Forced movement |
+| Unseasonable Squall | P7 / P7-005 | Area exposure, Save-result condition rider, Native condition, Forced movement |
+| Turbulent Tide | P7 / P7-006 | Save-result condition rider, Attack and dependent result, Forced movement, Movement action |
+| Arcane Explosion | P7 / P7-007 | Area exposure, Basic-save damage, Native condition, Forced movement, Modifier / resistance |
+| Blessed Boundary | P7 / P7-008 | Turn trigger or boundary, Save-result condition rider, Forced movement |
 | Boneshaker | P7 / P7-009 | Save-result condition rider, Native condition, Forced movement |
 | Imaginary Weapon | P7 / P7-010 | Attack and dependent result, Forced movement |
 | Life's Flowing River | P7 / P7-011 | Turn trigger or boundary, Area exposure, Save-result condition rider, Native condition, Forced movement |
-| Blazing Dive | P7 / P7-012 | Basic-save damage, Movement action |
-| Comet Charge | P7 / P7-012 | Persistent damage, Native condition, Attack and dependent result, Choice / casting variant, Movement action, Modifier / resistance |
-| Earth and Sky | P7 / P7-013 | Ending or dismissal, Save-result condition rider, Movement action |
-| Airlift | P7 / P7-014 | Movement action |
-| Pyrefowl Rebuke | P7 / P7-014 | Turn trigger or boundary, Save-result condition rider, Basic-save damage, Native condition, Movement action |
-| Agile Feet | P7 / P7-015 | Granted movement speed, Movement action, Modifier / resistance |
-| Augmented Body | P7 / P7-015 | Ending or dismissal, Granted movement speed, Choice / casting variant, Movement action, Modifier / resistance |
-| Flashy Disappearance | P7 / P7-016 | Movement action, Modifier / resistance |
-| Flowing Strike | P7 / P7-016 | Attack and dependent result, Movement action |
-| Agitate | P7 / P7-017 | Turn trigger or boundary, Save-result condition rider, Movement action |
+| Airlift | P7 / P7-012 | Movement action |
+| Pyrefowl Rebuke | P7 / P7-012 | Turn trigger or boundary, Save-result condition rider, Basic-save damage, Native condition, Movement action |
+| Agile Feet | P7 / P7-013 | Granted movement speed, Movement action, Modifier / resistance |
+| Augmented Body | P7 / P7-013 | Ending or dismissal, Granted movement speed, Choice / casting variant, Movement action, Modifier / resistance |
+| Blazing Dive | P7 / P7-014 | Basic-save damage, Movement action |
+| Comet Charge | P7 / P7-014 | Persistent damage, Native condition, Attack and dependent result, Choice / casting variant, Movement action, Modifier / resistance |
+| Flashy Disappearance | P7 / P7-015 | Movement action, Modifier / resistance |
+| Flowing Strike | P7 / P7-015 | Attack and dependent result, Movement action |
+| Agitate | P7 / P7-016 | Turn trigger or boundary, Save-result condition rider, Movement action |
+| Earth and Sky | P7 / P7-019 | Ending or dismissal, Save-result condition rider, Movement action |
 | Earthbreaker Stride | P7 / P7-020 | Ending or dismissal, Granted movement speed, Movement action |
 | Forceful Hand | P7 / P7-021 | Sustain, Turn trigger or boundary, Basic-save damage, Attack and dependent result, Movement action, Modifier / resistance |
 | Hippocampus Retreat | P7 / P7-022 | Attack and dependent result, Movement action, Modifier / resistance |
@@ -5170,89 +5171,89 @@ These spells are owned by another primary worklist; reuse their listed batch ins
 | Collective Transposition | P7 / P7-041 | Teleportation |
 | Sudden Transposition | P7 / P7-041 | Save-result condition rider, Native condition, Teleportation |
 | Warping Pull | P7 / P7-041 | Teleportation, Modifier / resistance |
-| Forest of Gates | P7 / P7-042 | Save-result condition rider, Native condition, Healing / recipient mode, Choice / casting variant, Incarnate arrival/departure |
-| Maze of Locked Doors | P7 / P7-043 | Save-result condition rider, Counteract, Teleportation |
-| Proximal Shift | P7 / P7-044 | Basic-save damage, Native condition, Teleportation, Terrain |
-| Unexpected Transposition | P7 / P7-045 | Temporary immunity |
-| Momentary Recovery | P7 / P7-046 | Turn trigger or boundary, Native condition, Incarnate arrival/departure, Teleportation |
-| Echo Jump | P7 / P7-047 | Teleportation |
-| Rapid Retreat | P7 / P7-047 | Area exposure, Teleportation, Modifier / resistance |
-| Disruptive Transfer | P7 / P7-049 | Native condition, Teleportation |
-| Dimensional Drop | P7 / P7-054 | Save-result condition rider |
-| Dimensional Excision | P7 / P7-055 | Persistent damage, Modifier / resistance |
-| Dive and Breach | P7 / P7-056 | Area exposure, Movement action |
-| Flicker | P7 / P7-061 | Sustain, Turn trigger or boundary, Teleportation, Modifier / resistance |
-| Infiltrator's Tunnel | P7 / P7-063 | Teleportation |
-| Trade Items | P7 / P7-072 | Modifier / resistance |
-| Flame Vortex | P7 / P7-074 | Sustain, Area exposure, Basic-save damage, Terrain |
-| Ice Storm | P7 / P7-074 | Turn trigger or boundary, Area exposure, Basic-save damage, Terrain |
-| Rouse Skeletons | P7 / P7-074 | Sustain, Basic-save damage, Terrain |
-| Storm of Vengeance | P7 / P7-074 | Sustain, Temporary immunity, Basic-save damage, Native condition, Choice / casting variant, Terrain, Modifier / resistance |
-| Tear the Veil | P7 / P7-074 | Sustain, Area exposure, Save-result condition rider, Native condition, Terrain, Forced movement |
-| Wrathful Storm | P7 / P7-074 | Sustain, Basic-save damage, Choice / casting variant, Terrain, Modifier / resistance |
-| Cave Fangs | P7 / P7-075 | Ending or dismissal, Basic-save damage, Terrain |
-| Coral Eruption | P7 / P7-075 | Area exposure, Save-result condition rider, Basic-save damage, Persistent damage, Terrain |
-| Elemental Breath | P7 / P7-075 | Save-result condition rider, Basic-save damage, Native condition, Choice / casting variant, Terrain, Forced movement |
-| Mushroom Patch | P7 / P7-075 | Save-result condition rider, Native condition, Terrain |
-| Scatter Scree | P7 / P7-075 | Basic-save damage, Terrain |
-| Trim the Blight | P7 / P7-075 | Save-result condition rider, Native condition, Terrain |
-| Untwisting Iron Roots | P7 / P7-075 | Basic-save damage, Native condition, Terrain |
-| Whirlpool | P7 / P7-076 | Sustain, Area exposure, Save-result condition rider, Terrain |
-| Whirlwind | P7 / P7-076 | Sustain, Area exposure, Ending or dismissal, Save-result condition rider, Granted movement speed, Terrain |
-| Zombie Horde | P7 / P7-076 | Sustain, Turn trigger or boundary, Area exposure, Ending or dismissal, Basic-save damage, Terrain |
-| Corrosive Muck | P7 / P7-077 | Area exposure, Save-result condition rider, Basic-save damage, Persistent damage, Terrain |
-| Entangling Flora | P7 / P7-077 | Area exposure, Save-result condition rider, Native condition, Terrain, Modifier / resistance |
-| Horizon's Veil | P7 / P7-077 | Area exposure, Ending or dismissal, Native condition, Terrain, Modifier / resistance |
-| Morass of Ages | P7 / P7-077 | Sustain, Area exposure, Save-result condition rider, Native condition, Terrain |
-| Oneiric Mire | P7 / P7-077 | Recurring saving throw, Area exposure, Save-result condition rider, Native condition, Terrain, Modifier / resistance |
-| Rime Slick | P7 / P7-077 | Save-result condition rider, Basic-save damage, Native condition, Terrain |
-| Sea of Thought | P7 / P7-077 | Area exposure, Save-result condition rider, Native condition, Terrain, Modifier / resistance |
-| Storm Lord | P7 / P7-077 | Sustain, Area exposure, Basic-save damage, Native condition, Terrain, Modifier / resistance |
-| Swampcall | P7 / P7-077 | Turn trigger or boundary, Save-result condition rider, Native condition, Terrain, Modifier / resistance |
-| Web | P7 / P7-077 | Turn trigger or boundary, Area exposure, Save-result condition rider, Native condition, Terrain, Modifier / resistance |
+| Momentary Recovery | P7 / P7-042 | Turn trigger or boundary, Native condition, Incarnate arrival/departure, Teleportation |
+| Echo Jump | P7 / P7-043 | Teleportation |
+| Rapid Retreat | P7 / P7-043 | Area exposure, Teleportation, Modifier / resistance |
+| Disruptive Transfer | P7 / P7-045 | Native condition, Teleportation |
+| Dimensional Drop | P7 / P7-050 | Save-result condition rider |
+| Dimensional Excision | P7 / P7-051 | Persistent damage, Modifier / resistance |
+| Dive and Breach | P7 / P7-052 | Area exposure, Movement action |
+| Flicker | P7 / P7-057 | Sustain, Turn trigger or boundary, Teleportation, Modifier / resistance |
+| Forest of Gates | P7 / P7-058 | Save-result condition rider, Native condition, Healing / recipient mode, Choice / casting variant, Incarnate arrival/departure |
+| Infiltrator's Tunnel | P7 / P7-060 | Teleportation |
+| Maze of Locked Doors | P7 / P7-064 | Save-result condition rider, Counteract, Teleportation |
+| Proximal Shift | P7 / P7-065 | Basic-save damage, Native condition, Teleportation, Terrain |
+| Trade Items | P7 / P7-071 | Modifier / resistance |
+| Unexpected Transposition | P7 / P7-073 | Temporary immunity |
+| Cave Fangs | P7 / P7-074 | Ending or dismissal, Basic-save damage, Terrain |
+| Coral Eruption | P7 / P7-074 | Area exposure, Save-result condition rider, Basic-save damage, Persistent damage, Terrain |
+| Elemental Breath | P7 / P7-074 | Save-result condition rider, Basic-save damage, Native condition, Choice / casting variant, Terrain, Forced movement |
+| Mushroom Patch | P7 / P7-074 | Save-result condition rider, Native condition, Terrain |
+| Scatter Scree | P7 / P7-074 | Basic-save damage, Terrain |
+| Trim the Blight | P7 / P7-074 | Save-result condition rider, Native condition, Terrain |
+| Untwisting Iron Roots | P7 / P7-074 | Basic-save damage, Native condition, Terrain |
+| Corrosive Muck | P7 / P7-075 | Area exposure, Save-result condition rider, Basic-save damage, Persistent damage, Terrain |
+| Entangling Flora | P7 / P7-075 | Area exposure, Save-result condition rider, Native condition, Terrain, Modifier / resistance |
+| Horizon's Veil | P7 / P7-075 | Area exposure, Ending or dismissal, Native condition, Terrain, Modifier / resistance |
+| Morass of Ages | P7 / P7-075 | Sustain, Area exposure, Save-result condition rider, Native condition, Terrain |
+| Oneiric Mire | P7 / P7-075 | Recurring saving throw, Area exposure, Save-result condition rider, Native condition, Terrain, Modifier / resistance |
+| Rime Slick | P7 / P7-075 | Save-result condition rider, Basic-save damage, Native condition, Terrain |
+| Sea of Thought | P7 / P7-075 | Area exposure, Save-result condition rider, Native condition, Terrain, Modifier / resistance |
+| Storm Lord | P7 / P7-075 | Sustain, Area exposure, Basic-save damage, Native condition, Terrain, Modifier / resistance |
+| Swampcall | P7 / P7-075 | Turn trigger or boundary, Save-result condition rider, Native condition, Terrain, Modifier / resistance |
+| Web | P7 / P7-075 | Turn trigger or boundary, Area exposure, Save-result condition rider, Native condition, Terrain, Modifier / resistance |
+| Flame Vortex | P7 / P7-076 | Sustain, Area exposure, Basic-save damage, Terrain |
+| Ice Storm | P7 / P7-076 | Turn trigger or boundary, Area exposure, Basic-save damage, Terrain |
+| Rouse Skeletons | P7 / P7-076 | Sustain, Basic-save damage, Terrain |
+| Storm of Vengeance | P7 / P7-076 | Sustain, Temporary immunity, Basic-save damage, Native condition, Choice / casting variant, Terrain, Modifier / resistance |
+| Tear the Veil | P7 / P7-076 | Sustain, Area exposure, Save-result condition rider, Native condition, Terrain, Forced movement |
+| Wrathful Storm | P7 / P7-076 | Sustain, Basic-save damage, Choice / casting variant, Terrain, Modifier / resistance |
+| Conjured Clockwork | P7 / P7-077 | Sustain, Area exposure, Basic-save damage, Terrain |
+| Etheric Shards | P7 / P7-077 | Basic-save damage, Terrain |
+| Rose's Thorns | P7 / P7-077 | Sustain, Area exposure, Save-result condition rider, Basic-save damage, Persistent damage, Native condition, Terrain |
+| Weapon Tide | P7 / P7-077 | Area exposure, Basic-save damage, Terrain |
+| Wildfire | P7 / P7-077 | Sustain, Area exposure, Persistent damage, Terrain |
 | Bramble Bush | P7 / P7-078 | Turn trigger or boundary, Area exposure, Basic-save damage, Terrain |
 | Howling Blizzard | P7 / P7-078 | Turn trigger or boundary, Basic-save damage, Terrain |
 | Planar Collision | P7 / P7-078 | Area exposure, Save-result condition rider, Basic-save damage, Choice / casting variant, Terrain, Forced movement |
 | Swamp of Sloth | P7 / P7-078 | Area exposure, Basic-save damage, Terrain |
-| Undertaker | P7 / P7-079 | Turn trigger or boundary, Save-result condition rider, Native condition, Terrain, Modifier / resistance |
-| Earthquake | P7 / P7-080 | Turn trigger or boundary, Save-result condition rider, Basic-save damage, Native condition, Terrain, Modifier / resistance |
-| Elemental Confluence | P7 / P7-081 | Sustain, Save-result condition rider, Basic-save damage, Persistent damage, Attack and dependent result, Terrain, Modifier / resistance |
-| Pierce the Sky | P7 / P7-082 | Area exposure, Save-result condition rider, Native condition, Attack and dependent result, Terrain |
-| Rainbow Fumarole | P7 / P7-083 | Area exposure, Basic-save damage, Persistent damage, Native condition, Choice / casting variant, Terrain |
-| Repulsion | P7 / P7-084 | Aura membership, Area exposure, Terrain |
-| Shipwreck | P7 / P7-085 | Save-result condition rider, Terrain |
-| Tanglecurse | P7 / P7-086 | Area exposure, Save-result condition rider, Native condition, Terrain |
-| Unbreaking Wave Barrier | P7 / P7-087 | Sustain, Area exposure, Save-result condition rider, Native condition, Terrain, Forced movement, Modifier / resistance |
-| Upheaval | P7 / P7-088 | Save-result condition rider, Native condition, Terrain |
-| Volcanic Eruption | P7 / P7-089 | Save-result condition rider, Native condition, Terrain, Modifier / resistance |
-| Conjured Clockwork | P7 / P7-090 | Sustain, Area exposure, Basic-save damage, Terrain |
-| Etheric Shards | P7 / P7-090 | Basic-save damage, Terrain |
-| Rose's Thorns | P7 / P7-090 | Sustain, Area exposure, Save-result condition rider, Basic-save damage, Persistent damage, Native condition, Terrain |
-| Weapon Tide | P7 / P7-090 | Area exposure, Basic-save damage, Terrain |
-| Wildfire | P7 / P7-090 | Sustain, Area exposure, Persistent damage, Terrain |
-| Antlion Trap | P7 / P7-092 | Area exposure, Save-result condition rider, Native condition, Terrain |
-| Crystallized Vapors | P7 / P7-094 | Sustain, Attack and dependent result, Terrain |
-| Cyclone Rondo | P7 / P7-095 | Sustain, Area exposure, Basic-save damage, Native condition, Terrain |
-| Elemental Gift | P7 / P7-096 | Turn trigger or boundary, Persistent damage, Granted movement speed, Native condition, Choice / casting variant, Terrain, Modifier / resistance |
-| Field of Razors | P7 / P7-097 | Ending or dismissal, Persistent damage, Terrain |
-| Garden of Stone | P7 / P7-098 | Basic-save damage, Terrain |
-| Gluttonous Growth | P7 / P7-099 | Sustain, Turn trigger or boundary, Save-result condition rider, Native condition, Terrain |
-| Heart's Desire | P7 / P7-100 | Save-result condition rider, Native condition, Terrain, Modifier / resistance |
-| Helpful Wood Spirits | P7 / P7-101 | Sustain, Native condition, Choice / casting variant, Terrain, Information / adjudication |
-| Iron Rain | P7 / P7-102 | Persistent damage, Terrain |
-| Magnetic Repulsion | P7 / P7-103 | Native condition, Terrain, Modifier / resistance |
-| Ranage's Circle | P7 / P7-105 | Area exposure, Save-result condition rider, Native condition, Terrain |
-| River Carving Mountains | P7 / P7-106 | Sustain, Turn trigger or boundary, Granted movement speed, Terrain, Movement action, Modifier / resistance |
-| Sawtooth Terrain | P7 / P7-107 | Area exposure, Save-result condition rider, Persistent damage, Healing / recipient mode, Terrain, Modifier / resistance |
-| Shifting Sand | P7 / P7-108 | Sustain, Turn trigger or boundary, Area exposure, Save-result condition rider, Native condition, Terrain, Modifier / resistance |
-| Strange Geometry | P7 / P7-110 | Area exposure, Terrain |
-| Telekinetic Bombardment | P7 / P7-112 | Save-result condition rider, Native condition, Terrain |
-| Transmute Rock And Mud | P7 / P7-113 | Save-result condition rider, Basic-save damage, Native condition, Choice / casting variant, Terrain, Movement action |
-| Prismatic Wall | P7 / P7-115 | Temporary immunity, Ending or dismissal, Save-result condition rider, Native condition, Counteract, Wall / barrier |
-| Wall of Ice | P7 / P7-116 | Wall / barrier, Modifier / resistance |
-| Wall of Radiance | P7 / P7-116 | Basic-save damage, Native condition, Wall / barrier |
-| Blade Barrier | P7 / P7-117 | Area exposure, Save-result condition rider, Basic-save damage, Wall / barrier |
-| Chromatic Wall | P7 / P7-117 | Save-result condition rider, Native condition, Counteract, Wall / barrier, Information / adjudication, Modifier / resistance |
+| Whirlpool | P7 / P7-079 | Sustain, Area exposure, Save-result condition rider, Terrain |
+| Whirlwind | P7 / P7-079 | Sustain, Area exposure, Ending or dismissal, Save-result condition rider, Granted movement speed, Terrain |
+| Zombie Horde | P7 / P7-079 | Sustain, Turn trigger or boundary, Area exposure, Ending or dismissal, Basic-save damage, Terrain |
+| Undertaker | P7 / P7-080 | Turn trigger or boundary, Save-result condition rider, Native condition, Terrain, Modifier / resistance |
+| Antlion Trap | P7 / P7-082 | Area exposure, Save-result condition rider, Native condition, Terrain |
+| Crystallized Vapors | P7 / P7-084 | Sustain, Attack and dependent result, Terrain |
+| Cyclone Rondo | P7 / P7-085 | Sustain, Area exposure, Basic-save damage, Native condition, Terrain |
+| Earthquake | P7 / P7-086 | Turn trigger or boundary, Save-result condition rider, Basic-save damage, Native condition, Terrain, Modifier / resistance |
+| Elemental Confluence | P7 / P7-087 | Sustain, Save-result condition rider, Basic-save damage, Persistent damage, Attack and dependent result, Terrain, Modifier / resistance |
+| Elemental Gift | P7 / P7-088 | Turn trigger or boundary, Persistent damage, Granted movement speed, Native condition, Choice / casting variant, Terrain, Modifier / resistance |
+| Field of Razors | P7 / P7-089 | Ending or dismissal, Persistent damage, Terrain |
+| Garden of Stone | P7 / P7-090 | Basic-save damage, Terrain |
+| Gluttonous Growth | P7 / P7-091 | Sustain, Turn trigger or boundary, Save-result condition rider, Native condition, Terrain |
+| Heart's Desire | P7 / P7-092 | Save-result condition rider, Native condition, Terrain, Modifier / resistance |
+| Helpful Wood Spirits | P7 / P7-093 | Sustain, Native condition, Choice / casting variant, Terrain, Information / adjudication |
+| Iron Rain | P7 / P7-094 | Persistent damage, Terrain |
+| Magnetic Repulsion | P7 / P7-095 | Native condition, Terrain, Modifier / resistance |
+| Pierce the Sky | P7 / P7-096 | Area exposure, Save-result condition rider, Native condition, Attack and dependent result, Terrain |
+| Rainbow Fumarole | P7 / P7-098 | Area exposure, Basic-save damage, Persistent damage, Native condition, Choice / casting variant, Terrain |
+| Ranage's Circle | P7 / P7-099 | Area exposure, Save-result condition rider, Native condition, Terrain |
+| Repulsion | P7 / P7-100 | Aura membership, Area exposure, Terrain |
+| River Carving Mountains | P7 / P7-101 | Sustain, Turn trigger or boundary, Granted movement speed, Terrain, Movement action, Modifier / resistance |
+| Sawtooth Terrain | P7 / P7-102 | Area exposure, Save-result condition rider, Persistent damage, Healing / recipient mode, Terrain, Modifier / resistance |
+| Shifting Sand | P7 / P7-103 | Sustain, Turn trigger or boundary, Area exposure, Save-result condition rider, Native condition, Terrain, Modifier / resistance |
+| Shipwreck | P7 / P7-104 | Save-result condition rider, Terrain |
+| Strange Geometry | P7 / P7-106 | Area exposure, Terrain |
+| Tanglecurse | P7 / P7-108 | Area exposure, Save-result condition rider, Native condition, Terrain |
+| Telekinetic Bombardment | P7 / P7-109 | Save-result condition rider, Native condition, Terrain |
+| Transmute Rock And Mud | P7 / P7-110 | Save-result condition rider, Basic-save damage, Native condition, Choice / casting variant, Terrain, Movement action |
+| Unbreaking Wave Barrier | P7 / P7-111 | Sustain, Area exposure, Save-result condition rider, Native condition, Terrain, Forced movement, Modifier / resistance |
+| Upheaval | P7 / P7-112 | Save-result condition rider, Native condition, Terrain |
+| Volcanic Eruption | P7 / P7-114 | Save-result condition rider, Native condition, Terrain, Modifier / resistance |
+| Wall of Ice | P7 / P7-115 | Wall / barrier, Modifier / resistance |
+| Wall of Radiance | P7 / P7-115 | Basic-save damage, Native condition, Wall / barrier |
+| Blade Barrier | P7 / P7-116 | Area exposure, Save-result condition rider, Basic-save damage, Wall / barrier |
+| Chromatic Wall | P7 / P7-116 | Save-result condition rider, Native condition, Counteract, Wall / barrier, Information / adjudication, Modifier / resistance |
+| Prismatic Wall | P7 / P7-119 | Temporary immunity, Ending or dismissal, Save-result condition rider, Native condition, Counteract, Wall / barrier |
 | Sea Surge | P7 / P7-120 | Turn trigger or boundary, Area exposure, Save-result condition rider, Native condition, Wall / barrier, Forced movement |
 | Wall of Flesh | P7 / P7-121 | Area exposure, Save-result condition rider, Native condition, Healing / recipient mode, Attack and dependent result, Choice / casting variant, Wall / barrier, Modifier / resistance |
 | Wall of Wind | P7 / P7-122 | Save-result condition rider, Wall / barrier, Forced movement, Modifier / resistance |

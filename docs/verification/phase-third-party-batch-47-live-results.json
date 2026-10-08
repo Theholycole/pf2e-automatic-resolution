@@ -1,0 +1,43 @@
+{
+ "label": "thirdPartyBatch47",
+ "passed": true,
+ "at": "2026-10-07T05:13:21.224Z",
+ "details": {
+  "thirdParty47": {
+   "cast": {
+    "status": "applied",
+    "spell": "Frostbite",
+    "rank": 9,
+    "shaper": true
+   },
+   "first": {
+    "regions": 2,
+    "a": [
+     -5
+    ],
+    "b": [
+     -15
+    ],
+    "lostA": 28,
+    "lostB": 56
+   },
+   "second": {
+    "shaped": [
+     "Fractal Frosting"
+    ],
+    "regions": 1,
+    "a": [
+     -15
+    ]
+   },
+   "dominion": {
+    "status": "applied",
+    "inside": true,
+    "fireball": "6d6 + 3 fire",
+    "bolt": "4d12 electricity",
+    "outside": true,
+    "fireballOutside": "6d6 fire"
+   }
+  }
+ }
+}

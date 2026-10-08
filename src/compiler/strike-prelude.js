@@ -37,6 +37,8 @@ export function extractStrikePrelude(adapted) {
     // A Strike whose result decides a rider (the card reads the Strike's degree from PF2e).
     const during = sentences.findIndex(sentence => STRIKE_DURING.test(sentence));
     if (during >= 0) return strikeResult(adapted, sentences, during, unmask, rest);
+    const table = strikeTable(adapted);
+    if (table !== undefined) return table;
     const conditions = strikeConditions(adapted, sentences, unmask, rest);
     if (conditions !== undefined) return conditions;
     const breakPush = strikeBreakPush(adapted, sentences, unmask, rest);
@@ -201,5 +203,43 @@ function strikeResult(adapted, sentences, during, unmask, rest) {
         ...(push ? { forcedMovement: { criticalSuccess: push, success: push } } : {}),
         constraints: { sourceText: "the target of your Strike", supportsActorTargets: true, complete: true, predicates },
         riderText: unmask(after[0])
+    };
+}
+
+// A Strike with its own degree table (Medusa's Wrath): "You make an attack filled with a medusa's petrifying power. Make an unarmed Strike with the following
+// additional effects." / "Critical Success The target is {Slowed 2} and must attempt a Fortitude save at the end of each of its turns; this ongoing save has the
+// incapacitation trait. On a failed save, the slowed condition increases by 1 (2 on a critical failure). A successful save reduces the slowed condition by 1.
+// When a creature is unable to act due to the slowed condition from medusa's wrath, it is {Petrified} permanently. The spell ends if the creature is petrified
+// or the slowed condition is removed." / "Success As critical success, but the target is initially {Slowed 1}" — the caster's own Strike decides the row (a
+// critical hit, a hit); each hit row's Slowed lasts with the escalating end-of-turn save (failure +1, critical failure +2, success −1; at 0 it ends; at the
+// creature's action count, Petrified permanently), the save being the item's (PF2e's Fortitude). A miss does nothing.
+const TABLE_STRIKE = /^Make an? (unarmed|melee|ranged) Strike with the following additional effects\.$/;
+const ESCALATE_CRIT = /^The target is (@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{Slowed (\d)\}) and must attempt an? (Fortitude|Reflex|Will) save at the end of each of its turns; this ongoing save has the incapacitation trait\. On a failed save, the slowed condition increases by (\d) \((\d) on a critical failure\)\. A successful save reduces the slowed condition by (\d)\. When a creature is unable to act due to the slowed condition from [a-z' ]+, it is (@UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{Petrified\}) permanently\. The spell ends if the creature is petrified or the slowed condition is removed\.$/;
+const ESCALATE_HIT = /^As critical success, but the target is initially (@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{Slowed (\d)\})\.?$/;
+function strikeTable(adapted) {
+    if ((adapted.damageComponents ?? []).length || adapted.targeting?.area || adapted.defense?.kind !== "save" || adapted.defense.basic !== false) return undefined;
+    const [lead, table, ...more] = String(adapted.descriptionHTML ?? "").split(/<hr\s*\/?>/i).map(section => section.trim());
+    const leadSentences = htmlToPlainText(lead ?? "").replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s+(?=[A-Z@])/).filter(Boolean);
+    const strikeAt = leadSentences.findIndex(sentence => TABLE_STRIKE.test(sentence));
+    if (strikeAt < 0) return undefined;
+    if (more.length || !table || strikeAt !== leadSentences.length - 1 || leadSentences.slice(0, strikeAt).some(sentence => /\d|\b(?:damage|save|bonus|penalty|condition|immune)\b/i.test(sentence))) return null;
+    const rows = Object.fromEntries([...table.matchAll(/<p>\s*<strong>\s*(Critical Success|Success)\s*<\/strong>([\s\S]*?)<\/p>/gi)].map(match => [match[1], match[2].replace(/\s+/g, " ").trim()]));
+    const crit = ESCALATE_CRIT.exec(rows["Critical Success"] ?? ""), hit = ESCALATE_HIT.exec(rows.Success ?? "");
+    if (Object.keys(rows).length !== 2 || !crit || !hit || crit[3].toLowerCase() !== adapted.defense.statistic || Number(hit[2]) >= Number(crit[2])) return null;
+    const unaffected = "The target is unaffected.";
+    const html = `<p>The target must attempt a Strike.</p><hr />${[["Critical Success", `The target is ${crit[1]} for an unlimited duration.`], ["Success", `The target is ${hit[1]} for an unlimited duration.`],
+        ["Failure", unaffected], ["Critical Failure", unaffected]].map(([heading, body]) => `<p><strong>${heading}</strong> ${body}</p>`).join("")}`;
+    const sourceText = htmlToPlainText(rows["Critical Success"]).replace(/\s+/g, " ").trim();
+    return {
+        html,
+        narration: leadSentences.slice(0, strikeAt),
+        defense: { kind: "save", statistic: "strike", basic: false },
+        strike: { reach: null, weapon: null, sourceText: leadSentences[strikeAt], result: true },
+        reminders: [],
+        constraints: { sourceText: "the target of your Strike", supportsActorTargets: true, complete: true, predicates: [] },
+        riderText: [sourceText, htmlToPlainText(rows.Success).trim()].join(" "),
+        escalate: { slug: "slowed", timing: "turn-end", mode: "escalate", statistic: crit[3].toLowerCase(),
+            steps: { criticalSuccess: -Number(crit[6]), success: -Number(crit[6]), failure: Number(crit[4]), criticalFailure: Number(crit[5]) }, maximum: 4,
+            atActions: { uuid: crit[8], slug: "petrified", sourceText: htmlToPlainText(`When a creature is unable to act due to the slowed condition`).trim() }, sourceText }
     };
 }

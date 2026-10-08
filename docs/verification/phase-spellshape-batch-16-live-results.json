@@ -1,0 +1,51 @@
+{
+  "generatedAt": "2026-10-05T21:25:44.488Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "spellshapeBatch16",
+      "passed": true,
+      "at": "2026-10-05T21:24:51.938Z",
+      "details": {
+        "spellshape16": {
+          "push": {
+            "at": [
+              7,
+              4
+            ],
+            "blocker": [
+              8,
+              4
+            ]
+          },
+          "thornsWatch": true,
+          "thorns": 2,
+          "hazeWatch": true,
+          "haze": 5,
+          "spider": {
+            "inWeb": 4,
+            "outside": 0
+          },
+          "probeWatch": true,
+          "probe": {
+            "outcome": "failure",
+            "spent": true
+          },
+          "echoArea": true,
+          "shards": {
+            "missiles": 2,
+            "volley": "2:7"
+          },
+          "echo": {
+            "card": true,
+            "rank": 2,
+            "targets": 6,
+            "count": 1
+          },
+          "continuation": "15 minutes"
+        }
+      }
+    }
+  ]
+}

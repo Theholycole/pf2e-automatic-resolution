@@ -1,0 +1,34 @@
+{
+ "label": "thirdPartyBatch60",
+ "passed": true,
+ "at": "2026-10-07T06:17:46.522Z",
+ "details": {
+  "thirdParty60": {
+   "cast": {
+    "first": "success",
+    "prone": true,
+    "clear": {
+     "slashing": 10,
+     "fire": 2
+    },
+    "difficult": true
+   },
+   "critTrip": {
+    "prone": true,
+    "lost": 6,
+    "damage": 6
+   },
+   "disarm": {
+    "effect": true
+   },
+   "reposition": "the creepers move PFTEST P23 Affliction tp60 beside up to 5 feet (it stays in or beside the area)",
+   "far": "Coiling Creepers: PFTEST P23 Affliction tp60 far isn't in the area or beside it.",
+   "colossus": "Coiling Creepers: PFTEST P23 Affliction tp60 colossus is too large for the creepers.",
+   "cleared": {
+    "before": 1,
+    "after": 2,
+    "hole": true
+   }
+  }
+ }
+}

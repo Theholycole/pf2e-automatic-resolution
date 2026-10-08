@@ -1,0 +1,38 @@
+{
+ "label": "thirdPartyBatch32",
+ "passed": true,
+ "at": "2026-10-07T03:09:14.947Z",
+ "details": {
+  "thirdParty32": {
+   "baseAC": 20,
+   "foeBefore": 20,
+   "otherBefore": 18,
+   "first": [
+    {
+     "name": "PFTEST P23 Affliction tp32 foe",
+     "value": 2,
+     "effectUuid": "Actor.6qhbaTOiJvT9yeFz.Item.9GiYFay55aeTZBD5"
+    }
+   ],
+   "effect": [
+    [
+     2,
+     [
+      "{item|flags.system.rulesSelections.defense}"
+     ]
+    ]
+   ],
+   "acVsFoe": 22,
+   "acVsOther": 18,
+   "baseWill": 10,
+   "second": [
+    {
+     "name": "PFTEST P23 Affliction tp32 foe",
+     "value": 2,
+     "effectUuid": "Actor.6qhbaTOiJvT9yeFz.Item.zf97oANWseb0zXfg"
+    }
+   ],
+   "willVsFoe": 12
+  }
+ }
+}

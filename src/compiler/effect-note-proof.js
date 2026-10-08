@@ -7,6 +7,11 @@ import { htmlToPlainText } from "./description-parser.js";
 // (Or PF2e's table form: "match(when(btwn(@item.level, 2, 3), 1), when(gte(@item.level, 8), 4))", or "ternary(gte(@item.level,7),15,10)".)
 export function ruleValueAt(value, rank) {
     if (Number.isFinite(value)) return Number(value);
+    // (PF2e's bracket table on the item's level — "{field: 'item|level', brackets: [{end: 6, value: 1}, {start: 7, value: 2}]}" — as a live world's Effect writes it.)
+    if (value && typeof value === "object" && Array.isArray(value.brackets) && ["item|level", "item|system.level.value"].includes(value.field ?? "item|level")) {
+        const bracket = value.brackets.find(entry => (entry.start == null || rank >= Number(entry.start)) && (entry.end == null || rank <= Number(entry.end)));
+        return bracket && Number.isFinite(Number(bracket.value)) ? Number(bracket.value) : null;
+    }
     const formula = String(value ?? "").replace(/@item\.(?:level|rank)/g, String(rank));
     if (!/^(?:[\d\s+\-*/().,]|floor|ceil|max|min|match|when|ternary|btwn|gte|lte|gt|lt|eq)+$/.test(formula)) return null;
     const helpers = { floor: Math.floor, ceil: Math.ceil, max: Math.max, min: Math.min, match: (...cases) => cases.find(entry => entry !== undefined), when: (condition, result) => condition ? result : undefined, ternary: (condition, yes, no) => condition ? yes : no,
@@ -23,6 +28,8 @@ const spiritOption = rule => { const terms = rule.predicate?.[0]?.or ?? []; cons
 
 const CONDITION = name => String.raw`(?:@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{${name}\}|${name})`;
 // Readers: a sentence and the one rule it states.
+// (A value a reader worked out from the text, for its own claim's overrides.)
+const TEXT_VALUES = new WeakMap();
 const READERS = [
     // Shielding Formation: "You and each ally who ends their turn within the emanation gain a +1 circumstance bonus to AC until they leave the emanation
     // or the spell ends, whichever comes first." (PF2e's AC bonus, off while its resistance toggle is on) / "If an ally takes physical damage or damage from
@@ -481,14 +488,209 @@ const READERS = [
     // "The gemstone you touch glows, spreading bright light with a color of your choice in a 20-foot radius (and dim light for the next 20 feet)."
     // (The light is the gem's: on its holder, the caster.)
     { pattern: /^The [a-z]+ you touch glows, spreading bright light with a color of your choice in a (\d+)-foot radius \(and dim light for the next (\d+) feet\)\.$/, recipient: { actor: "source" },
-        rule: (rule, match) => rule.key === "TokenLight" && Number(rule.value?.bright) === Number(match[1]) && Number(rule.value?.dim) === Number(match[1]) + Number(match[2]) }
+        rule: (rule, match) => rule.key === "TokenLight" && Number(rule.value?.bright) === Number(match[1]) && Number(rule.value?.dim) === Number(match[1]) + Number(match[2]) },
+    // Third-party (2026-10-06). Cosmic Tune (Witches+): "You grant an ally within 30 feet the ability to hear your cosmic song within their mind." (who
+    // gets it: the targeted ally) / "The ally gains a +1 status bonus to attack rolls and to Will saves, but they become Fascinated by the music for the
+    // duration and hostile actions do not end the fascinated condition." — the bonus and PF2e's Fascinated together; the hostile-action rule a note.
+    { pattern: /^You grant an ally within \d+ feet the ability to hear your [a-z ]+ within their mind\.$/, rules: () => [], recipient: { actor: "target" } },
+    { pattern: new RegExp(String.raw`^The ally gains a \+(\d) (status) bonus to attack rolls and to Will saves, but they become ${CONDITION("Fascinated")} by the music for the duration and hostile actions do not end the fascinated condition\.$`),
+        recipient: { actor: "target" }, bonusValue: true,
+        rules: (rules, match) => { const bonus = rules.findIndex(rule => rule.key === "FlatModifier" && [rule.selector].flat().sort().join() === "attack-roll,will" && rule.type === match[2] && !rule.predicate);
+            const fascinated = rules.findIndex(rule => rule.key === "GrantItem" && rule.uuid === "Compendium.pf2e.conditionitems.Item.AdPVz7rbaVSRxHFg" && !rule.predicate);
+            return bonus >= 0 && fascinated >= 0 ? [bonus, fascinated] : null; },
+        note: () => "Hostile actions don't end this Fascinated: it lasts as long as the spell." },
+    // Virtue's Light (Clerics+): "All unholy creatures within the emanation gain weakness to holy equal to twice the spell's level." (the GM targets the
+    // unholy creatures in it) / "If they already had a weakness to holy, its weakness is increased by the same amount." (the runtime adds the creature's own).
+    { pattern: /^All (unholy|holy) creatures within the emanation gain weakness to (holy|unholy) equal to twice the spell[’']s (?:level|rank)\.$/,
+        recipient: { actor: "target", trait: "unholy" },
+        rule: (rule, match, step) => match[1] === "unholy" && rule.key === "Weakness" && rule.type === match[2] && !rule.predicate && scales(rule.value, 2 * (step?.baseRank ?? 1), 2, 1, step?.baseRank ?? 1) },
+    { pattern: /^If they already had a weakness to (holy|unholy), its weakness is increased by the same amount\.$/, rules: () => [], extra: (_rules, _indices) => ({ weaknessStacks: true }) },
+    // Dual-Pattern Strike (Magus+): "Make two Strikes against a single target, one with each of the required weapons." (the caster's Strikes) / "If both your
+    // Strikes hit, you brand the target with an arcane sigil, giving them a weakness of 2 to one of the following damage types: acid, cold, …, negative,
+    // poison, or positive." (PF2e's names now void and vitality; the caster's pick, asked once; the card asks whether both hit) / "Apply your multiple attack
+    // penalty to each Strike normally." The module's Effect adds a choice for a feat the text doesn't name and reads it into the weakness: removed, the
+    // weakness set to the text's ("Heightened (+2) The weakness increases by 1.").
+    { pattern: /^Make two Strikes against a single target, one with each of the required weapons\.$/, rules: () => [], recipient: { actor: "target" },
+        note: () => "Make two Strikes against the target, one with each required weapon (your multiple attack penalty applies to each). Apply the sigil only if both hit." },
+    { pattern: /^If both your Strikes hit, you brand the target with an arcane sigil, giving them a weakness of (\d+) to one of the following damage types: ([a-z]+(?:, [a-z]+)*,? or [a-z]+)\.$/,
+        scaled: "weakness", recipient: { actor: "target" },
+        rules: (rules, match, step) => {
+            const legacy = { negative: "void", positive: "vitality" };
+            const listed = match[2].split(/,\s*(?:or\s+)?|\s+or\s+/).map(type => legacy[type.trim()] ?? type.trim()).filter(Boolean).sort();
+            const choice = rules.findIndex(rule => rule.key === "ChoiceSet" && !rule.predicate && Array.isArray(rule.choices) && rule.choices.map(entry => entry.value).sort().join() === listed.join());
+            const feat = rules.findIndex(rule => rule.key === "ChoiceSet" && Array.isArray(rule.predicate) && rule.predicate.length === 1 && /^feat:[a-z-]+$/.test(rule.predicate[0]));
+            const weakness = choice < 0 ? -1 : rules.findIndex(rule => rule.key === "Weakness" && rule.type === `{item|flags.pf2e.rulesSelections.${rules[choice].flag}}`);
+            if (choice < 0 || weakness < 0 || !step?.amount) return null;
+            // (The text's value: the stated number, rising by the step each interval.)
+            const value = `${match[1]}+floor((@item.level - ${step.baseRank})/${step.interval})*${step.amount}`;
+            if (!scales(value, Number(match[1]), step.amount, step.interval, step.baseRank)) return null;
+            TEXT_VALUES.set(rules, value);
+            return feat >= 0 ? [choice, feat, weakness] : [choice, weakness];
+        },
+        extra: (rules, indices) => ({ casterChoice: { flag: rules[indices[0]].flag }, confirm: "Did both Strikes hit the target?",
+            textOverrides: [{ index: indices.at(-1), key: "Weakness", patch: { value: TEXT_VALUES.get(rules) } }, ...(indices.length === 3 ? [{ index: indices[1], key: "ChoiceSet", remove: true }] : [])] }) },
+    { pattern: /^Apply your multiple attack penalty to each Strike normally\.$/, rules: () => [] },
+    // Glutton For Blood (Magic+): "You gain fast healing 4 for as long as the target is bleeding and within range of the spell, after which the spell ends."
+    // (the caster's PF2e fast healing, "Increase the fast healing by 1." a rank; its end — the target's bleeding stopping or leaving range — the GM's, a note).
+    { pattern: /^You gain fast healing (\d+) for as long as the target is bleeding and within range of the spell, after which the spell ends\.$/, scaled: "fast healing",
+        recipient: { actor: "source" },
+        rule: (rule, match, step) => rule.key === "FastHealing" && !rule.predicate && scales(rule.value, Number(match[1]), step?.amount ?? 0, step?.interval ?? 1, step?.baseRank ?? 1),
+        note: () => "Remove the fast healing when the target stops bleeding or leaves the spell's range (60 feet): the spell ends then." },
+    // Liberator's Ferocity (Clerics+, its Trigger "You would take damage from a creature who has authority over you …"): "You gain resistance to all damage equal to
+    // twice the spell's rank against the triggering attack and a status bonus to damage equal to the same amount against the triggering creature for 1 round." —
+    // the module's Resistance (its "all" PF2e's "all-damage") and damage bonus, both twice the rank, for the round (the module's Effect has no end); what each
+    // applies against (that attack, that creature) the GM's.
+    { pattern: /^You gain resistance to all damage equal to twice the spell.s rank against the triggering attack and a status bonus to damage equal to the same amount against the triggering creature for (\d+) round\.$/,
+        recipient: { actor: "source" },
+        rules: (rules, match, step) => {
+            const base = 2 * (step?.baseRank ?? 1);
+            const resist = rules.findIndex(rule => rule.key === "Resistance" && ["all", "all-damage"].includes(rule.type) && !rule.predicate && scales(rule.value, base, 2, 1, step?.baseRank ?? 1));
+            const bonus = rules.findIndex(rule => rule.key === "FlatModifier" && [rule.selector].flat().join() === "damage" && rule.type === "status" && !rule.predicate && scales(rule.value, base, 2, 1, step?.baseRank ?? 1));
+            return resist >= 0 && bonus >= 0 ? [resist, bonus] : null;
+        },
+        extra: (rules, indices) => ({ ...(rules[indices[0]].type === "all" ? { textOverrides: [{ index: indices[0], key: "Resistance", patch: { type: "all-damage" } }] } : {}),
+            durationOverride: { value: 1, unit: "rounds", expiry: "turn-start" } }),
+        note: () => "The resistance applies only against the triggering attack, and the damage bonus only against the triggering creature (the GM's). Both end after 1 round." },
+    // Weapon Trance (Oracles+'s Team+ version): "For the duration, your proficiency with the target weapons is equal to your proficiency with simple weapons, or to your
+    // proficiency with martial weapons if the target weapons are advanced." (the module's weapon choice and PF2e's proficiency equivalences) / "You automatically
+    // Sustain this spell as a free action the first time you attempt a Strike with the target weapon each round." (the caster's) / "If your cursebound value is 2,
+    // you gain a +1 status bonus to Strikes with the target weapons while the spell is active, or a +2 if you are cursebound value is 3 or greater." (the bonus by
+    // PF2e's cursebound value).
+    { pattern: /^For the duration, your proficiency with the target weapons is equal to your proficiency with simple weapons, or to your proficiency with martial weapons if the target weapons are advanced\.$/,
+        recipient: { actor: "source" },
+        rules: rules => {
+            const choice = rules.findIndex(rule => rule.key === "ChoiceSet" && rule.choices?.ownedItems === true && JSON.stringify(rule.choices.types) === '["weapon"]' && typeof rule.flag === "string");
+            const selected = choice >= 0 ? `item:id:{item|flags.pf2e.rulesSelections.${rules[choice].flag}}` : null;
+            const same = (category, sameAs) => rules.findIndex(rule => rule.key === "MartialProficiency" && rule.sameAs === sameAs && JSON.stringify(rule.definition) === JSON.stringify([selected, `item:category:${category}`]));
+            const martial = same("martial", "simple"), advanced = same("advanced", "martial");
+            return choice >= 0 && martial >= 0 && advanced >= 0 ? [choice, martial, advanced] : null;
+        },
+        note: () => "With two target weapons, apply the Effect again for the second weapon (its own weapon choice)." },
+    { pattern: /^You automatically Sustain this spell as a free action the first time you attempt a Strike with the target weapon each round\.$/, rules: () => [],
+        note: () => "The spell is Sustained automatically (a free action) the first time you Strike with a target weapon each round." },
+    { pattern: /^If your cursebound value is (\d), you gain a \+(\d) status bonus to Strikes with the target weapons while the spell is active, or a \+(\d) if you are cursebound value is (\d) or greater\.$/,
+        rules: (rules, match) => {
+            const choice = rules.find(rule => rule.key === "ChoiceSet" && rule.choices?.ownedItems === true);
+            const selector = choice ? `{item|flags.pf2e.rulesSelections.${choice.flag}}-attack` : null;
+            const bonus = rules.findIndex(rule => rule.key === "FlatModifier" && [rule.selector].flat().join() === selector && rule.type === "status" && Number(rule.value) === Number(match[2])
+                && JSON.stringify(rule.predicate) === JSON.stringify([{ gte: ["self:condition:cursebound", Number(match[1])] }]));
+            const upgrade = rules.findIndex(rule => rule.key === "AdjustModifier" && [rule.selector].flat().join() === selector && rule.mode === "upgrade" && Number(rule.value) === Number(match[3])
+                && JSON.stringify(rule.predicate) === JSON.stringify(["bonus:type:status", { gte: ["self:condition:cursebound", Number(match[4])] }]));
+            return bonus >= 0 && upgrade >= 0 ? [bonus, upgrade] : null;
+        } },
+    // Volley My Ally (Magic+): "You imbue your ally into the required weapon and make a ranged Strike at a creature within the required weapon's first range
+    // increment." (the caster's Strike; "Heightened (+2) Increase the range of the Strike by 15 feet." — the module's Effect, the range increment from rank 5) /
+    // "Your ally then appears in a space adjacent to the target of your Strike (or the closest available space if there are no available adjacent spaces)." / "If
+    // your ally could make a melee Strike at the end of this movement against the enemy you targeted with your Strike, it may spend its reaction to make a Strike
+    // against the enemy." (the GM moves the ally; its reaction is its own).
+    { pattern: /^You imbue your ally into the required weapon and make a ranged Strike at a creature within the required weapon.s first range increment\.$/, scaled: "strike range",
+        recipient: { actor: "source" },
+        rule: (rule, match, step) => rule.key === "AdjustStrike" && rule.mode === "add" && rule.property === "range-increment" && JSON.stringify(rule.definition) === '["item:ranged"]'
+            && step?.amount != null && scales(rule.value, 0, step.amount, step.interval, step.baseRank),
+        note: () => "Make a ranged Strike with the required weapon at a creature within its first range increment (the Effect adds the heightened range)." },
+    { pattern: /^Your ally then appears in a space adjacent to the target of your Strike \(or the closest available space if there are no available adjacent spaces\)\.$/, rules: () => [],
+        note: () => "Move the ally to a space adjacent to the Strike's target (or the closest available space)." },
+    { pattern: /^If your ally could make a melee Strike at the end of this movement against the enemy you targeted with your Strike, it may spend its reaction to make a Strike against the enemy\.$/, rules: () => [],
+        note: () => "If the ally can make a melee Strike against that enemy there, it can spend its reaction to Strike it." },
+    // Wishful Thinking (Oracles+): "Choose an ally within 30 feet of you and influence their mind …, choosing one of the listed effects." (the module's two
+    // choices — a second from 9th rank, "You can choose two effects instead of 1." — and the fly Speed added at 6th) / "The effects of the spell last for the duration, but you
+    // must succeed at a Deception check against the target's Will DC at the end of each of your turns or the spell immediately ends." / "You can use your spell attack
+    // modifier instead …" (the caster's check, a note) / the four listed effects, each the module's rules behind its choice (the status bonuses rising by 1 at 6th; the swim
+    // Speed's water breathing a note).
+    { pattern: /^Choose an ally within 30 feet of you and influence their mind to believe they are capable of the impossible, by granting them special powers of their dreams, choosing one of the listed effects\.$/,
+        recipient: { actor: "target" },
+        rules: rules => {
+            const values = ["attack-bonus", "skill-bonus", "climb", "swim", "fly"];
+            const first = rules.findIndex(rule => rule.key === "ChoiceSet" && !rule.predicate && Array.isArray(rule.choices) && JSON.stringify(rule.choices.map(choice => choice.value)) === JSON.stringify(values)
+                && rule.choices.every(choice => choice.value === "fly" ? JSON.stringify(choice.predicate) === '[{"gte":["parent:level",6]}]' : !choice.predicate));
+            const option = rules[first]?.rollOption;
+            const second = rules.findIndex(rule => rule.key === "ChoiceSet" && JSON.stringify(rule.predicate) === '[{"gte":["parent:level",9]}]' && Array.isArray(rule.choices)
+                && JSON.stringify(rule.choices.map(choice => [choice.value, choice.predicate])) === JSON.stringify(values.map(value => [value, [{ not: `${option}:${value}` }]])));
+            const other = rules[second]?.rollOption;
+            const fly = rules.findIndex(rule => rule.key === "BaseSpeed" && rule.selector === "fly" && Number(rule.value) === 30 && JSON.stringify(rule.predicate) === JSON.stringify([{ or: [`${option}:fly`, `${other}:fly`] }]));
+            return first >= 0 && second >= 0 && fly >= 0 && option && other ? [first, second, fly] : null;
+        },
+        extra: () => ({ heightenedClaims: ["^The status bonuses increase by 1 and you can choose to give the target a fly Speed of 30 feet in addition to the other effects you could choose from\\.", "^You can choose two effects instead of 1\\."] }) },
+    { pattern: /^The effects of the spell last for the duration, but you must succeed at a (?:@Check\[deception[^\]]*\](?:\{[^}]*\})?|Deception) check against the target.s Will DC at the end of each of your turns or the spell immediately ends\.$/,
+        rules: () => [], note: () => "At the end of each of your turns, attempt a Deception check against the target's Will DC (or use your spell attack modifier if it's higher); on a failure the spell ends — remove the Effect." },
+    { pattern: /^You can use your spell attack modifier instead of your modifier in Deception if it is higher\.$/, rules: () => [] },
+    { pattern: /^The target gains a \+(\d) status bonus to attack rolls and saving throws\.$/,
+        rules: (rules, match) => { const at = rules.findIndex(rule => rule.key === "FlatModifier" && JSON.stringify([rule.selector].flat()) === '["attack-roll","saving-throw"]' && rule.type === "status"
+            && JSON.stringify(rule.predicate) === '[{"or":["first-effect:attack-bonus","second-effect:attack-bonus"]}]' && ruleValueAt(rule.value, 5) === Number(match[1]) && ruleValueAt(rule.value, 6) === Number(match[1]) + 1);
+            return at >= 0 ? [at] : null; } },
+    { pattern: /^The target gains a \+(\d) status bonus to skill checks for a specific skill of your choice\.$/,
+        rules: (rules, match) => { const choice = rules.findIndex(rule => rule.key === "ChoiceSet" && rule.choices?.config === "skills" && JSON.stringify(rule.predicate) === '[{"or":["first-effect:skill-bonus","second-effect:skill-bonus"]}]');
+            const bonus = choice >= 0 ? rules.findIndex(rule => rule.key === "FlatModifier" && JSON.stringify([rule.selector].flat()) === JSON.stringify([`{item|flags.pf2e.rulesSelections.${rules[choice].flag}}`]) && rule.type === "status"
+                && JSON.stringify(rule.predicate) === JSON.stringify(rules[choice].predicate) && ruleValueAt(rule.value, 5) === Number(match[1]) && ruleValueAt(rule.value, 6) === Number(match[1]) + 1) : -1;
+            return bonus >= 0 ? [choice, bonus] : null; } },
+    { pattern: /^The target gains a climb Speed of (\d+) feet and scent as an imprecise scent with a range of (\d+) feet\.$/,
+        rules: (rules, match) => { const or = '[{"or":["first-effect:climb","second-effect:climb"]}]';
+            const climb = rules.findIndex(rule => rule.key === "BaseSpeed" && rule.selector === "climb" && Number(rule.value) === Number(match[1]) && JSON.stringify(rule.predicate) === or);
+            const scent = rules.findIndex(rule => rule.key === "Sense" && rule.selector === "scent" && rule.acuity === "imprecise" && Number(rule.range) === Number(match[2]) && JSON.stringify(rule.predicate) === or);
+            return climb >= 0 && scent >= 0 ? [climb, scent] : null; } },
+    { pattern: /^The target gains a swim Speed of (\d+) feet with the ability to breath underwater\.$/,
+        rules: (rules, match) => { const at = rules.findIndex(rule => rule.key === "BaseSpeed" && rule.selector === "swim" && Number(rule.value) === Number(match[1]) && JSON.stringify(rule.predicate) === '[{"or":["first-effect:swim","second-effect:swim"]}]');
+            return at >= 0 ? [at] : null; },
+        note: () => "With the swim Speed, it can breathe underwater (the GM's)." },
+    // Life of the Party (Oracles+): "… you immediately fill up to two of your open hands with festive treats for consumption." / "At any time during the duration, you or
+    // an ally within your reach can Interact to consume one of the treats in your hands, gaining 5 temporary Hit Points for 1 minute and a +2 status bonus to damage until
+    // the temporary Hit Points are lost." (the module's Effect on whoever eats one: its temporary Hit Points, "The temporary Hit Points increases by 2." a rank, and the
+    // damage bonus) / the second treat's Sickened 1 and the treats' end (notes).
+    { pattern: /^When you Cast the Spell and at the end of each of your turns for the duration, you immediately fill up to two of your open hands with festive treats for consumption\.$/, rules: () => [],
+        note: () => "When you cast it and at the end of each of your turns, fill up to two open hands with festive treats." },
+    { pattern: /^At any time during the duration, you or an ally within your reach can Interact to consume one of the treats in your hands, gaining (\d+) temporary Hit Points for 1 minute and a \+(\d) status bonus to damage until the temporary Hit Points are lost\.$/,
+        scaled: "temporary Hit Points", recipient: { actor: "target" },
+        rules: (rules, match, step) => {
+            const temp = rules.findIndex(rule => rule.key === "TempHP" && !rule.predicate && scales(rule.value, Number(match[1]), step?.amount ?? 0, step?.interval ?? 1, step?.baseRank ?? 1));
+            const bonus = rules.findIndex(rule => rule.key === "FlatModifier" && [rule.selector].flat().join() === "damage" && rule.type === "status" && Number(rule.value) === Number(match[2]) && !rule.predicate);
+            return temp >= 0 && bonus >= 0 ? [temp, bonus] : null;
+        },
+        note: () => "Target each creature as it eats a treat (you, or an ally within your reach, with an Interact): it gets the Effect. Remove the damage bonus when its temporary Hit Points are gone." },
+    { pattern: /^If a creature that has consumed one of your festive treats attempts to consume another before 10 minutes has passed, it becomes (?:@UUID\[[^\]]+\]\{Sickened 1\}|Sickened 1)\.$/, rules: () => [],
+        note: () => "A creature that eats a second treat within 10 minutes becomes Sickened 1 instead (the GM's)." },
+    { pattern: /^When the spell ends, these effects end and any remaining festive treats you have disappear\.$/, rules: () => [] },
+    // Dynamic Fly (Magic+, each version: glyph-versions.js): "Your target soars through the air, gaining a fly Speed equal to its Speed or 20 feet, whichever is
+    // greater." (the module's fly Speed; and, in Dynamic Flight, "All targets also gain a +20-foot status bonus to their fly Speed …" from 7th) / "You can only target
+    // yourself." (the caster) / "You cast the spell on yourself and up to 6 other creatures within 60 feet, granting all targets a fly Speed." (the targets, the caster
+    // among them) / "As a part of Casting the Spell, you Fly (up to twice; …)." (notes) / "The spell lasts until the end of your next turn." (the text's end over the
+    // Effect's start-of-turn).
+    { pattern: /^Your target soars through the air, gaining a fly Speed equal to its Speed or 20 feet, whichever is greater\.$/,
+        rules: rules => {
+            // (Its land Speed, in either of PF2e's paths: the module's current data and the older one a world's catalog may carry.)
+            const fly = rules.findIndex(rule => rule.key === "BaseSpeed" && rule.selector === "fly" && ["max(20,@actor.system.movement.speeds.land.value)", "max(20,@actor.attributes.speed.total)"].includes(String(rule.value).replace(/\s+/g, "")));
+            const bonus = rules.findIndex(rule => rule.key === "FlatModifier" && [rule.selector].flat().join() === "fly-speed" && rule.type === "status" && Number(rule.value) === 20
+                && JSON.stringify(rule.predicate) === '[{"gte":["{item|origin.rank}",7]}]');
+            return fly >= 0 ? (bonus >= 0 ? [fly, bonus] : [fly]) : null;
+        },
+        extra: (rules, indices) => indices.length === 2 ? { heightenedClaims: ["^All targets also gain a \\+20-foot status bonus to their fly Speed until the end of your next turn\\.$"] } : {} },
+    { pattern: /^You can only target yourself\.$/, rules: () => [], recipient: { actor: "source" } },
+    { pattern: /^As a part of the Casting the Spell, you Fly\.$/, rules: () => [], note: () => "As part of Casting the Spell, you Fly." },
+    { pattern: /^You cast the spell on yourself and up to 6 other creatures within 60 feet, granting all targets a fly Speed\.$/, rules: () => [], recipient: { actor: "target" },
+        note: () => "Target yourself and up to 6 other creatures within 60 feet." },
+    { pattern: /^As a part of Casting the Spell, you Fly up to twice; the other targets do not\.$/, rules: () => [], note: () => "As part of Casting the Spell, you Fly up to twice; the other targets don't." },
+    { pattern: /^The spell lasts until the end of your next turn\.$/, rules: () => [], extra: () => ({ durationOverride: { value: 1, unit: "rounds", expiry: "turn-end" } }) },
+    // Umbral Escape (Magic+): "Stride up to your Speed towards another creature or object with a shadow." / "You ignore difficult terrain during this
+    // Stride and can move along solid surfaces like walls or ceilings during this movement." (the caster's Stride, moved by the player) / "You gain
+    // resistance 4 to all damage during this Stride." (the module's Resistance, "Increase the resistance by 4." a rank; its type "all" is PF2e's
+    // "all-damage"; removed after the Stride) / "You are then temporarily immune for 1 minute." (the module's immunity Effect, which its Effect grants).
+    { pattern: /^Stride up to your Speed towards another creature or object with a shadow\.$/, rules: () => [], recipient: { actor: "source" },
+        note: () => "Stride up to your Speed toward another creature or object with a shadow." },
+    { pattern: /^You ignore difficult terrain during this Stride and can move along solid surfaces like walls or ceilings during this movement\.$/, rules: () => [],
+        note: () => "During this Stride you ignore difficult terrain and can move along solid surfaces like walls or ceilings." },
+    { pattern: /^You gain resistance (\d+) to all damage during this Stride\.$/, scaled: "resistance", recipient: { actor: "source" },
+        rule: (rule, match, step) => rule.key === "Resistance" && ["all", "all-damage"].includes(rule.type) && !rule.predicate && scales(rule.value, Number(match[1]), step?.amount ?? 0, step?.interval ?? 1, step?.baseRank ?? 1),
+        override: rule => rule.type === "all" ? { key: "Resistance", patch: { type: "all-damage" } } : null,
+        note: () => "The resistance lasts only during this Stride: remove the Effect when the Stride ends (its immunity stays)." },
+    { pattern: /^You are then temporarily immune for (\d+) (minute|hour)s?\.$/, immunity: true,
+        rules: rules => { const at = rules.findIndex(rule => rule.key === "GrantItem" && rule.onDeleteActions?.grantee === "detach");
+            return at >= 0 ? [at] : null; } },
 ];
 // "Heightened (+1) The fast healing increases by 2." / "Heightened (+2) The resistance increases by 5.": the step a scaled reader checks. Or
 // Thundering Dominance's "The status bonus to Intimidation checks increases by 1 (to a maximum of a +4 status bonus for an 8th-rank spell), and
 // the damage from the roar increases by 2d8." (its maximum, and PF2e's roar dice alteration rising by the same dice).
-const STEP = /^The (?:[a-z]+ (?=resistance))?(fast healing|resistance)s? increases? by (\d+)\.$|^The (status bonus) to [A-Z][a-z]+ checks increases by (\d+) \(to a maximum of a \+(\d+) status bonus for an? (\d+)(?:st|nd|rd|th)-rank spell\), and the damage from the ([a-z]+) increases by (\d+)d\d+\.$/;
+const STEP = /^The (?:[a-z]+ (?=resistance))?(fast healing|resistance|weakness)s? increases? by (\d+)\.$|^The (status bonus) to [A-Z][a-z]+ checks increases by (\d+) \(to a maximum of a \+(\d+) status bonus for an? (\d+)(?:st|nd|rd|th)-rank spell\), and the damage from the ([a-z]+) increases by (\d+)d\d+\.$/;
 // "The temporary Hit Points increase by 4." / "The additional healing increases by 2 Hit Points.": the same kind of step.
-const STEP_MORE = /^The (temporary Hit Points|additional healing|bonus) increases? by (\d+)(?: Hit Points)?\.$|^If you increase the Hardness of the object, the (new Hardness) is (\d+) higher\.$/;
+const STEP_MORE = /^The (temporary Hit Points|additional healing|bonus|strike range) increases? by (\d+)(?: Hit Points)?\.$|^If you increase the Hardness of the object, the (new Hardness) is (\d+) higher\.$/;
 // "The damage increases by 1d4." where PF2e's Effect raises the granted action's dice by the rank (Divine Dragon's Watch): a DamageAlteration
 // dice-number upgrade growing by that many dice each interval.
 const STEP_DICE = /^The damage increases by (\d+)d(\d+)\.$/;
@@ -742,12 +944,18 @@ export function proveEffectNote(adapted, effectNote, document) {
     // (A reaction's Trigger paragraph is its own section.)
     const sections = String(adapted.descriptionHTML ?? "").split(/<hr\s*\/?>/i);
     // (So is an Area paragraph naming a shape the GM draws: Safe Passage's "10-foot-wide, 10-foot-tall, 60-foot-long section of terrain".)
-    const body = /^\s*<p>\s*<strong>\s*Trigger\s*<\/strong>[^<]*<\/p>\s*(?:<p>\s*<strong>\s*Requirements\s*<\/strong>[^<]*<\/p>\s*)?$/.test(sections[0] ?? "")
-        || /^\s*<p>\s*<strong>\s*Area\s*<\/strong>[^<]*<\/p>\s*$/.test(sections[0] ?? "") ? sections[1] ?? "" : sections[0];
+    const body = (/^\s*<p>\s*<strong>\s*Trigger\s*<\/strong>[^<]*<\/p>\s*(?:<p>\s*<strong>\s*Requirements\s*<\/strong>[^<]*<\/p>\s*)?$/.test(sections[0] ?? "")
+        || /^\s*<p>\s*<strong>\s*Area\s*<\/strong>[^<]*<\/p>\s*$/.test(sections[0] ?? "") ? sections[1] ?? "" : sections[0])
+        // (A third-party spell's Heightened entry before the rule: the entries are read separately.)
+        .replace(/<p>\s*<strong>\s*Heightened[^<]*<\/strong>[\s\S]*?<\/p>/gi, "");
     // The heightened step a scaled sentence's rule must follow.
     const healResist = entry => { const match = STEP_HEAL_RESIST.exec(entry.text.trim());
         return match && effectNote.selfHeal && Number(match[1]) === effectNote.selfHeal.perRank * entry.step ? [entry.text.trim(), "resistance", match[3]] : null; };
-    const steps = (effectNote.heightened ?? []).filter(entry => entry.step).map(entry => ({ ...entry, found: STEP.exec(entry.text.trim()) ?? STEP_MORE.exec(entry.text.trim()) ?? healResist(entry),
+    // (Third-party wording: "Increase the fast healing by 1." is "The fast healing increases by 1."; a module's own "Note: …" line after it isn't the entry's.)
+    // (Volley My Ally's "Increase the range of the Strike by 15 feet." — the Effect's link after it isn't the entry's — is "The strike range increases by 15.")
+    const thirdPartyStep = text => String(text).split(/\n/)[0].trim().replace(/^Increase the range of the Strike by (\d+) feet\.(?: Spell Effect: [^.]+)?$/, "The strike range increases by $1.")
+        .replace(/^Increase the ([a-z ]+?) by (\d+)\.$/, "The $1 increases by $2.");
+    const steps = (effectNote.heightened ?? []).filter(entry => entry.step).map(entry => ({ ...entry, text: thirdPartyStep(entry.text) })).map(entry => ({ ...entry, found: STEP.exec(entry.text.trim()) ?? STEP_MORE.exec(entry.text.trim()) ?? healResist(entry),
         dice: STEP_DICE.exec(entry.text.trim()) }))
         .map(entry => entry.found || !entry.dice ? entry : { ...entry, found: [entry.text.trim(), "dice"] })
         // (Fire Shield's three steps in one entry: the resistance, the shield's HP, and the Shield Block damage the note carries.)
@@ -763,7 +971,8 @@ export function proveEffectNote(adapted, effectNote, document) {
     };
     // (A sentence may end inside its closing quotation mark: "… the password to enter the guild house.")
     // (A list's items are sentences of their own, even one opening with a number: Apex Companion's "30 temporary Hit Points.")
-    const sentences = htmlToPlainText(body.replace(/@UUID\[Compendium\.pf2e\.spell-effects\.Item\.[^\]]+\]\{[^}]+\}/g, "").replace(/<\/li>\s*<li>/g, "</li> § <li>")).replace(/\s+/g, " ").trim()
+    // (A module's own Effect link — "@UUID[Compendium.pf2e-team-plus-magic.misc.…]{Spell Effect: Dynamic Flight}" in a live world — is the Effect, not a sentence.)
+    const sentences = htmlToPlainText(body.replace(/@UUID\[Compendium\.pf2e\.spell-effects\.Item\.[^\]]+\]\{[^}]+\}/g, "").replace(/@UUID\[Compendium\.[a-z0-9-]+\.[a-z0-9-]+\.(?:Item\.)?[A-Za-z0-9]{16}\]\{(?:Spell )?Effect: [^}]+\}/g, "").replace(/<\/li>\s*<li>/g, "</li> § <li>")).replace(/\s+/g, " ").trim()
         .split(/(?<=[.!?]["”]?)\s+(?=[A-Z@])|\s*§\s*/).map(sentence => sentence.trim()).filter(Boolean);
     const used = new Set(), claims = [], notes = [];
     // A chosen benefit (Thermal Remedy): the list, its entries and PF2e's ChoiceSets together.
@@ -845,6 +1054,9 @@ export function proveEffectNote(adapted, effectNote, document) {
             entry.claimed = true;
         } else if (effectFromRank != null && entry.rank > effectFromRank && KEEPS.some(pattern => pattern.test(entry.text.trim()))) entry.claimed = true;
     }
+    // (A sentence's own claim on fixed-rank entries: Wishful Thinking's 6th and 9th, its choices' rank predicates.)
+    const heightenedClaims = claims.flatMap(claim => claim.extra?.heightenedClaims ?? []).map(pattern => new RegExp(pattern));
+    for (const entry of fixedRank) if (heightenedClaims.some(pattern => pattern.test(entry.text.trim()))) entry.claimed = true;
     // Fixed-rank entries: "The resistances increase to 10." — the claimed Resistance rule must give exactly that at that rank; Wind Jump's "At the end of
     // your turn, you can attempt a @Check[acrobatics|dc:30] check to find purchase in midair. If you succeed, you don't fall." — a note from that rank.
     const resistanceClaim = claims.find(claim => Number.isInteger(claim.rule) && rules[claim.rule]?.key === "Resistance");
@@ -854,10 +1066,11 @@ export function proveEffectNote(adapted, effectNote, document) {
     const bonusClaim = claims.find(claim => claim.bonusValue);
     if (bonusClaim) {
         const base = Number(/\+(\d)/.exec(bonusClaim.sentence)[1]);
-        if (!bonusClaim.rules.every(index => ruleValueAt(rules[index].value, Number(adapted.rank)) === base)) return null;
+        const bonusRules = bonusClaim.rules.filter(index => rules[index].key === "FlatModifier");
+        if (!bonusRules.length || !bonusRules.every(index => ruleValueAt(rules[index].value, Number(adapted.rank)) === base)) return null;
         for (const entry of fixedRank) {
             const up = /^The status bonus increases to \+(\d)\.$/.exec(entry.text.trim());
-            if (up && bonusClaim.rules.every(index => ruleValueAt(rules[index].value, entry.rank) === Number(up[1]))) entry.claimed = true;
+            if (up && bonusRules.every(index => ruleValueAt(rules[index].value, entry.rank) === Number(up[1]))) entry.claimed = true;
         }
     }
     // "For the duration, you also gain a status bonus to damage dealt by ignition equal to flaming fusillade's spell rank." (Flaming Fusillade at 9th): PF2e's
@@ -928,7 +1141,8 @@ export function proveEffectNote(adapted, effectNote, document) {
     if (blockDamage) {
         const step = steps.find(entry => entry.shieldDamage);
         if (step && (step.shieldDamage.faces !== Number(blockDamage[2]) || step.shieldDamage.type !== blockDamage[3])) return null;
-        const dice = step ? `(${blockDamage[1]}+floor((@item.level-${Number(adapted.rank)})/${step.step})*${step.shieldDamage.dice})` : blockDamage[1];
+        // (Spaced: Foundry would read "@item.level-4" as one data path, worth 0.)
+        const dice = step ? `(${blockDamage[1]}+floor((@item.level - ${Number(adapted.rank)})/${step.step})*${step.shieldDamage.dice})` : blockDamage[1];
         notes.push(`If you Shield Block a melee attack that is either an unarmed attack or made by an adjacent attacker, the attacker takes @Damage[${dice}d${blockDamage[2]}[${blockDamage[3]}]] damage.`);
     }
     // A dice step the Effect's dice-number upgrade carries.
@@ -948,6 +1162,9 @@ export function proveEffectNote(adapted, effectNote, document) {
     // a larger target count (the runtime's limit).
     if (globalThis.process?.env?.PROOF_DEBUG) console.error("proof end:", used.size, rules.length, JSON.stringify(fixedRank.map(entry => [entry.rank, entry.claimed ?? false, entry.text.slice(0, 50)])), (effectNote.heightenedDurations ?? []).length);
     if (used.size !== rules.length) return null;
+    // (An immunity sentence claiming a GrantItem: the granted item must be the spell's own immunity Effect, linked beside it.)
+    const grantId = uuid => /([A-Za-z0-9]{16})$/.exec(String(uuid ?? ""))?.[1] ?? null;
+    if (claims.some(claim => claim.immunity && (claim.rules ?? []).some(index => rules[index].key === "GrantItem" && grantId(rules[index].uuid) !== grantId(effectNote.grantedImmunity?.uuid)))) return null;
     const stepsUsed = new Set(claims.filter(claim => claim.step).map(claim => claim.step.interval));
     const fixedEntries = fixedRank.filter(entry => !entry.claimed && !TARGETS.test(entry.text.trim()));
     if (steps.some(entry => !stepsUsed.has(entry.step)) || fixedEntries.length !== (effectNote.heightenedDurations ?? []).length) return null;
@@ -961,7 +1178,7 @@ export function proveEffectNote(adapted, effectNote, document) {
         ...(additions.length ? { ruleAdditions: additions } : {}), ...(reveal ? { reveal } : {}), ...(immunity ? { immunity } : {}),
         ...(castCheck ? { castCheck } : {}), ...(counteract ? { counteract } : {}), ...(effectFromRank != null ? { effectFromRank } : {}),
         ...(benefit ? { benefitChoice: benefit.benefitChoice } : {}),
-        ...(claims.some(claim => claim.override || claim.overrides) ? { ruleOverrides: claims.flatMap(claim => claim.overrides ?? (claim.override ? [claim.override] : [])) } : {}),
+        ...(claims.some(claim => claim.override || claim.overrides || claim.extra?.textOverrides) ? { ruleOverrides: claims.flatMap(claim => [...(claim.overrides ?? (claim.override ? [claim.override] : [])), ...(claim.extra?.textOverrides ?? [])]) } : {}),
         ...(targetsByRank.length ? { targetsByRank } : {}),
         ...Object.assign({}, ...claims.map(claim => claim.extra ?? {})),
         ...(shieldBlockFromRank != null ? { shieldBlockFromRank } : {}),

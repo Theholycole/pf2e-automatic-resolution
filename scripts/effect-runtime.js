@@ -1,3 +1,7 @@
+import { assertSpellNotLost, dropMissedTargets } from "./casting-rules-runtime.js";
+import { spellFromSource } from "./cast-spell.js";
+import { auraRadiusAt } from "../src/compiler/trigger-aura.js";
+import { forcedMove } from "./forced-movement.js";
 import { compileAbility } from "../src/compiler/index.js";
 import {
     effectForApplication,
@@ -61,6 +65,11 @@ import { webRadius } from "../src/compiler/web-area.js";
 import { illusoryAt } from "../src/compiler/illusory-creature.js";
 import { sustainedSaveDamageAt } from "../src/compiler/sustained-save-damage.js";
 import { ONGOING_FLAG } from "./ongoing-core.js";
+import { spellAttack, linesRegion, nearestSpaceBeside } from "./attack-shapes-runtime.js";
+import { startLink, sacrificePart, furyPart, leechPart, mimicPart, deathMarkPart, wordPart, emblemPart } from "./trigger-runtime.js";
+import { raisePart, revivePart, shockPart, renewalPart } from "./revival-runtime.js";
+import { makePickupItems, seedPart, podPart, giftPart } from "./pickup-runtime.js";
+import { trueTargetPart, covenantPart, heartboltPart } from "./support-runtime.js";
 import { terrainAt } from "../src/compiler/terrain-area.js";
 import { objectDamageAt } from "../src/compiler/object-damage.js";
 import { hazardFormulaAt } from "../src/compiler/hazard-area.js";
@@ -86,6 +95,8 @@ import { sharedLoreAt } from "../src/compiler/rule-effects.js";
 import { absorberHp } from "../src/compiler/ward-families.js";
 import { summonEligible, summonMaxLevel } from "../src/compiler/summon-families.js";
 import { ruleSetRules, snagAt } from "../src/compiler/rule-sets.js";
+import { statedRulesAt } from "../src/compiler/stated-effect.js";
+import { textSpellDamage } from "./text-spell-damage.js";
 import { conjuredAt, mendable } from "../src/compiler/item-families.js";
 import { DEGREE_ORDER, lured } from "../src/compiler/area-saves.js";
 import { shrubsAt, wallSegments } from "../src/compiler/scene-features.js";
@@ -109,6 +120,20 @@ import {
 } from "./runtime-utils.js";
 import { debugError, debugLog } from "./debug.js";
 import { castSpellFromUuid, rememberCastSpell } from './cast-spell.js';
+import { applyPartDamage, applyPartHealing, applyPartEffect, reducePartConditions, incarnatePartHTML, copyCreature, postControlsCard } from './incarnate-parts-runtime.js';
+import { startFollowingAura } from './form-aura-runtime.js';
+import { essenceSummoned } from './essence-runtime.js';
+import { FORM_PROFILES } from './form-core.js';
+import { teleportToken, swapTokens, changeElevation, destinationProblem } from './teleport-runtime.js';
+import { renewalAt } from '../src/compiler/promised-renewal.js';
+import { gardenDice } from '../src/compiler/crystal-garden.js';
+import { tokenInRegion, shapeSelfRecipients, shapeSelfAfter, shapeRecipientsAfter, shapeSummonedAfter, shapeAdjustEffects, shapeChoiceSelectionsFor, shapeRidersFor } from './spellshape-runtime.js';
+import { creepersClearAt } from '../src/compiler/creeper-maneuver.js';
+import { boundaryAt } from '../src/compiler/spirit-boundary.js';
+import { seedsAt } from '../src/compiler/divine-seeds.js';
+import { diffractCone } from '../src/compiler/power-prism.js';
+import { treeAt } from '../src/compiler/engulfing-tree.js';
+import { grappleSizeAt } from '../src/compiler/weapon-grapple.js';
 
 export const MODULE_ID = "pf2e-automatic-resolution";
 
@@ -173,6 +198,72 @@ export async function createStreakQuickened(actor, { castInstanceId, castRank, s
         system: { level: { value: castRank }, duration: { value: -1, unit: "unlimited", expiry: null, sustained: false }, start: { value: game.time.worldTime, initiative: game.combat?.combatant?.initiative ?? null },
             description: { value: `<p>Quickened while the winning streak lasts: the extra action only to ${escapeHTML(data.limit)}.</p>` },
             rules: [{ key: "GrantItem", uuid: data.condition.uuid, flag: "streakQuickened", onDeleteActions: { grantee: "cascade" } }] } }]))[0];
+}
+
+/** The conjured token's footprint as a rectangle (Lifewood Cage's cage), for moving creatures out of it. */
+async function conjuredFootprint(data) {
+    const token = data.conjured?.tokenUuid ? await fromUuid(data.conjured.tokenUuid).catch(() => null) : null;
+    if (!token) return null;
+    const size = canvas.grid.size;
+    return [{ type: "rectangle", x: token.x, y: token.y, width: Number(token.width ?? 1) * size, height: Number(token.height ?? 1) * size }];
+}
+
+/** A stated aura's world Effect (Spellsurge's Interference), made once and reused: the option's rules. */
+async function statedAuraEffect(plan, chosen) {
+    const key = `${plan.source.slug ?? plan.source.name}:${chosen.key}`;
+    const existing = game.items.find(item => item.type === "effect" && item.flags?.[MODULE_ID]?.statedAura === key);
+    if (existing) return existing;
+    return Item.create({ name: `${plan.source.name}: ${chosen.label}`, type: "effect", img: "icons/svg/aura.svg", flags: { [MODULE_ID]: { statedAura: key } },
+        system: { duration: { value: -1, unit: "unlimited", expiry: null, sustained: false }, rules: structuredClone(chosen.aura.rules), tokenIcon: { show: true },
+            description: { value: `<p>${plan.source.name}: ${chosen.notes.map(note => escapeHTML(note)).join(" ")}</p>` } } });
+}
+
+/** The centre an incarnate part's push goes away from: the conjured token, the familiar the spell targets, the part's area or the cast's template. */
+async function incarnatePushCenter(item, caster, data, region) {
+    const size = canvas.grid.size;
+    const tokenCentre = token => token ? { x: token.x + Number(token.width ?? 1) * size / 2, y: token.y + Number(token.height ?? 1) * size / 2 } : null;
+    const conjured = data.conjured?.tokenUuid ? await fromUuid(data.conjured.tokenUuid).catch(() => null) : null;
+    if (conjured) return tokenCentre(conjured);
+    if (/\bfamiliar\b/i.test(String(item?.system?.target?.value ?? ""))) {
+        const familiar = game.actors.find(actor => actor.type === "familiar" && (actor.system?.master?.id === caster.id || actor.master?.id === caster.id));
+        const token = familiar?.getActiveTokens?.(true, true)?.[0];
+        if (token) return tokenCentre(token);
+    }
+    const area = region ?? (data.sourceMessageId ? canvas.scene?.regions.find(entry => entry.flags?.pf2e?.messageId === data.sourceMessageId) : null);
+    const shape = area?.shapes?.[0];
+    return shape ? { x: Number(shape.x), y: Number(shape.y) } : null;
+}
+
+/**
+ * Creatures standing in the boxes (pixel rectangles {x, y, w, h}) moved to the nearest free space beside them: no other creature's space, no box, inside the
+ * scene (Garden of Crystals' clusters, Wooden Engulfment's tree). Returns [{name, to}] (to null when no space is free — the GM's).
+ */
+async function moveOutOfBoxes(scene, boxes, { skip = [] } = {}) {
+    const size = scene.grid.size;
+    const overlap = (a, b) => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
+    const footprint = (token, x = token.x, y = token.y) => ({ x, y, w: token.width * size, h: token.height * size });
+    const moved = [];
+    for (const token of scene.tokens.filter(candidate => candidate.actor && !skip.includes(candidate.id))) {
+        const box = boxes.find(candidate => overlap(footprint(token), candidate));
+        if (!box) continue;
+        const spots = [];
+        for (let x = box.x - token.width * size; x <= box.x + box.w; x += size) for (let y = box.y - token.height * size; y <= box.y + box.h; y += size) {
+            const spot = footprint(token, x, y);
+            if (boxes.some(other => overlap(spot, other)) || x < 0 || y < 0 || x + spot.w > scene.dimensions.width || y + spot.h > scene.dimensions.height) continue;
+            if (scene.tokens.some(other => other !== token && other.actor && !skip.includes(other.id) && overlap(spot, footprint(other)))) continue;
+            spots.push({ x, y, near: Math.hypot(x - token.x, y - token.y) });
+        }
+        spots.sort((a, b) => a.near - b.near);
+        if (!spots[0]) { moved.push({ name: token.name, to: null }); continue; }
+        await token.update({ x: spots[0].x, y: spots[0].y }, { teleport: true, animate: false, [MODULE_ID]: { forced: true } });
+        moved.push({ name: token.name, to: { x: spots[0].x, y: spots[0].y } });
+    }
+    return moved;
+}
+
+/** A corpse: PF2e's dead creature (at 0 Hit Points and not dying), or one marked dead. */
+function isCorpse(actor) {
+    return Boolean(actor?.isDead || actor?.statuses?.has?.("dead") || (Number(actor?.hitPoints?.value ?? 1) <= 0 && !actor?.hasCondition?.("dying") && !actor?.hasCondition?.("unconscious")));
 }
 
 function uniqueActors(values) {
@@ -261,11 +352,22 @@ export class EffectRuntime {
     async compile(itemOrSource, { sourceFile = null } = {}) {
         const nativeEffectCatalog = await this.#catalog.get();
         const source = itemSource(itemOrSource);
-        // The spells this one names ("functions as @UUID[…]{Mist}"), loaded for the compiler.
+        // The spells this one names ("functions as @UUID[…]{Mist}"), loaded for the compiler — and the spells those name (Prismatic Wall's layers are
+        // Chromatic Wall's, whose blue and indigo are Petrify and Warp Mind).
         const referencedSpells = new Map();
-        for (const [, uuid] of String(source?.system?.description?.value ?? "").matchAll(/@UUID\[(Compendium\.pf2e\.spells-srd\.Item\.[A-Za-z0-9]+)\]/g)) {
-            if (referencedSpells.has(uuid)) continue;
-            try { const spell = await fromUuid(uuid); if (spell) referencedSpells.set(uuid, spell.toObject()); } catch (_) {}
+        const load = async (text, depth) => {
+            for (const [, uuid] of String(text ?? "").matchAll(/@UUID\[(Compendium\.pf2e\.spells-srd\.Item\.[A-Za-z0-9]+)\]/g)) {
+                if (referencedSpells.has(uuid)) continue;
+                try { const spell = await fromUuid(uuid); if (spell) { referencedSpells.set(uuid, spell.toObject()); if (depth > 1) await load(spell.system?.description?.value, depth - 1); } } catch (_) {}
+            }
+        };
+        await load(source?.system?.description?.value, 2);
+        // (An entry with no text — Magic+'s empty Dynamic Breathe Fire: its written twin of the same name in the same pack, for the compiler.)
+        if (source?.type === "spell" && !String(source.system?.description?.value ?? "").trim()) {
+            const collection = itemOrSource?.pack ?? /^Compendium\.(.+)\.Item\.[A-Za-z0-9]+$/.exec(String(source._stats?.compendiumSource ?? source.flags?.core?.sourceId ?? ""))?.[1] ?? null;
+            const pack = collection ? game.packs.get(collection) : null;
+            const twin = pack ? (await pack.getDocuments()).find(doc => doc.type === "spell" && doc.name === source.name && doc.id !== source._id && String(doc.system?.description?.value ?? "").trim()) : null;
+            if (twin) { referencedSpells.set(twin.uuid, { ...twin.toObject(), _pack: collection }); source._pack ??= collection; }
         }
         return compileAbility(source, { sourceFile, nativeEffectCatalog, referencedSpells });
     }
@@ -275,6 +377,14 @@ export class EffectRuntime {
     }
 
     async execute(itemOrSource, options = {}) {
+        // (A spell lost to a disruption or a counterspell has no effect: casting-rules-runtime.js.)
+        assertSpellNotLost(options?.sourceMessageId ?? null);
+        // (A concealed or hidden target the spell's flat check missed is left out.)
+        if (options?.sourceMessageId) {
+            const kept = dropMissedTargets(options.sourceMessageId, options.targets ?? null);
+            if (Array.isArray(kept) && !kept.length && (options.targets ?? [...(game.user?.targets ?? [])]).length) throw new Error("The spell's concealed or hidden flat check missed every target; it has no effect on them.");
+            options = { ...options, targets: kept ?? options.targets };
+        }
         rememberCastSpell(itemOrSource);
         const key = options.sourceMessageId;
         if (!key) return this.#execute(itemOrSource, options);
@@ -299,6 +409,35 @@ export class EffectRuntime {
         if (options.sourceMessageId && !options.force) {
             const prior = game.messages.get(options.sourceMessageId)?.getFlag(MODULE_ID, "resolvedCast");
             if (prior) throw new Error(`${plan.source.name}: this spell card has already been resolved.`);
+        }
+        // A spell cast with 1 to 3 actions and no PF2e variants (Dynamic Shield): the actions spent, asked (or given), then that version's plan — an Effect
+        // route here, a save or attack on its card.
+        if (plan.resolution.kind === "action-versions") {
+            const versions = plan.resolution.versions;
+            const actions = Number(options.actions ?? await foundry.applications.api.DialogV2.wait({ window: { title: `${plan.source.name} — actions spent` }, content: "<p>How many actions did you spend Casting the Spell?</p>",
+                buttons: versions.map(version => ({ action: String(version.actions), label: `${version.actions} action${version.actions === 1 ? "" : "s"}` })), close: () => null, rejectClose: false }));
+            const version = versions.find(entry => entry.actions === actions);
+            if (!version) return { status: "cancelled", plan };
+            const sub = clone(version.plan);
+            if (SUPPORTED_RESOLUTION_KINDS.includes(sub.resolution?.kind)) return { ...(await this.#execute(itemOrSource, { ...options, plan: sub, actions })), actions };
+            const { card } = await this.saves.start(itemOrSource, { plan: sub, sourceActor, targets: [...(options.targets ?? game.user.targets)].map(target => target.object ?? target),
+                castRank: Number(options.castRank ?? itemOrSource?.rank ?? plan.rank), skipConfirmation: true, ...(options.sourceMessageId ? { sourceMessageId: options.sourceMessageId } : {}) });
+            return { status: "applied", plan, actions, cardId: card?.id ?? null };
+        }
+        // Parts in order (Dynamic Gouging Claw's three actions: the claw, its reach, then the attack's card).
+        if (plan.resolution.kind === "compound") {
+            const results = [];
+            for (const part of plan.resolution.parts) {
+                const sub = clone(part.plan);
+                if (SUPPORTED_RESOLUTION_KINDS.includes(sub.resolution?.kind)) results.push({ label: part.label, ...(await this.#execute(itemOrSource, { ...options, plan: sub, sourceMessageId: null, force: true })) });
+                else {
+                    const { card } = await this.saves.start(itemOrSource, { plan: sub, sourceActor, targets: [...(options.targets ?? game.user.targets)].map(target => target.object ?? target),
+                        castRank: Number(options.castRank ?? itemOrSource?.rank ?? plan.rank), skipConfirmation: true });
+                    results.push({ label: part.label, status: "started", cardId: card?.id ?? null });
+                }
+            }
+            if (options.sourceMessageId) try { await game.messages.get(options.sourceMessageId)?.setFlag(MODULE_ID, "resolvedCast", { castInstanceId: randomID(), resolutionKind: "compound" }); } catch (_) {}
+            return { status: "applied", plan, parts: results, cardId: results.find(result => result.cardId)?.cardId ?? null };
         }
         // Healing alone: no Effect, just PF2e's healing roll applied to the recipients.
         if (plan.resolution.kind === "healing") return this.#executeHealing(itemOrSource, plan, sourceActor, options);
@@ -479,6 +618,7 @@ export class EffectRuntime {
         if (plan.resolution.kind === "stance-strike") return this.#executeStanceStrike(itemOrSource, plan, sourceActor, options);
         if (plan.resolution.kind === "cannibal-hunger") return this.#executeCannibalHunger(itemOrSource, plan, sourceActor, options);
         if (plan.resolution.kind === "restore-condition") return this.#executeRestoreCondition(itemOrSource, plan, sourceActor, options);
+        if (plan.resolution.kind === "condition-lower") return this.#executeConditionLower(itemOrSource, plan, sourceActor, options);
         if (plan.resolution.kind === "level-tiers") return this.#executeLevelTiers(itemOrSource, plan, sourceActor, options);
         if (plan.resolution.kind === "thrall-summon") return this.#executeThrallSummon(itemOrSource, plan, sourceActor, options);
         if (plan.resolution.kind === "spell-storm") return this.#executeSpellStorm(itemOrSource, plan, sourceActor, options);
@@ -495,6 +635,7 @@ export class EffectRuntime {
         if (plan.resolution.kind === "outline") return this.#executeOutline(itemOrSource, plan, sourceActor, options);
         if (plan.resolution.kind === "causeway") return this.#executeCauseway(itemOrSource, plan, sourceActor, options);
         if (plan.resolution.kind === "battle-form") return this.#executeBattleForm(itemOrSource, plan, sourceActor, options);
+        if (plan.resolution.kind === "generated-form") return this.#executeGeneratedForm(itemOrSource, plan, sourceActor, options);
         if (plan.resolution.kind === "counteract-transfer") return this.#executeCounteractTransfer(itemOrSource, plan, sourceActor, options);
         if (plan.resolution.kind === "bonus-effect") return this.#executeBonusEffect(itemOrSource, plan, sourceActor, options);
         if (plan.resolution.kind === "substitute-roll") return this.#executeSubstituteRoll(itemOrSource, plan, sourceActor, options);
@@ -520,9 +661,35 @@ export class EffectRuntime {
         if (plan.resolution.kind === "shared-lore") return this.#executeSharedLore(itemOrSource, plan, sourceActor, options);
         if (plan.resolution.kind === "unarmed-reach") return this.#executeUnarmedReach(itemOrSource, plan, sourceActor, options);
         if (plan.resolution.kind === "attack-ward") return this.#executeAttackWard(itemOrSource, plan, sourceActor, options);
+        if (plan.resolution.kind === "mark-ward") return this.#executeMarkWard(itemOrSource, plan, sourceActor, options);
+        if (plan.resolution.kind === "trigger-aura") return this.#executeTriggerAura(itemOrSource, plan, sourceActor, options);
+        if (plan.resolution.kind === "pulse-area") return this.#executePulseArea(itemOrSource, plan, sourceActor, options);
+        if (plan.resolution.kind === "proxy-cast") return this.#executeProxyCast(itemOrSource, plan, sourceActor, options);
+        if (plan.resolution.kind === "caster-dominion") return this.#executeCasterDominion(itemOrSource, plan, sourceActor, options);
+        if (plan.resolution.kind === "renewal") return this.#executeRenewal(itemOrSource, plan, sourceActor, options);
+        if (plan.resolution.kind === "attribute-surgery") return this.#executeAttributeSurgery(itemOrSource, plan, sourceActor, options);
+        if (plan.resolution.kind === "crystal-garden") return this.#executeCrystalGarden(itemOrSource, plan, sourceActor, options);
+        if (plan.resolution.kind === "marionette") return this.#executeMarionette(itemOrSource, plan, sourceActor, options);
+        if (plan.resolution.kind === "dream-hazard") return this.#executeDreamHazard(itemOrSource, plan, sourceActor, options);
+        if (plan.resolution.kind === "fate-roll") return this.#executeFateRoll(itemOrSource, plan, sourceActor, options);
+        if (plan.resolution.kind === "engulfing-tree") return this.#executeEngulfingTree(itemOrSource, plan, sourceActor, options);
+        if (plan.resolution.kind === "weapon-grapple") return this.#executeWeaponGrapple(itemOrSource, plan, sourceActor, options);
+        if (plan.resolution.kind === "dream-table") return this.#executeDreamTable(itemOrSource, plan, sourceActor, options);
+        if (plan.resolution.kind === "honor-duel") return this.#executeHonorDuel(itemOrSource, plan, sourceActor, options);
+        if (plan.resolution.kind === "spotlight") return this.#executeSpotlight(itemOrSource, plan, sourceActor, options);
+        if (plan.resolution.kind === "creeper-maneuver") return this.#executeCreepers(itemOrSource, plan, sourceActor, options);
+        if (plan.resolution.kind === "rally-cry") return this.#executeRallyCry(itemOrSource, plan, sourceActor, options);
+        if (plan.resolution.kind === "true-power") return this.#executeTruePower(itemOrSource, plan, sourceActor, options);
+        if (plan.resolution.kind === "mystic-bomb") return this.#executeMysticBomb(itemOrSource, plan, sourceActor, options);
+        if (plan.resolution.kind === "spirit-boundary") return this.#executeSpiritBoundary(itemOrSource, plan, sourceActor, options);
+        if (plan.resolution.kind === "divine-seeds") return this.#executeDivineSeeds(itemOrSource, plan, sourceActor, options);
+        if (plan.resolution.kind === "power-prism") return this.#executePowerPrism(itemOrSource, plan, sourceActor, options);
+        if (plan.resolution.kind === "animated-spark") return this.#executeAnimatedSpark(itemOrSource, plan, sourceActor, options);
+        if (plan.resolution.kind === "patron-apocalypse") return this.#executePatronApocalypse(itemOrSource, plan, sourceActor, options);
         if (plan.resolution.kind === "strike-absorber") return this.#executeStrikeAbsorber(itemOrSource, plan, sourceActor, options);
         if (plan.resolution.kind === "summon") return this.#executeSummon(itemOrSource, plan, sourceActor, options);
         if (plan.resolution.kind === "rule-set") return this.#executeRuleSet(itemOrSource, plan, sourceActor, options);
+        if (plan.resolution.kind === "stated-effect") return this.#executeStatedEffect(itemOrSource, plan, sourceActor, options);
         if (plan.resolution.kind === "conjured-item") return this.#executeConjuredItem(itemOrSource, plan, sourceActor, options);
         if (plan.resolution.kind === "item-repair") return this.#executeItemRepair(itemOrSource, plan, sourceActor, options);
         if (plan.resolution.kind === "hide-reaction") return this.#executeHideReaction(itemOrSource, plan, sourceActor, options);
@@ -621,10 +788,22 @@ export class EffectRuntime {
             const dc = Number(options.dc ?? itemOrSource?.spellcasting?.statistic?.dc?.value ?? NaN);
             if (!Number.isFinite(dc)) throw new Error(`${plan.source.name}: the spell DC is unavailable.`);
             const castRank = Number(options.castRank ?? itemOrSource?.rank ?? plan.rank);
+            // ("you can make the area any radius you choose, up to 40 feet": the caster's radius, in 5-foot steps.)
+            let radius = data.radius;
+            if (data.radiusUpTo) {
+                const steps = Array.from({ length: Math.floor(data.radiusUpTo / 5) }, (_, index) => (index + 1) * 5);
+                radius = Number(options.radius ?? await foundry.applications.api.DialogV2.prompt({ window: { title: `${plan.source.name} — radius` },
+                    content: `<p>Choose the emanation's radius.${data.radiusDefault ? ` PF2e's item has no area: ${data.radiusDefault} feet is offered.` : ""}</p><select name="radius">${steps.map(feet => `<option value="${feet}"${feet === (data.radiusDefault ?? data.radiusUpTo) ? " selected" : ""}>${feet} feet</option>`).join("")}</select>`,
+                    ok: { label: "Cast", callback: (_event, button) => button.form.elements.radius.value }, rejectClose: false }) ?? NaN);
+                if (!Number.isFinite(radius)) return { status: "cancelled", plan };
+                if (!steps.includes(radius)) throw new Error(`${plan.source.name}: the radius is 5 to ${data.radiusUpTo} feet, in 5-foot steps.`);
+            }
             const started = await this.ongoing.startLanternAura({ spellName: plan.source.name, sourceActorUuid: sourceActor.uuid, sourceItemUuid: itemOrSource?.uuid ?? null, castRank, dc,
-                radius: data.radius, durationSeconds: data.durationSeconds, lantern: data });
+                radius, durationSeconds: data.durationSeconds, lantern: data });
+            const rowText = data.rows ? Object.entries(data.rows).map(([degree, row]) => `${row.label}: ${[...row.conditions.map(condition => `${condition.slug}${condition.value ? ` ${condition.value}` : ""}`), ...row.notes].join("; ")}`).join(". ") : "";
             try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "lantern-aura", castInstanceId: started.castId } },
-                content: `<h3>${escapeHTML(plan.source.name)}</h3><p>A ${data.radius}-foot emanation for ${Math.round(data.durationSeconds / 60)} minute${data.durationSeconds === 60 ? "" : "s"}: each living creature and undead inside (or entering) saves once (its card). A failed living creature gets half the healing while inside; a failed undead is ${escapeHTML(data.failed.undead.condition)} ${data.failed.undead.value} while inside. Sustain (optional, once a round, from the next) grows it by ${data.growth.feet} feet.</p>` }); } catch (_) {}
+                content: data.rows ? `<h3>${escapeHTML(plan.source.name)}</h3><p>A ${radius}-foot emanation for ${Math.round(data.durationSeconds / 60)} minute${data.durationSeconds === 60 ? "" : "s"}${data.sustained ? " (sustained)" : ""}: each ${data.enemiesOnly ? "enemy" : "creature"} inside (or entering) saves once for this casting (its card); ${data.heldOutside ? "its result lasts for the spell, wherever it goes" : "its result holds while it's inside, and again if it comes back"}.${data.immunity ? ` Each creature that saves is then immune for ${data.immunity.value} ${data.immunity.unit.replace(/s$/, data.immunity.value === 1 ? "" : "s")}.` : ""}${data.growth ? ` Sustain (optional, once a round) grows it by ${data.growth.feet} feet.` : ""}${data.dismissible ? " You can Dismiss it." : ""}</p><p>${escapeHTML(rowText)}.</p>`
+                    : `<h3>${escapeHTML(plan.source.name)}</h3><p>A ${data.radius}-foot emanation for ${Math.round(data.durationSeconds / 60)} minute${data.durationSeconds === 60 ? "" : "s"}: each living creature and undead inside (or entering) saves once (its card). A failed living creature gets half the healing while inside; a failed undead is ${escapeHTML(data.failed.undead.condition)} ${data.failed.undead.value} while inside. Sustain (optional, once a round, from the next) grows it by ${data.growth.feet} feet.</p>` }); } catch (_) {}
             if (options.sourceMessageId) try { await game.messages.get(options.sourceMessageId)?.setFlag(MODULE_ID, "resolvedCast", { castInstanceId: started.castId, resolutionKind: "lantern-aura" }); } catch (_) {}
             return { status: "applied", plan, castInstanceId: started.castId, asked: started.asked };
         }
@@ -721,8 +900,10 @@ export class EffectRuntime {
         const effect = effectForApplication(plan, application);
         const sequence = this.#sequenceMetadata(plan, application);
         const recipientType = recipientActorType(effect, castRank);
+        // (A spellshape sending a self-only Effect elsewhere — Linked Target Spell, Twinned Target Spell, Ally Form: spellshape-runtime.js.)
+        const redirected = recipientType === "source" && options.sourceMessageId ? await shapeSelfRecipients(options.sourceMessageId, sourceActor) : null;
         const actors = recipientType === "source"
-            ? [sourceActor]
+            ? redirected ?? [sourceActor]
             : recipientType === "target"
                 ? uniqueActors(options.targets ?? [...game.user.targets])
                 : recipientType === "area-allies"
@@ -838,6 +1019,9 @@ export class EffectRuntime {
         if (!confirmed) return { status: "cancelled", plan };
 
         const castInstanceId = options.castInstanceId ?? randomID();
+        // (A spellshape's answer to the form's choice — Colossal Aspect Form's Gargantuan size: spellshape-runtime.js shapeChoiceSelectionsFor.)
+        const shapedChoices = options.sourceMessageId ? shapeChoiceSelectionsFor(options.sourceMessageId) : null;
+        if (shapedChoices) options = { ...options, choiceSelections: { ...(options.choiceSelections ?? {}), ...shapedChoices } };
         debugLog(castInstanceId, "native Effect application prepared", {
             spell: plan.source.name,
             resolutionKind: plan.resolution.kind,
@@ -891,6 +1075,8 @@ export class EffectRuntime {
                     sequence,
                     ...(heightenedDuration ? { heightenedDuration } : {}),
                     ...(rolledSelection ? { rolledSelection } : {}),
+                    // (PF2e's choice answered ahead — a form's option — when the caller gives it.)
+                    ...(options.choiceSelections ? { choiceSelections: clone(options.choiceSelections) } : {}),
                     ...(markTokenUuid ? { markTokenUuid } : {}),
                     // The text's corrections: removed after its one use, rules patched, its duration.
                     ...(plan.resolution.consumeOn ? { consumeOn: clone(plan.resolution.consumeOn) } : {}),
@@ -931,6 +1117,11 @@ export class EffectRuntime {
             throw error;
         }
         if (journal) await this.ongoing.activate(journal);
+        if (redirected) await shapeSelfAfter(options.sourceMessageId, sourceActor, created);
+        // (Fury of a Thousand: Song of Strength's bonus raised on the Effects made.)
+        if (options.sourceMessageId) await shapeAdjustEffects(options.sourceMessageId, created);
+        // (Enlightening Spell: the allies the spell's Effect reached.)
+        if (recipientType === "target" && options.sourceMessageId) await shapeRecipientsAfter(options.sourceMessageId, sourceActor, effectActors, castRank, itemOrSource);
         // "… ending one source of persistent acid, bleed, fire, poison, or void damage affecting it": one such persistent damage on
         // each recipient ends; with more than one, the caster chooses (a GM line lists them).
         const ended = [];
@@ -958,6 +1149,8 @@ export class EffectRuntime {
                 flags: { [MODULE_ID]: { kind: "granted-action", castInstanceId, grantedAction: { itemUuid: itemOrSource?.uuid ?? null, sourceActorUuid: sourceActor.uuid, castRank,
                     spellName: plan.source.name, effectUuids: created.map(document => document.uuid) } } } });
         } catch (error) { console.warn(`${MODULE_ID} | The granted action card could not be posted.`, error); }
+        // A form's stat-block abilities (Monstrosity Form): its auras following the caster, its turn-end recovery, and the form's card, for the picked option.
+        if (plan.resolution.formRiders && created.length) await this.#startFormRiders(plan, { itemOrSource, sourceActor, created, castRank, castInstanceId, journal });
 
         if (options.sourceMessageId) {
             try {
@@ -1089,7 +1282,24 @@ export class EffectRuntime {
         if (back.length) try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: itemOrSource.actor }),
             content: `<p><strong>${escapeHTML(plan.source.name)}</strong></p>${back.map(result => `<p>${escapeHTML(result.name)}: ${escapeHTML(revivedNote(result.revived))}</p>`).join("")}`,
             flags: { [MODULE_ID]: { kind: "dying-recovery", castInstanceId } } }); } catch (error) { console.warn(`${MODULE_ID} | The Dying recovery note could not be posted.`, error); }
-        return { formula: roll.formula, total: roll.total, results };
+        // Quick Siphon: the caster may end one instance of persistent damage of the stated type it's suffering from (its pick; none is fine).
+        const ends = plan.resolution.healing.endPersistent;
+        let ended = null;
+        if (ends) {
+            const caster = itemOrSource?.actor;
+            const instances = (caster?.itemTypes?.condition ?? []).filter(condition => condition.slug === "persistent-damage" && condition.system?.persistent?.damageType === ends.damageType);
+            const chosen = options.endPersistent !== undefined ? options.endPersistent
+                : instances.length ? await foundry.applications.api.DialogV2.prompt({ window: { title: `${plan.source.name} — end persistent ${ends.damageType} damage?` },
+                    content: `<p>You can end one instance of persistent ${escapeHTML(ends.damageType)} damage you're suffering from.</p><select name="instance"><option value="">Keep it</option>${instances.map(condition => `<option value="${condition.id}">${escapeHTML(condition.name)}</option>`).join("")}</select>`,
+                    ok: { label: "Done", callback: (_event, button) => button.form.elements.instance.value }, rejectClose: false }) : "";
+            const instance = chosen ? instances.find(condition => condition.id === chosen) : null;
+            if (chosen && !instance) throw new Error(`${plan.source.name}: that isn't persistent ${ends.damageType} damage on ${caster?.name}.`);
+            if (instance) { ended = { id: instance.id, name: instance.name }; await instance.delete();
+                try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: caster }), content: `<p><strong>${escapeHTML(plan.source.name)}</strong>: ${escapeHTML(caster.name)} ends ${escapeHTML(instance.name)}.</p>`,
+                    flags: { [MODULE_ID]: { kind: "persistent-ended", castInstanceId } } }); } catch (error) { console.warn(`${MODULE_ID} | The ended persistent damage note could not be posted.`, error); }
+            }
+        }
+        return { formula: roll.formula, total: roll.total, results, ...(ended ? { endedPersistent: ended } : {}) };
     }
 
     async #executeHealing(itemOrSource, plan, sourceActor, options) {
@@ -1113,8 +1323,9 @@ export class EffectRuntime {
 
     async #executeDirectDamage(itemOrSource, plan, sourceActor, options) {
         const actors = uniqueActors(options.targets ?? [...game.user.targets]);
-        const count = plan.resolution.damage?.count ?? 1;
-        if (actors.length !== count) throw new Error(`${plan.source.name}: target exactly ${count} creature${count === 1 ? "" : "s"}.`);
+        // (A ring of splash damage: each creature the caster targets — Dynamic Caustic Blast's Splash.)
+        const count = plan.resolution.damage?.any === true ? null : plan.resolution.damage?.count ?? 1;
+        if (count == null ? !actors.length : actors.length !== count) throw new Error(`${plan.source.name}: target ${count == null ? "the creatures it reaches" : `exactly ${count} creature${count === 1 ? "" : "s"}`}.`);
         if (actors.includes(sourceActor)) throw new Error(`${plan.source.name}: target a creature other than the caster.`);
         for (const actor of actors) if (!actor.canUserModify?.(game.user, "update") && !game.user.isGM) throw new Error(`You do not have permission to damage ${actor.name}.`);
         const confirmed = options.skipConfirmation === true || await confirmAction({
@@ -1132,8 +1343,13 @@ export class EffectRuntime {
         if (!textFormula && typeof spell?.getDamage !== "function") throw new Error(`${plan.source.name} does not expose PF2e damage.`);
         const TextDamageRoll = textFormula ? (CONFIG.Dice?.rolls ?? []).find(candidate => candidate?.name === "DamageRoll") : null;
         if (textFormula && !TextDamageRoll) throw new Error("PF2e's DamageRoll class could not be resolved.");
-        const prepared = textFormula ? { context: { options: [...(spell?.getRollOptions?.("item") ?? [])] } } : await spell.getDamage({ skipDialog: true });
-        const roll = textFormula ? new TextDamageRoll(textFormula, spell?.getRollData?.({ castRank }) ?? { item: { rank: castRank, level: castRank } }, { rollerId: game.user.id })
+        // (The text's damage as PF2e spell damage, so the caster's spell-damage rules apply; its formula as before when it can't be.)
+        // (Bleed added to the bleed being taken now — Siphoning Rivulet: PF2e reads bleed as persistent, so the roll is evaluated as damage now, as PF2e's own
+        // persistent damage is when it's taken.)
+        const immediate = plan.resolution.damage?.immediate === true;
+        const built = textFormula && !immediate ? await textSpellDamage(spell, textFormula, { castRank }) : null;
+        const prepared = textFormula ? { context: built?.context ?? { options: [...(spell?.getRollOptions?.("item") ?? [])] } } : await spell.getDamage({ skipDialog: true });
+        const roll = textFormula ? built?.roll ?? new TextDamageRoll(textFormula, spell?.getRollData?.({ castRank }) ?? { item: { rank: castRank, level: castRank } }, { rollerId: game.user.id, ...(immediate ? { evaluatePersistent: true } : {}) })
             : prepared?.template?.damage?.roll;
         if (!roll) throw new Error(`PF2e returned no damage roll for ${plan.source.name}.`);
         await roll.evaluate();
@@ -1153,7 +1369,22 @@ export class EffectRuntime {
             try { await game.messages.get(options.sourceMessageId)?.setFlag(MODULE_ID, "resolvedCast", { castInstanceId, resolutionKind: "direct-damage" }); }
             catch (error) { console.warn(`${MODULE_ID} | Damage was applied, but the source chat card could not be marked as resolved.`, error); }
         }
-        const damage = { formula: roll.formula, total: roll.total, results };
+        // Siphoning Rivulet: the caster's temporary Hit Points, the triggering bleed (the caster gives it) plus what this dealt, until the end of its next turn.
+        const siphon = plan.resolution.damage?.siphon;
+        let siphoned = null;
+        if (siphon) {
+            const triggering = Number(options.triggeringDamage ?? await foundry.applications.api.DialogV2.prompt({ window: { title: `${plan.source.name} — the triggering ${siphon.plusTriggering} damage` },
+                content: `<label>The ${escapeHTML(siphon.plusTriggering)} damage ${escapeHTML(actors[0].name)} took from its persistent damage <input type="number" name="amount" min="0" value="0"></label>`,
+                ok: { label: "Siphon", callback: (_event, button) => Number(button.form.elements.amount.value) }, rejectClose: false }));
+            if (!Number.isInteger(triggering) || triggering < 0) throw new Error(`${plan.source.name}: give the triggering ${siphon.plusTriggering} damage the creature took.`);
+            const amount = triggering + results.reduce((sum, result) => sum + Math.max(0, Number(result.receipt?.damage ?? 0)), 0);
+            if (amount > 0) {
+                const effect = await this.#ruleEffect(sourceActor, { name: `${plan.source.name} (${amount} temporary HP)`, rules: [{ key: "TempHP", value: amount }], seconds: 6 * siphon.rounds, expiry: siphon.expiry,
+                    sourceActor, itemOrSource, description: `<p>Temporary Hit Points from <strong>${escapeHTML(plan.source.name)}</strong>: the bleed damage the target took. Any remaining are lost at the end of your next turn.</p>` });
+                siphoned = { amount, effectId: effect?.id ?? null };
+            } else siphoned = { amount: 0, effectId: null };
+        }
+        const damage = { formula: roll.formula, total: roll.total, results, ...(siphoned ? { siphoned } : {}) };
         Hooks.callAll(`${MODULE_ID}.resolved`, { plan, created: [], castInstanceId, damage });
         return { status: "applied", plan, created: [], castInstanceId, damage };
     }
@@ -1401,13 +1632,13 @@ export class EffectRuntime {
     }
 
     /** A module Effect on an actor with the given rules and duration (seconds), flagged to the cast. */
-    async #ruleEffect(actor, { name, img, rules, seconds, sourceActor, itemOrSource, description = "", flags = {}, sustained = false, expiry = "turn-start" }) {
-        // (No time — Chromatic Ray's Clumsy while slowed: until the GM removes it.)
-        const duration = seconds === 0 ? { value: -1, unit: "unlimited" } : seconds >= 3600 && seconds % 3600 === 0 ? { value: seconds / 3600, unit: "hours" } : seconds < 60 ? { value: Math.max(1, Math.round(seconds / 6)), unit: "rounds" }
+    async #ruleEffect(actor, { name, img, rules, seconds, sourceActor, itemOrSource, description = "", flags = {}, sustained = false, expiry = "turn-start", untilTurnEnd = false }) {
+        // (No time — Chromatic Ray's Clumsy while slowed: until the GM removes it.) ("Until the end of your current turn": 0 rounds, ending as the turn does.)
+        const duration = untilTurnEnd ? { value: 0, unit: "rounds" } : seconds === 0 ? { value: -1, unit: "unlimited" } : seconds >= 3600 && seconds % 3600 === 0 ? { value: seconds / 3600, unit: "hours" } : seconds < 60 ? { value: Math.max(1, Math.round(seconds / 6)), unit: "rounds" }
             : { value: Math.max(1, Math.round(seconds / 60)), unit: "minutes" };
         const [effect] = await actor.createEmbeddedDocuments("Item", [{ name, type: "effect", img: img ?? itemOrSource?.img ?? "icons/svg/aura.svg",
             flags: { [MODULE_ID]: { runtime: { schema: 1, kind: "rule-effect", sourceActorUuid: sourceActor.uuid, sourceItemName: name, targetActorUuid: actor.uuid }, ...flags } },
-            system: { description: { value: description }, duration: { ...duration, expiry: duration.unit === "unlimited" ? null : expiry, sustained }, tokenIcon: { show: true }, traits: { value: [] }, rules,
+            system: { description: { value: description }, duration: { ...duration, expiry: duration.unit === "unlimited" ? null : untilTurnEnd ? "turn-end" : expiry, sustained }, tokenIcon: { show: true }, traits: { value: [] }, rules,
                 start: { value: game.time.worldTime, initiative: game.combat?.combatant?.initiative ?? null },
                 context: { origin: { actor: sourceActor.uuid, item: itemOrSource?.uuid ?? null }, target: { actor: actor.uuid }, roll: null } } }]);
         return effect;
@@ -1419,6 +1650,1620 @@ export class EffectRuntime {
             .map(Number).find(value => Number.isFinite(value) && value > 0);
         if (!dc) throw new Error("The caster's spell DC can't be read.");
         return dc;
+    }
+
+    /**
+     * Another spell's effect (Coalesce Form, Untamed Aspect Shift, Witch's Bottle): the caster's pick — a listed spell (from its rank), one of its own spells of a
+     * trait, or a polymorph spell from the compendiums — resolved by the module at this spell's rank (or its own, for the caster's own spell); Witch's Bottle's Slowed by
+     * the actions it took; Untamed Aspect Shift's own-attack bonus behind a toggle.
+     */
+    async #executeProxyCast(itemOrSource, plan, sourceActor, options) {
+        const data = plan.resolution.proxyCast;
+        const castRank = Number(options.castRank ?? itemOrSource?.rank ?? plan.rank);
+        let candidates = [];
+        if (data.source === "list") candidates = data.list.filter(entry => castRank >= entry.minRank).map(entry => ({ label: entry.name, uuid: entry.uuid, seconds: entry.seconds }));
+        else if (data.source === "own-trait") candidates = (sourceActor.itemTypes?.spell ?? []).filter(spell => spell.id !== itemOrSource?.id && (spell.system?.traits?.value ?? []).includes(data.trait))
+            .map(spell => ({ label: spell.name, uuid: spell.uuid, own: true }));
+        else {
+            const packs = game.packs.filter(pack => pack.documentName === "Item" && (pack.collection === "pf2e.spells-srd" || pack.collection.startsWith("pf2e-team-plus")));
+            for (const pack of packs) for (const entry of (await pack.getIndex({ fields: ["type", "system.traits.value", "system.level.value"] })))
+                if (entry.type === "spell" && (entry.system?.traits?.value ?? []).includes("polymorph") && Number(entry.system?.level?.value ?? 1) <= castRank) candidates.push({ label: entry.name, uuid: entry.uuid ?? `Compendium.${pack.collection}.Item.${entry._id}` });
+        }
+        if (!candidates.length) throw new Error(`${plan.source.name}: there's no spell to cast with it.`);
+        const wanted = options.proxySpell ?? null;
+        const pick = wanted ? candidates.find(entry => entry.uuid === wanted || entry.label === wanted)
+            : candidates.length === 1 ? candidates[0] : candidates[Number(await foundry.applications.api.DialogV2.prompt({ window: { title: `${plan.source.name} — which spell?` }, rejectClose: false,
+                content: `<select name="spell">${candidates.map((entry, index) => `<option value="${index}">${escapeHTML(entry.label)}</option>`).join("")}</select>`,
+                ok: { label: "Cast", callback: (_event, button) => button.form.elements.spell.value } }) ?? -1)];
+        if (!pick) return { status: "cancelled", plan };
+        const found = await fromUuid(pick.uuid);
+        if (!found) throw new Error(`${plan.source.name}: ${pick.label} isn't available.`);
+        let spell = pick.own ? found : spellFromSource({ ...found.toObject(), system: { ...found.toObject().system, location: { ...(found.system?.location ?? {}), value: itemOrSource?.system?.location?.value ?? null,
+            heightenedLevel: castRank } } }, sourceActor);
+        // (The empty entry's written twin: the variant it's cast as — Dynamic Breathe Fire's actions.)
+        const overlays = data.variants ? Object.entries(spell.system?.overlays ?? {}).filter(([, overlay]) => overlay?.overlayType === "override") : [];
+        if (overlays.length) {
+            const overlayId = options.variant ?? (overlays.length === 1 ? overlays[0][0] : await foundry.applications.api.DialogV2.wait({ window: { title: `${plan.source.name} — the version` }, content: "<p>Which version?</p>",
+                buttons: overlays.map(([id, overlay]) => ({ action: id, label: overlay.name ?? overlay.system?.time?.value ?? id })), close: () => null, rejectClose: false }));
+            if (!overlayId) return { status: "cancelled", plan };
+            spell = spell.loadVariant?.({ overlayIds: [overlayId] }) ?? spell;
+        }
+        const rank = data.sameRank ? castRank : Number(spell.rank ?? castRank);
+        const sub = await this.compile(spell);
+        const targets = options.targets ?? [...game.user.targets];
+        // (Routed as its own card would be: an Ongoing family — Evil Eye — a lingering area, an Effect, or a save card.)
+        const api = game.modules.get(MODULE_ID)?.api;
+        const route = api?.diagnose ? (await api.diagnose(spell)).route : null;
+        // (Fractal Frosting: the caster's Effect for the duration shapes each of its casts of the spell — this one too — with the riders of this rank.)
+        const made = [];
+        let shapeRiders = null;
+        if (data.shaper) {
+            const riders = data.shaper.riders.filter(rider => !rider.minRank || castRank >= rider.minRank);
+            shapeRiders = [{ name: plan.source.name, requires: null, choice: null, riders }];
+            made.push(await this.#ruleEffect(sourceActor, { name: plan.source.name, seconds: data.shaper.seconds, sourceActor, itemOrSource, rules: [],
+                flags: { castShaper: { spellSlug: data.shaper.spellSlug, name: plan.source.name, riders } }, description: `<p>${escapeHTML(data.shaper.note)}</p>` }));
+        }
+        let result;
+        if (route === "ongoing") result = await api.ongoing.start(spell, { sourceActor, targets, castRank: rank });
+        else if (sub.resolution?.lingering && api?.ongoing?.startLingering) result = await api.ongoing.startLingering(spell, sub, { castRank: rank, targets });
+        else if (SUPPORTED_RESOLUTION_KINDS.includes(sub.resolution?.kind)) result = await this.#execute(spell, { ...options, plan: sub, castRank: rank, targets, sourceMessageId: null, force: true });
+        else result = { status: "started", card: (await this.saves.start(spell, { plan: sub, sourceActor, targets: targets.map(target => target.object ?? target), castRank: rank, skipConfirmation: true, ...(shapeRiders ? { shapeRiders } : {}) })).card?.id ?? null };
+        // (Witch's Bottle: Slowed by the actions the hex took, until the end of the caster's next turn.)
+        const actions = Number(/^(\d)/.exec(String(spell.system?.time?.value ?? ""))?.[1] ?? 0);
+        const slowed = data.slowed?.byActions?.[actions] ?? null;
+        if (slowed) made.push(await this.#ruleEffect(sourceActor, { name: `${plan.source.name}: Slowed ${slowed}`, seconds: 6, expiry: "turn-end", sourceActor, itemOrSource,
+            rules: [{ key: "GrantItem", uuid: data.slowed.uuid, onDeleteActions: { grantee: "restrict" }, alterations: [{ mode: "override", property: "badge-value", value: slowed }] }],
+            description: `<p>Slowed ${slowed} until the end of your next turn (${escapeHTML(pick.label)} took ${actions} actions).</p>` }));
+        // (Untamed Aspect Shift: "+2 status bonus to your attack rolls" when using your own attack modifier — a toggle for the form's time.)
+        if (data.attackToggle) made.push(await this.#ruleEffect(sourceActor, { name: `${plan.source.name}: own attack modifier`, seconds: pick.seconds ?? 60, sourceActor, itemOrSource,
+            rules: [{ key: "RollOption", domain: "all", option: data.attackToggle.option, toggleable: true, label: data.attackToggle.label, value: false },
+                { key: "FlatModifier", selector: "attack-roll", type: "status", value: data.attackToggle.value, predicate: [data.attackToggle.option] }],
+            description: `<p>Switch it on when you use your own attack modifier in the form: +${data.attackToggle.value} status to attack rolls.</p>` }));
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "proxy-cast" } },
+            content: `<h3>${escapeHTML(plan.source.name)}</h3><p>${escapeHTML(pick.label)}${data.sameRank ? ` at rank ${rank}` : ""}.</p>${(data.notes ?? []).map(note => `<p>${escapeHTML(note)}</p>`).join("")}` }); } catch (_) {}
+        return { status: "applied", plan, spell: pick.label, rank, actions, slowed, result, effectUuids: made.map(effect => effect.uuid) };
+    }
+
+    /** The region area of one of Patron's Apocalypse's bursts, or of the hazardous terrain a moved one leaves. */
+    async #apocalypseArea(region, { spellName, sourceActor, itemOrSource, castRank, seconds, entry, dc, statistic, terrain = null }) {
+        const memberRules = [...(entry.memberRules ?? []), ...(entry.allyRules ?? [])];
+        return this.ongoing.startRegionArea({ spellName, sourceActorUuid: sourceActor.uuid, sourceItemUuid: itemOrSource?.uuid ?? null, castRank, region, durationSeconds: seconds, sustained: true,
+            events: [terrain ? "enter" : "turn-start"], seedMembers: true, enemiesOnly: entry.enemiesOnly === true, concealment: entry.concealment === true,
+            hazardDamage: terrain ? { formula: String(terrain), type: entry.type, label: `${entry.name}: hazardous terrain`, ...((entry.terrainAlways ?? entry.always) ? { alwaysEffect: foundry.utils.deepClone(entry.terrainAlways ?? entry.always) } : {}) }
+                : { formula: entry.formula, type: entry.type, label: `${entry.name}`, basic: { statistic, dc }, ...(entry.failure ? { failureEffect: foundry.utils.deepClone(entry.failure) } : {}), ...(entry.always ? { alwaysEffect: foundry.utils.deepClone(entry.always) } : {}) },
+            ...(memberRules.length && !entry.concealment ? { memberRules, ...(entry.allyRules ? { memberAllies: true, memberCaster: true } : {}) } : {}),
+            notes: entry.note ? [entry.note] : [] });
+    }
+
+    /**
+     * Patron's Apocalypse: the caster's apocalypse (`options.apocalypse`, kept on the caster, or asked) and its bursts (`options.positions`, centres in pixels, or placed),
+     * each a region whose creatures starting a turn there take its damage (basic save) and effects, for the sustained minute; the caster's Effect holds the Sustain's
+     * move control (`apocalypseMove`).
+     */
+    async #executePatronApocalypse(itemOrSource, plan, sourceActor, options) {
+        const data = plan.resolution.patronApocalypse;
+        if (!this.ongoing?.startRegionArea) throw new Error(`${plan.source.name} needs the ongoing spell manager.`);
+        const castRank = Number(options.castRank ?? itemOrSource?.rank ?? plan.rank);
+        const kept = sourceActor.getFlag?.(MODULE_ID, "apocalypse");
+        const kind = options.apocalypse ?? (data.types[kept] ? kept : await foundry.applications.api.DialogV2.wait({ window: { title: `${plan.source.name} — your patron's apocalypse` }, content: "<p>Chosen when you took the Lesson of Apocalypses:</p>",
+            buttons: Object.entries(data.types).map(([key, entry]) => ({ action: key, label: entry.name })), close: () => null, rejectClose: false }));
+        const entry = data.types[kind];
+        if (!entry) return { status: "cancelled", plan };
+        if (kept !== kind) await sourceActor.setFlag?.(MODULE_ID, "apocalypse", kind).catch(() => null);
+        const casterToken = sourceActor.getActiveTokens?.(true, true)?.[0];
+        const scene = casterToken?.parent ?? canvas.scene, size = scene.grid.size, feet = scene.grid.distance || 5, pixels = data.radius / feet * size;
+        const regions = [];
+        if (options.positions) {
+            if (!options.positions.length || options.positions.length > data.count) throw new Error(`${plan.source.name}: 1 to ${data.count} bursts.`);
+            for (const [first, second] of options.positions.flatMap((a, i) => options.positions.slice(i + 1).map(b => [a, b]))) if (Math.hypot(first.x - second.x, first.y - second.y) < 2 * pixels) throw new Error(`${plan.source.name}: the bursts can't overlap.`);
+            for (const point of options.positions) regions.push((await scene.createEmbeddedDocuments("Region", [{ name: `${plan.source.name}: ${entry.name}`, color: "#8a2b2b", shapes: [{ type: "circle", x: point.x, y: point.y, radiusX: pixels, radiusY: pixels, radius: pixels, rotation: 0, hole: false }] }]))[0]);
+        } else {
+            if (!itemOrSource?.placeTemplate) throw new Error(`${plan.source.name}: the spell item is needed to place the bursts.`);
+            for (let index = 0; index < data.count; index++) { const placed = await itemOrSource.placeTemplate(); if (!placed) break; regions.push(placed); }
+            if (!regions.length) return { status: "cancelled", plan };
+        }
+        const dc = this.#spellDC(itemOrSource, sourceActor, options);
+        const castIds = [];
+        for (const region of regions) castIds.push((await this.#apocalypseArea(region, { spellName: plan.source.name, sourceActor, itemOrSource, castRank, seconds: data.seconds, entry, dc, statistic: data.statistic })).castId);
+        const effect = await this.#ruleEffect(sourceActor, { name: `${plan.source.name}: ${entry.name}`, seconds: data.seconds, sustained: true, sourceActor, itemOrSource, rules: [],
+            flags: { apocalypse: { spell: plan.source.name, kind, entry, dc, castRank, statistic: data.statistic, move: data.move, terrain: data.terrain, radius: data.radius, regionUuids: regions.map(region => region.uuid), castIds, itemUuid: itemOrSource?.uuid ?? null } },
+            description: `<p>${escapeHTML(entry.sourceText)}</p>` });
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "patron-apocalypse" } },
+            content: `<h3>${escapeHTML(plan.source.name)}: ${escapeHTML(entry.name)}</h3><p>${regions.length} burst${regions.length === 1 ? "" : "s"}: a creature starting its turn in one takes ${escapeHTML(entry.formula)} ${escapeHTML(entry.type)} (basic ${escapeHTML(data.statistic)}, DC ${dc}).</p>`
+                + `<button type="button" class="pf2e-auto-runtime-button" data-repeatable="true" data-runtime-action="apocalypse-move" data-actor-uuid="${sourceActor.uuid}" data-effect-id="${effect.id}"><i class="fa-solid fa-meteor"></i> Sustain: move a burst up to ${data.move} feet (select its region, then place the new spot)</button>`
+                + `<p class="pf2e-auto-gm-reminder">${escapeHTML(entry.sourceText)}</p>` }); } catch (_) {}
+        return { status: "applied", plan, kind, effectUuid: effect.uuid, regionUuids: regions.map(region => region.uuid), castIds, dc };
+    }
+
+    /** A burst moved on a Sustain (`options.regionUuid` and `options.to`, its new centre): hazardous terrain left where it was, the burst moved up to its feet. */
+    async apocalypseMove(effectDocument, { regionUuid = null, to = null } = {}) {
+        const data = effectDocument?.flags?.[MODULE_ID]?.apocalypse;
+        if (!data) throw new Error("This Effect holds no apocalypse.");
+        const caster = effectDocument.actor;
+        const uuid = regionUuid ?? canvas.regions?.controlled?.[0]?.document?.uuid ?? null;
+        if (!uuid || !data.regionUuids.includes(uuid)) throw new Error(`${data.spell}: select one of the bursts.`);
+        const region = await fromUuid(uuid);
+        if (!region) throw new Error(`${data.spell}: that burst is gone.`);
+        const scene = region.parent, size = scene.grid.size, feet = scene.grid.distance || 5, shape = region.shapes[0];
+        let target = to;
+        if (!target) {
+            const itemOrSource = data.itemUuid ? await fromUuid(data.itemUuid) : null;
+            const placed = await itemOrSource?.placeTemplate?.();
+            if (!placed) return { status: "cancelled" };
+            target = { x: Number(placed.shapes?.[0]?.x), y: Number(placed.shapes?.[0]?.y) };
+            await placed.delete().catch(() => null);
+        }
+        const distance = Math.hypot(target.x - shape.x, target.y - shape.y) / size * feet;
+        if (distance > data.move + 0.01) throw new Error(`${data.spell}: a burst moves up to ${data.move} feet.`);
+        const itemOrSource = data.itemUuid ? await fromUuid(data.itemUuid) : null;
+        const [left] = await scene.createEmbeddedDocuments("Region", [{ name: `${data.spell}: hazardous terrain`, color: "#5a1f1f", shapes: [shape.toObject?.() ?? { ...shape }] }]);
+        const seconds = Math.max(6, Number(effectDocument.remainingDuration?.remaining ?? 60));
+        const started = await this.#apocalypseArea(left, { spellName: data.spell, sourceActor: caster, itemOrSource, castRank: data.castRank, seconds, entry: data.entry, dc: data.dc, statistic: data.statistic, terrain: data.terrain });
+        await region.update({ shapes: [{ type: "circle", x: target.x, y: target.y, radiusX: shape.radius, radiusY: shape.radius, radius: shape.radius, rotation: 0, hole: false }] });
+        await effectDocument.update({ [`flags.${MODULE_ID}.apocalypse.castIds`]: [...data.castIds, started.castId] });
+        return { moved: Math.round(distance), terrainUuid: left.uuid, terrainCastId: started.castId };
+    }
+
+    /**
+     * Animated Spark: a PF2e familiar whose master is the caster (a familiar's statistics for the caster's level), with Construct, the weakness (`options.weakness`, or
+     * asked; the caster's level) and the abilities chosen (`options.abilities`, names, or asked); its token where the objects are (`options.position`, or beside the
+     * caster); the caster's Effect for the sustained duration (an earlier spark of this spell ended) with the disperse control (`sparkDisperse`).
+     */
+    async #executeAnimatedSpark(itemOrSource, plan, sourceActor, options) {
+        const data = plan.resolution.animatedSpark;
+        const castRank = Number(options.castRank ?? itemOrSource?.rank ?? plan.rank);
+        const casterToken = sourceActor.getActiveTokens?.(true, true)?.[0];
+        if (!casterToken) throw new Error(`${plan.source.name}: ${sourceActor.name} needs a token on the scene.`);
+        // ("If you Cast the Spell on another target, the spell automatically ends.")
+        for (const earlier of (sourceActor.itemTypes?.effect ?? []).filter(effect => effect.flags?.[MODULE_ID]?.animatedSpark?.spell === plan.source.name)) await earlier.delete().catch(() => null);
+        const weakness = options.weakness ?? await foundry.applications.api.DialogV2.prompt({ window: { title: `${plan.source.name} — its weakness` }, rejectClose: false,
+            content: `<p>An appropriate damage type for the objects (usually ${data.weaknessTypes.join(", ")}).</p><select name="type">${[...new Set([...data.weaknessTypes, "acid", "cold", "electricity", "sonic", "force"])].map(type => `<option value="${type}">${type}</option>`).join("")}</select>`,
+            ok: { label: "Choose", callback: (_event, button) => button.form.elements.type.value } });
+        if (!weakness) return { status: "cancelled", plan };
+        const pack = game.packs.get("pf2e.familiar-abilities");
+        const docs = pack ? await pack.getDocuments() : [];
+        const offered = docs.filter(doc => doc.name !== "Spellcasting" && doc.name !== "Construct" && doc.name !== "Tough");
+        let names = options.abilities ?? null;
+        if (!names) names = await foundry.applications.api.DialogV2.prompt({ window: { title: `${plan.source.name} — its ${data.abilities} abilities` }, rejectClose: false,
+            content: Array.from({ length: data.abilities }, (_, index) => `<select name="ability${index}">${offered.map(doc => `<option value="${escapeHTML(doc.name)}">${escapeHTML(doc.name)}</option>`).join("")}</select>`).join(""),
+            ok: { label: "Animate", callback: (_event, button) => Array.from({ length: data.abilities }, (_, index) => button.form.elements[`ability${index}`].value) } });
+        if (!names) return { status: "cancelled", plan };
+        const chosen = names.map(name => offered.find(doc => doc.name === name));
+        if (chosen.length !== data.abilities || chosen.some(doc => !doc) || new Set(names).size !== names.length) throw new Error(`${plan.source.name}: choose ${data.abilities} different abilities (not Spellcasting).`);
+        const construct = await fromUuid(data.constructUuid);
+        const castId = options.castInstanceId ?? randomID();
+        const actor = await Actor.create({ name: `${plan.source.name}: animated objects`, type: "familiar", img: itemOrSource?.img ?? "icons/svg/mystery-man.svg",
+            system: { master: { id: sourceActor.id } }, ownership: { ...foundry.utils.deepClone(sourceActor.ownership ?? {}), default: 0 },
+            flags: { [MODULE_ID]: { summoned: { castId, casterUuid: sourceActor.uuid, spell: plan.source.name } } } });
+        await actor.createEmbeddedDocuments("Item", [...[construct, ...chosen].filter(Boolean).map(doc => { const source = doc.toObject(); delete source._id; return source; }),
+            { name: `${plan.source.name}: weakness`, type: "effect", img: "icons/svg/downgrade.svg", system: { duration: { value: -1, unit: "unlimited", expiry: null, sustained: false }, rules: [{ key: "Weakness", type: weakness, value: Number(sourceActor.level ?? 1) }] } }]);
+        const size = casterToken.parent.grid.size;
+        const place = options.position ?? freeSpaceNear(casterToken, { width: 1, height: 1 }, 30);
+        const [token] = await casterToken.parent.createEmbeddedDocuments("Token", [(await actor.getTokenDocument({ x: place?.x ?? casterToken.x + size, y: place?.y ?? casterToken.y, actorLink: true, disposition: casterToken.disposition })).toObject()]);
+        const effect = await this.#ruleEffect(sourceActor, { name: `${plan.source.name}: the animated objects`, seconds: data.seconds, sustained: true, sourceActor, itemOrSource, rules: [],
+            flags: { summon: { castId, actorUuid: actor.uuid, tokenUuid: token.uuid, extra: [{ tokenUuid: token.uuid, actorUuid: actor.uuid }] },
+                animatedSpark: { spell: plan.source.name, castId, castRank, dice: data.disperse.dice + Math.max(0, castRank - data.baseRank) * data.disperse.step, die: data.disperse.die, radius: data.disperse.radius,
+                    statistic: data.disperse.statistic, types: data.disperse.types, dc: this.#spellDC(itemOrSource, sourceActor, options), itemUuid: itemOrSource?.uuid ?? null } },
+            description: `<p>The animated objects (a minion) take ${data.actions} actions when you Cast or Sustain the spell. ${data.notes.map(note => escapeHTML(note)).join(" ")}</p>` });
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "animated-spark", castInstanceId: castId } },
+            content: `<h3>${escapeHTML(plan.source.name)}</h3><p>The objects come alive: a familiar's statistics for ${escapeHTML(sourceActor.name)}'s level, Construct, ${escapeHTML(names.join(" and "))}; weakness ${Number(sourceActor.level ?? 1)} to ${escapeHTML(weakness)}. It takes ${data.actions} actions when you Cast or Sustain the spell.</p>`
+                + `<button type="button" class="pf2e-auto-runtime-button" data-runtime-action="spark-disperse" data-actor-uuid="${sourceActor.uuid}" data-effect-id="${effect.id}"><i class="fa-solid fa-burst"></i> It disperses (${data.disperse.dice + Math.max(0, castRank - data.baseRank) * data.disperse.step}d${data.disperse.die} in a ${data.disperse.radius}-foot emanation, basic ${escapeHTML(data.disperse.statistic)})</button>`
+                + data.notes.map(note => `<p class="pf2e-auto-gm-reminder">${escapeHTML(note)}</p>`).join("") }); } catch (_) {}
+        return { status: "applied", plan, effectUuid: effect.uuid, actorUuid: actor.uuid, tokenUuid: token.uuid, weakness, abilities: names };
+    }
+
+    /** The animated objects disperse: the save card for the creatures within the emanation (the type chosen), then the spell ends. */
+    async sparkDisperse(effectDocument, { damageType = null } = {}) {
+        const data = effectDocument?.flags?.[MODULE_ID]?.animatedSpark, summon = effectDocument?.flags?.[MODULE_ID]?.summon;
+        if (!data || !summon) throw new Error("This Effect holds no animated objects.");
+        const caster = effectDocument.actor, token = await fromUuid(summon.tokenUuid);
+        if (!token) throw new Error(`${data.spell}: the animated objects are gone.`);
+        const type = damageType ?? await foundry.applications.api.DialogV2.wait({ window: { title: `${data.spell} — disperse` }, content: "<p>The damage type, as appropriate for the objects:</p>",
+            buttons: data.types.map(entry => ({ action: entry, label: entry })), close: () => null, rejectClose: false });
+        if (!data.types.includes(type)) return { status: "cancelled" };
+        // (A Tiny creature's half square measured as the square it occupies.)
+        const square = { x: token.x, y: token.y, width: Math.max(1, Number(token.width) || 1), height: Math.max(1, Number(token.height) || 1) };
+        const targets = token.parent.tokens.filter(other => other.actor && other.id !== token.id && tokenDistance(square, other) <= data.radius).map(other => other.object ?? other);
+        const spell = data.itemUuid ? await fromUuid(data.itemUuid) : null, source = spell?.toObject?.();
+        let cardId = null;
+        if (targets.length && source) {
+            const variant = spellFromSource({ ...source, system: { ...source.system, description: { value: `<p>Each creature in the area takes ${data.dice}d${data.die} ${type} damage with a basic ${data.statistic[0].toUpperCase()}${data.statistic.slice(1)} save.</p>` },
+                damage: { spark: { formula: `${data.dice}d${data.die}`, type, kinds: ["damage"], category: null, materials: [], applyMod: false } }, defense: { save: { statistic: data.statistic, basic: true } }, heightening: null,
+                area: { type: "emanation", value: data.radius }, target: { value: "" }, duration: { value: "", sustained: false }, location: { ...(source.system.location ?? {}), heightenedLevel: data.castRank } } }, caster);
+            const plan = await this.compile(variant);
+            cardId = (await this.saves.start(variant, { plan, sourceActor: caster, targets, castRank: data.castRank, dc: data.dc, skipConfirmation: true })).card?.id ?? null;
+        }
+        await effectDocument.delete().catch(() => null);
+        return { dispersed: true, cardId, dice: `${data.dice}d${data.die}`, type, targets: targets.map(other => other.document?.name ?? other.name) };
+    }
+
+    /**
+     * Prism of Power: the mode (`options.mode`, or asked) and the prism's square (`options.position`, its top-left in pixels, or placed) — a region for the minute with the
+     * caster's Effect holding its card's control (`prismAct`).
+     */
+    async #executePowerPrism(itemOrSource, plan, sourceActor, options) {
+        const data = plan.resolution.powerPrism;
+        if (!this.ongoing?.startRegionArea) throw new Error(`${plan.source.name} needs the ongoing spell manager.`);
+        const castRank = Number(options.castRank ?? itemOrSource?.rank ?? plan.rank);
+        const mode = options.mode ?? await foundry.applications.api.DialogV2.wait({ window: { title: `${plan.source.name} — the prism` }, content: "<p>Choose its option.</p>",
+            buttons: Object.keys(data.modes).map(entry => ({ action: entry, label: entry[0].toUpperCase() + entry.slice(1) })), close: () => null, rejectClose: false });
+        if (!data.modes[mode]) return { status: "cancelled", plan };
+        const casterToken = sourceActor.getActiveTokens?.(true, true)?.[0];
+        const scene = casterToken?.parent ?? canvas.scene, size = scene.grid.size, side = data.size / (scene.grid.distance || 5) * size;
+        let at = options.position ?? null;
+        if (!at) {
+            if (!itemOrSource?.clone) throw new Error(`${plan.source.name}: the spell item is needed to place the prism.`);
+            const placed = await itemOrSource.clone({ "system.area": { type: "square", value: data.size } }).placeTemplate();
+            if (!placed) return { status: "cancelled", plan };
+            const shape = placed.shapes?.[0] ?? {};
+            at = { x: Math.floor(Number(shape.x ?? 0) / size) * size, y: Math.floor(Number(shape.y ?? 0) / size) * size };
+            await placed.delete().catch(() => null);
+        }
+        const [region] = await scene.createEmbeddedDocuments("Region", [{ name: `${plan.source.name}: the prism (${mode})`, color: "#e0c3ff", shapes: [{ type: "rectangle", x: at.x, y: at.y, width: side, height: side, rotation: 0, hole: false }] }]);
+        const effect = await this.#ruleEffect(sourceActor, { name: `${plan.source.name}: ${mode}`, seconds: data.seconds, sourceActor, itemOrSource, rules: [],
+            flags: { powerPrism: { spell: plan.source.name, mode, regionUuid: region.uuid, modes: data.modes, itemUuid: itemOrSource?.uuid ?? null } },
+            description: `<p>The prism (${mode}).${mode === "refract" ? ` ${escapeHTML(data.modes.refract.note)}` : ""}</p>` });
+        const started = await this.ongoing.startRegionArea({ spellName: plan.source.name, sourceActorUuid: sourceActor.uuid, sourceItemUuid: itemOrSource?.uuid ?? null, castRank, region, durationSeconds: data.seconds,
+            notes: mode === "refract" ? [data.modes.refract.note] : [], extraEntryUuids: [effect.uuid] });
+        const label = { scatter: `Scatter: a spell attack through the prism (target up to ${data.modes.scatter.targets} creatures within ${data.modes.scatter.reach} feet of it)`,
+            diffract: "Diffract: a line spell enters the prism (the feet it had left)" }[mode];
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "power-prism", castInstanceId: started.castId } },
+            content: `<h3>${escapeHTML(plan.source.name)}</h3><p>The prism: <strong>${escapeHTML(mode)}</strong>.</p>`
+                + (label ? `<button type="button" class="pf2e-auto-runtime-button" data-repeatable="true" data-runtime-action="prism" data-option="${mode}" data-actor-uuid="${sourceActor.uuid}" data-effect-id="${effect.id}"><i class="fa-solid fa-gem"></i> ${escapeHTML(label)}</button>` : "")
+                + (mode === "refract" ? `<p class="pf2e-auto-gm-reminder"><strong>GM:</strong> ${escapeHTML(data.modes.refract.note)}</p>` : "") }); } catch (_) {}
+        return { status: "applied", plan, mode, castInstanceId: started.castId, effectUuid: effect.uuid, regionUuid: region.uuid };
+    }
+
+    /** Prism of Power: "scatter" — one spell attack against the AC of each targeted creature near the prism; "diffract" — the cone from the line's feet left, placed from the prism. */
+    async prismAct(effectDocument, which, { targets = [...game.user.targets], total = null, feetLeft = null, spell = null } = {}) {
+        const data = effectDocument?.flags?.[MODULE_ID]?.powerPrism;
+        if (!data) throw new Error("This Effect holds no prism.");
+        const caster = effectDocument.actor, region = await fromUuid(data.regionUuid);
+        if (!region) throw new Error(`${data.spell}: the prism is gone.`);
+        const scene = region.parent, size = scene.grid.size, feet = scene.grid.distance || 5, shape = region.shapes[0];
+        if (which === "scatter") {
+            const tokens = targets.map(target => target?.document ?? target).filter(token => token?.actor);
+            if (!tokens.length || tokens.length > data.modes.scatter.targets) throw new Error(`${data.spell}: target 1 to ${data.modes.scatter.targets} creatures.`);
+            // (Within 5 feet of the prism's square: the gap between the two squares, in squares.)
+            const gap = token => Math.max(Math.max(0, shape.x - (token.x + token.width * size), token.x - (shape.x + shape.width)), Math.max(0, shape.y - (token.y + token.height * size), token.y - (shape.y + shape.height))) / size * feet;
+            const far = tokens.find(token => gap(token) > data.modes.scatter.reach);
+            if (far) throw new Error(`${data.spell}: ${far.name} isn't within ${data.modes.scatter.reach} feet of the prism.`);
+            const itemOrSource = data.itemUuid ? await fromUuid(data.itemUuid) : null;
+            const statistic = itemOrSource?.spellcasting?.statistic ?? caster.getStatistic?.("spell-attack");
+            const roll = total == null ? await statistic?.check?.roll({ extraRollOptions: ["attack", "item:trait:attack"], skipDialog: true, label: `${data.spell}: one spell attack through the prism` }) : null;
+            const result = Number(total ?? roll?.total);
+            if (!Number.isFinite(result)) throw new Error(`${data.spell}: the spell attack wasn't rolled.`);
+            const degreeOf = ac => result >= ac + 10 ? "criticalSuccess" : result >= ac ? "success" : result <= ac - 10 ? "criticalFailure" : "failure";
+            const results = tokens.map(token => { const ac = Number(token.actor.armorClass?.value ?? token.actor.system?.attributes?.ac?.value); return { name: token.actor.name, ac, degree: degreeOf(ac) }; });
+            try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: caster }), content: `<p><strong>${escapeHTML(data.spell)}</strong> scatters a spell attack (${result}): ${results.map(entry => `${escapeHTML(entry.name)} (AC ${entry.ac}) — ${escapeHTML(entry.degree.replace(/([A-Z])/g, " $1").toLowerCase())}`).join("; ")}.</p><p class="pf2e-auto-gm-reminder">Roll the spell's damage for each hit (double on a critical hit).</p>` }); } catch (_) {}
+            return { total: result, results };
+        }
+        if (which === "diffract") {
+            const left = Number(feetLeft ?? await foundry.applications.api.DialogV2.prompt({ window: { title: `${data.spell} — diffract` }, rejectClose: false,
+                content: "<p>How many feet could the line still travel when it entered the prism?</p><input type=\"number\" name=\"feet\" min=\"0\" step=\"5\">", ok: { label: "Diffract", callback: (_event, button) => button.form.elements.feet.value } }));
+            if (!Number.isFinite(left)) return { status: "cancelled" };
+            const cone = diffractCone({ modes: data.modes }, left);
+            const line = spell ? await fromUuid(spell) : null;
+            const placed = line?.clone ? await line.clone({ "system.area": { type: "cone", value: cone } }).placeTemplate().catch(() => null) : null;
+            try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: caster }), content: `<p><strong>${escapeHTML(data.spell)}</strong> diffracts the line into a ${cone}-foot cone from the prism, in the line's direction.</p>` }); } catch (_) {}
+            return { cone, regionUuid: placed?.uuid ?? null };
+        }
+        throw new Error(`${data.spell}: refract is the GM's measuring from the prism.`);
+    }
+
+    /**
+     * Seeds of Divinity: the caster's Effect for the sustained duration holding the seeds and the bushes (removed with it); the seeds sprouting where they land
+     * (`options.positions`, top-left pixels of squares, or later the card's control); the cursebound value asked (`options.cursebound`); the controls (`seedsAct`).
+     */
+    async #executeDivineSeeds(itemOrSource, plan, sourceActor, options) {
+        const data = plan.resolution.divineSeeds;
+        const castRank = Number(options.castRank ?? itemOrSource?.rank ?? plan.rank);
+        const cursebound = Number(options.cursebound ?? await foundry.applications.api.DialogV2.prompt({ window: { title: `${plan.source.name} — your maximum cursebound value` }, rejectClose: false,
+            content: `<input type="number" name="value" value="${Number(sourceActor.system?.resources?.cursebound?.max ?? 2)}" min="0" max="4">`, ok: { label: "Set", callback: (_event, button) => button.form.elements.value.value } }));
+        if (!Number.isFinite(cursebound)) return { status: "cancelled", plan };
+        const at = seedsAt(data, castRank), castId = options.castInstanceId ?? randomID();
+        const effect = await this.#ruleEffect(sourceActor, { name: `${plan.source.name}: ${data.count} seeds`, seconds: data.seconds, sustained: true, sourceActor, itemOrSource, rules: [],
+            flags: { summon: { castId, tokenUuid: null, extra: [] }, divineSeeds: { spell: plan.source.name, castId, castRank, seedsLeft: data.count, at, cursebound, bushes: [], growAfter: data.growAfterSeconds, types: data.hazard.types, itemUuid: itemOrSource?.uuid ?? null } },
+            description: `<p>Bushes: ${at.hp} HP, AC ${at.ac}, concealment. Grown hazardous: ${at.damage} ${escapeHTML(data.hazard.types.join(" and "))} to each creature moving through. Bountiful: a fruit — ${at.tempHP} temporary HP and +${cursebound} status to damage until the spell ends.</p>` });
+        const button = (which, label, icon) => `<button type="button" class="pf2e-auto-runtime-button" data-repeatable="true" data-runtime-action="seeds" data-option="${which}" data-actor-uuid="${sourceActor.uuid}" data-effect-id="${effect.id}"><i class="fa-solid ${icon}"></i> ${label}</button>`;
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "divine-seeds", castInstanceId: castId } },
+            content: `<h3>${escapeHTML(plan.source.name)}</h3><p>${data.count} seeds (released into an adjacent square, or thrown up to ${data.throwFeet} feet).</p>`
+                + button("sprout", "A seed lands (place its square)", "fa-seedling") + button("grow", "Sustain: grow a bush (target it)", "fa-tree") + button("eat", "A creature eats a fruit (target it)", "fa-apple-whole")
+                + data.notes.map(note => `<p class="pf2e-auto-gm-reminder">${escapeHTML(note)}</p>`).join("") }); } catch (_) {}
+        const sprouted = options.positions?.length ? await this.seedsAct(effect, "sprout", { positions: options.positions }) : null;
+        return { status: "applied", plan, castInstanceId: castId, effectUuid: effect.uuid, at, sprouted };
+    }
+
+    /** Seeds of Divinity's controls: "sprout" — bushes where seeds land; "grow" — a bush a round old turned hazardous or bountiful; "eat" — a creature eats a bush's fruit. */
+    async seedsAct(effectDocument, which, { positions = null, targets = [...game.user.targets], choice = null, bush = null } = {}) {
+        const data = effectDocument?.flags?.[MODULE_ID]?.divineSeeds;
+        if (!data) throw new Error("This Effect holds no seeds.");
+        const caster = effectDocument.actor, casterToken = caster.getActiveTokens?.(true, true)?.[0];
+        const scene = casterToken?.parent ?? canvas.scene, size = scene.grid.size;
+        const itemOrSource = data.itemUuid ? await fromUuid(data.itemUuid) : null;
+        const save = async patch => { await effectDocument.update(Object.fromEntries(Object.entries(patch).map(([key, value]) => [`flags.${MODULE_ID}.${key}`, value]))); };
+        if (which === "sprout") {
+            let spots = positions;
+            if (!spots) {
+                if (!itemOrSource?.clone) throw new Error(`${data.spell}: the spell item is needed to place the seed.`);
+                const placed = await itemOrSource.clone({ "system.area": { type: "square", value: 5 } }).placeTemplate();
+                if (!placed) return { status: "cancelled" };
+                const shape = placed.shapes?.[0] ?? {};
+                spots = [{ x: Math.floor(Number(shape.x ?? 0) / size) * size, y: Math.floor(Number(shape.y ?? 0) / size) * size }];
+                await placed.delete().catch(() => null);
+            }
+            if (spots.length > data.seedsLeft) throw new Error(`${data.spell}: only ${data.seedsLeft} seed${data.seedsLeft === 1 ? "" : "s"} left.`);
+            const bushes = [...data.bushes], extra = [...(effectDocument.flags[MODULE_ID].summon?.extra ?? [])];
+            for (const spot of spots) {
+                const actor = await Actor.create({ name: `${data.spell}: bush`, type: "npc", img: itemOrSource?.img ?? "icons/svg/oak.svg",
+                    system: { details: { level: { value: 0 } }, attributes: { hp: { value: data.at.hp, max: data.at.hp }, ac: { value: data.at.ac }, speed: { value: 0 } }, traits: { value: ["plant"], size: { value: "med" }, rarity: "common" } },
+                    flags: { [MODULE_ID]: { summoned: { castId: data.castId, casterUuid: caster.uuid, spell: data.spell } } } });
+                await actor.increaseCondition?.("immobilized").catch(() => null);
+                const [token] = await scene.createEmbeddedDocuments("Token", [(await actor.getTokenDocument({ x: spot.x, y: spot.y, actorLink: true, disposition: casterToken?.disposition ?? 1 })).toObject()]);
+                bushes.push({ tokenUuid: token.uuid, actorUuid: actor.uuid, sproutedAt: game.time.worldTime, grown: null, fruit: false });
+                extra.push({ tokenUuid: token.uuid, actorUuid: actor.uuid });
+            }
+            await save({ "divineSeeds.bushes": bushes, "divineSeeds.seedsLeft": data.seedsLeft - spots.length, "summon.extra": extra });
+            return { sprouted: spots.length, seedsLeft: data.seedsLeft - spots.length, bushes: bushes.map(entry => entry.tokenUuid) };
+        }
+        const pickBush = uuid => data.bushes.find(entry => entry.tokenUuid === uuid);
+        if (which === "grow") {
+            const tokenUuid = bush ?? targets.map(target => (target?.document ?? target)?.uuid)[0];
+            const entry = pickBush(tokenUuid);
+            if (!entry) throw new Error(`${data.spell}: target one of the bushes.`);
+            if (entry.grown) throw new Error(`${data.spell}: that bush has already grown.`);
+            if (game.time.worldTime - entry.sproutedAt < data.growAfter) throw new Error(`${data.spell}: a bush grows only after a round has passed since it sprouted.`);
+            const kind = choice ?? await foundry.applications.api.DialogV2.wait({ window: { title: `${data.spell} — grow the bush` }, content: "<p>Hazardous or bountiful?</p>",
+                buttons: [{ action: "hazardous", label: "Hazardous" }, { action: "bountiful", label: "Bountiful" }], close: () => null, rejectClose: false });
+            if (!["hazardous", "bountiful"].includes(kind)) return { status: "cancelled" };
+            const token = await fromUuid(entry.tokenUuid);
+            let regionUuid = null;
+            if (kind === "hazardous" && token && this.ongoing?.startRegionArea) {
+                const [region] = await scene.createEmbeddedDocuments("Region", [{ name: `${data.spell}: hazardous bush`, color: "#2f6b2f", shapes: [{ type: "rectangle", x: token.x, y: token.y, width: size, height: size, rotation: 0, hole: false }] }]);
+                const remaining = Math.max(6, Number(effectDocument.remainingDuration?.remaining ?? 60));
+                await this.ongoing.startRegionArea({ spellName: data.spell, sourceActorUuid: caster.uuid, sourceItemUuid: data.itemUuid, castRank: data.castRank, region, durationSeconds: remaining, events: ["enter"],
+                    hazardDamage: { formula: `{${data.types.map(type => `${data.at.damage}[${type}]`).join(",")}}`, type: null, label: "the thorny bush" } });
+                regionUuid = region.uuid;
+            }
+            const bushes = data.bushes.map(other => other.tokenUuid === entry.tokenUuid ? { ...other, grown: kind, fruit: kind === "bountiful", regionUuid } : other);
+            await save({ "divineSeeds.bushes": bushes });
+            return { grown: kind, regionUuid };
+        }
+        // ("A creature can harvest and consume a fruit from a bush as a single Interact action.")
+        const eaters = targets.map(target => target?.document ?? target).filter(token => token?.actor);
+        if (eaters.length !== 1) throw new Error(`${data.spell}: target the creature that eats the fruit.`);
+        const entry = bush ? pickBush(bush) : data.bushes.find(other => other.fruit);
+        if (!entry?.fruit) throw new Error(`${data.spell}: no bountiful bush has a fruit.`);
+        const remaining = Math.max(6, Number(effectDocument.remainingDuration?.remaining ?? 60));
+        const eaten = await this.#ruleEffect(eaters[0].actor, { name: `${data.spell}: the fruit`, seconds: remaining, sourceActor: caster, itemOrSource,
+            rules: [{ key: "TempHP", value: data.at.tempHP }, { key: "FlatModifier", selector: "damage", type: "status", value: data.cursebound, label: data.spell }],
+            description: `<p>${data.at.tempHP} temporary Hit Points and +${data.cursebound} status to damage until the spell ends.</p>` });
+        await save({ "divineSeeds.bushes": data.bushes.map(other => other.tokenUuid === entry.tokenUuid ? { ...other, fruit: false } : other) });
+        return { eaten: eaten.uuid, tempHP: data.at.tempHP, bonus: data.cursebound };
+    }
+
+    /**
+     * Spirit Boundary: the version by the actions spent (`options.actions`, or asked), its radius (the three-action version's chosen — `options.radius`); the burst a
+     * region for the minute with the caster's Effect holding the shield's Hit Points and reduction (`boundaryOnDamage` watches the damage), and the Dismiss control.
+     */
+    async #executeSpiritBoundary(itemOrSource, plan, sourceActor, options) {
+        const data = plan.resolution.spiritBoundary;
+        if (!this.ongoing?.startRegionArea) throw new Error(`${plan.source.name} needs the ongoing spell manager.`);
+        const castRank = Number(options.castRank ?? itemOrSource?.rank ?? plan.rank);
+        const actions = Number(options.actions ?? await foundry.applications.api.DialogV2.wait({ window: { title: `${plan.source.name} — actions` }, content: "<p>How many actions did you spend?</p>",
+            buttons: [1, 2, 3].map(count => ({ action: String(count), label: String(count) })), close: () => null, rejectClose: false }));
+        const version = data.versions[actions];
+        if (!version) return { status: "cancelled", plan };
+        let radius = version.radius;
+        if (radius == null) {
+            radius = Number(options.radius ?? await foundry.applications.api.DialogV2.prompt({ window: { title: `${plan.source.name} — radius` }, rejectClose: false,
+                content: `<select name="radius">${Array.from({ length: (version.max - version.min) / 5 + 1 }, (_, index) => version.min + index * 5).map(feet => `<option value="${feet}">${feet} feet</option>`).join("")}</select>`,
+                ok: { label: "Raise", callback: (_event, button) => button.form.elements.radius.value } }));
+            if (!(radius >= version.min && radius <= version.max)) throw new Error(`${plan.source.name}: choose a radius from ${version.min} to ${version.max} feet.`);
+        }
+        const casterToken = sourceActor.getActiveTokens?.(true, true)?.[0];
+        const scene = casterToken?.parent ?? canvas.scene, size = scene.grid.size, feet = scene.grid.distance || 5;
+        let region = null;
+        if (options.position) {
+            const pixels = radius / feet * size;
+            [region] = await scene.createEmbeddedDocuments("Region", [{ name: `${plan.source.name} (${sourceActor.name})`, color: "#b8d8ff", shapes: [{ type: "circle", x: options.position.x, y: options.position.y, radiusX: pixels, radiusY: pixels, radius: pixels, rotation: 0, hole: false }] }]);
+        } else {
+            if (!itemOrSource?.clone) throw new Error(`${plan.source.name}: the spell item is needed to place the shield.`);
+            region = await itemOrSource.clone({ "system.area": { type: "burst", value: radius } }).placeTemplate();
+            if (!region) return { status: "cancelled", plan };
+        }
+        const hp = boundaryAt(version.hp, castRank), reduce = boundaryAt(version.reduce, castRank);
+        const effect = await this.#ruleEffect(sourceActor, { name: `${plan.source.name}: the shield (${hp} HP)`, seconds: data.seconds, sourceActor, itemOrSource, rules: [],
+            flags: { spiritBoundary: { spell: plan.source.name, regionUuid: region.uuid, hp, remaining: hp, reduce, seen: [] } },
+            description: `<p>A ${radius}-foot shield of spirits: damage crossing its edge is reduced by ${reduce}; the shield takes what it reduces (once per damaging effect) and is destroyed at 0 of its ${hp} Hit Points.</p>` });
+        const started = await this.ongoing.startRegionArea({ spellName: plan.source.name, sourceActorUuid: sourceActor.uuid, sourceItemUuid: itemOrSource?.uuid ?? null, castRank, region,
+            durationSeconds: data.seconds, extraEntryUuids: [effect.uuid] });
+        await effect.update({ [`flags.${MODULE_ID}.spiritBoundary.castId`]: started.castId });
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "spirit-boundary", castInstanceId: started.castId } },
+            content: `<h3>${escapeHTML(plan.source.name)}</h3><p>A ${radius}-foot shield (${hp} HP) reduces damage crossing its edge by ${reduce}.</p>`
+                + (version.dismiss ? `<button type="button" class="pf2e-auto-runtime-button" data-runtime-action="boundary-dismiss" data-actor-uuid="${sourceActor.uuid}" data-effect-id="${effect.id}"><i class="fa-solid fa-ban"></i> Dismiss (reaction: a damaging effect passing through it)</button>` : "") }); } catch (_) {}
+        return { status: "applied", plan, castInstanceId: started.castId, effectUuid: effect.uuid, regionUuid: region.uuid, actions, radius, hp, reduce };
+    }
+
+    /** Damage taken from an origin on the other side of a spirit shield's edge: reduced (the Hit Points given back), the shield losing what it reduced once per effect. */
+    async boundaryOnDamage(message, { lastDamage }) {
+        const applied = message?.flags?.pf2e?.appliedDamage, origin = message?.flags?.pf2e?.origin;
+        if (!applied || applied.isHealing || !origin?.actor) return null;
+        const victim = await fromUuid(applied.uuid), attacker = await fromUuid(origin.actor);
+        const scene = canvas.scene;
+        const victimToken = scene?.tokens.get(message.speaker?.token) ?? victim?.getActiveTokens?.(true, true)?.[0], attackerToken = attacker?.getActiveTokens?.(true, true)?.[0];
+        if (!victimToken || !attackerToken) return null;
+        const amount = Number(lastDamage(victim)?.amount ?? 0);
+        if (!(amount > 0)) return null;
+        for (const actor of new Set(scene.tokens.map(token => token.actor).filter(Boolean))) for (const effect of actor.itemTypes?.effect ?? []) {
+            const data = effect.flags?.[MODULE_ID]?.spiritBoundary;
+            if (!data || data.remaining <= 0) continue;
+            const region = await fromUuid(data.regionUuid);
+            if (!region || tokenInRegion(victimToken, region) === tokenInRegion(attackerToken, region)) continue;
+            const reduced = Math.min(data.reduce, amount);
+            const hp = victim.system.attributes.hp;
+            await victim.update({ "system.attributes.hp.value": Math.min(Number(hp.max), Number(hp.value) + reduced) });
+            // ("If the crossing effect deals damage to multiple creatures, the shield only takes damage once.")
+            const key = `${origin.uuid}|${game.combat?.round ?? 0}|${game.combat?.turn ?? 0}|${Math.floor(Date.now() / 5000)}`;
+            const first = !data.seen.includes(key);
+            const remaining = first ? data.remaining - reduced : data.remaining;
+            await effect.update({ [`flags.${MODULE_ID}.spiritBoundary.remaining`]: remaining, [`flags.${MODULE_ID}.spiritBoundary.seen`]: [...data.seen.slice(-20), key], name: `${data.spell}: the shield (${Math.max(0, remaining)} HP)` });
+            try { await ChatMessage.create({ content: `<p><strong>${escapeHTML(data.spell)}</strong>: the shield reduces the damage to ${escapeHTML(victim.name)} by ${reduced}${first ? ` and takes ${reduced} (${Math.max(0, remaining)} HP left)` : " (it already took this effect's damage)"}.</p>` }); } catch (_) {}
+            if (remaining <= 0 && data.castId) await this.ongoing.request("end", { castId: data.castId });
+            return { reduced, remaining, first };
+        }
+        return null;
+    }
+
+    /**
+     * Mystic Bomb: the bomb's burst a region where it's placed (`options.position`, its centre in pixels, or the placed template); its damage type the Arcane Cascade's
+     * (`options.damageType`, the caster's stance Effect's choice, or asked). Creatures in it: it explodes at once. Otherwise the caster's Effect holds it for the
+     * sustained duration with its controls (`bombAct`).
+     */
+    async #executeMysticBomb(itemOrSource, plan, sourceActor, options) {
+        const data = plan.resolution.mysticBomb;
+        const castRank = Number(options.castRank ?? itemOrSource?.rank ?? plan.rank);
+        const casterToken = sourceActor.getActiveTokens?.(true, true)?.[0];
+        const scene = casterToken?.parent ?? canvas.scene, size = scene.grid.size, feet = scene.grid.distance || 5;
+        const energies = ["acid", "cold", "electricity", "fire", "sonic", "force", "vitality", "void", "spirit", "mental", "poison", "bludgeoning", "piercing", "slashing"];
+        const cascade = (sourceActor.itemTypes?.effect ?? []).find(effect => /arcane cascade/i.test(effect.name));
+        const chosen = Object.values(cascade?.flags?.pf2e?.rulesSelections ?? {}).find(value => energies.includes(String(value)));
+        const type = options.damageType ?? chosen ?? await foundry.applications.api.DialogV2.prompt({ window: { title: `${plan.source.name} — your Arcane Cascade's damage type` }, rejectClose: false,
+            content: `<select name="type">${energies.map(entry => `<option value="${entry}">${entry}</option>`).join("")}</select>`, ok: { label: "Choose", callback: (_event, button) => button.form.elements.type.value } });
+        if (!type) return { status: "cancelled", plan };
+        let region = null;
+        if (options.position) {
+            const pixels = data.radius / feet * size;
+            [region] = await scene.createEmbeddedDocuments("Region", [{ name: `${plan.source.name} (${sourceActor.name})`, color: "#7f3fbf", shapes: [{ type: "circle", x: options.position.x, y: options.position.y, radiusX: pixels, radiusY: pixels, radius: pixels, rotation: 0, hole: false }] }]);
+        } else {
+            if (!itemOrSource?.placeTemplate) throw new Error(`${plan.source.name}: the spell item is needed to place the bomb.`);
+            region = await itemOrSource.placeTemplate();
+            if (!region) return { status: "cancelled", plan };
+        }
+        const steps = Math.max(0, castRank - data.baseRank);
+        const effect = await this.#ruleEffect(sourceActor, { name: `${plan.source.name}: the bomb`, seconds: data.seconds, sustained: true, sourceActor, itemOrSource, rules: [],
+            flags: { mysticBomb: { spell: plan.source.name, regionUuid: region.uuid, dice: data.dice + steps * data.step.dice, die: data.die, type, statistic: data.statistic, radius: data.radius, grow: data.grow,
+                aid: { ...data.aid, uses: data.aid.uses + steps * data.step.uses, used: 0, aided: [] }, castRank, dc: this.#spellDC(itemOrSource, sourceActor, options), itemUuid: itemOrSource?.uuid ?? null } },
+            description: `<p>The bomb waits until creatures are in its area. ${escapeHTML(data.notes[0])}</p>` });
+        const inside = scene.tokens.filter(token => token.actor && tokenInRegion(token, region));
+        if (inside.length) return { status: "applied", plan, type, exploded: await this.bombAct(effect, "explode") };
+        const button = (which, label, icon) => `<button type="button" class="pf2e-auto-runtime-button" data-repeatable="true" data-runtime-action="bomb" data-option="${which}" data-actor-uuid="${sourceActor.uuid}" data-effect-id="${effect.id}"><i class="fa-solid ${icon}"></i> ${label}</button>`;
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "mystic-bomb" } },
+            content: `<h3>${escapeHTML(plan.source.name)}</h3><p>No creature is in the area: the bomb (${data.dice + steps * data.step.dice}d${data.die} ${escapeHTML(type)}) stays. Move its region on a Sustain, then:</p>`
+                + button("explode", "Sustain: it explodes if creatures are in its area", "fa-bomb") + button("grow", `End of turn: its burst grows by ${data.grow.feet} feet (to ${data.grow.max})`, "fa-expand")
+                + button("aid", "An ally within 60 feet Aids (target it)", "fa-hands-helping") + `<p class="pf2e-auto-gm-reminder">${escapeHTML(data.notes[0])}</p>` }); } catch (_) {}
+        return { status: "applied", plan, type, effectUuid: effect.uuid, regionUuid: region.uuid, waiting: true };
+    }
+
+    /** Mystic Bomb's controls: "explode" — the save card for the creatures in its area (then it's gone); "grow" — 5 feet more (to 20); "aid" — an ally's Athletics or Arcana. */
+    async bombAct(effectDocument, which, { targets = [...game.user.targets], degree = null } = {}) {
+        const data = effectDocument?.flags?.[MODULE_ID]?.mysticBomb;
+        if (!data) throw new Error("This Effect holds no bomb.");
+        const caster = effectDocument.actor, region = await fromUuid(data.regionUuid);
+        if (!region) throw new Error(`${data.spell}: the bomb is gone.`);
+        const scene = region.parent, size = scene.grid.size, feet = scene.grid.distance || 5;
+        if (which === "grow") {
+            if (data.radius >= data.grow.max) throw new Error(`${data.spell}: the burst is already ${data.grow.max} feet.`);
+            const radius = Math.min(data.grow.max, data.radius + data.grow.feet), pixels = radius / feet * size, shape = region.shapes[0];
+            await region.update({ shapes: [{ type: "circle", x: shape.x, y: shape.y, radiusX: pixels, radiusY: pixels, radius: pixels, rotation: 0, hole: false }] });
+            await effectDocument.update({ [`flags.${MODULE_ID}.mysticBomb.radius`]: radius });
+            return { radius };
+        }
+        if (which === "aid") {
+            const tokens = targets.map(target => target?.document ?? target).filter(token => token?.actor);
+            if (tokens.length !== 1) throw new Error(`${data.spell}: target the one ally who Aids.`);
+            const ally = tokens[0].actor, shape = region.shapes[0];
+            const middle = { x: tokens[0].x + tokens[0].width * size / 2, y: tokens[0].y + tokens[0].height * size / 2 };
+            if (Math.hypot(middle.x - shape.x, middle.y - shape.y) / size * feet > data.aid.range + data.radius) throw new Error(`${data.spell}: ${ally.name} isn't within ${data.aid.range} feet of the bomb.`);
+            if (data.aid.aided.includes(ally.uuid)) throw new Error(`${data.spell}: ${ally.name} already Aided.`);
+            const dc = levelDC(caster.level ?? 0);
+            const skill = data.aid.skills.map(slug => ally.skills?.[slug]).filter(Boolean).sort((a, b) => Number(b.mod ?? 0) - Number(a.mod ?? 0))[0];
+            const DEGREES = ["criticalFailure", "failure", "success", "criticalSuccess"];
+            let outcome = degree;
+            if (data.aid.used >= data.aid.uses) outcome = "failure";
+            else if (!outcome) { const roll = await skill?.roll({ dc: { value: dc }, extraRollOptions: ["action:aid"], skipDialog: true, label: `${data.spell}: Aid (DC ${dc})` }); outcome = DEGREES[Number(roll?.degreeOfSuccess)] ?? "failure"; }
+            const added = outcome === "criticalSuccess" ? data.aid.critical : outcome === "success" ? 1 : 0;
+            const counts = outcome === "criticalSuccess" ? data.aid.critCounts : added ? 1 : 0;
+            if (added) await effectDocument.update({ [`flags.${MODULE_ID}.mysticBomb.dice`]: data.dice + added, [`flags.${MODULE_ID}.mysticBomb.aid.used`]: data.aid.used + counts,
+                [`flags.${MODULE_ID}.mysticBomb.aid.aided`]: [...data.aid.aided, ally.uuid] });
+            try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: ally }), content: `<p><strong>${escapeHTML(data.spell)}</strong>: ${escapeHTML(ally.name)} Aids — ${escapeHTML(outcome.replace(/([A-Z])/g, " $1").toLowerCase())}${added ? `: +${added}d${data.die} (now ${data.dice + added}d${data.die})` : data.aid.used >= data.aid.uses ? " (no Aid left)" : ""}.</p>` }); } catch (_) {}
+            return { degree: outcome, added, dice: data.dice + added };
+        }
+        // ("explode": the creatures in its area now.)
+        const inside = scene.tokens.filter(token => token.actor && tokenInRegion(token, region)).map(token => token.object ?? token);
+        if (!inside.length) return { exploded: false };
+        const spell = data.itemUuid ? await fromUuid(data.itemUuid) : null;
+        const source = spell?.toObject?.();
+        if (!source) throw new Error(`${data.spell}: the spell is unavailable.`);
+        const damageId = Object.keys(source.system.damage ?? {})[0] ?? "bomb";
+        const variant = spellFromSource({ ...source, system: { ...source.system, description: { value: `<p>Each creature in the area takes ${data.dice}d${data.die} ${data.type} damage with a basic ${data.statistic[0].toUpperCase()}${data.statistic.slice(1)} save.</p>` },
+            damage: { [damageId]: { formula: `${data.dice}d${data.die}`, type: data.type, kinds: ["damage"], category: null, materials: [], applyMod: false } }, heightening: null,
+            duration: { value: "", sustained: false }, location: { ...(source.system.location ?? {}), heightenedLevel: data.castRank } } }, caster);
+        const plan = await this.compile(variant);
+        const { card } = await this.saves.start(variant, { plan, sourceActor: caster, targets: inside, castRank: data.castRank, dc: data.dc, skipConfirmation: true });
+        await region.delete().catch(() => null);
+        await effectDocument.delete().catch(() => null);
+        return { exploded: true, cardId: card?.id ?? null, dice: `${data.dice}d${data.die}`, type: data.type, targets: inside.map(token => token.document?.name ?? token.name) };
+    }
+
+    /**
+     * Unleash True Power: the caster's Effect for the sustained duration — every other spell it casts shaped a rank higher (to 10th: spellshape-runtime.js
+     * `castShaper`), its card's control for a spell cast through the patron (`truePowerCast`; at once with `options.patronSpell`), its end the final shock (`truePowerEnd`).
+     */
+    async #executeTruePower(itemOrSource, plan, sourceActor, options) {
+        const data = plan.resolution.truePower;
+        const castRank = Number(options.castRank ?? itemOrSource?.rank ?? plan.rank);
+        const dc = this.#spellDC(itemOrSource, sourceActor, options);
+        const riders = [{ type: "rank-change", by: data.heighten.by, cap: data.heighten.cap }];
+        const effect = await this.#ruleEffect(sourceActor, { name: plan.source.name, seconds: data.seconds, sustained: true, sourceActor, itemOrSource, rules: [],
+            flags: { castShaper: { spellSlug: "*", except: itemOrSource?.slug ?? null, name: plan.source.name, riders },
+                truePower: { spell: plan.source.name, dc, castRank, maxActions: data.maxActions, patron: data.patron, heighten: data.heighten, end: data.end, itemUuid: itemOrSource?.uuid ?? null } },
+            description: `<p>Spells you cast are heightened by ${data.heighten.by} rank (to ${data.heighten.cap}th at most). On the cast and the first Sustain each turn you can Cast a spell of ${data.maxActions} actions or less as a single action, taking 1d${data.patron.die} ${escapeHTML(data.patron.type)} damage per rank of it (basic ${escapeHTML(data.patron.statistic)}). When it ends, you and every creature within ${data.end.radius} feet take ${escapeHTML(data.end.formula)} ${escapeHTML(data.end.type)} (basic ${escapeHTML(data.end.statistic)}).</p>` });
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "true-power" } },
+            content: `<h3>${escapeHTML(plan.source.name)}</h3><p>${escapeHTML(sourceActor.name)}'s spells are heightened by ${data.heighten.by} rank while it lasts (to ${data.heighten.cap}th).</p>`
+                + `<button type="button" class="pf2e-auto-runtime-button" data-repeatable="true" data-runtime-action="true-power" data-actor-uuid="${sourceActor.uuid}" data-effect-id="${effect.id}"><i class="fa-solid fa-bolt"></i> Cast a spell through your patron (1d${data.patron.die} ${escapeHTML(data.patron.type)} a rank, basic ${escapeHTML(data.patron.statistic)})</button>` }); } catch (_) {}
+        const first = options.patronSpell ? await this.truePowerCast(effect, { spell: options.patronSpell, degree: options.degree ?? null }) : null;
+        return { status: "applied", plan, effectUuid: effect.uuid, dc, first };
+    }
+
+    /** A spell cast through the patron: its rank (heightened one more, to 10th), the caster's basic save against its own spell DC, 1d6 spirit a rank. */
+    async truePowerCast(effectDocument, { spell = null, rank = null, degree = null } = {}) {
+        const data = effectDocument?.flags?.[MODULE_ID]?.truePower;
+        if (!data) throw new Error("This Effect holds no patron's power.");
+        const caster = effectDocument.actor;
+        const actionsOf = item => { const time = String(item.system?.time?.value ?? ""); return /^[1-3]$/.test(time) ? Number(time) : /reaction|free/i.test(time) ? 1 : 99; };
+        const choices = (caster.itemTypes?.spell ?? []).filter(item => item.uuid !== data.itemUuid && actionsOf(item) <= data.maxActions);
+        const chosenId = spell || choices.length === 1 ? null : await foundry.applications.api.DialogV2.prompt({ window: { title: `${data.spell} — through your patron` }, rejectClose: false,
+            content: `<select name="spell">${choices.map(item => `<option value="${item.id}">${escapeHTML(item.name)}</option>`).join("")}</select>`, ok: { label: "Cast", callback: (_event, button) => button.form.elements.spell.value } });
+        const picked = spell ? choices.find(item => item.uuid === spell || item.name === spell || item.id === spell) : choices.length === 1 ? choices[0] : choices.find(item => item.id === chosenId);
+        if (!picked) throw new Error(`${data.spell}: choose a spell of ${data.maxActions} actions or less.`);
+        const base = Number(rank ?? (picked.isCantrip ? Math.ceil(Number(caster.level ?? 1) / 2) : picked.rank ?? 1));
+        const spellRank = Math.min(base + Number(data.heighten?.by ?? 1), Math.max(Number(data.heighten?.cap ?? 10), base));
+        const save = await caster.saves?.[data.patron.statistic]?.roll({ dc: { value: data.dc }, skipDialog: true, label: `${data.spell}: the patron's toll (basic, DC ${data.dc})` });
+        const DEGREES = ["criticalFailure", "failure", "success", "criticalSuccess"];
+        const outcome = degree ?? DEGREES[Number(save?.degreeOfSuccess)] ?? "failure";
+        const DamageRoll = CONFIG.Dice.rolls.find(entry => entry.name === "DamageRoll");
+        const roll = await new DamageRoll(`${spellRank}d${data.patron.die}[${data.patron.type}]`).evaluate();
+        const multiplier = { criticalSuccess: 0, success: 0.5, failure: 1, criticalFailure: 2 }[outcome];
+        let receipt = null;
+        if (multiplier) {
+            const damage = multiplier === 1 ? roll : await new DamageRoll(`${Math.floor(roll.total * multiplier)}[${data.patron.type}]`).evaluate();
+            try { await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: caster }), flavor: `<strong>${escapeHTML(data.spell)}</strong>: ${escapeHTML(picked.name)} through the patron (${escapeHTML(outcome.replace(/([A-Z])/g, " $1").toLowerCase())}${multiplier !== 1 ? `, ${multiplier === 2 ? "double" : "half"}` : ""})` }); } catch (_) {}
+            const token = caster.getActiveTokens?.()?.[0]?.document;
+            receipt = await applyDamageWithReceipt(caster, { damage, token: token ?? undefined, skipIWR: false, rollOptions: new Set() }, randomID());
+        }
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: caster }), content: `<p><strong>${escapeHTML(data.spell)}</strong>: cast <strong>${escapeHTML(picked.name)}</strong> now as a single action (rank ${spellRank}, heightened by the hex).</p>` }); } catch (_) {}
+        return { spell: picked.name, rank: spellRank, formula: `${spellRank}d${data.patron.die}`, degree: outcome, damage: receipt?.damage ?? 0 };
+    }
+
+    /** Unleash True Power ends: the caster and every creature within the emanation save against the final shock (the compiled save card). */
+    async truePowerEnd(effectDocument) {
+        const data = effectDocument?.flags?.[MODULE_ID]?.truePower;
+        if (!data) return null;
+        const caster = effectDocument.actor, spell = data.itemUuid ? await fromUuid(data.itemUuid) : null;
+        const casterToken = caster?.getActiveTokens?.(true, true)?.[0];
+        if (!spell || !casterToken) return null;
+        const plan = await this.compile(spell);
+        const endPlan = plan.resolution?.truePower?.endPlan;
+        if (!endPlan) return null;
+        const targets = casterToken.parent.tokens.filter(token => token.actor && (token.actor === caster || tokenDistance(casterToken, token) <= data.end.radius)).map(token => token.object ?? token);
+        const { card } = await this.saves.start(spell, { plan: foundry.utils.deepClone(endPlan), sourceActor: caster, targets, castRank: data.castRank, dc: data.dc, skipConfirmation: true });
+        return { cardId: card?.id ?? null, targets: targets.map(token => token.document?.name ?? token.name) };
+    }
+
+    /**
+     * Long Live the Revolution: the act of rebellion (`options.act`, or asked) on the caster's Effect for the sustained duration, with the Sustain's control for newcomers;
+     * the targets' saves now (`rallySaves`).
+     */
+    async #executeRallyCry(itemOrSource, plan, sourceActor, options) {
+        const data = plan.resolution.rallyCry;
+        const act = options.act ?? await foundry.applications.api.DialogV2.prompt({ window: { title: `${plan.source.name} — the act of rebellion` }, rejectClose: false,
+            content: `<p>${escapeHTML(data.notes[0])}</p><input type="text" name="act" placeholder="storming the castle">`, ok: { label: "Call", callback: (_event, button) => button.form.elements.act.value.trim() } });
+        if (!act) return { status: "cancelled", plan };
+        const dc = this.#spellDC(itemOrSource, sourceActor, options);
+        const effect = await this.#ruleEffect(sourceActor, { name: `${plan.source.name}: ${act}`, seconds: data.seconds, sustained: true, sourceActor, itemOrSource, rules: [],
+            flags: { rally: { spell: plan.source.name, act, dc, cheers: 0, data, itemUuid: itemOrSource?.uuid ?? null } },
+            description: `<p>The act of rebellion: ${escapeHTML(act)}. ${data.notes.map(note => escapeHTML(note)).join(" ")}</p>` });
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "rally-cry" } },
+            content: `<h3>${escapeHTML(plan.source.name)}</h3><p>The act of rebellion: <strong>${escapeHTML(act)}</strong> (Will DC ${dc}).</p>`
+                + `<button type="button" class="pf2e-auto-runtime-button" data-repeatable="true" data-runtime-action="rally-sustain" data-actor-uuid="${sourceActor.uuid}" data-effect-id="${effect.id}"><i class="fa-solid fa-flag"></i> Sustain: the creatures that came within range save (target them)</button>`
+                + data.notes.map(note => `<p class="pf2e-auto-gm-reminder">${escapeHTML(note)}</p>`).join("") }); } catch (_) {}
+        const results = await this.rallySaves(effect, { targets: options.targets ?? [...game.user.targets], degrees: options.degrees, willing: options.willing, opposed: options.opposed });
+        return { status: "applied", plan, effectUuid: effect.uuid, dc, results };
+    }
+
+    /**
+     * The targets' Will saves against the call (PF2e's, the spell its origin — incapacitation applies): the willing take a failure, the opposed get +4 circumstance, the
+     * critical successes so far a circumstance bonus to later saves (to +4; not stacking with the +4); an immune or already rebelling creature skipped.
+     */
+    async rallySaves(effectDocument, { targets = [...game.user.targets], degrees = null, willing = [], opposed = [] } = {}) {
+        const flag = effectDocument?.flags?.[MODULE_ID]?.rally;
+        if (!flag) throw new Error("This Effect holds no rebellion.");
+        const caster = effectDocument.actor, data = flag.data, spell = flag.itemUuid ? await fromUuid(flag.itemUuid) : null;
+        const tokens = [...targets].map(target => target?.document ?? target).filter(token => token?.actor && token.actor !== caster);
+        if (!tokens.length) throw new Error(`${flag.spell}: target the creatures that notice the call.`);
+        const DEGREES = ["criticalFailure", "failure", "success", "criticalSuccess"];
+        const results = [];
+        let cheers = Number(flag.cheers ?? 0);
+        for (const token of tokens) {
+            const actor = token.actor;
+            if ((actor.itemTypes?.effect ?? []).some(effect => effect.flags?.[MODULE_ID]?.rallyImmune === caster.uuid)) { results.push({ name: actor.name, skipped: "immune" }); continue; }
+            if ((actor.itemTypes?.effect ?? []).some(effect => effect.flags?.[MODULE_ID]?.rallyHold?.casterEffectUuid === effectDocument.uuid)) { results.push({ name: actor.name, skipped: "rebelling" }); continue; }
+            let degree = degrees?.[actor.uuid] ?? ((willing ?? []).includes(actor.uuid) ? "failure" : null);
+            const bonus = Math.max((opposed ?? []).includes(actor.uuid) ? data.opposed : 0, Math.min(data.cheer.max, cheers * data.cheer.per));
+            if (!degree) {
+                const modifiers = bonus ? [new game.pf2e.Modifier({ label: (opposed ?? []).includes(actor.uuid) && bonus === data.opposed ? "Opposed to the act" : "The rebels' cheers", modifier: bonus, type: "circumstance" })] : [];
+                const roll = await actor.saves?.[data.statistic]?.roll({ dc: { value: flag.dc }, item: spell ?? undefined, origin: caster, modifiers, skipDialog: true,
+                    extraRollOptions: (spell?.system?.traits?.value ?? []).map(trait => `item:trait:${trait}`), label: `${flag.spell} (DC ${flag.dc})` });
+                degree = DEGREES[Number(roll?.degreeOfSuccess)] ?? "failure";
+            }
+            if (degree === "criticalSuccess") cheers += 1;
+            if (["success", "criticalSuccess"].includes(degree)) await this.#rallyImmunity(actor, caster, flag, spell);
+            let hold = null;
+            if (["failure", "criticalFailure"].includes(degree)) hold = await this.#ruleEffect(actor, { name: `${flag.spell}: ${flag.act}`, seconds: data.seconds, sustained: true, sourceActor: caster, itemOrSource: spell,
+                rules: [{ key: "GrantItem", uuid: "Compendium.pf2e.conditionitems.Item.AdPVz7rbaVSRxHFg", onDeleteActions: { grantee: "restrict" } },
+                    { key: "RollOption", domain: "all", option: "completing-the-rebellion", toggleable: true, value: false, label: "Checks to complete the act of rebellion" },
+                    { key: "FlatModifier", selector: "check", type: "status", value: data.bonus, predicate: ["completing-the-rebellion"], label: flag.spell }],
+                flags: { rallyHold: { casterEffectUuid: effectDocument.uuid, casterUuid: caster.uuid, critical: degree === "criticalFailure" } },
+                description: `<p>Fascinated with the act of rebellion (${escapeHTML(flag.act)}); +${data.bonus} status to checks to complete it (switch the toggle on). ${escapeHTML(data.attitude)}</p>` });
+            if (hold) {
+                const button = (which, label) => `<button type="button" class="pf2e-auto-runtime-button" data-runtime-action="rally" data-option="${which}" data-actor-uuid="${actor.uuid}" data-effect-id="${hold.id}">${escapeHTML(label)}</button>`;
+                try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: caster }), whisper: game.users.filter(user => user.isGM).map(user => user.id),
+                    content: `<p><strong>${escapeHTML(flag.spell)}</strong>: ${escapeHTML(actor.name)} joins the rebellion (${escapeHTML(degree.replace(/([A-Z])/g, " $1").toLowerCase())}).</p>${button("doubt", "It witnessed what it disagrees with: another Will save")}${degree === "criticalFailure" ? "" : button("persuaded", "Another creature's Diplomacy or Intimidation succeeded against it")}` }); } catch (_) {}
+            }
+            results.push({ name: actor.name, degree, bonus, holdUuid: hold?.uuid ?? null });
+        }
+        if (cheers !== Number(flag.cheers ?? 0)) await effectDocument.update({ [`flags.${MODULE_ID}.rally.cheers`]: cheers });
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: caster }), content: `<p><strong>${escapeHTML(flag.spell)}</strong>: ${results.map(result => `${escapeHTML(result.name)} — ${escapeHTML(result.skipped ?? result.degree.replace(/([A-Z])/g, " $1").toLowerCase())}`).join("; ")}.</p>` }); } catch (_) {}
+        return results;
+    }
+
+    /** "immune for 1 hour" */
+    async #rallyImmunity(actor, caster, flag, spell) {
+        return this.#ruleEffect(actor, { name: `${flag.spell}: immune`, seconds: flag.data.immuneHours * 3600, sourceActor: caster, itemOrSource: spell, rules: [],
+            flags: { rallyImmune: caster.uuid }, description: `<p>Immune to ${escapeHTML(caster.name)}'s ${escapeHTML(flag.spell)} for ${flag.data.immuneHours} hour.</p>` });
+    }
+
+    /** A rebel's controls: "doubt" — another Will save (a success ends it, immune); "persuaded" — another's Diplomacy or Intimidation succeeded (ends it, not on a critical failure). */
+    async rallyAct(holdEffect, which, { degree = null } = {}) {
+        const hold = holdEffect?.flags?.[MODULE_ID]?.rallyHold;
+        if (!hold) throw new Error("This Effect holds no rebel.");
+        const actor = holdEffect.actor, casterEffect = await fromUuid(hold.casterEffectUuid), caster = await fromUuid(hold.casterUuid);
+        const flag = casterEffect?.flags?.[MODULE_ID]?.rally ?? { spell: holdEffect.name.split(":")[0], dc: null, data: { statistic: "will", immuneHours: 1 } };
+        const spell = flag.itemUuid ? await fromUuid(flag.itemUuid) : null;
+        let ends = false, outcome = null;
+        if (which === "persuaded") {
+            if (hold.critical) throw new Error(`${flag.spell}: on a critical failure, Diplomacy and Intimidation don't end it.`);
+            ends = true;
+        } else {
+            const DEGREES = ["criticalFailure", "failure", "success", "criticalSuccess"];
+            const roll = degree ? null : await actor.saves?.[flag.data.statistic]?.roll({ dc: { value: Number(flag.dc) }, item: spell ?? undefined, origin: caster, skipDialog: true, label: `${flag.spell}: another save (DC ${flag.dc})` });
+            outcome = degree ?? DEGREES[Number(roll?.degreeOfSuccess)] ?? "failure";
+            ends = ["success", "criticalSuccess"].includes(outcome);
+        }
+        if (ends) { await holdEffect.delete(); if (caster) await this.#rallyImmunity(actor, caster, flag, spell); }
+        return { which, degree: outcome, ended: ends };
+    }
+
+    /**
+     * Coiling Creepers: the placed burst (`options.region`, or placed now) a region of difficult terrain for the sustained minute; the caster's Effect holds the card's
+     * controls (`creepersAct`): the maneuver on the cast and each Sustain, and a cleared square. A targeted creature at the cast gets the first maneuver.
+     */
+    async #executeCreepers(itemOrSource, plan, sourceActor, options) {
+        const data = plan.resolution.creepers;
+        if (!this.ongoing?.startRegionArea) throw new Error(`${plan.source.name} needs the ongoing spell manager.`);
+        const castRank = Number(options.castRank ?? itemOrSource?.rank ?? plan.rank);
+        let region = options.region ?? null;
+        if (!region) {
+            if (!itemOrSource?.placeTemplate) throw new Error(`${plan.source.name}: the spell item is needed to place the creepers.`);
+            region = await itemOrSource.placeTemplate();
+            if (!region) return { status: "cancelled", plan };
+        }
+        const clear = creepersClearAt(data, castRank);
+        const notes = [`A square is cleared by a single attack or effect dealing at least ${clear.slashing} slashing or ${clear.fire} fire damage.`, ...data.notes];
+        const started = await this.ongoing.startRegionArea({ spellName: plan.source.name, sourceActorUuid: sourceActor.uuid, sourceItemUuid: itemOrSource?.uuid ?? null, castRank, region,
+            durationSeconds: data.seconds, sustained: true, notes, behaviors: [{ name: `${plan.source.name}: difficult terrain`, type: "modifyMovementCost", system: { difficulties: terrainDifficulties(["walk"], 2) } }] });
+        const effect = await this.#ruleEffect(sourceActor, { name: `${plan.source.name}: the creepers`, seconds: data.seconds, sustained: true, sourceActor, itemOrSource, rules: [],
+            flags: { creepers: { spell: plan.source.name, castId: started.castId, regionUuid: region.uuid, radius: data.radius, maxTarget: data.maxTarget, maneuvers: data.maneuvers, itemUuid: itemOrSource?.uuid ?? null } },
+            description: `<p>The creepers' Athletics maneuver (Disarm, Reposition or Trip) with your spell attack modifier and multiple attack penalty, on the cast and each Sustain. ${notes.map(note => escapeHTML(note)).join(" ")}</p>` });
+        const button = (which, label, icon) => `<button type="button" class="pf2e-auto-runtime-button" data-repeatable="true" data-runtime-action="creepers" data-option="${which}" data-actor-uuid="${sourceActor.uuid}" data-effect-id="${effect.id}"><i class="fa-solid ${icon}"></i> ${label}</button>`;
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "creeper-maneuver", castInstanceId: started.castId } },
+            content: `<h3>${escapeHTML(plan.source.name)}</h3><p>The ${data.radius}-foot burst is difficult terrain.</p>${button("maneuver", "The creepers' maneuver (target a creature in the area or adjacent)", "fa-seedling")}${button("clear", "A square is cleared (target a token standing in it)", "fa-scissors")}`
+                + notes.map(note => `<p class="pf2e-auto-gm-reminder">${escapeHTML(note)}</p>`).join("") }); } catch (_) {}
+        const targets = [...(options.targets ?? [])].map(target => target?.document ?? target).filter(token => token?.actor);
+        const first = targets.length === 1 && options.maneuver ? await this.creepersAct(effect, "maneuver", { targets, maneuver: options.maneuver, map: options.map ?? 0, degree: options.degree ?? null }) : null;
+        return { status: "applied", plan, castInstanceId: started.castId, effectUuid: effect.uuid, regionUuid: region.uuid, clear, first };
+    }
+
+    /** Coiling Creepers' controls: "maneuver" — Disarm, Reposition or Trip against a creature in or beside the area; "clear" — the targeted token's square cut from the region. */
+    async creepersAct(effectDocument, which, { targets = [...game.user.targets], maneuver = null, map = null, degree = null } = {}) {
+        const data = effectDocument?.flags?.[MODULE_ID]?.creepers;
+        if (!data) throw new Error("This Effect holds no creepers.");
+        const caster = effectDocument.actor, region = await fromUuid(data.regionUuid);
+        if (!region) throw new Error(`${data.spell}: the creepers are gone.`);
+        const tokens = targets.map(target => target?.document ?? target).filter(token => token?.actor);
+        if (tokens.length !== 1) throw new Error(`${data.spell}: target one token.`);
+        const [token] = tokens, scene = region.parent, size = scene.grid.size, feet = scene.grid.distance || 5;
+        if (which === "clear") {
+            const hole = { type: "rectangle", x: token.x, y: token.y, width: token.width * size, height: token.height * size, rotation: 0, hole: true };
+            await region.update({ shapes: [...region.shapes.map(shape => shape.toObject?.() ?? shape), hole] });
+            return { cleared: { x: token.x / size, y: token.y / size } };
+        }
+        const target = token.actor;
+        const shape = region.shapes?.[0] ?? {};
+        const middle = { x: token.x + token.width * size / 2, y: token.y + token.height * size / 2 };
+        const gap = Math.hypot(middle.x - Number(shape.x ?? 0), middle.y - Number(shape.y ?? 0)) / size * feet - token.width * feet / 2 - data.radius;
+        if (!tokenInRegion(token, region) && gap > feet) throw new Error(`${data.spell}: ${target.name} isn't in the area or beside it.`);
+        const order = ["tiny", "sm", "med", "lg", "huge", "grg"];
+        if (order.indexOf(target.size) > order.indexOf(data.maxTarget)) throw new Error(`${data.spell}: ${target.name} is too large for the creepers.`);
+        const kind = maneuver ?? await foundry.applications.api.DialogV2.wait({ window: { title: `${data.spell} — the maneuver` }, content: `<p>Against ${escapeHTML(target.name)}:</p>`,
+            buttons: Object.keys(data.maneuvers).map(entry => ({ action: entry, label: entry[0].toUpperCase() + entry.slice(1) })), close: () => null, rejectClose: false });
+        if (!data.maneuvers[kind]) return { status: "cancelled" };
+        const penalty = map ?? Number(await foundry.applications.api.DialogV2.wait({ window: { title: `${data.spell} — multiple attack penalty` }, content: "<p>Your multiple attack penalty for this check?</p>",
+            buttons: [{ action: "0", label: "None" }, { action: "1", label: "−5" }, { action: "2", label: "−10" }], close: () => null, rejectClose: false }));
+        if (![0, 1, 2].includes(Number(penalty))) return { status: "cancelled" };
+        const itemOrSource = data.itemUuid ? await fromUuid(data.itemUuid) : null;
+        const statistic = itemOrSource?.spellcasting?.statistic ?? caster.getStatistic?.("spell-attack");
+        if (!statistic?.check?.roll) throw new Error(`${data.spell}: the caster's spell attack is unavailable.`);
+        const dc = Number(target.saves?.[data.maneuvers[kind]]?.dc?.value ?? NaN);
+        const modifiers = Number(penalty) ? [new game.pf2e.Modifier({ label: "Multiple attack penalty", modifier: -5 * Number(penalty), type: "untyped" })] : [];
+        const roll = await statistic.check.roll({ dc: { value: dc }, modifiers, extraRollOptions: [`action:${kind}`, "attack", "skill:athletics"], skipDialog: true, label: `${data.spell}: ${kind} ${target.name} (${data.maneuvers[kind]} DC ${dc})` });
+        const DEGREES = ["criticalFailure", "failure", "success", "criticalSuccess"];
+        const outcome = degree ?? DEGREES[Number(roll?.degreeOfSuccess)] ?? "failure";
+        const result = { maneuver: kind, degree: outcome };
+        const hit = ["success", "criticalSuccess"].includes(outcome);
+        if (kind === "trip" && hit) {
+            await target.increaseCondition?.("prone");
+            result.prone = true;
+            if (outcome === "criticalSuccess") {
+                const DamageRoll = CONFIG.Dice.rolls.find(entry => entry.name === "DamageRoll");
+                const damage = await new DamageRoll("1d6[bludgeoning]").evaluate();
+                try { await damage.toMessage({ speaker: ChatMessage.getSpeaker({ actor: caster }), flavor: `<strong>${escapeHTML(data.spell)}</strong>: the creepers trip ${escapeHTML(target.name)} hard` }); } catch (_) {}
+                result.receipt = await applyDamageWithReceipt(target, { damage, token, skipIWR: false, rollOptions: new Set() }, randomID());
+            }
+        }
+        if (kind === "disarm" && outcome === "success") result.effectUuid = (await this.#ruleEffect(target, { name: `${data.spell}: disarm (–2)`, seconds: 6, sourceActor: caster, itemOrSource,
+            rules: [{ key: "RollOption", domain: "all", option: "creepers-disarmed-item", toggleable: true, value: true, label: "Using the item the creepers weakened" },
+                { key: "FlatModifier", selector: ["attack-roll", "skill-check"], type: "circumstance", value: -2, predicate: ["creepers-disarmed-item"], label: data.spell }],
+            description: "<p>–2 circumstance to attack rolls with the item and checks using it until the start of its turn.</p>" })).uuid;
+        const told = kind === "disarm" && outcome === "criticalSuccess" ? `${target.name} drops the item (it falls in its space)` : kind === "reposition" && hit ? `the creepers move ${target.name} up to ${outcome === "criticalSuccess" ? 10 : 5} feet (it stays in or beside the area)` : null;
+        if (told) result.gm = told;
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: caster }), content: `<p><strong>${escapeHTML(data.spell)}</strong>: ${escapeHTML(kind)} against ${escapeHTML(target.name)} — ${escapeHTML(outcome.replace(/([A-Z])/g, " $1").toLowerCase())}${result.prone ? ": Prone" : ""}${result.receipt ? ` and ${result.receipt.damage} bludgeoning` : ""}${result.effectUuid ? ": –2 with the item" : ""}${told ? `; GM: ${escapeHTML(told)}` : ""}.</p>` }); } catch (_) {}
+        return result;
+    }
+
+    /**
+     * Shine Spotlight: the placed burst (`options.region`, or placed now) with a creature in it — a region for the sustained minute whose creatures hold the Perform
+     * bonus and Stealth penalty; each non-allied creature outside it within reach (or `options.observers`) saves (`options.degrees`), a failure fascinated by the
+     * spotlight's subjects and Off-Guard while fascinated until the spell ends; the caster's Effect holds the card's Perform control (`spotlightPerform`).
+     */
+    async #executeSpotlight(itemOrSource, plan, sourceActor, options) {
+        const data = plan.resolution.spotlight;
+        if (!this.ongoing?.startRegionArea) throw new Error(`${plan.source.name} needs the ongoing spell manager.`);
+        const castRank = Number(options.castRank ?? itemOrSource?.rank ?? plan.rank);
+        let region = options.region ?? null, placed = false;
+        if (!region) {
+            if (!itemOrSource?.placeTemplate) throw new Error(`${plan.source.name}: the spell item is needed to place the spotlight.`);
+            region = await itemOrSource.placeTemplate();
+            if (!region) return { status: "cancelled", plan };
+            placed = true;
+        }
+        const scene = region.parent;
+        const subjects = scene.tokens.filter(token => token.actor && tokenInRegion(token, region));
+        if (!subjects.length) { if (placed) await region.delete().catch(() => null); throw new Error(`${plan.source.name}: the spotlight must include at least one creature.`); }
+        const dc = this.#spellDC(itemOrSource, sourceActor, options);
+        const started = await this.ongoing.startRegionArea({ spellName: plan.source.name, sourceActorUuid: sourceActor.uuid, sourceItemUuid: itemOrSource?.uuid ?? null, castRank, region,
+            durationSeconds: data.seconds, sustained: true, notes: data.notes, memberRules: foundry.utils.deepClone(data.rules), seedMembers: true });
+        await this.ongoing.reconcile();
+        const effect = await this.#ruleEffect(sourceActor, { name: `${plan.source.name}: the spotlight`, seconds: data.seconds, sustained: true, sourceActor, itemOrSource, rules: [],
+            flags: { spotlight: { spell: plan.source.name, castId: started.castId, regionUuid: region.uuid, reach: data.reach, radius: data.radius, statistic: data.statistic, fascinated: data.fascinated, offGuard: data.offGuard } },
+            description: `<p>The spotlight (DC ${dc}): creatures in it have +1 status to Perform and –1 circumstance to Stealth. ${data.notes.map(note => escapeHTML(note)).join(" ")}</p>` });
+        const observers = options.observers ? [...options.observers].map(target => target?.document ?? target).filter(token => token?.actor) : this.#spotlightObservers(sourceActor, region, data);
+        const DEGREES = ["criticalFailure", "failure", "success", "criticalSuccess"];
+        const results = [];
+        for (const token of observers) {
+            const actor = token.actor;
+            let degree = options.degrees?.[actor.uuid] ?? null;
+            if (!degree) {
+                const roll = await actor.saves?.[data.statistic]?.roll({ dc: { value: dc }, skipDialog: true, extraRollOptions: (itemOrSource?.system?.traits?.value ?? []).map(trait => `item:trait:${trait}`), label: `${plan.source.name} (DC ${dc})` });
+                degree = DEGREES[Number(roll?.degreeOfSuccess)] ?? "failure";
+            }
+            const fascinated = ["failure", "criticalFailure"].includes(degree) ? await this.#spotlightFascinate(actor, effect, sourceActor, itemOrSource, "the spotlight's subjects") : null;
+            results.push({ name: actor.name, degree, fascinated: !!fascinated });
+        }
+        const button = `<button type="button" class="pf2e-auto-runtime-button" data-repeatable="true" data-runtime-action="spotlight" data-actor-uuid="${sourceActor.uuid}" data-effect-id="${effect.id}"><i class="fa-solid fa-masks-theater"></i> A creature in the spotlight Performs (target it)</button>`;
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "spotlight", castInstanceId: started.castId } },
+            content: `<h3>${escapeHTML(plan.source.name)}</h3><p>In the spotlight: ${subjects.map(token => escapeHTML(token.name)).join(", ")}. Onlookers (Will DC ${dc}): ${results.length ? results.map(result => `${escapeHTML(result.name)} — ${escapeHTML(result.degree.replace(/([A-Z])/g, " $1").toLowerCase())}${result.fascinated ? ", fascinated and off-guard" : ""}`).join("; ") : "none"}.</p>${button}`
+                + data.notes.map(note => `<p class="pf2e-auto-gm-reminder">${escapeHTML(note)}</p>`).join("") }); } catch (_) {}
+        return { status: "applied", plan, castInstanceId: started.castId, effectUuid: effect.uuid, regionUuid: region.uuid, subjects: subjects.map(token => token.name), results };
+    }
+
+    /** The non-allied creatures outside the spotlight and within its reach of the burst. */
+    #spotlightObservers(caster, region, data) {
+        const scene = region.parent, size = scene.grid.size, feet = scene.grid.distance || 5;
+        const shape = region.shapes?.[0] ?? {};
+        const centre = { x: Number(shape.x ?? 0), y: Number(shape.y ?? 0) };
+        return scene.tokens.filter(token => {
+            if (!token.actor || token.actor === caster || caster.isAllyOf?.(token.actor) || tokenInRegion(token, region)) return false;
+            const middle = { x: token.x + token.width * size / 2, y: token.y + token.height * size / 2 };
+            const gap = Math.hypot(middle.x - centre.x, middle.y - centre.y) / size * feet - token.width * feet / 2 - data.radius;
+            return gap <= data.reach;
+        });
+    }
+
+    /** Fascinated (with the spotlight's subjects, or the performer) and Off-Guard while fascinated, until the spell ends. */
+    async #spotlightFascinate(actor, spotlightEffect, sourceActor, itemOrSource, by) {
+        const data = spotlightEffect.flags[MODULE_ID].spotlight;
+        if ((actor.itemTypes?.effect ?? []).some(effect => effect.flags?.[MODULE_ID]?.spotlightHold === spotlightEffect.uuid)) return null;
+        return this.#ruleEffect(actor, { name: `${data.spell}: fascinated`, seconds: 60, sustained: true, sourceActor, itemOrSource,
+            rules: [{ key: "GrantItem", uuid: data.fascinated, onDeleteActions: { grantee: "cascade" } }, { key: "GrantItem", uuid: data.offGuard, onDeleteActions: { grantee: "restrict" } }],
+            flags: { spotlightHold: spotlightEffect.uuid, areaLifetime: { castId: data.castId } },
+            description: `<p>Fascinated with ${escapeHTML(by)} and off-guard while fascinated, until the spell ends. If a hostile action ends the fascination, the off-guard condition remains until that action is resolved.</p>` });
+    }
+
+    /** A creature in the spotlight Performs: its Performance against the Will DC of each non-allied creature outside the spotlight within reach — beaten, fascinated by the performer. */
+    async spotlightPerform(effectDocument, { targets = [...game.user.targets], observers = null, total = null } = {}) {
+        const data = effectDocument?.flags?.[MODULE_ID]?.spotlight;
+        if (!data) throw new Error("This Effect holds no spotlight.");
+        const caster = effectDocument.actor, region = await fromUuid(data.regionUuid);
+        if (!region) throw new Error(`${data.spell}: the spotlight is gone.`);
+        const tokens = targets.map(target => target?.document ?? target).filter(token => token?.actor);
+        if (tokens.length !== 1 || !tokenInRegion(tokens[0], region)) throw new Error(`${data.spell}: target the one creature in the spotlight that Performs.`);
+        const performer = tokens[0].actor;
+        const roll = total == null ? await performer.skills?.performance?.roll({ extraRollOptions: ["action:perform"], skipDialog: true, label: `${data.spell}: Perform in the spotlight` }) : null;
+        const result = Number(total ?? roll?.total);
+        if (!Number.isFinite(result)) throw new Error(`${data.spell}: ${performer.name} has no Performance.`);
+        const watchers = observers ? observers.map(target => target?.document ?? target).filter(token => token?.actor) : this.#spotlightObservers(caster, region, data);
+        const fascinated = [];
+        for (const token of watchers) {
+            const willDC = Number(token.actor.saves?.will?.dc?.value ?? NaN);
+            if (Number.isFinite(willDC) && result > willDC && await this.#spotlightFascinate(token.actor, effectDocument, caster, null, performer.name)) fascinated.push(token.actor.name);
+        }
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: performer }), content: `<p><strong>${escapeHTML(data.spell)}</strong>: ${escapeHTML(performer.name)} Performs (${result}) and Sustains the spell${fascinated.length ? `; fascinated with it: ${fascinated.map(name => escapeHTML(name)).join(", ")}` : ""}.</p>` }); } catch (_) {}
+        return { total: result, fascinated };
+    }
+
+    /**
+     * Honorable Death: the champion (the caster or an ally within range — `options.champion`, or asked), the target's save (`options.degree`), its Effect for the row's
+     * time with the end-of-turn control (`honorAct`).
+     */
+    async #executeHonorDuel(itemOrSource, plan, sourceActor, options) {
+        const data = plan.resolution.honorDuel;
+        const castRank = Number(options.castRank ?? itemOrSource?.rank ?? plan.rank);
+        const tokens = [...(options.targets ?? game.user.targets)].map(target => target?.document ?? target).filter(token => token?.actor);
+        if (tokens.length !== 1) throw new Error(`${plan.source.name}: target the one opponent.`);
+        const target = tokens[0].actor, casterToken = sourceActor.getActiveTokens?.(true, true)?.[0];
+        const allies = [sourceActor, ...(casterToken?.parent?.tokens ?? []).filter(token => token.actor && token.actor !== sourceActor && sourceActor.isAllyOf?.(token.actor) && tokenDistance(casterToken, token) <= data.range).map(token => token.actor)];
+        const championUuid = options.champion ?? (allies.length === 1 ? sourceActor.uuid : await foundry.applications.api.DialogV2.wait({ window: { title: `${plan.source.name} — the champion` }, content: "<p>Choose yourself or an ally within range.</p>",
+            buttons: allies.map(actor => ({ action: actor.uuid, label: actor.name })), close: () => null, rejectClose: false }));
+        const champion = allies.find(actor => actor.uuid === championUuid);
+        if (!champion) throw new Error(`${plan.source.name}: choose yourself or an ally within ${data.range} feet.`);
+        const dc = this.#spellDC(itemOrSource, sourceActor, options);
+        const roll = await target.saves?.[data.statistic]?.roll({ dc: { value: dc }, skipDialog: true, extraRollOptions: (itemOrSource?.system?.traits?.value ?? []).map(trait => `item:trait:${trait}`), label: `${plan.source.name} (DC ${dc})` });
+        const DEGREES = ["criticalFailure", "failure", "success", "criticalSuccess"];
+        const degree = options.degree ?? DEGREES[Number(roll?.degreeOfSuccess)] ?? "failure";
+        const pair = champion === sourceActor ? escapeHTML(sourceActor.name) : `${escapeHTML(sourceActor.name)} or ${escapeHTML(champion.name)}`;
+        if (degree === "criticalSuccess") {
+            try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), content: `<h3>${escapeHTML(plan.source.name)}</h3><p>${escapeHTML(target.name)}: critical success — unaffected; the spell ends.</p>` }); } catch (_) {}
+            return { status: "applied", plan, degree, champion: champion.name };
+        }
+        const amount = data.damage.perRank * castRank;
+        const effect = await this.#ruleEffect(target, { name: `${plan.source.name}: an honorable death`, seconds: data.seconds[degree], expiry: "turn-end", sourceActor, itemOrSource, rules: [],
+            flags: { honorDuel: { spell: plan.source.name, casterUuid: sourceActor.uuid, championUuid: champion.uuid, amount, type: data.damage.type, statistic: data.damage.statistic, recovery: degree === "success" ? null : data.recovery, dc, itemUuid: itemOrSource?.uuid ?? null } },
+            description: `<p>At the end of each of its turns, if it took no hostile action against ${pair}, it takes ${amount} ${escapeHTML(data.damage.type)} damage (basic ${escapeHTML(data.damage.statistic)} save, DC ${dc})${degree === "success" ? " and the spell ends" : `; then a ${escapeHTML(data.recovery)} save shortens it by 1 round (a critical success ends it)`}. Reduced to 0 Hit Points while this lasts, it dies.</p>` });
+        const button = (which, label, icon) => `<button type="button" class="pf2e-auto-runtime-button" data-repeatable="true" data-runtime-action="honor" data-option="${which}" data-actor-uuid="${target.uuid}" data-effect-id="${effect.id}"><i class="fa-solid ${icon}"></i> ${label}</button>`;
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "honor-duel" } },
+            content: `<h3>${escapeHTML(plan.source.name)}</h3><p>${escapeHTML(target.name)}: ${escapeHTML(degree.replace(/([A-Z])/g, " $1").toLowerCase())} (DC ${dc}). Champion: ${escapeHTML(champion.name)}.</p>`
+                + `<p>At the end of each of its turns:</p>${button("peace", `No hostile action against ${pair}: ${amount} ${data.damage.type} (basic save)`, "fa-skull")}${button("hostile", "It took a hostile action against them", "fa-hand-fist")}`
+                + `<p class="pf2e-auto-gm-reminder">${escapeHTML(data.note)}</p>` }); } catch (_) {}
+        return { status: "applied", plan, degree, champion: champion.name, effectUuid: effect.uuid, amount };
+    }
+
+    /** Honorable Death at the end of the target's turn: "peace" — the damage (basic save); then the recovery save on the longer rows (one round less, or the end). */
+    async honorAct(effectDocument, which, { degree = null, recoveryDegree = null } = {}) {
+        const data = effectDocument?.flags?.[MODULE_ID]?.honorDuel;
+        if (!data) throw new Error("This Effect holds no honorable death.");
+        const actor = effectDocument.actor, caster = await fromUuid(data.casterUuid), itemOrSource = data.itemUuid ? await fromUuid(data.itemUuid) : null;
+        const DEGREES = ["criticalFailure", "failure", "success", "criticalSuccess"];
+        const result = { which };
+        if (which === "peace") {
+            const save = await actor.saves?.[data.statistic]?.roll({ dc: { value: data.dc }, skipDialog: true, label: `${data.spell}: basic ${data.statistic} save (DC ${data.dc})` });
+            const outcome = degree ?? DEGREES[Number(save?.degreeOfSuccess)] ?? "failure";
+            const multiplier = { criticalSuccess: 0, success: 0.5, failure: 1, criticalFailure: 2 }[outcome];
+            const amount = Math.floor(data.amount * multiplier);
+            if (amount > 0) {
+                const DamageRoll = CONFIG.Dice.rolls.find(roll => roll.name === "DamageRoll");
+                const roll = await new DamageRoll(`${amount}[${data.type}]`).evaluate();
+                try { await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: caster ?? actor }), flavor: `<strong>${escapeHTML(data.spell)}</strong>: ${escapeHTML(actor.name)} (${escapeHTML(outcome.replace(/([A-Z])/g, " $1").toLowerCase())})` }); } catch (_) {}
+                const token = actor.getActiveTokens?.()?.[0]?.document;
+                result.receipt = await applyDamageWithReceipt(actor, { damage: roll, token: token ?? undefined, item: itemOrSource ?? undefined, skipIWR: false, rollOptions: new Set() }, randomID());
+            }
+            Object.assign(result, { degree: outcome, amount });
+        }
+        // ("and then the spell ends" on a success; on the longer rows the save that shortens it.)
+        const live = actor.items.get(effectDocument.id);
+        if (live && !data.recovery) { await live.delete(); result.ended = true; }
+        else if (live) {
+            const save = await actor.saves?.[data.recovery]?.roll({ dc: { value: data.dc }, skipDialog: true, label: `${data.spell}: ${data.recovery} save to shorten it (DC ${data.dc})` });
+            const outcome = recoveryDegree ?? DEGREES[Number(save?.degreeOfSuccess)] ?? "failure";
+            result.recovery = outcome;
+            if (outcome === "criticalSuccess") { await live.delete(); result.ended = true; }
+            else if (outcome === "success") {
+                const duration = live.system.duration, rounds = duration.unit === "minutes" ? Number(duration.value) * 10 : Number(duration.value);
+                if (rounds <= 1) { await live.delete(); result.ended = true; }
+                else { await live.update({ "system.duration.value": rounds - 1, "system.duration.unit": "rounds" }); result.rounds = rounds - 1; }
+            }
+        }
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: caster ?? actor }), content: `<p><strong>${escapeHTML(data.spell)}</strong>: ${escapeHTML(actor.name)}'s turn ends — ${which === "peace" ? `${result.amount} ${escapeHTML(data.type)} damage` : "it fought, no damage"}${result.recovery ? `; its save to shorten it: ${escapeHTML(result.recovery.replace(/([A-Z])/g, " $1").toLowerCase())}` : ""}${result.ended ? "; the spell ends" : ""}.</p>` }); } catch (_) {}
+        return result;
+    }
+
+    /** Honorable Death's target at 0 Hit Points: instantly killed. */
+    async honorDeath(actor) {
+        const effect = (actor.itemTypes?.effect ?? []).find(entry => entry.flags?.[MODULE_ID]?.honorDuel);
+        if (!effect || actor.statuses?.has?.("dead")) return null;
+        const data = effect.flags[MODULE_ID].honorDuel;
+        const caster = await fromUuid(data.casterUuid);
+        for (const slug of ["dying", "unconscious", "wounded"]) for (const condition of actor.itemTypes?.condition?.filter(entry => entry.slug === slug) ?? []) await condition.delete().catch(() => null);
+        await actor.toggleStatusEffect?.("dead", { active: true, overlay: true });
+        await effect.delete().catch(() => null);
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: caster ?? actor }), content: `<p><strong>${escapeHTML(data.spell)}</strong>: ${escapeHTML(actor.name)} is reduced to 0 Hit Points and instantly killed; its soul goes to the domain of ${escapeHTML(caster?.name ?? "the caster")}'s deity.</p>` }); } catch (_) {}
+        return { dead: true };
+    }
+
+    /**
+     * Dream Logic: each creature in the caster's aura (or the given targets) saves — or takes a failure (`options.willing`); the table rolled for each that fails
+     * (twice on a critical failure, the caster picking — `options.picks`), its entry applied. `options.degrees` and `options.rolls` set results for scripted runs
+     * (rolls per creature: [the table's die, the second on a critical failure, Static Time's die, Warped Energy's five dice]).
+     */
+    async #executeDreamTable(itemOrSource, plan, sourceActor, options) {
+        const data = plan.resolution.dreamTable;
+        const casterToken = sourceActor.getActiveTokens?.(true, true)?.[0];
+        if (!casterToken) throw new Error(`${plan.source.name}: ${sourceActor.name} needs a token on the scene.`);
+        const dc = this.#spellDC(itemOrSource, sourceActor, options);
+        const tokens = options.targets ? [...options.targets].map(target => target?.document ?? target).filter(token => token?.actor)
+            : casterToken.parent.tokens.filter(token => token.actor && token.actor !== sourceActor && tokenDistance(casterToken, token) <= data.radius);
+        const DEGREES = ["criticalFailure", "failure", "success", "criticalSuccess"];
+        const rollDie = async () => Number((await new Roll(`1d${data.die}`).evaluate()).total);
+        const results = [];
+        for (const token of tokens) {
+            const actor = token.actor;
+            let degree = options.degrees?.[actor.uuid] ?? null;
+            if (!degree && (options.willing ?? []).includes(actor.uuid)) degree = "failure";
+            if (!degree) {
+                const roll = await actor.saves?.[data.statistic]?.roll({ dc: { value: dc }, skipDialog: true, extraRollOptions: (itemOrSource?.system?.traits?.value ?? []).map(trait => `item:trait:${trait}`), label: `${plan.source.name} (DC ${dc})` });
+                degree = DEGREES[Number(roll?.degreeOfSuccess)] ?? "failure";
+            }
+            if (!["failure", "criticalFailure"].includes(degree)) { results.push({ name: actor.name, degree }); continue; }
+            const given = options.rolls?.[actor.uuid] ?? [];
+            const rolled = [given[0] ?? await rollDie(), ...(degree === "criticalFailure" ? [given[1] ?? await rollDie()] : [])];
+            let pick = rolled[0];
+            if (rolled.length === 2 && rolled[0] !== rolled[1]) {
+                const named = rolled.map(value => data.entries.find(entry => entry.roll === value));
+                pick = Number(options.picks?.[actor.uuid] ?? await foundry.applications.api.DialogV2.wait({ window: { title: `${plan.source.name} — ${actor.name}` }, content: `<p>${escapeHTML(actor.name)} critically failed: choose its result.</p>`,
+                    buttons: named.map(entry => ({ action: String(entry.roll), label: `${entry.roll}: ${entry.name}` })), close: () => String(rolled[0]), rejectClose: false }));
+                if (!rolled.includes(pick)) throw new Error(`${plan.source.name}: pick one of the rolled results.`);
+            }
+            const entry = data.entries.find(candidate => candidate.roll === pick);
+            results.push({ name: actor.name, degree, rolled, pick, ...(await this.#dreamEntry(entry, actor, { sourceActor, itemOrSource, spellName: plan.source.name, given: options.rolls?.[actor.uuid] })) });
+        }
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "dream-table" } },
+            content: `<h3>${escapeHTML(plan.source.name)}</h3><p>Will DC ${dc} for each creature in the ${data.radius}-foot aura:</p><ul>${results.map(result => `<li>${escapeHTML(result.name)}: ${escapeHTML(result.degree.replace(/([A-Z])/g, " $1").toLowerCase())}${result.pick ? ` — rolled ${result.rolled.join(" and ")}: ${escapeHTML(result.label)}` : ""}</li>`).join("")}</ul>` }); } catch (_) {}
+        return { status: "applied", plan, dc, results };
+    }
+
+    /** One entry of Dream Logic's table on a creature. */
+    async #dreamEntry(entry, actor, { sourceActor, itemOrSource, spellName, given = [] }) {
+        const name = `${spellName}: ${entry.name}`;
+        if (entry.kind === "social") {
+            const effect = await this.#ruleEffect(actor, { name, seconds: 6, sourceActor, itemOrSource,
+                rules: [{ key: "FlatModifier", selector: "skill-check", type: "circumstance", value: entry.bonus, predicate: [{ or: ["action:make-a-request", "action:demoralize"] }], label: spellName }],
+                description: `<p>${escapeHTML(entry.note)} +${entry.bonus} circumstance to Make a Request and Demoralize.</p>` });
+            return { label: `${entry.name}: +${entry.bonus} to Make a Request and Demoralize`, effectUuid: effect.uuid };
+        }
+        if (entry.kind === "extend") {
+            const rounds = Number(given[2] ?? (await new Roll(`1d${entry.die}`).evaluate()).total);
+            const extended = [];
+            for (const effect of actor.itemTypes?.effect ?? []) {
+                const duration = effect.system?.duration ?? {};
+                const perRound = { rounds: 1, minutes: 10, hours: 600, days: 14400 }[duration.unit];
+                if (!perRound || !(Number(duration.value) > 0)) continue;
+                await effect.update({ "system.duration.value": duration.unit === "rounds" ? Number(duration.value) + rounds : Number(duration.value) * perRound + rounds, "system.duration.unit": "rounds" });
+                extended.push(effect.name);
+            }
+            return { label: `${entry.name}: its timed Effects ${rounds} round${rounds === 1 ? "" : "s"} longer${extended.length ? ` (${extended.join(", ")})` : " (none)"}`, rounds, extended };
+        }
+        if (entry.kind === "fly") {
+            const template = await loadNativeEffectTemplate(entry.effect.uuid);
+            if (!template) throw new Error(`${spellName}: ${entry.effect.name} is unavailable.`);
+            const made = await createNativeEffect(actor, prepareNativeEffectSource(template, { castInstanceId: randomID(), castRank: Number(itemOrSource?.rank ?? 1), sourceActorUuid: sourceActor.uuid,
+                sourceItemUuid: itemOrSource?.uuid ?? null, sourceItemName: spellName, resolutionKind: "dream-table", targetActorUuid: actor.uuid }));
+            return { label: `${entry.name}: a fly Speed equal to its land Speed until the end of its next turn`, effectUuid: made?.uuid ?? null };
+        }
+        // (Warped Energy: each energy type's replacement rolled now among the other four.)
+        const swaps = {};
+        for (const [index, type] of entry.types.entries()) {
+            const others = entry.types.filter(other => other !== type);
+            swaps[type] = others[Number(given[3 + index] ?? (await new Roll(`1d${others.length}`).evaluate()).total) - 1];
+        }
+        const effect = await this.#ruleEffect(actor, { name, seconds: 6, expiry: "turn-end", sourceActor, itemOrSource,
+            rules: entry.types.map(type => ({ key: "DamageAlteration", mode: "override", property: "damage-type", selectors: ["inline-damage", "strike-damage", "spell-damage", "impulse-damage"], predicate: [`damage:type:${type}`], value: swaps[type] })),
+            description: `<p>Until the end of its turn: ${entry.types.map(type => `${type} → ${swaps[type]}`).join(", ")}. ${escapeHTML(entry.note)}</p>` });
+        return { label: `${entry.name}: ${entry.types.map(type => `${type} → ${swaps[type]}`).join(", ")}`, swaps, effectUuid: effect.uuid };
+    }
+
+    /**
+     * Coiling Grasp: the caster's Effect for the sustained duration (the target and the size limit kept), its card's control maintaining the Grapple on each Sustain;
+     * the first Grapple now (`weaponGrapple`).
+     */
+    async #executeWeaponGrapple(itemOrSource, plan, sourceActor, options) {
+        const data = plan.resolution.weaponGrapple;
+        const castRank = Number(options.castRank ?? itemOrSource?.rank ?? plan.rank);
+        const tokens = [...(options.targets ?? game.user.targets)].map(target => target?.document ?? target).filter(token => token?.actor);
+        if (tokens.length !== 1) throw new Error(`${plan.source.name}: target the one creature.`);
+        const [token] = tokens, maxSize = grappleSizeAt(data, castRank);
+        const order = ["tiny", "sm", "med", "lg", "huge", "grg"], labels = { tiny: "Tiny", sm: "Small", med: "Medium", lg: "Large", huge: "Huge", grg: "Gargantuan" };
+        if (order.indexOf(token.actor.size) > order.indexOf(maxSize)) throw new Error(`${plan.source.name}: ${token.actor.name} is larger than ${labels[maxSize]}.`);
+        const effect = await this.#ruleEffect(sourceActor, { name: `${plan.source.name}: grappling ${token.actor.name}`, seconds: data.seconds, sustained: true, sourceActor, itemOrSource, rules: [],
+            flags: { weaponGrapple: { spell: plan.source.name, targetTokenUuid: token.uuid, rows: data.rows, defense: data.defense, itemUuid: itemOrSource?.uuid ?? null } },
+            description: data.notes.map(note => `<p>${escapeHTML(note)}</p>`).join("") });
+        const button = `<button type="button" class="pf2e-auto-runtime-button" data-repeatable="true" data-runtime-action="weapon-grapple" data-actor-uuid="${sourceActor.uuid}" data-effect-id="${effect.id}"><i class="fa-solid fa-link"></i> Sustain: maintain the Grapple on ${escapeHTML(token.actor.name)}</button>`;
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "weapon-grapple" } },
+            content: `<h3>${escapeHTML(plan.source.name)}</h3><p>${escapeHTML(sourceActor.name)} Grapples ${escapeHTML(token.actor.name)} with the required weapon at range (the higher of Athletics and the spell attack modifier, against its Fortitude DC).</p>${button}`
+                + data.notes.map(note => `<p class="pf2e-auto-gm-reminder">${escapeHTML(note)}</p>`).join("") }); } catch (_) {}
+        const first = await this.weaponGrapple(effect, { degree: options.degree ?? null, critFailure: options.critFailure ?? null });
+        return { status: "applied", plan, effectUuid: effect.uuid, maxSize, first };
+    }
+
+    /** Coiling Grasp's Grapple: the higher of Athletics and the spell attack against the target's Fortitude DC; the row's condition until the end of the caster's next turn. */
+    async weaponGrapple(effectDocument, { degree = null, critFailure = null } = {}) {
+        const data = effectDocument?.flags?.[MODULE_ID]?.weaponGrapple;
+        if (!data) throw new Error("This Effect holds no Grapple.");
+        const caster = effectDocument.actor, token = await fromUuid(data.targetTokenUuid), target = token?.actor;
+        if (!target) throw new Error(`${data.spell}: the target is gone.`);
+        const itemOrSource = data.itemUuid ? await fromUuid(data.itemUuid) : null;
+        const spellAttack = itemOrSource?.spellcasting?.statistic ?? caster.getStatistic?.("spell-attack");
+        const athletics = caster.skills?.athletics;
+        const statistic = [athletics, spellAttack].filter(entry => entry?.check?.roll).sort((a, b) => Number(b.check?.mod ?? b.mod ?? 0) - Number(a.check?.mod ?? a.mod ?? 0))[0];
+        if (!statistic) throw new Error(`${data.spell}: ${caster.name}'s Athletics and spell attack can't be read.`);
+        const dc = Number(target.saves?.[data.defense]?.dc?.value ?? NaN);
+        if (!Number.isFinite(dc)) throw new Error(`${data.spell}: ${target.name}'s ${data.defense} DC can't be read.`);
+        const roll = await statistic.check.roll({ dc: { value: dc }, extraRollOptions: ["action:grapple", "attack"], skipDialog: true, label: `${data.spell}: Grapple ${target.name} (${data.defense} DC ${dc})` });
+        const DEGREES = ["criticalFailure", "failure", "success", "criticalSuccess"];
+        const outcome = degree ?? DEGREES[Number(roll?.degreeOfSuccess)] ?? "failure";
+        // (A new attempt replaces what the last one held.)
+        for (const old of target.itemTypes.effect.filter(effect => effect.flags?.[MODULE_ID]?.weaponHold === effectDocument.uuid)) await old.delete();
+        let made = null, choice = null;
+        const row = data.rows[outcome];
+        if (row?.uuid) made = await this.#ruleEffect(target, { name: `${data.spell}: ${row.slug[0].toUpperCase()}${row.slug.slice(1)}`, seconds: 6, expiry: "turn-end", sourceActor: caster, itemOrSource,
+            rules: [{ key: "GrantItem", uuid: row.uuid, onDeleteActions: { grantee: "restrict" } }], flags: { weaponHold: effectDocument.uuid },
+            description: `<p>${row.slug[0].toUpperCase()}${row.slug.slice(1)} by ${escapeHTML(caster.name)}'s weapon until the end of ${escapeHTML(caster.name)}'s next turn (maintained by a Sustain); it can Escape as normal.</p>` });
+        if (outcome === "criticalFailure") {
+            // ("The target can either grab you if you are within its reach … or force you to fall and land Prone.": the target's choice.)
+            choice = critFailure ?? await foundry.applications.api.DialogV2.wait({ window: { title: `${data.spell} — critical failure` }, content: `<p>${escapeHTML(target.name)} chooses:</p>`,
+                buttons: [{ action: "grab", label: `Grab ${caster.name} (if within its reach)` }, { action: "prone", label: `${caster.name} falls Prone` }], close: () => "prone", rejectClose: false });
+            if (choice === "prone") await caster.increaseCondition?.("prone");
+            else made = await this.#ruleEffect(caster, { name: `${data.spell}: Grabbed by ${target.name}`, seconds: 6, expiry: "turn-end", sourceActor: caster, itemOrSource,
+                rules: [{ key: "GrantItem", uuid: data.rows.success.uuid, onDeleteActions: { grantee: "restrict" } }], description: `<p>Grabbed by ${escapeHTML(target.name)} (as its successful Grapple) until the end of its next turn.</p>` });
+        }
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: caster }), content: `<p><strong>${escapeHTML(data.spell)}</strong>: Grapple on ${escapeHTML(target.name)} — ${escapeHTML(outcome.replace(/([A-Z])/g, " $1").toLowerCase())}${row?.slug ? `: ${row.slug}` : ""}${choice ? `; ${choice === "prone" ? `${escapeHTML(caster.name)} falls Prone` : `${escapeHTML(target.name)} grabs ${escapeHTML(caster.name)}`}` : ""}.</p>` }); } catch (_) {}
+        return { degree: outcome, held: row?.slug ?? null, choice, effectUuid: made?.uuid ?? null, statistic: statistic === athletics ? "athletics" : "spell-attack" };
+    }
+
+    /**
+     * Wooden Engulfment: the tree a token in the placed square (`options.position`, its top-left in pixels, or the placed template) — its Hit Points and AC at the rank,
+     * Immobilized; the creatures there moved beside it; the caster's Effect for the sustained duration, its card's grab control (`treeGrab`); a single targeted creature
+     * within reach grabbed at once ("When you first Cast the Spell").
+     */
+    async #executeEngulfingTree(itemOrSource, plan, sourceActor, options) {
+        const data = plan.resolution.engulfingTree;
+        const castRank = Number(options.castRank ?? itemOrSource?.rank ?? plan.rank);
+        const casterToken = sourceActor.getActiveTokens?.(true, true)?.[0];
+        if (!casterToken) throw new Error(`${plan.source.name}: ${sourceActor.name} needs a token on the scene.`);
+        const scene = casterToken.parent, size = scene.grid.size, side = data.size / (scene.grid.distance || 5) * size;
+        let at = options.position ?? null;
+        if (!at) {
+            if (!itemOrSource?.placeTemplate) throw new Error(`${plan.source.name}: the spell item is needed to place the ${data.name}.`);
+            const placed = await itemOrSource.placeTemplate();
+            if (!placed) return { status: "cancelled", plan };
+            const shape = placed.shapes?.[0] ?? {};
+            at = { x: Number(shape.x ?? 0), y: Number(shape.y ?? 0) };
+            await placed.delete().catch(() => null);
+        }
+        const box = { x: at.x, y: at.y, w: side, h: side };
+        const moved = await moveOutOfBoxes(scene, [box]);
+        const stats = treeAt(data, castRank), dc = this.#spellDC(itemOrSource, sourceActor, options), castId = options.castInstanceId ?? randomID();
+        const squares = Math.round(side / size), sizes = { 1: "med", 2: "lg", 3: "huge", 4: "grg" };
+        const actor = await Actor.create({ name: `${plan.source.name}: the ${data.name}`, type: "npc", img: itemOrSource?.img ?? "icons/svg/oak.svg",
+            system: { details: { level: { value: castRank } }, attributes: { hp: { value: stats.hp, max: stats.hp }, ac: { value: stats.ac }, speed: { value: 0 } },
+                traits: { value: ["plant", "wood"], size: { value: sizes[squares] ?? "huge" }, rarity: "common" } },
+            flags: { [MODULE_ID]: { summoned: { castId, casterUuid: sourceActor.uuid, spell: plan.source.name, endsAtZero: true } } } });
+        await actor.increaseCondition?.("immobilized").catch(() => null);
+        const tokenData = (await actor.getTokenDocument({ x: box.x, y: box.y, width: squares, height: squares, disposition: casterToken.disposition, actorLink: true })).toObject();
+        const [token] = await scene.createEmbeddedDocuments("Token", [tokenData]);
+        const effect = await this.#ruleEffect(sourceActor, { name: `${plan.source.name}: the ${data.name}`, rules: [], seconds: data.seconds, sustained: true, sourceActor, itemOrSource,
+            flags: { summon: { castId, actorUuid: actor.uuid, tokenUuid: token.uuid, conjuredBy: itemOrSource?.uuid ?? plan.source.uuid },
+                engulfingTree: { spell: plan.source.name, castId, dc, reach: data.reach, defense: data.defense, grabbed: data.grabbed, restrained: data.restrained, itemUuid: itemOrSource?.uuid ?? null } },
+            description: `<p>The ${escapeHTML(data.name)}: ${stats.height} feet high, ${stats.hp} HP, AC ${stats.ac}, reach ${data.reach} feet, Immobilized.</p>${data.notes.map(note => `<p>${escapeHTML(note)}</p>`).join("")}` });
+        const button = `<button type="button" class="pf2e-auto-runtime-button" data-repeatable="true" data-runtime-action="tree-grab" data-actor-uuid="${sourceActor.uuid}" data-effect-id="${effect.id}"><i class="fa-solid fa-tree"></i> The ${escapeHTML(data.name)}'s grab (target a creature within ${data.reach} feet of it)</button>`;
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "engulfing-tree", castInstanceId: castId } },
+            content: `<h3>${escapeHTML(plan.source.name)}</h3><p>The ${escapeHTML(data.name)} (${stats.height} feet, ${stats.hp} HP, AC ${stats.ac}, reach ${data.reach} feet) grows; Immobilized.${moved.length ? ` Moved beside it: ${moved.map(entry => escapeHTML(entry.name) + (entry.to ? "" : " (no free space — the GM places it)")).join(", ")}.` : ""}</p>`
+                + `<p>When you Cast the Spell and each time you Sustain it: your spell attack against the ${escapeHTML(data.defense)} DC of a creature within its reach.</p>${button}`
+                + data.notes.map(note => `<p class="pf2e-auto-gm-reminder">${escapeHTML(note)}</p>`).join("") }); } catch (_) {}
+        if (options.sourceMessageId) try { await game.messages.get(options.sourceMessageId)?.setFlag(MODULE_ID, "resolvedCast", { castInstanceId: castId, resolutionKind: "engulfing-tree" }); } catch (_) {}
+        // ("When you first Cast the Spell": one targeted creature within reach grabbed now.)
+        const targets = [...(options.targets ?? [])].map(target => target?.document ?? target).filter(candidate => candidate?.actor && candidate.actor !== sourceActor);
+        const first = targets.length === 1 && tokenDistance(token, targets[0]) <= data.reach ? await this.treeGrab(effect, { targets, map: options.map ?? 0, degree: options.degree ?? null }) : null;
+        return { status: "applied", plan, castInstanceId: castId, effectUuid: effect.uuid, treeToken: token.uuid, stats, moved, dc, first };
+    }
+
+    /** The tree's grab: the caster's spell attack (with the multiple attack penalty) against the creature's DC; Grabbed or, on a critical success, Restrained until the end of the caster's next turn. */
+    async treeGrab(effectDocument, { targets = [...game.user.targets], map = null, degree = null } = {}) {
+        const data = effectDocument?.flags?.[MODULE_ID]?.engulfingTree, summon = effectDocument?.flags?.[MODULE_ID]?.summon;
+        if (!data || !summon) throw new Error("This Effect has no tree.");
+        const caster = effectDocument.actor, treeToken = await fromUuid(summon.tokenUuid);
+        if (!treeToken) throw new Error(`${data.spell}: the tree is gone.`);
+        const tokens = targets.map(target => target?.document ?? target).filter(token => token?.actor);
+        if (tokens.length !== 1) throw new Error(`${data.spell}: target the one creature.`);
+        const [token] = tokens, target = token.actor;
+        if (tokenDistance(treeToken, token) > data.reach) throw new Error(`${data.spell}: ${target.name} is beyond the tree's ${data.reach}-foot reach.`);
+        const penalty = map ?? Number(await foundry.applications.api.DialogV2.wait({ window: { title: `${data.spell} — multiple attack penalty` }, content: "<p>Your multiple attack penalty for this attack?</p>",
+            buttons: [{ action: "0", label: "None" }, { action: "1", label: "−5" }, { action: "2", label: "−10" }], close: () => null, rejectClose: false }));
+        if (![0, 1, 2].includes(Number(penalty))) return { status: "cancelled" };
+        const itemOrSource = data.itemUuid ? await fromUuid(data.itemUuid) : null;
+        const statistic = itemOrSource?.spellcasting?.statistic ?? caster.getStatistic?.("spell-attack");
+        if (!statistic?.check?.roll) throw new Error(`${data.spell}: the caster's spell attack is unavailable.`);
+        const defenseDC = Number(target.saves?.[data.defense]?.dc?.value ?? NaN);
+        if (!Number.isFinite(defenseDC)) throw new Error(`${data.spell}: ${target.name}'s ${data.defense} DC can't be read.`);
+        const modifiers = Number(penalty) ? [new game.pf2e.Modifier({ label: "Multiple attack penalty", modifier: -5 * Number(penalty), type: "untyped" })] : [];
+        const roll = await statistic.check.roll({ dc: { value: defenseDC }, item: itemOrSource ?? undefined, modifiers, extraRollOptions: ["attack", "item:trait:attack"], skipDialog: true,
+            label: `${data.spell}: the tree's grab against ${target.name} (${data.defense} DC ${defenseDC})` });
+        const DEGREES = ["criticalFailure", "failure", "success", "criticalSuccess"];
+        const outcome = degree ?? DEGREES[Number(roll?.degreeOfSuccess)] ?? "failure";
+        let held = null;
+        if (["success", "criticalSuccess"].includes(outcome)) {
+            const restrained = outcome === "criticalSuccess";
+            for (const old of target.itemTypes.effect.filter(effect => effect.flags?.[MODULE_ID]?.treeHold === data.castId)) await old.delete();
+            held = await this.#ruleEffect(target, { name: `${data.spell}: ${restrained ? "Restrained" : "Grabbed"} by the tree`, seconds: 6, expiry: "turn-end", sourceActor: caster, itemOrSource,
+                rules: [{ key: "GrantItem", uuid: restrained ? data.restrained : data.grabbed, onDeleteActions: { grantee: "restrict" } }], flags: { treeHold: data.castId },
+                description: `<p>${restrained ? "Restrained" : "Grabbed"} by the tree until the end of ${escapeHTML(caster.name)}'s next turn. Escape, or another creature's Force Open, against DC ${data.dc} frees it.</p>` });
+        }
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: caster }), content: `<p><strong>${escapeHTML(data.spell)}</strong>: the tree's grab on ${escapeHTML(target.name)} — ${escapeHTML(outcome.replace(/([A-Z])/g, " $1").toLowerCase())}${held ? `: ${outcome === "criticalSuccess" ? "Restrained" : "Grabbed"} until the end of ${escapeHTML(caster.name)}'s next turn (Escape or Force Open DC ${data.dc})` : ""}.</p>` }); } catch (_) {}
+        return { status: "applied", degree: outcome, heldUuid: held?.uuid ?? null };
+    }
+
+    /** Lucky Decision: the d20 rolled now (`options.d20` for scripted runs) and kept on the caster's Effect until the next daily preparations, with its two reactions. */
+    async #executeFateRoll(itemOrSource, plan, sourceActor, options) {
+        const data = plan.resolution.fateRoll;
+        const dc = this.#spellDC(itemOrSource, sourceActor, options);
+        const roll = await new Roll("1d20").evaluate();
+        const value = Number(options.d20 ?? roll.total);
+        try { await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flavor: `<strong>${escapeHTML(plan.source.name)}</strong>: the fate you make for yourself` }); } catch (_) {}
+        const effect = await this.#ruleEffect(sourceActor, { name: `${plan.source.name} (d20: ${value})`, seconds: 0, sourceActor, itemOrSource, rules: [],
+            flags: { fateRoll: { spellName: plan.source.name, value, dc, data } },
+            description: `<p>Your kept d20: <strong>${value}</strong>, until your next daily preparations. ${escapeHTML(data.good.name)} (reaction; ${escapeHTML(data.good.trigger)}) or ${escapeHTML(data.bad.name)} (reaction; ${escapeHTML(data.bad.trigger)}); using either ends the spell.</p>` });
+        const button = (which, label, icon) => `<button type="button" class="pf2e-auto-runtime-button" data-runtime-action="fate" data-option="${which}" data-actor-uuid="${sourceActor.uuid}" data-effect-id="${effect.id}"><i class="fa-solid ${icon}"></i> ${escapeHTML(label)}</button>`;
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "fate-roll" } },
+            content: `<h3>${escapeHTML(plan.source.name)}</h3><p>Kept d20: <strong>${value}</strong> (until your next daily preparations).</p>`
+                + button("good", `${data.good.name}: your next attack roll, save or skill check uses ${value}`, "fa-clover") + button("bad", `${data.bad.name}: the targeted enemy's ${data.bad.statistic} save (DC ${dc})`, "fa-hand-sparkles")
+                + `<p class="pf2e-auto-gm-reminder">Use them as the trigger happens (a non-secret roll for ${escapeHTML(data.good.name)}).</p>` }); } catch (_) {}
+        return { status: "applied", plan, value, dc, effectUuid: effect.uuid };
+    }
+
+    /** Lucky Decision's reactions: "good" — the caster's next roll is the kept result; "bad" — the targeted enemy's save, its next roll's penalty (and the kept result). Either ends the spell. */
+    async fateAct(effectDocument, which, { targets = [...game.user.targets], degree = null } = {}) {
+        const fate = effectDocument?.flags?.[MODULE_ID]?.fateRoll;
+        if (!fate) throw new Error("This Effect holds no kept d20.");
+        // (PF2e's SubstituteRoll takes one selector: a rule for each kind of roll.)
+        const caster = effectDocument.actor, data = fate.data, label = `${fate.spellName} (${fate.value})`;
+        let made = null, result = { which };
+        if (which === "good") {
+            made = await this.#ruleEffect(caster, { name: `${fate.spellName}: ${data.good.name} (${fate.value})`, seconds: 0, sourceActor: caster, itemOrSource: null,
+                rules: data.selectors.map(selector => ({ key: "SubstituteRoll", selector, value: fate.value, effectType: "fortune", required: true, removeAfterRoll: true, label })),
+                description: `<p>Your next attack roll, saving throw or skill check uses ${fate.value} instead of rolling the d20 (fortune).</p>` });
+        } else {
+            const tokens = targets.map(target => target?.document ?? target).filter(token => token?.actor);
+            if (tokens.length !== 1) throw new Error(`${fate.spellName}: target the one enemy about to roll.`);
+            const enemy = tokens[0].actor;
+            const statistic = enemy.saves?.[data.bad.statistic];
+            if (!statistic?.roll) throw new Error(`${fate.spellName}: ${enemy.name} has no ${data.bad.statistic} save.`);
+            const roll = await statistic.roll({ dc: { value: fate.dc }, skipDialog: true, label: `${fate.spellName}: ${data.bad.name} (DC ${fate.dc})` });
+            const DEGREES = ["criticalFailure", "failure", "success", "criticalSuccess"];
+            const outcome = degree ?? DEGREES[Number(roll?.degreeOfSuccess)] ?? "failure";
+            const row = data.bad.rows[outcome];
+            if (row) made = await this.#ruleEffect(enemy, { name: `${fate.spellName}: ${data.bad.name}${row.substitute ? ` (${fate.value})` : ""}, –${row.penalty}`, seconds: 0, sourceActor: caster, itemOrSource: null,
+                rules: [...(row.substitute ? data.selectors.map(selector => ({ key: "SubstituteRoll", selector, value: fate.value, required: true, removeAfterRoll: true, label })) : []),
+                    { key: "FlatModifier", selector: data.selectors, type: "status", value: -row.penalty, removeAfterRoll: true, label: fate.spellName }],
+                description: `<p>Its triggering roll${row.substitute ? ` uses ${fate.value} instead of the d20 and` : ""} takes a –${row.penalty} status penalty.</p>` });
+            result = { which, degree: outcome, enemy: enemy.name };
+        }
+        // ("If you use either reaction the spell ends immediately.")
+        await effectDocument.delete();
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: caster }), content: `<p><strong>${escapeHTML(fate.spellName)}</strong>: ${escapeHTML(which === "good" ? data.good.name : `${data.bad.name} — ${result.enemy}, ${result.degree.replace(/([A-Z])/g, " $1").toLowerCase()}`)}; the spell ends.</p>` }); } catch (_) {}
+        return { ...result, effectUuid: made?.uuid ?? null };
+    }
+
+    /**
+     * Mind's Eye Wink: the area or the object (`options.branch`, or asked). The area: the lingering save in the GM's drawn region (`options.region`, or the selected
+     * one). The object: the holder's save rolled on the card; a failure's penalty to checks using the object an Effect behind a toggle for the duration.
+     */
+    async #executeDreamHazard(itemOrSource, plan, sourceActor, options) {
+        const data = plan.resolution.dreamHazard;
+        const castRank = Number(options.castRank ?? itemOrSource?.rank ?? plan.rank);
+        const branch = options.branch ?? await foundry.applications.api.DialogV2.wait({ window: { title: `${plan.source.name}` }, content: "<p>Cast it on an area or on an object?</p>",
+            buttons: [{ action: "area", label: "Area (draw and select the squares first)" }, { action: "object", label: `Object (${data.object.what}; target its holder)` }], close: () => null, rejectClose: false });
+        if (!branch) return { status: "cancelled", plan };
+        if (branch === "area") {
+            const lingering = game.modules.get(MODULE_ID)?.api?.ongoing?.startLingering;
+            if (!lingering) throw new Error(`${plan.source.name} needs the ongoing spell manager.`);
+            const region = options.region ?? canvas.regions?.controlled?.[0]?.document ?? null;
+            if (!region) throw new Error(`${plan.source.name}: draw ${data.areaPlan.resolution.lingering.drawnArea} as a region and select it first.`);
+            const started = await lingering(itemOrSource, foundry.utils.deepClone(data.areaPlan), { castRank, region, targets: options.targets, sourceMessageId: options.sourceMessageId ?? null });
+            return { status: "applied", plan, branch, started };
+        }
+        const tokens = [...(options.targets ?? game.user.targets)].map(target => target?.document ?? target).filter(token => token?.actor);
+        if (tokens.length !== 1) throw new Error(`${plan.source.name}: target the creature holding the object.`);
+        const holder = tokens[0].actor;
+        const dc = this.#spellDC(itemOrSource, sourceActor, options);
+        const statistic = holder.saves?.[data.object.statistic];
+        if (!statistic?.roll) throw new Error(`${plan.source.name}: ${holder.name} has no ${data.object.statistic} save.`);
+        const roll = await statistic.roll({ dc: { value: dc }, skipDialog: true, extraRollOptions: (itemOrSource?.system?.traits?.value ?? []).map(trait => `item:trait:${trait}`), label: `${plan.source.name}: the object (DC ${dc})` });
+        const DEGREES = ["criticalFailure", "failure", "success", "criticalSuccess"];
+        const degree = options.degree ?? DEGREES[Number(roll?.degreeOfSuccess)] ?? "failure";
+        const penalty = data.object.penalty?.[degree] ?? null;
+        let effect = null;
+        if (penalty) effect = await this.#ruleEffect(holder, { name: `${plan.source.name}: the object (–${penalty})`, seconds: 60, sourceActor, itemOrSource,
+            rules: [{ key: "RollOption", domain: "all", option: "using-the-wink-object", toggleable: true, value: false, label: "Using the object" },
+                { key: "FlatModifier", selector: "check", type: "circumstance", value: -penalty, predicate: ["using-the-wink-object"], label: plan.source.name }],
+            description: `<p>–${penalty} circumstance to checks that involve using the object (switch on "Using the object" for such a check). A Seek lets it try to disbelieve.</p>` });
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "dream-hazard" } },
+            content: `<h3>${escapeHTML(plan.source.name)}</h3><p>${escapeHTML(holder.name)}, holding the object: ${escapeHTML(degree.replace(/([A-Z])/g, " $1").toLowerCase())} (DC ${dc})${penalty ? ` — –${penalty} circumstance to checks that involve using it` : ""}.</p>`
+                + `<p class="pf2e-auto-gm-reminder"><strong>GM:</strong> ${escapeHTML(data.object.text)}</p>` }); } catch (_) {}
+        return { status: "applied", plan, branch, degree, penalty, effectUuid: effect?.uuid ?? null };
+    }
+
+    /**
+     * Gruesome Marionettist: the caster names the prohibited and directed actions (`options.actions`), the target's save sets the share of the bleed and the time; the
+     * target's Effect holds them, its card's controls the GM's (`marionetteAct`).
+     */
+    async #executeMarionette(itemOrSource, plan, sourceActor, options) {
+        const data = plan.resolution.marionette;
+        const castRank = Number(options.castRank ?? itemOrSource?.rank ?? plan.rank);
+        const tokens = [...(options.targets ?? game.user.targets)].map(target => target?.document ?? target).filter(token => token?.actor);
+        if (tokens.length !== 1) throw new Error(`${plan.source.name}: target the one creature.`);
+        const target = tokens[0].actor;
+        const actions = options.actions ?? await foundry.applications.api.DialogV2.prompt({ window: { title: `${plan.source.name} — ${target.name}'s actions` }, rejectClose: false,
+            content: `<p>Two actions or activities ${escapeHTML(target.name)} can take with the ${data.traits.join(", ")} trait.</p><div class="form-group"><label>Prohibited</label><input type="text" name="prohibited"></div><div class="form-group"><label>Directed</label><input type="text" name="directed"></div>`,
+            ok: { label: "Seize", callback: (_event, button) => ({ prohibited: button.form.elements.prohibited.value.trim(), directed: button.form.elements.directed.value.trim() }) } });
+        if (!actions?.prohibited || !actions?.directed) return { status: "cancelled", plan };
+        const dc = this.#spellDC(itemOrSource, sourceActor, options);
+        const statistic = target.saves?.[data.statistic];
+        if (!statistic?.roll) throw new Error(`${plan.source.name}: ${target.name} has no ${data.statistic} save.`);
+        const roll = await statistic.roll({ dc: { value: dc }, skipDialog: true, extraRollOptions: (itemOrSource?.system?.traits?.value ?? []).map(trait => `item:trait:${trait}`), label: `${plan.source.name} (DC ${dc})` });
+        const DEGREES = ["criticalFailure", "failure", "success", "criticalSuccess"];
+        const degree = options.degree ?? DEGREES[Number(roll?.degreeOfSuccess)] ?? "failure";
+        const share = data.share[degree];
+        if (share == null) {
+            try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), content: `<h3>${escapeHTML(plan.source.name)}</h3><p>${escapeHTML(target.name)}: critical success — unaffected.</p>` }); } catch (_) {}
+            return { status: "applied", plan, degree, share: null };
+        }
+        const dice = `${data.dice + Math.max(0, castRank - data.baseRank)}d${data.die}`;
+        const formula = share === 0.5 ? `floor((${dice})/2)` : share === 2 ? `(${dice})*2` : dice;
+        const untilNextTurn = data.ends[degree] === "caster-next-turn-start";
+        const shareText = share === 0.5 ? "half" : share === 2 ? "double" : "full";
+        const effect = await this.#ruleEffect(target, { name: `${plan.source.name}: ${actions.prohibited} prohibited, ${actions.directed} directed`, seconds: untilNextTurn ? 6 : data.seconds, sustained: !untilNextTurn, sourceActor, itemOrSource, rules: [],
+            flags: { marionette: { spellName: plan.source.name, casterUuid: sourceActor.uuid, formula, type: data.type, share, prohibited: actions.prohibited, directed: actions.directed, castRank } },
+            description: `<p>Prohibited: ${escapeHTML(actions.prohibited)} — taking it deals ${escapeHTML(formula)} persistent ${escapeHTML(data.type)} damage (${shareText}). Directed: ${escapeHTML(actions.directed)} — taking it makes ${escapeHTML(target.name)} immune to this bleed until the beginning of its next turn.</p>`
+                + `<p>${untilNextTurn ? `Ends at the beginning of ${escapeHTML(sourceActor.name)}'s next turn.` : "Lasts the sustained duration (up to 1 minute)."}</p>` });
+        const button = option => `<button type="button" class="pf2e-auto-runtime-button" data-repeatable="true" data-runtime-action="marionette" data-option="${option}" data-actor-uuid="${target.uuid}" data-effect-id="${effect.id}">`
+            + `<i class="fa-solid ${option === "prohibited" ? "fa-droplet" : "fa-person-walking"}"></i> ${escapeHTML(target.name)} took the ${option} action (${escapeHTML(actions[option])})</button>`;
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "marionette" } },
+            content: `<h3>${escapeHTML(plan.source.name)}</h3><p>${escapeHTML(target.name)}: ${escapeHTML(degree.replace(/([A-Z])/g, " $1").toLowerCase())} (DC ${dc}) — ${shareText} bleed (${escapeHTML(formula)}), ${untilNextTurn ? "until your next turn" : "for the duration"}.</p>${button("prohibited")}${button("directed")}` }); } catch (_) {}
+        return { status: "applied", plan, degree, share, formula, effectUuid: effect.uuid };
+    }
+
+    /** The GM's control on Gruesome Marionettist's card: the prohibited action taken (the persistent bleed, unless the directed action protects it), or the directed one. */
+    async marionetteAct(effectDocument, option) {
+        const data = effectDocument?.flags?.[MODULE_ID]?.marionette;
+        if (!data) throw new Error("This Effect has no seized blood.");
+        const actor = effectDocument.actor;
+        const shield = (actor.itemTypes?.effect ?? []).find(effect => effect.flags?.[MODULE_ID]?.marionetteImmune === effectDocument.uuid);
+        const sourceActor = await fromUuid(data.casterUuid);
+        if (option === "directed") {
+            if (shield) await shield.delete();
+            const made = await this.#ruleEffect(actor, { name: `${data.spellName}: immune to the bleed`, seconds: 6, sourceActor: sourceActor ?? actor, itemOrSource: null, rules: [],
+                flags: { marionetteImmune: effectDocument.uuid }, description: `<p>Took the directed action (${escapeHTML(data.directed)}): immune to ${escapeHTML(data.spellName)}'s bleed until the beginning of its next turn.</p>` });
+            return { status: "immune", effectUuid: made.uuid };
+        }
+        if (shield) {
+            try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content: `<p><strong>${escapeHTML(data.spellName)}</strong>: ${escapeHTML(actor.name)} took the prohibited action, but the directed action protects it this round.</p>` }); } catch (_) {}
+            return { status: "immune" };
+        }
+        const DamageRoll = CONFIG.Dice.rolls.find(roll => roll.name === "DamageRoll");
+        const roll = await new DamageRoll(`(${data.formula})[persistent,${data.type}]`).evaluate();
+        try { await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: sourceActor ?? actor }), flavor: `<strong>${escapeHTML(data.spellName)}</strong>: ${escapeHTML(actor.name)} took the prohibited action (${escapeHTML(data.prohibited)})` }); } catch (_) {}
+        const token = actor.getActiveTokens?.()?.[0]?.document;
+        const receipt = await applyDamageWithReceipt(actor, { damage: roll, token: token ?? undefined, skipIWR: false, rollOptions: new Set() }, randomID());
+        return { status: "applied", formula: data.formula, receipt };
+    }
+
+    /**
+     * Garden of Crystals: the caster's emanation of difficult terrain (its exemption a reminder); the clusters at the bursts the caster places (`options.clusters`, grid
+     * points in pixels) — walled off, any creature in them moved to the nearest free adjacent space; the squares beside them an area whose creatures hold the critical
+     * force dice; all until the GM ends the spell.
+     */
+    async #executeCrystalGarden(itemOrSource, plan, sourceActor, options) {
+        const data = plan.resolution.crystalGarden;
+        if (!this.ongoing?.startRegionArea) throw new Error(`${plan.source.name} needs the ongoing spell manager.`);
+        const castRank = Number(options.castRank ?? itemOrSource?.rank ?? plan.rank);
+        const casterToken = sourceActor.getActiveTokens?.(true, true)?.[0];
+        if (!casterToken) throw new Error(`${plan.source.name}: ${sourceActor.name} needs a token on the scene.`);
+        const scene = casterToken.parent, size = scene.grid.size, feet = scene.grid.distance || 5;
+        const centre = { x: casterToken.x + casterToken.width * size / 2, y: casterToken.y + casterToken.height * size / 2 };
+        const radius = (data.radius / feet + casterToken.width / 2) * size;
+        let points = options.clusters ?? null;
+        if (!points) {
+            if (!itemOrSource?.clone) throw new Error(`${plan.source.name}: the spell item is needed to place the clusters.`);
+            points = [];
+            for (let index = 0; index < data.clusters.count; index++) {
+                const placed = await itemOrSource.clone({ "system.area": { type: "burst", value: data.clusters.burst } }).placeTemplate();
+                if (!placed) return { status: "cancelled", plan };
+                const shape = placed.shapes?.[0];
+                points.push({ x: Number(shape?.x), y: Number(shape?.y) });
+                await placed.delete().catch(() => null);
+            }
+        }
+        if (points.length !== data.clusters.count) throw new Error(`${plan.source.name}: place ${data.clusters.count} clusters.`);
+        const half = data.clusters.burst / feet * size;
+        const boxes = points.map(point => ({ x: point.x - half, y: point.y - half, w: 2 * half, h: 2 * half }));
+        // ("at least partially within the area")
+        for (const box of boxes) {
+            const dx = Math.max(box.x - centre.x, 0, centre.x - (box.x + box.w)), dy = Math.max(box.y - centre.y, 0, centre.y - (box.y + box.h));
+            if (Math.hypot(dx, dy) >= radius) throw new Error(`${plan.source.name}: each cluster must be at least partly within the ${data.radius}-foot emanation.`);
+        }
+        // ("moving any creatures in the area to the nearest adjacent space")
+        const moved = await moveOutOfBoxes(scene, boxes);
+        const WALL = CONST.WALL_MOVEMENT_TYPES?.NORMAL ?? 20, NONE = CONST.WALL_SENSE_TYPES?.NONE ?? 0;
+        const walls = await scene.createEmbeddedDocuments("Wall", boxes.flatMap(box => [[box.x, box.y, box.x + box.w, box.y], [box.x + box.w, box.y, box.x + box.w, box.y + box.h],
+            [box.x + box.w, box.y + box.h, box.x, box.y + box.h], [box.x, box.y + box.h, box.x, box.y]].map(c => ({ c, move: WALL, sight: NONE, light: NONE, sound: NONE,
+            flags: { [MODULE_ID]: { crystalCluster: plan.source.name } } }))));
+        const [terrain] = await scene.createEmbeddedDocuments("Region", [{ name: `${plan.source.name}: difficult terrain`, color: "#9b7fd4",
+            shapes: [{ type: "circle", x: centre.x, y: centre.y, radiusX: radius, radiusY: radius, radius, rotation: 0, hole: false }] }]);
+        await terrain.createEmbeddedDocuments("RegionBehavior", [{ name: `${plan.source.name}: difficult terrain`, type: "modifyMovementCost", system: { difficulties: terrainDifficulties(["walk"], 2) } }]);
+        const [beside] = await scene.createEmbeddedDocuments("Region", [{ name: `${plan.source.name}: beside the crystals`, color: "#c9b8ff",
+            shapes: boxes.flatMap(box => [{ type: "rectangle", x: box.x - size, y: box.y - size, width: box.w + 2 * size, height: box.h + 2 * size, rotation: 0, hole: false },
+                { type: "rectangle", x: box.x, y: box.y, width: box.w, height: box.h, rotation: 0, hole: true }]) }]);
+        const dice = gardenDice(data.crit, castRank);
+        const [exemption] = await sourceActor.createEmbeddedDocuments("Item", [{ name: `${plan.source.name}: not difficult terrain for you`, type: "effect", img: itemOrSource?.img ?? "icons/svg/crystal-ball.svg",
+            system: { duration: { value: -1, unit: "unlimited", expiry: null, sustained: false }, rules: [], description: { value: `<p>${escapeHTML(data.exemption)}</p>` } } }]);
+        const notes = [`The crystals are ${data.clusters.height} feet high. They have no duration: they stay until the GM ends the spell.`];
+        const started = await this.ongoing.startRegionArea({ spellName: plan.source.name, sourceActorUuid: sourceActor.uuid, sourceItemUuid: itemOrSource?.uuid ?? null, castRank, region: beside,
+            durationSeconds: null, notes, memberRules: [{ key: "DamageDice", selector: data.selectors, diceNumber: dice, dieSize: data.crit.die, damageType: data.crit.type, critical: true }], seedMembers: true,
+            extraEntryUuids: [terrain.uuid, exemption.uuid, ...walls.map(wall => wall.uuid)] });
+        await this.ongoing.reconcile();
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "crystal-garden", castInstanceId: started.castId } },
+            content: `<h3>${escapeHTML(plan.source.name)}</h3><p>The ${data.radius}-foot emanation is difficult terrain (not for ${escapeHTML(sourceActor.name)}). ${data.clusters.count} crystal clusters stand in it; a creature beside one deals ${dice}${escapeHTML(data.crit.die)} more ${escapeHTML(data.crit.type)} damage on a critical hit.</p>`
+                + (moved.length ? `<p>Moved out of the crystals: ${moved.map(entry => escapeHTML(entry.name) + (entry.to ? "" : " (no free space — the GM places it)")).join(", ")}.</p>` : "")
+                + notes.map(note => `<p class="pf2e-auto-gm-reminder"><strong>GM:</strong> ${escapeHTML(note)}</p>`).join("") }); } catch (_) {}
+        if (options.sourceMessageId) try { await game.messages.get(options.sourceMessageId)?.setFlag(MODULE_ID, "resolvedCast", { castInstanceId: started.castId, resolutionKind: "crystal-garden" }); } catch (_) {}
+        return { status: "applied", plan, castInstanceId: started.castId, dice, moved, wallUuids: walls.map(wall => wall.uuid), terrainUuid: terrain.uuid, besideUuid: beside.uuid, exemptionUuid: exemption.uuid };
+    }
+
+    /**
+     * Instant Surgery: the caster's spell attack against the target's AC (+2 circumstance while the named spell's Effect of the caster's is on that creature); on a
+     * critical hit two attributes the caster picks, each boosted or depleted, on a hit one of each — the target's Effect for the duration, a status modifier to the
+     * rolls of each attribute (one more from the Heightened rank). `options.attributes` [{attribute, sign}] answers the pick.
+     */
+    async #executeAttributeSurgery(itemOrSource, plan, sourceActor, options) {
+        const data = plan.resolution.attributeSurgery;
+        const castRank = Number(options.castRank ?? itemOrSource?.rank ?? plan.rank);
+        const tokens = [...(options.targets ?? game.user.targets)].map(target => target?.document ?? target).filter(token => token?.actor);
+        if (tokens.length !== 1) throw new Error(`${plan.source.name}: target the one creature you touch.`);
+        const target = tokens[0].actor;
+        const statistic = itemOrSource?.spellcasting?.statistic ?? sourceActor.getStatistic?.("spell-attack") ?? null;
+        if (!statistic?.check?.roll) throw new Error(`${plan.source.name}: ${sourceActor.name}'s spell attack can't be read.`);
+        const ac = Number(target.armorClass?.value ?? target.system?.attributes?.ac?.value);
+        if (!Number.isFinite(ac)) throw new Error(`${plan.source.name}: ${target.name}'s AC can't be read.`);
+        // ("If you have view internal anatomy active on the creature": the caster's Effect of that spell aimed at this creature.)
+        const anatomy = (sourceActor.itemTypes?.effect ?? []).some(effect => effect.name.toLowerCase().includes(data.anatomy.name)
+            && JSON.stringify(effect.system?.rules ?? []).includes(`target:signature:${target.signature}`));
+        const Modifier = game.pf2e?.Modifier;
+        const modifiers = anatomy && Modifier ? [new Modifier({ label: data.anatomy.name.replace(/\b\w/g, letter => letter.toUpperCase()), modifier: data.anatomy.bonus, type: "circumstance" })] : [];
+        const roll = await statistic.check.roll({ dc: { value: ac }, modifiers, extraRollOptions: ["item:trait:attack"], label: `${plan.source.name}: spell attack against ${target.name}`, ...(options.skipDialog ?? true ? { skipDialog: true } : {}) });
+        if (!roll) return { status: "cancelled", plan };
+        const DEGREES = ["criticalFailure", "failure", "success", "criticalSuccess"];
+        const degree = options.degree ?? DEGREES[Number(roll.degreeOfSuccess)] ?? (Number(roll.total) >= ac + 10 ? "criticalSuccess" : Number(roll.total) >= ac ? "success" : Number(roll.total) <= ac - 10 ? "criticalFailure" : "failure");
+        const pick = data.picks[degree] ?? null;
+        const value = data.value + (castRank >= data.heightened.rank ? data.heightened.add : 0);
+        let effect = null, picks = [];
+        if (pick) {
+            picks = options.attributes ?? await this.#surgeryPicks(plan.source.name, target.name, data.attributes, pick, value);
+            if (!picks) return { status: "cancelled", plan, degree };
+            const signs = picks.map(entry => Math.sign(Number(entry.sign)));
+            if (picks.length !== pick.count || new Set(picks.map(entry => entry.attribute)).size !== pick.count || picks.some(entry => !data.attributes.includes(entry.attribute)) || signs.some(sign => sign === 0)
+                || (pick.mixed && !(signs.includes(1) && signs.includes(-1)))) throw new Error(`${plan.source.name}: ${pick.mixed ? "one attribute boosted and one depleted" : `${pick.count} different attributes, each boosted or depleted`}.`);
+            const label = attribute => ({ str: "Strength", dex: "Dexterity", con: "Constitution", int: "Intelligence", wis: "Wisdom", cha: "Charisma" })[attribute];
+            effect = await this.#ruleEffect(target, { name: `${plan.source.name}: ${picks.map(entry => `${label(entry.attribute)} ${entry.sign > 0 ? "+" : "–"}${value}`).join(", ")}`, seconds: data.seconds, sourceActor, itemOrSource,
+                rules: picks.map(entry => ({ key: "FlatModifier", selector: `${entry.attribute}-based`, type: "status", value: Math.sign(entry.sign) * value, label: plan.source.name })),
+                description: `<p>${picks.map(entry => `${entry.sign > 0 ? "+" : "–"}${value} status to rolls made with ${label(entry.attribute)}`).join("; ")}, for 1 minute.</p>` });
+        }
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "attribute-surgery" } },
+            content: `<h3>${escapeHTML(plan.source.name)}</h3><p>Spell attack ${Number(roll.total)} against AC ${ac}${anatomy ? ` (+${data.anatomy.bonus} circumstance: ${escapeHTML(data.anatomy.name)})` : ""}: <strong>${escapeHTML(degree.replace(/([A-Z])/g, " $1").toLowerCase())}</strong>.`
+                + `${effect ? ` ${escapeHTML(effect.name.replace(`${plan.source.name}: `, ""))} for ${escapeHTML(target.name)}.` : ""}</p>${data.notes.map(note => `<p><em>${escapeHTML(note)}</em></p>`).join("")}` }); } catch (_) {}
+        return { status: "applied", plan, degree, anatomy, total: Number(roll.total), ac, picks, value, effectUuid: effect?.uuid ?? null };
+    }
+
+    /** The caster's picks: the attributes, and for each a boost or a depletion (one of each when mixed). */
+    async #surgeryPicks(spellName, targetName, attributes, pick, value) {
+        const options = attributes.map(attribute => `<option value="${attribute}">${attribute.toUpperCase()}</option>`).join("");
+        const signOptions = index => pick.mixed ? `<input type="hidden" name="sign${index}" value="${index === 0 ? 1 : -1}"><span>${index === 0 ? `+${value} (boost)` : `–${value} (deplete)`}</span>`
+            : `<select name="sign${index}"><option value="1">+${value} (boost)</option><option value="-1">–${value} (deplete)</option></select>`;
+        return foundry.applications.api.DialogV2.prompt({ window: { title: `${spellName} — ${targetName}'s attributes` }, rejectClose: false,
+            content: Array.from({ length: pick.count }, (_, index) => `<div class="form-group"><select name="attribute${index}">${options}</select>${signOptions(index)}</div>`).join(""),
+            ok: { label: "Operate", callback: (_event, button) => Array.from({ length: pick.count }, (_, index) => ({ attribute: button.form.elements[`attribute${index}`].value, sign: Number(button.form.elements[`sign${index}`].value) })) } });
+    }
+
+    /**
+     * Promised Renewal: a corpse grown over at once; a dying creature's save card (Dying +2, +3 on a critical failure), the growth around it if the save kills it
+     * (`renewalOnKill`, on saveApplied).
+     */
+    async #executeRenewal(itemOrSource, plan, sourceActor, options) {
+        const data = plan.resolution.renewal;
+        const castRank = Number(options.castRank ?? itemOrSource?.rank ?? plan.rank);
+        const tokens = (options.targets ?? [...game.user.targets]).map(target => target?.document ?? target).filter(token => token?.actor);
+        if (tokens.length !== 1) throw new Error(`${plan.source.name}: target the one corpse or dying creature.`);
+        const [token] = tokens;
+        if (isCorpse(token.actor)) {
+            const growth = await this.renewalGrowth({ token, sourceActor, sourceItemUuid: itemOrSource?.uuid ?? null, spellName: plan.source.name, growth: data.growth, castRank });
+            return { status: "applied", plan, corpse: true, ...growth };
+        }
+        if (!token.actor.hasCondition?.("dying")) throw new Error(`${plan.source.name}: ${token.actor.name} is neither a corpse nor dying.`);
+        const { card } = await this.saves.start(itemOrSource, { plan: data.savePlan, sourceActor, targets: [token.object ?? token], castRank, skipConfirmation: true,
+            sourceMessageId: options.sourceMessageId ?? null, renewalGrowth: { growth: data.growth, spellName: plan.source.name, sourceItemUuid: itemOrSource?.uuid ?? null, sourceActorUuid: sourceActor.uuid, castRank } });
+        return { status: "started", plan, corpse: false, card: card?.id ?? null };
+    }
+
+    /** The growth around a creature Promised Renewal's save killed. */
+    async renewalOnKill(state) {
+        const data = state?.renewalGrowth;
+        if (!data || state.renewalStarted) return [];
+        const killed = (state.targets ?? []).filter(target => target.killedByRow);
+        if (!killed.length) return [];
+        state.renewalStarted = true;
+        const sourceActor = await fromUuid(data.sourceActorUuid);
+        const made = [];
+        for (const target of killed) {
+            const token = target.tokenUuid ? await fromUuid(target.tokenUuid) : (await fromUuid(target.actorUuid))?.getActiveTokens?.(true, true)?.[0];
+            if (token && sourceActor) made.push(await this.renewalGrowth({ token, sourceActor, sourceItemUuid: data.sourceItemUuid, spellName: data.spellName, growth: data.growth, castRank: data.castRank }));
+        }
+        return made;
+    }
+
+    /** The emanation of plant life around the token for the spell's time: difficult terrain, the stated minions' fast healing inside. */
+    async renewalGrowth({ token, sourceActor, sourceItemUuid, spellName, growth, castRank }) {
+        const at = renewalAt(growth, castRank);
+        const scene = token.parent, size = scene.grid.size, pixels = (at.radius / (scene.grid.distance || 5) + token.width / 2) * size;
+        const [region] = await scene.createEmbeddedDocuments("Region", [{ name: `${spellName}: plant growth around ${token.name}`, color: "#4f7a28",
+            shapes: [{ type: "circle", x: token.x + token.width * size / 2, y: token.y + token.height * size / 2, radiusX: pixels, radiusY: pixels, radius: pixels, rotation: 0, hole: false }] }]);
+        const rules = [{ key: "FastHealing", value: at.fastHealing, predicate: [{ or: growth.traits.map(trait => `self:trait:${trait}`) }, "self:trait:minion"] }];
+        const started = await this.ongoing.startRegionArea({ spellName, sourceActorUuid: sourceActor.uuid, sourceItemUuid, castRank, region, durationSeconds: growth.seconds, notes: growth.notes,
+            behaviors: growth.difficult ? [{ name: `${spellName}: difficult terrain`, type: "modifyMovementCost", system: { difficulties: { walk: 2, travel: 2 } } }] : [],
+            memberRules: rules, seedMembers: true });
+        await this.ongoing.reconcile();
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "renewal-growth", castInstanceId: started.castId } },
+            content: `<h3>${escapeHTML(spellName)}</h3><p>Plant life grows in a ${at.radius}-foot emanation around ${escapeHTML(token.name)} for ${growth.seconds / 6} rounds: difficult terrain; minions with the ${growth.traits.join(", ")} traits inside have fast healing ${at.fastHealing}.</p>`
+                + growth.notes.map(note => `<p class="pf2e-auto-gm-reminder"><strong>GM:</strong> ${escapeHTML(note)}</p>`).join("") }); } catch (_) {}
+        return { castInstanceId: started.castId, regionUuid: region.uuid, radius: at.radius, fastHealing: at.fastHealing };
+    }
+
+    /** Manifest Wicket Dominion: the emanation fixed where the caster stands; the caster holds its rules while inside. */
+    async #executeCasterDominion(itemOrSource, plan, sourceActor, options) {
+        const data = plan.resolution.casterDominion;
+        if (!this.ongoing?.startRegionArea) throw new Error(`${plan.source.name} needs the ongoing spell manager.`);
+        const castRank = Number(options.castRank ?? itemOrSource?.rank ?? plan.rank);
+        let region = options.region ?? null;
+        if (!region) {
+            const token = sourceActor.getActiveTokens?.(true, true)?.[0];
+            if (!token) throw new Error(`${plan.source.name}: ${sourceActor.name} needs a token on the scene.`);
+            const scene = token.parent, size = scene.grid.size, pixels = (data.radius / (scene.grid.distance || 5) + token.width / 2) * size;
+            [region] = await scene.createEmbeddedDocuments("Region", [{ name: `${plan.source.name} (${sourceActor.name})`, color: "#6a4c93",
+                shapes: [{ type: "circle", x: token.x + token.width * size / 2, y: token.y + token.height * size / 2, radiusX: pixels, radiusY: pixels, radius: pixels, rotation: 0, hole: false }] }]);
+        }
+        // (The caster's dominion, for its wicket's threaded magic — "while within the area": spellshape-runtime.js wicketDominionOf.)
+        await region.setFlag(MODULE_ID, "casterDominion", { casterUuid: sourceActor.uuid });
+        const started = await this.ongoing.startRegionArea({ spellName: plan.source.name, sourceActorUuid: sourceActor.uuid, sourceItemUuid: itemOrSource?.uuid ?? null, castRank, region,
+            durationSeconds: data.seconds, notes: data.notes, memberRules: foundry.utils.deepClone(data.rules), memberAllies: true, memberCaster: true, memberCasterOnly: true, seedMembers: true });
+        await this.ongoing.reconcile();
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "caster-dominion", castInstanceId: started.castId } },
+            content: `<h3>${escapeHTML(plan.source.name)}</h3><p>A stationary ${data.radius}-foot emanation for 1 minute. While ${escapeHTML(sourceActor.name)} is inside, its slot and Focus spells with its wicket traits gain a status bonus to their damage or healing equal to the spell's rank.</p>`
+                + data.notes.map(note => `<p class="pf2e-auto-gm-reminder"><strong>GM:</strong> ${escapeHTML(note)}</p>`).join("") }); } catch (_) {}
+        if (options.sourceMessageId) try { await game.messages.get(options.sourceMessageId)?.setFlag(MODULE_ID, "resolvedCast", { castInstanceId: started.castId, resolutionKind: "caster-dominion" }); } catch (_) {}
+        return { status: "applied", plan, castInstanceId: started.castId, regionUuid: region.uuid };
+    }
+
+    /** Shadow Puppetry: the placed area, the caster's damage type; its damage to each creature in it now and on the first Sustain each turn (`areaPulse`). */
+    async #executePulseArea(itemOrSource, plan, sourceActor, options) {
+        const data = plan.resolution.pulseArea;
+        if (!this.ongoing?.startRegionArea) throw new Error(`${plan.source.name} needs the ongoing spell manager.`);
+        if (!game.user.isGM) throw new Error(`${plan.source.name}: the GM places and runs the area.`);
+        const castRank = Number(options.castRank ?? itemOrSource?.rank ?? plan.rank);
+        const type = options.casterChoice ?? await foundry.applications.api.DialogV2.prompt({ window: { title: `${plan.source.name} — damage type` }, rejectClose: false,
+            content: `<select name="type">${data.types.map(entry => `<option value="${entry}">${entry}</option>`).join("")}</select>`, ok: { label: "Choose", callback: (_event, button) => button.form.elements.type.value } });
+        if (!data.types.includes(type)) throw new Error(`${plan.source.name}: choose one of ${data.types.join(", ")}.`);
+        let region = options.region ?? null;
+        if (!region) {
+            if (!itemOrSource?.placeTemplate) throw new Error(`${plan.source.name}: the spell item is needed to place the area.`);
+            region = await itemOrSource.placeTemplate();
+            if (!region) return { status: "cancelled" };
+        }
+        const formula = String(data.formula).replace(/@item\.(?:rank|level)\b/g, String(castRank));
+        const started = await this.ongoing.startRegionArea({ spellName: plan.source.name, sourceActorUuid: sourceActor.uuid, sourceItemUuid: itemOrSource?.uuid ?? null, castRank, region,
+            durationSeconds: data.seconds, events: [], hazardDamage: { formula, type, label: `the ${type} shadows` }, sustained: data.sustained === true, sustainPulse: true });
+        const pulse = await this.ongoing.areaPulse(started.castId);
+        return { status: "applied", plan, castInstanceId: started.castId, type, formula, pulse };
+    }
+
+    /** Overwhelming Festivities: the module's Aura on the caster (its radius proved again at the cast rank); the watcher hurts the enemies it holds (`trigger-aura-runtime.js`). */
+    async #executeTriggerAura(itemOrSource, plan, sourceActor, options) {
+        const data = plan.resolution.triggerAura;
+        const castRank = Number(options.castRank ?? itemOrSource?.rank ?? plan.rank);
+        const template = await loadNativeEffectTemplate(data.effect.uuid);
+        const aura = (template?.system?.rules ?? []).find(rule => rule.key === "Aura");
+        const expected = data.radius.base + Math.max(0, Math.floor((castRank - data.radius.baseRank) / data.radius.interval)) * data.radius.feet;
+        if (!aura || auraRadiusAt(aura.radius, castRank) !== expected) throw new Error(`${plan.source.name}: the module's Aura no longer matches the text's ${expected}-foot emanation.`);
+        const castInstanceId = options.castInstanceId ?? randomID();
+        const source = prepareNativeEffectSource(template, { castInstanceId, castRank, sourceActorUuid: sourceActor.uuid, sourceItemUuid: itemOrSource?.uuid ?? null, sourceItemName: plan.source.name, resolutionKind: "trigger-aura" });
+        source.flags = { ...(source.flags ?? {}), [MODULE_ID]: { ...(source.flags?.[MODULE_ID] ?? {}), triggerAura: { castId: castInstanceId, castRank, formula: data.formula, type: data.type, trait: data.trait,
+            condition: data.condition, granted: data.granted, spellUuid: itemOrSource?.uuid ?? null, spellName: plan.source.name } } };
+        const effect = await createNativeEffect(sourceActor, source);
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "trigger-aura", castInstanceId } },
+            content: `<h3>${escapeHTML(plan.source.name)}</h3><p>A ${expected}-foot emanation for 1 minute: ${escapeHTML(data.sourceText)} (The module applies it.)</p>` }); } catch (_) {}
+        if (options.sourceMessageId) try { await game.messages.get(options.sourceMessageId)?.setFlag(MODULE_ID, "resolvedCast", { castInstanceId, resolutionKind: "trigger-aura" }); } catch (_) {}
+        return { status: "applied", plan, castInstanceId, radius: expected, effectUuid: effect?.uuid ?? null };
+    }
+
+    /**
+     * Mark of Mystery: the ward on the caster and the targeted ally for the duration; a creature targeting either with a harmful effect gets the save card
+     * (`markWardTrigger`), the caster's tradition read from its spellcasting.
+     */
+    async #executeMarkWard(itemOrSource, plan, sourceActor, options) {
+        const data = plan.resolution.markWard;
+        const ally = this.#singleTarget(plan, options, "1 ally").actor;
+        if (ally === sourceActor || !(sourceActor.isAllyOf?.(ally) ?? sourceActor.alliance === ally.alliance)) throw new Error(`${plan.source.name}: the target must be one of ${sourceActor.name}'s allies.`);
+        const castRank = Number(options.castRank ?? itemOrSource?.rank ?? plan.rank);
+        const dc = this.#spellDC(itemOrSource, sourceActor, options);
+        const tradition = itemOrSource?.spellcasting?.tradition ?? itemOrSource?.system?.traditions?.value?.[0] ?? null;
+        const castInstanceId = options.castInstanceId ?? randomID();
+        const flags = { castId: castInstanceId, dc, castRank, casterUuid: sourceActor.uuid, spellUuid: itemOrSource?.uuid ?? null, statistic: data.statistic, plan: clone(data.plan),
+            tradition, types: tradition ? data.traditions[tradition] ?? [] : [], penaltyUuid: data.penalty.uuid, asked: [], holders: [] };
+        const made = [];
+        for (const actor of [sourceActor, ally]) made.push(await this.#ruleEffect(actor, { name: plan.source.name, rules: [], seconds: data.seconds, sourceActor, itemOrSource, flags: { markWard: flags },
+            description: `<p>Marked by ${escapeHTML(sourceActor.name)}'s patron. A creature targeting ${escapeHTML(sourceActor.name)} or ${escapeHTML(ally.name)} with a harmful effect attempts a ${escapeHTML(data.statistic)} save against DC ${dc} (the module starts the card): Frightened 1, or 2 on a critical failure; then immune for 1 hour.${tradition ? ` Creatures of the ${escapeHTML(tradition)} types (${escapeHTML((flags.types ?? []).join(", "))}) take a −1 status penalty to it.` : ""}</p>` }));
+        for (const effect of made) await effect.setFlag(MODULE_ID, "markWard", { ...flags, holders: made.filter(other => other !== effect).map(other => other.uuid) });
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "mark-ward", castInstanceId } },
+            content: `<h3>${escapeHTML(plan.source.name)}</h3><p>${escapeHTML(sourceActor.name)} and ${escapeHTML(ally.name)} bear the mark for 1 minute (save DC ${dc}${tradition ? `, ${escapeHTML(tradition)}` : ""}).</p>` }); } catch (_) {}
+        if (options.sourceMessageId) try { await game.messages.get(options.sourceMessageId)?.setFlag(MODULE_ID, "resolvedCast", { castInstanceId, resolutionKind: "mark-ward" }); } catch (_) {}
+        return { status: "applied", plan, castInstanceId, dc, tradition, effectUuids: made.map(effect => effect.uuid) };
     }
 
     /** A ward against attacks (Sanctuary): the Effect on the target; each attack on it has the attacker save (`attackWardOnAttack`). */
@@ -1456,7 +3301,8 @@ export class EffectRuntime {
      * caster, and placed in the nearest free space within range. The caster's sustained Effect removes it when it ends (`summonOnEnd`).
      */
     async #executeSummon(itemOrSource, plan, sourceActor, options) {
-        const data = plan.resolution.summon;
+        // (A feature's summon of one trait — Create Elemental's "must have the same elemental trait as the residual energy": `options.requireTraits`.)
+        const data = options.requireTraits?.length ? { ...plan.resolution.summon, requireTraits: [...options.requireTraits] } : plan.resolution.summon;
         const castRank = Number(options.castRank ?? itemOrSource?.rank ?? plan.rank);
         const casterToken = sourceActor.getActiveTokens?.(true, true)?.[0] ?? null;
         if (!casterToken) throw new Error(`${plan.source.name}: ${sourceActor.name} needs a token on the scene.`);
@@ -1494,6 +3340,8 @@ export class EffectRuntime {
         foundry.utils.setProperty(actorData, "system.details.alliance", sourceActor.alliance ?? sourceActor.system?.details?.alliance ?? null);
         actorData.prototypeToken = { ...(actorData.prototypeToken ?? {}), actorLink: true, disposition: casterToken.disposition };
         actorData.flags = foundry.utils.mergeObject(actorData.flags ?? {}, { [MODULE_ID]: { summoned: { castId: castInstanceId, casterUuid: sourceActor.uuid, spell: plan.source.name } } });
+        // (An aspect — Magic+'s aspect summons: its level the cast rank, as the module's macro sets it.)
+        if (data.aspect) foundry.utils.setProperty(actorData, "system.details.level.value", castRank);
         const actor = await Actor.create(actorData);
         let token;
         try {
@@ -1508,7 +3356,33 @@ export class EffectRuntime {
             description: `<p>${escapeHTML(actor.name)} (summoned, minion) is here while you Sustain this spell; it acts when you Sustain (2 actions). It's removed when this Effect ends.</p>${(data.notes ?? []).map(note => `<p>${escapeHTML(note)}</p>`).join("")}` });
         try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), content: `<h3>${escapeHTML(plan.source.name)}</h3><p>${escapeHTML(sourceActor.name)} summons <strong>${escapeHTML(actor.name)}</strong> (level ${actor.level}${extraTraits.length ? `; ${escapeHTML(extraTraits.join(", "))}` : ""}). It has the summoned and minion traits and acts when you Sustain the spell (2 actions). It's removed when the spell ends.</p>${(data.notes ?? []).map(note => `<p><em>${escapeHTML(note)}</em></p>`).join("")}`,
             flags: { [MODULE_ID]: { kind: "summon", castInstanceId } } }); } catch (error) { console.warn(`${MODULE_ID} | The summon card could not be posted.`, error); }
+        // (An aspect's statistics: the module's Effect at the cast rank, from the caster — its AspectForm reads the caster's spell DC from the origin — with the caster's
+        // choices: the form, size and damage type asked by PF2e's choice sets, or given as `options.aspectSelections` {flag: value}.)
+        if (data.aspect) await this.#aspectStatistics(actor, data.aspect, { castRank, sourceActor, casterToken, itemOrSource, tradition, selections: options.aspectSelections ?? null });
+        // (A spellshape on the summoned creature — Veracious Summon: spellshape-runtime.js.)
+        if (options.sourceMessageId) await shapeSummonedAfter(options.sourceMessageId, sourceActor, actor, { ongoing: this.ongoing, summonEffect: effect, castRank, durationSeconds: data.durationSeconds, itemOrSource });
+        // (Magic+'s Essence Summoner: a summon from an essence spell, its bonus by the essence before the cast — essence-runtime.js.)
+        if (options.sourceMessageId) await essenceSummoned(sourceActor, actor, castRank, options.sourceMessageId).catch(() => null);
         return { status: "applied", plan, castInstanceId, maxLevel, actorUuid: actor.uuid, tokenUuid: token.uuid, effectUuid: effect.uuid };
+    }
+
+    /** A Magic+ aspect's statistics Effect on the summoned aspect (as the module's summon macro builds it). */
+    async #aspectStatistics(actor, aspect, { castRank, sourceActor, casterToken, itemOrSource, tradition, selections }) {
+        const template = await loadNativeEffectTemplate(aspect.statistics.uuid);
+        if (!template) throw new Error(`${aspect.statistics.name} isn't in the module's packs.`);
+        const source = foundry.utils.deepClone(template.toObject?.() ?? template);
+        delete source._id;
+        source.system.level = { ...(source.system.level ?? {}), value: castRank };
+        const statistic = itemOrSource?.spellcasting?.statistic ?? null;
+        source.system.context = { origin: { actor: sourceActor.uuid, token: casterToken.document?.uuid ?? casterToken.uuid ?? null, item: itemOrSource?.uuid ?? null, rollOptions: [],
+            spellcasting: itemOrSource?.spellcasting ? { attribute: { type: itemOrSource.attribute ?? statistic?.attribute ?? null, mod: statistic?.attributeModifier?.value ?? 0 }, tradition } : null } };
+        for (const rule of source.system.rules ?? []) {
+            if (rule.key !== "ChoiceSet" || !selections) continue;
+            const key = rule.flag ?? rule.rollOption ?? null;
+            if (key && selections[key] !== undefined) rule.selection = selections[key];
+        }
+        const [made] = await actor.createEmbeddedDocuments("Item", [source]);
+        return made ?? null;
     }
 
     /**
@@ -1581,6 +3455,123 @@ export class EffectRuntime {
             content: `<h3>${escapeHTML(plan.source.name)}</h3><p>Effect on <strong>${escapeHTML(recipient.name)}</strong>${weapon ? ` (${escapeHTML(weapon.name)})` : ""}.${data.toggle ? ` Switch on “${escapeHTML(data.toggle.label)}” for a roll it applies to.` : ""}</p>${snag ? notes.map(note => `<p>${escapeHTML(note)}</p>`).join("") : ""}${snagButton}` }); } catch (_) {}
         if (options.sourceMessageId) try { await game.messages.get(options.sourceMessageId)?.setFlag(MODULE_ID, "resolvedCast", { castInstanceId, resolutionKind: "rule-set" }); } catch (_) {}
         return { status: "applied", plan, castInstanceId, effectUuid: effect.uuid, weaponId: weapon?.id ?? null, rules, choice: chosen?.key ?? null };
+    }
+
+    /**
+     * Stated bonuses, Speeds and senses (Movanic Glimmer, Chameleon Coat, Feet to Fins …; the notes audit 2026-10-05): an Effect per recipient — the
+     * caster, each target, the caster and the targets, or the familiar — with the rules at the cast rank, a recipient's alternative (a fly Speed it
+     * already has, low-light vision it already has), its land Speed written in, a toggle, and the option picked.
+     */
+    async #executeStatedEffect(itemOrSource, plan, sourceActor, options) {
+        const data = plan.resolution.statedEffect;
+        const castRank = Number(options.castRank ?? itemOrSource?.rank ?? plan.rank);
+        const targets = uniqueActors(options.targets ?? [...game.user.targets]);
+        let recipients;
+        if (data.recipient === "self") recipients = [sourceActor];
+        else if (data.recipient === "familiar") {
+            const familiar = targets.find(actor => actor.type === "familiar")
+                ?? game.actors.find(actor => actor.type === "familiar" && (actor.system?.master?.id === sourceActor.id || actor.master?.id === sourceActor.id));
+            if (!familiar) throw new Error(`${plan.source.name}: ${sourceActor.name} has no familiar to target.`);
+            recipients = [familiar];
+        } else {
+            recipients = data.recipient === "self-and-targets" ? [sourceActor, ...targets.filter(actor => actor !== sourceActor)] : targets;
+            if (!recipients.length) throw new Error(`${plan.source.name}: target the creature${data.recipient === "targets" ? "s" : ""} first.`);
+        }
+        if (data.requiresTrait) {
+            const wrong = recipients.filter(actor => !actor.traits?.has?.(data.requiresTrait));
+            if (wrong.length) throw new Error(`${plan.source.name}: ${wrong.map(actor => actor.name).join(", ")} ${wrong.length === 1 ? "isn't" : "aren't"} ${data.requiresTrait === "animal" ? "an animal" : `a ${data.requiresTrait}`}.`);
+        }
+        let chosen = null;
+        // (The caster's class pick on its own sheet — Channel Imperial Dragon's Imperial Dragon Emissary dragon — chooses without asking.)
+        const preset = data.presetFlag ? String(data.presetFlag).split(".").reduce((value, key) => value?.[key], sourceActor.flags?.pf2e ?? {}) : null;
+        if (data.choice) {
+            const key = options.choice ?? (data.choice.options.some(option => option.key === preset) ? preset : null) ?? await foundry.applications.api.DialogV2.prompt({ window: { title: `${plan.source.name} — ${data.choice.label}` }, rejectClose: false,
+                content: `<select name="choice">${data.choice.options.map(option => `<option value="${option.key}">${escapeHTML(option.label)}</option>`).join("")}</select>`,
+                ok: { label: "Choose", callback: (_event, button) => button.form.elements.choice.value } });
+            chosen = data.choice.options.find(option => option.key === key);
+            if (!chosen) throw new Error(`${plan.source.name}: choose ${data.choice.label.toLowerCase()}.`);
+        }
+        const seconds = (data.secondsByRank ?? []).filter(entry => castRank >= entry.rank).at(-1)?.seconds ?? data.seconds;
+        // (More targets from a rank: Discern Secrets+'s two at 5th.)
+        if (data.maxTargets) {
+            const most = castRank >= data.maxTargets.rank ? data.maxTargets.count : data.maxTargets.base;
+            if (recipients.length > most) throw new Error(`${plan.source.name}: at most ${most} target${most === 1 ? "" : "s"} at rank ${castRank}.`);
+        }
+        // (An option that removes a condition — Discern Secrets+'s concealment: one an Effect grants stays, and the card offers the counteract.)
+        const removed = [], kept = [];
+        if (chosen?.removes) for (const actor of recipients) {
+            for (const condition of (actor.itemTypes?.condition ?? []).filter(entry => entry.slug === chosen.removes.slug)) {
+                if (condition.grantedBy && condition.grantedBy.type !== "condition") { kept.push(`${actor.name}'s ${condition.grantedBy.name}`); continue; }
+                await condition.delete(); removed.push(actor.name);
+            }
+        }
+        // (PF2e 8.5 keeps Speeds in system.movement.speeds; older data in system.attributes.speed.)
+        const speedOf = (actor, type) => actor.system?.movement?.speeds?.[type] ?? (type === "land" ? actor.system?.attributes?.speed : (actor.system?.attributes?.speed?.otherSpeeds ?? []).find(speed => speed.type === type)) ?? null;
+        const has = (actor, test) => test.speed ? !!speedOf(actor, test.speed)
+            : test.sense ? (actor.system?.perception?.senses ?? []).some(sense => sense.type === test.sense) : false;
+        const castInstanceId = options.castInstanceId ?? randomID();
+        // (Against one creature — View Internal Anatomy: its signature and the cast rank's amount in the rules.)
+        let against = null;
+        if (data.againstTarget) {
+            const others = targets.filter(actor => actor !== sourceActor);
+            if (others.length !== 1) throw new Error(`${plan.source.name}: target the one creature first.`);
+            against = others[0];
+        }
+        const fill = value => against ? JSON.parse(JSON.stringify(value).replaceAll('"{castRank}"', String(Number(data.perRank ?? 1) * castRank)).replaceAll("{targetSignature}", String(against.signature))) : value;
+        const made = [];
+        for (const actor of recipients) {
+            const alternative = (data.alternatives ?? []).find(entry => has(actor, entry.if));
+            let rules = alternative ? structuredClone(alternative.rules) : [...statedRulesAt(data, castRank), ...structuredClone(chosen?.rules ?? [])];
+            // (An aura option — Spellsurge's Interference: PF2e's Aura rule handing a world Effect with the option's rules to every creature in it.)
+            if (chosen?.aura) rules.push({ key: "Aura", radius: chosen.aura.radius, slug: `${plan.source.slug ?? "stated"}-${chosen.key}`, effects: [{ uuid: (await statedAuraEffect(plan, chosen)).uuid, affects: "all", includesSelf: true }] });
+            const land = Number(speedOf(actor, "land")?.value ?? speedOf(actor, "land")?.total ?? 25);
+            rules = fill(JSON.parse(JSON.stringify(rules).replaceAll('"{landSpeed}"', String(land))));
+            if (data.toggle) rules.unshift({ key: "RollOption", domain: "all", option: data.toggle.option, toggleable: true, label: data.toggle.label, value: false });
+            const notes = [...(chosen ? [`${chosen.label}.`, ...chosen.notes] : []), ...(alternative?.notes ?? []), ...(data.notes ?? [])];
+            // (A choice answered ahead: PF2e's ChoiceSet of that flag preset.)
+            for (const rule of rules) if (rule.key === "ChoiceSet" && rule.flag && options.choiceSelections && rule.flag in options.choiceSelections) rule.selection = options.choiceSelections[rule.flag];
+            // (Immune after it — Dynamic Gouging Claw's claw: refused while immune, the immunity made with the Effect.)
+            if (data.immunity) {
+                if ((actor.itemTypes?.effect ?? []).some(effect => effect.flags?.[MODULE_ID]?.spellImmunity?.key === data.immunity.key && !effect.isExpired))
+                    throw new Error(`${plan.source.name}: ${actor.name} is temporarily immune to it.`);
+                made.push(await createSpellImmunity(actor, data.immunity, plan.source.name, castInstanceId));
+            }
+            const effect = await this.#ruleEffect(actor, { name: chosen ? `${plan.source.name} (${chosen.label})` : plan.source.name, rules, seconds, sourceActor, itemOrSource, sustained: !!data.sustained, untilTurnEnd: data.untilTurnEnd === true,
+                ...(data.expiry ? { expiry: data.expiry } : {}),
+                flags: { runtime: { schema: 1, kind: "stated-effect", castInstanceId, sourceActorUuid: sourceActor.uuid, sourceItemName: plan.source.name, targetActorUuid: actor.uuid,
+                    // (A marker the caster's next damaging spell reads — Dynamic Vampiric Feast's one action: its cap at this rank.)
+                    ...(data.vampiricNext ? { vampiricNext: { ...data.vampiricNext, cap: Number(data.vampiricNext.capPerRank) * castRank, spellName: plan.source.name } } : {}) } },
+                description: `${data.toggle ? `<p>Switch on “${escapeHTML(data.toggle.label)}” for a roll it applies to.</p>` : ""}${notes.map(note => `<p>${escapeHTML(note)}</p>`).join("")}` });
+            made.push(effect);
+        }
+        // (The creature's facts to the GM — View Internal Anatomy; and the GM's options, against that creature.)
+        if (against && data.reveal) await revealInformation(against, { kind: data.reveal.kind, sourceActorUuid: sourceActor.uuid, spellName: plan.source.name });
+        // (The Sustain's bonus at the cast rank — Channel Imperial Dragon's one more every 3 ranks.)
+        const social = data.socialBonus ? data.socialBonus.base + Math.max(0, Math.floor((castRank - data.socialBonus.rank) / data.socialBonus.interval)) * data.socialBonus.add : null;
+        // (Hyper-Arcane Pressure Point Strike: "Roll damage for the required unarmed Strike again" — the caster's unarmed Strike's damage, read now.)
+        let strikeDamage = null, strikeDice = null, strikeType = null;
+        if (data.strikeDamage) {
+            const strike = (sourceActor.system?.actions ?? []).find(action => action.item?.category === "unarmed" || (action.item?.system?.traits?.value ?? []).includes("unarmed"));
+            const text = strike ? String(await strike.damage({ getFormula: true })) : "";
+            const parsed = /^(.+?)\s+([a-z]+)$/.exec(text.trim());
+            if (!parsed) throw new Error(`${plan.source.name}: ${sourceActor.name} has no unarmed Strike to read.`);
+            strikeDice = parsed[1].replace(/\s+/g, ""); strikeType = parsed[2];
+            strikeDamage = `(${strikeDice})[${strikeType}]`;
+        }
+        // (Or the option chosen — Secret of the Forebearers' patron skill.)
+        const gmOptions = against ? fill(data.gmOptions ?? []) : (data.gmOptions ?? []).length ? JSON.parse(JSON.stringify(data.gmOptions).replaceAll('"{socialBonus}"', String(social ?? 0))
+            .replaceAll('"{chosen}"', JSON.stringify(chosen?.key ?? null)).replaceAll('"{strikeDamage}"', JSON.stringify(strikeDamage))
+            .replaceAll('"{strikeDice}"', JSON.stringify(strikeDice)).replaceAll('"{strikeType}"', JSON.stringify(strikeType))) : [];
+        const counteract = kept.length ? { target: kept.join(", "), text: chosen.removes.counteract, result: null, castRank, sourceItemUuid: itemOrSource?.uuid ?? null, spellName: plan.source.name } : null;
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "stated-effect", castInstanceId, ...(counteract ? { noteCounteract: counteract } : {}),
+                ...(gmOptions.length ? { gmOptions: { castRank, dc: null, sourceActorUuid: sourceActor.uuid, sourceItemUuid: itemOrSource?.uuid ?? null,
+                    spellSource: typeof itemOrSource?.toObject === "function" ? itemOrSource.toObject() : clone(itemOrSource ?? null), spellName: plan.source.name, options: gmOptions } } : {}) } },
+            content: `<h3>${escapeHTML(plan.source.name)}</h3><p>Effect on <strong>${recipients.map(actor => escapeHTML(actor.name)).join(", ")}</strong>${against ? `, against <strong>${escapeHTML(against.name)}</strong>` : ""}${chosen ? ` (${escapeHTML(chosen.label)})` : ""}.${data.toggle ? ` Switch on “${escapeHTML(data.toggle.label)}” for a roll it applies to.` : ""}</p>`
+                + (gmOptions.length ? `<p><strong>GM options</strong> (target the creatures, then press one):</p>${gmOptions.map(option => `<button type="button" class="pf2e-auto-gm-option" data-option="${escapeHTML(option.key)}">${escapeHTML(option.label)}</button>`).join("")}` : "")
+                + (removed.length ? `<p>No longer ${escapeHTML(chosen.removes.slug)}: ${removed.map(escapeHTML).join(", ")}.</p>` : "")
+                + (counteract ? `<p class="pf2e-auto-gm-reminder">${escapeHTML(counteract.target)} keeps it: ${escapeHTML(counteract.text)}</p><button type="button" class="pf2e-auto-note-counteract">Counteract</button>` : "") }); } catch (_) {}
+        if (options.sourceMessageId) try { await game.messages.get(options.sourceMessageId)?.setFlag(MODULE_ID, "resolvedCast", { castInstanceId, resolutionKind: "stated-effect" }); } catch (_) {}
+        return { status: "applied", plan, castInstanceId, effectUuids: made.map(effect => effect.uuid), recipients: recipients.map(actor => actor.uuid), choice: chosen?.key ?? null, removed, kept };
     }
 
     /** A switchable option (Variable Gravity): the option picked replaces the Effect's rules and notes; the spell's time goes on. */
@@ -1947,7 +3938,12 @@ export class EffectRuntime {
                     const template = link ? await fromUuid(link) : game.pf2e.ConditionManager.getCondition(condition.slug);
                     const [doc] = await sourceActor.createEmbeddedDocuments("Item", [prepareConditionGrantSource(condition, template, { ...runtime, castId: state.castId, duration: condition.duration })]);
                     created.push(doc?.uuid);
-                } else await sourceActor.increaseCondition(condition.slug, condition.value ? { value: condition.value } : {});
+                } else {
+                    // (PF2e adds the value to an existing condition: raise it to the stated value, never lower it.)
+                    const current = Number(sourceActor.getCondition?.(condition.slug)?.value ?? 0);
+                    if (!condition.value) { if (!sourceActor.hasCondition?.(condition.slug)) await sourceActor.increaseCondition(condition.slug); }
+                    else if (current < condition.value) await sourceActor.increaseCondition(condition.slug, { value: condition.value - current });
+                }
             }
         }
         const readable = value => value.replace(/([A-Z])/g, " $1").toLowerCase();
@@ -2028,6 +4024,8 @@ export class EffectRuntime {
             description: `<p>The ${data.shape === "cube" ? "cube's walls block sight (not movement)" : "wall blocks movement (not sight)"}; they're removed when this Effect ends.</p>${stats}${data.notes.map(note => `<p>${escapeHTML(note)}</p>`).join("")}` });
         try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "scene-walls", castInstanceId } },
             content: `<h3>${escapeHTML(plan.source.name)}</h3><p>${walls.length} wall${walls.length === 1 ? "" : "s"} placed (${data.blocksMove ? "blocking movement" : "blocking sight"})${light ? " with the cage's light" : ""}.</p>${stats}${data.notes.map(note => `<p><em>${escapeHTML(note)}</em></p>`).join("")}` }); } catch (_) {}
+        // (A catalyst's rider on the walls — Force Tiles — once they stand: catalyst-runtime.js.)
+        if (options.sourceMessageId) try { await game.messages.get(options.sourceMessageId)?.setFlag(MODULE_ID, "resolvedCast", { castInstanceId, resolutionKind: "scene-walls" }); } catch (_) {}
         return { status: "applied", plan, castInstanceId, wallIds: walls.map(wall => wall.id), lightId: light?.id ?? null, regionUuid: region.uuid, effectUuid: effect.uuid, size };
     }
 
@@ -2407,7 +4405,12 @@ export class EffectRuntime {
                     system: { duration: { value: condition.minutes, unit: "minutes", expiry: "turn-start", sustained: false }, start: { value: game.time.worldTime, initiative: game.combat?.combatant?.initiative ?? null },
                         description: { value: condition.escapeEnds ? "<p>An Escape against the spell DC ends the spell: delete this Effect.</p>" : "" },
                         rules: [{ key: "GrantItem", uuid: condition.uuid, onDeleteActions: { grantee: "cascade" } }] } }]);
-                else await target.increaseCondition(condition.slug, condition.value ? { value: condition.value } : {});
+                else {
+                    // (PF2e adds the value to an existing condition: raise it to the stated value, never lower it.)
+                    const current = Number(target.getCondition?.(condition.slug)?.value ?? 0);
+                    if (!condition.value) { if (!target.hasCondition?.(condition.slug)) await target.increaseCondition(condition.slug); }
+                    else if (current < condition.value) await target.increaseCondition(condition.slug, { value: condition.value - current });
+                }
             }
         }
         return roll;
@@ -2539,7 +4542,9 @@ export class EffectRuntime {
      * the card's control on the first Sustain each later round (`mischiefAct`).
      */
     async #executeMischief(itemOrSource, plan, sourceActor, options) {
-        const data = plan.resolution.mischief;
+        // (Literate Lemur: "the following option is added to the options normally available".)
+        const added = options.sourceMessageId ? shapeRidersFor(options.sourceMessageId).flatMap(shape => shape.riders ?? []).filter(rider => rider.type === "mischief-mode").map(rider => rider.mode) : [];
+        const data = added.length ? { ...plan.resolution.mischief, modes: [...plan.resolution.mischief.modes, ...added] } : plan.resolution.mischief;
         const key = options.mode ?? (data.modes.length === 1 ? data.modes[0].key : await foundry.applications.api.DialogV2.prompt({ window: { title: `${plan.source.name} — the mischief` }, rejectClose: false,
             content: `<select name="mode">${data.modes.map(mode => `<option value="${mode.key}">${escapeHTML(mode.label)}</option>`).join("")}</select>`,
             ok: { label: "Choose", callback: (_event, button) => button.form.elements.mode.value } }));
@@ -3769,7 +5774,8 @@ export class EffectRuntime {
             degree = Math.max(0, Math.min(3, degree + (natural === 20 ? 1 : natural === 1 ? -1 : 0)));
             const frightened = degree === 3 ? 2 : degree === 2 ? 1 : 0;
             if (frightened) {
-                if ((actor.getCondition?.("frightened")?.value ?? 0) < frightened) await actor.increaseCondition("frightened", { value: frightened });
+                const frightenedNow = Number(actor.getCondition?.("frightened")?.value ?? 0);
+                if (frightenedNow < frightened) await actor.increaseCondition("frightened", { value: frightened - frightenedNow }); // (PF2e adds the value to an existing condition.)
                 await this.#ruleEffect(actor, { name: `${plan.source.name}: belittled (${labels[choice]})`, rules: [{ key: "FlatModifier", selector, predicate, type: data.penalty.type, value: -penalty }],
                     seconds: data.seconds, sourceActor, itemOrSource });
             }
@@ -3954,7 +5960,8 @@ export class EffectRuntime {
         const roll = await actor.skills?.[data.skill]?.roll({ dc: { value: dc }, extraRollOptions: ["action:demoralize"], traits: ["concentrate", "emotion", "fear", "mental", "visual"], skipDialog });
         const degree = Number(roll?.degreeOfSuccess ?? -1);
         const frightened = degree === 3 ? 2 : degree === 2 ? 1 : 0;
-        if (frightened && (foe.getCondition?.("frightened")?.value ?? 0) < frightened) await foe.increaseCondition("frightened", { value: frightened });
+        const frightenedNow = Number(foe.getCondition?.("frightened")?.value ?? 0);
+        if (frightened && frightenedNow < frightened) await foe.increaseCondition("frightened", { value: frightened - frightenedNow }); // (PF2e adds the value to an existing condition.)
         let fleeing = null;
         if (degree === 3 && data.castRank >= data.fleeing.rank) fleeing = (await this.#ruleEffect(foe, { name: `${data.spell}: Fleeing from ${actor.name}`, rules: [{ key: "GrantItem", uuid: data.fleeing.uuid, onDeleteActions: { grantee: "restrict" } }],
             seconds: data.fleeing.rounds * 6, sourceActor: actor, itemOrSource: null, description: `<p>Fleeing from ${escapeHTML(actor.name)}.</p>` })).uuid;
@@ -4235,7 +6242,15 @@ export class EffectRuntime {
                 extraRollOptions: ["strike", "crush"].includes(action.kind) ? ["attack", "item:trait:attack", "item:melee"] : [`action:${action.kind === "push" ? "shove" : "grapple"}`], skipDialog });
             const degree = Number(roll?.degreeOfSuccess ?? -1);
             const result = { status: "rolled", action: action.key, degree };
-            if (action.kind === "push") await say(degree === 3 ? `${escapeHTML(target.name)} is pushed up to 10 feet (the GM moves it).` : degree === 2 ? `${escapeHTML(target.name)} is pushed 5 feet (the GM moves it).` : `${escapeHTML(target.name)} isn't pushed.`);
+            // (The hand's Shove: pushed away from the hand — 5 feet, or 10 on a critical success — by the module, never ending in another creature's space.)
+            if (action.kind === "push" && degree >= 2) {
+                const handToken = canvas.scene.tokens.find(token => token.actor?.flags?.[MODULE_ID]?.summoned?.castId === data.castId) ?? caster.getActiveTokens?.(true, true)?.[0] ?? null;
+                const handPoint = handToken ? { x: handToken.x + Number(handToken.width ?? 1) * canvas.grid.size / 2, y: handToken.y + Number(handToken.height ?? 1) * canvas.grid.size / 2 } : null;
+                const pushed = handPoint ? await forcedMove(tokens[0], { point: handPoint, direction: "away", feet: degree === 3 ? 10 : 5, reason: spell.name }) : null;
+                result.pushed = pushed;
+                await say(pushed?.moved ? `${escapeHTML(target.name)} is pushed ${pushed.squares * 5} feet${pushed.stoppedBy === "occupied" ? ", ending beside the creature in its way" : pushed.stoppedBy === "wall" ? " (a wall stopped it)" : ""}.`
+                    : `${escapeHTML(target.name)} is pushed ${degree === 3 ? "up to 10" : "5"} feet (the GM moves it).`);
+            } else if (action.kind === "push") await say(`${escapeHTML(target.name)} isn't pushed.`);
             if (action.kind === "grapple") {
                 for (const effect of linked(target).filter(effect => effect.flags[MODULE_ID].forceGrab)) await effect.delete();
                 if (degree >= 2) result.effectUuid = (await effectOn(degree === 3 ? "restrained" : "grabbed", degree === 3 ? "Restrained" : "Grabbed")).uuid;
@@ -5441,6 +7456,53 @@ export class EffectRuntime {
      * Stone to Flesh: the targeted creature's condition ended — the condition, and any Effect that grants it; with no creature targeted, the object's change the
      * GM's note on the card.
      */
+    /**
+     * Hope Prevails: the condition lowered by the amount on the target (or each creature in the caster's emanation); a condition an Effect keeps (an
+     * ongoing effect's) is left, and the card offers the GM's counteract against it; the two-action version's module Effect, proved again from the live template.
+     */
+    async #executeConditionLower(itemOrSource, plan, sourceActor, options) {
+        const data = plan.resolution.conditionLower;
+        const castRank = Number(options.castRank ?? itemOrSource?.rank ?? plan.rank);
+        let tokens;
+        if (data.recipients === "emanation") {
+            const centre = sourceActor.getActiveTokens?.(true, true)?.[0];
+            if (!centre) throw new Error(`${plan.source.name}: ${sourceActor.name} needs a token on the scene.`);
+            tokens = centre.parent.tokens.filter(token => token.actor?.isOfType?.("creature") && (token.id === centre.id || tokenDistance(centre, token) <= data.radius));
+        } else {
+            tokens = [...(options.targets ?? game.user.targets)].map(target => target?.document ?? target).filter(token => token?.actor);
+            if (tokens.length !== 1) throw new Error(`${plan.source.name}: target the one ${data.slug} creature.`);
+            if (!(tokens[0].actor.itemTypes?.condition ?? []).some(condition => condition.slug === data.slug)) throw new Error(`${plan.source.name}: ${tokens[0].actor.name} isn't ${data.slug}.`);
+        }
+        const castInstanceId = options.castInstanceId ?? randomID();
+        const lines = [], kept = [], made = [];
+        for (const token of tokens) {
+            const actor = token.actor;
+            for (const condition of (actor.itemTypes?.condition ?? []).filter(entry => entry.slug === data.slug)) {
+                // (An ongoing effect's condition — granted by an Effect — stays: the counteract is the way to end it.)
+                if (condition.grantedBy && condition.grantedBy.type !== "condition") { kept.push({ actor, source: condition.grantedBy.name }); continue; }
+                const value = Number(condition.value ?? condition.system?.value?.value ?? 1), next = value - data.by;
+                if (next > 0) await condition.update({ "system.value.value": next }); else await condition.delete();
+                lines.push(`${escapeHTML(actor.name)}: ${escapeHTML(data.label)} ${value} → ${Math.max(0, next) || "removed"}.`);
+            }
+            if (data.effect) {
+                const template = await loadNativeEffectTemplate(data.effect.uuid);
+                const rules = template?.system?.rules ?? [];
+                if (!(rules.length === 1 && rules[0].key === "FlatModifier" && rules[0].selector === "saving-throw" && rules[0].type === "status" && template.system.duration?.value === 1 && template.system.duration?.unit === "minutes"))
+                    throw new Error(`${plan.source.name}: the module's Effect no longer matches its sentence.`);
+                made.push(await createNativeEffect(actor, prepareNativeEffectSource(template, { castInstanceId, castRank, sourceActorUuid: sourceActor.uuid, sourceItemUuid: itemOrSource?.uuid ?? null,
+                    sourceItemName: plan.source.name, resolutionKind: "condition-lower", targetActorUuid: actor.uuid })));
+                lines.push(`${escapeHTML(actor.name)}: ${escapeHTML(data.effect.claimText)}`);
+            }
+        }
+        const counteract = kept.length ? { target: kept.map(entry => `${entry.actor.name}'s ${entry.source}`).join(", "), text: data.counteract.text, result: null } : null;
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }),
+            flags: { [MODULE_ID]: { kind: "condition-lower", castInstanceId, ...(counteract ? { noteCounteract: { ...counteract, castRank, sourceItemUuid: itemOrSource?.uuid ?? null, spellName: plan.source.name } } : {}) } },
+            content: `<h3>${escapeHTML(plan.source.name)}</h3>${lines.map(line => `<p>${line}</p>`).join("") || `<p>No one was ${escapeHTML(data.slug)}.</p>`}`
+                + (counteract ? `<p class="pf2e-auto-gm-reminder">${escapeHTML(counteract.target)} keeps ${escapeHTML(data.slug)} from an ongoing ${escapeHTML(data.counteract.trait)} effect: ${escapeHTML(data.counteract.text)}</p><button type="button" class="pf2e-auto-note-counteract">Counteract</button>` : "") }); } catch (_) {}
+        if (options.sourceMessageId) try { await game.messages.get(options.sourceMessageId)?.setFlag(MODULE_ID, "resolvedCast", { castInstanceId, resolutionKind: "condition-lower" }); } catch (_) {}
+        return { status: "applied", plan, castInstanceId, recipients: tokens.map(token => token.actor.uuid), kept: kept.map(entry => entry.actor.uuid), effectUuids: made.map(effect => effect.uuid) };
+    }
+
     async #executeRestoreCondition(itemOrSource, plan, sourceActor, options) {
         const data = plan.resolution.restoreCondition;
         const tokens = [...(options.targets ?? game.user.targets)].map(target => target?.object ?? target).filter(token => token?.actor);
@@ -6886,15 +8948,411 @@ export class EffectRuntime {
             if (!choice) throw new Error(`${plan.source.name}: choose one of the ${data.options.label}.`);
         }
         const phases = choice ? choice.phases : data.phases;
-        const label = phase => phase.key === "arrive" ? "Arrive" : phase.key === "depart" ? "Depart" : phase.title;
-        const when = phase => phase.key === "depart" ? " — at the end of your next turn" : phase.key === "arrive" ? " — when it appears" : phase.dc ? ` — DC ${phase.dc}` : "";
-        const content = `<h3>${escapeHTML(plan.source.name)}</h3>${choice ? `<p><strong>${escapeHTML(choice.label)}</strong></p>` : ""}${data.notes.map(text => `<p class="pf2e-auto-gm-reminder"><strong>GM:</strong> ${escapeHTML(text)} Place it on the map.</p>`).join("")}`
-            + phases.map(phase => `<p><strong>${escapeHTML(label(phase))}${phase.traits?.length ? ` (${escapeHTML(phase.traits.join(", "))})` : ""}${phase.dc ? "" : `: ${escapeHTML(phase.title)}`}</strong>${when(phase)}${phase.reminder ? `. ${escapeHTML(phase.reminder)}` : ""}${phase.note ? `. ${escapeHTML(phase.note)}` : ""}</p>`
-                + (phase.plan ? `<button type="button" class="pf2e-auto-incarnate" data-phase="${phase.key}"><i class="fa-solid fa-users"></i> ${escapeHTML(label(phase))}: target the creatures, then roll their saves</button>` : "")).join("");
+        // (A conjured creature with stated statistics — Dragon Turret's — is the module's token, made now.)
+        const conjured = data.conjure ? await this.#conjureToken(itemOrSource, plan, sourceActor, { ...options, castRank, castInstanceId }) : null;
+        // (A mode card's area — Storm Lord's storm around the caster, Wrathful Storm's cloud the GM places: a region whose state each mode sets.)
+        const areaCastId = data.area ? await this.#startModeArea(itemOrSource, plan, sourceActor, data.area, { castRank, region: options.region ?? null, radius: options.areaRadius ?? null }) : null;
+        if (data.area && !areaCastId) return { status: "cancelled", plan };
+        // (A card whose parts' Effects last the spell's time — Unbreaking Wave Containment's hold while Sustained, Doom Mark's marks for its minute: its
+        // own record holds them, and ends them with the spell.)
+        let lastingCastId = null;
+        if (data.lasting) {
+            if (!this.ongoing?.begin) throw new Error(`${plan.source.name} needs the ongoing spell manager.`);
+            // ("If you cast touch of death again, the effects of any touch of death you had previously cast end."; the emblem's new casting replaces the old.)
+            if (data.replaces) for (const journal of this.ongoing.records()) {
+                const record = journal.getFlag(MODULE_ID, ONGOING_FLAG);
+                if (record?.status === "active" && record.sourceActorUuid === sourceActor.uuid && record.name === plan.source.name && record.lastingCard) await this.ongoing.end(journal, { reason: "replaced" });
+            }
+            const clock = this.ongoing.clock();
+            const journal = await this.ongoing.begin({ castId: castInstanceId, name: plan.source.name, kind: "native", sourceActorUuid: sourceActor.uuid, sourceItemUuid: itemOrSource?.uuid ?? null,
+                recipientUuids: [], rank: castRank, castRound: clock.round, maximumAt: game.time.worldTime + data.lasting.seconds, endsAtMaximum: true, lastingCard: true,
+                ...(data.lasting.sustained ? { sustained: true, sustainClock: clock } : {}), ...(data.markTrigger ? { markTrigger: clone(data.markTrigger) } : {}) });
+            const record = clone(journal.getFlag(MODULE_ID, ONGOING_FLAG));
+            record.status = "active";
+            await this.ongoing.save(journal, record);
+            lastingCastId = castInstanceId;
+            // (Fire Seeds' acorns: an item on the caster, removed with the spell.)
+            if (data.pickup) await makePickupItems(this.ongoing, lastingCastId, sourceActor, { name: `${plan.source.name}: ${data.pickup.item}`, count: data.pickup.count, img: itemOrSource?.img ?? null, text: data.pickup.text });
+        }
+        const content = `<h3>${escapeHTML(plan.source.name)}</h3>${choice ? `<p><strong>${escapeHTML(choice.label)}</strong></p>` : ""}${(choice?.notes ?? []).map(text => `<p class="pf2e-auto-gm-reminder"><strong>GM:</strong> ${escapeHTML(text)}</p>`).join("")}${data.notes.map(text => `<p class="pf2e-auto-gm-reminder"><strong>GM:</strong> ${escapeHTML(text)}${conjured ? "" : " Place it on the map."}</p>`).join("")}`
+            + (conjured ? `<p><strong>${escapeHTML(conjured.name)}</strong> (AC ${conjured.ac}, saves +${conjured.saves}, ${conjured.hp} HP) is here: move its token where it appears. It's removed when the spell ends or it dies.</p>` : "")
+            + phases.map(phase => incarnatePartHTML(phase)).join("");
         const message = await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), content,
-            flags: { [MODULE_ID]: { kind: "incarnate", castInstanceId, incarnate: { itemUuid: itemOrSource?.uuid ?? null, sourceActorUuid: sourceActor.uuid, castRank, spellName: plan.source.name, used: [], choice: choice?.key ?? null } } } });
+            flags: { [MODULE_ID]: { kind: "incarnate", castInstanceId, incarnate: { itemUuid: itemOrSource?.uuid ?? null, sourceActorUuid: sourceActor.uuid, castRank, spellName: plan.source.name, used: [], choice: choice?.key ?? null,
+                // (A PF2e variant — Dynamic Ignition's one action — is reloaded by its overlays for each part.)
+                ...(itemOrSource?.isVariant && itemOrSource.appliedOverlays?.size ? { overlayIds: [...itemOrSource.appliedOverlays.values()] } : {}),
+                ...(options.sourceMessageId ? { sourceMessageId: options.sourceMessageId } : {}), ...(areaCastId ? { areaCastId } : {}), ...(lastingCastId ? { lastingCastId } : {}),
+                ...(conjured ? { conjured: { tokenUuid: conjured.tokenUuid, actorUuid: conjured.actorUuid } } : {}) } } } });
         if (options.sourceMessageId) try { await game.messages.get(options.sourceMessageId)?.setFlag(MODULE_ID, "resolvedCast", { castInstanceId, resolutionKind: "incarnate" }); } catch (_) {}
         return { status: "applied", plan, created: [], castInstanceId, messageId: message.id };
+    }
+
+    /**
+     * A mode card's area: a region following the caster (its emanation), fixed where the caster stands (a burst centred on it), or placed by the GM; a
+     * lingering record holding the members' Effects of the current mode (its base state at first), Sustained when the spell is.
+     */
+    async #startModeArea(itemOrSource, plan, sourceActor, area, { castRank, region = null, radius = null }) {
+        if (!this.ongoing?.startRegionArea) throw new Error(`${plan.source.name} needs the ongoing spell manager.`);
+        const own = sourceActor.getActiveTokens?.(true, true)?.[0], casterToken = own?.document ?? own;
+        // (A larger cloud at a higher rank: Wrathful Storm's 1,000-foot burst at 10th.)
+        const atRank = (area.byRank ?? []).filter(entry => castRank >= entry.minRank).sort((a, b) => a.minRank - b.minRank).at(-1)?.radius ?? area.radius;
+        // ("you can make the area any radius you choose, up to 40 feet": asked, unless given.)
+        if (area.chooseRadius && radius == null) {
+            radius = await foundry.applications.api.DialogV2.prompt({ window: { title: `${plan.source.name} — radius` }, rejectClose: false,
+                content: `<p>Radius (5 to ${atRank} feet):</p><input type="number" name="radius" value="${atRank}" min="5" max="${atRank}" step="5">`,
+                ok: { label: "Cast", callback: (_event, button) => Number(button.form.elements.radius.value) } });
+            if (!radius) return null;
+        }
+        const feet = Math.min(Number(atRank), Number(radius ?? atRank));
+        let placed = region;
+        if (!placed && (area.follow || area.atCaster)) {
+            if (!casterToken) throw new Error(`${plan.source.name}: ${sourceActor.name} needs a token on the scene.`);
+            const size = canvas.scene.grid.size, pixels = (feet / canvas.scene.grid.distance + (area.follow ? casterToken.width / 2 : 0)) * size;
+            const centre = { x: casterToken.x + casterToken.width * size / 2, y: casterToken.y + casterToken.height * size / 2 };
+            [placed] = await canvas.scene.createEmbeddedDocuments("Region", [{ name: `${plan.source.name}: ${area.label}`, color: "#5577aa", shapes: [{ type: "circle", x: centre.x, y: centre.y, radius: pixels }],
+                ...(area.follow ? { flags: { [MODULE_ID]: { followToken: casterToken.uuid, followShape: "emanation", followRadius: pixels } } } : {}) }]);
+        }
+        if (!placed) placed = await itemOrSource.clone({ "system.area": { type: area.shape, value: feet } }).placeTemplate?.();
+        if (!placed) return null;
+        const base = area.base ?? {};
+        const started = await this.ongoing.startRegionArea({ spellName: plan.source.name, sourceActorUuid: sourceActor.uuid, sourceItemUuid: itemOrSource?.uuid ?? null, castRank, region: placed,
+            durationSeconds: Number(area.seconds), sustained: area.sustained === true, excludeCaster: area.excludeCaster === true, seedMembers: true, notes: [],
+            // (Control Sand's dazzling sand: the area's own save, at the caster's spell DC; Vibrant Vibrato's kept save, its creatures inside at the cast
+            // saving as if they entered.)
+            ...(base.hazard ? { events: [...base.hazard.events], hazardOncePerTurn: base.hazard.oncePerTurn === true, dc: Number(itemOrSource?.spellcasting?.statistic?.dc?.value ?? 0) || null,
+                ...(base.hazard.remembered ? { seedMembers: false } : {}),
+                hazardDamage: base.hazard.remembered ? { remembered: { ...clone(base.hazard.remembered), dc: Number(itemOrSource?.spellcasting?.statistic?.dc?.value ?? 0) }, label: area.label }
+                    : { conditionSave: { ...clone(base.hazard.conditionSave), dc: Number(itemOrSource?.spellcasting?.statistic?.dc?.value ?? 0) }, label: area.label } } : {}),
+            ...(base.memberEffect ? { memberEffect: clone(base.memberEffect) } : {}), ...(base.memberEffects?.length ? { memberEffects: clone(base.memberEffects) } : {}),
+            ...(base.terrain ? { behaviors: [{ name: `${plan.source.name}: ${base.terrain.difficulty === 3 ? "greater " : ""}difficult terrain`, type: "modifyMovementCost",
+                system: { difficulties: terrainDifficulties(base.terrain.movement ?? ["walk"], base.terrain.difficulty) } }] } : {}) });
+        // (The base state on the creatures already inside, now: Wrathful Storm's penalty as the cloud forms.)
+        if (started?.castId && (base.memberEffect || base.memberEffects?.length)) await this.ongoing.setAreaMode({ castId: started.castId, memberEffect: clone(base.memberEffect ?? null), memberEffects: clone(base.memberEffects ?? []),
+            terrain: null });
+        return started?.castId ?? null;
+    }
+
+    /**
+     * A conjured creature with stated statistics (Dragon Turret's dragon; user decision 2026-10-01: a token the module makes): an NPC with the stated size, AC,
+     * saving throw modifiers, Hit Points and immunities, owned like the caster, beside the caster (the GM moves it within range); the caster's Effect for the
+     * spell's time removes it (summonOnEnd), and its death ends that Effect.
+     */
+    async #conjureToken(itemOrSource, plan, sourceActor, options) {
+        const stated = plan.resolution.incarnate.conjure;
+        // (Its statistics at the cast rank — Ice Guardian's Hit Points, AC and weakness each rank above the first.)
+        const steps = stated.step ? Math.max(0, Number(options.castRank) - stated.step.baseRank) : 0;
+        const data = stated.step ? { ...stated, hp: stated.hp + steps * stated.step.hp, ac: stated.ac + steps * stated.step.ac,
+            weaknesses: stated.weaknesses.map(entry => ({ ...entry, value: entry.value + steps * stated.step.weakness })) } : stated;
+        const casterToken = sourceActor.getActiveTokens?.(true, true)?.[0] ?? null;
+        if (!casterToken) throw new Error(`${plan.source.name}: ${sourceActor.name} needs a token on the scene.`);
+        const squares = { tiny: 1, sm: 1, med: 1, lg: 2, huge: 3, grg: 4 }[data.size] ?? 1;
+        const actor = await Actor.create({ name: `${plan.source.name}: ${data.name}`, type: "npc", img: itemOrSource?.img ?? "icons/svg/tower.svg",
+            ownership: { ...foundry.utils.deepClone(sourceActor.ownership ?? {}), default: 0 },
+            prototypeToken: { actorLink: true, width: squares, height: squares, disposition: casterToken.disposition, name: data.name },
+            system: { details: { level: { value: Number(options.castRank) || 0 }, alliance: sourceActor.alliance ?? sourceActor.system?.details?.alliance ?? null },
+                attributes: { ac: { value: data.ac }, hp: { value: data.hp, max: data.hp }, immunities: data.immunities.map(type => ({ type, exceptions: [] })),
+                    weaknesses: data.weaknesses.map(entry => ({ ...entry, exceptions: [] })), resistances: data.resistances.map(entry => ({ ...entry, exceptions: [], doubleVs: [] })) },
+                saves: { fortitude: { value: data.saves }, reflex: { value: data.saves }, will: { value: data.saves } },
+                traits: { value: [...new Set([...data.traits, "summoned"])], size: { value: data.size }, rarity: "common" } },
+            flags: { [MODULE_ID]: { summoned: { castId: options.castInstanceId, casterUuid: sourceActor.uuid, spell: plan.source.name, endsAtZero: data.endsAtZero === true, ...(data.object ? { object: true } : {}) } } } });
+        let token;
+        try {
+            const place = options.position ?? freeSpaceNear(casterToken, { width: squares, height: squares }, Math.min(data.rangeFeet, 60));
+            if (!place) throw new Error(`${plan.source.name}: there's no free space near ${sourceActor.name}.`);
+            [token] = await casterToken.parent.createEmbeddedDocuments("Token", [(await actor.getTokenDocument({ x: place.x, y: place.y, width: squares, height: squares, actorLink: true, disposition: casterToken.disposition })).toObject()]);
+        } catch (error) { await actor.delete().catch(() => null); throw error; }
+        // ("creatures within the confluence are Concealed, and all creatures outside the confluence are concealed to creatures within it": a concealing area that follows the token.)
+        let concealing = null;
+        if (data.concealing) {
+            const pixels = data.concealing.radius / canvas.scene.grid.distance * canvas.scene.grid.size;
+            const centre = { x: token.x + token.width * canvas.scene.grid.size / 2, y: token.y + token.height * canvas.scene.grid.size / 2 };
+            const [region] = await canvas.scene.createEmbeddedDocuments("Region", [{ name: `${plan.source.name}: ${data.name}`, color: "#8899aa", shapes: [{ type: "circle", x: centre.x, y: centre.y, radius: pixels }],
+                flags: { [MODULE_ID]: { followToken: token.uuid, followShape: "emanation", followRadius: pixels } } }]);
+            concealing = await this.ongoing.startCloud({ spellName: `${plan.source.name}: ${data.name}`, sourceActorUuid: sourceActor.uuid, sourceItemUuid: itemOrSource?.uuid ?? null, castRank: Number(options.castRank),
+                region, durationSeconds: data.durationSeconds, dismissible: true, memberRules: [], notes: [`It moves with the ${data.name}; it ends with the spell.`] });
+        }
+        // ("You and your allies gain lesser cover while you are adjacent to the guardian": a region following it, its rules on the caster and its allies inside.)
+        let cover = null;
+        if (data.coverAura) {
+            const pixels = (data.coverAura.feet / canvas.scene.grid.distance + token.width / 2) * canvas.scene.grid.size;
+            const centre = { x: token.x + token.width * canvas.scene.grid.size / 2, y: token.y + token.height * canvas.scene.grid.size / 2 };
+            const [region] = await canvas.scene.createEmbeddedDocuments("Region", [{ name: `${plan.source.name}: ${data.coverAura.label}`, color: "#88bbdd", shapes: [{ type: "circle", x: centre.x, y: centre.y, radius: pixels }],
+                flags: { [MODULE_ID]: { followToken: token.uuid, followShape: "emanation", followRadius: pixels } } }]);
+            cover = await this.ongoing.startRegionArea({ spellName: `${plan.source.name}: ${data.coverAura.label}`, sourceActorUuid: sourceActor.uuid, sourceItemUuid: itemOrSource?.uuid ?? null, castRank: Number(options.castRank),
+                region, durationSeconds: data.durationSeconds, memberRules: data.coverAura.rules, memberAllies: true, memberCaster: true, excludeTokenUuids: [token.uuid], seedMembers: false,
+                notes: [`It moves with the ${data.name}; it ends with the spell.`] });
+        }
+        const effect = await this.#ruleEffect(sourceActor, { name: `${plan.source.name}: ${data.name}`, rules: [], seconds: data.durationSeconds, sustained: data.sustained, sourceActor, itemOrSource,
+            flags: { summon: { castId: options.castInstanceId, actorUuid: actor.uuid, tokenUuid: token.uuid, ...(concealing?.castId || cover?.castId ? { ongoingCastIds: [concealing?.castId, cover?.castId].filter(Boolean) } : {}) } },
+            description: `<p>${escapeHTML(data.name)} (AC ${data.ac}, saves +${data.saves}, ${data.hp} HP) is here${data.sustained ? " while you Sustain the spell" : ""}. It's removed when this Effect ends${data.endsAtZero ? " or it dies" : ""}.</p>` });
+        return { name: data.name, ac: data.ac, saves: data.saves, hp: data.hp, actorUuid: actor.uuid, tokenUuid: token.uuid, effectUuid: effect.uuid };
+    }
+
+    /**
+     * A summon part (Gray Shadow, Shambling Horror): the stated creature (or the listed one the GM picks, of the corpse's size and at most its level) as the
+     * caster's minion beside the targeted creature, for the spell's time; PF2e's linked Effect on it; ended with the dying creature's Dying when tied to it.
+     */
+    async #summonPart(item, caster, phase, near, { castRank, castId, spellName, summonUuid = null }) {
+        if (!near?.actor) throw new Error(`${spellName}: target the ${phase.fromCorpse ? "corpse" : "dying creature"} first.`);
+        if (phase.linkedDying && !near.actor.hasCondition?.("dying")) throw new Error(`${spellName}: ${near.actor.name} isn't dying.`);
+        // ("a creature that has a level no greater than your level – 4")
+        if (phase.fromCorpse && Number(near.actor.level) > Number(caster.level) - 4) throw new Error(`${spellName}: ${near.actor.name} is above level ${Number(caster.level) - 4}.`);
+        let uuid = phase.actorUuid ?? null;
+        if (!uuid) {
+            const size = near.actor.size, level = Number(near.actor.level);
+            const allowed = phase.candidates.filter(entry => entry.size === size && entry.level <= level);
+            if (!allowed.length) throw new Error(`${spellName}: no listed stat block is ${size} and level ${level} or lower.`);
+            const resolve = async entry => entry.uuid ?? (await (async () => { for (const pack of game.packs.filter(pack => pack.documentName === "Actor")) { const found = (await pack.getIndex()).find(row => row.name === entry.name); if (found) return found.uuid; } return null; })());
+            const picked = summonUuid ? allowed.find(entry => entry.uuid === summonUuid || entry.name === summonUuid) : allowed.length === 1 ? allowed[0]
+                : allowed[Number(await foundry.applications.api.DialogV2.prompt({ window: { title: `${spellName} — stat block` }, rejectClose: false,
+                    content: `<select name="block">${allowed.map((entry, index) => `<option value="${index}">${escapeHTML(entry.name)} (level ${entry.level})</option>`).join("")}</select>`,
+                    ok: { label: "Raise", callback: (_event, button) => button.form.elements.block.value } }) ?? -1)];
+            if (!picked) return { status: "cancelled" };
+            uuid = await resolve(picked);
+            if (!uuid) throw new Error(`${spellName}: ${picked.name} isn't in the Actor compendiums.`);
+        }
+        const source = await fromUuid(uuid);
+        if (source?.documentName !== "Actor") throw new Error(`${spellName}: ${uuid} isn't a creature.`);
+        const data = game.actors.fromCompendium(source);
+        data.system.traits.value = [...new Set([...(data.system.traits.value ?? []), "summoned", "minion"])];
+        data.ownership = { ...foundry.utils.deepClone(caster.ownership ?? {}), default: 0 };
+        foundry.utils.setProperty(data, "system.details.alliance", caster.alliance ?? caster.system?.details?.alliance ?? null);
+        const casterToken = caster.getActiveTokens?.(true, true)?.[0];
+        data.prototypeToken = { ...(data.prototypeToken ?? {}), actorLink: true, disposition: casterToken?.disposition ?? data.prototypeToken?.disposition };
+        data.flags = foundry.utils.mergeObject(data.flags ?? {}, { [MODULE_ID]: { summoned: { castId, casterUuid: caster.uuid, spell: spellName } } });
+        const actor = await Actor.create(data);
+        let token;
+        try {
+            const anchor = near.document ?? near;
+            const place = phase.fromCorpse ? { x: anchor.x, y: anchor.y } : freeSpaceNear(near.document ?? near, actor.prototypeToken, 10);
+            if (!place) throw new Error(`${spellName}: there's no free space beside ${near.actor.name}.`);
+            [token] = await anchor.parent.createEmbeddedDocuments("Token", [(await actor.getTokenDocument({ x: place.x, y: place.y, actorLink: true })).toObject()]);
+        } catch (error) { await actor.delete().catch(() => null); throw error; }
+        if (phase.effectUuid) {
+            const template = await loadNativeEffectTemplate(phase.effectUuid);
+            if (template) await createNativeEffect(actor, prepareNativeEffectSource(template, { castInstanceId: castId, castRank, sourceActorUuid: caster.uuid, sourceItemUuid: item.uuid, sourceItemName: spellName, resolutionKind: "summon" }));
+        }
+        const effect = await this.#ruleEffect(caster, { name: `${spellName}: ${actor.name}`, rules: [], seconds: phase.seconds, sustained: phase.sustained === true, sourceActor: caster, itemOrSource: item,
+            flags: { summon: { castId, actorUuid: actor.uuid, tokenUuid: token.uuid, ...(phase.linkedDying ? { linkedDying: near.actor.uuid } : {}) } },
+            description: `<p>${escapeHTML(actor.name)} (a minion) is here${phase.sustained ? " while you Sustain the spell" : ""}. It's removed when this Effect ends.${phase.linkedDying ? ` It ends when ${escapeHTML(near.actor.name)} dies or regains consciousness.` : ""}</p>` });
+        return { actorUuid: actor.uuid, tokenUuid: token.uuid, effectUuid: effect.uuid, name: actor.name };
+    }
+
+    /** The options PF2e's choice picked on the form's Effect (its rule selections), and whether an ability's option is among them. */
+    static formPicked(effect, option) {
+        if (!option) return true;
+        return [...Object.values(effect?.flags?.system?.rulesSelections ?? {}), ...Object.values(effect?.flags?.pf2e?.rulesSelections ?? {})].some(value => String(value) === option);
+    }
+
+    /** A form's riders once its Effect is on the caster: the picked option's auras started, its recovery flagged, the form's card posted. */
+    async #startFormRiders(plan, { itemOrSource, sourceActor, created, castRank, castInstanceId, journal }) {
+        const riders = plan.resolution.formRiders;
+        const effect = created.find(document => document.actor?.uuid === sourceActor.uuid) ?? created[0];
+        const picked = option => EffectRuntime.formPicked(effect, option);
+        const auras = {};
+        for (const aura of riders.auras.filter(entry => picked(entry.option))) auras[aura.key] = await this.#startFormAura(plan, aura, { itemOrSource, sourceActor, effect, castRank, parentCastId: journal ? castInstanceId : null, radius: aura.radius });
+        const recovery = riders.recovery.filter(entry => picked(entry.option));
+        await effect.setFlag(MODULE_ID, "formRiders", { castInstanceId, auras, sizes: Object.fromEntries(Object.keys(auras).map(key => [key, riders.auras.find(entry => entry.key === key).radius])),
+            ...(riders.tempExpires ? { tempExpires: true } : {}),
+            ...(recovery.length ? { turnEndRecovery: { slugs: [...new Set(recovery.flatMap(entry => entry.slugs))], sourceItemName: plan.source.name } } : {}) });
+        const parts = (plan.resolution.controls?.parts ?? []).filter(part => picked(part.option) && (part.kind !== "form-aura" || auras[part.aura]));
+        if (parts.length) await postControlsCard({ controls: { ...plan.resolution.controls, parts }, spellName: plan.source.name, itemUuid: itemOrSource?.uuid ?? null, sourceActorUuid: sourceActor.uuid,
+            castRank, castId: castInstanceId, targets: [sourceActor.name] });
+    }
+
+    /** One of a form's auras: a region around the caster's token that follows it, dealing its damage (or its save) by itself. */
+    async #startFormAura(plan, aura, { itemOrSource, sourceActor, effect, castRank, parentCastId, radius }) {
+        // (The chosen type: PF2e's choice on the Effect — Qi Form's force, spirit, vitality or void.)
+        const type = aura.type ?? (aura.typeFlag ? effect?.flags?.system?.rulesSelections?.[aura.typeFlag] ?? effect?.flags?.pf2e?.rulesSelections?.[aura.typeFlag] : null);
+        const dc = itemOrSource?.spellcasting?.statistic?.dc?.value ?? sourceActor.attributes?.classOrSpellDC?.value ?? null;
+        const remaining = Number(effect?.system?.duration?.value ?? 1) * ({ rounds: 6, minutes: 60, hours: 3600 }[effect?.system?.duration?.unit] ?? 60);
+        return startFollowingAura(this.ongoing, { spellName: plan.source.name, sourceActor, sourceItemUuid: itemOrSource?.uuid ?? null, castRank, aura, type, dc, durationSeconds: remaining, parentCastId, radius });
+    }
+
+    /** A form's aura part: switched off or on (Shroud of Flame), or its emanation resized (Qi Form's corona), on a Sustain. */
+    async #formAuraPart(message, phase, plan, caster, item, castRank) {
+        const castInstanceId = message.getFlag(MODULE_ID, "castInstanceId");
+        const effect = (caster.itemTypes?.effect ?? []).find(entry => entry.flags?.[MODULE_ID]?.formRiders?.castInstanceId === castInstanceId);
+        if (!effect) throw new Error(`${plan.source.name} has ended.`);
+        const data = clone(effect.flags[MODULE_ID].formRiders);
+        const aura = plan.resolution.formRiders.auras.find(entry => entry.key === phase.aura);
+        const auraJournal = data.auras[aura.key] ? this.ongoing.find(data.auras[aura.key]) : null;
+        const active = auraJournal && auraJournal.getFlag(MODULE_ID, ONGOING_FLAG)?.status !== "ended" ? auraJournal : null;
+        const parentCastId = this.ongoing.find?.(castInstanceId) ? castInstanceId : null;
+        if (aura.sizes) {
+            const next = aura.sizes.find(size => size !== Number(data.sizes?.[aura.key] ?? aura.radius)) ?? aura.radius;
+            if (active) await this.ongoing.end(active, { reason: "resized" });
+            data.auras[aura.key] = await this.#startFormAura(plan, aura, { itemOrSource: item, sourceActor: caster, effect, castRank, parentCastId, radius: next });
+            data.sizes = { ...(data.sizes ?? {}), [aura.key]: next };
+            await effect.setFlag(MODULE_ID, "formRiders", data);
+            return { aura: aura.key, radius: next };
+        }
+        if (active) { await this.ongoing.end(active, { reason: "deactivated" }); data.auras[aura.key] = null; await effect.setFlag(MODULE_ID, "formRiders", data); return { aura: aura.key, active: false }; }
+        data.auras[aura.key] = await this.#startFormAura(plan, aura, { itemOrSource: item, sourceActor: caster, effect, castRank, parentCastId, radius: aura.radius });
+        await effect.setFlag(MODULE_ID, "formRiders", data);
+        return { aura: aura.key, active: true };
+    }
+
+    /** A form's temporary Hit Points (Corrosive Body's digested acid): the first time each round, the higher of these and the caster's current ones. */
+    async #formTempHp(message, phase, plan, caster, castRank) {
+        const castInstanceId = message.getFlag(MODULE_ID, "castInstanceId");
+        const effect = (caster.itemTypes?.effect ?? []).find(entry => entry.flags?.[MODULE_ID]?.formRiders?.castInstanceId === castInstanceId);
+        if (!effect) throw new Error(`${plan.source.name} has ended.`);
+        const data = clone(effect.flags[MODULE_ID].formRiders);
+        const round = game.combat?.started ? `${game.combat.id}:${game.combat.round}` : `time:${Math.floor((game.time?.worldTime ?? 0) / 6)}`;
+        if (data.tempRound === round) return { skipped: "already this round" };
+        const formula = [...(phase.tempHp.byRank ?? [])].sort((a, b) => a.minRank - b.minRank).filter(entry => castRank >= entry.minRank).at(-1)?.formula ?? phase.tempHp.formula;
+        const roll = await new Roll(formula).evaluate();
+        await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: caster }), flavor: `<strong>${escapeHTML(plan.source.name)}</strong> — temporary Hit Points` });
+        const current = Number(caster.system?.attributes?.hp?.temp ?? 0);
+        if (roll.total > current) await caster.update({ "system.attributes.hp.temp": roll.total });
+        await effect.setFlag(MODULE_ID, "formRiders", { ...data, tempRound: round, tempGranted: Math.max(roll.total, Number(data.tempGranted ?? 0)) });
+        return { rolled: roll.total, temp: Math.max(current, roll.total) };
+    }
+
+    /**
+     * Metamorphosis's form: one of the caster's polymorph spells (rank up to the limit, no target), cast by its own route at the chosen rank; the previous
+     * form ends first; the stated temporary Hit Points replace the form's; each spell's form once per casting. `options.formSpellId`, `options.formRank`
+     * and `options.choiceSelections` answer the questions ahead.
+     */
+    async #castFormPart(message, phase, plan, caster, item, options = {}) {
+        const castInstanceId = message.getFlag(MODULE_ID, "castInstanceId");
+        const holder = (caster.itemTypes?.effect ?? []).find(entry => entry.flags?.[MODULE_ID]?.formRiders?.castInstanceId === castInstanceId);
+        if (!holder) throw new Error(`${plan.source.name} has ended.`);
+        const data = clone(holder.flags[MODULE_ID].formRiders);
+        const baseRank = spell => Number(spell.baseRank ?? spell.system?.level?.value ?? spell.rank);
+        const spells = (caster.itemTypes?.spell ?? []).filter(spell => spell.id !== item.id && (spell.traits?.has?.("polymorph") || (spell.system?.traits?.value ?? []).includes("polymorph"))
+            && baseRank(spell) <= phase.maxRank && !String(spell.system?.target?.value ?? "").trim() && !spell.isRitual);
+        if (!spells.length) throw new Error(`${plan.source.name}: ${caster.name} has no polymorph spell of rank ${phase.maxRank} or lower.`);
+        const spellId = options.formSpellId ?? await foundry.applications.api.DialogV2.prompt({ window: { title: `${plan.source.name} — the form` }, rejectClose: false,
+            content: `<p>Which form?</p><select name="spell">${spells.map(spell => `<option value="${spell.id}">${escapeHTML(spell.name)} (rank ${baseRank(spell)})</option>`).join("")}</select>`
+                + `<p>At rank (up to ${phase.maxRank}): <input type="number" name="rank" value="${phase.maxRank}" min="1" max="${phase.maxRank}"></p>`,
+            ok: { label: "Transform", callback: (_event, button) => { options.formRank ??= Number(button.form.elements.rank.value); return button.form.elements.spell.value; } } });
+        const spell = spells.find(entry => entry.id === spellId);
+        if (!spell) return { status: "cancelled" };
+        if ((data.usedForms ?? []).includes(spell.id)) throw new Error(`${plan.source.name}: ${spell.name}'s form was already used during this casting.`);
+        const rank = Math.max(baseRank(spell), Math.min(phase.maxRank, Number(options.formRank ?? phase.maxRank)));
+        // (The previous form ends: its Effects.)
+        for (const uuid of data.formEffects ?? []) { const old = await fromUuid(uuid).catch(() => null); if (old) await old.delete(); }
+        const before = new Set((caster.itemTypes?.effect ?? []).map(effect => effect.id));
+        const casterToken = caster.getActiveTokens?.(true, true)?.[0];
+        const slug = spell.slug ?? spell.system?.slug;
+        const api = game.modules.get(MODULE_ID)?.api;
+        if (Object.hasOwn(FORM_PROFILES, slug) && api?.forms?.start) await api.forms.start(spell, { castRank: rank, ...(options.formChoice ? { choice: options.formChoice } : {}) });
+        else await this.execute(spell, { plan: await this.compile(spell), sourceActor: caster, targets: casterToken ? [casterToken] : [], castRank: rank, skipConfirmation: true, confirmed: true,
+            ...(options.choiceSelections ? { choiceSelections: clone(options.choiceSelections) } : {}) });
+        const created = (caster.itemTypes?.effect ?? []).filter(effect => !before.has(effect.id) && effect.id !== holder.id);
+        // ("You gain 40 temporary Hit Points rather than the amount normally granted by the form.")
+        await caster.update({ "system.attributes.hp.temp": Number(phase.tempHP) });
+        await holder.setFlag(MODULE_ID, "formRiders", { ...data, usedForms: [...(data.usedForms ?? []), spell.id], formEffects: created.map(effect => effect.uuid) });
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: caster }), content: `<p><strong>${escapeHTML(plan.source.name)}:</strong> ${escapeHTML(caster.name)} takes the form of ${escapeHTML(spell.name)} (rank ${rank}), with ${Number(phase.tempHP)} temporary Hit Points.</p>` }); } catch (_) {}
+        return { spell: spell.name, rank, effects: created.map(effect => effect.name), temp: Number(phase.tempHP) };
+    }
+
+    /**
+     * A movement part on a spell's card (teleport-runtime.js):
+     *   - teleport, "move": each targeted creature (or the caster) to a space picked on the canvas (`options.destinations`, in order, answers ahead), within the
+     *     stated feet of the caster (or of where it stands), entirely inside when the text says so, unoccupied;
+     *   - teleport, "swap": the caster and the targeted creature (or the two targeted creatures) trade places; a stated immunity then marks both;
+     *   - hp-share: the targeted creatures' Hit Points redistributed (`options.hpShares` {actorUuid: Hit Points}, or asked), the total kept, each from 1 to its
+     *     maximum;
+     *   - descend: each targeted flying creature lowered the stated feet (more at higher ranks); one the ground stops takes that many feet as bludgeoning damage
+     *     and falls Prone;
+     *   - elevate: the caster rises the stated feet.
+     */
+    async #movementPart(message, phase, plan, caster, item, castRank, options = {}) {
+        const own = caster.getActiveTokens?.(true, true)?.[0];
+        const casterToken = own?.document ?? own ?? null;
+        const tokens = [...(options.targets ?? game.user.targets)].map(target => target?.document ?? target).filter(token => token?.actor);
+        const say = async text => { try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: caster }), content: `<p><strong>${escapeHTML(plan.source.name)}:</strong> ${text}</p>` }); } catch (_) {} };
+        if (phase.kind === "elevate") {
+            if (!casterToken) throw new Error(`${plan.source.name}: ${caster.name} needs a token on the scene.`);
+            const moved = await changeElevation(casterToken, Number(options.feet ?? phase.feet));
+            await say(`${escapeHTML(caster.name)} rises to ${moved.to} feet.${phase.landing ? ` ${escapeHTML(phase.landing)}` : ""}`);
+            return moved;
+        }
+        if (phase.kind === "descend") {
+            if (!tokens.length) throw new Error(`${plan.source.name}: target the flying creatures in the area first.`);
+            const fall = Number(phase.feet) + Math.max(0, castRank - Number(phase.baseRank ?? castRank)) * Number(phase.stepFeet ?? 0);
+            const results = [];
+            for (const token of tokens) {
+                const height = Number(token.elevation ?? 0);
+                if (!(height > 0)) { results.push({ name: token.name, flying: false }); continue; }
+                const landed = height <= fall;
+                const moved = await changeElevation(token, -Math.min(fall, height));
+                let damage = null;
+                if (landed) {
+                    damage = await applyPartDamage({ spell: item, caster, castRank, castId: message.getFlag(MODULE_ID, "castInstanceId"), spellName: plan.source.name, title: `${phase.title} (fell ${moved.moved} feet)`,
+                        formula: `${moved.moved}[bludgeoning]`, tokens: [token.object ?? token] });
+                    if (!token.actor.hasCondition?.("prone")) await token.actor.increaseCondition?.("prone");
+                }
+                results.push({ name: token.name, fell: moved.moved, landed, damage: damage?.total ?? null });
+            }
+            return { results };
+        }
+        if (phase.kind === "launch") {
+            // (Wrathful Storm's tornado: each targeted creature thrown up the stated feet, then PF2e's falling — half that as bludgeoning damage, landing Prone.)
+            if (!tokens.length) throw new Error(`${plan.source.name}: target the creatures in the whirlwind first.`);
+            const fall = Math.floor(Number(phase.feet) / 2);
+            const damage = await applyPartDamage({ spell: item, caster, castRank, castId: message.getFlag(MODULE_ID, "castInstanceId"), spellName: plan.source.name, title: `${phase.title} (thrown ${phase.feet} feet up, then falls)`,
+                formula: `${fall}[bludgeoning]`, tokens: tokens.map(token => token.object ?? token) });
+            for (const token of tokens) if (!token.actor.hasCondition?.("prone")) await token.actor.increaseCondition?.("prone");
+            await say(`Each creature thrown ${Number(phase.feet)} feet up falls: ${fall} bludgeoning damage and Prone. A creature that can fly can Arrest its Fall (the GM restores it).`);
+            return { fall, results: damage.results.map(entry => entry.name) };
+        }
+        if (phase.kind === "fuse") {
+            // (Amalgamizing Leap: the target taken into the caster — its token hidden — and the caster's Effect until the end of its next turn: the temporary
+            // Hit Points and the reach; when it ends, the target comes back beside the caster.)
+            if (tokens.length !== 1) throw new Error(`${plan.source.name}: target the creature fused with the caster first.`);
+            const target = tokens[0];
+            const initiative = game.combat?.combatants?.find(combatant => combatant.actor?.uuid === caster.uuid)?.initiative ?? null;
+            const [effect] = await caster.createEmbeddedDocuments("Item", [{ name: `${plan.source.name}: fused with ${target.name}`, type: "effect", img: item?.img ?? "icons/svg/portal.svg",
+                flags: { [MODULE_ID]: { formRiders: { castInstanceId: message.getFlag(MODULE_ID, "castInstanceId"), fusedTokenUuid: target.uuid, spellName: plan.source.name } } },
+                system: { duration: { value: 1, unit: "rounds", expiry: "turn-end", sustained: false }, start: { value: game.time.worldTime, initiative }, tokenIcon: { show: true },
+                    rules: [{ key: "TempHP", value: Number(phase.tempHP) }, { key: "ActiveEffectLike", mode: "add", path: "system.attributes.reach.base", value: Number(phase.reach) }],
+                    description: { value: `<p>Fused with ${escapeHTML(target.name)} until the end of your next turn: ${Number(phase.tempHP)} temporary Hit Points, reach +${Number(phase.reach)} feet, and its Speeds and special senses (the GM). It returns beside you when this ends.</p>` } } }]);
+            await target.update({ hidden: true });
+            await say(`${escapeHTML(target.name)} is fused with ${escapeHTML(caster.name)} until the end of its next turn.`);
+            return { effectUuid: effect?.uuid ?? null, hidden: target.uuid };
+        }
+        if (phase.kind === "hp-share") {
+            if (tokens.length < 2) throw new Error(`${plan.source.name}: target the creatures sharing their Hit Points first.`);
+            const actors = [...new Set(tokens.map(token => token.actor))];
+            const total = actors.reduce((sum, actor) => sum + Number(actor.system?.attributes?.hp?.value ?? 0), 0);
+            let shares = options.hpShares ?? null;
+            if (!shares) shares = await foundry.applications.api.DialogV2.prompt({ window: { title: `${plan.source.name} — Hit Points` }, rejectClose: false,
+                content: `<p>Distribute ${total} Hit Points (each from 1 to its maximum).</p>` + actors.map(actor => `<p>${escapeHTML(actor.name)} (max ${actor.system.attributes.hp.max}): <input type="number" name="${actor.id}" value="${actor.system.attributes.hp.value}" min="1" max="${actor.system.attributes.hp.max}"></p>`).join(""),
+                ok: { label: "Distribute", callback: (_event, button) => Object.fromEntries(actors.map(actor => [actor.uuid, Number(button.form.elements[actor.id].value)])) } });
+            if (!shares) return { status: "cancelled" };
+            const values = actors.map(actor => Number(shares[actor.uuid]));
+            if (values.some((value, index) => !Number.isInteger(value) || value < 1 || value > Number(actors[index].system.attributes.hp.max))) throw new Error(`${plan.source.name}: each creature gets 1 to its maximum Hit Points.`);
+            if (values.reduce((sum, value) => sum + value, 0) !== total) throw new Error(`${plan.source.name}: the shares must add up to ${total} Hit Points.`);
+            for (const [index, actor] of actors.entries()) await actor.update({ "system.attributes.hp.value": values[index] });
+            await say(`Hit Points shared: ${actors.map((actor, index) => `${escapeHTML(actor.name)} ${values[index]}`).join(", ")}.`);
+            return { total, shares: Object.fromEntries(actors.map((actor, index) => [actor.uuid, values[index]])) };
+        }
+        // Teleports.
+        if (phase.mode === "swap") {
+            const pair = phase.who === "caster" ? [casterToken, tokens[0]] : tokens.slice(0, 2);
+            if (!pair[0] || !pair[1] || (phase.who === "caster" ? tokens.length !== 1 : tokens.length !== 2)) throw new Error(`${plan.source.name}: target ${phase.who === "caster" ? "the creature to swap with" : "the two creatures that swap"} first.`);
+            const result = await swapTokens(pair[0], pair[1]);
+            if (phase.immunity) for (const token of pair) await createSpellImmunity(token.actor, phase.immunity, plan.source.name, message.getFlag(MODULE_ID, "castInstanceId"));
+            await say(`${escapeHTML(pair[0].name)} and ${escapeHTML(pair[1].name)} swap places.`);
+            return result;
+        }
+        const movers = phase.who === "caster" ? [casterToken] : tokens;
+        if (!movers.length || !movers[0]) throw new Error(`${plan.source.name}: target the creature${phase.count === 1 ? "" : "s"} to teleport first.`);
+        if (phase.count && movers.length > phase.count) throw new Error(`${plan.source.name}: ${phase.title} moves at most ${phase.count}.`);
+        const moved = [];
+        for (const [index, token] of movers.entries()) {
+            const origin = phase.from === "self" ? token : casterToken;
+            const result = await teleportToken(token, { destination: options.destinations?.[index] ?? null, origin, within: Number(phase.within), entirely: phase.entirely === true,
+                label: `${plan.source.name}: ${token.name}`, ignore: movers.map(entry => entry.id) });
+            if (result.status === "cancelled") return result;
+            moved.push({ name: token.name, ...result });
+        }
+        await say(`${moved.map(entry => escapeHTML(entry.name)).join(", ")} ${moved.length === 1 ? "teleports" : "teleport"}.`);
+        return { moved };
     }
 
     /** A granted action's button (Swarm Form's crawl): its save card for the targeted creature, while the spell's Effect lasts. */
@@ -6926,26 +9384,413 @@ export class EffectRuntime {
         return this.saves.start(item, { plan: clone(actionPlan), sourceActor: caster, targets: tokens, castRank: data.castRank, skipConfirmation });
     }
 
-    /** An incarnate's phase button: that phase's save card for the targeted creatures. */
-    async incarnatePhase(message, key, { targets = null, skipConfirmation = false } = {}) {
+    /**
+     * An incarnate's part button: that part for the targeted creatures — its save card (or spell attacks, or its lingering area), damage or healing
+     * with no save, a generated or PF2e Effect, conditions reduced, a spell the manifestation casts, or its cloud. Once each, unless it repeats on a
+     * reported trigger; one of two alternatives ("if summoned in a body of water") uses up the other.
+     */
+    async incarnatePhase(message, key, { targets = null, skipConfirmation = false, region = null, casterChoice = null, ...options } = {}) {
         const data = message?.getFlag?.(MODULE_ID, "incarnate");
         if (!data) throw new Error("This incarnate card is unavailable.");
-        const item = await fromUuid(data.itemUuid), caster = await fromUuid(data.sourceActorUuid);
+        const stored = await fromUuid(data.itemUuid), caster = await fromUuid(data.sourceActorUuid);
+        const item = stored && data.overlayIds?.length ? stored.loadVariant({ overlayIds: data.overlayIds }) ?? stored : stored;
         if (!item || !caster) throw new Error(`${data.spellName}: the spell or its caster is unavailable.`);
         const plan = await this.compile(item);
         const incarnate = plan.resolution?.incarnate;
-        const phases = data.choice ? incarnate?.options?.choices?.find(entry => entry.key === data.choice)?.phases : incarnate?.phases;
+        // (A spell's controls card — Puppet Strings' — runs its controls' parts the same way.)
+        const phases = data.source === "controls" ? plan.resolution?.controls?.parts : data.choice ? incarnate?.options?.choices?.find(entry => entry.key === data.choice)?.phases : incarnate?.phases;
         const phase = phases?.find(entry => entry.key === key);
-        const name = key === "arrive" ? "Arrive" : key === "depart" ? "Depart" : phase?.title ?? key;
-        if (!phase?.plan) throw new Error(`${data.spellName}: no ${key} save to roll.`);
-        if (data.used.includes(key)) throw new Error(`${data.spellName}: its ${name} has been resolved.`);
-        const tokens = [...(targets ?? game.user.targets)].map(target => target?.object ?? target).filter(token => token?.actor);
-        if (!tokens.length) throw new Error(`${data.spellName}: target the creatures the ${name} affects first.`);
-        if (!this.saves?.start) throw new Error(`${data.spellName}: the save manager is unavailable.`);
-        // (An affliction's own save at its stated DC: Pest Swarm's violin spider venom.)
-        const started = await this.saves.start(item, { plan: clone(phase.plan), sourceActor: caster, targets: tokens, castRank: data.castRank, skipConfirmation, ...(phase.dc ? { dc: phase.dc } : {}) });
-        await message.setFlag(MODULE_ID, "incarnate", { ...data, used: [...data.used, key] });
-        return started;
+        const base = key.replace(/-\d+$/, "");
+        const name = base === "arrive" ? "Arrive" : base === "depart" ? "Depart" : phase?.title ?? key;
+        if (!phase || !(phase.plan || ["damage", "heal", "effect", "native-effect", "reduce-conditions", "cast-spell", "cloud", "destroy-thrall", "check-copy", "terrain", "summon", "hazard", "form-aura", "beam-roll", "sequence", "fumarole", "attack-save", "charge", "teeth", "link", "sacrifice", "fury", "leech", "mimic", "death-mark", "word", "emblem", "raise", "revive", "shock", "renewal", "seed", "pod", "gift", "true-target", "covenant", "heartbolt", "retaliate", "temp-hp", "cast-form", "teleport", "hp-share", "descend", "elevate", "fuse", "mode", "launch", "temp-share", "glyph"].includes(phase.kind))) throw new Error(`${data.spellName}: no ${key} part to resolve.`);
+        if (data.used.includes(key) && !phase.repeat) throw new Error(`${data.spellName}: its ${name} (${phase.title}) has been resolved.`);
+        const other = phase.alternative ? phases.find(entry => entry !== phase && entry.alternative?.group === phase.alternative.group && data.used.includes(entry.key)) : null;
+        if (other) throw new Error(`${data.spellName}: ${other.alternative.label} was used instead.`);
+        // (A part on the conjured thing itself — Elemental Confluence's earth — or its area: the card's own token.)
+        const own = phase.onConjured ? await fromUuid(data.conjured?.tokenUuid ?? "").catch(() => null) : null;
+        if (phase.onConjured && !own) throw new Error(`${data.spellName}: its conjured token is gone.`);
+        // (A part on the caster itself — Bound in Death's self-damage on a Sustain.)
+        const tokens = own ? [own.object ?? own] : phase.self ? caster.getActiveTokens(true, false).slice(0, 1) : [...(targets ?? game.user.targets)].map(target => target?.object ?? target).filter(token => token?.actor);
+        // A mode on a mode card (Storm Lord's rain, Dancing Fountain's displays): the area's new state, then its own action for the targeted creatures.
+        if (phase.kind === "mode") {
+            if (phase.noRepeat && data.lastMode === key) throw new Error(`${data.spellName}: ${phase.title} can't be chosen twice in a row.`);
+            // (Leaving the last mode: Control Sand's shield gone, its sandstorm's damage ended and its area back to size.)
+            const previous = data.lastMode ? phases.find(entry => entry.key === data.lastMode) : null;
+            if (previous?.state?.shield) { const ids = caster.items.filter(entry => entry.flags?.[MODULE_ID]?.temporaryShield?.castId === data.areaCastId).map(entry => entry.id);
+                if (ids.length) await caster.deleteEmbeddedDocuments("Item", ids, { [MODULE_ID]: { reason: "mode-changed" } }); }
+            if (previous?.state?.child && data.childCastId) { const child = this.ongoing.find(data.childCastId); if (child && child.getFlag(MODULE_ID, ONGOING_FLAG)?.status === "active") await this.ongoing.end(child, { reason: "mode-changed" }); }
+            if (previous?.state?.radius && !phase.state?.radius && data.areaCastId) await this.ongoing.resizeArea({ castId: data.areaCastId, feet: plan.resolution.incarnate.area.radius });
+            let childCastId = null;
+            if (phase.state?.radius && data.areaCastId) await this.ongoing.resizeArea({ castId: data.areaCastId, feet: phase.state.radius });
+            if (phase.state?.child) childCastId = await startFollowingAura(this.ongoing, { spellName: data.spellName, sourceActor: caster, sourceItemUuid: item.uuid, castRank: Number(data.castRank),
+                aura: { key: "child", label: phase.title, radius: phase.state.child.radius, events: [...phase.state.child.events], oncePerTurn: phase.state.child.oncePerTurn === true, formula: phase.state.child.formula,
+                    type: phase.state.child.type, basic: phase.state.child.basic }, dc: item.spellcasting?.statistic?.dc?.value ?? null, durationSeconds: Number(plan.resolution.incarnate.area.seconds), parentCastId: data.areaCastId });
+            if (phase.state?.shield) await caster.createEmbeddedDocuments("Item", [temporaryShieldSource({ ...phase.state.shield, castId: data.areaCastId, effectId: null })]);
+            if (childCastId) data.childCastId = childCastId;
+            if (data.areaCastId) await this.ongoing.setAreaMode({ castId: data.areaCastId, memberEffect: phase.state?.memberEffect ?? null, memberEffects: phase.state?.memberEffects ?? [], terrain: phase.state?.terrain ?? null,
+                ...(phase.state?.slot ? { slot: phase.state.slot, member: phase.state.member ?? null } : {}) });
+            // (Musical Shift's key and time are separate choices: "twice in a row" and the last mode are per slot.)
+            await message.setFlag(MODULE_ID, "incarnate", { ...data, lastMode: key, used: data.used.includes(key) ? data.used : [...data.used, key] });
+            if (!phase.action) return { mode: key };
+            return { mode: key, action: await this.incarnatePhase(game.messages.get(message.id), phase.action, { targets, skipConfirmation, region, casterChoice, ...options }) };
+        }
+        if (phase.kind === "form-aura") return this.#formAuraPart(message, phase, plan, caster, item, Number(data.castRank));
+        if (phase.kind === "temp-hp") return this.#formTempHp(message, phase, plan, caster, Number(data.castRank));
+        if (phase.kind === "cast-form") return this.#castFormPart(message, phase, plan, caster, item, options);
+        // (Vampiric Revelry's allies: the caster's temporary Hit Points from that part's save card. Metallic Meteorite Glyph's glyphs: an Effect whose
+        // smaller meteor the module rolls as the creature's turn ends.)
+        if (phase.kind === "temp-share" || phase.kind === "glyph") {
+            const tokens = [...(targets ?? game.user.targets)].map(target => target?.document ?? target).filter(token => token?.actor);
+            if (!tokens.length) throw new Error(`${data.spellName}: target the creatures for ${phase.title} first.`);
+            const minutes = Math.max(1, Math.round(Number(phase.seconds) / 60));
+            const made = [];
+            if (phase.kind === "temp-share") {
+                const card = (data.cards?.[phase.from] ?? []).at(-1);
+                const result = card ? game.messages.get(card.id)?.getFlag(MODULE_ID, "basicSaveState")?.casterBenefitResult : null;
+                const amount = Number(result?.amount ?? 0);
+                if (!(amount > 0)) throw new Error(`${data.spellName}: resolve the ${phases.find(entry => entry.key === phase.from)?.title ?? phase.from} save first (no temporary Hit Points were gained).`);
+                for (const token of tokens.filter(token => token.actor !== caster)) {
+                    const [effect] = await token.actor.createEmbeddedDocuments("Item", [{ name: `${data.spellName}: temporary Hit Points`, type: "effect", img: item.img ?? "icons/svg/regen.svg",
+                        system: { duration: { value: minutes, unit: "minutes", expiry: "turn-start", sustained: false }, start: { value: game.time.worldTime, initiative: game.combat?.combatant?.initiative ?? null },
+                            rules: [{ key: "TempHP", value: amount }], description: { value: `<p>${amount} temporary Hit Points from <strong>${escapeHTML(data.spellName)}</strong>, lost after ${minutes} minute${minutes === 1 ? "" : "s"}.</p>` } } }]);
+                    made.push({ name: token.name, amount, effectUuid: effect?.uuid ?? null });
+                }
+            } else {
+                const dc = Number(item.spellcasting?.statistic?.dc?.value ?? 0);
+                for (const token of tokens) {
+                    const [effect] = await token.actor.createEmbeddedDocuments("Item", [{ name: `${data.spellName}: glyph`, type: "effect", img: item.img ?? "icons/svg/target.svg",
+                        flags: { [MODULE_ID]: { runtime: { schema: 1, kind: "glyph", castInstanceId: message.getFlag(MODULE_ID, "castInstanceId"), sourceActorUuid: caster.uuid, sourceItemUuid: item.uuid, sourceItemName: data.spellName,
+                            turnEndSave: { statistic: phase.statistic, dc, formula: phase.formula, basic: true } } } },
+                        system: { duration: { value: minutes, unit: "minutes", expiry: "turn-start", sustained: false }, start: { value: game.time.worldTime, initiative: game.combat?.combatant?.initiative ?? null }, tokenIcon: { show: true },
+                            rules: [], description: { value: `<p>A glyph: at the end of each of its turns, a smaller meteor strikes (${escapeHTML(phase.formula)}, basic ${escapeHTML(phase.statistic)} save, DC ${dc}).</p>` } } }]);
+                    made.push({ name: token.name, effectUuid: effect?.uuid ?? null });
+                }
+            }
+            await message.setFlag(MODULE_ID, "incarnate", { ...data, used: data.used.includes(key) ? data.used : [...data.used, key] });
+            return { made };
+        }
+        // PF2e's Effect and the rest of its text (support-runtime.js): True Target's mark, Sacred Covenant's pact; Heartbolt's bolt and plume.
+        if (["true-target", "covenant", "heartbolt"].includes(phase.kind)) {
+            const tokens = [...(targets ?? game.user.targets)].map(target => target?.object ?? target).filter(token => token?.actor);
+            if (!tokens.length || (phase.kind === "heartbolt" && tokens.length !== 1)) throw new Error(`${data.spellName}: target the creature${phase.kind === "heartbolt" ? "" : "s"} for ${phase.title}.`);
+            const run = { "true-target": trueTargetPart, covenant: covenantPart, heartbolt: heartboltPart }[phase.kind];
+            const result = await run({ ongoing: this.ongoing, saves: this.saves, caster, spell: item, data, phase, message, token: tokens[0], tokens, options });
+            if (result?.status !== "cancelled") { const latest = game.messages.get(message.id)?.getFlag(MODULE_ID, "incarnate") ?? data;
+                await message.setFlag(MODULE_ID, "incarnate", { ...latest, used: latest.used.includes(key) ? latest.used : [...latest.used, key] }); }
+            return result;
+        }
+        // Things picked up and used (pickup-runtime.js): a thrown acorn, a season's pod, a gift.
+        if (["seed", "pod", "gift"].includes(phase.kind)) {
+            const tokens = [...(targets ?? game.user.targets)].map(target => target?.object ?? target).filter(token => token?.actor);
+            if (phase.kind === "gift" && tokens.length !== 1) throw new Error(`${data.spellName}: target the one character consuming the gift.`);
+            const run = { seed: seedPart, pod: podPart, gift: giftPart }[phase.kind];
+            const result = await run({ ongoing: this.ongoing, saves: this.saves, caster, spell: item, data, phase, message, token: tokens[0], options: { ...options, ...(region ? { region } : {}), ...(targets && phase.kind !== "gift" ? { targets: tokens } : {}) } });
+            if (result?.status !== "cancelled") { const latest = game.messages.get(message.id)?.getFlag(MODULE_ID, "incarnate") ?? data;
+                await message.setFlag(MODULE_ID, "incarnate", { ...latest, used: latest.used.includes(key) ? latest.used : [...latest.used, key] }); }
+            return result;
+        }
+        // Spells bringing creatures back (revival-runtime.js): the return, the burst, the jolt, the day's recovery.
+        if (["raise", "revive", "shock", "renewal"].includes(phase.kind)) {
+            const tokens = [...(targets ?? game.user.targets)].map(target => target?.object ?? target).filter(token => token?.actor);
+            if (!tokens.length || (["raise", "shock"].includes(phase.kind) && tokens.length !== 1)) throw new Error(`${data.spellName}: target the creature${["raise", "shock"].includes(phase.kind) ? "" : "s"} for ${phase.title}.`);
+            const run = { raise: raisePart, revive: revivePart, shock: shockPart, renewal: renewalPart }[phase.kind];
+            const result = await run({ ongoing: this.ongoing, caster, spell: item, data, phase, token: tokens[0], tokens, options });
+            const latest = game.messages.get(message.id)?.getFlag(MODULE_ID, "incarnate") ?? data;
+            await message.setFlag(MODULE_ID, "incarnate", { ...latest, used: latest.used.includes(key) ? latest.used : [...latest.used, key] });
+            return result;
+        }
+        // Spells answering a trigger (trigger-runtime.js): the life link, the sacrifice, the fury, the leech, the mimic, the word of death's mark and word, the emblem.
+        if (["link", "sacrifice", "fury", "leech", "mimic", "death-mark", "word", "emblem"].includes(phase.kind)) {
+            const tokens = [...(targets ?? game.user.targets)].map(target => target?.object ?? target).filter(token => token?.actor);
+            if (tokens.length !== 1) throw new Error(`${data.spellName}: target the one creature for ${phase.title}.`);
+            const run = { link: startLink, sacrifice: sacrificePart, fury: furyPart, leech: leechPart, mimic: mimicPart, "death-mark": deathMarkPart, word: wordPart, emblem: emblemPart }[phase.kind];
+            const result = await run({ ongoing: this.ongoing, caster, spell: item, data, phase, token: tokens[0], options });
+            if (result?.status !== "cancelled") { const latest = game.messages.get(message.id)?.getFlag(MODULE_ID, "incarnate") ?? data;
+                await message.setFlag(MODULE_ID, "incarnate", { ...latest, used: latest.used.includes(key) ? latest.used : [...latest.used, key] }); }
+            return result;
+        }
+        // Ray of Corruption: the module's spell attack against each target's AC; a hit starts the part's save (a degree worse on a critical hit).
+        if (phase.kind === "attack-save") {
+            const tokens = [...(targets ?? game.user.targets)].map(target => target?.object ?? target).filter(token => token?.actor);
+            if (tokens.length !== 1) throw new Error(`${data.spellName}: target the one creature for ${phase.title}.`);
+            const from = caster.getActiveTokens?.(true, true)?.[0];
+            if (from && tokenDistance(from, tokens[0]) > phase.range) throw new Error(`${data.spellName}: ${tokens[0].name} is beyond ${phase.range} feet.`);
+            const attack = await spellAttack(item, tokens[0].actor, { degree: options.attackDegree ?? null });
+            let card = null;
+            if (["success", "criticalSuccess"].includes(attack.degree)) {
+                const worse = attack.degree === "criticalSuccess" && phase.critWorse ? { predicate: { kind: "everyone" }, sourceText: "a critical hit: one degree worse",
+                    map: { criticalSuccess: "success", success: "failure", failure: "criticalFailure", criticalFailure: "criticalFailure" } } : null;
+                card = await this.saves.start(item, { plan: clone(phase.plan), sourceActor: caster, targets: tokens, castRank: Number(data.castRank), skipConfirmation, ...(worse ? { degreeAdjustment: worse } : {}),
+                    ...(data.lastingCastId ? { attachTo: data.lastingCastId } : {}) });
+            } else try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: caster }), content: `<p><strong>${escapeHTML(data.spellName)}</strong>: the attack misses ${escapeHTML(tokens[0].name)}.</p>` }); } catch (_) {}
+            await message.setFlag(MODULE_ID, "incarnate", { ...data, used: data.used.includes(key) ? data.used : [...data.used, key] });
+            return { degree: attack.degree, card: card?.card ?? card ?? null };
+        }
+        // Comet Charge: the caster flies to the free space beside the target nearest it (within the feet), down to its elevation; then the chosen
+        // element's attack — the metal one when the GM says the target wears metal armor or is made of metal — the target Off-Guard (+2) after a dive.
+        if (phase.kind === "charge") {
+            const tokens = [...(targets ?? game.user.targets)].map(target => target?.object ?? target).filter(token => token?.actor);
+            if (tokens.length !== 1) throw new Error(`${data.spellName}: target the one creature to charge.`);
+            const target = tokens[0].document ?? tokens[0], mover = caster.getActiveTokens?.(true, true)?.[0];
+            if (!mover) throw new Error(`${data.spellName}: ${caster.name} needs a token on the scene.`);
+            const higher = Number(mover.elevation ?? 0) > Number(target.elevation ?? 0);
+            const destination = options.destination ?? nearestSpaceBeside(target, mover, phase.feet);
+            if (!destination) throw new Error(`${data.spellName}: no free space beside ${target.name} within ${phase.feet} feet.`);
+            const problem = destinationProblem(mover, destination, { origin: mover, within: phase.feet, ignore: [mover.id] });
+            if (problem && !(destination.x === mover.x && destination.y === mover.y)) throw new Error(`${data.spellName}: ${problem}`);
+            await mover.update({ x: destination.x, y: destination.y, elevation: Number(target.elevation ?? 0) }, { teleport: true, animate: false, [MODULE_ID]: { teleported: true } });
+            let metal = false;
+            if (phase.metalAttack) metal = options.metal ?? await foundry.applications.api.DialogV2.confirm({ window: { title: data.spellName }, content: `<p>${escapeHTML(phase.question)}</p>`, rejectClose: false });
+            await message.setFlag(MODULE_ID, "incarnate", { ...data, used: data.used.includes(key) ? data.used : [...data.used, key] });
+            const result = await this.incarnatePhase(game.messages.get(message.id), metal ? phase.metalAttack : phase.attack, { targets: tokens, skipConfirmation,
+                ...(higher ? { attackBonus: { value: 2, label: "Off-Guard (the caster began higher)" } } : {}) });
+            return { moved: destination, higher, metal, attack: result };
+        }
+        // Ravenous Darkness: the placed burst of the linked spell's darkness (at the stated rank); the teeth's attack against each creature inside now,
+        // then as each creature ends its turn there.
+        if (phase.kind === "teeth") {
+            const linked = await fromUuid(phase.darkness.uuid);
+            const darkness = linked ? (await this.compile(linked))?.resolution?.darknessArea : null;
+            if (!darkness?.darkness) throw new Error(`${data.spellName}: ${phase.darkness.name}'s darkness is unavailable.`);
+            const placed = region ?? await item.clone({ "system.area": { type: phase.place.type, value: phase.place.value } }).placeTemplate(message);
+            if (!placed) return { status: "cancelled" };
+            const rank = phase.darkness.rank;
+            const notes = [phase.reminder, ...darkness.notes.map(note => note.replace("the cast rank", `rank ${rank}`)), ...(darkness.heightened ?? []).filter(entry => rank >= entry.minRank).map(entry => entry.note)];
+            const started = await this.ongoing.startRegionArea({ spellName: data.spellName, sourceActorUuid: caster.uuid, sourceItemUuid: item.uuid, castRank: Number(data.castRank), region: placed,
+                durationSeconds: phase.seconds, notes, events: ["turn-end"], seedMembers: true,
+                behaviors: [{ name: `${data.spellName}: darkness`, type: "adjustDarknessLevel", system: { mode: darkness.darkness.mode, modifier: darkness.darkness.modifier } }],
+                hazardDamage: { teeth: { statistic: phase.statistic, formula: phase.formula, type: phase.type, gnaw: phase.gnaw, gnawType: phase.gnawType, speedPenalty: phase.speedPenalty }, label: "the teeth" } });
+            const inside = canvas.scene.tokens.filter(token => token.actor && token.actor !== caster && !token.hidden && placed.testPoint?.({ x: token.x + token.width * canvas.grid.size / 2, y: token.y + token.height * canvas.grid.size / 2, elevation: Number(token.elevation ?? 0) }));
+            const first = [];
+            for (const token of inside) first.push({ name: token.name, ...(await this.ongoing.teethAttempt(started.castId, token, { degree: options.attackDegrees?.[token.name] ?? null })) });
+            await message.setFlag(MODULE_ID, "incarnate", { ...data, used: data.used.includes(key) ? data.used : [...data.used, key] });
+            return { ...started, first };
+        }
+        // Prismatic Spray's beams: each targeted creature's own roll (two beams, rerolling the "twice" result and a repeat, on that result), then that
+        // beam's part on it. Prismatic Wall's passage: every layer's part in turn on the creature.
+        if (phase.kind === "beam-roll" || phase.kind === "sequence") {
+            const tokens = [...(targets ?? game.user.targets)].map(target => target?.object ?? target).filter(token => token?.actor);
+            if (!tokens.length) throw new Error(`${data.spellName}: target the creatures for ${phase.title} first.`);
+            const forced = [...(options.beamRolls ?? [])];
+            const roll = async () => forced.length ? Number(forced.shift()) : (await new Roll(`1d${phase.die}`).evaluate()).total;
+            const runs = [];
+            for (const token of tokens) {
+                let keys = [], rolls = [];
+                if (phase.kind === "sequence") keys = [...phase.sequence];
+                else {
+                    const first = await roll(); rolls.push(first);
+                    if (first !== phase.twice) keys.push(phase.table[first]);
+                    else while (keys.length < 2) { const next = await roll(); rolls.push(next); const color = phase.table[next]; if (next !== phase.twice && color && !keys.includes(color)) keys.push(color); }
+                }
+                if (phase.kind === "beam-roll") try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: caster }),
+                    content: `<p><strong>${escapeHTML(data.spellName)}</strong>: ${escapeHTML(token.name)} rolls ${rolls.join(", ")} on 1d${phase.die}: <strong>${keys.map(color => escapeHTML(phases.find(entry => entry.key === color)?.title ?? color)).join("</strong> and <strong>")}</strong>.</p>` }); } catch (_) {}
+                const results = [];
+                for (const part of keys) results.push({ key: part, result: await this.incarnatePhase(game.messages.get(message.id), part, { targets: [token], skipConfirmation, ...options, beamRolls: [] }) });
+                runs.push({ token: token.name, rolls, keys, results });
+            }
+            const latest = game.messages.get(message.id)?.getFlag(MODULE_ID, "incarnate") ?? data;
+            await message.setFlag(MODULE_ID, "incarnate", { ...latest, used: latest.used.includes(key) ? latest.used : [...latest.used, key] });
+            return { runs };
+        }
+        // Rainbow Fumarole: its color rolled once for the casting, then the placed cylinder — difficult terrain, and that color's basic save (and added
+        // effect on a failure) for each creature caught in it, moving through it or ending its turn there; on "All", the caster's color for each creature.
+        if (phase.kind === "fumarole") {
+            const rolled = Number(options.colorRoll ?? (await new Roll(`1d${phase.die}`).evaluate()).total);
+            const all = rolled === phase.all, color = all ? null : phase.colors[rolled];
+            if (!all && !color) throw new Error(`${data.spellName}: no color for a roll of ${rolled}.`);
+            const placing = item.clone({ "system.area": { type: phase.area.type === "cylinder" ? "burst" : phase.area.type, value: phase.area.value } });
+            const placed = region ?? await placing.placeTemplate(message);
+            if (!placed) return { status: "cancelled" };
+            const dc = Number(item.spellcasting?.statistic?.dc?.value ?? 0);
+            try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: caster }),
+                content: `<p><strong>${escapeHTML(data.spellName)}</strong>: rolled ${rolled} on 1d${phase.die} — <strong>${all ? "All" : escapeHTML(color.name)}</strong>.</p>` }); } catch (_) {}
+            const result = await this.ongoing.startRegionArea({ spellName: data.spellName, sourceActorUuid: caster.uuid, sourceItemUuid: item.uuid, castRank: Number(data.castRank), region: placed,
+                durationSeconds: phase.seconds, notes: [phase.reminder], events: ["enter", "turn-end"], hazardOncePerTurn: true, dc,
+                behaviors: phase.terrain ? [{ name: `${data.spellName}: difficult terrain`, type: "modifyMovementCost", system: { difficulties: terrainDifficulties(["walk"], phase.terrain) } }] : [],
+                hazardDamage: { basic: { statistic: phase.statistic, dc }, label: all ? "All" : color.name, ...(all ? { colors: clone(phase.colors) } : { formula: color.formula, failureEffect: color.effect ?? null }) } });
+            await message.setFlag(MODULE_ID, "incarnate", { ...data, fumarole: { rolled, color: all ? "All" : color.name, castId: result.castId }, used: data.used.includes(key) ? data.used : [...data.used, key] });
+            return { rolled, color: all ? "All" : color.name, ...result };
+        }
+        if (["teleport", "hp-share", "descend", "elevate", "fuse", "launch"].includes(phase.kind)) {
+            const result = await this.#movementPart(message, phase, plan, caster, item, Number(data.castRank), { targets, ...options });
+            if (result?.status !== "cancelled") await message.setFlag(MODULE_ID, "incarnate", { ...data, used: data.used.includes(key) ? data.used : [...data.used, key] });
+            return result;
+        }
+        if (phase.kind !== "cloud" && phase.kind !== "hazard" && !phase.linger && !(phase.kind === "terrain" && phase.place) && !tokens.length) throw new Error(`${data.spellName}: target the creatures the ${name} (${phase.title}) affects first.`);
+        if (phase.count && tokens.length > phase.count) throw new Error(`${data.spellName}: ${phase.title} reaches at most ${phase.count} creature${phase.count === 1 ? "" : "s"}.`);
+        // ("On a critical success, the creature becomes temporarily immune for 1 round.": a creature that critically succeeded on this part's card recently.)
+        if (phase.immunityRounds) {
+            const now = game.time?.worldTime ?? 0;
+            const immune = (data.cards?.[key] ?? []).filter(entry => now - entry.worldTime < phase.immunityRounds * 6).flatMap(entry => {
+                const state = game.messages.get(entry.id)?.getFlag(MODULE_ID, "basicSaveState");
+                return (state?.targets ?? []).filter(target => target.degree === "criticalSuccess").map(target => target.actorUuid);
+            });
+            const refused = tokens.filter(token => immune.includes(token.actor.uuid));
+            if (refused.length) throw new Error(`${data.spellName}: ${refused.map(token => token.actor.name).join(", ")} critically succeeded and is immune for ${phase.immunityRounds} round${phase.immunityRounds === 1 ? "" : "s"}.`);
+        }
+        const castRank = Number(data.castRank);
+        const context = { spell: item, caster, castRank, castId: message.getFlag(MODULE_ID, "castInstanceId") ?? message.id, spellName: data.spellName, title: phase.title, tokens };
+        // ("The damage type depends on the tradition used to cast this spell": the casting entry's tradition names it.)
+        if (phase.typeByTradition && !casterChoice) casterChoice = phase.typeByTradition[item.spellcasting?.tradition] ?? null;
+        let result;
+        if (phase.linger) {
+            const api = game.modules.get(MODULE_ID)?.api;
+            if (!api?.ongoing?.startLingering) throw new Error(`${data.spellName}: the lingering-area manager is unavailable.`);
+            result = await api.ongoing.startLingering(item, clone(phase.plan), { castRank, targets: tokens, ...(region ? { region } : {}), ...(casterChoice ? { casterChoice } : {}) });
+            if (result?.status === "cancelled") return result;
+        } else if (phase.plan && ["save", "attack"].includes(phase.kind ?? "save")) {
+            if (!this.saves?.start) throw new Error(`${data.spellName}: the save manager is unavailable.`);
+            // (A heightened rank's own plan: Patron's Protector's Body Check at 9th.)
+            const ranked = (phase.byRank ?? []).filter(entry => castRank >= entry.minRank).sort((a, b) => a.minRank - b.minRank).at(-1);
+            if (ranked) phase.plan = ranked.plan;
+            // (An affliction's own save at its stated DC: Pest Swarm's violin spider venom.)
+            // (A push "away from the center": the part's area, the cast's template, the conjured token, or the familiar the spell targets — Planar Collision,
+            // Patron's Protector.)
+            const forcedPoint = Object.values(phase.plan?.resolution?.outcomes ?? {}).some(outcome => outcome?.forcedMovement?.direction === "from-center") ? await incarnatePushCenter(item, caster, data, region) : null;
+            result = await this.saves.start(item, { plan: clone(phase.plan), sourceActor: caster, targets: tokens, castRank, skipConfirmation, ...(phase.dc ? { dc: phase.dc } : {}), ...(casterChoice ? { casterChoice } : {}),
+                ...(forcedPoint ? { forcedPoint } : {}), ...(phase.plan?.resolution?.areaExit?.area === "conjured" ? { exitArea: await conjuredFootprint(data) } : {}),
+                ...(data.lastingCastId ? { attachTo: data.lastingCastId } : {}), ...(options.attackBonus ? { attackBonus: options.attackBonus } : {}) });
+            // (Divinity Leech: the creatures whose divine casts the module now watches, on the card's record.)
+            if (phase.leechTargets && data.lastingCastId) {
+                const leechPhase = phases.find(entry => entry.kind === "leech");
+                const journal = this.ongoing.find(data.lastingCastId), record = journal ? clone(journal.getFlag(MODULE_ID, ONGOING_FLAG)) : null;
+                if (record && leechPhase) { record.leech = { targets: [...new Set([...(record.leech?.targets ?? []), ...tokens.map(token => token.actor.uuid)])], tradition: leechPhase.tradition, partKey: leechPhase.key, messageId: message.id };
+                    await this.ongoing.save(journal, record); }
+            }
+        } else if (phase.kind === "damage") result = await applyPartDamage({ ...context, formula: phase.formula });
+        // (Corrosive Body's touch: its acid at the cast rank on the creature, then the caster's temporary Hit Points the first time each round.)
+        else if (phase.kind === "retaliate") {
+            const formula = [...(phase.byRank ?? [])].sort((a, b) => a.minRank - b.minRank).filter(entry => castRank >= entry.minRank).at(-1)?.formula ?? phase.formula;
+            result = await applyPartDamage({ ...context, formula });
+            if (phase.tempHp) result.tempHp = await this.#formTempHp(message, phase, plan, caster, castRank);
+        }
+        else if (phase.kind === "heal") result = await applyPartHealing({ ...context, formula: phase.formula });
+        else if (phase.kind === "effect") result = await applyPartEffect({ ...context, part: phase });
+        else if (phase.kind === "reduce-conditions") result = await reducePartConditions({ slugs: phase.slugs, by: phase.by, tokens });
+        // (Gray Shadow's named creature beside the dying target; Shambling Horror's stat block, picked from the list, at the corpse.)
+        else if (phase.kind === "summon") result = await this.#summonPart(item, caster, phase, tokens[0], { castRank, castId: context.castId, spellName: data.spellName, summonUuid: options.summonUuid ?? null });
+        // (Elemental Confluence's wood: difficult terrain over the conjured thing's area, following it, for the stated rounds.)
+        else if (phase.kind === "hazard") {
+            // (A placed area dealing its damage, no save, to each creature ending its turn there: Burning Blossoms' petals, at the cast rank.)
+            // (Pierce the Sky's lines: from the caster to each targeted creature, drawn by the module.)
+            const from = phase.between ? caster.getActiveTokens?.(true, true)?.[0] : null;
+            if (phase.between && (!from || !tokens.length)) throw new Error(`${data.spellName}: target the creatures shot (the caster needs a token).`);
+            const placed = region ?? (phase.between ? await linesRegion(canvas.scene, from, tokens, `${data.spellName}: ${phase.title}`)
+                : await item.clone({ "system.area": { type: phase.place.type, value: phase.place.value } }).placeTemplate(message));
+            if (!placed) return { status: "cancelled" };
+            // (Planar Collision's ground: the plane's type, the caster's pick — given, or asked.)
+            let type = phase.type;
+            if (!type && phase.typeChoice) {
+                type = phase.typeChoice.includes(casterChoice) ? casterChoice : await foundry.applications.api.DialogV2.prompt({ window: { title: `${data.spellName} — damage type` }, rejectClose: false,
+                    content: `<select name="type">${phase.typeChoice.map(value => `<option value="${value}">${escapeHTML(value)}</option>`).join("")}</select>`, ok: { label: "Place", callback: (_event, button) => button.form.elements.type.value } });
+                if (!type) return { status: "cancelled" };
+            }
+            // (Rounds rolled when it's placed: Dynamic Ignition's "[[/r 1d4]] rounds".)
+            const rounds = phase.roundsRoll ? Number((await new Roll(phase.roundsRoll).evaluate()).total) : phase.rounds;
+            result = await this.ongoing.startRegionArea({ spellName: `${data.spellName}: ${phase.title}`, sourceActorUuid: caster.uuid, sourceItemUuid: item.uuid, castRank, region: placed,
+                durationSeconds: rounds * 6, notes: [phase.reminder], events: [...phase.events], ...(phase.oncePerRound ? { hazardOncePerRound: true } : {}),
+                ...(phase.terrain ? { behaviors: [{ name: `${data.spellName}: difficult terrain`, type: "modifyMovementCost", system: { difficulties: terrainDifficulties(["walk"], phase.terrain) } }] } : {}),
+                hazardDamage: { formula: phase.formula.replaceAll("@item.rank", String(Number(castRank))), type, label: phase.label } });
+        }
+        else if (phase.kind === "terrain" && phase.place) {
+            // (A placed shape: the GM places it, from the destroyed thrall's space; its difficulty for the spell's time.)
+            const placing = item.clone({ "system.area": { type: phase.place.type, value: phase.place.value } });
+            const placed = region ?? await placing.placeTemplate(message);
+            if (!placed) return { status: "cancelled" };
+            result = await this.ongoing.startRegionArea({ spellName: `${data.spellName}: ${phase.title}`, sourceActorUuid: caster.uuid, sourceItemUuid: item.uuid, castRank, region: placed,
+                durationSeconds: phase.rounds * 6, notes: [phase.reminder], behaviors: [{ name: `${data.spellName}: ${phase.difficulty === 3 ? "greater " : ""}difficult terrain`, type: "modifyMovementCost", system: { difficulties: terrainDifficulties(["walk"], phase.difficulty) } }] });
+        }
+        else if (phase.kind === "terrain") {
+            const token = tokens[0]?.document ?? tokens[0];
+            const pixels = Number(plan.resolution.incarnate.conjure?.concealing?.radius ?? 10) / canvas.scene.grid.distance * canvas.scene.grid.size;
+            const centre = { x: token.x + token.width * canvas.scene.grid.size / 2, y: token.y + token.height * canvas.scene.grid.size / 2 };
+            const [region] = await canvas.scene.createEmbeddedDocuments("Region", [{ name: `${data.spellName}: ${phase.title}`, color: "#557733", shapes: [{ type: "circle", x: centre.x, y: centre.y, radius: pixels }],
+                flags: { [MODULE_ID]: { followToken: token.uuid, followShape: "emanation", followRadius: pixels } } }]);
+            result = await this.ongoing.startRegionArea({ spellName: `${data.spellName}: ${phase.title}`, sourceActorUuid: caster.uuid, sourceItemUuid: item.uuid, castRank, region,
+                durationSeconds: phase.rounds * 6, notes: [phase.reminder], behaviors: [{ name: `${data.spellName}: difficult terrain`, type: "modifyMovementCost", system: { difficulties: terrainDifficulties(["walk"], 2) } }] });
+        }
+        // (Reanimate Foe: the caster's skill check against the corpse's level DC; the copy, or a thrall and the Focus Point back.)
+        else if (phase.kind === "check-copy") {
+            if (tokens.length !== 1) throw new Error(`${data.spellName}: target the one corpse.`);
+            const corpse = tokens[0];
+            const statistic = caster.skills?.[phase.skill] ?? caster.getStatistic?.(phase.skill);
+            if (!statistic) throw new Error(`${data.spellName}: ${caster.name} has no ${phase.skillLabel} to roll.`);
+            const dc = levelDC(corpse.actor.level);
+            const roll = await statistic.roll({ dc: { value: dc }, skipDialog: true, extraRollOptions: ["action:reanimate"] });
+            const degree = ["criticalFailure", "failure", "success", "criticalSuccess"][Number(roll?.degreeOfSuccess ?? -1)];
+            const outcome = phase.results[degree];
+            if (!outcome) throw new Error(`${data.spellName}: the check's result can't be read.`);
+            if (outcome.thrall) {
+                const made = await makeThralls(caster, { count: 1, spell: data.spellName, itemOrSource: item, near: { x: corpse.center?.x ?? corpse.x, y: corpse.center?.y ?? corpse.y }, feet: 5 });
+                const focus = caster.system?.resources?.focus;
+                if (outcome.focusRefund && focus) await caster.update({ "system.resources.focus.value": Math.min(Number(focus.max ?? 0), Number(focus.value ?? 0) + 1) });
+                result = { degree, dc, thrall: made, focusRefunded: !!(outcome.focusRefund && focus) };
+            } else result = { degree, dc, copy: await copyCreature({ original: corpse.actor, originalToken: corpse, caster, spellName: data.spellName, castId: context.castId, castRank,
+                hp: outcome.hp, hpLoss: outcome.hpLoss, halfDamage: outcome.halfDamage, seconds: outcome.seconds }) };
+        }
+        // (The caster's thrall the spell destroys: Temporary Possession's.)
+        else if (phase.kind === "destroy-thrall") {
+            const thralls = tokens.filter(token => isThrall(token));
+            if (thralls.length !== 1 || thralls.length !== tokens.length) throw new Error(`${data.spellName}: target the one thrall to destroy.`);
+            await destroyThrall(thralls[0].document ?? thralls[0]);
+            result = { destroyed: thralls[0].name };
+        }
+        else if (phase.kind === "native-effect") {
+            const template = await loadNativeEffectTemplate(phase.uuid);
+            if (!template) throw new Error(`${data.spellName}: PF2e's Effect for ${phase.title} is unavailable.`);
+            result = [];
+            for (const token of tokens) {
+                const source = prepareNativeEffectSource(template, { castInstanceId: context.castId, castRank, sourceActorUuid: caster.uuid, sourceItemUuid: item.uuid, sourceItemName: data.spellName, resolutionKind: "incarnate" });
+                // (PF2e's choice on the Effect answered ahead — "pick its element" — when the caller gives it.)
+                // (PF2e preselects a ChoiceSet from its rule's own `selection`.)
+                if (options.rulesSelections) for (const rule of source.system?.rules ?? []) if (rule.key === "ChoiceSet" && rule.flag in options.rulesSelections) rule.selection = options.rulesSelections[rule.flag];
+                const effect = await createNativeEffect(token.actor, source);
+                result.push({ actorUuid: token.actor.uuid, effectUuid: effect?.uuid ?? null });
+            }
+        } else if (phase.kind === "cast-spell") result = await this.#incarnateCast(item, caster, phase, tokens, { skipConfirmation });
+        else if (phase.kind === "cloud") {
+            const placed = region ?? canvas.regions?.controlled?.[0]?.document ?? await item.clone({ "system.area": clone(phase.area) }).placeTemplate?.();
+            if (!placed) return { status: "cancelled" };
+            result = await this.ongoing.startCloud({ spellName: `${data.spellName}: ${phase.title}`, sourceActorUuid: caster.uuid, sourceItemUuid: item.uuid, castRank, region: placed,
+                durationSeconds: phase.durationSeconds, dismissible: true, memberRules: clone(phase.memberRules ?? []), notes: [...(phase.notes ?? [])] });
+        }
+        const cards = { ...(data.cards ?? {}) };
+        if (result?.card?.id) cards[key] = [...(cards[key] ?? []), { id: result.card.id, worldTime: game.time?.worldTime ?? 0 }];
+        await message.setFlag(MODULE_ID, "incarnate", { ...data, used: data.used.includes(key) ? data.used : [...data.used, key], cards });
+        return result;
+    }
+
+    /**
+     * A spell an incarnate's manifestation casts (Incarnate Deific Herald's Divine Wrath, Summon Warden of the Wild's Fly): that spell, tied to the
+     * caster's spellcasting entry for the incarnate, at the stated rank (its stated action version), resolved by its own route for the targeted
+     * creatures; "The duration for both spells is reduced to 3 rounds": the Effects it made, shortened (and the text's exception added to them).
+     */
+    async #incarnateCast(item, caster, phase, tokens, { skipConfirmation = false } = {}) {
+        const referenced = await fromUuid(phase.uuid);
+        if (referenced?.type !== "spell") throw new Error(`${item.name}: ${phase.name} is unavailable.`);
+        const source = referenced.toObject();
+        source.system.location = { ...(source.system.location ?? {}), value: item.system?.location?.value ?? null, heightenedLevel: phase.rank };
+        let spell = new CONFIG.Item.documentClass(source, { parent: caster });
+        if (phase.overlayId) spell = spell.loadVariant({ castRank: phase.rank, overlayIds: [phase.overlayId] }) ?? spell;
+        rememberCastSpell(spell);
+        if (phase.plan.resolution?.kind === "save" && !phase.plan.resolution.lingering) {
+            if (!this.saves?.start) throw new Error(`${item.name}: the save manager is unavailable.`);
+            return this.saves.start(spell, { plan: clone(phase.plan), sourceActor: caster, targets: tokens, castRank: phase.rank, skipConfirmation });
+        }
+        const castInstanceId = randomID();
+        const result = await this.execute(spell, { plan: clone(phase.plan), sourceActor: caster, targets: tokens, castRank: phase.rank, castInstanceId, skipConfirmation: true, confirmed: true });
+        if (phase.durationRounds || phase.exception) {
+            for (const token of tokens) {
+                const made = (token.actor.itemTypes?.effect ?? []).filter(effect => [effect.flags?.[MODULE_ID]?.runtime?.castInstanceId, effect.flags?.[MODULE_ID]?.castInstanceId].includes(castInstanceId));
+                for (const effect of made) {
+                    const update = {};
+                    if (phase.durationRounds) update["system.duration"] = { value: phase.durationRounds, unit: "rounds", expiry: "turn-start", sustained: false };
+                    if (phase.exception) update["system.description.value"] = `${effect.system?.description?.value ?? ""}<p><strong>${escapeHTML(item.name)}:</strong> ${escapeHTML(phase.exception)}.</p>`;
+                    await effect.update(update);
+                }
+            }
+        }
+        return result;
     }
 
     async #executeDamagingWall(itemOrSource, plan, sourceActor, options) {
@@ -7095,6 +9940,38 @@ export class EffectRuntime {
      * The Everfull Moon: the generated battle form on the caster (its level the cast rank, for the brackets), tracked in Ongoing spells with the
      * Fuel control (`fuel-form`); the lethologic mark once (a lasting Effect: the weakness behind a night toggle).
      */
+    /** A form PF2e has no Effect for (Blanket of Stars, Mantle of Heaven's Slopes): the module's Effect on the caster for the duration, then its riders. */
+    async #executeGeneratedForm(itemOrSource, plan, sourceActor, options) {
+        if (!this.ongoing) throw new Error(`${plan.source.name} needs the ongoing spell manager.`);
+        const data = plan.resolution.generatedForm;
+        const castRank = Number(options.castRank ?? itemOrSource?.rank ?? plan.rank);
+        const castInstanceId = options.castInstanceId ?? randomID();
+        const minutes = data.seconds % 60 === 0;
+        // (PF2e's choice on the Effect answered ahead — Avatar's deity — when the caller gives it.)
+        const rules = clone(data.rules);
+        const selections = {};
+        if (options.choiceSelections) for (const rule of rules) {
+            const key = rule.key === "ChoiceSet" ? [rule.flag, rule.rollOption].find(name => name && name in options.choiceSelections) : null;
+            if (key) { rule.selection = options.choiceSelections[key]; if (rule.flag) selections[rule.flag] = rule.selection; }
+        }
+        const [form] = await sourceActor.createEmbeddedDocuments("Item", [{ name: `Spell Effect: ${plan.source.name}`, type: "effect", img: itemOrSource?.img ?? "icons/svg/aura.svg",
+            flags: { [MODULE_ID]: { runtime: { schema: 1, kind: "generated-form", castInstanceId, sourceActorUuid: sourceActor.uuid, sourceItemUuid: itemOrSource?.uuid ?? null, sourceItemName: plan.source.name, castRank } },
+                ...(Object.keys(selections).length ? { system: { rulesSelections: selections } } : {}) },
+            system: { level: { value: castRank }, duration: { value: minutes ? data.seconds / 60 : data.seconds / 6, unit: minutes ? "minutes" : "rounds", expiry: "turn-start", sustained: false },
+                start: { value: game.time.worldTime, initiative: game.combat?.combatants?.find(combatant => combatant.actor?.uuid === sourceActor.uuid)?.initiative ?? null },
+                rules, tokenIcon: { show: true },
+                description: { value: `<p>${escapeHTML(data.description)}</p>${(plan.resolution.gmNotes ?? []).map(note => `<p class="pf2e-auto-gm-reminder"><strong>GM:</strong> ${escapeHTML(note)}</p>`).join("")}` } } }]);
+        const journal = await this.ongoing.begin({ castId: castInstanceId, name: plan.source.name, kind: "native", sourceActorUuid: sourceActor.uuid, sourceItemUuid: itemOrSource?.uuid ?? null, recipientUuids: [sourceActor.uuid] });
+        await this.ongoing.attach(journal, form);
+        await this.ongoing.activate(journal);
+        await this.#startFormRiders(plan, { itemOrSource, sourceActor, created: [form], castRank, castInstanceId, journal });
+        if (data.toggleGrants?.length) await form.setFlag(MODULE_ID, "formRiders", { ...clone(form.flags[MODULE_ID].formRiders ?? {}), toggleGrants: clone(data.toggleGrants) });
+        if (plan.resolution.gmNotes?.length) try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), whisper: game.users.filter(user => user.isGM).map(user => user.id),
+            content: `<p><strong>${escapeHTML(plan.source.name)}</strong></p>${plan.resolution.gmNotes.map(note => `<p class="pf2e-auto-gm-reminder">${escapeHTML(note)}</p>`).join("")}` }); } catch (_) {}
+        if (options.sourceMessageId) try { await game.messages.get(options.sourceMessageId)?.setFlag(MODULE_ID, "resolvedCast", { castInstanceId, resolutionKind: "generated-form" }); } catch (_) {}
+        return { status: "applied", plan, castInstanceId, effectUuid: form.uuid };
+    }
+
     async #executeBattleForm(itemOrSource, plan, sourceActor, options) {
         if (!this.ongoing) throw new Error(`${plan.source.name} needs the ongoing spell manager.`);
         const data = plan.resolution.battleForm;
@@ -8415,21 +11292,27 @@ export class EffectRuntime {
         // An instantaneous spell that leaves something in the world (a plant, a wall, terrain): its result stays, so the GM marks it.
         const lasting = !note.duration && note.environment && /\b(?:creates?|conjures?|sprouts?|grows?|raises?|forms?|wall|bridge|difficult terrain)\b/i.test(note.text ?? "");
         const lines = [
-            note.environment && (note.duration || lasting) ? `<p><strong>GM:</strong> mark ${escapeHTML(plan.source.name)}'s ${lasting ? "result" : "area"} on the map${note.area?.value ? ` (${note.area.value}-foot ${escapeHTML(note.area.type ?? "area")})` : ""}; the module doesn't track it.</p>` : "",
+            note.environment && (note.duration || lasting) ? `<p class="pf2e-auto-gm-reminder"><strong>GM:</strong> mark ${escapeHTML(plan.source.name)}'s ${lasting ? "result" : "area"} on the map${note.area?.value ? ` (${note.area.value}-foot ${escapeHTML(note.area.type ?? "area")})` : ""}; the module doesn't track it.</p>` : "",
             created.length ? `<p>Note Effect on ${actors.map(actor => `<strong>${escapeHTML(actor.name)}</strong>`).join(", ")}${note.duration?.mode === "unlimited" ? " (unlimited)" : note.duration ? ` (${note.duration.value} ${escapeHTML(note.duration.value === 1 ? note.duration.unit.replace(/s$/, "") : note.duration.unit)}${note.duration.sustained ? ", sustained" : ""})` : ""}.</p>`
                 : lasting ? "<p>Instantaneous: the spell's result stays in the world.</p>" : "<p>Instantaneous: nothing to track.</p>",
             // An instantaneous spell has no Effect to hold its rules: the card shows them (at the cast rank).
             created.length ? "" : `<div class="pf2e-auto-gm-reminder">${text.split("\n").filter(Boolean).map(line => `<p>${escapeHTML(line)}</p>`).join("")}</div>`,
-            note.gmRitual ? `<p><strong>GM:</strong> this ritual's rules come from its adventure or book; resolve it at the table.</p>` : `<p><em>The module doesn't enforce this spell's rules; resolve them at the table.</em></p>`
+            note.gmRitual ? `<p class="pf2e-auto-gm-reminder"><strong>GM:</strong> this ritual's rules come from its adventure or book; resolve it at the table.</p>` : note.gmHandled ? `<p class="pf2e-auto-gm-reminder"><strong>GM:</strong> this spell is yours to run at the table (${note.gmHandled.group === "world-scale" ? "it acts at a scale the battle map doesn't model" : note.gmHandled.group === "non-combat" ? "it's a non-combat spell" : "it's information, travel or a ward"}).</p>` : `<p><em>The module doesn't enforce this spell's rules; resolve them at the table.</em></p>`
         ].join("");
         // A heightened counteract at the cast rank ("You can target an alchemical elixir …, attempting a counteract check against it."): a
         // button on the card rolls the caster's counteract check against the item the GM names.
         const counteract = (note.heightenedCounteract ?? []).filter(entry => castRank >= entry.rank).at(-1) ?? null;
         const counteractLine = counteract ? `<p><strong>${counteract.base ? "Counteract" : `Heightened (${counteract.rank})`}:</strong> ${escapeHTML(counteract.text)}</p><button type="button" class="pf2e-auto-note-counteract"><i class="fa-solid fa-ban"></i> Counteract ${escapeHTML(counteract.target)}</button>` : "";
-        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), content: `<h3>${escapeHTML(plan.source.name)} — note</h3>${lines}${counteractLine}`,
+        // The GM's options on a GM-handled spell: each applies only to the creatures the GM targets when pressing it.
+        const gmOptions = note.gmHandled?.options ?? [];
+        const gmOptionLines = gmOptions.length ? `<p><strong>GM options</strong> (target the creatures, then press one):</p>${gmOptions.map(option => `<button type="button" class="pf2e-auto-gm-option" data-option="${escapeHTML(option.key)}">${escapeHTML(option.label)}</button>`).join("")}`
+            + (note.gmHandled.notes ?? []).map(text => `<p class="pf2e-auto-gm-reminder">${escapeHTML(text)}</p>`).join("") : "";
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), content: `<h3>${escapeHTML(plan.source.name)} — note</h3>${lines}${counteractLine}${gmOptionLines}`,
             // (A GM's ritual: its text to the GM only.)
-            ...(note.gmRitual ? { whisper: ChatMessage.getWhisperRecipients("GM").map(user => user.id) } : {}),
+            ...(note.gmRitual || note.gmHandled ? { whisper: ChatMessage.getWhisperRecipients("GM").map(user => user.id) } : {}),
             flags: { [MODULE_ID]: { kind: "spell-note", castInstanceId, environment: note.environment === true,
+                ...(gmOptions.length ? { gmOptions: { castRank, dc: Number(options.dc ?? itemOrSource?.spellcasting?.statistic?.dc?.value ?? NaN) || null, sourceActorUuid: sourceActor.uuid,
+                    sourceItemUuid: itemOrSource?.uuid ?? null, spellSource: typeof itemOrSource?.toObject === "function" ? itemOrSource.toObject() : clone(itemOrSource ?? null), spellName: plan.source.name, options: clone(gmOptions) } } : {}),
                 ...(counteract ? { noteCounteract: { target: counteract.target, text: counteract.text, result: counteract.result ?? "spoils and becomes a mundane item", castRank, sourceItemUuid: itemOrSource?.uuid ?? null, spellName: plan.source.name } } : {}) } } }); }
         catch (error) { console.warn(`${MODULE_ID} | The spell note card could not be posted.`, error); }
         if (options.sourceMessageId) {
@@ -8590,6 +11473,11 @@ export class EffectRuntime {
             const unarmed = data.targetStrike ? actors.find(actor => !(actor.itemTypes?.weapon ?? []).some(weapon => weapon.system?.baseItem === data.targetStrike || weapon.slug === data.targetStrike)) : null;
             if (unarmed) throw new Error(`${plan.source.name}: ${unarmed.name} doesn't have an unarmed ${data.targetStrike} Strike.`);
         }
+        // (A condition the text sets on applying it — Dual-Pattern Strike's "If both your Strikes hit" — the caster's answer.)
+        if (data.proof?.confirm) {
+            const confirmed = options.confirmed ?? await foundry.applications.api.DialogV2.confirm({ window: { title: plan.source.name }, content: `<p>${escapeHTML(data.proof.confirm)}</p>`, rejectClose: false });
+            if (!confirmed) return { status: "cancelled", plan, reason: "not-confirmed" };
+        }
         const template = await loadNativeEffectTemplate(data.effect.uuid);
         if (!template) throw new Error(`${plan.source.name}: PF2e's ${data.effect.label ?? "Effect"} is unavailable.`);
         const castInstanceId = options.castInstanceId ?? randomID();
@@ -8650,7 +11538,7 @@ export class EffectRuntime {
                 ? { value: note.duration.value, unit: note.duration.unit } : null;
             const prepared = !effectApplies ? null : prepareNativeEffectSource(template, { castInstanceId, castRank, sourceActorUuid: sourceActor.uuid,
                 sourceItemUuid: itemOrSource?.uuid ?? null, sourceItemName: plan.source.name, resolutionKind: "effect-note", targetActorUuid: actor.uuid,
-                ...(heightened ? { heightenedDuration: heightened } : {}), ...(data.proof?.endsAfterDamage ? { endsAfterDamage: true } : {}),
+                ...(heightened ? { heightenedDuration: heightened } : data.proof?.durationOverride ? { heightenedDuration: { ...data.proof.durationOverride } } : {}), ...(data.proof?.endsAfterDamage ? { endsAfterDamage: true } : {}),
                 ...(data.proof?.endsAfterSave ? { endsAfterSave: true } : {}), ...(data.proof?.endsAfterAttack ? { endsAfterAttack: true } : {}),
                 ...(data.proof?.ruleAdditions || data.proof?.strikeUpgrade ? { ruleAdditions: [...casterResolvedRules(data.proof.ruleAdditions ?? [], sourceActor),
                     ...(data.proof.strikeUpgrade ? strikeUpgradeRules(data.proof.strikeUpgrade, actor) : [])] } : {}),
@@ -8687,12 +11575,25 @@ export class EffectRuntime {
                     foundry.utils.setProperty(prepared, `flags.system.rulesSelections.${rule.flag}`, casterPick);
                 }
             }
+            // (Choices answered ahead by the caller — a macro or test — preset PF2e's ChoiceSets of those flags; PF2e asks the rest.)
+            if (options.choiceSelections && prepared) for (const rule of prepared.system?.rules ?? []) {
+                if (rule.key !== "ChoiceSet" || rule.selection != null || !rule.flag || !(rule.flag in options.choiceSelections)) continue;
+                rule.selection = options.choiceSelections[rule.flag];
+                foundry.utils.setProperty(prepared, `flags.system.rulesSelections.${rule.flag}`, rule.selection);
+            }
             // (The chosen benefits preset PF2e's ChoiceSets, in order: no prompt per creature.)
             for (const [index, flag] of (benefit && benefits.length ? benefit.flags : []).entries()) {
                 const rule = prepared?.system?.rules?.find(entry => entry.key === "ChoiceSet" && entry.flag === flag);
                 if (!rule || !benefits[index]) continue;
                 rule.selection = benefits[index];
                 foundry.utils.setProperty(prepared, `flags.system.rulesSelections.${flag}`, benefits[index]);
+            }
+            // "If they already had a weakness to holy, its weakness is increased by the same amount." (Virtue's Light): PF2e keeps the higher of two
+            // weaknesses of a type, so the Effect's is the creature's own plus the spell's.
+            if (data.proof?.weaknessStacks && prepared) for (const rule of prepared.system?.rules ?? []) {
+                if (rule.key !== "Weakness") continue;
+                const own = Math.max(0, ...(actor.system?.attributes?.weaknesses ?? []).filter(weakness => weakness.type === rule.type).map(weakness => Number(weakness.value) || 0));
+                if (own > 0) rule.value = `${own}+(${rule.value})`;
             }
             const effect = prepared ? await createNativeEffect(actor, prepared) : null;
             const entry = { actorUuid: actor.uuid, effectUuid: effect?.uuid ?? null, name: effect?.name ?? template.name, noteUuid: null };
@@ -8723,7 +11624,7 @@ export class EffectRuntime {
         const content = [`<h3>${escapeHTML(plan.source.name)} — Effect + note</h3>`,
             ...(healed ? [`<p><strong>${escapeHTML(sourceActor.name)}</strong> recovers ${healed.amount} Hit Points.</p>`] : []),
             `<p>${escapeHTML(template.name)} on ${actors.map(actor => `<strong>${escapeHTML(actor.name)}</strong>`).join(", ")}${note.duration ? ", with a note of the spell's rules" : ""}.</p>`,
-            note.environment && note.duration ? `<p><strong>GM:</strong> mark ${escapeHTML(plan.source.name)}'s area on the map; the module doesn't track it.</p>` : "",
+            note.environment && note.duration ? `<p class="pf2e-auto-gm-reminder"><strong>GM:</strong> mark ${escapeHTML(plan.source.name)}'s area on the map; the module doesn't track it.</p>` : "",
             `<p><em>PF2e's Effect is applied as PF2e defines it; the module doesn't prove it carries every rule of the spell.</em></p>`].join("");
         // Knock: the cast's own check and its counteract (the card's buttons).
         const check = data.proof?.castCheck, counter = data.proof?.counteract;
@@ -8872,7 +11773,7 @@ export class EffectRuntime {
                 metalAttack: { slug, metalActors: Object.entries(classification).filter(([, kind]) => kind === "metal").map(([actorUuid]) => actorUuid), base: repulsionPenalty(data, castRank, plan.rank, false), metal: repulsionPenalty(data, castRank, plan.rank, true) } } } },
             system: { slug, level: { value: castRank }, duration: { value: Math.round(data.durationSeconds / 60), unit: "minutes", expiry: "turn-start", sustained: false },
                 start: { value: game.time.worldTime, initiative: game.combat?.combatants?.find(combatant => combatant.actor?.uuid === sourceActor.uuid)?.initiative ?? null },
-                description: { value: `<p>${data.notes.map(note => escapeHTML(note)).join("</p><p>")}</p><p>Attacks against you with metal objects: the GM uses the spell's control in Ongoing spells before the attack.</p>` },
+                description: { value: `<p>${data.notes.map(note => escapeHTML(note)).join("</p><p>")}</p><p class="pf2e-auto-gm-reminder"><strong>GM:</strong> attacks against this creature with metal objects: use the spell's control in Ongoing spells before the attack.</p>` },
                 rules: casterArmor ? [{ key: "GrantItem", uuid: /@UUID\[([^\]]+)\]/.exec(data.casterCondition.link)[1], flag: "repulsionSlowed", allowDuplicate: true, onDeleteActions: { granter: "cascade", grantee: "cascade" } }] : [] } }]);
         await this.ongoing.attach(this.ongoing.find(started.castId), effect);
         try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "repulsion-aura", castInstanceId: started.castId } },
@@ -8920,7 +11821,7 @@ export class EffectRuntime {
                     sourceItemName: plan.source.name, targetActorUuid: actor.uuid, targetName: actor.name, option: option.name, touchDisbelieve: { dc, statistic: data.disbelieve.statistic } } } },
                 system: { level: { value: castRank }, duration: { value: Math.round(data.durationSeconds / 3600), unit: "hours", expiry: "turn-start", sustained: false },
                     start: { value: game.time.worldTime, initiative: game.combat?.combatant?.initiative ?? null }, tokenIcon: { show: true },
-                    description: { value: `<p><strong>${escapeHTML(option.name)}</strong>: ${escapeHTML(option.sourceText.replace(/@UUID\[[^\]]+\]\{([^}]+)\}/g, "$1"))}</p>${option.note ? `<p><strong>GM:</strong> ${escapeHTML(option.note)}</p>` : ""}<p>A creature that touches this creature can attempt to disbelieve the illusion (the spell's control in Ongoing spells).</p>` },
+                    description: { value: `<p><strong>${escapeHTML(option.name)}</strong>: ${escapeHTML(option.sourceText.replace(/@UUID\[[^\]]+\]\{([^}]+)\}/g, "$1"))}</p>${option.note ? `<p class="pf2e-auto-gm-reminder"><strong>GM:</strong> ${escapeHTML(option.note)}</p>` : ""}<p>A creature that touches this creature can attempt to disbelieve the illusion (the spell's control in Ongoing spells).</p>` },
                     rules: [{ key: "RollOption", domain: option.bonus.skill, option: toggle, toggleable: true, label: `Impersonating ${option.bonus.as}` },
                         { key: "FlatModifier", selector: option.bonus.skill, type: option.bonus.type, value: option.bonus.value, predicate: [`action:${option.bonus.action}`, toggle], label: plan.source.name }],
                     context: { origin: { actor: sourceActor.uuid, item: itemOrSource?.uuid ?? null }, target: { actor: actor.uuid }, roll: null } } }]);
@@ -9280,6 +12181,11 @@ export class EffectRuntime {
         const chosen = typeof size === "string" ? { size, name: "Illusory creature" } : size;
         if (!allowed.includes(chosen.size)) throw new Error(`${plan.source.name}: at most ${labels[at.maxSize]} at this rank.`);
         const castId = options.castInstanceId ?? randomID();
+        // (Famed Figure: "or you Cast this spell again, the spell ends" — the caster's earlier image of it ends.)
+        if (data.endsOnRecast) for (const journal of this.ongoing.records?.() ?? []) {
+            const earlier = journal.getFlag?.(MODULE_ID, ONGOING_FLAG) ?? journal;
+            if (earlier?.status === "active" && earlier.illusory && earlier.sourceActorUuid === sourceActor.uuid && earlier.name === plan.source.name) await this.ongoing.request("end", { castId: earlier.castId });
+        }
         const squares = { tiny: 1, sm: 1, med: 1, lg: 2, huge: 3, grg: 4 }[chosen.size];
         const actor = await Actor.create({ name: `${chosen.name} (${plan.source.name})`, type: "npc", img: itemOrSource?.img ?? "icons/svg/mystery-man.svg",
             ownership: { ...foundry.utils.deepClone(sourceActor.ownership ?? {}), default: 0 },
@@ -9293,19 +12199,20 @@ export class EffectRuntime {
         const [token] = await casterToken.parent.createEmbeddedDocuments("Token", [(await actor.getTokenDocument({ x: place.x, y: place.y, width: squares, height: squares, actorLink: true, disposition: casterToken.disposition })).toObject()]);
         const journal = await this.ongoing.begin({ castId, name: plan.source.name, kind: "native", sourceActorUuid: sourceActor.uuid, sourceItemUuid: itemOrSource?.uuid ?? null,
             recipientUuids: [sourceActor.uuid], sustained: true, castRound: this.ongoing.clock().round, maximumAt: (game.time?.worldTime ?? 0) + 600, castRank, dc,
-            illusory: { tokenUuid: token.uuid, actorUuid: actor.uuid, formula: at.formula, type: data.strike.type, range: data.rangeFeet, disbelievers: [], damage: [] } });
+            illusory: { tokenUuid: token.uuid, actorUuid: actor.uuid, formula: at.formula, type: data.strike.type, range: data.rangeFeet, disbelievers: [], damage: [],
+                ...(at.rangedFormula ? { rangedFormula: at.rangedFormula, rangedFeet: data.strike.ranged.rangeFeet } : {}), ...(data.map ? { map: true } : {}) } });
         const record = clone(journal.getFlag(MODULE_ID, ONGOING_FLAG));
         for (const uuid of [token.uuid, actor.uuid]) record.entries.push({ uuid, actorUuid: sourceActor.uuid, status: "active", permanent: false });
         await this.ongoing.save(journal, record);
         await this.ongoing.activate(journal);
         try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { illusoryCard: { castId } } },
-            content: `<section class="pf2e-auto-runtime-card"><header><strong>${escapeHTML(plan.source.name)}</strong></header><p>${escapeHTML(chosen.name)} (${labels[chosen.size]}): AC ${dc}, saves +${dc - data.saveOffset}. It acts (${data.actions} actions) when ${escapeHTML(sourceActor.name)} Sustains the spell; it can flank. It ends if hit by an attack, if it fails a save, or more than ${data.rangeFeet} feet from ${escapeHTML(sourceActor.name)}.</p>${data.notes.map(note => `<p class="pf2e-auto-gm-reminder">${escapeHTML(note)}</p>`).join("")}<p>Target the creature, then:</p><button type="button" class="pf2e-auto-illusory" data-act="strike"><i class="fa-solid fa-hand-fist"></i> The image Strikes (${escapeHTML(at.formula)} ${escapeHTML(data.strike.type)}, nonlethal)</button><button type="button" class="pf2e-auto-illusory" data-act="disbelieve"><i class="fa-solid fa-eye"></i> It touches or Seeks the image (Disbelieve)</button></section>` }); } catch (_) {}
+            content: `<section class="pf2e-auto-runtime-card"><header><strong>${escapeHTML(plan.source.name)}</strong></header><p>${escapeHTML(chosen.name)} (${labels[chosen.size]}): AC ${dc}, saves +${dc - data.saveOffset}. It acts (${data.actions} actions) when ${escapeHTML(sourceActor.name)} Sustains the spell; it can flank. It ends if hit by an attack, if it fails a save, or more than ${data.rangeFeet} feet from ${escapeHTML(sourceActor.name)}.</p>${data.notes.map(note => `<p class="pf2e-auto-gm-reminder">${escapeHTML(note)}</p>`).join("")}<p>Target the creature, then:</p><button type="button" class="pf2e-auto-illusory" data-act="strike"><i class="fa-solid fa-hand-fist"></i> The image Strikes${at.rangedFormula ? " in melee" : ""} (${escapeHTML(at.formula)} ${escapeHTML(data.strike.type)}, nonlethal)</button>${at.rangedFormula ? `<button type="button" class="pf2e-auto-illusory" data-act="ranged"><i class="fa-solid fa-bullseye"></i> The image's ranged Strike (${escapeHTML(at.rangedFormula)} ${escapeHTML(data.strike.type)}, nonlethal, within ${data.strike.ranged.rangeFeet} feet)</button>` : ""}<button type="button" class="pf2e-auto-illusory" data-act="disbelieve"><i class="fa-solid fa-eye"></i> It touches or Seeks the image (Disbelieve)</button></section>` }); } catch (_) {}
         if (options.sourceMessageId) try { await game.messages.get(options.sourceMessageId)?.setFlag(MODULE_ID, "resolvedCast", { castInstanceId: castId, resolutionKind: "illusory-creature" }); } catch (_) {}
         return { status: "applied", plan, castInstanceId: castId, tokenUuid: token.uuid, actorUuid: actor.uuid, formula: at.formula };
     }
 
     /** The image's Strike against the GM's target, or the target's Disbelieve (the GM runs both). */
-    async illusoryAct(message, { act, tokenUuid = null } = {}) {
+    async illusoryAct(message, { act, tokenUuid = null, map = null } = {}) {
         const data = message?.getFlag?.(MODULE_ID, "illusoryCard");
         if (!data) throw new Error("This card has no illusion.");
         if (!game.user.isGM) throw new Error("The GM runs the illusion's actions.");
@@ -9336,19 +12243,29 @@ export class EffectRuntime {
             const caster = await fromUuid(record.sourceActorUuid), spell = await castSpellFromUuid(record);
             const statistic = spell?.spellcasting?.statistic;
             if (!statistic?.check?.roll) throw new Error(`${record.name}: the caster's spell attack is unavailable.`);
-            const roll = await statistic.check.roll({ dc: { value: Number(target.armorClass?.value ?? target.system?.attributes?.ac?.value) }, item: spell, extraRollOptions: ["attack", "item:trait:attack"], skipDialog: true });
+            // (Famed Figure's ranged Strike: within its range of the image.)
+            const ranged = act === "ranged";
+            if (ranged && !illusion.rangedFormula) throw new Error(`${record.name}: the image has no ranged Strike.`);
+            const image = ranged ? await fromUuid(illusion.tokenUuid) : null;
+            if (ranged && image && tokenDistance(image, token) > Number(illusion.rangedFeet)) throw new Error(`${record.name}: ${target.name} is beyond the image's ${illusion.rangedFeet}-foot range.`);
+            // ("if it makes more than one attack per turn, it takes a multiple attack penalty as if it were a creature")
+            const penalty = !illusion.map ? 0 : map ?? Number(await foundry.applications.api.DialogV2.wait({ window: { title: `${record.name} — multiple attack penalty` }, content: "<p>The image's multiple attack penalty?</p>",
+                buttons: [{ action: "0", label: "None" }, { action: "1", label: "−5" }, { action: "2", label: "−10" }], close: () => null, rejectClose: false }));
+            if (![0, 1, 2].includes(Number(penalty))) return { act, status: "cancelled" };
+            const modifiers = Number(penalty) ? [new game.pf2e.Modifier({ label: "Multiple attack penalty", modifier: -5 * Number(penalty), type: "untyped" })] : [];
+            const roll = await statistic.check.roll({ dc: { value: Number(target.armorClass?.value ?? target.system?.attributes?.ac?.value) }, item: spell, modifiers, extraRollOptions: ["attack", "item:trait:attack", ranged ? "item:ranged" : "item:melee"], skipDialog: true });
             const hit = Number(roll?.degreeOfSuccess ?? 0) >= 2;
             let dealt = 0;
             if (hit && !illusion.disbelievers.includes(target.uuid)) {
                 const DamageRoll = (CONFIG.Dice?.rolls ?? []).find(candidate => candidate?.name === "DamageRoll");
-                const damage = await new DamageRoll(`{${illusion.formula}[${illusion.type}]}`).evaluate();
+                const damage = await new DamageRoll(`{${ranged ? illusion.rangedFormula : illusion.formula}[${illusion.type}]}`).evaluate();
                 await damage.toMessage({ speaker: ChatMessage.getSpeaker({ actor: caster }), flavor: `<strong>${escapeHTML(record.name)}</strong>: the image's Strike (nonlethal)` });
                 const before = Number(target.hitPoints?.value ?? 0);
                 await target.applyDamage({ damage, token, rollOptions: new Set(["nonlethal"]) });
                 dealt = Math.max(0, before - Number(target.hitPoints?.value ?? 0));
                 if (tracked()) tracked().total += dealt; else record.illusory.damage.push({ actorUuid: target.uuid, total: dealt });
             }
-            result = { act, hit, dealt, disbelieved: illusion.disbelievers.includes(target.uuid) };
+            result = { act, hit, dealt, formula: ranged ? illusion.rangedFormula : illusion.formula, penalty: Number(penalty), disbelieved: illusion.disbelievers.includes(target.uuid) };
         }
         await this.ongoing.save(journal, record);
         return result;
@@ -9524,13 +12441,10 @@ export class EffectRuntime {
         const touch = await new DamageRoll(`{${at.formula}[${data.type}]}`).evaluate();
         await touch.toMessage({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flavor: `<strong>${escapeHTML(plan.source.name)}</strong> (${actions} action${actions === 1 ? "" : "s"}): the touch` });
         await victim.applyDamage({ damage: touch, token: target, item: itemOrSource ?? undefined });
-        // Pushed back away from the caster (along the nearest of the 8 directions), within the scene; walls are the GM's.
-        const size = canvas.grid.size, squares = Math.round(at.back / canvas.dimensions.distance);
-        const dx = Math.sign(Math.round((target.x - casterToken.x) / size)), dy = Math.sign(Math.round((target.y - casterToken.y) / size));
-        const rect = canvas.dimensions.sceneRect;
-        const x = Math.min(Math.max(target.x + dx * squares * size, rect.x), rect.x + rect.width - target.width * size);
-        const y = Math.min(Math.max(target.y + dy * squares * size, rect.y), rect.y + rect.height - target.height * size);
-        if (dx || dy) await target.update({ x, y }, { animate: false });
+        // Pushed back away from the caster (forced-movement.js: the nearest of the 8 directions, walls and the scene's edge stop it, never ending in
+        // another creature's space).
+        const casterPoint = { x: casterToken.x + Number(casterToken.width ?? 1) * canvas.grid.size / 2, y: casterToken.y + Number(casterToken.height ?? 1) * canvas.grid.size / 2 };
+        await forcedMove(target, { point: casterPoint, direction: "away", feet: Number(at.back), reason: plan.source.name });
         // The fall from the launch height: half the distance in bludgeoning damage, and Prone if it took any.
         let fallen = 0;
         if (at.fall > 0) {
@@ -9979,25 +12893,32 @@ export class EffectRuntime {
     /** Stabilize: the dying target loses Dying (PF2e's rule raises Wounded) and stays Unconscious at 0 Hit Points. */
     async #executeStabilize(itemOrSource, plan, sourceActor, options) {
         const actors = uniqueActors(options.targets ?? [...game.user.targets]);
-        if (actors.length !== 1) throw new Error(`${plan.source.name}: target exactly 1 dying creature.`);
-        const [actor] = actors;
-        if (!isDying(actor)) throw new Error(`${plan.source.name}: ${actor.name} isn't dying.`);
-        if (!game.user.isGM && !actor.canUserModify?.(game.user, "update")) throw new Error(`You do not have permission to change ${actor.name}.`);
+        // (Alicorn Hair: "allows you to target 1 additional creature".)
+        const extra = options.sourceMessageId ? shapeRidersFor(options.sourceMessageId).flatMap(shape => shape.riders ?? []).filter(rider => rider.type === "extra-targets").reduce((total, rider) => total + Number(rider.count ?? 0), 0) : 0;
+        if (actors.length < 1 || actors.length > 1 + extra) throw new Error(`${plan.source.name}: target ${extra ? `1 to ${1 + extra} dying creatures` : "exactly 1 dying creature"}.`);
+        for (const actor of actors) {
+            if (!isDying(actor)) throw new Error(`${plan.source.name}: ${actor.name} isn't dying.`);
+            if (!game.user.isGM && !actor.canUserModify?.(game.user, "update")) throw new Error(`You do not have permission to change ${actor.name}.`);
+        }
         const castInstanceId = options.castInstanceId ?? randomID();
-        const woundedBefore = actor.getCondition?.("wounded")?.value ?? 0;
-        await actor.decreaseCondition("dying", { forceRemove: true });
-        await actor.increaseCondition("wounded");
-        if (!actor.hasCondition?.("unconscious")) await actor.increaseCondition("unconscious");
-        const woundedAfter = actor.getCondition?.("wounded")?.value ?? 0;
-        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "stabilize", castInstanceId } },
-            content: `<h3>${escapeHTML(plan.source.name)}</h3><p><strong>${escapeHTML(actor.name)}</strong> is no longer dying and stays unconscious at 0 Hit Points. Wounded ${woundedBefore} → ${woundedAfter}.</p>` }); }
-        catch (error) { console.warn(`${MODULE_ID} | The stabilize card could not be posted.`, error); }
+        const stabilized = [];
+        for (const actor of actors) {
+            const woundedBefore = actor.getCondition?.("wounded")?.value ?? 0;
+            await actor.decreaseCondition("dying", { forceRemove: true });
+            await actor.increaseCondition("wounded");
+            if (!actor.hasCondition?.("unconscious")) await actor.increaseCondition("unconscious");
+            const woundedAfter = actor.getCondition?.("wounded")?.value ?? 0;
+            stabilized.push({ actorUuid: actor.uuid, woundedBefore, woundedAfter });
+            try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "stabilize", castInstanceId } },
+                content: `<h3>${escapeHTML(plan.source.name)}</h3><p><strong>${escapeHTML(actor.name)}</strong> is no longer dying and stays unconscious at 0 Hit Points. Wounded ${woundedBefore} → ${woundedAfter}.</p>` }); }
+            catch (error) { console.warn(`${MODULE_ID} | The stabilize card could not be posted.`, error); }
+        }
         if (options.sourceMessageId) {
             try { await game.messages.get(options.sourceMessageId)?.setFlag(MODULE_ID, "resolvedCast", { castInstanceId, resolutionKind: "stabilize" }); }
             catch (error) { console.warn(`${MODULE_ID} | Stabilized, but the source chat card could not be marked as resolved.`, error); }
         }
         Hooks.callAll(`${MODULE_ID}.resolved`, { plan, created: [], castInstanceId });
-        return { status: "applied", plan, created: [], castInstanceId, stabilized: { actorUuid: actor.uuid, woundedBefore, woundedAfter } };
+        return { status: "applied", plan, created: [], castInstanceId, stabilized: stabilized.length === 1 ? stabilized[0] : stabilized };
     }
 
     /** Condition + note: PF2e's condition on the recipient for the compiled duration, and a note Effect with the spell's text. */
@@ -10260,6 +13181,22 @@ export class EffectRuntime {
         if (button.dataset.runtimeAction === "color-armor") return await this.colorArmorAttacker(effectDocument);
         if (button.dataset.runtimeAction === "protagonist") return await this.protagonistAct(effectDocument);
         if (button.dataset.runtimeAction === "challenge-exempt") return await this.challengeExempt(effectDocument);
+        if (button.dataset.runtimeAction === "marionette") return await this.marionetteAct(effectDocument, button.dataset.option);
+        if (button.dataset.runtimeAction === "fate") return await this.fateAct(effectDocument, button.dataset.option);
+        if (button.dataset.runtimeAction === "tree-grab") return await this.treeGrab(effectDocument);
+        if (button.dataset.runtimeAction === "weapon-grapple") return await this.weaponGrapple(effectDocument);
+        if (button.dataset.runtimeAction === "honor") return await this.honorAct(effectDocument, button.dataset.option);
+        if (button.dataset.runtimeAction === "spotlight") return await this.spotlightPerform(effectDocument);
+        if (button.dataset.runtimeAction === "creepers") return await this.creepersAct(effectDocument, button.dataset.option);
+        if (button.dataset.runtimeAction === "rally-sustain") return await this.rallySaves(effectDocument);
+        if (button.dataset.runtimeAction === "rally") return await this.rallyAct(effectDocument, button.dataset.option);
+        if (button.dataset.runtimeAction === "true-power") return await this.truePowerCast(effectDocument);
+        if (button.dataset.runtimeAction === "bomb") return await this.bombAct(effectDocument, button.dataset.option);
+        if (button.dataset.runtimeAction === "seeds") return await this.seedsAct(effectDocument, button.dataset.option);
+        if (button.dataset.runtimeAction === "prism") return await this.prismAct(effectDocument, button.dataset.option);
+        if (button.dataset.runtimeAction === "spark-disperse") return await this.sparkDisperse(effectDocument);
+        if (button.dataset.runtimeAction === "apocalypse-move") return await this.apocalypseMove(effectDocument);
+        if (button.dataset.runtimeAction === "boundary-dismiss") return await this.ongoing.request("end", { castId: effectDocument.flags[MODULE_ID].spiritBoundary.castId });
         if (button.dataset.runtimeAction === "spell-steal") return await this.spellStealAttempt(effectDocument);
         if (button.dataset.runtimeAction === "flash-cloak") return await this.flashCloakAttacker(effectDocument);
         if (button.dataset.runtimeAction === "skill-demoralize") return await this.skillDemoralize(effectDocument);
@@ -10346,6 +13283,10 @@ export class EffectRuntime {
             const rule = source.system?.rules?.[runtime.rolledSelection.ruleIndex];
             if (rule?.key !== "ChoiceSet") throw new Error(`${runtime.sourceItemName}: PF2e's choice changed since it was compiled.`);
             rule.selection = runtime.rolledSelection.value;
+        }
+        if (runtime.choiceSelections) for (const rule of source.system?.rules ?? []) {
+            const key = rule.key === "ChoiceSet" ? [rule.flag, rule.rollOption].find(name => name && name in runtime.choiceSelections) : null;
+            if (key) rule.selection = runtime.choiceSelections[key];
         }
         // The marked creature (PF2e's TokenMark would otherwise take the user's current target).
         if (runtime.markTokenUuid) for (const rule of source.system?.rules ?? []) if (rule.key === "TokenMark") rule.uuid = runtime.markTokenUuid;
@@ -10654,3 +13595,4 @@ async function promptFiltered({ title, intro = "", name, label, options }) {
             filter?.addEventListener("input", () => { const text = filter.value.toLowerCase(); for (const option of select.options) option.hidden = !option.textContent.toLowerCase().includes(text); }); },
         ok: { label, callback: (_event, button) => button.form.elements[name].value || null } });
 }
+

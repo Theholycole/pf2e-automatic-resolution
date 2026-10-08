@@ -1,5 +1,6 @@
 import { compileKillEffect } from "./kill-effect.js";
 import { applyActionVersion } from "./action-versions.js";
+import { fitActionAreas, fitCausticVersion, fitColdEmbrace, fitEnergyExertion, fitTechnomancyRay, fitNudge, fitShadowWield, fitClawVersion, fitFeastVersion, fitFlyVersion, fitIgnitionVersion, fitGripVariant, fitProjectileVersion, fitSaveDCAttack, fitSelfInArea, fitTargetStrikeAttack, fitTextSave, selectGlyphVersion } from "./glyph-versions.js";
 import {compileBasicConditionRider} from './basic-condition-rider.js';
 import {
     ABILITY_MODEL_VERSION,
@@ -25,6 +26,7 @@ import { attachHeightenedDurations } from "./heightened-duration-compiler.js";
 import { compileGeneratedSpeedPenalties } from './generated-speed-modifier.js';
 import { applyRecurringNegation, attachRecurringSave } from "./recurring-save-lifetime.js";
 import { attachActionEnds } from "./action-end-lifetime.js";
+import { compileBasicFeatureRiders } from "./basic-feature-riders.js";
 import { compileBasicRowNotes, compileBasicDegreeRiders, compileBasicTraitKnockback, compileBasicPushRider, compileBasicKnockbackRider, compileBasicSecondaryTable, compileBasicCriticalSecond } from "./basic-degree-rider.js";
 import { compileBasicFailedSaveFollowUp } from "./basic-follow-up.js";
 import { rewriteSelfCostSave } from "./self-cost-save.js";
@@ -61,6 +63,13 @@ import { compileEscapeAura } from "./escape-aura.js";
 import { compileOptionVeil } from "./option-veil.js";
 import { compileRepulsionAura } from "./repulsion-aura.js";
 import { compileLanternAura } from "./lantern-aura.js";
+import { compileRememberedAura } from "./remembered-aura.js";
+import { extractThrallWave } from "./thrall-wave.js";
+import { extractLavaColumn } from "./lava-column.js";
+import { extractHostileNature } from "./hostile-nature.js";
+import { extractFieryTree } from "./fiery-tree.js";
+import { extractSeizedIdentity } from "./seized-identity.js";
+import { extractCalcification, extractLastingCurse, extractVitrifying } from "./lasting-curses.js";
 import { extractSunAura } from "./sun-aura.js";
 import { compileBloodMark } from "./blood-mark.js";
 import { compileRadiantField } from "./radiant-field.js";
@@ -71,7 +80,7 @@ import { compileBurrowWard } from "./burrow-ward.js";
 import { compileWebArea } from "./web-area.js";
 import { compileSpiritAid } from "./spirit-aid.js";
 import { compilePlantForm } from "./plant-form.js";
-import { compileIllusoryCreature } from "./illusory-creature.js";
+import { compileIllusoryCreature, compileFamedFigure } from "./illusory-creature.js";
 import { compileRitualOutcome } from "./ritual-outcome.js";
 import { compileSustainedSaveDamage } from "./sustained-save-damage.js";
 import { compileNoteFamily } from "./note-families.js";
@@ -97,6 +106,15 @@ import { extractConstellationBlast } from "./constellation-blast.js";
 import { extractMoveBlast } from "./move-blast.js";
 import { extractIncarnate } from "./incarnate.js";
 import { extractIncarnateSquadrons } from "./incarnate-squadrons.js";
+import { extractForcedActions } from "./forced-actions.js";
+import { extractPossession } from "./possession.js";
+import { extractBriefControl } from "./brief-control.js";
+import { extractDeadOrUndead } from "./dead-or-undead.js";
+import { extractConjuredStructure } from "./conjured-structure.js";
+import { extractDuplicateFoe, extractReanimateFoe } from "./creature-copy.js";
+import { extractCage, extractConfluence } from "./conjured-objects.js";
+import { extractBorrowedIllusion, extractSummonBoost, extractNamedSummon, extractCorpseStatBlock, extractFamiliarForm, extractJudgmentWeapon, extractShell } from "./conjured-misc.js";
+import { splitOptions, splitPhases, readPhase, phaseTable, partDamage } from "./incarnate-phases.js";
 import { compileSceneCost } from "./scene-cost.js";
 import { extractSustainOptions } from "./sustain-options.js";
 import { compileSharedTempHP } from "./shared-temp-hp.js";
@@ -172,7 +190,7 @@ const FALL_RIDER_NOTE = /^Additionally, if this spell causes the target to fall,
 const REPOSITION_NOTE = /^(?:(The first time each round you Sustain this spell), you can|As failure, and you can immediately) (?:@UUID\[Compendium\.pf2e\.actionspf2e\.Item\.[A-Za-z0-9]+\]\{Reposition\}|Reposition) the (?:grabbed )?target up to (\d+) feet\.$/;
 const BREAKABLE_NOTE = /\bunless it Escapes \([^()]*\) or destroys the ([a-z]+) \(the \1 has AC (\d+) and (\d+) Hit Points\), at which point the spell ends\.$/;
 const HOSTILE_ENDS = /^If you use (?:a )?hostile actions? against the target, the spell ends\.$/i;
-import { compileConditionRoll } from "./condition-roll.js";
+import { compileConditionRoll, compileFlickerRoll } from "./condition-roll.js";
 import { compileAttributeCondition } from "./attribute-condition.js";
 import { compileDegreeAdjustments } from "./degree-adjustment.js";
 import { compileResistanceHalving } from "./resistance-halving.js";
@@ -196,6 +214,7 @@ import { rewriteBridgeRows } from "./bridge-rows.js";
 import { rewriteRiverRows } from "./river-rows.js";
 import { rewriteHazardSquares } from "./hazard-squares.js";
 import { rewriteUndertow } from "./undertow-rows.js";
+import { rewriteIndolentHaze, rewriteMosquitoStorm, rewriteShadowArmy, rewriteShadowRaid, rewriteUnfathomableSong, rewriteStarsOfAnotherSky, rewriteTearTheVeil, rewriteTornado, rewriteVacuum, rewriteWaveBarrier, rewriteWhirlpool } from "./lingering-rules.js";
 import { rewriteFreezingRain } from "./freezing-rain.js";
 import { rewriteMovingTerrain } from "./moving-terrain.js";
 import { rewriteMovedAreaSave } from "./moved-area-save.js";
@@ -210,11 +229,44 @@ import { rewriteFeastHeal } from "./feast-heal.js";
 import { rewriteReefTerrain } from "./reef-terrain.js";
 import { rewriteAcidPools } from "./acid-pools.js";
 import { extractAreaFollowUp } from "./area-follow-up.js";
+import { extractPropagatingArc } from "./propagating-arc.js";
+import { extractSustainAllySave } from "./sustain-ally-save.js";
+import { extractConditionLower } from "./condition-lower.js";
+import { extractMarkWard } from "./mark-ward.js";
+import { extractTargetedWard } from "./targeted-ward.js";
+import { extractTriggerAura } from "./trigger-aura.js";
+import { extractPulseArea } from "./pulse-area.js";
+import { extractSwarmForm } from "./swarm-form.js";
+import { extractIceGuardian } from "./ice-guardian.js";
+import { extractPressurePoint } from "./pressure-point.js";
+import { extractProxyCast } from "./proxy-cast.js";
+import { extractWicketDominion } from "./wicket-dominion.js";
+import { extractPromisedRenewal } from "./promised-renewal.js";
+import { extractInstantSurgery } from "./instant-surgery.js";
+import { extractCrystalGarden } from "./crystal-garden.js";
+import { extractMarionette } from "./blood-marionette.js";
+import { rewriteDreamHazard } from "./dream-hazard.js";
+import { extractFateRoll } from "./fate-roll.js";
+import { extractEngulfingTree } from "./engulfing-tree.js";
+import { extractWeaponGrapple } from "./weapon-grapple.js";
+import { extractDreamTable } from "./dream-table.js";
+import { extractHonorDuel } from "./honor-duel.js";
+import { extractSpotlight } from "./spotlight.js";
+import { extractCreepers } from "./creeper-maneuver.js";
+import { extractRallyCry } from "./rally-cry.js";
+import { extractTruePower } from "./true-power.js";
+import { extractMysticBomb } from "./mystic-bomb.js";
+import { extractSpiritBoundary } from "./spirit-boundary.js";
+import { extractDivineSeeds } from "./divine-seeds.js";
+import { extractPowerPrism } from "./power-prism.js";
+import { extractAnimatedSpark } from "./animated-spark.js";
+import { extractPatronApocalypse } from "./patron-apocalypse.js";
 import { rewriteWeaponDice } from "./weapon-dice.js";
 import { rewriteEncasingRows } from "./encasing-rows.js";
 import { extractPopSave } from "./pop-save.js";
 import { compileHoarseVoice } from "./hoarse-voice.js";
 import { compileSkillCurse } from "./skill-curse.js";
+import { compileJudgeLead, compileSustainResave, compileThirdPartyRows, compileThirdPartyReminders, moduleEffectAt, rowEndsSpell, sameStatedRules } from "./third-party-rows.js";
 import { rewriteCourseOfAction } from "./course-of-action.js";
 import { rewriteSecretRune } from "./secret-rune.js";
 import { rewritePraiseRows } from "./praise-rows.js";
@@ -277,8 +329,20 @@ import { rewriteDoorBeyond } from "./door-beyond.js";
 import { rewriteShardField } from "./shard-field.js";
 import { rewriteMinefield, rewritePollenBulbs } from "./minefield.js";
 import { rewriteBloodTendrils } from "./blood-tendrils.js";
+import { rewriteViolentLight } from "./violent-light.js";
+import { rewriteCosmicGlow } from "./cosmic-glow.js";
+import { rewriteRhapsody } from "./rhapsody-aura.js";
+import { rewriteDivineEclipse } from "./divine-eclipse.js";
 import { rewritePurifyingVeil } from "./purifying-veil.js";
 import { rewriteDivineAura } from "./divine-aura.js";
+import { rewriteLastingNoteRows, readTrappedRows } from "./lasting-note-rows.js";
+import { rewriteDecapitationSave } from "./decapitation-save.js";
+import { readBleedConditionRise, applyBleedConditionRise } from "./bleed-condition-rise.js";
+import { rewriteBacklashSave } from "./backlash-save.js";
+import { rewriteFallingArea } from "./falling-area.js";
+import { rewriteDarknessField } from "./darkness-field.js";
+import { gmHandledRuling, GM_HANDLED_RULING } from "./user-rulings.js";
+import { compileGmOptions } from "./gm-options.js";
 import { rewriteRunewell } from "./runewell.js";
 import { rewriteSkySteal } from "./sky-steal.js";
 import { rewriteSorrowAura } from "./sorrow-aura.js";
@@ -354,7 +418,7 @@ import { compileDirectDamage } from "./direct-damage.js";
 import { compileAllyEnemySplit } from "./ally-enemy-split.js";
 import { compileMessage } from "./message-compiler.js";
 import { extractThrall, rewriteThrallHorde } from "./thrall-compiler.js";
-import { extractStoredTrigger, extractHeldTrigger, extractAuraTrigger, extractEffectTrigger, extractShieldTrigger, extractPactTrigger, extractMurmurTrigger, extractProphecyTrigger, extractGemTrigger, extractMirrorTrigger } from "./stored-trigger.js";
+import { extractStoredTrigger, extractHeldTrigger, extractAuraTrigger, extractEffectTrigger, extractShieldTrigger, extractPactTrigger, extractMurmurTrigger, extractProphecyTrigger, extractGemTrigger, extractMirrorTrigger, extractRuneTrigger } from "./stored-trigger.js";
 import { rewriteHealOrHarm } from "./heal-or-harm.js";
 import { rewriteBorrowedConcealment, rewriteBorrowedObscure, rewriteBorrowedSpell, rewriteBorrowedEffects, rewriteBorrowedTraitSave } from "./borrowed-spell.js";
 import { rewriteTraitGrant } from "./trait-grant.js";
@@ -384,6 +448,17 @@ import { compileActorTargetConstraints } from "./target-predicate-compiler.js";
 import { validateAbilityPlan } from "./validate-plan.js";
 import { inspectCasterBenefitClaim } from "../../scripts/effect-modifier-proof.js";
 import { compileBasicSaveAdjustmentRider, compileSaveAdjustment, compileSaveImmunity, compileStateImmunity, recipientQualifierCompiled, uncompiledSavePreamble } from './save-preamble.js';
+import { extractFormRiders, extractCasterForm } from "./form-riders.js";
+import { extractCloakAura, extractOptionPairForm, extractDeityForms, extractFormChooser } from "./generated-forms.js";
+import { extractModeCard } from "./mode-cards.js";
+import { extractBlastCard } from "./blast-cards.js";
+import { extractPrismaticCard } from "./prismatic-cards.js";
+import { extractAttackCard } from "./attack-shapes.js";
+import { extractTriggerCard } from "./trigger-cards.js";
+import { extractRevivalCard } from "./revival-cards.js";
+import { extractPickupCard } from "./pickup-cards.js";
+import { extractSupportCard } from "./support-cards.js";
+import { extractSwapReaction, extractAreaTeleport, extractMagneticRelocation, extractMeldSwap, extractCraterJump, extractHeavingWave, extractSkyLaunch, extractDownpour, extractFusionLeap } from "./teleport-spells.js";
 
 const STRIKE_PENALTY = /^The target takes an? [-–](\d) (circumstance|status) penalty to Strikes with its ([a-z]+)(?: or ([a-z]+))? while it is taking persistent ([a-z]+) damage\.$/;
 function componentStrikePenalty(adapted, selection) {
@@ -526,7 +601,7 @@ function hasUnscopedConditionDuration(outcomes) {
         const effects = outcomes[degree].effects;
         if (!effects.length) return false;
         // (A duration a row's note carries — "gains Light Blindness for 1 minute" — is the note's.)
-        const claimedText = new Set([...effects.map(effect => effect.duration?.sourceText), ...(outcomes[degree].noteEffects ?? []).map(note => note.duration?.sourceText)].filter(Boolean));
+        const claimedText = new Set([...effects.flatMap(effect => [effect.duration?.sourceText, ...(effect.duration?.claimedTexts ?? [])]), ...(outcomes[degree].noteEffects ?? []).map(note => note.duration?.sourceText)].filter(Boolean));
         // A duration inside a sentence the row's proved Speed-and-condition Effect claims is that Effect's.
         const effectClaims = Object.values(outcomes).flatMap(outcome => (outcome.nativeEffects ?? []))
             .filter(effect => ["degree-speed-condition", "degree-choice"].includes(effect.outcomeRule?.kind)).flatMap(effect => effect.outcomeRule.claims ?? []);
@@ -651,6 +726,8 @@ function attachOutcomeFormulaHeightening(outcomes, adapted) {
  */
 const VALUED_ROLL_SLUGS = new Set(["clumsy", "doomed", "drained", "enfeebled", "frightened", "sickened", "slowed", "stupefied"]);
 
+const FRIGHTENED_HOLD = /If the target fails an attack roll or skill check before the end of their next turn, they do not reduce their frightened condition by 1 at the end of their turn\./;
+
 function compileRowRules(plan, adapted = null) {
     for (const degree of DEGREES) {
         const outcome = plan.resolution.outcomes[degree];
@@ -712,6 +789,18 @@ function compileRowRules(plan, adapted = null) {
             const condition = (outcome.effects ?? []).find(effect => effect.kind === "condition" && effect.raw && before.endsWith(effect.raw));
             if (dealt && condition && condition.duration == null && condition.endsWhen == null)
                 Object.assign(condition, { endsWhen: { event: "persistent-damage-ended", damageType }, expirationMode: "event" });
+        }
+        // "… is Blinded and deafened for 1 round, and then dazzled for 1 minute." (Grand Finale): the later condition from now for the first time and
+        // the second together (PF2e's blinded already covers dazzled during the first round).
+        const thenLater = /\bfor (\d+) rounds?, and then (dazzled|deafened|sickened|clumsy|enfeebled|stupefied) for (\d+) (round|minute)s?\.$/.exec(raw);
+        const THEN_REFERENCE = { dazzled: "TkIyaNPgTZFBCCuh", deafened: "9PR9y0bi4JPKnHPR" };
+        if (thenLater && THEN_REFERENCE[thenLater[2]] && !(outcome.effects ?? []).some(effect => effect.slug === thenLater[2])
+            && (outcome.effects ?? []).some(effect => effect.duration?.sourceText === `for ${thenLater[1]} round${thenLater[1] === "1" ? "" : "s"}`)) {
+            const rounds = Number(thenLater[1]) + Number(thenLater[3]) * (thenLater[4] === "minute" ? 10 : 1);
+            outcome.effects.push({ kind: "condition", slug: thenLater[2], name: thenLater[2].replace(/^./, letter => letter.toUpperCase()), value: null,
+                duration: { mode: "fixed", value: rounds, unit: "rounds", expiry: "turn-start", anchor: "effect-start", sourceText: thenLater[0].replace(/\.$/, ""),
+                    claimedTexts: [`for ${thenLater[3]} ${thenLater[4]}${thenLater[3] === "1" ? "" : "s"}`] },
+                source: "row-rule", reference: THEN_REFERENCE[thenLater[2]], raw: `and then ${thenLater[2]}`, expirationMode: "duration" });
         }
         // "Until the bleeding stops, the target has weakness 1 to piercing and slashing damage." with the row's Effect link:
         // the Effect lasts while the row's persistent damage of that type does ("As failure" rows state it in failure).
@@ -811,6 +900,16 @@ function compileRowRules(plan, adapted = null) {
                 if (note.kind === "no-reactions") outcome.manualInstructions = (outcome.manualInstructions ?? []).filter(instruction => instruction.kind !== "action-restriction");
                 if (note.kind === "reduced-to-ashes") outcome.manualInstructions = (outcome.manualInstructions ?? []).filter(instruction => !(instruction.kind === "conditional-effect" && instruction.text.includes(note.sourceText)));
             }
+        // "If the target fails an attack roll or skill check before the end of their next turn, they do not reduce their frightened condition by 1 at the end of
+        // their turn." (Clerics+'s Residual Bad Luck): a note Effect watching its checks; after a failure, its frightened isn't reduced as that turn ends
+        // (note-watchers.js). "As failure, …" keeps it.
+        const holdSource = FRIGHTENED_HOLD.exec(raw) ?? (degree === "criticalFailure" && /^As failure\b/.test(raw) ? FRIGHTENED_HOLD.exec(String(plan.resolution.outcomes.failure?.rawText ?? "").replace(/\s+/g, " ")) : null);
+        if (holdSource && (outcome.effects ?? []).some(effect => effect.slug === "frightened")) {
+            outcome.noteEffects = [...(outcome.noteEffects ?? []), { label: "Frightened held after a failure", text: "If it fails an attack roll or skill check before the end of its next turn, its frightened isn't reduced at the end of that turn.",
+                sourceText: holdSource[0], conditionHold: { slug: "frightened", trigger: "failed-attack-or-skill" },
+                duration: { mode: "fixed", value: 1, unit: "rounds", expiry: "turn-end", anchor: "target-turn", sourceText: "before the end of their next turn" } }];
+            outcome.manualInstructions = (outcome.manualInstructions ?? []).filter(instruction => !(instruction.kind === "conditional-effect" && String(instruction.text ?? "").includes(holdSource[0])));
+        }
         // "The creature uses its remaining actions to watch you in awe.": it loses the rest of its turn; the GM carries it out.
         for (const sentence of raw.split(/(?<=\.)\s+(?=[A-Z@])/)) {
             if (/^The (?:creature|target) uses its remaining actions to [a-z ,']{3,60}\.$/.test(sentence))
@@ -1147,6 +1246,25 @@ function compileRowRules(plan, adapted = null) {
             outcome.forcedMovement = { kind: "pull", distance: null, toAdjacent: true, upTo: false, optional: false, direction: "toward", sourceText: raw };
         const toward = /^The (?:creature|target) moves (\d+) feet toward the center\.$/.exec(raw);
         if (toward) outcome.forcedMovement = { kind: "pull", distance: Number(toward[1]), upTo: false, optional: false, direction: "center", sourceText: raw };
+        // "The creature takes full damage and rises 10 feet into the air." (Whirlwind, rewritten): the row's damage, then the rise the card's GM reminder gives.
+        const rises = /^The (?:creature|target) (?:takes (?:half|full|double) damage|is @UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{[A-Z][a-z]+\}) and rises (\d+) feet into the air\.$/.exec(raw);
+        if (rises && ((outcome.damage && outcome.damage.mode !== "none") || (outcome.effects ?? []).some(effect => effect.kind === "condition"))) {
+            outcome.forcedMovement = { kind: "rise", distance: Number(rises[1]), upTo: false, optional: false, direction: "up", sourceText: raw };
+            for (const clause of outcome.semanticCoverage?.clauses ?? []) if (clause.text === raw && clause.status !== "compiled") { clause.status = "compiled"; clause.compiledClaims = [...(clause.compiledClaims ?? []), "damage", "forced-movement"]; }
+            const left = (outcome.semanticCoverage?.clauses ?? []).filter(clause => clause.status !== "compiled").length;
+            if (outcome.semanticCoverage) outcome.semanticCoverage = { ...outcome.semanticCoverage, residualClauseCount: left, compiledClauseCount: (outcome.semanticCoverage.clauses ?? []).length - left, fullyCompiled: left === 0, complete: left === 0 };
+            outcome.manualInstructions = (outcome.manualInstructions ?? []).filter(instruction => instruction.kind !== "forced-movement");
+        }
+        // "The creature takes full damage and moves 10 feet toward the center." / "… takes double damage and moves to the center." (Whirlpool, rewritten):
+        // the row's damage, then the pull the card's GM reminder gives.
+        const towardDamage = /^The (?:creature|target) takes (?:half|full|double|@Damage\[\d+d\d+\[[a-z]+\]\]) damage and moves (?:(\d+) feet toward|to) the center\.$/.exec(raw);
+        if (towardDamage && outcome.damage && outcome.damage.mode !== "none") {
+            outcome.forcedMovement = { kind: "pull", distance: towardDamage[1] ? Number(towardDamage[1]) : null, ...(towardDamage[1] ? {} : { toCenter: true }), upTo: false, optional: false, direction: "center", sourceText: raw };
+            for (const clause of outcome.semanticCoverage?.clauses ?? []) if (clause.text === raw && clause.status !== "compiled") { clause.status = "compiled"; clause.compiledClaims = [...(clause.compiledClaims ?? []), "damage", "forced-movement"]; }
+            const left = (outcome.semanticCoverage?.clauses ?? []).filter(clause => clause.status !== "compiled").length;
+            if (outcome.semanticCoverage) outcome.semanticCoverage = { ...outcome.semanticCoverage, residualClauseCount: left, compiledClauseCount: (outcome.semanticCoverage.clauses ?? []).length - left, fullyCompiled: left === 0, complete: left === 0 };
+            outcome.manualInstructions = (outcome.manualInstructions ?? []).filter(instruction => instruction.kind !== "forced-movement");
+        }
         // "The creature takes full damage and is pushed 5 feet away from you." — the row's damage, then a push the GM carries out.
         // Also a push-only row ("The creature is pushed 15 feet away from you."), "… and knocked Prone" (the Prone link is the
         // row's condition), and "is pushed 10 feet" with no direction when the area starts at the caster (a cone or emanation)
@@ -1233,6 +1351,86 @@ function compileRowRules(plan, adapted = null) {
  */
 const ASLEEP_WAKES = /^If it's asleep, it wakes up and is (@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{[A-Za-z]+\}) for (\d+) rounds?\.$/;
 const WHILE_FRIGHTENED = /(?:^|(?<=[.!?]\s))A creature frightened by this spell takes (\d+) additional ([a-z]+) damage each time it's hit by a Strike\.(?=\s|$)/;
+
+/**
+ * A third-party reader's rows (third-party-rows.js) on the plan: each row's notes; its dropped conditions; the conditions' time; the module's own
+ * Effect (linked in a row or after the table) checked at each degree against the text's rules — a data note either way, the text's applied.
+ */
+function applyThirdPartyRows(plan, read, adapted) {
+    const outcomes = plan.resolution.outcomes;
+    const links = [...new Map([...Object.values(outcomes).flatMap(outcome => outcome.nativeEffects ?? []), ...(plan.nativeEffects?.unscoped ?? [])]
+        .filter(effect => effect.document?.type === "effect" && !effect.outcomeRule).map(effect => [effect.uuid, effect])).values()];
+    for (const degree of ["success", "failure", "criticalFailure"]) {
+        const outcome = outcomes[degree];
+        outcome.noteEffects = [...(outcome.noteEffects ?? []), ...(read.notes[degree] ?? [])];
+        outcome.effects = read.effects?.[degree] ? cloneJSON(read.effects[degree])
+            : (outcome.effects ?? []).filter(effect => !(read.dropConditions?.[degree] ?? []).includes(effect.slug));
+        if (read.conditionDuration) for (const effect of outcome.effects ?? []) if (effect.kind === "condition" && effect.duration == null)
+            Object.assign(effect, { duration: { ...read.conditionDuration }, expirationMode: "duration" });
+        outcome.manualInstructions = [];
+        // (The rows' damage is the notes' triggered damage, not the cast's.)
+        if (read.noDamage) outcome.damage = { mode: "none", multiplier: 0, sourceComponentIds: [] };
+        // (Or the text's own damage, the item having none: Creeping Cold.)
+        if (read.damage?.[degree]) outcome.damage = cloneJSON(read.damage[degree]);
+        // (The GM's forced movement on a row: Kinetic Tow's pull toward the caster's pick.)
+        if (read.forcedMovement?.[degree]) outcome.forcedMovement = cloneJSON(read.forcedMovement[degree]);
+    }
+    if (read.casterChoice) { plan.resolution.casterChoice = cloneJSON(read.casterChoice); plan.compilerEvidence.casterChoice = read.casterChoiceSentence; }
+    if (read.sensory) plan.compilerEvidence.sensoryRows = read.evidence;
+    if (read.court) plan.compilerEvidence.courtRows = read.evidence;
+    if (read.optionNotes) plan.compilerEvidence.optionNoteRows = read.evidence;
+    if (read.optionConditions) plan.compilerEvidence.optionConditionRows = read.evidence;
+    if (read.optionSets) plan.compilerEvidence.optionSetRows = read.evidence;
+    // ("Duration varies": each row's own time — Dream Come True.)
+    if (read.rowDurations) plan.compilerEvidence.rowDurations = read.evidence;
+    // (A reader's notes that carry what the analysis left to the GM: Sudden Outbreak's disease saves and its Sustain.)
+    if (read.clears?.length) plan.automation.pendingCapabilities = plan.automation.pendingCapabilities.filter(capability => !read.clears.includes(capability));
+    // (Its Sustain sentences are the notes' too.)
+    if (read.clears?.includes("sustain-effect")) plan.compilerEvidence.sustainNotes = read.evidence;
+    if (read.sharedDamage) {
+        plan.resolution.sharedDamage = cloneJSON(read.sharedDamage);
+        if (read.damage?.criticalSuccess) outcomes.criticalSuccess.damage = cloneJSON(read.damage.criticalSuccess);
+        plan.compilerEvidence.textFormula = read.textFormula;
+    }
+    if (read.noDamage) plan.compilerEvidence.triggeredDamage = { componentId: Object.values(read.notes).flat()[0]?.triggeredDamage?.componentId ?? null, heightening: null };
+    // (The caster's own condition on a row: The End is Nigh's critical success.)
+    for (const [degree, entries] of Object.entries(read.casterConditions ?? {})) { outcomes[degree].casterConditions = cloneJSON(entries); outcomes[degree].effects = []; }
+    for (const [degree, entries] of Object.entries(read.narration ?? {})) outcomes[degree].narration = [...(outcomes[degree].narration ?? []), ...entries];
+    for (const link of links) {
+        const agrees = [], differs = [], unread = [];
+        for (const degree of ["success", "failure", "criticalFailure"]) {
+            const textRules = [...(read.notes[degree] ?? []).flatMap(note => note.rules ?? []),
+                ...(outcomes[degree].effects ?? []).filter(effect => effect.kind === "condition" && effect.reference).map(effect => ({ key: "GrantItem", uuid: `Compendium.pf2e.conditionitems.Item.${effect.reference}` }))];
+            const at = moduleEffectAt(link.document?.mechanics?.rules, degree, { rank: adapted?.rank, picks: read.picks ?? { "golden-touch-target": "creature" } });
+            if (at == null) { unread.push(degree); continue; }
+            if (!at.offered) { if (textRules.length) differs.push(degree); continue; }
+            (sameStatedRules(at.active, textRules, adapted?.rank) ? agrees : differs).push(degree);
+        }
+        for (const outcome of Object.values(outcomes)) {
+            if (String(outcome.rawText ?? "").includes(link.sourceText)) outcome.replacedLinks = [...(outcome.replacedLinks ?? []), link.sourceText];
+            outcome.nativeEffects = (outcome.nativeEffects ?? []).filter(effect => effect.uuid !== link.uuid);
+        }
+        if (plan.nativeEffects?.unscoped) plan.nativeEffects.unscoped = plan.nativeEffects.unscoped.filter(effect => effect.uuid !== link.uuid);
+        const name = link.reference ?? link.document?.name ?? "its Effect";
+        plan.resolution.dataNotes = [...(plan.resolution.dataNotes ?? []), unread.length
+            ? `The module's own ${name} doesn't pick its rules by the save's degree (its choice is made by hand); the module applies the text's Effect instead.`
+            : differs.length
+            ? `The module's own ${name} differs from the text at ${differs.join(", ")} (checked rule by rule); the module applies the text's Effect instead.`
+            : `The module's own ${name} matches the text at ${agrees.join(", ")}; the module applies the text's Effect, for the text's time.`];
+        plan.compilerEvidence.moduleEffectChecks = [...(plan.compilerEvidence.moduleEffectChecks ?? []), { uuid: link.uuid, agrees, differs, unread }];
+    }
+    // The table's link after the Heightened entries (Golden Touch) is the module's Effect, checked above.
+    const html = String(adapted?.descriptionHTML ?? "");
+    plan.compilerEvidence.thirdPartyRows = read.evidence;
+    if (read.preambleClaims?.length) plan.compilerEvidence.thirdPartyPreamble = read.preambleClaims;
+    // (A lead sentence the GM acts on: Drown's non-breathers and its counteracting spell.)
+    if (read.reminders?.length) plan.resolution.reminders = [...(plan.resolution.reminders ?? []), ...cloneJSON(read.reminders)];
+    if (read.interpretation) plan.compilerEvidence.thirdPartyInterpretation = read.interpretation;
+    plan.automation.pendingCapabilities = plan.automation.pendingCapabilities.filter(capability => !["native-spell-effect-scope", "native-spell-effect-recipient", "residual-prose"].includes(capability)
+        && !capability.startsWith("manual:") && !(read.preambleClaims?.length && capability.startsWith("preamble:")));
+    plan.diagnostics = plan.diagnostics.filter(entry => !["RESIDUAL_PROSE_PENDING", "NATIVE_SPELL_EFFECT_SCOPE_PENDING", "NATIVE_SPELL_EFFECT_RECIPIENT_PENDING", ...(read.preambleClaims?.length ? ["SAVE_PREAMBLE_PENDING"] : [])].includes(entry.code));
+    void html;
+}
 
 function compileConditionScopedRules(plan, adapted) {
     const outcomes = plan.resolution.outcomes;
@@ -1612,6 +1810,38 @@ function compileConditionScopedRules(plan, adapted) {
         }
         plan.compilerEvidence.skillCurse = ["success", "failure", "criticalFailure"].map(rowRaw);
         if (skillCurse.preamble) plan.compilerEvidence.skillCursePreamble = skillCurse.preamble;
+    }
+    // Third-party rows read from their text (third-party-rows.js): each row's generated Effect; the module's own Effect checked against it.
+    const thirdParty = plan.resolution.check?.basic === false ? compileThirdPartyRows(rowRaw, { descriptionHTML: adapted?.descriptionHTML, rank: adapted?.rank, baseRank: adapted?.rank,
+        lifecycle: plan.lifecycle, outcomes, components: adapted?.damageComponents ?? [] }) : null;
+    if (thirdParty) applyThirdPartyRows(plan, thirdParty, adapted);
+    // A save attempted again on each first Sustain (the Witches+ hexes): the cast's repeats; rows ending the spell close them.
+    const resave = plan.resolution.check?.statistic && plan.resolution.check.statistic !== "spell-attack"
+        ? compileSustainResave(adapted?.descriptionHTML, { statistic: plan.resolution.check.statistic, lifecycle: plan.lifecycle }) : null;
+    if (resave) {
+        plan.resolution.repeatable = resave.repeatable;
+        plan.compilerEvidence.sustainResave = [resave.sentence];
+        plan.compilerEvidence.thirdPartyPreamble = [...(plan.compilerEvidence.thirdPartyPreamble ?? []), resave.sentence];
+        for (const outcome of Object.values(outcomes)) if (rowEndsSpell(outcome?.rawText)) outcome.endsRepeat = true;
+        // (The repeat is the Sustain's whole rule.)
+        plan.automation.pendingCapabilities = plan.automation.pendingCapabilities.filter(capability => capability !== "sustain-effect");
+    }
+    // (Judge Soul's lead: the text's damage type over the item's, vitality for void healing, death at 0 Hit Points, the shades a note.)
+    const judge = plan.resolution.check?.basic === false ? compileJudgeLead(adapted?.descriptionHTML, adapted?.damageComponents) : null;
+    if (judge && plan.resolution.sharedDamage?.components?.length === 1) {
+        plan.resolution.damageTypeFrom = judge.damageTypeFrom;
+        plan.resolution.damageSwap = judge.damageSwap;
+        plan.resolution.postDamageTerminal = { kind: "death", label: "Dies at 0 HP", threshold: 0, requiresReductionBySource: true, automatic: true };
+        // (The plan's component is the text's type; the card retypes PF2e's roll before it's rolled.)
+        plan.resolution.sharedDamage.components = plan.resolution.sharedDamage.components.map(component => ({ ...component, type: "void" }));
+        plan.resolution.reminders = [...(plan.resolution.reminders ?? []), ...judge.reminders];
+        plan.compilerEvidence.thirdPartyPreamble = [...(plan.compilerEvidence.thirdPartyPreamble ?? []), ...judge.claims];
+        plan.compilerEvidence.energyByCreature = { mode: "damage-swap", sourceText: judge.damageSwap.sourceText };
+    }
+    const thirdPartyReminders = plan.resolution.check ? compileThirdPartyReminders(adapted?.descriptionHTML, adapted?.targeting?.area) : null;
+    if (thirdPartyReminders) {
+        plan.resolution.reminders = [...(plan.resolution.reminders ?? []), ...thirdPartyReminders.reminders];
+        plan.compilerEvidence.thirdPartyPreamble = [...(plan.compilerEvidence.thirdPartyPreamble ?? []), ...thirdPartyReminders.claims];
     }
     // A voice that fails and hurts (Croak Voice): each row a note; the throat massage the creature's save control, the auditory damage the GM's.
     const hoarse = (adapted?.damageComponents ?? []).length === 1 ? compileHoarseVoice(rowRaw, adapted.damageComponents,
@@ -2154,7 +2384,8 @@ function addNativeSpellEffects(plan, compilation) {
             `${manualRecipients} native spell-effect application${manualRecipients === 1 ? " needs" : "s need"} recipient confirmation.`
         ));
     }
-    if (compilation.unresolvedCount > 0) {
+    // (Links to Effects PF2e no longer has, claimed by the reader that builds the Effect from the text: Discern Secrets+.)
+    if (compilation.unresolvedCount > 0 && !plan.resolution?.statedEffect?.ignoresLinks) {
         plan.automation.pendingCapabilities.push("native-spell-effect-resolution");
     }
 }
@@ -2636,7 +2867,7 @@ function compileSpell(item, options) {
     // An illusory creature with statistics (Illusory Creature): a token, its Strikes from the card, Disbelieve, and its ending triggers.
     if (!options.traitModeSource) {
         const adaptedSource = adaptSpellSource(item, options);
-        const image = compileIllusoryCreature(adaptedSource);
+        const image = compileIllusoryCreature(adaptedSource) ?? compileFamedFigure(adaptedSource);
         if (image) {
             const plan = compileSpell(item, { ...options, traitModeSource: true });
             plan.resolution = { kind: "illusory-creature", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [], illusoryCreature: image.illusoryCreature };
@@ -2645,6 +2876,409 @@ function compileSpell(item, options) {
             plan.compilerEvidence = { ...plan.compilerEvidence, illusoryCreature: image.claimed };
             plan.diagnostics = (plan.diagnostics ?? []).filter(entry => entry.severity !== "warning" && !["DESCRIPTION_SEMANTICS_PENDING", "TARGET_ELIGIBILITY_PENDING"].includes(entry.code));
             return plan;
+        }
+    }
+    // Attacks with their own shape (attack-shapes.js): an attack then a save, an attack then a shock wave, arrows leaving lines, a mark, an area's teeth,
+    // a charge with a chosen element, a sustained hold.
+    if (!options.traitModeSource) {
+        const adaptedCard = adaptSpellSource(item, options);
+        // (And spells answering a trigger, trigger-cards.js: a life link, a sacrifice, a fury, a leech, a mimic, a word of death, an emblem.)
+        // (And spells bringing creatures back, revival-cards.js.)
+        const card = extractAttackCard(adaptedCard) ?? extractTriggerCard(adaptedCard) ?? extractRevivalCard(adaptedCard, options.referencedSpells ?? null) ?? extractPickupCard(adaptedCard)
+            ?? extractSupportCard(adaptedCard, options.nativeEffectCatalog ?? null);
+        if (card) {
+            const debug = (...args) => { if (globalThis.process?.env?.MODE_DEBUG) console.error(...args); };
+            const build = list => {
+                const phases = [];
+                for (const part of list) {
+                    if (part.kind === "action") {
+                        const built = buildCardAction(item, options, part.spec, debug);
+                        if (!built) return null;
+                        const { spec, kind, hidden, repeat, reminder, pushStopped, ...extra } = cloneJSON(part);
+                        // (A push stopped by a firm surface — Planar Collision's collision damage — rides on its rows' movement.)
+                        if (pushStopped) for (const outcome of Object.values(built.plan?.resolution?.outcomes ?? {})) if (outcome?.forcedMovement) outcome.forcedMovement.stopped = pushStopped;
+                        phases.push({ ...built, ...extra, traits: [], ...(hidden ? { hidden: true, repeat: { trigger: "the card runs it" } } : {}),
+                            ...(repeat ? { repeat } : {}), reminder: reminder ?? "Run by the charge." });
+                    } else if (part.kind === "attack-save") {
+                        // (The save a hit starts: its own small spell.)
+                        const built = buildCardAction(item, options, part.saveSpec, debug);
+                        if (!built) return null;
+                        const { saveSpec, ...rest } = cloneJSON(part);
+                        phases.push({ ...rest, plan: built.plan, traits: [] });
+                    } else if (part.spec) {
+                        // (A part of its own kind carrying a save it starts: Fire Seeds' acorns, Tree of Seasons' pods.)
+                        const built = buildCardAction(item, options, part.spec, debug);
+                        if (!built) return null;
+                        const { spec, ...rest } = cloneJSON(part);
+                        phases.push({ ...rest, plan: built.plan, traits: part.traits ?? [] });
+                    } else {
+                        // (Named saves a part starts — Heartbolt's bolt and plume: each "…Spec" built into its "…Plan".)
+                        const copy = cloneJSON(part);
+                        for (const name of Object.keys(copy).filter(name => /^[a-z]+Spec$/.test(name))) {
+                            const built = buildCardAction(item, options, copy[name], debug);
+                            if (!built) return null;
+                            copy[name.replace(/Spec$/, "Plan")] = built.plan;
+                            delete copy[name];
+                        }
+                        phases.push({ ...copy, traits: part.traits ?? [] });
+                    }
+                }
+                return phases;
+            };
+            const phases = build(card.parts);
+            const choices = card.options ? card.options.choices.map(choice => ({ key: choice.key, label: choice.label, traits: choice.traits, notes: choice.notes, phases: build(choice.parts) })) : null;
+            if (phases && (!choices || choices.every(choice => choice.phases))) {
+                const base = cloneJSON(item);
+                base.system.description.value = "<p>The spell's card.</p>";
+                const plan = compileSpell(base, { ...options, traitModeSource: true });
+                plan.resolution = { kind: "incarnate", check: null, sharedDamage: null, outcomes: plan.resolution?.outcomes ?? {}, postDamageTerminal: null, applications: [],
+                    incarnate: { notes: card.notes, phases, ...(choices ? { options: { label: card.options.label, choices } } : {}), ...(card.lasting ? { lasting: card.lasting } : {}),
+                        ...(card.markTrigger ? { markTrigger: card.markTrigger } : {}), ...(card.replaces ? { replaces: true } : {}), ...(card.pickup ? { pickup: card.pickup } : {}), ...(card.area ? { area: card.area } : {}) } };
+                plan.automation = { level: "automatic", confidence: 1, compiledCapabilities: ["source", "incarnate", "attack-card"], pendingCapabilities: [], delegatedCapabilities: [] };
+                plan.compilerEvidence.incarnate = card.claimed;
+                plan.diagnostics = (plan.diagnostics ?? []).filter(entry => entry.severity !== "warning");
+                return plan;
+            }
+        }
+    }
+    // Rolled color tables (prismatic-cards.js): Prismatic Spray's beams, Rainbow Fumarole's area, Prismatic Wall's light and layers.
+    if (!options.traitModeSource) {
+        const card = extractPrismaticCard(adaptSpellSource(item, options), options.referencedSpells ?? null);
+        if (card) {
+            const debug = (...args) => { if (globalThis.process?.env?.MODE_DEBUG) console.error(...args); };
+            const castOf = (uuid, name, rank) => {
+                const referenced = options.referencedSpells?.get?.(uuid);
+                const cast = referenced ? compileSpell(cloneJSON(referenced), { ...options, traitModeSource: false }) : null;
+                const runs = cast?.resolution && !["unsupported", "unsafe"].includes(cast.automation?.level) && !(cast.automation?.pendingCapabilities ?? []).length;
+                return runs ? { kind: "cast-spell", uuid, name, rank, plan: cast } : null;
+            };
+            const hidden = (built, key, title, reminder) => ({ ...built, key, title, traits: [], hidden: true, repeat: { trigger: "the card runs it" }, reminder });
+            const Stat = statistic => `${statistic[0].toUpperCase()}${statistic.slice(1)}`;
+            let phases = null;
+            if (card.beams) {
+                const colors = [];
+                for (const part of card.parts) {
+                    const built = part.spec ? buildCardAction(item, options, part.spec, debug) : castOf(part.cast.uuid, part.cast.name, card.rank);
+                    if (!built) { colors.length = 0; break; }
+                    colors.push(hidden(built, part.key, part.title, "Run by the beams."));
+                }
+                if (colors.length === card.parts.length) phases = [{ ...card.beams, kind: "beam-roll", traits: [], repeat: { trigger: "another group of creatures is targeted" } }, ...colors];
+            } else if (card.fumarole) phases = [{ ...card.fumarole, kind: "fumarole", traits: [] }];
+            else if (card.wall) {
+                // (The layers: Chromatic Wall's colors — its own compile — at the stated ranks.)
+                const chromatic = compileSpell(cloneJSON(card.wall.source), { ...options, traitModeSource: false });
+                const colors = chromatic.resolution?.colorWall?.colors ?? [];
+                const layers = [];
+                for (const color of colors) {
+                    const key = color.name.toLowerCase();
+                    let built = null;
+                    if (color.damage) {
+                        const rider = color.rider ? ` and is ${color.rider.condition} for ${color.rider.minutes} minute${color.rider.minutes === 1 ? "" : "s"}` : "";
+                        built = buildCardAction(item, options, { type: "save", statistic: color.damage.statistic, basic: true, damage: { formula: String(color.damage.amount), type: color.damage.type },
+                            html: `<p>The target must attempt a ${Stat(color.damage.statistic)} save.</p><hr />` + ["Critical Success", "Success", "Failure", "Critical Failure"].map((label, index) => `<p><strong>${label}</strong> ${["The target is unaffected.", "The target takes half damage.", `The target takes full damage${rider}.`, `The target takes double damage${rider}.`][index]}</p>`).join("") }, debug);
+                    } else if (color.borrowed) built = castOf(color.borrowed.uuid, color.borrowed.name, card.wall.high);
+                    else if (color.slowed) built = buildCardAction(item, options, { type: "save", statistic: color.slowed.statistic, basic: false,
+                        html: `<p>The target must attempt a ${Stat(color.slowed.statistic)} save.</p><hr />` + ["Critical Success", "Success", "Failure", "Critical Failure"].map((label, index) => `<p><strong>${label}</strong> ${["The target is unaffected.", "The target is unaffected.", `The target is ${color.slowed.condition} for ${color.slowed.minutes} minute.`, `The target is ${color.slowed.condition} for ${color.slowed.minutes} minute.`][index]}</p>`).join("") }, debug);
+                    if (!built) { layers.length = 0; break; }
+                    layers.push(hidden(built, `layer-${key}`, `${color.name} layer`, "Run by passing through."));
+                }
+                const light = card.wall.light;
+                const lightPart = buildCardAction(item, options, { type: "save", statistic: light.statistic, basic: false, area: true,
+                    html: `<p>The target must attempt a ${Stat(light.statistic)} save.</p><hr />` + ["Critical Success", "Success", "Failure", "Critical Failure"].map((label, index) => `<p><strong>${label}</strong> ${["The target is unaffected.",
+                        `The target is @UUID[${light.success.uuid}]{${light.success.name}} for ${light.success.rounds} round.`, `The target is @UUID[${light.failure.uuid}]{${light.failure.name}} for ${light.failure.rounds} round.`,
+                        `The target is @UUID[${light.failure.uuid}]{${light.failure.name}} for ${light.criticalMinutes} minute.`][index]}</p>`).join("") }, debug);
+                if (layers.length === 7 && lightPart) phases = [{ ...lightPart, key: "light", title: "The wall's light", traits: [], repeat: { trigger: "another creature comes into the light" },
+                        reminder: `Target the creatures (other than the caster) that come into the wall's light; each is then immune to the blinding for ${light.immuneHours} hour.` },
+                    { key: "pass", title: "Passing through", kind: "sequence", sequence: layers.map(layer => layer.key), traits: [], repeat: { trigger: "a creature passes through" },
+                        reminder: "Target the creature passing through: each layer's save in turn (red to violet)." }, ...layers];
+            }
+            if (phases) {
+                const base = cloneJSON(item);
+                base.system.description.value = "<p>The spell's card.</p>";
+                const plan = compileSpell(base, { ...options, traitModeSource: true });
+                plan.resolution = { kind: "incarnate", check: null, sharedDamage: null, outcomes: plan.resolution?.outcomes ?? {}, postDamageTerminal: null, applications: [], incarnate: { notes: card.notes, phases } };
+                plan.automation = { level: "automatic", confidence: 1, compiledCapabilities: ["source", "incarnate", "prismatic-card"], pendingCapabilities: [], delegatedCapabilities: [] };
+                plan.compilerEvidence.incarnate = card.claimed;
+                plan.diagnostics = (plan.diagnostics ?? []).filter(entry => entry.severity !== "warning");
+                return plan;
+            }
+        }
+    }
+    // Blasts by where each creature is, or of a type the caster picks (blast-cards.js): a card of save parts (and a hazard the blast leaves).
+    if (!options.traitModeSource) {
+        const card = extractBlastCard(adaptSpellSource(item, options));
+        if (card) {
+            const debug = (...args) => { if (globalThis.process?.env?.MODE_DEBUG) console.error(...args); };
+            const phases = [];
+            let ok = true;
+            for (const part of card.parts) {
+                if (part.kind !== "action") { phases.push({ ...cloneJSON(part), traits: [] }); continue; }
+                const built = buildCardAction(item, options, part.spec, debug);
+                if (!built) { ok = false; break; }
+                // (A push stopped by a firm surface — Planar Collision — rides on its rows' movement.)
+                if (part.pushStopped) for (const outcome of Object.values(built.plan?.resolution?.outcomes ?? {})) if (outcome?.forcedMovement) outcome.forcedMovement.stopped = part.pushStopped;
+                phases.push({ ...built, key: part.key, title: part.title, traits: [], ...(part.repeat ? { repeat: part.repeat } : {}), reminder: part.reminder });
+            }
+            if (ok) {
+                const base = cloneJSON(item);
+                base.system.description.value = "<p>The spell's card.</p>";
+                const plan = compileSpell(base, { ...options, traitModeSource: true });
+                plan.resolution = { kind: "incarnate", check: null, sharedDamage: null, outcomes: plan.resolution?.outcomes ?? {}, postDamageTerminal: null, applications: [], incarnate: { notes: card.notes, phases } };
+                plan.automation = { level: "automatic", confidence: 1, compiledCapabilities: ["source", "incarnate", "blast-card"], pendingCapabilities: [], delegatedCapabilities: [] };
+                plan.compilerEvidence.incarnate = card.claimed;
+                plan.diagnostics = (plan.diagnostics ?? []).filter(entry => entry.severity !== "warning");
+                return plan;
+            }
+        }
+    }
+    // Spells of modes chosen on the cast and each Sustain (mode-cards.js): a card whose area holds the mode's state, each mode's action a hidden part it presses.
+    if (!options.traitModeSource) {
+        const card = extractModeCard(adaptSpellSource(item, options), options.nativeEffectCatalog ?? null);
+        if (card) {
+            const debug = (...args) => { if (globalThis.process?.env?.MODE_DEBUG) console.error(...args); };
+            const buildAction = spec => buildCardAction(item, options, spec, debug);
+            const modes = [], hidden = [];
+            let ok = true;
+            for (const part of card.parts) {
+                // (A text part: Vibrant Vibrato's card says what the area does by itself.)
+                if (part.note) { modes.push(cloneJSON(part)); continue; }
+                if (part.kind === "mode") {
+                    const { action, ...mode } = cloneJSON(part);
+                    if (action) {
+                        const built = buildAction(action);
+                        if (!built) { ok = false; break; }
+                        hidden.push({ ...built, key: `${part.key}-action`, title: part.title, traits: [], hidden: true, repeat: { trigger: "its mode is chosen" }, reminder: part.reminder });
+                        mode.action = `${part.key}-action`;
+                    }
+                    modes.push({ ...mode, traits: [], repeat: { trigger: "the caster Casts or Sustains the spell" } });
+                } else {
+                    const built = buildAction(part.spec);
+                    if (!built) { ok = false; break; }
+                    modes.push({ ...built, key: part.key, title: part.title, traits: [], repeat: part.repeat, reminder: part.reminder });
+                }
+            }
+            if (ok) {
+                const base = cloneJSON(item);
+                base.system.description.value = "<p>The spell's card.</p>";
+                const plan = compileSpell(base, { ...options, traitModeSource: true });
+                plan.resolution = { kind: "incarnate", check: null, sharedDamage: null, outcomes: plan.resolution?.outcomes ?? {}, postDamageTerminal: null, applications: [],
+                    incarnate: { notes: card.notes, phases: [...modes, ...hidden], area: cloneJSON(card.area) } };
+                plan.automation = { level: "automatic", confidence: 1, compiledCapabilities: ["source", "incarnate", "mode-card"], pendingCapabilities: [], delegatedCapabilities: [] };
+                plan.compilerEvidence.incarnate = card.claimed;
+                plan.diagnostics = (plan.diagnostics ?? []).filter(entry => entry.severity !== "warning");
+                return plan;
+            }
+        }
+    }
+    // Teleports on the battle map (teleport-spells.js): a save, then the card's teleport or swap for the rows that move the target (Unexpected
+    // Transposition, Collective Transposition, Magnetic Dominion).
+    if (!options.traitModeSource) {
+        const adaptedSource = adaptSpellSource(item, options);
+        const moved = extractSwapReaction(adaptedSource) ?? extractAreaTeleport(adaptedSource) ?? extractMagneticRelocation(adaptedSource);
+        if (moved) {
+            const copy = cloneJSON(item);
+            copy.system.description.value = moved.saveHTML;
+            // (Who may be targeted — "other than the triggering enemy", "creatures wearing metal armor …" — is the GM's; a note says so.)
+            if (moved.saveTarget) copy.system.target = { value: moved.saveTarget };
+            const plan = compileSpell(copy, { ...options, traitModeSource: true });
+            const controls = cloneJSON(moved.controls);
+            // (Magnetic Dominion: the stated rank of the referenced spell on the caster, by that spell's own route.)
+            let castOk = true;
+            if (moved.castSpell) {
+                const referenced = options.referencedSpells?.get?.(moved.castSpell.uuid);
+                const cast = referenced ? compileSpell(cloneJSON(referenced), { ...options, traitModeSource: false }) : null;
+                castOk = !!cast?.resolution && !["unsupported", "unsafe"].includes(cast.automation?.level) && !(cast.automation?.pendingCapabilities ?? []).length;
+                if (castOk) {
+                    controls.degrees = ["criticalSuccess", "success", "failure", "criticalFailure"];
+                    controls.parts.push({ key: "cast", title: `${moved.castSpell.name} (rank ${moved.castSpell.rank}) on yourself`, traits: [], kind: "cast-spell", uuid: moved.castSpell.uuid, name: moved.castSpell.name,
+                        rank: moved.castSpell.rank, plan: cast, reminder: `Target the caster: it's affected by ${moved.castSpell.name} at rank ${moved.castSpell.rank} for the spell's duration (its choice).` });
+                }
+            }
+            if (castOk && plan.resolution?.kind === "save" && !(plan.automation?.pendingCapabilities ?? []).length) {
+                plan.resolution.controls = controls;
+                plan.resolution.reminders = [...(plan.resolution.reminders ?? []), ...moved.notes.map(text => ({ kind: "teleport-note", text, sourceText: moved.claimed[0] }))];
+                plan.compilerEvidence.forcedActions = [controls.sourceText];
+                plan.compilerEvidence.teleportSpell = moved.claimed;
+                plan.automation.compiledCapabilities.push("teleport-controls");
+                return plan;
+            }
+        }
+    }
+    // Movement through the ground and the air (Heaving Earth, Earth and Sky, Deluge): the save's rows from the text (pushes, PF2e's falling damage), then the
+    // card's tremors save, the caster's rise, or the flyers' descent.
+    if (!options.traitModeSource) {
+        const adaptedSource = adaptSpellSource(item, options);
+        const wave = extractHeavingWave(adaptedSource), launch = wave ? null : extractSkyLaunch(adaptedSource), pour = wave || launch ? null : extractDownpour(adaptedSource);
+        const leap = wave || launch || pour ? null : extractFusionLeap(adaptedSource);
+        const found = wave ?? launch ?? pour ?? leap;
+        if (found) {
+            const copy = cloneJSON(item);
+            copy.system.description.value = found.mainHTML;
+            if (found.mainTarget) copy.system.target = { value: found.mainTarget };
+            if (wave) { if (found.mainHeightening) copy.system.heightening = cloneJSON(found.mainHeightening); else delete copy.system.heightening; }
+            // (The spell's own time is its parts': the rows' conditions state theirs.)
+            if (found.clearDuration) copy.system.duration = { value: "", sustained: false };
+            if (launch) copy.system.damage = { fall: { applyMod: false, category: null, formula: found.damage.formula, kinds: ["damage"], materials: [], type: found.damage.type } };
+            const plan = compileSpell(copy, { ...options, traitModeSource: true });
+            const controls = cloneJSON(found.controls);
+            let ok = plan.resolution?.kind === "save" && !(plan.automation?.pendingCapabilities ?? []).length;
+            if (globalThis.process?.env?.MOVE_DEBUG) console.error("MOVE main", plan.resolution?.kind, JSON.stringify(plan.automation?.pendingCapabilities));
+            // (The fall's damage is the text's, not the item's: rolled by the module, scaled by the row.)
+            if (ok && launch) {
+                ok = !!plan.resolution.sharedDamage;
+                if (ok) { plan.resolution.sharedDamage = { ...plan.resolution.sharedDamage, mode: "formula", rollOnce: true, formula: `(${found.damage.formula})[${found.damage.type}]`, textDerived: true, degreeScaled: true };
+                    plan.compilerEvidence.phaseFormula = plan.resolution.sharedDamage.formula; }
+            }
+            if (ok && wave) {
+                const sub = cloneJSON(item);
+                sub.system.description.value = found.tremorHTML; sub.system.defense = { save: { statistic: found.tremorStatistic, basic: false } }; sub.system.damage = {};
+                delete sub.system.heightening; sub.system.target = { value: "any number of creatures" }; sub.system.area = null;
+                const tremors = compileSpell(sub, { ...options, traitModeSource: true });
+                if (globalThis.process?.env?.MOVE_DEBUG) console.error("MOVE tremors", tremors.resolution?.kind, JSON.stringify(tremors.automation?.pendingCapabilities));
+                ok = tremors.resolution?.kind === "save" && !(tremors.automation?.pendingCapabilities ?? []).length;
+                if (ok) controls.parts.push({ key: "tremors", title: "The tremors", traits: [], kind: "save", plan: tremors,
+                    reminder: "Target each creature in the line between the caster and the target (not one the explosion hit)." });
+            }
+            if (ok) {
+                plan.resolution.controls = controls;
+                plan.resolution.reminders = [...(plan.resolution.reminders ?? []), ...found.notes.map(text => ({ kind: "teleport-note", text, sourceText: found.claimed[0] }))];
+                plan.compilerEvidence.forcedActions = [controls.sourceText];
+                plan.compilerEvidence.teleportSpell = found.claimed;
+                plan.automation.compiledCapabilities.push("movement-controls");
+                return plan;
+            }
+        }
+    }
+    // The caster's own moves with what they leave behind, or places and Hit Points traded (All Is One, One Is All; Proximal Shift): a card of parts.
+    if (!options.traitModeSource) {
+        const adaptedSource = adaptSpellSource(item, options);
+        const meld = extractMeldSwap(adaptedSource), jump = meld ? null : extractCraterJump(adaptedSource);
+        const found = meld ?? jump;
+        if (found) {
+            const phases = cloneJSON(found.phases);
+            const Stat = statistic => `${statistic[0].toUpperCase()}${statistic.slice(1)}`;
+            const saveSub = (html, statistic, basic, damage, area) => {
+                const sub = cloneJSON(item);
+                sub.system.description.value = html; sub.system.defense = { save: { statistic, basic } };
+                sub.system.damage = { text0: { applyMod: false, category: null, formula: damage.formula, kinds: ["damage"], materials: [], type: damage.type } };
+                delete sub.system.heightening; sub.system.duration = { value: "", sustained: false }; sub.system.target = { value: "" }; sub.system.area = area; sub.system.range = { value: "" };
+                const compiled = compileSpell(sub, { ...options, traitModeSource: true });
+                if (compiled.resolution?.kind !== "save" || (compiled.automation?.pendingCapabilities ?? []).length || !compiled.resolution.sharedDamage) return null;
+                compiled.resolution.sharedDamage = { ...compiled.resolution.sharedDamage, mode: "formula", rollOnce: true, formula: `(${damage.formula})[${damage.type}]`, textDerived: true, ...(basic ? {} : { degreeScaled: true }) };
+                compiled.compilerEvidence.phaseFormula = compiled.resolution.sharedDamage.formula;
+                return compiled;
+            };
+            let ok = true;
+            if (jump) {
+                const { crater, debris } = jump;
+                const craterPlan = saveSub(`<p>Each creature in the area must attempt a ${Stat(crater.statistic)} save.</p><hr /><p><strong>Critical Success</strong> The creature is unaffected.</p><p><strong>Success</strong> The creature is unaffected.</p>`
+                    + `<p><strong>Failure</strong> The creature takes full damage and falls @UUID[${crater.prone}]{Prone}.</p><p><strong>Critical Failure</strong> The creature takes full damage and falls @UUID[${crater.prone}]{Prone}.</p>`,
+                    crater.statistic, false, { formula: String(crater.amount), type: crater.type }, { type: "emanation", value: crater.radius });
+                const debrisPlan = saveSub(`<p>Each creature in the area takes ${debris.formula} ${debris.type} damage (basic ${Stat(debris.statistic)} save).</p>`, debris.statistic, true, { formula: debris.formula, type: debris.type }, { type: "emanation", value: debris.radius });
+                ok = !!craterPlan && !!debrisPlan;
+                if (ok) phases.unshift({ key: "crater", title: "The crater", traits: [], kind: "save", plan: craterPlan, reminder: `Target the creatures within ${crater.radius} feet of where the caster stands (before the jump).` });
+                if (ok) phases.push({ key: "debris", title: "The debris", traits: [], kind: "save", plan: debrisPlan, reminder: `Target the creatures within ${debris.radius} feet of the caster's arrival space.` },
+                    { key: "terrain", title: "Difficult terrain", traits: [], kind: "terrain", place: { type: "emanation", value: debris.radius }, difficulty: 2, rounds: debris.rounds,
+                        reminder: `Place the ${debris.radius}-foot emanation around the arrival space: difficult terrain for ${debris.rounds} rounds.` });
+            }
+            if (ok) {
+                const base = cloneJSON(item);
+                base.system.description.value = "<p>The spell's card.</p>";
+                const plan = compileSpell(base, { ...options, traitModeSource: true });
+                plan.resolution = { kind: "incarnate", check: null, sharedDamage: null, outcomes: plan.resolution?.outcomes ?? {}, postDamageTerminal: null, applications: [],
+                    incarnate: { notes: found.notes, phases } };
+                plan.automation = { level: "automatic", confidence: 1, compiledCapabilities: ["source", "incarnate", "teleport-parts"], pendingCapabilities: [], delegatedCapabilities: [] };
+                plan.compilerEvidence.incarnate = found.claimed;
+                plan.diagnostics = (plan.diagnostics ?? []).filter(entry => entry.severity !== "warning");
+                return plan;
+            }
+        }
+    }
+    // A form PF2e has no Effect for (Blanket of Stars, Mantle of Heaven's Slopes): the module's Effect from the text, with its auras and notes.
+    if (!options.traitModeSource) {
+        const adaptedSource = adaptSpellSource(item, options);
+        const generated = extractCloakAura(adaptedSource) ?? extractOptionPairForm(adaptedSource) ?? extractDeityForms(adaptedSource) ?? extractFormChooser(adaptedSource);
+        if (generated) {
+            const plan = compileSpell(item, { ...options, traitModeSource: true });
+            plan.resolution = { kind: "generated-form", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [], generatedForm: generated.generatedForm,
+                formRiders: generated.formRiders, ...(generated.formRiders.notes.length ? { gmNotes: [...generated.formRiders.notes] } : {}),
+                ...(generated.formRiders.parts.length ? { controls: { degrees: [], label: "The form", sourceText: generated.claimed[0], parts: cloneJSON(generated.formRiders.parts) } } : {}) };
+            plan.targeting.actorConstraints = { sourceText: "you", supportsActorTargets: false, complete: true, predicates: [] };
+            plan.automation = { level: "automatic", confidence: 1, compiledCapabilities: ["source", "generated-form"], pendingCapabilities: [] };
+            plan.compilerEvidence = { ...plan.compilerEvidence, generatedForm: generated.claimed };
+            plan.diagnostics = (plan.diagnostics ?? []).filter(entry => entry.severity !== "warning" && !["DESCRIPTION_SEMANTICS_PENDING", "TARGET_ELIGIBILITY_PENDING", "SAVE_PREAMBLE_PENDING"].includes(entry.code));
+            return plan;
+        }
+    }
+    // A blast that leaves its caster as something else (Arcane Explosion): the area's save from the rest of the text, then PF2e's Effect on the caster
+    // with its aura and its end at maximum Hit Points (the card's finalize).
+    if (!options.traitModeSource) {
+        const exploded = extractCasterForm(adaptSpellSource(item, options), options.nativeEffectCatalog ?? null);
+        if (exploded) {
+            const copy = cloneJSON(item);
+            copy.system.description.value = exploded.remainingHTML;
+            const plan = compileSpell(copy, { ...options, traitModeSource: true });
+            if (plan.resolution?.kind === "save" && !(plan.automation?.pendingCapabilities ?? []).length) {
+                plan.resolution.casterForm = exploded.casterForm;
+                plan.resolution.reminders = [...(plan.resolution.reminders ?? []), ...exploded.casterForm.notes.map(text => ({ kind: "caster-form", text, sourceText: exploded.claimed[0] }))];
+                plan.compilerEvidence.casterForm = exploded.claimed;
+                plan.automation.compiledCapabilities.push("caster-form");
+                return plan;
+            }
+        }
+    }
+    // A form's stat-block abilities around PF2e's Effect (Monstrosity Form, Nature Incarnate, Qi Form): the Effect proved from the rest of the text, then
+    // its auras (regions following the caster), its turn-end recovery and its moving saves (the form card's buttons), each for its picked option.
+    if (!options.traitModeSource && !options.formRidersStripped) {
+        const riders = extractFormRiders(adaptSpellSource(item, options), options.nativeEffectCatalog ?? null);
+        if (riders) {
+            const copy = cloneJSON(item);
+            copy.system.description.value = riders.remainingHTML;
+            // (The item's damage is the riders' — Corrosive Body's touch.)
+            if (riders.stripDamage) { copy.system.damage = {}; delete copy.system.heightening; }
+            const plan = compileSpell(copy, { ...options, formRidersStripped: true });
+            const parts = [];
+            for (const part of riders.formRiders.parts) {
+                if (part.kind !== "text-attack") { parts.push(cloneJSON(part)); continue; }
+                // (A Strike with the caster's spell attack — One with the Land's terrain vengeance: the type chosen each time.)
+                const attack = compileTextAttack(item, options, { damage: [[part.damage, "untyped"]], multipliers: { criticalSuccess: 2, success: 1, failure: 0, criticalFailure: 0 },
+                    types: part.types, typeSource: riders.claimed.find(sentence => sentence.includes("terrain vengeance Strikes")) ?? part.title, range: `${part.range} feet` });
+                if (!attack) { parts.failed = true; break; }
+                const { damage, types, range, ...rest } = part;
+                parts.push({ ...rest, kind: "attack", plan: attack });
+            }
+            const actionSave = (action, formula) => {
+                const sub = cloneJSON(item);
+                sub.system.description.value = `<p>Each creature takes ${formula} ${action.type} damage (basic ${action.statistic[0].toUpperCase()}${action.statistic.slice(1)} save against your spell DC).</p>`;
+                sub.system.defense = { save: { statistic: action.statistic, basic: true } };
+                sub.system.damage = { [action.key]: { applyMod: false, category: null, formula, kinds: ["damage"], materials: [], type: action.type } };
+                delete sub.system.heightening; sub.system.duration = { value: "", sustained: false }; sub.system.target = { value: "any number of creatures" }; sub.system.area = null;
+                const save = compileSpell(sub, { ...options, traitModeSource: true });
+                if (globalThis.process?.env?.FORM_DEBUG) console.error("FORMSAVE", action.key, save.resolution?.kind, JSON.stringify(save.automation?.pendingCapabilities));
+                if (save.resolution?.kind !== "save" || (save.automation?.pendingCapabilities ?? []).length || !save.resolution.sharedDamage) return null;
+                // (The form has no damage of its own: the text's dice, rolled by the module.)
+                save.resolution.sharedDamage = { ...save.resolution.sharedDamage, mode: "formula", rollOnce: true, formula: `(${formula})[${action.type}]`, textDerived: true };
+                save.compilerEvidence.phaseFormula = save.resolution.sharedDamage.formula;
+                return save;
+            };
+            for (const action of parts.failed ? [] : riders.formRiders.actions) {
+                const save = actionSave(action, action.formula);
+                // (A Heightened rank's extra die: Monstrosity Form's Spine Rake at 9th — that rank's own plan.)
+                const byRank = (action.byRank ?? []).map(entry => ({ minRank: entry.minRank, plan: actionSave(action, entry.formula) }));
+                if (!save || byRank.some(entry => !entry.plan)) { parts.length = 0; parts.failed = true; break; }
+                parts.push({ key: action.key, title: action.label, traits: [], kind: "save", plan: save, ...(byRank.length ? { byRank } : {}), option: action.option, repeat: { trigger: `you use ${action.label} (${action.cost} actions)` }, reminder: action.reminder });
+            }
+            for (const aura of riders.formRiders.auras.filter(entry => entry.toggle || entry.sizes))
+                parts.push({ key: `aura-${aura.key}`, title: aura.toggle ? `${aura.label}: switch on or off` : `${aura.label}: ${aura.sizes.join(" or ")}-foot emanation`, traits: [], kind: "form-aura", aura: aura.key,
+                    option: aura.option, repeat: { trigger: "you Sustain the spell" }, reminder: aura.toggle ? "Sustain: the aura ends, or starts again." : `Sustain: the emanation changes size (${aura.sizes.join(" ↔ ")} feet).` });
+            if (!parts.failed && plan.resolution?.kind === "effect" && plan.automation?.level !== "unsupported") {
+                plan.resolution.formRiders = riders.formRiders;
+                if (riders.formRiders.notes.length) plan.resolution.gmNotes = [...(plan.resolution.gmNotes ?? []), ...riders.formRiders.notes];
+                if (parts.length) plan.resolution.controls = { degrees: [], label: "The form", sourceText: riders.claimed[0], parts };
+                plan.compilerEvidence.formRiders = riders.claimed;
+                plan.automation.compiledCapabilities.push("form-riders");
+                return plan;
+            }
         }
     }
     // Becoming a plant or merging with one (One with Plants): the mode asked; a generated Effect (a battle form for the tree).
@@ -4295,6 +4929,8 @@ function compileSpell(item, options) {
             if (plans.every(entry => entry.plan.resolution?.lingering && !(entry.plan.automation?.pendingCapabilities ?? []).length)) {
                 const plan = cloneJSON(plans[0].plan);
                 plan.resolution.lingeringModes = plans.map(entry => ({ key: entry.key, label: entry.label, plan: entry.plan }));
+                // ("If the fire source is a creature, the creature takes 1d6 points of cold damage": dealt to the targeted creature as the area starts.)
+                if (modes.sourceCreatureDamage) plan.resolution.sourceCreatureDamage = cloneJSON(modes.sourceCreatureDamage);
                 plan.automation.compiledCapabilities.push("lingering-modes");
                 return plan;
             }
@@ -4633,6 +5269,534 @@ function compileSpell(item, options) {
             }
         }
     }
+    // Incarnates the narrower readers don't take (Holy Host, Unholy Army, the kaiju, the heralds, …): each listed manifestation's Arrive and Depart read into
+    // parts — a save (its own small spell), PF2e's linked Effect for the allies, the GM's reminders — and the caster's choice of manifestation when it's cast.
+    if (!options.traitModeSource && (item?.system?.traits?.value ?? []).includes("incarnate") && /^until the end of your next turn$/i.test(String(item?.system?.duration?.value ?? "").trim())) {
+        const incarnatePlan = compileIncarnateParts(item, options);
+        if (incarnatePlan) return incarnatePlan;
+    }
+    // A failing target the caster makes act (Puppet Strings): the rows' conditions, the end-of-turn save that frees it, and the forced Strike and
+    // Stride as the spell's controls (the controls card, while the spell lasts).
+    if (!options.traitModeSource) {
+        const forced = extractForcedActions(adaptSpellSource(item, options));
+        if (forced) {
+            const copy = cloneJSON(item);
+            copy.system.description.value = forced.html;
+            delete copy.system.heightening;
+            const plan = compileSpell(copy, { ...options, traitModeSource: true });
+            const strike = plan.resolution?.kind === "save" ? compileTextAttack(item, options, { damage: [[forced.controls.strike.formula, "untyped", null]],
+                multipliers: { criticalSuccess: 2, success: 1, failure: 0, criticalFailure: 0 }, types: forced.controls.strike.types, typeSource: forced.controls.strike.sourceText, range: "60 feet" }) : null;
+            if (globalThis.process?.env?.FORCED_DEBUG) console.error("forced:", plan.resolution?.kind, JSON.stringify(plan.automation?.pendingCapabilities), !!strike);
+            if (plan.resolution?.kind === "save" && !(plan.automation?.pendingCapabilities ?? []).length && strike) {
+                // (A sustained spell's maximum: the note lasts that long at most, and ends with the spell.)
+                const spec = plan.lifecycle?.durationSpec?.mode === "sustained" ? plan.lifecycle.durationSpec.maximum : plan.lifecycle?.durationSpec;
+                const rounds = spec?.mode === "fixed" ? Number(spec.value) * ({ rounds: 1, minutes: 10, hours: 600 }[spec.unit] ?? NaN) : NaN;
+                if (Number.isInteger(rounds) && rounds > 0) {
+                    for (const degree of ["failure", "criticalFailure"]) plan.resolution.outcomes[degree].noteEffects = [...(plan.resolution.outcomes[degree].noteEffects ?? []),
+                        { label: "Held by the strings", text: `${forced.freeSave.text} You can force its actions while the spell lasts (the spell's controls card).`, sourceText: forced.freeSave.sourceText,
+                            recurringSave: { timing: "turn-end", mode: "end", statistic: forced.freeSave.statistic }, duration: { mode: "fixed", value: rounds, unit: "rounds", expiry: "turn-start", anchor: "effect-start", sourceText: "the spell's duration" } }];
+                    const each = actions => actions === 1 ? "once" : `${actions} times (${actions} actions)`;
+                    plan.resolution.controls = { degrees: [...forced.controls.degrees], label: forced.controls.label, sourceText: forced.controls.sourceText,
+                        parts: [{ key: "strike", title: "Forced Strike", traits: [], kind: "attack", plan: strike, count: 1,
+                            repeat: { trigger: `you Cast the spell or first Sustain it each turn (${each(forced.controls.actions.failure)} on a failure, ${each(forced.controls.actions.criticalFailure)} on a critical failure, shared with Stride)`, unless: null },
+                            reminder: "Target the creature it Strikes, within its reach (not itself); it uses your spell attack modifier and your multiple attack penalty, and its own gear and abilities don't apply. Pick the damage type on the card." },
+                            { key: "stride", title: "Forced Stride", traits: [], kind: "note", note: forced.controls.stride.text }] };
+                    plan.compilerEvidence.forcedActions = [forced.controls.sourceText, forced.controls.strike.sourceText, forced.controls.stride.sourceText, forced.freeSave.sourceText];
+                    return plan;
+                }
+            }
+        }
+    }
+    // A copy of the target fighting for the caster (Duplicate Foe): the target's save; the duplicate (a module token) on the rows that make one.
+    if (!options.traitModeSource) {
+        const duplicate = extractDuplicateFoe(adaptSpellSource(item, options));
+        if (duplicate) {
+            const copy = cloneJSON(item);
+            const Statistic = `${duplicate.statistic[0].toUpperCase()}${duplicate.statistic.slice(1)}`;
+            copy.system.description.value = `<p>The target must attempt a ${Statistic} save.</p><hr /><p><strong>Critical Success</strong> The target is unaffected.</p><p><strong>Success</strong> The target is unaffected.</p>`
+                + `<p><strong>Failure</strong> The target is unaffected.</p>`;
+            delete copy.system.heightening;
+            // ("1 enemy of level 15 or lower", 2 levels higher per heightened rank: PF2e's level, checked at the cast rank.)
+            const levelLimit = /^1 enemy of level (\d+) or lower$/i.exec(String(item.system?.target?.value ?? "").trim());
+            if (levelLimit) copy.system.target = { value: "1 enemy" };
+            const plan = compileSpell(copy, { ...options, traitModeSource: true });
+            if (levelLimit && plan.targeting?.actorConstraints) {
+                const base = Number(levelLimit[1]), rank = Number(plan.rank), step = duplicate.heightening;
+                const byRank = step ? Object.fromEntries(Array.from({ length: 10 - rank }, (_, index) => rank + 1 + index).map(at => [String(at), base + step.levels * Math.floor((at - rank) / step.interval)])) : {};
+                plan.targeting.actorConstraints.predicates = [...(plan.targeting.actorConstraints.predicates ?? []), { kind: "level-at-most", level: base, byRank }];
+            }
+            const spec = plan.lifecycle?.durationSpec?.mode === "sustained" ? plan.lifecycle.durationSpec.maximum : plan.lifecycle?.durationSpec;
+            if (globalThis.process?.env?.COPY_DEBUG) console.error("duplicate:", plan.resolution?.kind, JSON.stringify(plan.automation?.pendingCapabilities), JSON.stringify(spec));
+            if (plan.resolution?.kind === "save" && !(plan.automation?.pendingCapabilities ?? []).length && spec?.mode === "fixed") {
+                plan.resolution.duplicate = { byDegree: cloneJSON(duplicate.byDegree), hp: { base: duplicate.hp, step: duplicate.heightening?.hp ?? 0, interval: duplicate.heightening?.interval ?? 1, baseRank: Number(plan.rank) },
+                    hpLoss: duplicate.hpLoss, seconds: Number(spec.value) * ({ rounds: 6, minutes: 60, hours: 3600 }[spec.unit] ?? NaN), sustained: plan.lifecycle?.sustained === true, notes: duplicate.notes, sourceText: duplicate.sourceText };
+                plan.compilerEvidence.creatureCopy = [duplicate.sourceText];
+                return plan;
+            }
+        }
+        const reanimate = extractReanimateFoe(adaptSpellSource(item, options));
+        if (reanimate) {
+            const base = compileSpell((() => { const copy = cloneJSON(item); copy.system.description.value = "<p>You call a corpse to fight.</p>"; copy.system.target = { value: "" }; return copy; })(), { ...options, traitModeSource: true });
+            const plan = base;
+            plan.resolution = { kind: "incarnate", check: null, sharedDamage: null, outcomes: plan.resolution?.outcomes ?? {}, postDamageTerminal: null, applications: [],
+                incarnate: { notes: [], phases: [
+                    { key: "reanimate", title: "Reanimate the corpse", traits: [], kind: "check-copy", skill: reanimate.skill, skillLabel: reanimate.skillLabel,
+                        results: { criticalSuccess: cloneJSON(reanimate.success), success: cloneJSON(reanimate.success), failure: cloneJSON(reanimate.failure), criticalFailure: cloneJSON(reanimate.criticalFailure) },
+                        reminder: `Target the corpse of an enemy dead no more than ${reanimate.deadFor} minute${reanimate.deadFor === 1 ? "" : "s"} (once living or undead), within ${reanimate.thrallRange} feet of your thrall: your ${reanimate.skillLabel} check against the standard DC of its level.` },
+                    { key: "thrall", title: "Destroy the thrall", traits: [], kind: "destroy-thrall", reminder: "Target the thrall you launched: it's destroyed." }] } };
+            plan.automation = { level: "automatic", confidence: 1, compiledCapabilities: ["source", "incarnate", "creature-copy"], pendingCapabilities: [], delegatedCapabilities: [] };
+            plan.compilerEvidence.incarnate = [reanimate.sourceText];
+            plan.diagnostics = (plan.diagnostics ?? []).filter(entry => entry.severity !== "warning");
+            return plan;
+        }
+    }
+    // The rest of group 2: a borrowed illusion, a summon's boost, a named summon, a corpse's stat block, a familiar's form, a weapon that Strikes on a
+    // trigger, a shell the GM reports creatures crossing — each a card of parts (conjured-misc.js).
+    if (!options.traitModeSource) {
+        const adaptedHere = adaptSpellSource(item, options);
+        const card = (notes, phases, evidence) => {
+            const base = compileSpell((() => { const copy = cloneJSON(item); copy.system.description.value = "<p>The spell takes effect.</p>"; copy.system.defense = null; copy.system.damage = {}; copy.system.area = null; copy.system.target = { value: "" }; return copy; })(), { ...options, traitModeSource: true });
+            base.resolution = { kind: "incarnate", check: null, sharedDamage: null, outcomes: base.resolution?.outcomes ?? {}, postDamageTerminal: null, applications: [], incarnate: { notes, phases } };
+            base.automation = { level: "automatic", confidence: 1, compiledCapabilities: ["source", "incarnate", "spell-card"], pendingCapabilities: [], delegatedCapabilities: [] };
+            base.compilerEvidence.incarnate = [evidence];
+            base.diagnostics = (base.diagnostics ?? []).filter(entry => entry.severity !== "warning");
+            return base;
+        };
+        const lifetime = (() => { const spec = item.system?.duration?.value; const m = /^(\d+) (round|minute|hour)s?$/.exec(String(spec ?? "").trim()); return m ? Number(m[1]) * { round: 6, minute: 60, hour: 3600 }[m[2]] : null; })();
+        const sustained = item.system?.duration?.sustained === true;
+        const basicSave = (formula, type, statistic, push = null) => {
+            const sub = cloneJSON(item);
+            const Statistic = `${statistic[0].toUpperCase()}${statistic.slice(1)}`;
+            sub.system.description.value = `<p>Each creature takes the damage and must attempt a ${Statistic} save.</p><hr /><p><strong>Critical Success</strong> The creature is unaffected.</p><p><strong>Success</strong> The creature takes half damage.</p><p><strong>Failure</strong> The creature takes full damage.</p><p><strong>Critical Failure</strong> The creature takes double damage.</p>`;
+            sub.system.defense = { save: { statistic, basic: true } };
+            sub.system.target = { value: "" }; sub.system.area = { type: "emanation", value: 5 }; sub.system.duration = { value: "", sustained: false };
+            sub.system.damage = { text0: { applyMod: false, category: null, formula: formula.replace(/\[[a-z]+\]$/, ""), kinds: ["damage"], materials: [], type } };
+            delete sub.system.heightening;
+            const plan = compileSpell(sub, { ...options, traitModeSource: true });
+            if (plan.resolution?.kind !== "save" || (plan.automation?.pendingCapabilities ?? []).length || !plan.resolution.sharedDamage) return null;
+            const full = `${formula.replace(/\[[a-z]+\]$/, "")}[${type}]`;
+            plan.resolution.sharedDamage = { ...plan.resolution.sharedDamage, mode: "formula", rollOnce: true, formula: full, textDerived: true, ...(plan.resolution.check?.basic === true ? {} : { degreeScaled: true }) };
+            plan.compilerEvidence.phaseFormula = full;
+            for (const degree of ["failure", "criticalFailure"]) if (push?.[degree]) plan.resolution.outcomes[degree].forcedMovement = { kind: "push", distance: push[degree], upTo: push.upTo === true, optional: false, direction: push.direction ?? "from-center" };
+            return plan;
+        };
+        const illusion = extractBorrowedIllusion(adaptedHere);
+        const referenced = illusion ? options.referencedSpells?.get?.(illusion.uuid) : null;
+        if (illusion && referenced) {
+            const copy = cloneJSON(item);
+            copy.system.description.value = referenced.system.description.value;
+            const plan = compileSpell(copy, { ...options, traitModeSource: false });
+            if (plan.resolution?.kind === "illusory-creature" && plan.resolution.illusoryCreature) {
+                const data = plan.resolution.illusoryCreature;
+                data.strike = { ...data.strike, dice: illusion.dice, faces: illusion.faces, step: { ...illusion.step } };
+                data.maxSize = illusion.maxSize; data.sizeStep = { ...data.sizeStep, cap: illusion.maxSize };
+                data.notes = [...illusion.notes, ...data.notes];
+                plan.compilerEvidence.borrowedIllusion = illusion.sourceText;
+                return plan;
+            }
+        }
+        const boost = extractSummonBoost(adaptedHere);
+        if (boost) return card([], [{ key: "boost", title: `The summoned creature: ${boost.effect.name.replace(/^Spell Effect: /, "")}`, traits: [], kind: "native-effect", uuid: boost.effect.uuid,
+            reminder: `Target the creature your next action's ${boost.spells.join(" or ")} summons; pick its element (${boost.choices.join(", ")}) on PF2e's Effect.`, sourceText: boost.sourceText }], boost.sourceText);
+        const named = extractNamedSummon(adaptedHere);
+        if (named && lifetime) return card([named.origin], [{ key: "summon", title: `Summon the ${named.actorName}`, traits: [], kind: "summon", actorUuid: named.actorUuid, actorName: named.actorName,
+            effectUuid: named.effect.uuid, near: "target", linkedDying: true, seconds: lifetime, sustained, count: 1,
+            reminder: `Target the dying creature: the ${named.actorName} appears beside it (PF2e's ${named.effect.name} on it). ${named.ends}`, sourceText: named.sourceText }], named.sourceText);
+        const corpse = extractCorpseStatBlock(adaptedHere);
+        if (corpse && lifetime) return card(corpse.notes, [{ key: "summon", title: "Raise the corpse", traits: [], kind: "summon", candidates: corpse.candidates, near: "target", fromCorpse: true, minion: true,
+            seconds: lifetime, sustained, count: 1, reminder: "Target the corpse (its level at most yours – 4, dead since the last sunrise): pick a stat block of its size and at most its level; it rises where the corpse lies.", sourceText: corpse.sourceText }], corpse.sourceText);
+        const familiar = extractFamiliarForm(adaptedHere);
+        if (familiar && lifetime) {
+            const rankAt = Number(Object.keys(familiar.ac.byRank)[0]);
+            const checkAt = rank => basicSave(`${familiar.bodyCheck.dice + (rank >= familiar.bodyCheck.heightened.rank ? familiar.bodyCheck.heightened.dice : 0)}d${familiar.bodyCheck.faces}`, familiar.bodyCheck.type, familiar.bodyCheck.statistic, familiar.bodyCheck.push);
+            const low = checkAt(Number(item.system?.level?.value ?? 1)), high = checkAt(rankAt);
+            if (low && high) return card([familiar.command], [
+                { key: "form", title: "The familiar's form", traits: [], kind: "effect", label: "Patron's protector", count: 1,
+                    text: `AC becomes ${familiar.ac.base} (${Object.values(familiar.ac.byRank)[0]} at ${rankAt}th); it's ${familiar.size === "lg" ? "Large" : familiar.size}; ${familiar.temp.base} temporary Hit Points (${Object.values(familiar.temp.byRank)[0]} at ${rankAt}th). At 0 Hit Points the spell ends and it's at 1 instead. Once per turn: ${familiar.actions.join(" or ")} (the card's buttons).`,
+                    sourceText: familiar.sourceText, rules: [{ key: "CreatureSize", value: familiar.size }], grants: [], acSet: familiar.ac, tempHp: familiar.temp, zeroToOne: true,
+                    duration: { mode: "fixed", value: lifetime / 60, unit: "minutes", expiry: "turn-start", anchor: "effect-start", sourceText: item.system.duration.value }, reminder: "Target your familiar." },
+                { key: "body-check", title: "Body Check", traits: [], kind: "save", plan: low, byRank: [{ minRank: rankAt, plan: high }], count: 1, repeat: { trigger: "once per turn, instead of Protector's Shove", unless: null },
+                    reminder: "Target the creature adjacent to your familiar; a failure knocks it back from the familiar." },
+                { key: "shove", title: "Protector's Shove", traits: [], kind: "effect", label: `+${familiar.shove.bonus} AC`, count: 1, repeat: { trigger: "once per turn, instead of Body Check", unless: null },
+                    text: `Pushed up to ${familiar.shove.feet} feet by the familiar (forced movement: move its token) and a +${familiar.shove.bonus} ${familiar.shove.type} bonus to AC for ${familiar.shove.rounds} round.`, sourceText: familiar.shove.sourceText,
+                    rules: [{ key: "FlatModifier", selector: "ac", type: familiar.shove.type, value: familiar.shove.bonus }], grants: [],
+                    duration: { mode: "fixed", value: familiar.shove.rounds, unit: "rounds", expiry: "turn-start", anchor: "effect-start", sourceText: `for ${familiar.shove.rounds} round` }, reminder: "Target the adjacent willing ally." }], familiar.sourceText);
+        }
+        const weapon = extractJudgmentWeapon(adaptedHere);
+        if (weapon) {
+            const attackAt = dice => compileTextAttack(item, options, { damage: [[`${dice}d${weapon.faces}`, "untyped", null]], multipliers: { criticalSuccess: 2, success: 1, failure: 0, criticalFailure: 0 },
+                types: ["bludgeoning", "piercing", "slashing", weapon.alternative], typeSource: weapon.sourceText, range: "100 feet" });
+            const low = attackAt(weapon.dice), high = attackAt(weapon.dice + weapon.heightened.dice);
+            if (low && high) return card(weapon.notes, [{ key: "strike", title: "The weapon Strikes", traits: [], kind: "attack", plan: low, byRank: [{ minRank: weapon.heightened.rank, plan: high }], count: 1,
+                repeat: { trigger: "the GM reports its trigger (war: the target's turn ended without a hostile action against the chosen creature; peace: a hostile action against you or a chosen ally)", unless: null },
+                reminder: `Target the spell's target: your melee spell attack; pick the weapon's damage type (${weapon.alternative} if the GM rules it worse for the creature).` }], weapon.sourceText);
+        }
+        const shell = extractShell(adaptedHere);
+        if (shell) {
+            const plan = basicSave(shell.formula, shell.type, shell.statistic, { ...shell.push, upTo: true, direction: "any" });
+            if (plan) {
+                for (const degree of ["failure", "criticalFailure"]) plan.resolution.outcomes[degree].rowNotes = [];
+                return card(shell.notes, [{ key: "shell", title: "The shell", traits: [], kind: "save", plan, repeat: { trigger: shell.trigger, unless: null },
+                    reminder: "Target the creatures it reaches; a failure is pushed (your choice of direction) and its movement ends." }], shell.sourceText);
+            }
+        }
+    }
+    // Conjured objects and elementals with stated statistics (Lifewood Cage, Elemental Confluence): the module's token, and what it does as the card's buttons.
+    if (!options.traitModeSource) {
+        const adaptedHere = adaptSpellSource(item, options);
+        const cage = extractCage(adaptedHere), confluence = cage ? null : extractConfluence(adaptedHere);
+        if (cage || confluence) {
+            const base = compileSpell((() => { const copy = cloneJSON(item); copy.system.description.value = `<p>${(cage ?? confluence).sentences[0]}</p>`; copy.system.defense = null; copy.system.damage = {}; copy.system.area = null; return copy; })(), { ...options, traitModeSource: true });
+            const spec = base.lifecycle?.durationSpec?.mode === "sustained" ? base.lifecycle.durationSpec.maximum : base.lifecycle?.durationSpec;
+            const range = Number(/^(\d+) feet/.exec(String(item.system?.range?.value ?? "").trim())?.[1] ?? NaN);
+            const seconds = spec?.mode === "fixed" ? Number(spec.value) * ({ rounds: 6, minutes: 60, hours: 3600 }[spec.unit] ?? NaN) : NaN;
+            const saveSub = (html, statistic, basic, damage = [], traits = []) => {
+                const sub = cloneJSON(item);
+                sub.system.description.value = html;
+                sub.system.defense = { save: { statistic, basic } };
+                sub.system.target = { value: "" };
+                sub.system.area = { type: "emanation", value: 5 };
+                sub.system.duration = { value: "", sustained: false };
+                sub.system.traits = { ...sub.system.traits, value: [...new Set([...(sub.system.traits?.value ?? []), ...traits])] };
+                sub.system.damage = Object.fromEntries(damage.map(([formula, type, category], index) => [`text${index}`, { applyMod: false, category, formula, kinds: ["damage"], materials: [], type }]));
+                delete sub.system.heightening;
+                // (Some row forms — a basic save's extra persistent damage — are read only on the full route.)
+                let plan = compileSpell(sub, { ...options, traitModeSource: true });
+                if (plan.resolution?.kind !== "save" || (plan.automation?.pendingCapabilities ?? []).length) plan = compileSpell(sub, { ...options, traitModeSource: false });
+                if (plan.resolution?.kind !== "save" || (plan.automation?.pendingCapabilities ?? []).length) return null;
+                if (damage.length && plan.resolution.sharedDamage) {
+                    const formula = damage.length === 1 && !damage[0][2] ? `${damage[0][0]}[${damage[0][1]}]` : `{${damage.map(([dice, type, category]) => `${dice}[${category ? `${category},` : ""}${type}]`).join(",")}}`;
+                    plan.resolution.sharedDamage = { ...plan.resolution.sharedDamage, mode: "formula", rollOnce: true, formula, textDerived: true, ...(plan.resolution.check?.basic === true ? {} : { degreeScaled: true }) };
+                    plan.compilerEvidence.phaseFormula = formula;
+                }
+                return plan;
+            };
+            const Stat = statistic => `${statistic[0].toUpperCase()}${statistic.slice(1)}`;
+            let phases = null, notes = [], conjure = null;
+            if (cage && Number.isFinite(seconds)) {
+                const trap = saveSub(`<p>The target must attempt a ${Stat(cage.statistic)} save.</p><hr /><p><strong>Critical Success</strong> The target is unaffected.</p><p><strong>Success</strong> The target is unaffected.</p>`
+                    + `<p><strong>Failure</strong> The target is unaffected.</p><p><strong>Critical Failure</strong> The target is unaffected.</p>`, cage.statistic, false);
+                if (trap) {
+                    for (const degree of ["failure", "criticalFailure"]) trap.resolution.outcomes[degree].noteEffects = [{ ...cloneJSON(cage.trapped), gmPlays: true,
+                        duration: { mode: "fixed", value: spec.value, unit: spec.unit, expiry: "turn-start", anchor: "effect-start", sourceText: spec.raw ?? "the spell's duration" } }];
+                    conjure = cage.conjure; notes = cage.notes;
+                    // (A success is moved by the module to the nearest free space outside the cage's token.)
+                    trap.resolution.areaExit = { who: "success", area: "conjured" };
+                    phases = [{ key: "trap", title: "The cage closes", traits: [], kind: "save", plan: trap,
+                        reminder: `Target each creature in the cage's area. On a success it's ${cage.pushed.replace(/^If it succeeds, it's /, "").replace(/\.$/, "")}: the module moves it to the nearest free space outside (the GM moves it elsewhere if it chooses).` }];
+                }
+            }
+            if (confluence && Number.isFinite(seconds)) {
+                const built = [];
+                for (const element of confluence.elements) {
+                    if (globalThis.process?.env?.COPY_DEBUG) console.error("element:", element.key, element.kind, built.length);
+                    const title = `${element.label} elementals`;
+                    const repeat = { trigger: `you Cast or Sustain the spell (up to ${confluence.choose} different elementals each time)`, unless: null };
+                    if (element.kind === "save" && element.outside) {
+                        const plan = saveSub(`<p>Each creature takes the damage and must attempt a ${Stat(element.statistic)} save.</p><hr /><p><strong>Critical Success</strong> The creature is unaffected.</p><p><strong>Success</strong> The creature takes half damage.</p><p><strong>Failure</strong> The creature takes full damage.</p><p><strong>Critical Failure</strong> The creature takes double damage.</p>`, element.statistic, true, element.damage, element.traits);
+                        if (!plan) { built.length = 0; break; }
+                        built.push({ key: element.key, title, traits: element.traits, kind: "save", plan, repeat, reminder: `Target the creatures within ${element.within} feet of the ${confluence.conjure.name}, not those completely inside it.` });
+                    } else if (element.kind === "save" && element.inside) {
+                        const crit = element.critical[0];
+                        const plan = saveSub(`<p>Each creature takes ${element.damage[0][0]} ${element.damage[0][1]} damage and must attempt a ${Stat(element.statistic)} save.</p><hr /><p><strong>Critical Success</strong> The creature is unaffected.</p><p><strong>Success</strong> The creature takes half damage.</p><p><strong>Failure</strong> The creature takes full damage.</p><p><strong>Critical Failure</strong> The creature takes double damage and @Damage[${crit[0]}[${crit[2] ? "persistent," : ""}${crit[1]}]] damage.</p>`, element.statistic, true, element.damage, element.traits);
+                        if (!plan) { built.length = 0; break; }
+                        built.push({ key: element.key, title, traits: element.traits, kind: "save", plan, repeat, reminder: `Target the creatures partly or entirely inside the ${confluence.conjure.name}.` });
+                    } else if (element.kind === "damage") built.push({ key: element.key, title, traits: element.traits, kind: "damage", repeat,
+                        formula: element.damage.length === 1 ? `${element.damage[0][0]}[${element.damage[0][2] ? "persistent," : ""}${element.damage[0][1]}]` : null, reminder: `Target the creatures partly or entirely inside the ${confluence.conjure.name}.`, sourceText: element.sourceText });
+                    else if (element.kind === "self-effect") built.push({ key: element.key, title, traits: element.traits, kind: "effect", onConjured: true, repeat, label: `${element.label}: +${element.bonus} AC, resistance ${element.resistance}`,
+                        text: element.sourceText, sourceText: element.sourceText, grants: [],
+                        rules: [{ key: "FlatModifier", selector: "ac", type: element.bonusType, value: element.bonus }, { key: "Resistance", type: element.resistType, value: element.resistance, exceptions: [element.except] }],
+                        duration: { mode: "fixed", value: element.rounds, unit: "rounds", expiry: "turn-start", anchor: "effect-start", sourceText: `for ${element.rounds} round${element.rounds === 1 ? "" : "s"}` },
+                        reminder: `On the ${confluence.conjure.name} itself.` });
+                    else if (element.kind === "attack") {
+                        const plan = compileTextAttack(item, options, { damage: element.damage, multipliers: { criticalSuccess: 2, success: 1, failure: 0, criticalFailure: 0 }, traits: element.traits, range: `${element.range} feet` });
+                        if (!plan) { built.length = 0; break; }
+                        built.push({ key: element.key, title, traits: element.traits, kind: "attack", plan, count: 1, repeat,
+                            reminder: `Target one creature inside the ${confluence.conjure.name} or within ${element.range} feet of it: your spell attack (it ignores the ${confluence.conjure.name}'s concealment; +${element.insideBonus} circumstance against a target inside — add it in PF2e's attack dialog; it doesn't count toward your multiple attack penalty).` });
+                    } else if (element.kind === "terrain") built.push({ key: element.key, title, traits: element.traits, kind: "terrain", onConjured: true, repeat, rounds: element.rounds,
+                        reminder: `The ground in the ${confluence.conjure.name}'s area is difficult terrain for ${element.rounds} round${element.rounds === 1 ? "" : "s"}.`, sourceText: element.sourceText });
+                }
+                if (built.length === confluence.elements.length && built.every(part => part.kind !== "damage" || part.formula)) {
+                    conjure = confluence.conjure; phases = built;
+                    notes = [`${confluence.sentences[2]} You can move it up to ${confluence.move} feet when you Cast or Sustain the spell (move its token; the concealment follows).`];
+                }
+            }
+            if (globalThis.process?.env?.COPY_DEBUG) console.error("conjured:", !!phases, !!conjure, range, seconds);
+            if (phases && conjure && Number.isInteger(range)) {
+                const plan = base;
+                plan.resolution = { kind: "incarnate", check: null, sharedDamage: null, outcomes: plan.resolution?.outcomes ?? {}, postDamageTerminal: null, applications: [],
+                    incarnate: { notes, conjure: { ...conjure, rangeFeet: range, durationSeconds: seconds, sustained: base.lifecycle?.sustained === true }, phases } };
+                plan.automation = { level: "automatic", confidence: 1, compiledCapabilities: ["source", "incarnate", "conjured-token"], pendingCapabilities: [], delegatedCapabilities: [] };
+                plan.compilerEvidence.incarnate = [(cage ?? confluence).sentences.join(" ")];
+                plan.diagnostics = (plan.diagnostics ?? []).filter(entry => entry.severity !== "warning");
+                return plan;
+            }
+        }
+    }
+    // A conjured creature with stated statistics acting from the card (Dragon Turret): its token (the module's, removed when the spell ends or it dies),
+    // and its action as the card's button (a basic save of the text's dice, of the type the casting tradition names), once each Cast or Sustain.
+    if (!options.traitModeSource) {
+        const structure = extractConjuredStructure(adaptSpellSource(item, options));
+        if (structure) {
+            const sub = cloneJSON(item);
+            const statistic = structure.action.statistic, Statistic = `${statistic[0].toUpperCase()}${statistic.slice(1)}`;
+            sub.system.description.value = `<p>Each creature takes the damage and must attempt a ${Statistic} save.</p><hr /><p><strong>Critical Success</strong> The creature is unaffected.</p>`
+                + `<p><strong>Success</strong> The creature takes half damage.</p><p><strong>Failure</strong> The creature takes full damage.</p><p><strong>Critical Failure</strong> The creature takes double damage.</p>`;
+            sub.system.defense = { save: { statistic, basic: true } };
+            sub.system.area = cloneJSON(structure.action.area);
+            sub.system.target = { value: "" };
+            sub.system.duration = { value: "", sustained: false };
+            sub.system.damage = { text0: { applyMod: false, category: null, formula: structure.action.formula, kinds: ["damage"], materials: [], type: "untyped" } };
+            delete sub.system.heightening;
+            const action = compileSpell(sub, { ...options, traitModeSource: true });
+            const base = compileSpell((() => { const copy = cloneJSON(item); copy.system.description.value = `<p>${structure.sentences[0]}</p>`; copy.system.defense = null; copy.system.damage = {}; copy.system.area = null; return copy; })(), { ...options, traitModeSource: true });
+            const spec = base.lifecycle?.durationSpec?.mode === "sustained" ? base.lifecycle.durationSpec.maximum : base.lifecycle?.durationSpec;
+            const range = Number(/^(\d+) feet$/.exec(String(item.system?.range?.value ?? "").trim())?.[1] ?? NaN);
+            if (action.resolution?.kind === "save" && action.resolution.sharedDamage && !(action.automation?.pendingCapabilities ?? []).length && spec?.mode === "fixed" && Number.isInteger(range)) {
+                const formula = `${structure.action.formula}[untyped]`;
+                action.resolution.sharedDamage = { ...action.resolution.sharedDamage, mode: "formula", rollOnce: true, formula, textDerived: true, ...(action.resolution.check?.basic === true ? {} : { degreeScaled: true }) };
+                action.compilerEvidence.phaseFormula = formula;
+                action.resolution.casterChoice = { kind: "damage-type", values: [...new Set(Object.values(structure.action.byTradition))], label: "Damage type" };
+                action.compilerEvidence.casterChoice = structure.action.sourceText;
+                const plan = base;
+                plan.resolution = { kind: "incarnate", check: null, sharedDamage: null, outcomes: plan.resolution?.outcomes ?? {}, postDamageTerminal: null, applications: [],
+                    incarnate: { notes: structure.notes, conjure: { ...structure.conjure, rangeFeet: range, durationSeconds: Number(spec.value) * ({ rounds: 6, minutes: 60, hours: 3600 }[spec.unit] ?? NaN),
+                        sustained: base.lifecycle?.sustained === true },
+                        phases: [{ key: "breath", title: structure.action.title, traits: [], kind: "save", plan: action, typeByTradition: { ...structure.action.byTradition },
+                            repeat: { trigger: "you Cast the spell, and once per round when you Sustain it", unless: null },
+                            reminder: `Target the creatures in its ${structure.action.area.value}-foot ${structure.action.area.type}; its type is your casting tradition's (${Object.entries(structure.action.byTradition).map(([tradition, type]) => `${tradition} ${type}`).join(", ")}).` }] } };
+                plan.automation = { level: "automatic", confidence: 1, compiledCapabilities: ["source", "incarnate", "conjured-token"], pendingCapabilities: [], delegatedCapabilities: [] };
+                plan.compilerEvidence.incarnate = [structure.conjure.sourceText, structure.action.sourceText];
+                plan.diagnostics = (plan.diagnostics ?? []).filter(entry => entry.severity !== "warning");
+                return plan;
+            }
+        }
+    }
+    // Dead creatures or undead ones (Song of the Fallen): a card with the two, one using up the other — the dead's Effect (temporary Hit Points,
+    // Slowed, dead again when the spell ends) and the undead's save.
+    if (!options.traitModeSource) {
+        const both = extractDeadOrUndead(adaptSpellSource(item, options));
+        if (both) {
+            const sub = cloneJSON(item);
+            sub.system.description.value = both.rowsHtml;
+            sub.system.defense = { save: { statistic: both.statistic, basic: false } };
+            sub.system.target = { value: "1 undead creature" };
+            sub.system.duration = { value: "", sustained: false };
+            sub.system.damage = {};
+            delete sub.system.heightening;
+            const save = compileSpell(sub, { ...options, traitModeSource: true });
+            const base = compileSpell((() => { const copy = cloneJSON(item); copy.system.description.value = `<p>${both.sentences[0]}</p>`; copy.system.defense = null; copy.system.damage = {}; return copy; })(), { ...options, traitModeSource: true });
+            const spec = base.lifecycle?.durationSpec?.mode === "sustained" ? base.lifecycle.durationSpec.maximum : base.lifecycle?.durationSpec;
+            if (save.resolution?.kind === "save" && !(save.automation?.pendingCapabilities ?? []).length && spec?.mode === "fixed") {
+                const plan = base;
+                plan.resolution = { kind: "incarnate", check: null, sharedDamage: null, outcomes: plan.resolution?.outcomes ?? {}, postDamageTerminal: null, applications: [],
+                    incarnate: { notes: [], phases: [
+                        { key: "dead", title: "Rouse the dead", traits: [], kind: "effect", label: "Animated", text: both.dead.text, sourceText: both.dead.sourceText, count: both.count,
+                            rules: [{ key: "TempHP", value: both.dead.temp }], grants: [{ ...both.dead.slowed }], endsInDeath: true,
+                            duration: { mode: "fixed", value: spec.value, unit: spec.unit, expiry: "turn-start", anchor: "effect-start", sourceText: spec.raw ?? "the spell's duration" },
+                            alternative: { group: "targets", label: "dead creatures" }, reminder: `Target up to ${both.count} dead creatures. End their Effects if you stop Sustaining the spell (they die again).` },
+                        { key: "undead", title: "Lay the undead to rest", traits: [], kind: "save", plan: save, count: both.count,
+                            alternative: { group: "targets", label: "undead creatures" }, reminder: `Target up to ${both.count} undead creatures.` }] } };
+                plan.automation = { level: "automatic", confidence: 1, compiledCapabilities: ["source", "incarnate", "incarnate-parts"], pendingCapabilities: [], delegatedCapabilities: [] };
+                plan.compilerEvidence.incarnate = [both.dead.sourceText, both.undeadSource];
+                plan.diagnostics = (plan.diagnostics ?? []).filter(entry => entry.severity !== "warning");
+                return plan;
+            }
+        }
+    }
+    // A voice and face taken (Seize Identity): the rows' damage, then the controls card — PF2e's disguise on the caster, its Silence on the target, the aging's save on each Sustain.
+    if (!options.traitModeSource) {
+        const seized = extractSeizedIdentity(adaptSpellSource(item, options));
+        const catalogId = name => options.nativeEffectCatalog?.get?.(name)?.id ?? null;
+        const disguiseId = seized ? catalogId("Spell Effect: Illusory Disguise") : null, silenceId = seized ? catalogId("Spell Effect: Silence") : null;
+        if (seized && disguiseId && silenceId) {
+            const copy = cloneJSON(item);
+            copy.system.description.value = seized.html; copy.system.damage = {}; delete copy.system.heightening; copy.system.target = { value: "1 creature" };
+            const plan = compileSpell(copy, { ...options, traitModeSource: true });
+            plan.resolution && (plan.resolution.dataNotes = [...(plan.resolution.dataNotes ?? []), "The target must be an intelligent creature (the GM)."]);
+            const sub = cloneJSON(item);
+            sub.system.description.value = seized.aging.html; sub.system.defense = { save: { statistic: seized.aging.statistic, basic: false } };
+            sub.system.damage = { aging: { applyMod: false, category: null, formula: seized.aging.formula.replace(/\[[a-z]+\]$/, "").replace(/^.*\)d/, "2d"), kinds: ["damage"], materials: [], type: /\[([a-z]+)\]$/.exec(seized.aging.formula)[1] } };
+            delete sub.system.heightening; sub.system.duration = { value: "", sustained: false }; sub.system.target = { value: "1 creature" };
+            const aging = compileSpell(sub, { ...options, traitModeSource: true });
+            // ("… becomes Enfeebled 1 or increases the value of its enfeebled condition by 1": one more than it has.)
+            for (const degree of ["failure", "criticalFailure"]) for (const effect of aging.resolution?.outcomes?.[degree]?.effects ?? []) if (effect.slug === "enfeebled") effect.increment = true;
+            if (plan.resolution?.kind === "save" && !(plan.automation?.pendingCapabilities ?? []).length && aging.resolution?.kind === "save" && !(aging.automation?.pendingCapabilities ?? []).length && aging.resolution.sharedDamage) {
+                aging.resolution.sharedDamage = { ...aging.resolution.sharedDamage, mode: "formula", rollOnce: true, formula: seized.aging.formula, textDerived: true, degreeScaled: true };
+                aging.compilerEvidence.phaseFormula = seized.aging.formula;
+                plan.resolution.controls = { degrees: ["success", "failure", "criticalFailure"], label: "The seized identity", sourceText: seized.sentences[1], parts: [
+                    { key: "disguise", title: "Your disguise", traits: [], kind: "native-effect", uuid: `Compendium.pf2e.spell-effects.Item.${disguiseId}`, reminder: "Target yourself: you look and sound like the target (remove it when the spell ends)." },
+                    { key: "voice", title: "The seized voice", traits: [], kind: "native-effect", uuid: `Compendium.pf2e.spell-effects.Item.${silenceId}`, reminder: "Target the creature: it can't speak (remove it when the spell ends)." },
+                    { key: "aging", title: "Rapid aging", traits: [], kind: "save", plan: aging, repeat: { trigger: "you Sustain the spell (the first time each round after the cast)" }, reminder: "Target the creature." }] };
+                plan.compilerEvidence.forcedActions = [seized.sentences[1]];
+                plan.compilerEvidence.seizedIdentity = seized.sentences;
+                plan.automation.compiledCapabilities.push("seized-identity");
+                return plan;
+            }
+        }
+    }
+    // A burning tree fascinating those who see it (Burning Blossoms): a card of parts — the petals' area, and the enemies' save (pressed again by the GM).
+    if (!options.traitModeSource) {
+        const tree = extractFieryTree(adaptSpellSource(item, options));
+        if (tree) {
+            const sub = cloneJSON(item);
+            sub.system.description.value = tree.saveHTML;
+            sub.system.damage = {}; delete sub.system.heightening; sub.system.area = null; sub.system.target = { value: "" }; sub.system.duration = { value: "", sustained: false };
+            const gaze = compileSpell(sub, { ...options, traitModeSource: true });
+            if (gaze.resolution?.kind === "save" && !(gaze.automation?.pendingCapabilities ?? []).length) {
+                for (const degree of ["failure", "criticalFailure"]) gaze.resolution.outcomes[degree].noteEffects = [...(gaze.resolution.outcomes[degree].noteEffects ?? []), cloneJSON(tree.drawn[degree])];
+                const plan = compileSpell((() => { const copy = cloneJSON(item); copy.system.description.value = "<p>The spell takes effect.</p>"; copy.system.defense = null; copy.system.damage = {}; delete copy.system.heightening; return copy; })(), { ...options, traitModeSource: true });
+                plan.resolution = { kind: "incarnate", check: null, sharedDamage: null, outcomes: plan.resolution?.outcomes ?? {}, postDamageTerminal: null, applications: [], incarnate: { notes: [...tree.notes], phases: [
+                    { key: "tree", title: "The burning tree", traits: [], kind: "hazard", ...cloneJSON(tree.hazard), reminder: "Place the tree's area: each creature ending its turn under its branches takes the petals' damage." },
+                    { key: "gaze", title: "Seeing the tree", traits: [...tree.traits], kind: "save", plan: gaze, repeat: { trigger: tree.repeat }, reminder: "Target each enemy that can see the tree, even outside the area." }] } };
+                plan.automation = { level: "automatic", confidence: 1, compiledCapabilities: ["source", "incarnate", "incarnate-parts"], pendingCapabilities: [], delegatedCapabilities: [] };
+                plan.compilerEvidence.incarnate = [tree.sentences.join(" ")];
+                plan.diagnostics = (plan.diagnostics ?? []).filter(entry => entry.severity !== "warning");
+                return plan;
+            }
+        }
+    }
+    // A thrall turned to bone dust (Calcification): a card — destroy the thrall, then the creature's save (Slowed escalating to Petrified, the weakness following it).
+    if (!options.traitModeSource) {
+        const bone = extractCalcification(adaptSpellSource(item, options));
+        if (bone) {
+            const sub = cloneJSON(item);
+            sub.system.description.value = bone.saveHTML;
+            sub.system.target = { value: "1 creature" }; sub.system.duration = { value: "", sustained: false };
+            const calcify = compileSpell(sub, { ...options, traitModeSource: true });
+            if (calcify.resolution?.kind === "save" && !(calcify.automation?.pendingCapabilities ?? []).length) {
+                for (const degree of ["failure", "criticalFailure"]) for (const effect of calcify.resolution.outcomes[degree].effects ?? []) if (effect.slug === "slowed") effect.recurringSave = cloneJSON(bone.recurring);
+                for (const [degree, notes] of Object.entries(bone.notes)) {
+                    calcify.resolution.outcomes[degree].noteEffects = [...(calcify.resolution.outcomes[degree].noteEffects ?? []), ...cloneJSON(notes)];
+                    if (degree === "failure") calcify.resolution.outcomes.criticalFailure.noteEffects = [...(calcify.resolution.outcomes.criticalFailure.noteEffects ?? []), ...cloneJSON(notes)];
+                }
+                const plan = compileSpell((() => { const copy = cloneJSON(item); copy.system.description.value = "<p>The spell takes effect.</p>"; copy.system.defense = null; copy.system.target = { value: "" }; return copy; })(), { ...options, traitModeSource: true });
+                plan.resolution = { kind: "incarnate", check: null, sharedDamage: null, outcomes: plan.resolution?.outcomes ?? {}, postDamageTerminal: null, applications: [], incarnate: { notes: [...bone.notes2], phases: [
+                    { key: "thrall", title: "Destroy the thrall", traits: [], kind: "destroy-thrall", reminder: "Target the thrall: it's destroyed." },
+                    { key: "calcify", title: "Bone dust", traits: [], kind: "save", plan: calcify, reminder: `Target a living or undead creature within ${bone.within} feet of where the thrall was.` }] } };
+                plan.automation = { level: "automatic", confidence: 1, compiledCapabilities: ["source", "incarnate", "incarnate-parts"], pendingCapabilities: [], delegatedCapabilities: [] };
+                plan.compilerEvidence.incarnate = [bone.sentences.join(" ")];
+                plan.diagnostics = (plan.diagnostics ?? []).filter(entry => entry.severity !== "warning");
+                return plan;
+            }
+        }
+    }
+    // Nature turned against the targets (Nature's Enmity): a card's Effect on each target — the Speed penalty, the turn-start attacks, the rest notes.
+    if (!options.traitModeSource) {
+        const nature = extractHostileNature(adaptSpellSource(item, options));
+        if (nature) {
+            const plan = compileSpell((() => { const copy = cloneJSON(item); copy.system.description.value = "<p>The spell takes effect.</p>"; copy.system.defense = null; return copy; })(), { ...options, traitModeSource: true });
+            plan.resolution = { kind: "incarnate", check: null, sharedDamage: null, outcomes: plan.resolution?.outcomes ?? {}, postDamageTerminal: null, applications: [], incarnate: { notes: [...nature.notes], phases: [
+                { key: "ire", title: "Nature's ire", traits: [], kind: "effect", count: nature.count, ...cloneJSON(nature.part), reminder: `Target up to ${nature.count} creatures in the area.` }] } };
+            plan.automation = { level: "automatic", confidence: 1, compiledCapabilities: ["source", "incarnate", "incarnate-parts"], pendingCapabilities: [], delegatedCapabilities: [] };
+            plan.compilerEvidence.incarnate = [nature.sentences.join(" ")];
+            plan.diagnostics = (plan.diagnostics ?? []).filter(entry => entry.severity !== "warning");
+            return plan;
+        }
+    }
+    // A column of lava that encases (Volcanic Eruption): a card of parts — the column's save (the failing rows' encasing note) and the heat's damage, no save.
+    if (!options.traitModeSource) {
+        const lava = extractLavaColumn(adaptSpellSource(item, options));
+        if (lava) {
+            const sub = cloneJSON(item);
+            sub.system.description.value = lava.saveHTML;
+            const column = compileSpell(sub, { ...options, traitModeSource: true });
+            if (column.resolution?.kind === "save" && !(column.automation?.pendingCapabilities ?? []).length && column.resolution.sharedDamage) {
+                for (const degree of ["failure", "criticalFailure"]) column.resolution.outcomes[degree].noteEffects = [...(column.resolution.outcomes[degree].noteEffects ?? []), cloneJSON(lava.encased)];
+                const plan = compileSpell((() => { const copy = cloneJSON(item); copy.system.description.value = "<p>The spell takes effect.</p>"; copy.system.defense = null; copy.system.damage = {}; delete copy.system.heightening; return copy; })(), { ...options, traitModeSource: true });
+                plan.resolution = { kind: "incarnate", check: null, sharedDamage: null, outcomes: plan.resolution?.outcomes ?? {}, postDamageTerminal: null, applications: [], incarnate: { notes: [], phases: [
+                    { key: "column", title: "The lava column", traits: [], kind: "save", plan: column, reminder: "Target the creatures in the area." },
+                    { key: "heat", title: "The intense heat", traits: [], kind: "damage", formula: lava.heat.formula,
+                        reminder: `Target every creature in the area and within ${lava.heat.within} feet of the column, whatever their saves.` }] } };
+                plan.automation = { level: "automatic", confidence: 1, compiledCapabilities: ["source", "incarnate", "incarnate-parts"], pendingCapabilities: [], delegatedCapabilities: [] };
+                plan.compilerEvidence.incarnate = [lava.sentences.join(" ")];
+                plan.diagnostics = (plan.diagnostics ?? []).filter(entry => entry.severity !== "warning");
+                return plan;
+            }
+        }
+    }
+    // A thrall melted into a wave (Flesh Tsunami): a card of parts — destroy the thrall, the cone's terrain, and the second thrall's grasp (its save).
+    if (!options.traitModeSource) {
+        const wave = extractThrallWave(adaptSpellSource(item, options));
+        if (wave) {
+            const sub = cloneJSON(item);
+            sub.system.description.value = wave.grasp.html;
+            sub.system.target = { value: "" }; sub.system.area = { ...wave.grasp.area }; sub.system.duration = { value: "", sustained: false };
+            const grasp = compileSpell(sub, { ...options, traitModeSource: true });
+            if (grasp.resolution?.kind === "save" && !(grasp.automation?.pendingCapabilities ?? []).length) {
+                const plan = compileSpell((() => { const copy = cloneJSON(item); copy.system.description.value = "<p>The spell takes effect.</p>"; copy.system.defense = null; copy.system.target = { value: "" }; return copy; })(), { ...options, traitModeSource: true });
+                plan.resolution = { kind: "incarnate", check: null, sharedDamage: null, outcomes: plan.resolution?.outcomes ?? {}, postDamageTerminal: null, applications: [], incarnate: { notes: [], phases: [
+                    { key: "thrall", title: "Destroy the thrall", traits: [], kind: "destroy-thrall", reminder: "Target the thrall: it's destroyed, and the wave starts from its space." },
+                    { key: "wave", title: `${wave.terrain.difficulty === 3 ? "Greater difficult" : "Difficult"} terrain`, traits: [], kind: "terrain", place: { ...wave.terrain.area }, difficulty: wave.terrain.difficulty,
+                        rounds: wave.terrain.seconds / 6, reminder: `A ${wave.terrain.area.value}-foot ${wave.terrain.area.type} from the destroyed thrall's space, for the spell's duration.`, sourceText: wave.terrain.sourceText },
+                    { key: "second", title: "Destroy a second thrall", traits: [], kind: "destroy-thrall", reminder: "Optional: target a second thrall in the area to make the wave grasp your foes." },
+                    { key: "grasp", title: "Grasping limbs", traits: [], kind: "save", plan: grasp, reminder: "Only after destroying a second thrall: target each enemy in the area." }] } };
+                plan.automation = { level: "automatic", confidence: 1, compiledCapabilities: ["source", "incarnate", "incarnate-parts"], pendingCapabilities: [], delegatedCapabilities: [] };
+                plan.compilerEvidence.incarnate = [wave.sentences.join(" ")];
+                plan.diagnostics = (plan.diagnostics ?? []).filter(entry => entry.severity !== "warning");
+                return plan;
+            }
+        }
+    }
+    // A creature controlled until the end of the caster's turn (Temporary Possession): each row's note (Controlled, the caster's players own its token,
+    // Stunned 1 after, half its lost Hit Points the caster's); the destroyed thrall is the controls card's.
+    if (!options.traitModeSource) {
+        const brief = extractBriefControl(adaptSpellSource(item, options));
+        if (brief) {
+            const copy = cloneJSON(item);
+            copy.system.description.value = brief.html;
+            copy.system.target = { value: brief.target };
+            const plan = compileSpell(copy, { ...options, traitModeSource: true });
+            if (plan.resolution?.kind === "save" && !(plan.automation?.pendingCapabilities ?? []).length) {
+                for (const degree of ["success", "failure", "criticalFailure"]) plan.resolution.outcomes[degree].noteEffects = [...(plan.resolution.outcomes[degree].noteEffects ?? []), cloneJSON(brief.rows[degree])];
+                plan.resolution.controls = { degrees: ["criticalSuccess", "success", "failure", "criticalFailure"], label: "The thrall", sourceText: brief.thrall.sourceText,
+                    parts: [{ key: "thrall", title: "Destroy the thrall", traits: [], kind: "destroy-thrall", reminder: brief.thrall.text }] };
+                plan.compilerEvidence.forcedActions = [brief.thrall.sourceText];
+                return plan;
+            }
+        }
+    }
+    // Possession: a note on each possessed creature for the spell's time (riding along; partial control's start-of-turn save; full control's Controlled
+    // and the caster's ownership), the caster's body Unconscious while that note lasts, and the controls card's save when the possessed body dies.
+    if (!options.traitModeSource) {
+        const possession = extractPossession(adaptSpellSource(item, options));
+        if (possession) {
+            const copy = cloneJSON(item);
+            copy.system.description.value = possession.html;
+            const plan = compileSpell(copy, { ...options, traitModeSource: true });
+            const spec = plan.lifecycle?.durationSpec;
+            const death = compileSpell((() => {
+                const sub = cloneJSON(item);
+                const d = possession.death, time = entry => `${entry.value} ${entry.unit}${entry.value === 1 ? "" : "s"}`;
+                sub.system.description.value = `<p>The target must attempt a ${d.statistic[0].toUpperCase()}${d.statistic.slice(1)} save.</p><hr /><p><strong>Critical Success</strong> The target is unaffected.</p>`
+                    + `<p><strong>Success</strong> The target is unaffected.</p><p><strong>Failure</strong> The target is @UUID[${d.uuid}]{${d.name}} for ${time(d.failure)}.</p>`
+                    + `<p><strong>Critical Failure</strong> The target is @UUID[${d.uuid}]{${d.name}} for ${time(d.criticalFailure)}.</p>`;
+                sub.system.defense = { save: { statistic: d.statistic, basic: false } };
+                sub.system.duration = { value: "", sustained: false };
+                sub.system.traits = { ...sub.system.traits, value: (sub.system.traits?.value ?? []).filter(trait => !["incapacitation", "mental", "possession"].includes(trait)) };
+                delete sub.system.heightening;
+                return sub;
+            })(), { ...options, traitModeSource: true });
+            if (plan.resolution?.kind === "save" && !(plan.automation?.pendingCapabilities ?? []).length && spec?.mode === "fixed" && death.resolution?.kind === "save" && !(death.automation?.pendingCapabilities ?? []).length) {
+                const duration = { mode: "fixed", value: spec.value, unit: spec.unit, expiry: "turn-start", anchor: "effect-start", sourceText: spec.raw };
+                for (const degree of ["success", "failure", "criticalFailure"]) {
+                    const note = possession.notes[degree];
+                    plan.resolution.outcomes[degree].noteEffects = [...(plan.resolution.outcomes[degree].noteEffects ?? []), { ...cloneJSON(note), sourceText: possession.sentences.join(" "), possession: true, duration: { ...duration } }];
+                }
+                plan.resolution.casterNote = { recipient: "source", kind: "while-target-note", degrees: ["success", "failure", "criticalFailure"], label: possession.body.slug === "unconscious" ? "Body left behind" : "Possessing",
+                    text: possession.body.text, castText: possession.body.text, sourceText: possession.body.sourceText,
+                    rules: [{ key: "GrantItem", uuid: possession.body.uuid, flag: `condition${possession.body.slug[0].toUpperCase()}${possession.body.slug.slice(1)}` }], duration: { ...duration } };
+                plan.resolution.controls = { degrees: ["success", "failure", "criticalFailure"], label: "Possession", sourceText: possession.death.sourceText,
+                    parts: [{ key: "body-died", title: "The possessed body died", traits: [], kind: "save", plan: death,
+                            reminder: `Target yourself, the caster: your ${possession.death.statistic} save against your own spell DC. The spell ends: end it in Ongoing spells.` },
+                        { key: "less-control", title: "Less control", traits: [], kind: "note", note: `${possession.reminders[0]} (Correct the target's degree on the save card.)` },
+                        { key: "initiative", title: "Initiative", traits: [], kind: "note", note: possession.reminders[1] }] };
+                plan.compilerEvidence.casterNote = possession.body.sourceText;
+                plan.compilerEvidence.forcedActions = [possession.death.sourceText, ...possession.sentences];
+                return plan;
+            }
+        }
+    }
     // The caster moving and a blast where they left or landed (Echo Jump, Blazing Dive): the ordinary basic save of the creatures in the
     // area, the move the caster's reminder.
     if (!options.traitModeSource) {
@@ -4838,6 +6002,57 @@ function compileSpell(item, options) {
             }
         }
     }
+    // A target's basic save, then the damage spreading around it if it fails (Propagating Arc): the spread a basic-save plan of its own, which a card starts
+    // after Finalize for the creatures around the target — half beyond the inner distance — when one is within it.
+    if (!options.traitModeSource) {
+        const arc = extractPropagatingArc(adaptSpellSource(item, options));
+        if (arc) {
+            const mainCopy = cloneJSON(item); mainCopy.system.description.value = arc.mainHTML;
+            const main = compileSpell(mainCopy, { ...options, traitModeSource: true });
+            const second = cloneJSON(item);
+            second.system.description.value = arc.followHTML;
+            second.system.damage = { spread: { formula: arc.followDamage.formula, type: arc.followDamage.type, category: null, materials: [], kinds: ["damage"], applyMod: false } };
+            second.system.heightening = { type: "interval", interval: 1, damage: { spread: arc.followDamage.step } };
+            second.system.target = { value: "" }; second.system.area = { type: "emanation", value: arc.spread.outer };
+            const followPlan = compileSpell(second, { ...options, traitModeSource: true });
+            const ready = plan => plan.resolution?.kind === "save" && !(plan.automation?.pendingCapabilities ?? []).length && ["automatic", "guided"].includes(plan.automation?.level);
+            if (ready(main) && ready(followPlan) && main.resolution.check?.basic === true && followPlan.resolution.check?.basic === true) {
+                // (The spread's damage is the text's "(@item.level)d6", rolled at the cast rank — the card's spell item carries the target's 2d12.)
+                const [component] = followPlan.resolution.sharedDamage.components;
+                const formula = `(@item.rank)d${arc.followDamage.step.slice(2)}[${arc.followDamage.type}]`;
+                followPlan.resolution.sharedDamage = { mode: "formula", rollOnce: true, formula, components: [{ ...component, formula: "(@item.rank)d" + arc.followDamage.step.slice(2) }], textDerived: true };
+                followPlan.compilerEvidence.textFormula = formula;
+                main.resolution.areaFollowUp = { plan: followPlan, radius: arc.spread.radius, outer: { radius: arc.spread.outer, half: true }, excludeCentre: true, needsInner: true,
+                    unless: ["criticalSuccess", "success"], sourceText: arc.sentences[1] };
+                main.compilerEvidence.areaFollowUp = arc.sentences;
+                main.automation.compiledCapabilities.push("propagating-arc");
+                return main;
+            }
+        }
+    }
+    // A sustained save whose first Sustain each turn makes one of a failed target's allies save (Warped Visage): the ally's save a plan of its own.
+    if (!options.traitModeSource) {
+        const visage = extractSustainAllySave(adaptSpellSource(item, options));
+        if (visage) {
+            const mainCopy = cloneJSON(item); mainCopy.system.description.value = visage.mainHTML;
+            const main = compileSpell(mainCopy, { ...options, traitModeSource: true });
+            const second = cloneJSON(item);
+            second.system.description.value = visage.followHTML;
+            second.system.defense = { save: { basic: false, statistic: visage.ally.statistic } };
+            second.system.damage = {}; second.system.heightening = null; second.system.target = { value: "" };
+            second.system.area = { type: "emanation", value: visage.ally.radius };
+            second.system.duration = { value: "", sustained: false };
+            const followPlan = compileSpell(second, { ...options, traitModeSource: true });
+            const ready = plan => plan.resolution?.kind === "save" && !(plan.automation?.pendingCapabilities ?? []).length && ["automatic", "guided"].includes(plan.automation?.level);
+            if (ready(main) && ready(followPlan) && main.lifecycle?.sustained === true && followPlan.resolution.temporaryImmunity) {
+                main.resolution.sustainAllySave = { plan: followPlan, radius: visage.ally.radius, degrees: ["failure", "criticalFailure"], sourceText: visage.sentences[0] };
+                main.resolution.reminders = [...(main.resolution.reminders ?? []), { kind: "spell-note", text: visage.note, sourceText: visage.sentences[2] }];
+                main.compilerEvidence.sustainAllySave = visage.sentences;
+                main.automation.compiledCapabilities.push("sustain-ally-save");
+                return main;
+            }
+        }
+    }
     // Charges a save leaves, each popped for a basic save around the target (Blister): the target's save sets the count; the pop a plan of its own.
     if (!options.traitModeSource) {
         const pop = extractPopSave(adaptSpellSource(item, options));
@@ -4982,8 +6197,11 @@ function compileSpell(item, options) {
         ? { sentence: SLOT_TRIGGER.exec(adapted.descriptionHTML)[0].trim(), link: slotLinks[0][1] } : null;
     if (slotTrigger) adapted.descriptionHTML = String(adapted.descriptionHTML).replace(SLOT_TRIGGER, "").replace(slotLinks[0][0], "");
     // A spell that waits for a trigger, then makes the triggering creature save (Animus Mine, Bandit's Doom).
-    const storedTrigger = extractStoredTrigger(adapted) ?? extractHeldTrigger(adapted) ?? extractAuraTrigger(adapted) ?? extractEffectTrigger(adapted) ?? extractShieldTrigger(adapted) ?? extractPactTrigger(adapted) ?? extractMurmurTrigger(adapted) ?? extractProphecyTrigger(adapted) ?? extractGemTrigger(adapted) ?? extractMirrorTrigger(adapted);
+    const storedTrigger = extractStoredTrigger(adapted) ?? extractHeldTrigger(adapted) ?? extractAuraTrigger(adapted) ?? extractEffectTrigger(adapted) ?? extractShieldTrigger(adapted) ?? extractPactTrigger(adapted) ?? extractMurmurTrigger(adapted) ?? extractProphecyTrigger(adapted) ?? extractGemTrigger(adapted) ?? extractMirrorTrigger(adapted) ?? extractRuneTrigger(adapted);
     if (storedTrigger) { adapted.descriptionHTML = storedTrigger.html; adapted.targeting = { ...adapted.targeting, target: storedTrigger.target }; }
+    // (Unknowable Icon: the text's basic save over the item's; the save is each creature's near the rune, not the cast's area.)
+    if (storedTrigger?.defense) adapted.defense = storedTrigger.defense;
+    if (storedTrigger?.storedTrigger.area) { adapted.targeting = { ...adapted.targeting, area: null }; adapted.lifecycle = { ...adapted.lifecycle, duration: "", sustained: false }; }
     // (Murmuration: the text's damage, typed by the caster's pick.)
     if (storedTrigger?.component) { adapted.damageComponents = [storedTrigger.component]; adapted.heightening = null; }
     // An aura's trigger: the save is the triggering creature's (no area); the aura's Sustain is the marker's.
@@ -5119,6 +6337,47 @@ function compileSpell(item, options) {
     // Water that batters and holds swimmers back (Undertow): the lingering rows; the failing rows' Effect until the creature leaves the area.
     const undertow = !healOrHarm && !castPunish ? rewriteUndertow(adapted) : null;
     if (undertow) adapted.descriptionHTML = undertow.html;
+    // A haze that lays creatures down and drains sleepers (Indolent Haze): the lingering rows' Prone (Unconscious for one already prone), the
+    // failure's note; the sleepers' damage at each exposure is the record's.
+    const indolentHaze = !healOrHarm && !castPunish ? rewriteIndolentHaze(adapted) : null;
+    if (indolentHaze) { adapted.descriptionHTML = indolentHaze.html; adapted.damageComponents = []; adapted.heightening = null; }
+    // A sustained whirlpool battering and drawing in the creatures inside (Whirlpool): the lingering cast and Sustain exposures, the pulls the card's.
+    const whirlpool = !healOrHarm && !castPunish ? rewriteWhirlpool(adapted) : null;
+    if (whirlpool) { adapted.descriptionHTML = whirlpool.html; adapted.lingeringNotes = [...(adapted.lingeringNotes ?? []), ...whirlpool.notes]; }
+    // A tornado the caster moves on Sustain (Whirlwind): the lingering cast and Sustain exposures, the GM's control for the creatures it moved through.
+    const tornado = !healOrHarm && !castPunish ? rewriteTornado(adapted) : null;
+    if (tornado) { adapted.descriptionHTML = tornado.html; adapted.lingeringNotes = [...(adapted.lingeringNotes ?? []), ...tornado.notes]; }
+    // A tear pulling the living toward a draining centre (Tear the Veil): the lingering rows; the living-only terrain and the draining burst after compiling.
+    const tearVeil = !healOrHarm && !castPunish ? rewriteTearTheVeil(adapted) : null;
+    if (tearVeil) adapted.descriptionHTML = tearVeil.html;
+    // A sky lifting the fascinated toward it (Stars of Another Sky): the lingering cast and Sustain rows; Fascinated for the spell and the top's damage after compiling.
+    const stars = !healOrHarm && !castPunish ? rewriteStarsOfAnotherSky(adapted) : null;
+    if (stars) { adapted.descriptionHTML = stars.html; adapted.lingeringNotes = [...(adapted.lingeringNotes ?? []), ...stars.notes]; }
+    // Shadow clones battering enemies (Shadow Army): the lingering enemies' rows; the chosen condition and the critical success's better saves after compiling.
+    const shadowArmy = !healOrHarm && !castPunish ? rewriteShadowArmy(adapted) : null;
+    if (shadowArmy) { adapted.descriptionHTML = shadowArmy.html; adapted.lingeringNotes = [...(adapted.lingeringNotes ?? []), ...shadowArmy.notes]; }
+    // Air stolen from the creatures around the caster (Vacuum): the lingering emanation's rows; holding breath, the GM's control and suffocation after compiling.
+    const vacuum = !healOrHarm && !castPunish ? rewriteVacuum(adapted) : null;
+    if (vacuum) { adapted.descriptionHTML = vacuum.html; adapted.lingeringNotes = [...(adapted.lingeringNotes ?? []), ...vacuum.notes]; }
+    // A barrier around the caster pushing creatures out (Unbreaking Wave Barrier): the lingering rows; the following region, terrain and caster Effect after compiling.
+    const waveBarrier = !healOrHarm && !castPunish ? rewriteWaveBarrier(adapted) : null;
+    if (waveBarrier) adapted.descriptionHTML = waveBarrier.html;
+    // Glass shards whose Slowed escalates, its weakness following it (Vitrifying Blast): plain rows; the escalating save and the weakness note after compiling.
+    const vitrify = !healOrHarm && !castPunish ? extractVitrifying(adapted) : null;
+    if (vitrify) adapted.descriptionHTML = vitrify.html;
+    // A lasting state the save leaves (Undermine Reality, Fabricated Truth, Cursed Metamorphosis, Remake Physiology): plain rows; each row's state a note after compiling.
+    const lastingCurse = !healOrHarm && !castPunish ? extractLastingCurse(adapted) : null;
+    if (lastingCurse) { adapted.descriptionHTML = lastingCurse.html; if (lastingCurse.dropDamage) { adapted.damageComponents = []; adapted.heightening = null; } }
+    // A storm of mosquitoes spreading a disease (Dread Mosquito Storm): the lingering exposures afflicting; the exposures' damage and notes after compiling.
+    const mosquito = !healOrHarm && !castPunish ? rewriteMosquitoStorm(adapted) : null;
+    if (mosquito) { adapted.descriptionHTML = mosquito.html; adapted.lingeringAffliction = true; adapted.lingeringNotes = [...(adapted.lingeringNotes ?? []), ...mosquito.notes]; }
+    // A song whose targets save when cast and on each Sustain, a table rolled on a failure (Unfathomable Song): the rows list the table's conditions; the
+    // targets' lingering exposures and the per-degree roll after compiling.
+    const song = !healOrHarm && !castPunish ? rewriteUnfathomableSong(adapted) : null;
+    if (song) adapted.descriptionHTML = song.html;
+    // Shadows striking enemies, then lingering (Shadow Raid): the enemies' basic save of the text's untyped damage; the type, the save choice and the area after compiling.
+    const shadowRaid = !healOrHarm && !castPunish ? rewriteShadowRaid(adapted) : null;
+    if (shadowRaid) { adapted.descriptionHTML = shadowRaid.html; adapted.damageComponents = adapted.damageComponents.map(component => ({ ...component, type: "untyped" })); adapted.heightening = null; }
     // A sustained rain whose Sustain may freeze it (Freezing Rain): the lingering area exposed on that Sustain; moving and freezing are notes.
     const freezingRain = !healOrHarm && !castPunish ? rewriteFreezingRain(adapted) : null;
     if (freezingRain) adapted.descriptionHTML = freezingRain.html;
@@ -5204,6 +6463,25 @@ function compileSpell(item, options) {
     // A glimpse into the target's mind (Mind Reading): the immunity to this caster; the Intelligence comparison whispered; the thoughts the GM's.
     const mindRead = !healOrHarm && !castPunish ? rewriteMindRead(adapted) : null;
     // A save whose result only the GM can play (Catch Your Name, Telepathic Demand): whispers to the GM.
+    // A behaviour note whose lifetime the result sets — until the next turn ends, with an end-of-turn save, or the full duration (Orb of Twisting Fate).
+    const lastingNotes = !healOrHarm && !castPunish && !mindRead ? rewriteLastingNoteRows(adapted) : null;
+    if (lastingNotes) adapted.descriptionHTML = lastingNotes.html;
+    // Opening rules around a degree table: a GM yes/no on the target, and a condition rising while the target bleeds (Expunge Blood).
+    const bleedRise = !healOrHarm && !castPunish ? readBleedConditionRise(adapted) : null;
+    // A creature trapped off the map until a time or a number of doors passed (Maze of Locked Doors): each row's note for its own time.
+    const trappedRows = !healOrHarm && !castPunish ? readTrappedRows(adapted) : null;
+    // A field of magical darkness draining those who enter or start their turn in it, a few allies spared (Darklight).
+    const darknessField = !healOrHarm && !castPunish ? rewriteDarknessField(adapted) : null;
+    if (darknessField) adapted.descriptionHTML = darknessField.html;
+    // An area slamming flying creatures to its bottom (Falling Sky): their fall from the tokens' elevation, then everyone's save.
+    const fallingArea = !healOrHarm && !castPunish ? rewriteFallingArea(adapted) : null;
+    if (fallingArea) adapted.descriptionHTML = fallingArea.html;
+    // A deadly area that turns back on the caster when it kills no one (Massacre): living creatures up to a level; the backlash after the card.
+    const backlash = !healOrHarm && !castPunish ? rewriteBacklashSave(adapted) : null;
+    if (backlash) adapted.descriptionHTML = backlash.html;
+    // A damage save whose critical failure can behead: a second save that kills (Beheading Buzz-Saw).
+    const decapitation = !healOrHarm && !castPunish && !lastingNotes ? rewriteDecapitationSave(adapted) : null;
+    if (decapitation) adapted.descriptionHTML = decapitation.html;
     const gmCommand = !healOrHarm && !castPunish && !mindRead ? rewriteGmCommand(adapted) : null;
     if (gmCommand) adapted.descriptionHTML = gmCommand.html;
     if (mindRead) adapted.descriptionHTML = mindRead.html;
@@ -5293,6 +6571,9 @@ function compileSpell(item, options) {
     if (doomTimeline) { adapted.descriptionHTML = doomTimeline.html; adapted.damageComponents = doomTimeline.damageComponents; adapted.heightening = doomTimeline.heightening; }
     const sorrowAura = !healOrHarm && !castPunish ? rewriteSorrowAura(adapted) : null;
     if (sorrowAura) adapted.descriptionHTML = sorrowAura.html;
+    // Music charming the foes in the caster's aura (Enchanting Rhapsody): each row a note while in the area and a round after.
+    const rhapsody = !healOrHarm && !castPunish && !sorrowAura ? rewriteRhapsody(adapted) : null;
+    if (rhapsody) adapted.descriptionHTML = rhapsody.html;
     const skySteal = !healOrHarm && !castPunish ? rewriteSkySteal(adapted) : null;
     if (skySteal) adapted.descriptionHTML = skySteal.html;
     const runewell = !healOrHarm && !castPunish ? rewriteRunewell(adapted) : null;
@@ -5304,6 +6585,15 @@ function compileSpell(item, options) {
     if (divineAura) { adapted.descriptionHTML = divineAura.html; adapted.defense = cloneJSON(divineAura.defense); adapted.targeting = { ...adapted.targeting, target: "" }; }
     const bloodTendrils = !healOrHarm && !castPunish ? rewriteBloodTendrils(adapted) : null;
     if (bloodTendrils) adapted.descriptionHTML = bloodTendrils.html;
+    // An ally's light damaging the enemies ending their turns in it, growing on Sustain (Aura of Violent Light).
+    const violentLight = !healOrHarm && !castPunish && !bloodTendrils ? rewriteViolentLight(adapted, options.nativeEffectCatalog ?? null) : null;
+    if (violentLight) { adapted.descriptionHTML = violentLight.html; adapted.targeting = { ...adapted.targeting, target: "" }; adapted.lifecycle = { ...adapted.lifecycle, duration: "", sustained: false }; }
+    // Darkness around the caster, a few blessed with light (Divine Eclipse).
+    const divineEclipse = !healOrHarm && !castPunish && !violentLight ? rewriteDivineEclipse(adapted, options.nativeEffectCatalog ?? null) : null;
+    if (divineEclipse) { adapted.descriptionHTML = divineEclipse.html; adapted.targeting = { ...adapted.targeting, target: "" }; }
+    // A glowing square that blinks and burns again on each Sustain, warding the caster's side in it (Cosmic Glow).
+    const cosmicGlow = !healOrHarm && !castPunish && !violentLight ? rewriteCosmicGlow(adapted) : null;
+    if (cosmicGlow) { adapted.descriptionHTML = cosmicGlow.html; adapted.lifecycle = { ...adapted.lifecycle, duration: "", sustained: false }; }
     // A damaging illusion area its disbelievers escape (Visions of Danger): the lingering area, with the GM's Disbelieve control.
     const disbelievedArea = !healOrHarm && !castPunish ? rewriteDisbelievedArea(adapted) : null;
     if (disbelievedArea) adapted.descriptionHTML = disbelievedArea.html;
@@ -5692,7 +6982,7 @@ function compileSpell(item, options) {
     const escapeAura = spellNote || directHealing || foodHealing || messageSpell || directDamage || markFirst || aidPrepare || auraTurnEffect || checkBonus || climbAid || strideHide || cloudAction || grantedBlock || actionModeEffect || commandList || thoughtChoice || allyAura || areaBoon ? null : compileEscapeAura(adapted, nativeSpellEffects);
     const optionVeil = spellNote || directHealing || foodHealing || messageSpell || directDamage || markFirst || aidPrepare || auraTurnEffect || checkBonus || climbAid || strideHide || cloudAction || grantedBlock || actionModeEffect || commandList || thoughtChoice || allyAura || areaBoon || escapeAura ? null : compileOptionVeil(adapted);
     const repulsionAura = spellNote || directHealing || foodHealing || messageSpell || directDamage || markFirst || aidPrepare || auraTurnEffect || checkBonus || climbAid || strideHide || cloudAction || grantedBlock || actionModeEffect || commandList || thoughtChoice || allyAura || areaBoon || escapeAura || optionVeil ? null : compileRepulsionAura(adapted);
-    const lanternAura = spellNote || directHealing || foodHealing || messageSpell || directDamage || markFirst || aidPrepare || auraTurnEffect || checkBonus || climbAid || strideHide || cloudAction || grantedBlock || actionModeEffect || commandList || thoughtChoice || allyAura || areaBoon || escapeAura || optionVeil || repulsionAura ? null : compileLanternAura(adapted);
+    const lanternAura = spellNote || directHealing || foodHealing || messageSpell || directDamage || markFirst || aidPrepare || auraTurnEffect || checkBonus || climbAid || strideHide || cloudAction || grantedBlock || actionModeEffect || commandList || thoughtChoice || allyAura || areaBoon || escapeAura || optionVeil || repulsionAura ? null : (compileLanternAura(adapted) ?? compileRememberedAura(adapted));
     let sunAura = spellNote || directHealing || foodHealing || messageSpell || directDamage || markFirst || aidPrepare || auraTurnEffect || checkBonus || climbAid || strideHide || cloudAction || grantedBlock || actionModeEffect || commandList || thoughtChoice || allyAura || areaBoon || escapeAura || optionVeil || repulsionAura || lanternAura ? null : extractSunAura(adapted, nativeSpellEffects);
     const conjuredWeapons = spellNote || directHealing || foodHealing || messageSpell || directDamage || markFirst || aidPrepare || auraTurnEffect || checkBonus || climbAid || strideHide || cloudAction || grantedBlock || actionModeEffect || commandList || thoughtChoice || allyAura || areaBoon || escapeAura || optionVeil || repulsionAura || lanternAura || sunAura ? null : compileConjuredWeapons(adapted);
     // (Its sunlight save: a compiled degree save the card starts for the creatures the GM targets.)
@@ -6056,6 +7346,27 @@ function compileSpell(item, options) {
                 plan.resolution.reminders = [...(plan.resolution.reminders ?? []), ...generalRider.reminders];
                 plan.compilerEvidence.areaChoice = generalRider.areaChoice;
             }
+        }
+
+        // The caster's own features in a basic save (third-party spells): the Arcane Cascade's damage type, a choice of areas, off-guard to the caster.
+        const featureRider = !conditionRider && !generalRider && !lingering?.riders && !stuckRider && !speechRider && !completeness.complete ? compileBasicFeatureRiders({ ...adapted, lifecycle: { ...adapted.lifecycle, durationSpec: plan.lifecycle?.durationSpec } }) : null;
+        if (globalThis.process?.env?.RIDER_DEBUG) console.error("riders:", JSON.stringify({ life: plan.lifecycle?.durationSpec, html: adapted.descriptionHTML, conditionRider: !!conditionRider, generalRider: !!generalRider, lingering: !!lingering?.riders, stuckRider: !!stuckRider, speechRider: !!speechRider, complete: completeness.complete, feature: featureRider && { rem: featureRider.remainderHTML, gate: assessSimpleBasicSaveDescription({ ...adapted, descriptionHTML: featureRider.remainderHTML }, analyzeDescription(featureRider.remainderHTML)) } }));
+        if (featureRider && assessSimpleBasicSaveDescription({ ...adapted, descriptionHTML: featureRider.remainderHTML }, analyzeDescription(featureRider.remainderHTML)).complete) {
+            for (const [degree, notes] of Object.entries(featureRider.noteEffects)) if (notes.length) plan.resolution.outcomes[degree].noteEffects = [...(plan.resolution.outcomes[degree].noteEffects ?? []), ...cloneJSON(notes)];
+            if (featureRider.damageTypeFrom) plan.resolution.damageTypeFrom = cloneJSON(featureRider.damageTypeFrom);
+            if (featureRider.reminders.length) {
+                plan.resolution.reminders = [...(plan.resolution.reminders ?? []), ...cloneJSON(featureRider.reminders)];
+                if (featureRider.areaChoice) plan.compilerEvidence.areaChoice = cloneJSON(featureRider.areaChoice);
+            }
+            for (const [degree, list] of Object.entries(featureRider.effects ?? {})) plan.resolution.outcomes[degree].effects.push(...cloneJSON(list));
+            if (featureRider.saveAdjustment) { plan.resolution.attackAdjustment = cloneJSON(featureRider.saveAdjustment); plan.compilerEvidence.saveAdjustment = featureRider.saveAdjustment.sourceText; }
+            for (const outcome of Object.values(plan.resolution.outcomes)) outcome.semanticCoverage = { fullyCompiled: true };
+            plan.automation.level = "guided";
+            const accounted = new Set(["description-effects", "description-target-predicates", "description-lifecycle"]);
+            plan.automation.pendingCapabilities = plan.automation.pendingCapabilities.filter(capability => !accounted.has(capability));
+            plan.automation.compiledCapabilities.push("basic-save-feature-riders");
+            plan.compilerEvidence.basicFeatureRiders = featureRider.sentences;
+            plan.diagnostics = plan.diagnostics.filter(entry => entry.code !== "DESCRIPTION_SEMANTICS_PENDING");
         }
 
         // Nonlethal damage against living creatures, and a knockback for failing creatures of one trait (the GM's push).
@@ -6478,7 +7789,7 @@ function compileSpell(item, options) {
             ));
         }
         addPostDamageTerminalCapability(plan);
-    } else if (adapted.defense.kind === "save" && !adapted.defense.basic
+    } else if (adapted.defense.kind === "save" && !adapted.defense.basic && !lanternAura?.lanternAura?.rows
         && compileNonBasicDegreeSave(plan, adapted, description, componentIds)) {
         // The helper populates a conservative guided plan.
     } else if (careResolution?.resolution) {
@@ -6579,7 +7890,7 @@ function compileSpell(item, options) {
         plan.diagnostics = plan.diagnostics.filter(entry => !["DESCRIPTION_SEMANTICS_PENDING", "TARGET_ELIGIBILITY_PENDING", "NATIVE_SPELL_EFFECT_SCOPE_PENDING"].includes(entry.code));
     } else if (lanternAura) {
         plan.resolution = { kind: "lantern-aura", check: null, sharedDamage: null, outcomes: plan.resolution.outcomes, postDamageTerminal: null, applications: [], lanternAura: lanternAura.lanternAura };
-        plan.targeting.actorConstraints = { sourceText: "living creatures and undead in the area", supportsActorTargets: false, complete: true, predicates: [] };
+        plan.targeting.actorConstraints = { sourceText: lanternAura.lanternAura.rows ? (lanternAura.lanternAura.enemiesOnly ? "enemies in the area" : "creatures in the area") : "living creatures and undead in the area", supportsActorTargets: false, complete: true, predicates: [] };
         plan.automation = { level: "automatic", confidence: 1, compiledCapabilities: ["source", "lantern-aura"], pendingCapabilities: [] };
         plan.compilerEvidence.lanternAura = lanternAura.claimed;
         plan.diagnostics = plan.diagnostics.filter(entry => !["DESCRIPTION_SEMANTICS_PENDING", "TARGET_ELIGIBILITY_PENDING", "NATIVE_SPELL_EFFECT_SCOPE_PENDING"].includes(entry.code));
@@ -6837,6 +8148,8 @@ function compileSpell(item, options) {
                 ...(proof.recipient.strike ? { targetStrike: proof.recipient.strike } : {}) });
             plan.automation = { level: "automatic", confidence: 1, compiledCapabilities: ["source", "effect-note", "effect-note-proof"], pendingCapabilities: [] };
             plan.compilerEvidence.effectNoteProof = proof.claims.map(claim => claim.sentence);
+            // (The text's own time where PF2e's Effect has none: the note lasts it too.)
+            if (proof.durationOverride) plan.resolution.effectNote.duration = { mode: "fixed", ...proof.durationOverride, anchor: "effect-start", offset: 0 };
         }
     } else {
         const path = adapted.defense.kind === "save"
@@ -6942,6 +8255,20 @@ function compileSpell(item, options) {
     const conditionRoll = plan.resolution.kind === "save" && !attackTable && !adapted.defense.basic
         ? compileConditionRoll(plan, String(adapted.descriptionHTML ?? "").split(/<strong\b[^>]*>\s*(?:Critical Success|Success|Failure|Critical Failure)\s*<\/strong>/i)[0]) : null;
     if (conditionRoll) { plan.resolution.conditionRoll = conditionRoll.conditionRoll; plan.compilerEvidence.conditionRoll = conditionRoll.sentences; }
+    // (Realityflicker: the rows' own roll, a critical failure rolling a second.)
+    const flickerRoll = !conditionRoll && plan.resolution.kind === "save" && !attackTable && !adapted.defense.basic ? compileFlickerRoll(plan, adapted.damageComponents) : null;
+    if (flickerRoll) {
+        plan.resolution.conditionRoll = flickerRoll.conditionRoll; plan.compilerEvidence.conditionRoll = flickerRoll.sentences;
+        // (The rows are the roll's: every clause of them claimed.)
+        for (const degree of ["failure", "criticalFailure"]) {
+            const outcome = plan.resolution.outcomes[degree];
+            for (const clause of outcome.semanticCoverage?.clauses ?? []) Object.assign(clause, { status: "compiled", compiledClaims: ["condition-roll"], guidedClaims: [], unexplainedSignals: [] });
+            if (outcome.semanticCoverage) Object.assign(outcome.semanticCoverage, { residualClauseCount: 0, guidedClauseCount: 0, compiledClauseCount: outcome.semanticCoverage.clauses?.length ?? 0, complete: true, fullyCompiled: true });
+            outcome.conditionRollClaims = String(outcome.rawText ?? "").replace(/\s+/g, " ").trim().split(/(?<=\.)\s+(?=[A-Z@])/).filter(Boolean);
+        }
+        plan.automation.pendingCapabilities = plan.automation.pendingCapabilities.filter(capability => !["residual-prose", "condition-duration-scope", "manual:conditional-effect"].includes(capability));
+        plan.diagnostics = plan.diagnostics.filter(entry => !["RESIDUAL_PROSE_PENDING", "CONDITION_DURATION_SCOPE_PENDING"].includes(entry.code));
+    }
     // The rolled behaviours: each failing row gets every result's note, and the card's roll keeps one.
     if (rolledNotes && !conditionRoll && plan.resolution.kind === "save"
         && ["failure", "criticalFailure"].every(degree => !(plan.resolution.outcomes[degree]?.effects ?? []).length && !(plan.resolution.outcomes[degree]?.nativeEffects ?? []).length)) {
@@ -7370,7 +8697,7 @@ function compileSpell(item, options) {
         const preambleHTML = [afflictionHandoff?.blockHTML, ...(afflictionHandoff?.optionsHTML ?? [])].filter(Boolean)
             .reduce((html, part) => html.replace(part, ""), adapted.descriptionHTML);
         // "All Medium or smaller creatures that are adjacent to the line are pulled to the nearest unoccupied space within the
-        // line.": before the saves, the GM moves those creatures (a reminder on the card).
+        // line.": the GM targets those creatures too; the module moves them into the line (`areaPullIn`).
         const areaPull = htmlToPlainText(String(adapted.descriptionHTML ?? "").split(/<strong\b[^>]*>\s*(?:Critical Success|Success|Failure|Critical Failure)\s*<\/strong>/i)[0])
             .split(/(?<=[.!?])\s+(?=[A-Z@])/).map(sentence => sentence.trim())
             .find(sentence => /^All (?:(?:Tiny|Small|Medium|Large|Huge) or smaller )?creatures that are adjacent to the (?:line|area) are pulled to the nearest unoccupied space within the (?:line|area)\.$/.test(sentence)) ?? null;
@@ -7426,7 +8753,8 @@ function compileSpell(item, options) {
         const allyChooses = htmlToPlainText(String(adapted.descriptionHTML ?? "").split(/<strong\b[^>]*>\s*(?:Critical Success|Success|Failure|Critical Failure)\s*<\/strong>/i)[0])
             .split(/(?<=[.!?])\s+(?=[A-Z@])/).map(sentence => sentence.trim())
             .find(sentence => /^If you cast this (?:hex|spell) on a willing ally(?: \([^)]{1,80}\))?, the ally can choose which result it gets without rolling\.$/.test(sentence)
-                || /^You can allow allies to choose the degree of success instead of rolling a saving throw\.$/.test(sentence));
+                || /^You can allow allies to choose the degree of success instead of rolling a saving throw\.$/.test(sentence)
+                || /^If the target is a willing ally, the ally can choose which result it gets without rolling\.$/.test(sentence));
         if (allyChooses && !plan.compilerEvidence.willingChoice) {
             plan.resolution.reminders = [...(plan.resolution.reminders ?? []), { kind: "willing-choice", text: "A willing ally may choose its result: set it on the card instead of rolling.", sourceText: allyChooses }];
             plan.compilerEvidence.willingChoice = allyChooses;
@@ -7451,7 +8779,11 @@ function compileSpell(item, options) {
             plan.compilerEvidence.objectMove = objectMove;
         }
         if (areaPull) {
-            plan.resolution.reminders = [...(plan.resolution.reminders ?? []), { kind: "area-pull", text: `Before the saves: ${areaPull} Move them; the module doesn't.`, sourceText: areaPull }];
+            // (Target those creatures too: the module moves each one that's outside the area, of the stated size or smaller, into the nearest unoccupied space
+            // in it before the pushes.)
+            const largest = /^All (Tiny|Small|Medium|Large|Huge) or smaller/.exec(areaPull)?.[1] ?? null;
+            plan.resolution.areaPullIn = { maxSize: largest ? { Tiny: "tiny", Small: "sm", Medium: "med", Large: "lg", Huge: "huge" }[largest] : null };
+            plan.resolution.reminders = [...(plan.resolution.reminders ?? []), { kind: "area-pull", text: `Before the saves: ${areaPull} Target them too: the module moves each one into the area.`, sourceText: areaPull }];
             plan.compilerEvidence.areaPull = areaPull;
         }
         // Sentences before the table that only explain what the noted behaviour means ("You can command the target to approach
@@ -7543,6 +8875,8 @@ function compileSpell(item, options) {
                 ...(stateImmunity && plan.targeting.actorConstraints.complete ? [stateImmunity.sentence] : []),
                 ...(saveAdjustment ? [saveAdjustment.sourceText] : []),
                 ...(penaltyEffects?.preambleSentence ? [penaltyEffects.preambleSentence] : []),
+                // (A third-party reader's sentences before the table: third-party-rows.js.)
+                ...(plan.compilerEvidence.thirdPartyPreamble ?? []),
                 ...(objectEffects?.preambleSentence ? [objectEffects.preambleSentence] : []),
                 ...(plan.compilerEvidence.conditionScopedNote ? [plan.compilerEvidence.conditionScopedNote] : []),
                 ...(plan.compilerEvidence.fearSource ? [plan.compilerEvidence.fearSource] : []),
@@ -7600,7 +8934,7 @@ function compileSpell(item, options) {
             .flatMap(effect => effect.outcomeRule?.kind === "degree-choice" ? effect.outcomeRule.claims ?? [] : [])).filter(sentence => /\bsustain/i.test(sentence));
         // (A row's Reposition note on Sustain, and the object branch's Sustain move, are the GM's.)
         const repositionNotes = Object.values(plan.resolution.outcomes ?? {}).flatMap(outcome => (outcome.rowNotes ?? []).filter(note => note.kind === "reposition").map(note => htmlToPlainText(note.sourceText)));
-        const sustainText = [...claimedSustain, ...(plan.compilerEvidence.illusionLure ?? []), ...repositionNotes, ...(plan.compilerEvidence.objectMove ? [plan.compilerEvidence.objectMove] : [])].reduce((text, sentence) => text.replace(sentence, ""), htmlToPlainText(stripHeighteningHTML(adapted.descriptionHTML)));
+        const sustainText = [...claimedSustain, ...(plan.compilerEvidence.illusionLure ?? []), ...repositionNotes, ...(plan.compilerEvidence.sustainResave ?? []), ...(plan.compilerEvidence.sustainNotes ?? []), ...(plan.compilerEvidence.objectMove ? [plan.compilerEvidence.objectMove] : [])].reduce((text, sentence) => text.replace(sentence, ""), htmlToPlainText(stripHeighteningHTML(adapted.descriptionHTML)));
         if (!lingeringTriggers && plan.lifecycle.sustained && /\bsustain/i.test(sustainText)) {
             plan.automation.pendingCapabilities.push("sustain-effect");
         }
@@ -7755,6 +9089,9 @@ function compileSpell(item, options) {
         && plan.resolution.note?.duration?.mode === "fixed" && /\bThe spell has a duration of \d+ (?:hour|minute|day)s? or until [^.]{3,80}, whichever comes first\./.test(plan.resolution.note.text ?? "")) {
         plan.lifecycle.durationSpec = { mode: "fixed", value: plan.resolution.note.duration.value, unit: plan.resolution.note.duration.unit, raw: plan.lifecycle.durationSpec.raw };
     }
+    // (A third-party save whose rows each state their own time, the item's duration "varies": the cast itself is instantaneous.)
+    if (plan.lifecycle.durationSpec.mode === "text" && plan.resolution.kind === "save" && /^varies$/i.test(plan.lifecycle.durationSpec.raw ?? "") && Array.isArray(plan.compilerEvidence.rowDurations))
+        plan.lifecycle.durationSpec = { mode: "instantaneous", raw: plan.lifecycle.durationSpec.raw };
     if (plan.lifecycle.durationSpec.mode === "text") {
         plan.automation.pendingCapabilities.push("item-duration-grammar");
     } else {
@@ -8545,6 +9882,13 @@ function compileSpell(item, options) {
         plan.compilerEvidence.persistentRows = persistentRows.claimed;
         plan.automation.compiledCapabilities.push("persistent-rows");
     }
+    // A Strike's own table whose hit rows' Slowed escalates at each turn's end (Medusa's Wrath): the item's save, read from the critical success row.
+    if (strikePrelude?.escalate && plan.resolution.kind === "save" && plan.resolution.check?.statistic === "strike") {
+        const { slug, ...recurring } = strikePrelude.escalate;
+        for (const degree of ["criticalSuccess", "success"]) for (const effect of plan.resolution.outcomes[degree].effects ?? []) if (effect.slug === slug) effect.recurringSave = cloneJSON(recurring);
+        plan.compilerEvidence.strikeEscalate = strikePrelude.escalate.sourceText;
+        plan.automation.compiledCapabilities.push("strike-escalate");
+    }
     if (petrifying && plan.resolution.kind === "save" && plan.resolution.check?.basic === false) {
         const { slug, ...recurring } = petrifying.recurring;
         for (const degree of ["failure", "criticalFailure"]) for (const effect of plan.resolution.outcomes[degree].effects ?? []) if (effect.slug === slug) effect.recurringSave = cloneJSON(recurring);
@@ -8621,6 +9965,141 @@ function compileSpell(item, options) {
         plan.automation.pendingCapabilities = plan.automation.pendingCapabilities.filter(capability => !["manual:conditional-effect", "residual-prose"].includes(capability));
         plan.compilerEvidence.undertow = undertow.claimed;
         plan.automation.compiledCapabilities.push("undertow");
+    }
+    if (indolentHaze && plan.resolution.kind === "save" && plan.resolution.lingering && !(plan.automation.pendingCapabilities ?? []).length) {
+        for (const degree of ["success", "failure"]) for (const effect of plan.resolution.outcomes[degree].effects ?? [])
+            if (effect.kind === "condition" && effect.slug === "prone") effect.insteadIfHeld = cloneJSON(indolentHaze.instead);
+        plan.resolution.outcomes.failure.noteEffects = [...(plan.resolution.outcomes.failure.noteEffects ?? []), cloneJSON(indolentHaze.cantStand)];
+        plan.resolution.lingering.sleeperDamage = { ...cloneJSON(indolentHaze.sleepers), baseRank: Number(plan.rank) };
+        plan.compilerEvidence.indolentHaze = indolentHaze.claimed;
+        plan.automation.compiledCapabilities.push("indolent-haze");
+    }
+    if (vitrify && plan.resolution.kind === "save" && plan.resolution.check?.basic === false) {
+        for (const degree of ["failure", "criticalFailure"]) for (const effect of plan.resolution.outcomes[degree].effects ?? []) if (effect.slug === "slowed") effect.recurringSave = cloneJSON(vitrify.recurring);
+        for (const [degree, notes] of Object.entries(vitrify.notes)) {
+            plan.resolution.outcomes[degree].noteEffects = [...(plan.resolution.outcomes[degree].noteEffects ?? []), ...cloneJSON(notes)];
+            if (degree === "failure") plan.resolution.outcomes.criticalFailure.noteEffects = [...(plan.resolution.outcomes.criticalFailure.noteEffects ?? []), ...cloneJSON(notes)];
+        }
+        plan.compilerEvidence.vitrify = vitrify.claimed;
+        plan.automation.compiledCapabilities.push("vitrifying-blast");
+    }
+    if (lastingCurse && plan.resolution.kind === "save" && !plan.resolution.lingering) {
+        for (const source of [lastingCurse.notes ?? {}, lastingCurse.notesExtra ?? {}]) for (const [degree, notes] of Object.entries(source))
+            plan.resolution.outcomes[degree].noteEffects = [...(plan.resolution.outcomes[degree].noteEffects ?? []), ...cloneJSON(notes)];
+        // (Chrysopoetic Curse: each condition behind its own question for the creature.)
+        for (const [degree, gates] of Object.entries(lastingCurse.gates ?? {})) for (const effect of plan.resolution.outcomes[degree]?.effects ?? []) if (gates[effect.slug]) effect.gate = cloneJSON(gates[effect.slug]);
+        if (lastingCurse.gateSentences) plan.compilerEvidence.gateSentences = [...lastingCurse.gateSentences];
+        if (lastingCurse.targetAura) plan.resolution.targetAura = cloneJSON(lastingCurse.targetAura);
+        // (Tanglecurse: the spores' roll for the cast; the failing rows list its conditions.)
+        if (lastingCurse.conditionRoll) {
+            for (const degree of ["failure", "criticalFailure"]) { for (const effect of plan.resolution.outcomes[degree].effects ?? []) effect.choiceGroup = "condition-roll"; plan.resolution.outcomes[degree].conditionRollClaims = [plan.resolution.outcomes[degree].rawText]; }
+            plan.resolution.conditionRoll = cloneJSON(lastingCurse.conditionRoll);
+            plan.compilerEvidence.conditionRoll = lastingCurse.claimed.slice(-2);
+        }
+        if (lastingCurse.dataNotes?.length) plan.resolution.dataNotes = [...(plan.resolution.dataNotes ?? []), ...lastingCurse.dataNotes];
+        // ("Duration varies": each row's note carries its own time.)
+        // (Or "until the end of your next turn", which the rows' notes carry: Dread Secret.)
+        if (/^(?:varies|until the end of your next turn|until full tribute is paid|)$/i.test(String(adapted.lifecycle?.duration ?? "").trim()) && plan.lifecycle && (lastingCurse.notes || lastingCurse.targetAura))
+            plan.lifecycle = { ...plan.lifecycle, durationSpec: { mode: "outcome", sourceText: String(adapted.lifecycle.duration).trim() } };
+        plan.automation.pendingCapabilities = plan.automation.pendingCapabilities.filter(capability => !["item-duration-grammar", "residual-prose"].includes(capability));
+        plan.diagnostics = plan.diagnostics.filter(entry => !["ITEM_DURATION_GRAMMAR_PENDING", "RESIDUAL_PROSE_PENDING"].includes(entry.code));
+        plan.compilerEvidence.lastingCurse = lastingCurse.claimed;
+        plan.automation.compiledCapabilities.push("lasting-curse");
+    }
+    if (mosquito && plan.resolution.kind === "save" && plan.resolution.lingering && !(plan.automation.pendingCapabilities ?? []).length) {
+        plan.resolution.lingering.exposureDamage = cloneJSON(mosquito.exposure);
+        plan.resolution.outcomes.success.noteEffects = [...(plan.resolution.outcomes.success.noteEffects ?? []), cloneJSON(mosquito.recovery)];
+        plan.compilerEvidence.mosquitoStorm = mosquito.claimed;
+        plan.automation.compiledCapabilities.push("mosquito-storm");
+    }
+    if (song && plan.resolution.kind === "save" && plan.resolution.check?.basic === false && !plan.resolution.lingering) {
+        const tagged = ["failure", "criticalFailure"].every(degree => (plan.resolution.outcomes[degree].effects ?? []).length === song.results[degree].length
+            && (plan.resolution.outcomes[degree].effects ?? []).every(effect => effect.kind === "condition"));
+        if (tagged) {
+            for (const degree of ["failure", "criticalFailure"]) {
+                for (const [index, effect] of plan.resolution.outcomes[degree].effects.entries()) { effect.choiceGroup = "condition-roll-results"; effect.rollResults = [song.results[degree][index]]; }
+                plan.resolution.outcomes[degree].conditionRollClaims = [plan.resolution.outcomes[degree].rawText];
+            }
+            plan.resolution.conditionRoll = cloneJSON(song.roll);
+            plan.resolution.lingering = { events: ["sustain"], initial: true, oncePerRound: false, excludeCaster: false, enemiesOnly: false, area: null, centre: "targets", maxTargets: { count: song.count, baseRank: Number(plan.rank) },
+                durationSeconds: Number(/^(\d+) minutes?$/i.exec(String(adapted.lifecycle?.duration ?? ""))?.[1] ?? 1) * 60, sustained: true, concealment: false, sourceText: song.claimed.slice(1, 3) };
+            plan.automation.pendingCapabilities = plan.automation.pendingCapabilities.filter(capability => !["residual-prose", "condition-roll", "description-lifecycle"].includes(capability));
+            plan.compilerEvidence.unfathomableSong = song.claimed;
+            plan.compilerEvidence.conditionRoll = song.claimed.slice(5, 7);
+            plan.automation.compiledCapabilities.push("unfathomable-song");
+        }
+    }
+    if (shadowRaid && plan.resolution.kind === "save" && plan.resolution.check?.basic === true && plan.resolution.sharedDamage && !plan.resolution.lingering && !(plan.automation.pendingCapabilities ?? []).length) {
+        plan.resolution.sharedDamage = { ...plan.resolution.sharedDamage, mode: "formula", rollOnce: true, formula: shadowRaid.formula, textDerived: true };
+        plan.resolution.casterChoice = { kind: "damage-type", values: [...shadowRaid.types], label: "Damage type" };
+        plan.compilerEvidence.casterChoice = shadowRaid.choiceSentence;
+        plan.resolution.check.saveChoice = cloneJSON(shadowRaid.saveChoice);
+        plan.compilerEvidence.saveChoice = shadowRaid.saveChoice.sourceText;
+        plan.resolution.areaTerrain = cloneJSON(shadowRaid.areaTerrain);
+        plan.resolution.dataNotes = [...(plan.resolution.dataNotes ?? []), "Each target chooses its save (Reflex or Will): the card rolls its better one."];
+        plan.compilerEvidence.shadowRaid = shadowRaid.claimed;
+        plan.automation.compiledCapabilities.push("shadow-raid");
+    }
+    if (waveBarrier && plan.resolution.kind === "save" && plan.resolution.lingering && !(plan.automation.pendingCapabilities ?? []).filter(capability => !["native-spell-effect-scope", "native-spell-effect-recipient"].includes(capability)).length) {
+        const [link] = plan.nativeEffects?.unscoped ?? [];
+        if ((plan.nativeEffects?.unscoped ?? []).length === 1 && link?.resolutionStatus === "resolved" && inspectCasterBenefitClaim(link.document, waveBarrier.grant, { rank: adapted.rank, spellDuration: "sustained" }).supported) {
+            Object.assign(plan.resolution.lingering, { centre: "placed", areaOnCaster: true, excludeCaster: true, rowTerrain: cloneJSON(waveBarrier.terrain), sustainGrowth: cloneJSON(waveBarrier.growth),
+                casterEffect: { uuid: link.uuid, reference: link.reference, claimText: waveBarrier.grant, document: cloneJSON(link.document) } });
+            plan.resolution.forcedMovementNotes = [...(plan.resolution.forcedMovementNotes ?? []), waveBarrier.collision];
+            plan.nativeEffects.unscoped = [];
+            plan.automation.pendingCapabilities = plan.automation.pendingCapabilities.filter(capability => !["native-spell-effect-scope", "native-spell-effect-recipient"].includes(capability));
+            plan.diagnostics = plan.diagnostics.filter(entry => !["NATIVE_SPELL_EFFECT_SCOPE_PENDING", "NATIVE_SPELL_EFFECT_RECIPIENT_PENDING"].includes(entry.code));
+            plan.compilerEvidence.rowTerrain = waveBarrier.claimed;
+            plan.compilerEvidence.waveBarrier = waveBarrier.claimed;
+            plan.automation.compiledCapabilities.push("wave-barrier");
+        }
+    }
+    if (vacuum && plan.resolution.kind === "save" && plan.resolution.lingering && !(plan.automation.pendingCapabilities ?? []).length) {
+        if (vacuum.suffocate) plan.resolution.outcomes.criticalFailure.suffocate = cloneJSON(vacuum.suffocate);
+        for (const degree of ["criticalSuccess", "success", "failure"]) plan.resolution.outcomes[degree].noteEffects = [...(plan.resolution.outcomes[degree].noteEffects ?? []), cloneJSON(degree === "failure" ? vacuum.holding.failure : vacuum.holding.success)];
+        plan.resolution.lingering.gmAction = cloneJSON(vacuum.gmAction);
+        plan.resolution.degreeAdjustment = { predicate: { kind: "note-held", label: vacuum.adjustment.label }, map: { criticalFailure: "failure", failure: "success", success: "criticalSuccess", criticalSuccess: "criticalSuccess" }, sourceText: vacuum.adjustment.sourceText };
+        plan.compilerEvidence.vacuum = vacuum.claimed;
+        plan.automation.compiledCapabilities.push("vacuum");
+    }
+    if (shadowArmy && plan.resolution.kind === "save" && plan.resolution.lingering && !(plan.automation.pendingCapabilities ?? []).length) {
+        // ("you choose a condition … on a failed save": the failing rows list all of them; the caster's pick keeps one.)
+        const chosen = degree => (plan.resolution.outcomes[degree].effects ?? []).filter(effect => effect.kind === "condition" && shadowArmy.choices.includes(effect.slug));
+        if (["failure", "criticalFailure"].every(degree => chosen(degree).length === shadowArmy.choices.length)) {
+            for (const degree of ["failure", "criticalFailure"]) { for (const effect of chosen(degree)) effect.choiceGroup = "caster-condition"; plan.resolution.outcomes[degree].conditionChoiceClaims = [plan.resolution.outcomes[degree].rawText]; }
+            plan.resolution.casterChoice = { kind: "condition", values: [...shadowArmy.choices], label: "Condition on a failed save" };
+            plan.compilerEvidence.casterChoice = shadowArmy.claimed[3];
+            plan.resolution.outcomes.criticalSuccess.noteEffects = [...(plan.resolution.outcomes.criticalSuccess.noteEffects ?? []), { ...cloneJSON(shadowArmy.sees),
+                duration: { mode: "fixed", value: Math.max(1, Math.round(plan.resolution.lingering.durationSeconds / 60)), unit: "minutes", expiry: null, anchor: "effect-start", offset: 0, sourceText: "For the duration of the spell" } }];
+            plan.resolution.degreeAdjustment = { predicate: { kind: "note-held", label: shadowArmy.sees.label }, map: { criticalFailure: "failure", failure: "success", success: "criticalSuccess", criticalSuccess: "criticalSuccess" }, sourceText: shadowArmy.adjustment.sourceText };
+            plan.compilerEvidence.shadowArmy = shadowArmy.claimed;
+            plan.automation.compiledCapabilities.push("shadow-army");
+        } else plan.automation.pendingCapabilities = [...plan.automation.pendingCapabilities, "shadow-army-conditions"];
+    }
+    if (stars && plan.resolution.kind === "save" && plan.resolution.lingering && !(plan.automation.pendingCapabilities ?? []).length) {
+        // (Fascinated by the sky: while the spell lasts, unless it ends sooner — the GM removes it after a hostile action.)
+        for (const degree of ["success", "failure", "criticalFailure"]) for (const effect of plan.resolution.outcomes[degree].effects ?? [])
+            if (effect.kind === "condition" && effect.slug === "fascinated") { effect.duration = null; effect.endsWhen = [{ event: "area-ended" }]; effect.expirationMode = "event"; delete effect.lifetimeProof; }
+        for (const degree of ["failure", "criticalFailure"]) plan.resolution.outcomes[degree].noteEffects = [...(plan.resolution.outcomes[degree].noteEffects ?? []), cloneJSON(stars.steadfast)];
+        plan.resolution.lingering.gmMark = cloneJSON(stars.top);
+        plan.compilerEvidence.starsSky = stars.claimed;
+        plan.automation.compiledCapabilities.push("stars-of-another-sky");
+    }
+    if (tearVeil && plan.resolution.kind === "save" && plan.resolution.lingering?.terrain && !(plan.automation.pendingCapabilities ?? []).length) {
+        plan.resolution.lingering.livingOnly = true;
+        plan.resolution.lingering.terrain = { ...plan.resolution.lingering.terrain, living: true };
+        plan.resolution.lingering.drainCenter = cloneJSON(tearVeil.drain);
+        plan.targeting.actorConstraints = { ...(plan.targeting.actorConstraints ?? {}), sourceText: "living creatures in the area", supportsActorTargets: true, complete: true,
+            predicates: [...(plan.targeting.actorConstraints?.predicates ?? []).filter(predicate => predicate.kind !== "living-creature"), { kind: "living-creature" }] };
+        plan.diagnostics = plan.diagnostics.filter(entry => !/limits who is affected \(living\)/.test(entry.message ?? ""));
+        plan.compilerEvidence.tearVeil = tearVeil.claimed;
+        plan.automation.compiledCapabilities.push("tear-the-veil");
+    }
+    if (tornado && plan.resolution.kind === "save" && plan.resolution.lingering && !(plan.automation.pendingCapabilities ?? []).length) {
+        plan.resolution.lingering.gmAction = cloneJSON(tornado.gmAction);
+        for (const degree of ["failure", "criticalFailure"]) plan.resolution.outcomes[degree].noteEffects = [...(plan.resolution.outcomes[degree].noteEffects ?? []), cloneJSON(tornado.fly[degree])];
+        plan.compilerEvidence.tornado = tornado.claimed;
+        plan.automation.compiledCapabilities.push("tornado");
     }
     if (freezingRain && plan.resolution.kind === "save" && plan.resolution.lingering) {
         plan.resolution.lingering.notes = [...(plan.resolution.lingering.notes ?? []), ...freezingRain.notes];
@@ -8821,6 +10300,59 @@ function compileSpell(item, options) {
         plan.compilerEvidence.censureRows = censure.sentences;
         plan.automation.compiledCapabilities.push("censure-rows");
     }
+    if (darknessField && plan.resolution.kind === "save" && plan.resolution.check?.basic === true && !plan.resolution.lingering) {
+        plan.resolution.lingering = cloneJSON(darknessField.lingering);
+        plan.compilerEvidence.darknessField = darknessField.sentences;
+        plan.automation.compiledCapabilities.push("darkness-field");
+    }
+    if (fallingArea && plan.resolution.kind === "save" && plan.resolution.check?.basic === false) {
+        plan.resolution.areaFall = cloneJSON(fallingArea.areaFall);
+        plan.resolution.reminders = [...(plan.resolution.reminders ?? []), cloneJSON(fallingArea.reminder)];
+        plan.automation.pendingCapabilities = plan.automation.pendingCapabilities.filter(capability => !capability.startsWith("preamble:") && capability !== "area-paragraph");
+        plan.diagnostics = plan.diagnostics.filter(entry => entry.code !== "SAVE_PREAMBLE_PENDING");
+        plan.compilerEvidence.fallingArea = fallingArea.sentences;
+        plan.automation.compiledCapabilities.push("falling-area");
+    }
+    if (backlash && plan.resolution.kind === "save" && plan.resolution.check?.basic === false && plan.resolution.postDamageTerminal?.kind === "death") {
+        plan.targeting.actorConstraints = { sourceText: backlash.levelLimit.sourceText, supportsActorTargets: true, complete: true,
+            predicates: [{ kind: "living-creature" }, { kind: "level-at-most", level: backlash.levelLimit.level, byRank: cloneJSON(backlash.levelLimit.byRank) }] };
+        plan.resolution.backlash = cloneJSON(backlash.backlash);
+        plan.automation.pendingCapabilities = plan.automation.pendingCapabilities.filter(capability => !capability.startsWith("preamble:"));
+        plan.diagnostics = plan.diagnostics.filter(entry => entry.code !== "SAVE_PREAMBLE_PENDING");
+        plan.compilerEvidence.backlashSave = backlash.sentences;
+        plan.automation.compiledCapabilities.push("backlash-save");
+    }
+    if (trappedRows && plan.resolution.kind === "save" && plan.resolution.check?.basic === false
+        && Object.keys(trappedRows.durations).every(degree => (plan.resolution.outcomes[degree]?.noteEffects ?? []).length === 1)) {
+        for (const [degree, entry] of Object.entries(trappedRows.durations)) {
+            const note = plan.resolution.outcomes[degree].noteEffects[0];
+            note.duration = { mode: "fixed", value: entry.value, unit: entry.unit, expiry: "turn-start", anchor: "effect-start", offset: 0, sourceText: entry.sourceText };
+            note.text = `${entry.sourceText} The GM ends this early once it has bypassed ${entry.doors} door${entry.doors === 1 ? "" : "s"}.`;
+        }
+        plan.resolution.reminders = [...(plan.resolution.reminders ?? []), cloneJSON(trappedRows.reminder)];
+        plan.automation.pendingCapabilities = plan.automation.pendingCapabilities.filter(capability => capability !== "preamble:counteract");
+        plan.diagnostics = plan.diagnostics.filter(entry => entry.code !== "SAVE_PREAMBLE_PENDING");
+        plan.compilerEvidence.trappedRows = trappedRows.sentences;
+        plan.automation.compiledCapabilities.push("trapped-rows");
+    }
+    if (bleedRise && plan.resolution.kind === "save" && plan.resolution.check?.basic === false && applyBleedConditionRise(plan, bleedRise)) {
+        plan.targeting.actorConstraints = { ...(plan.targeting.actorConstraints ?? { sourceText: String(adapted.targeting?.target ?? ""), supportsActorTargets: true, complete: true }),
+            predicates: [...(plan.targeting.actorConstraints?.predicates ?? []), { kind: "gm-confirmed", question: bleedRise.gmQuestion.question, sourceText: bleedRise.gmQuestion.sourceText }] };
+        plan.automation.pendingCapabilities = plan.automation.pendingCapabilities.filter(capability => !capability.startsWith("preamble:"));
+        plan.diagnostics = plan.diagnostics.filter(entry => entry.code !== "SAVE_PREAMBLE_PENDING");
+        plan.compilerEvidence.bleedConditionRise = bleedRise.sentences;
+        plan.automation.compiledCapabilities.push("bleed-condition-rise");
+    }
+    if (decapitation && plan.resolution.kind === "save" && plan.resolution.check?.basic === false) {
+        plan.resolution.reminders = [...(plan.resolution.reminders ?? []), cloneJSON(decapitation.reminder)];
+        plan.compilerEvidence.decapitationSave = decapitation.sentences;
+        plan.automation.compiledCapabilities.push("decapitation-save");
+    }
+    if (lastingNotes && plan.resolution.kind === "save" && plan.resolution.check?.basic === false) {
+        for (const [degree, note] of Object.entries(lastingNotes.notes)) plan.resolution.outcomes[degree].noteEffects = [...(plan.resolution.outcomes[degree].noteEffects ?? []), cloneJSON(note)];
+        plan.compilerEvidence.lastingNotes = lastingNotes.sentences;
+        plan.automation.compiledCapabilities.push("lasting-note-rows");
+    }
     if (gmCommand && plan.resolution.kind === "save" && plan.resolution.check?.basic === false && !plan.resolution.temporaryImmunity) {
         for (const [degree, note] of Object.entries(gmCommand.notes)) plan.resolution.outcomes[degree].noteEffects = [...(plan.resolution.outcomes[degree].noteEffects ?? []), cloneJSON(note)];
         if (gmCommand.immunity) plan.resolution.temporaryImmunity = { key: adapted.source.slug, ...cloneJSON(gmCommand.immunity) };
@@ -8900,6 +10432,7 @@ function compileSpell(item, options) {
     if (impalingLance && plan.resolution.kind === "save" && plan.resolution.check?.statistic === "spell-attack" && plan.compilerEvidence.generatedSpeedPenalties) {
         // The persistent bleed when it Escapes: on the impaling penalty, at the cast rank.
         plan.resolution.escapeDamage = cloneJSON(impalingLance.escapeDamage);
+        if (impalingLance.groundOnly) plan.resolution.groundOnly = cloneJSON(impalingLance.groundOnly);
         plan.resolution.reminders = [...(plan.resolution.reminders ?? []), cloneJSON(impalingLance.reminder)];
         plan.compilerEvidence.impalingLance = impalingLance.sentences;
         plan.automation.compiledCapabilities.push("impaling-lance");
@@ -8983,6 +10516,14 @@ function compileSpell(item, options) {
         plan.compilerEvidence.doomTimeline = doomTimeline.sentences;
         plan.automation.compiledCapabilities.push("doom-timeline");
     }
+    if (rhapsody && plan.resolution.kind === "save" && plan.resolution.lingering?.centre === "caster" && plan.resolution.lingering.enemiesOnly === true && !plan.resolution.temporaryImmunity) {
+        for (const [degree, note] of Object.entries(rhapsody.notes))
+            plan.resolution.outcomes[degree].noteEffects = [...(plan.resolution.outcomes[degree].noteEffects ?? []), { ...cloneJSON(note), gmPlays: note.gmPlays === true }];
+        plan.resolution.temporaryImmunity = { key: adapted.source.slug, ...cloneJSON(rhapsody.immunity) };
+        plan.resolution.lingering.excludeCaster = true;
+        plan.compilerEvidence.rhapsody = rhapsody.sentences;
+        plan.automation.compiledCapabilities.push("rhapsody-aura");
+    }
     if (sorrowAura && plan.resolution.kind === "save" && plan.resolution.lingering?.centre === "caster" && !plan.resolution.temporaryImmunity) {
         for (const [degree, note] of Object.entries(sorrowAura.notes))
             plan.resolution.outcomes[degree].noteEffects = [...(plan.resolution.outcomes[degree].noteEffects ?? []), { ...cloneJSON(note), gmPlays: note.gmPlays === true }];
@@ -9038,6 +10579,24 @@ function compileSpell(item, options) {
         addEnemyPredicate(plan);
         plan.compilerEvidence.bloodTendrils = bloodTendrils.sentences;
         plan.automation.compiledCapabilities.push("blood-tendrils");
+    }
+    // (The area itself the lingering compiler reads from the rewritten sentence; the blessing, the caster's exclusion and the darkness note added to it.)
+    if (divineEclipse && plan.resolution.kind === "save" && plan.resolution.check?.basic === true && (!plan.resolution.lingering
+        || (plan.resolution.lingering.centre === "caster" && plan.resolution.lingering.events?.join() === "turn-end" && plan.resolution.lingering.area?.value === divineEclipse.lingering.area.value))) {
+        plan.resolution.lingering = { ...(plan.resolution.lingering ?? {}), ...cloneJSON(divineEclipse.lingering) };
+        plan.compilerEvidence.divineEclipse = divineEclipse.sentences;
+        plan.automation.compiledCapabilities.push("divine-eclipse");
+    }
+    if (cosmicGlow && plan.resolution.kind === "save" && plan.resolution.check?.basic === true && !plan.resolution.lingering) {
+        plan.resolution.lingering = cloneJSON(cosmicGlow.lingering);
+        plan.compilerEvidence.cosmicGlow = cosmicGlow.sentences;
+        plan.automation.compiledCapabilities.push("cosmic-glow");
+    }
+    if (violentLight && plan.resolution.kind === "save" && plan.resolution.check?.basic === true && !plan.resolution.lingering) {
+        plan.resolution.lingering = cloneJSON(violentLight.lingering);
+        addEnemyPredicate(plan);
+        plan.compilerEvidence.violentLight = violentLight.sentences;
+        plan.automation.compiledCapabilities.push("violent-light");
     }
     if (disbelievedArea && plan.resolution.kind === "save" && plan.resolution.lingering) {
         plan.resolution.lingering.disbelief = cloneJSON(disbelievedArea.disbelief);
@@ -9269,6 +10828,8 @@ function compileSpell(item, options) {
         plan.automation.compiledCapabilities.push("mirror-ring");
     }
     if (stoneGarden && plan.resolution.kind === "save" && plan.resolution.check?.basic === true) {
+        // ("pushed to the nearest unoccupied space as the stalagmite rises": each creature in the area, moved out of it by the module.)
+        plan.resolution.areaExit = { who: "all" };
         plan.resolution.reminders = [...(plan.resolution.reminders ?? []), cloneJSON(stoneGarden.reminder)];
         plan.compilerEvidence.stoneGarden = stoneGarden.sentences;
         plan.automation.compiledCapabilities.push("stone-garden");
@@ -9481,6 +11042,7 @@ function compileSpell(item, options) {
     // Rows reworded (Suffocate's critical failure; Sudden Transposition's teleports, the GM's reminder).
     if (savedRows && plan.resolution.kind === "save") {
         plan.resolution.reminders = [...(plan.resolution.reminders ?? []), ...cloneJSON(savedRows.reminders)];
+        if (savedRows.areaExit) plan.resolution.areaExit = cloneJSON(savedRows.areaExit);
         plan.compilerEvidence.savedRows = savedRows.sentences;
         // (A row's later condition as its note: Confusing Colors.)
         for (const { degree, note, secondary } of savedRows.notes ?? []) {
@@ -9566,6 +11128,8 @@ function compileSpell(item, options) {
     if (bladeWall && plan.resolution.kind === "save" && plan.resolution.lingering) {
         plan.resolution.lingering.gmAction = cloneJSON(bladeWall.gmAction);
         plan.resolution.reminders = [...(plan.resolution.reminders ?? []), ...cloneJSON(bladeWall.reminders)];
+        // ("A creature that succeeds … when the wall is created is pushed to the nearest space on the side of its choice": the nearest space outside the line.)
+        plan.resolution.areaExit = { who: "success" };
         plan.compilerEvidence.bladeWall = bladeWall.sentences;
         plan.automation.compiledCapabilities.push("blade-wall");
     }
@@ -9737,6 +11301,39 @@ function compileSpell(item, options) {
                 area: null, heightened: [], heightenedDurations: [], duration: null } };
         plan.automation = { level: "automatic", confidence: 1, compiledCapabilities: ["source", "spell-note", "gm-ritual"], pendingCapabilities: [] };
         plan.compilerEvidence.spellNote = { recipient: "source", environment: false, gmRitual: true };
+        plan.diagnostics = plan.diagnostics.filter(entry => entry.severity === "info");
+    }
+    // A spell the user ruled the GM's (2026-10-04: world-scale and non-combat information, travel and ward spells), when no route automates it: the
+    // card whispers its text to the GM, marked as theirs to run.
+    const gmHandled = !options.traitModeSource && !options.gmOptionSub && plan.automation.level !== "automatic" ? gmHandledRuling(item) : null;
+    if (gmHandled) {
+        // The parts that act on creatures, each the GM's option (user request 2026-10-04): a save option is its own small spell, compiled by the ordinary route.
+        const read = compileGmOptions(adapted, item, { referenced: null });
+        const asIf = /as if affected by @UUID\[(Compendium\.pf2e\.spells-srd\.Item\.[A-Za-z0-9]+)\]/.exec(String(adapted.descriptionHTML ?? ""))?.[1];
+        const gmRead = read ?? (asIf && options.referencedSpells?.get?.(asIf) ? compileGmOptions(adapted, item, { referenced: options.referencedSpells.get(asIf) }) : null);
+        const gmOptions = [];
+        for (const option of gmRead?.options ?? []) {
+            if (option.kind === "save") {
+                const source = cloneJSON(item);
+                source.system = { ...source.system, ...cloneJSON(option.patch) };
+                const sub = compileSpell(source, { ...options, referencedSpells: null, gmOptionSub: true });
+                // (Damage only the option's text gives — the item has none, as Thousand-Year Flood's: the card refetches the item, so the text's formula is rolled.)
+                const stated = Object.values(option.patch?.damage ?? {});
+                if (sub.resolution?.kind === "save" && sub.resolution.sharedDamage && !Object.keys(item.system?.damage ?? {}).length && stated.length === 1 && !stated[0].category) {
+                    sub.resolution.sharedDamage = { ...sub.resolution.sharedDamage, mode: "formula", rollOnce: true, formula: `${stated[0].formula}[${stated[0].type}]`, textDerived: true };
+                    sub.compilerEvidence.phaseFormula = sub.resolution.sharedDamage.formula;
+                }
+                if (sub.resolution?.kind === "save" && !(sub.automation?.pendingCapabilities ?? []).length) gmOptions.push({ ...option, plan: sub });
+            } else if (option.kind === "item-save") {
+                if (plan.resolution.kind === "save" && plan.resolution.check?.basic === true) gmOptions.push({ ...option, kind: "save", patch: null, plan: cloneJSON(plan) });
+            } else gmOptions.push(option);
+        }
+        const text = htmlToPlainText(stripHeighteningHTML(String(adapted.descriptionHTML ?? ""))).replace(/@UUID\[[^\]]+\]\{([^}]+)\}/g, "$1").replace(/\s+/g, " ").trim();
+        plan.resolution = { kind: "spell-note", check: null, sharedDamage: null, outcomes: plan.resolution.outcomes, postDamageTerminal: null, applications: [],
+            note: { recipient: "source", environment: false, gmHandled: { group: gmHandled.group, ruling: gmHandled.ruling ?? GM_HANDLED_RULING.date, options: gmOptions, notes: gmRead?.notes ?? [] }, text, target: String(adapted.targeting?.target ?? "").trim() || null,
+                area: null, heightened: [], heightenedDurations: [], duration: null } };
+        plan.automation = { level: "automatic", confidence: 1, compiledCapabilities: ["source", "spell-note", "gm-handled"], pendingCapabilities: [] };
+        plan.compilerEvidence.spellNote = { recipient: "source", environment: false, gmHandled: gmHandled.group };
         plan.diagnostics = plan.diagnostics.filter(entry => entry.severity === "info");
     }
     // A proved Effect + note says who gets the Effect: the recipient and target questions are answered.
@@ -10012,9 +11609,795 @@ function addEnemyPredicate(plan) {
     if (!constraints.predicates.some(predicate => predicate.kind === "enemy-of-caster")) constraints.predicates.push({ kind: "enemy-of-caster" });
 }
 
+/**
+ * A spell attack the text states inside another spell (an incarnate's thorns, a puppet's forced Strike): a small attack spell whose rows are the text's
+ * multipliers of its own damage ([[formula, type, category]]); with `types`, the caster picks the type of the text's untyped damage. Or null.
+ */
+function compileTextAttack(item, options, { damage, multipliers, traits = [], types = null, typeSource = null, range = "300 feet" }) {
+    const row = multiplier => multiplier === 0 ? "The target is unaffected." : `The target takes ${{ 0.5: "half", 1: "full", 2: "double" }[multiplier]} damage.`;
+    const copy = cloneJSON(item);
+    // (A miss that does nothing is the attack's usual two rows.)
+    const misses = multipliers.failure === 0 && multipliers.criticalFailure === 0 ? "" : `<p><strong>Failure</strong> ${row(multipliers.failure)}</p><p><strong>Critical Failure</strong> ${row(multipliers.criticalFailure)}</p>`;
+    copy.system.description.value = `<p>Make a spell attack roll against the target.</p><hr /><p><strong>Critical Success</strong> ${row(multipliers.criticalSuccess)}</p><p><strong>Success</strong> ${row(multipliers.success)}</p>${misses}`;
+    copy.system.defense = null;
+    copy.system.target = { value: "1 creature" };
+    copy.system.range = { value: range };
+    copy.system.area = null;
+    copy.system.duration = { value: "", sustained: false };
+    copy.system.traits = { ...copy.system.traits, value: [...new Set([...(copy.system.traits?.value ?? []).filter(trait => !["incarnate", "incapacitation"].includes(trait)), ...traits, "attack"])] };
+    copy.system.damage = Object.fromEntries(damage.map(([formula, type, category], index) => [`text${index}`, { applyMod: false, category, formula, kinds: ["damage"], materials: [], type }]));
+    delete copy.system.heightening;
+    const plan = compileSpell(copy, { ...options, traitModeSource: true });
+    if (plan.resolution?.kind !== "save" || plan.resolution.check?.statistic !== "spell-attack" || (plan.automation?.pendingCapabilities ?? []).length || !plan.resolution.sharedDamage) return null;
+    const formula = damage.length === 1 && !damage[0][2] ? `${damage[0][0]}[${damage[0][1]}]` : `{${damage.map(([dice, type, category]) => `${dice}[${category ? `${category},` : ""}${type}]`).join(",")}}`;
+    plan.resolution.sharedDamage = { ...plan.resolution.sharedDamage, mode: "formula", rollOnce: true, formula, textDerived: true, ...(plan.resolution.check?.basic === true ? {} : { degreeScaled: true }) };
+    plan.compilerEvidence.phaseFormula = formula;
+    if (types) {
+        if (!(damage.length === 1 && damage[0][1] === "untyped")) return null;
+        plan.resolution.casterChoice = { kind: "damage-type", values: [...types], label: "Damage type" };
+        plan.compilerEvidence.casterChoice = typeSource;
+    }
+    return plan;
+}
+
+/**
+ * One part of a spell's card from its spec (mode-cards.js, blast-cards.js): damage, a launch, placed terrain, a spell attack with its hit rows, or a save
+ * — its text's damage rolled by the module (`formula`: the text's own pools, with the rank in it), and a damage type the caster picks (`choice`).
+ */
+function buildCardAction(item, options, spec, debug = () => {}) {
+    const textFormula = (compiled, damage, basic, formula = null) => {
+        compiled.resolution.sharedDamage = { ...compiled.resolution.sharedDamage, mode: "formula", rollOnce: true, formula: formula ?? `(${damage.formula})[${damage.type}]`, textDerived: true, ...(basic ? {} : { degreeScaled: true }) };
+        compiled.compilerEvidence.phaseFormula = compiled.resolution.sharedDamage.formula;
+    };
+    if (spec.type === "damage") return { kind: "damage", formula: spec.formula };
+    if (spec.type === "launch") return { kind: "launch", feet: spec.feet };
+    if (spec.type === "terrain") return { kind: "terrain", place: cloneJSON(spec.place), difficulty: spec.difficulty, rounds: spec.rounds };
+    const sub = cloneJSON(item);
+    // (The item's own damage — Vampiric Revelry's 12d6 void — is PF2e's roll: kept as it is.)
+    if (!spec.itemDamage) sub.system.damage = spec.damage ? { text0: { applyMod: false, category: null, formula: spec.damage.formula, kinds: ["damage"], materials: [], type: spec.damage.type } } : {};
+    delete sub.system.heightening; sub.system.duration = { value: "", sustained: false }; sub.system.area = spec.areaShape ? cloneJSON(spec.areaShape) : null;
+    if (spec.type === "attack") {
+        // (Several targets — Pierce the Sky's arrows, one multiple attack penalty for all; a melee attack — Comet Charge's blow; a hold dealing no damage.)
+        const count = spec.count ?? 1;
+        sub.system.description.value = `<p>Make a ${spec.melee ? "melee " : ""}spell attack roll against ${count > 1 ? "each target" : "the target"}.${spec.sharedPenalty ? ` ${spec.sharedPenalty}` : ""}</p>${spec.rowsHTML}`;
+        sub.system.defense = null; sub.system.target = { value: count > 1 ? `up to ${count} creatures` : "1 creature" }; sub.system.range = { value: spec.melee ? "touch" : `${spec.range} feet` };
+        sub.system.traits = { ...sub.system.traits, value: [...new Set([...(sub.system.traits?.value ?? []).filter(trait => !["focus", "incapacitation"].includes(trait)), "attack"])] };
+        const compiled = compileSpell(sub, { ...options, traitModeSource: true });
+        debug("CARD attack", compiled.resolution?.kind, compiled.resolution?.check?.statistic, JSON.stringify(compiled.automation?.pendingCapabilities), JSON.stringify((compiled.diagnostics ?? []).filter(entry => entry.severity !== "info").map(entry => entry.code + ":" + (entry.message ?? "").slice(0, 160))), JSON.stringify(sub.system.description.value).slice(0, 300));
+        if (compiled.resolution?.kind !== "save" || compiled.resolution.check?.statistic !== "spell-attack" || (compiled.automation?.pendingCapabilities ?? []).length || (!spec.noDamage && !compiled.resolution.sharedDamage)) return null;
+        if (!spec.noDamage) textFormula(compiled, spec.damage, false, spec.formula ?? null);
+        return { kind: "attack", plan: compiled, count };
+    }
+    sub.system.description.value = spec.html; sub.system.defense = { save: { statistic: spec.statistic, basic: spec.basic } };
+    sub.system.target = { value: spec.area ? "any number of creatures" : "1 creature" };
+    const compiled = compileSpell(sub, { ...options, traitModeSource: true });
+    debug("CARD save", spec.statistic, compiled.resolution?.kind, compiled.automation?.level, JSON.stringify(compiled.automation?.pendingCapabilities), JSON.stringify(spec.html).slice(0, 120));
+    if (compiled.resolution?.kind !== "save" || (compiled.automation?.pendingCapabilities ?? []).length || ((spec.damage || spec.itemDamage) && !compiled.resolution.sharedDamage)) return null;
+    // ("You gain temporary Hit Points equal to half the damage …": the benefit the text states, when it says so.)
+    if (spec.benefit && !compiled.resolution.casterBenefit) return null;
+    // (Rows stating the damage make it a degree save: the formula is then scaled by the rows.)
+    if (spec.damage && !spec.itemDamage) textFormula(compiled, spec.damage, compiled.resolution.check?.basic === true, spec.formula ?? null);
+    // (Cataclysm: "Treat the resistances of creatures in the area as if they were 10 lower …" — each resistance PF2e applies lowered by the amount.)
+    if (spec.resistanceLower) compiled.resolution.resistanceLower = spec.resistanceLower;
+    // ("Choose for the falling stars to be … (sonic), … (fire), …": the untyped pool's type, picked on the card.)
+    if (spec.choice) {
+        compiled.resolution.casterChoice = { kind: "damage-type", values: [...spec.choice.values], label: spec.choice.label };
+        compiled.compilerEvidence.casterChoice = spec.choice.sourceText;
+    }
+    return { kind: "save", plan: compiled, ...(spec.count ? { count: spec.count } : {}) };
+}
+
+/** An incarnate's manifestations by parts (incarnate-phases.js), or null when a sentence isn't read or a part doesn't compile. */
+function compileIncarnateParts(item, options) {
+    const html = String(item.system?.description?.value ?? "");
+    const debug = (...args) => { if (globalThis.process?.env?.INCARNATE_DEBUG) console.error(...args); };
+    const effects = [...html.matchAll(/@UUID\[(Compendium\.pf2e\.spell-effects\.Item\.[^\]]+)\]\{(Spell Effect: [^}]+)\}/g)].map(match => ({ uuid: match[1], name: match[2] }));
+    const options_ = splitOptions(html.replace(/<hr\s*\/?>\s*(?:<p>\s*@UUID\[Compendium\.pf2e\.spell-effects[^<]*<\/p>\s*)+$/, ""));
+    const intro = plainOfHTML(html.split(/<ul>|<p>\s*<strong>\s*(?:Arrive|Depart)\b/)[0]);
+    // (A Heightened entry: every formula must read the cast rank, since the phases' small spells drop PF2e's heightening.)
+    const heightened = /<strong>\s*Heightened\b/.test(html);
+    const formulaOf = entries => entries.length === 1 && !entries[0][2] ? `${entries[0][0]}[${entries[0][1]}]` : `{${entries.map(([dice, type, category]) => `${dice}[${category ? `${category},` : ""}${type}]`).join(",")}}`;
+    const rankSafe = entries => !heightened || entries.every(([dice]) => /@item\./.test(dice));
+    const subSpell = (description, { statistic = null, basic = false, traits = [], area = { type: "emanation", value: 5 }, duration = "", damage = [] } = {}) => {
+        const copy = cloneJSON(item);
+        copy.system.description.value = description;
+        copy.system.defense = statistic ? { save: { statistic, basic } } : null;
+        copy.system.target = { value: "" };
+        copy.system.area = area;
+        copy.system.duration = { value: duration, sustained: false };
+        copy.system.traits = { ...copy.system.traits, value: [...new Set([...(copy.system.traits?.value ?? []).filter(trait => trait !== "incarnate"), ...traits])] };
+        copy.system.damage = Object.fromEntries(damage.map(([formula, type, category], index) => [`phase${index}`, { applyMod: false, category, formula, kinds: ["damage"], materials: [], type }]));
+        delete copy.system.heightening;
+        return copy;
+    };
+    // (The spell item has no damage of its own: the save rolls the phase's formula.)
+    const phaseFormula = (plan, entries) => {
+        if (!entries?.length || !plan.resolution?.sharedDamage) return;
+        const formula = formulaOf(entries);
+        // (A degree table that halves, keeps and doubles it — the save route's reading of the phase's rows — scales the one roll.)
+        plan.resolution.sharedDamage = { ...plan.resolution.sharedDamage, mode: "formula", rollOnce: true, formula, textDerived: true, ...(plan.resolution.check?.basic === true ? {} : { degreeScaled: true }) };
+        plan.compilerEvidence.phaseFormula = formula;
+    };
+    const pending = plan => (plan.automation?.pendingCapabilities ?? []).length > 0;
+    const compilePart = (part, phase, { types = null } = {}) => {
+        const entries = partDamage(part);
+        if (entries === null && part.lead.damageText) return null;
+        if (entries && !rankSafe(entries)) return null;
+        // (The full route: the small spell has no incarnate trait, and some row forms — a basic save's extra persistent damage — are read only there.)
+        let plan = compileSpell(subSpell(phaseTable(part), { statistic: part.lead.statistic, basic: part.lead.basic, traits: phase.traits, damage: entries ?? [] }), { ...options, traitModeSource: true });
+        if (plan.resolution?.kind !== "save" || pending(plan)) plan = compileSpell(subSpell(phaseTable(part), { statistic: part.lead.statistic, basic: part.lead.basic, traits: phase.traits, damage: entries ?? [] }), { ...options, traitModeSource: false });
+        if (plan.resolution?.kind !== "save" || pending(plan) || plan.resolution.lingering) {
+            debug("  part plan:", plan.resolution?.kind, JSON.stringify(plan.automation?.pendingCapabilities), JSON.stringify(Object.values(plan.resolution?.outcomes ?? {}).flatMap(outcome => (outcome.semanticCoverage?.clauses ?? []).filter(clause => clause.status !== "compiled").map(clause => clause.text))).slice(0, 400));
+            return null;
+        }
+        phaseFormula(plan, entries);
+        // ("Arcane dragons can choose force or mental, …": the caster's pick of the manifestation's two types, the text's untyped damage.)
+        if (types) {
+            if (!(entries?.length === 1 && entries[0][1] === "untyped")) return null;
+            plan.resolution.casterChoice = { kind: "damage-type", values: [...types], label: "Damage type" };
+            plan.compilerEvidence.casterChoice = part.typeChoice.sourceText;
+        }
+        // ("… pushed 10 feet away from the kanyas": away from the manifestation, the area's centre; "pulled 50 feet toward the center".)
+        for (const degree of ["failure", "criticalFailure"]) {
+            if (part.push?.[degree]) plan.resolution.outcomes[degree].forcedMovement = { kind: "push", distance: part.push[degree], upTo: false, optional: false, direction: "from-center" };
+            if (part.pull?.[degree]) plan.resolution.outcomes[degree].forcedMovement = { kind: "pull", distance: part.pull[degree], upTo: false, optional: false, direction: "center" };
+        }
+        // A row's note Effects the save route doesn't write: a Speed penalty while the bleed lasts, a creature shunted into the future, a d20 limit, a squeeze each turn.
+        for (const [degree, notes] of Object.entries(part.rows.extras ?? {})) {
+            const outcome = plan.resolution.outcomes[degree];
+            if (!outcome) return null;
+            outcome.noteEffects = [...(outcome.noteEffects ?? []), ...cloneJSON(notes)];
+        }
+        // The manifestation's own counteract against light (or darkness) in the area: the card's reminder with its modifier and rank.
+        if (part.counteract) plan.resolution.reminders = [...(plan.resolution.reminders ?? []), { kind: "counteract-fixed", target: part.counteract.target, modifier: part.counteract.modifier,
+            rank: part.counteract.rank, text: part.counteract.text }];
+        return plan;
+    };
+    // Spell attacks against several targets: the attack's rows from the text's multipliers.
+    const compileAttack = (part, phase) => rankSafe(part.damage) ? compileTextAttack(item, options, { damage: part.damage, multipliers: part.multipliers, traits: phase.traits }) : null;
+    // A lingering cloud: the small spell the lingering-area route reads.
+    const compileLinger = (part, phase) => {
+        if (!rankSafe(part.damage)) return null;
+        // (The cloud fills an area around the manifestation, not the caster: a placed area — the GM's region — even where the text says "emanation".)
+        const plan = compileSpell(subSpell(part.html, { statistic: part.statistic, basic: part.basic, traits: phase.traits, area: { type: "burst", value: part.area.value }, duration: `${part.minutes} minute${part.minutes === 1 ? "" : "s"}`, damage: part.damage }),
+            { ...options, traitModeSource: true });
+        if (plan.resolution?.kind !== "save" || !plan.resolution.lingering || pending(plan)) { debug("  linger plan:", plan.resolution?.kind, JSON.stringify(plan.automation?.pendingCapabilities)); return null; }
+        phaseFormula(plan, part.damage);
+        return plan;
+    };
+    // A spell the manifestation casts: that spell's own plan (its 3-action version, its stated area), at the stated rank.
+    const compileCast = part => {
+        const referenced = options.referencedSpells?.get?.(part.uuid);
+        if (!referenced) return null;
+        const source = cloneJSON(referenced);
+        let overlayId = null;
+        if (part.actions) {
+            const found = Object.entries(source.system?.overlays ?? {}).find(([, overlay]) => overlay?.overlayType === "override" && String(overlay.system?.time?.value) === String(part.actions) && !overlay.system?.damage);
+            if (!found) return null;
+            overlayId = found[0];
+            const merge = (target, patch) => { for (const [key, value] of Object.entries(patch)) target[key] = value && typeof value === "object" && !Array.isArray(value) && target[key] && typeof target[key] === "object" && !Array.isArray(target[key]) ? merge(target[key], value) : value; return target; };
+            source.system = merge(source.system, cloneJSON(found[1].system ?? {}));
+        }
+        delete source.system.overlays;
+        // (The area the text gives instead of the spell's own is where the GM targets: the spell's plan is its own.)
+        const plan = compileSpell(source, { ...options, traitModeSource: false });
+        if (!plan.resolution || ["unsupported", "unsafe"].includes(plan.automation?.level) || pending(plan)) { debug("  cast plan:", part.name, plan.resolution?.kind, plan.automation?.level, JSON.stringify(plan.automation?.pendingCapabilities)); return null; }
+        return { plan, overlayId, rank: part.rank ?? Number(referenced.system?.level?.value) };
+    };
+    const choices = [];
+    for (const [index, option] of options_.entries()) {
+        const phases = splitPhases(option.html);
+        if (phases.map(phase => phase.key).join() !== "arrive,depart") return null;
+        // (PF2e's linked Effect for this manifestation — "Spell Effect: Holy Host (Azata)" — or, with one manifestation, the phase's: "… (Depart)".)
+        const byOption = option.label ? effects.find(effect => effect.name.toLowerCase().includes(option.label.toLowerCase().replace(/s$/, ""))) ?? null : null;
+        const readPhases = [];
+        for (const phase of phases) {
+            const linked = byOption ?? (options_.length === 1 ? effects.find(effect => new RegExp(`\\(${phase.key}\\)`, "i").test(effect.name)) ?? null : null);
+            const read = readPhase(phase.text, { linkedEffect: linked });
+            if (read.unread.length) debug("incarnate parts unread:", option.label, phase.key, read.unread);
+            if (read.unread.length || !read.parts.length) return null;
+            readPhases.push({ phase, read });
+        }
+        // ("The dragons choose the damage type … depending on the tradition of dragons summoned.": a manifestation per tradition, each blast's type its pick of that tradition's two.)
+        const traditions = readPhases.flatMap(({ read }) => read.parts.filter(part => part.typeChoice)).map(part => part.typeChoice.byTradition);
+        if (traditions.some(byTradition => !byTradition || !Object.keys(byTradition).length) || traditions.length > 1 || (traditions.length && options_.length > 1)) return null;
+        const variants = traditions.length ? Object.entries(traditions[0]).map(([tradition, types]) => ({ tradition, types })) : [null];
+        for (const variant of variants) {
+            const compiled = [];
+            for (const { phase, read } of readPhases) {
+                const parts = [];
+                const keyOf = () => parts.length ? `${phase.key}-${parts.length}` : phase.key;
+                for (const part of read.parts) {
+                    if (part.kind === "save") {
+                        // ("two blasts of energy: a @Template[line|120] and a @Template[cone|60] that can't overlap": each blast its own save, its own type.)
+                        const blasts = part.typeChoice ? /two blasts of energy: an? @Template\[(?:type:)?(\w+)\|distance:(\d+)\] and an? @Template\[(?:type:)?(\w+)\|distance:(\d+)\]/.exec(phase.text) : null;
+                        if (part.typeChoice && !blasts) return null;
+                        const areas = blasts ? [`${blasts[2]}-foot ${blasts[1]}`, `${blasts[4]}-foot ${blasts[3]}`] : [null];
+                        for (const area of areas) {
+                            const plan = compilePart(part, phase, { types: part.typeChoice ? variant?.types ?? null : null });
+                            if (!plan) { debug("incarnate part didn't compile:", option.label, phase.key, phaseTable(part).slice(0, 600)); return null; }
+                            if (part.repeat?.invalid || part.rows.invalid) return null;
+                            const reminder = [area ? `Target the creatures in the ${area} (the two blasts can't overlap).` : part.where ? `Target the creatures it reaches: ${sentenceOf(part.where)}` : null, ...part.rows.notes].filter(Boolean).join(" ") || null;
+                            parts.push({ key: keyOf(), title: `${phase.title}${area ? ` (${area})` : ""}${part.alternative ? ` (${part.alternative})` : ""}`, traits: phase.traits, kind: "save", plan, reminder,
+                                ...(part.repeat ? { repeat: { ...part.repeat } } : {}), ...(part.immunityRounds ? { immunityRounds: part.immunityRounds } : {}),
+                                ...(part.alternative ? { alternative: { group: phase.key, label: part.alternative } } : {}) });
+                        }
+                    } else if (part.kind === "attack") {
+                        const plan = compileAttack(part, phase);
+                        if (!plan) return null;
+                        parts.push({ key: keyOf(), title: phase.title, traits: phase.traits, kind: "attack", plan, count: part.count, reminder: `Target ${lowerFirst(part.who)}: each target is its own attack roll.`, sourceText: part.sourceText });
+                    } else if (part.kind === "linger") {
+                        const plan = compileLinger(part, phase);
+                        if (!plan) return null;
+                        parts.push({ key: keyOf(), title: phase.title, traits: phase.traits, kind: "save", plan, linger: true,
+                            reminder: `Select the region it fills: the ${part.area.value}-foot ${part.area.type} around the manifestation${part.area.type === "emanation" ? " and its space" : ""} (${part.minutes} minute${part.minutes === 1 ? "" : "s"}).` });
+                    } else if (part.kind === "damage" || part.kind === "heal") {
+                        const entries = part.kind === "damage" ? part.damage : null;
+                        if (entries && !rankSafe(entries)) return null;
+                        parts.push({ key: keyOf(), title: phase.title, traits: phase.traits, kind: part.kind, formula: entries ? formulaOf(entries) : part.formula, count: part.count ?? null,
+                            reminder: `Target ${lowerFirst(part.who)}.`, sourceText: part.sourceText });
+                    } else if (part.kind === "effect") {
+                        parts.push({ key: keyOf(), title: `${phase.title}: ${part.label}`, traits: phase.traits, kind: "effect", label: part.label, text: part.text, rules: cloneJSON(part.rules ?? []),
+                            grants: cloneJSON(part.grants ?? []), ...(part.d20Clamp ? { d20Clamp: cloneJSON(part.d20Clamp) } : {}), duration: cloneJSON(part.duration), reminder: `Target ${part.who}.`, sourceText: part.sourceText });
+                    } else if (part.kind === "cast-spell") {
+                        const cast = compileCast(part);
+                        if (!cast) return null;
+                        parts.push({ key: keyOf(), title: `${phase.title}: ${part.name}`, traits: phase.traits, kind: "cast-spell", uuid: part.uuid, name: part.name, rank: cast.rank, overlayId: cast.overlayId,
+                            plan: cast.plan, alliesOnly: !!part.alliesOnly, ...(part.durationRounds ? { durationRounds: part.durationRounds } : {}), ...(part.exception ? { exception: part.exception } : {}),
+                            reminder: `Target ${part.who}.${part.exception ? ` ${part.exception[0].toUpperCase()}${part.exception.slice(1)}.` : ""}`, sourceText: part.sourceText });
+                    } else if (part.kind === "cloud") {
+                        parts.push({ key: keyOf(), title: phase.title, traits: phase.traits, kind: "cloud", area: cloneJSON(part.area), durationSeconds: part.durationSeconds, memberRules: cloneJSON(part.memberRules),
+                            notes: [...part.notes], reminder: `Select or place the ${part.area.value}-foot ${part.area.type}. ${part.notes.join(" ")}`, sourceText: part.sourceText });
+                    } else if (part.kind === "native-effect") parts.push({ key: keyOf(), title: `${phase.title}: ${part.label}`, traits: phase.traits, kind: "native-effect", uuid: part.uuid, sourceText: part.sourceText });
+                    else if (part.kind === "reduce-conditions") parts.push({ key: keyOf(), title: `${phase.title}: ${part.label}`, traits: phase.traits, kind: "reduce-conditions", slugs: part.slugs, by: part.by, sourceText: part.sourceText });
+                    else return null;
+                }
+                if (read.reminders.length) parts[0].reminder = [parts[0].reminder, ...read.reminders].filter(Boolean).join(" ");
+                compiled.push(...parts);
+            }
+            const label = variant ? `${variant.tradition[0].toUpperCase()}${variant.tradition.slice(1)} dragons (${variant.types.join(" or ")})` : option.label ?? item.name;
+            choices.push({ key: variant ? variant.tradition : option.label ? option.label.toLowerCase().replace(/[^a-z0-9]+/g, "-") : `option-${index}`, label, phases: compiled });
+        }
+    }
+    if (!choices.length) return null;
+    const base = cloneJSON(item);
+    base.system.description.value = `<p>${intro}</p>`;
+    const plan = compileSpell(base, { ...options, traitModeSource: true });
+    const notes = [intro.split(/(?<=[.!?])\s+/).find(sentence => /occup(?:y|ies) the space of/.test(sentence)) ?? intro];
+    plan.resolution = { kind: "incarnate", check: null, sharedDamage: null, outcomes: plan.resolution.outcomes, postDamageTerminal: null, applications: [],
+        incarnate: { notes, ...(choices.length > 1 ? { phases: [], options: { label: choices.some(choice => /dragons \(/.test(choice.label)) ? "tradition" : "manifestation", choices } } : { phases: choices[0].phases }) } };
+    plan.automation = { level: "automatic", confidence: 1, compiledCapabilities: ["source", "incarnate", "incarnate-parts"], pendingCapabilities: [], delegatedCapabilities: [] };
+    plan.compilerEvidence.incarnate = choices.flatMap(choice => choice.phases.map(phase => `${choice.label}: ${phase.title}`));
+    plan.diagnostics = (plan.diagnostics ?? []).filter(entry => entry.severity !== "warning");
+    return plan;
+}
+const sentenceOf = text => /[.!?)]$/.test(String(text).trim()) ? String(text).trim() : `${String(text).trim()}.`;
+const lowerFirst = text => /^(?:All|Any|Each|One|Up|The|Allies|Enemies)\b/.test(String(text)) ? `${String(text)[0].toLowerCase()}${String(text).slice(1)}` : String(text);
+const plainOfHTML = html => htmlToPlainText(String(html ?? "")).replace(/@UUID\[[^\]]+\]\{([^}]+)\}/g, "$1").replace(/\s+/g, " ").trim();
+
+/**
+ * Third-party content links in the older UUID form, without the document type — "@UUID[Compendium.pf2e.conditionitems.TBSHQspnbcqxsmjL]{Frightened 1}" —
+ * which Foundry still resolves: read as the current form ("Compendium.pf2e.conditionitems.Item.TBSHQspnbcqxsmjL").
+ */
+const LEGACY_UUID = /(@UUID\[Compendium\.[\w-]+\.[\w-]+\.)(?!Item\.|Actor\.|JournalEntry\.|Macro\.|RollTable\.|Scene\.|Adventure\.)([A-Za-z0-9]{16}\])/g;
+// (Also the older "@Check[type:flat|dc:6]" and "@Compendium[pf2e.conditionitems.ID]{Label}" forms.)
+const LEGACY_CHECK = /@Check\[type:/g;
+const MODULE_EFFECT = /@UUID\[Compendium\.(?!pf2e\.)[\w-]+\.[\w-]+\.Item\.([A-Za-z0-9]{16})\]\{((?:Spell )?Effect: [^}]+)\}/g;
+const LEGACY_COMPENDIUM = /@Compendium\[([\w-]+\.[\w-]+)\.([A-Za-z0-9]{16})\]/g;
+const UNNAMED_MODULE_LINK = /@UUID\[Compendium\.(?!pf2e\.)[\w-]+\.[\w-]+\.Item\.([A-Za-z0-9]{16})\](?!\{)/g;
+export function normalizeLegacyLinks(item, catalog = null) {
+    const html = item?.system?.description?.value;
+    if (typeof html !== "string") return item;
+    const fixed = html.replace(LEGACY_UUID, "$1Item.$2").replace(LEGACY_CHECK, "@Check[").replace(LEGACY_COMPENDIUM, "@UUID[Compendium.$1.Item.$2]")
+        // (A module's Effect linked without its name — Celestial Shift's "@UUID[Compendium.pf2e-team-plus-magic.misc.GNSz5ksf9fux0j7u]" — named from the catalog, then read as below.)
+        .replace(UNNAMED_MODULE_LINK, (link, id) => { const name = catalog?.get?.(id)?.name; return /^(?:Spell )?Effect: /.test(String(name ?? "")) ? `${link}{${name}}` : link; })
+        // (A module's own Effect — "@UUID[Compendium.pf2e-team-plus-magic.misc.Item.blEZMYfhAWP8iW8Q]{Spell Effect: Hemophilia}" — read as PF2e's spell
+        // Effects are; the loader finds it in the module's pack: native-outcome-effects.js findModuleEffect.)
+        .replace(MODULE_EFFECT, "@UUID[Compendium.pf2e.spell-effects.Item.$1]{$2}")
+        // (A third-party table's headings in plain text — "<p>Failure The target is …" — or misspelt — "Critical Failura" — read as PF2e's bold ones.)
+        .replace(/<p>(Critical Success|Success|Failure|Critical Failure) (?=[A-Z@])/g, "<p><strong>$1</strong> ")
+        .replace(/<strong>Critical Failura<\/strong>/g, "<strong>Critical Failure</strong>")
+        // (A curly apostrophe in a third-party text — "your target’s AC" — read as the straight one PF2e's texts use.)
+        .replace(/(?<=[A-Za-z])’(?=[a-z])/g, "'");
+    if (fixed === html) return item;
+    return { ...item, system: { ...item.system, description: { ...item.system.description, value: fixed } } };
+}
+
+/**
+ * A spell entry with no text that duplicates a written one (Magic+'s second, empty Dynamic Breathe Fire — user decision 2026-10-07: use the full copy's plan): the
+ * written twin of the same name and pack among the referenced spells, or null.
+ */
+function writtenTwin(item, referencedSpells) {
+    if (item?.type !== "spell" || String(item.system?.description?.value ?? "").trim() || !referencedSpells?.values) return null;
+    const pack = item._pack ?? /^Compendium\.(.+)\.Item\.[A-Za-z0-9]+$/.exec(String(item._stats?.compendiumSource ?? item.flags?.core?.sourceId ?? ""))?.[1] ?? null;
+    return [...referencedSpells.values()].find(other => other?.type === "spell" && other.name === item.name && other._id !== item._id && String(other.system?.description?.value ?? "").trim()
+        && other._pack && (!pack || other._pack === pack)) ?? null;
+}
+
 export function compileAbility(item, options = {}) {
     try {
-        if (item?.type === "spell") return withThrallTokens(compileSpell(item, options), item);
+        // (An empty entry: its written twin cast in its place — the twin's own card, its variant asked.)
+        const twin = writtenTwin(item, options.referencedSpells);
+        if (twin) {
+            const plan = compileAbility(cloneJSON(twin), { ...options, referencedSpells: new Map() });
+            return { ...plan, source: { ...(plan.source ?? {}), name: item.name, id: item._id ?? plan.source?.id },
+                resolution: { kind: "proxy-cast", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [],
+                    proxyCast: { source: "list", sameRank: true, variants: true, list: [{ name: twin.name, uuid: `Compendium.${twin._pack}.Item.${twin._id}`, minRank: 0 }],
+                        notes: ["This entry has no text: its written copy is cast in its place."] } },
+                automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "proxy-cast", "written-twin"], pendingCapabilities: [] },
+                compilerEvidence: { ...(plan.compilerEvidence ?? {}), writtenTwin: [`Compendium.${twin._pack}.Item.${twin._id}`] } };
+        }
+        if (item?.type === "spell") {
+            const legacy = normalizeLegacyLinks(item, options.nativeEffectCatalog ?? null);
+            const asWritten = withThrallTokens(compileSpell(legacy, options), legacy);
+            // (Another spell's effect, the caster's pick resolved at this rank — Coalesce Form, Untamed Aspect Shift, Witch's Bottle.)
+            const proxy = extractProxyCast(legacy, options.nativeEffectCatalog ?? null);
+            if (proxy) return { ...asWritten, resolution: { kind: "proxy-cast", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [], proxyCast: proxy.proxy },
+                automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "proxy-cast"], pendingCapabilities: [] },
+                compilerEvidence: { ...(asWritten.compilerEvidence ?? {}), proxyCast: proxy.sentences }, diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+            // (A stationary area strengthening the caster's spells cast in it — Manifest Wicket Dominion.)
+            const dominion = extractWicketDominion(legacy);
+            if (dominion) return { ...asWritten, resolution: { kind: "caster-dominion", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [], casterDominion: dominion.dominion },
+                automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "caster-dominion"], pendingCapabilities: [] },
+                compilerEvidence: { ...(asWritten.compilerEvidence ?? {}), casterDominion: dominion.sentences }, diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+            // (A Strike's mark, its later shock the card's option — Hyper-Arcane Pressure Point Strike.)
+            const pressure = extractPressurePoint(legacy);
+            if (pressure) {
+                const shock = cloneJSON(legacy);
+                shock.system.description.value = pressure.saveHTML;
+                shock.system.defense = { save: { statistic: pressure.statistic, basic: false } };
+                shock.system.damage = { strike: { formula: "1d4", type: "untyped", category: null, materials: [], kinds: ["damage"], applyMod: false } };
+                shock.system.target = { value: "1 creature" }; shock.system.duration = { value: "", sustained: false }; shock.system.requirements = "";
+                const shockPlan = compileSpell(shock, { ...options, traitModeSource: true });
+                if (shockPlan.resolution?.kind === "save" && !(shockPlan.automation?.pendingCapabilities ?? []).length) {
+                    // (The Strike's damage rolled again: the caster's unarmed Strike formula, read when it casts.)
+                    const [component] = shockPlan.resolution.sharedDamage.components;
+                    shockPlan.resolution.sharedDamage = { mode: "formula", rollOnce: true, formula: "{strikeDamage}", components: [{ ...component, formula: "{strikeDice}", type: "{strikeType}" }], textDerived: true, degreeScaled: true };
+                    shockPlan.compilerEvidence.textFormula = "{strikeDamage}";
+                    for (const degree of ["failure", "criticalFailure"]) shockPlan.resolution.outcomes[degree].noteEffects = [...(shockPlan.resolution.outcomes[degree].noteEffects ?? []),
+                        { label: "Pressure points", text: pressure.flat, sourceText: pressure.sentences[degree === "failure" ? 3 : 4], claimsRow: false, gmPlays: true,
+                            duration: { mode: "fixed", value: pressure.rounds, unit: "rounds", expiry: "turn-start", anchor: "effect-start", offset: 0, sourceText: "while enfeebled" } }];
+                    const patch = { defense: shock.system.defense, damage: shock.system.damage, target: shock.system.target, duration: shock.system.duration };
+                    return { ...asWritten, resolution: { kind: "stated-effect", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [],
+                        statedEffect: { recipient: "targets", seconds: 60, rules: [], strikeDamage: true, ignoresLinks: true,
+                            notes: ["Marked by the caster's pressure-point Strike (if it hit). On a later turn, the caster can spend a single action (concentrate) to activate it: the card's option."],
+                            gmOptions: [{ key: "activate", label: "Activate the pressure points (1 action, concentrate): target the marked creature", kind: "save", plan: shockPlan, patch, endsCast: true }] } },
+                        automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "stated-effect", "pressure-point"], pendingCapabilities: [] },
+                        compilerEvidence: { ...(asWritten.compilerEvidence ?? {}), statedEffect: pressure.sentences }, diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+                }
+            }
+            // (A conjured guardian giving cover to its side, its Sustain's standard cover the card's part — Ice Guardian.)
+            const guardian = extractIceGuardian(legacy);
+            if (guardian) return { ...asWritten, resolution: { kind: "incarnate", check: null, sharedDamage: null, outcomes: asWritten.resolution?.outcomes ?? {}, postDamageTerminal: null, applications: [],
+                    incarnate: { notes: [`Sustain: raise the cover to standard until the start of your next turn (the card's part), or have the guardian Stride up to ${guardian.conjure.speed} feet (move its token).`],
+                        conjure: { ...guardian.conjure, durationSeconds: 60, sustained: false },
+                        phases: [{ key: "standard-cover", title: "Sustain: standard cover", kind: "effect", label: "Standard cover (beside the ice guardian)", who: "you and your allies adjacent to the guardian",
+                            text: "Standard cover from the ice guardian until the start of your next turn: +2 circumstance to AC, to Reflex saves against area effects and to Stealth checks to Hide, Sneak or avoid detection.",
+                            sourceText: guardian.cover.sourceText, rules: [{ key: "FlatModifier", selector: "ac", type: "circumstance", value: 2 },
+                                { key: "FlatModifier", selector: "reflex", type: "circumstance", value: 2, predicate: ["area-effect"] },
+                                { key: "FlatModifier", selector: "stealth", type: "circumstance", value: 2, predicate: [{ or: ["action:hide", "action:sneak", "avoid-detection"] }] }],
+                            duration: { mode: "fixed", value: 1, unit: "rounds", expiry: "turn-start", anchor: "source-turn", offset: 0, sourceText: "until the beginning of your next turn" } }] } },
+                automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "incarnate", "conjured-token"], pendingCapabilities: [], delegatedCapabilities: [] },
+                compilerEvidence: { ...(asWritten.compilerEvidence ?? {}), incarnate: guardian.sentences }, diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+            // (A swarm battle form generated from the text, its attack the card's option — Chorus Made Manifest.)
+            const swarmForm = extractSwarmForm(legacy);
+            if (swarmForm) {
+                const strike = cloneJSON(legacy), attack = swarmForm.attack;
+                const Statistic = attack.statistic[0].toUpperCase() + attack.statistic.slice(1);
+                strike.system.description.value = `<p>Each creature in the area takes ${attack.formula} ${attack.type} damage with a basic ${Statistic} save. A creature that critically fails its save is @UUID[Compendium.pf2e.conditionitems.Item.9PR9y0bi4JPKnHPR]{Deafened} for ${attack.rounds} round${attack.rounds === 1 ? "" : "s"}.</p>`;
+                strike.system.defense = { save: { statistic: attack.statistic, basic: true } };
+                strike.system.damage = { swarm: { formula: attack.formula, type: attack.type, category: null, materials: [], kinds: ["damage"], applyMod: false } };
+                strike.system.area = { type: "cone", value: attack.cone }; strike.system.duration = { value: "", sustained: false }; strike.system.heightening = null;
+                strike.system.traits = { ...strike.system.traits, value: (strike.system.traits?.value ?? []).filter(trait => trait !== "polymorph") };
+                const attackPlan = compileSpell(strike, { ...options, traitModeSource: true });
+                if (attackPlan.resolution?.kind === "save" && attackPlan.resolution.check?.basic === true && !(attackPlan.automation?.pendingCapabilities ?? []).length) {
+                    // (The spell item has no damage of its own: the card rolls the text's formula.)
+                    const formula = `${attack.formula}[${attack.type}]`;
+                    attackPlan.resolution.sharedDamage = { mode: "formula", rollOnce: true, formula, components: cloneJSON(attackPlan.resolution.sharedDamage?.components ?? []), textDerived: true };
+                    attackPlan.compilerEvidence.textFormula = formula;
+                    const patch = { defense: strike.system.defense, damage: strike.system.damage, area: strike.system.area, duration: strike.system.duration, heightening: null, traits: strike.system.traits };
+                    return { ...asWritten, resolution: { kind: "stated-effect", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [],
+                        statedEffect: { ...swarmForm.form, gmOptions: [{ key: "swarm-attack", label: `${attack.name} (a single action): target the creatures in the ${attack.cone}-foot cone`, kind: "save", plan: attackPlan, patch }], ignoresLinks: true } },
+                        automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "stated-effect", "swarm-form"], pendingCapabilities: [] },
+                        compilerEvidence: { ...(asWritten.compilerEvidence ?? {}), statedEffect: swarmForm.sentences }, diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+                }
+            }
+            // (A sustained area dealing its damage again on each Sustain, no save — Shadow Puppetry.)
+            const pulseArea = extractPulseArea(adaptSpellSource(legacy, options));
+            if (pulseArea) return { ...asWritten, resolution: { kind: "pulse-area", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [], pulseArea: pulseArea.pulse },
+                automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "pulse-area"], pendingCapabilities: [] },
+                compilerEvidence: { ...(asWritten.compilerEvidence ?? {}), pulseArea: pulseArea.sentences }, diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+            // (An aura hurting the foes in it when an emotion or fear takes hold — Overwhelming Festivities: the module's Aura, the module watching.)
+            const triggerAura = extractTriggerAura(adaptSpellSource(legacy, options), options.nativeEffectCatalog ?? null);
+            if (triggerAura) return { ...asWritten, resolution: { kind: "trigger-aura", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [], triggerAura: triggerAura.trigger },
+                automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "trigger-aura"], pendingCapabilities: [] },
+                compilerEvidence: { ...(asWritten.compilerEvidence ?? {}), triggerAura: triggerAura.sentences }, diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+            // (A ward against one foe by the actions spent — Targeted Ward: each version the foe's save card, the caster's Effect at Finalize.)
+            // (Four bursts of the patron's apocalypse, the table from the book's text — Patron's Apocalypse.)
+            const apocalypse = extractPatronApocalypse(legacy);
+            if (apocalypse) return { ...asWritten, resolution: { kind: "patron-apocalypse", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [], patronApocalypse: apocalypse.apocalypse },
+                automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "patron-apocalypse"], pendingCapabilities: [] },
+                compilerEvidence: { ...(asWritten.compilerEvidence ?? {}), patronApocalypse: apocalypse.sentences }, diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+            // (Objects animated into a familiar-like minion that can disperse — Animated Spark.)
+            const spark = extractAnimatedSpark(legacy);
+            if (spark) return { ...asWritten, resolution: { kind: "animated-spark", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [], animatedSpark: spark.spark },
+                automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "animated-spark"], pendingCapabilities: [] },
+                compilerEvidence: { ...(asWritten.compilerEvidence ?? {}), animatedSpark: spark.sentences }, diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+            // (A prism that diffracts, refracts or scatters magic — Prism of Power.)
+            const prism = extractPowerPrism(legacy);
+            if (prism) return { ...asWritten, resolution: { kind: "power-prism", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [], powerPrism: prism.prism },
+                automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "power-prism"], pendingCapabilities: [] },
+                compilerEvidence: { ...(asWritten.compilerEvidence ?? {}), powerPrism: prism.sentences }, diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+            // (Seeds that sprout into bushes, grown hazardous or bountiful — Seeds of Divinity.)
+            const seeds = extractDivineSeeds(legacy);
+            if (seeds) return { ...asWritten, resolution: { kind: "divine-seeds", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [], divineSeeds: seeds.seeds },
+                automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "divine-seeds"], pendingCapabilities: [] },
+                compilerEvidence: { ...(asWritten.compilerEvidence ?? {}), divineSeeds: seeds.sentences }, diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+            // (A shield that blunts damage crossing its edge — Spirit Boundary.)
+            const boundary = extractSpiritBoundary(legacy);
+            if (boundary) return { ...asWritten, resolution: { kind: "spirit-boundary", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [], spiritBoundary: boundary.boundary },
+                automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "spirit-boundary"], pendingCapabilities: [] },
+                compilerEvidence: { ...(asWritten.compilerEvidence ?? {}), spiritBoundary: boundary.sentences }, diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+            // (A bomb that waits for creatures, grows and takes Aid — Mystic Bomb.)
+            const bomb = extractMysticBomb(legacy);
+            if (bomb) return { ...asWritten, resolution: { kind: "mystic-bomb", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [], mysticBomb: bomb.bomb },
+                automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "mystic-bomb"], pendingCapabilities: [] },
+                compilerEvidence: { ...(asWritten.compilerEvidence ?? {}), mysticBomb: bomb.sentences }, diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+            // (A patron's power: every spell a rank higher, spells cast through the patron, the final shock — Unleash True Power.)
+            const power = extractTruePower(legacy);
+            if (power) {
+                const copy = cloneJSON(legacy);
+                copy.system.description.value = power.endHTML;
+                copy.system.area = { type: "emanation", value: power.power.end.radius };
+                copy.system.duration = { value: "", sustained: false };
+                const endPlan = compileSpell(copy, { ...options, traitModeSource: true });
+                if (endPlan.resolution?.kind === "save" && !(endPlan.automation?.pendingCapabilities ?? []).length)
+                    return { ...asWritten, resolution: { kind: "true-power", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [], truePower: { ...power.power, endPlan } },
+                        automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "true-power"], pendingCapabilities: [] },
+                        compilerEvidence: { ...(asWritten.compilerEvidence ?? {}), truePower: power.sentences }, diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+            }
+            // (A call to rebellion: the noticing creatures' saves, the fascinated rebels, the cheers and the immunity — Long Live the Revolution.)
+            const rally = extractRallyCry(legacy);
+            if (rally) return { ...asWritten, resolution: { kind: "rally-cry", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [], rallyCry: rally.rally },
+                automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "rally-cry"], pendingCapabilities: [] },
+                compilerEvidence: { ...(asWritten.compilerEvidence ?? {}), rallyCry: rally.sentences }, diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+            // (Creepers in a difficult area that trip, disarm and shove on each Sustain — Coiling Creepers.)
+            const creepers = extractCreepers(legacy);
+            if (creepers) return { ...asWritten, resolution: { kind: "creeper-maneuver", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [], creepers: creepers.creepers },
+                automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "creeper-maneuver"], pendingCapabilities: [] },
+                compilerEvidence: { ...(asWritten.compilerEvidence ?? {}), creepers: creepers.sentences }, diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+            // (A spotlight's area and the fascinated onlookers — Shine Spotlight.)
+            const spotlight = extractSpotlight(legacy);
+            if (spotlight) return { ...asWritten, resolution: { kind: "spotlight", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [], spotlight: spotlight.spotlight },
+                automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "spotlight"], pendingCapabilities: [] },
+                compilerEvidence: { ...(asWritten.compilerEvidence ?? {}), spotlight: spotlight.sentences }, diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+            // (A foe offered a valiant end, its damage at the end of its turns unless it fights — Honorable Death.)
+            const duel = extractHonorDuel(legacy);
+            if (duel) return { ...asWritten, resolution: { kind: "honor-duel", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [], honorDuel: duel.duel },
+                automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "honor-duel"], pendingCapabilities: [] },
+                compilerEvidence: { ...(asWritten.compilerEvidence ?? {}), honorDuel: duel.sentences }, diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+            // (An aura's save into a rolled table of dreams — Dream Logic.)
+            const dreams = extractDreamTable(legacy, options.nativeEffectCatalog ?? null);
+            if (dreams) return { ...asWritten, resolution: { kind: "dream-table", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [], dreamTable: dreams.table },
+                automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "dream-table"], pendingCapabilities: [] },
+                compilerEvidence: { ...(asWritten.compilerEvidence ?? {}), dreamTable: dreams.sentences }, diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+            // (A weapon's Grapple at range, kept by each Sustain — Coiling Grasp.)
+            const grapple = extractWeaponGrapple(legacy);
+            if (grapple) return { ...asWritten, resolution: { kind: "weapon-grapple", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [], weaponGrapple: grapple.grapple },
+                automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "weapon-grapple"], pendingCapabilities: [] },
+                compilerEvidence: { ...(asWritten.compilerEvidence ?? {}), weaponGrapple: grapple.sentences }, diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+            // (A tree token that grabs on the cast and each Sustain — Wooden Engulfment.)
+            const tree = extractEngulfingTree(legacy);
+            if (tree) return { ...asWritten, resolution: { kind: "engulfing-tree", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [], engulfingTree: tree.tree },
+                automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "engulfing-tree"], pendingCapabilities: [] },
+                compilerEvidence: { ...(asWritten.compilerEvidence ?? {}), engulfingTree: tree.sentences }, diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+            // (A d20 kept for two reactions — Lucky Decision.)
+            const fate = extractFateRoll(legacy);
+            if (fate) return { ...asWritten, resolution: { kind: "fate-roll", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [], fateRoll: fate.fate },
+                automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "fate-roll"], pendingCapabilities: [] },
+                compilerEvidence: { ...(asWritten.compilerEvidence ?? {}), fateRoll: fate.sentences }, diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+            // (An illusory hazard cast on an area or an object — Mind's Eye Wink: the area's lingering save plan, the object's save on the card.)
+            const dream = rewriteDreamHazard(legacy);
+            if (dream) {
+                const copy = cloneJSON(legacy);
+                copy.system.description.value = dream.html;
+                copy.system.area = { ...dream.area };
+                const areaPlan = compileSpell(copy, { ...options, traitModeSource: true });
+                if (areaPlan.resolution?.kind === "save" && areaPlan.resolution.lingering && !(areaPlan.automation?.pendingCapabilities ?? []).length) {
+                    Object.assign(areaPlan.resolution.lingering, cloneJSON(dream.lingering));
+                    for (const [degree, note] of Object.entries(dream.notes)) areaPlan.resolution.outcomes[degree].noteEffects = [...(areaPlan.resolution.outcomes[degree].noteEffects ?? []), cloneJSON(note)];
+                    areaPlan.compilerEvidence.dreamHazard = dream.sentences;
+                    areaPlan.automation.compiledCapabilities.push("dream-hazard");
+                    return { ...asWritten, resolution: { kind: "dream-hazard", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [], dreamHazard: { areaPlan, object: dream.object } },
+                        automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "dream-hazard"], pendingCapabilities: [] },
+                        compilerEvidence: { ...(asWritten.compilerEvidence ?? {}), dreamHazard: dream.sentences }, diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+                }
+            }
+            // (A creature's blood made to obey, its save setting the share and the time — Gruesome Marionettist.)
+            const marionette = extractMarionette(legacy);
+            if (marionette) return { ...asWritten, resolution: { kind: "marionette", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [], marionette: marionette.marionette },
+                automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "marionette"], pendingCapabilities: [] },
+                compilerEvidence: { ...(asWritten.compilerEvidence ?? {}), marionette: marionette.sentences }, diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+            // (Crystal clusters in a difficult emanation, critical force dice beside them — Garden of Crystals.)
+            const garden = extractCrystalGarden(legacy, options.nativeEffectCatalog ?? null);
+            if (garden) return { ...asWritten, resolution: { kind: "crystal-garden", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [], crystalGarden: garden.garden },
+                automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "crystal-garden"], pendingCapabilities: [] },
+                compilerEvidence: { ...(asWritten.compilerEvidence ?? {}), crystalGarden: garden.sentences }, diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+            // (A spell attack reworking the target's attributes by the caster's picks — Instant Surgery.)
+            const surgery = extractInstantSurgery(legacy);
+            if (surgery) return { ...asWritten, resolution: { kind: "attribute-surgery", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [], attributeSurgery: surgery.surgery },
+                automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "attribute-surgery"], pendingCapabilities: [] },
+                compilerEvidence: { ...(asWritten.compilerEvidence ?? {}), attributeSurgery: surgery.sentences }, diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+            // (A dying creature's save, a corpse or the creature it kills grown over — Promised Renewal: a `renewal` plan holding the save's own plan.)
+            const renewal = extractPromisedRenewal(legacy);
+            if (renewal) {
+                const copy = cloneJSON(legacy);
+                copy.system.description.value = renewal.saveHTML;
+                copy.system.defense = { save: { basic: false, statistic: renewal.statistic } };
+                copy.system.target = { value: "1 creature" }; copy.system.duration = { value: "", sustained: false };
+                const savePlan = compileSpell(copy, { ...options, traitModeSource: true });
+                if (savePlan.resolution?.kind === "save" && !(savePlan.automation?.pendingCapabilities ?? []).length && ["failure", "criticalFailure"].every(degree => savePlan.resolution.outcomes?.[degree]?.conditionIncreases?.length === 1))
+                    return { ...asWritten, resolution: { kind: "renewal", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [], renewal: { savePlan, growth: renewal.growth } },
+                        automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "renewal"], pendingCapabilities: [] },
+                        compilerEvidence: { ...(asWritten.compilerEvidence ?? {}), renewal: renewal.sentences }, diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+            }
+            const targetedWard = extractTargetedWard(legacy);
+            if (targetedWard) {
+                const copy = cloneJSON(legacy);
+                copy.system.description.value = targetedWard.saveHTML;
+                copy.system.defense = { save: { basic: false, statistic: targetedWard.statistic } };
+                copy.system.target = { value: "1 creature" }; copy.system.duration = { value: "", sustained: false };
+                const versions = [];
+                for (const version of targetedWard.versions) {
+                    copy.system.time = { value: String(version.actions) }; copy.system.range = { value: `${version.range} feet` };
+                    const plan = compileSpell(cloneJSON(copy), { ...options, traitModeSource: true });
+                    if (plan.resolution?.kind !== "save" || (plan.automation?.pendingCapabilities ?? []).length) { versions.length = 0; break; }
+                    plan.resolution.casterWard = { ...cloneJSON(targetedWard.ward), toggle: version.toggle, ...(version.note ? { note: version.note } : {}), sourceText: targetedWard.sentences[0] };
+                    plan.compilerEvidence.casterWard = targetedWard.sentences;
+                    versions.push({ actions: version.actions, plan });
+                }
+                if (versions.length === 3) return { ...asWritten, resolution: { kind: "action-versions", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [], versions },
+                    automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "action-versions"], pendingCapabilities: [] },
+                    diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+            }
+            // (A mark whose bearers frighten those who target them — Mark of Mystery: a `mark-ward` plan holding the triggered save's own plan.)
+            const mark = extractMarkWard(legacy, options.nativeEffectCatalog ?? null);
+            if (mark) {
+                const second = cloneJSON(legacy);
+                second.system.description.value = mark.followHTML;
+                second.system.defense = { save: { basic: false, statistic: mark.statistic } };
+                second.system.damage = {}; second.system.heightening = null; second.system.target = { value: "" };
+                second.system.area = { type: "emanation", value: 30 }; second.system.duration = { value: "", sustained: false };
+                const followPlan = compileSpell(second, { ...options, traitModeSource: true });
+                if (followPlan.resolution?.kind === "save" && !(followPlan.automation?.pendingCapabilities ?? []).length && followPlan.resolution.temporaryImmunity) {
+                    const { followHTML, sentences, ...data } = mark;
+                    return { ...asWritten, resolution: { kind: "mark-ward", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [], markWard: { ...data, plan: followPlan, sourceText: sentences[1] } },
+                        automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "mark-ward"], pendingCapabilities: [] },
+                        compilerEvidence: { ...(asWritten.compilerEvidence ?? {}), markWard: sentences }, diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+                }
+            }
+            // (A condition lowered, its versions by the actions spent — Hope Prevails: each a `condition-lower` plan; the card asks the actions.)
+            const lowering = extractConditionLower(legacy, options.nativeEffectCatalog ?? null);
+            if (lowering) {
+                const versionPlan = version => ({ ...cloneJSON(asWritten), resolution: { kind: "condition-lower", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [],
+                    conditionLower: version.conditionLower }, automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "condition-lower"], pendingCapabilities: [] },
+                    compilerEvidence: { ...(asWritten.compilerEvidence ?? {}), conditionLower: lowering.sentences }, diagnostics: [] });
+                return { ...asWritten, resolution: { kind: "action-versions", check: null, sharedDamage: null, outcomes: {}, postDamageTerminal: null, applications: [],
+                    versions: lowering.versions.map(version => ({ actions: version.actions, plan: versionPlan(version) })) },
+                    automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "action-versions"], pendingCapabilities: [] },
+                    diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+            }
+            // (A version listed by action glyph — third-party "Dynamic" spells — only where the spell as written leaves something pending: PF2e's own
+            // action-glyph spells already read their versions.)
+            const versioned = (asWritten.automation?.pendingCapabilities ?? []).length || !["automatic", "guided"].includes(asWritten.automation?.level) ? fitCausticVersion(legacy) ?? fitClawVersion(legacy) ?? fitIgnitionVersion(legacy) ?? fitFeastVersion(legacy) ?? fitProjectileVersion(legacy) ?? fitFlyVersion(legacy) ?? selectGlyphVersion(legacy) ?? fitGripVariant(legacy) ?? fitTargetStrikeAttack(legacy) ?? fitTextSave(legacy) ?? fitActionAreas(legacy) ?? fitSelfInArea(legacy) ?? fitSaveDCAttack(legacy) ?? fitColdEmbrace(legacy) ?? fitEnergyExertion(legacy) ?? fitTechnomancyRay(legacy) ?? fitNudge(legacy) ?? fitShadowWield(legacy) : null;
+            // (A spell cast with 1 to 3 actions and no PF2e variants — Dynamic Shield: each count's version compiled; the card asks the actions spent.)
+            const range = /^([1-3]) to ([1-3])$/.exec(String(legacy.system?.time?.value ?? "").trim());
+            if (!versioned && range && !Object.keys(legacy.system?.overlays ?? {}).length && ((asWritten.automation?.pendingCapabilities ?? []).length || !["automatic", "guided", "prompted"].includes(asWritten.automation?.level))) {
+                const versions = [];
+                for (let actions = Number(range[1]); actions <= Number(range[2]); actions++) {
+                    const copy = cloneJSON(legacy); copy.system.time = { ...(copy.system.time ?? {}), value: String(actions) };
+                    const version = compileAbility(copy, options);
+                    if (!version.resolution || version.resolution.kind === "unsupported" || (version.automation?.pendingCapabilities ?? []).length || !["automatic", "guided", "prompted"].includes(version.automation?.level)) { versions.length = 0; break; }
+                    versions.push({ actions, plan: version });
+                }
+                if (versions.length >= 2) return { ...asWritten, resolution: { kind: "action-versions", check: null, sharedDamage: null, outcomes: asWritten.resolution?.outcomes ?? {}, postDamageTerminal: null, applications: [], versions },
+                    automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "action-versions"], pendingCapabilities: [] },
+                    diagnostics: (asWritten.diagnostics ?? []).filter(entry => entry.severity === "info") };
+            }
+            if (!versioned) return asWritten;
+            const source = versioned;
+            let plan = withThrallTokens(compileSpell(source, options), source);
+            // (An immunity to one version only: "temporarily immune to the one-action version …" — its own key.)
+            // (The text's heightened step, where the variant's data steps otherwise: the card rolls the text's formula at the cast rank.)
+            const textStep = source.flags?.["pf2e-automatic-resolution"]?.textStep;
+            if (textStep && plan.resolution?.kind === "save" && plan.resolution.check?.basic === true && plan.resolution.sharedDamage?.components?.length === 1) {
+                plan.resolution.sharedDamage = { ...plan.resolution.sharedDamage, mode: "formula", rollOnce: true, formula: textStep, textDerived: true };
+                plan.compilerEvidence.glyphFormula = textStep;
+            }
+            // (Dynamic Caustic Blast: the one-action version's creature with Hardness, the GM's question; the three-action Blast's splash ring a reminder.)
+            const caustic = source.flags?.["pf2e-automatic-resolution"]?.caustic;
+            if (caustic?.version === 1 && plan.resolution?.kind === "save")
+                plan.targeting.actorConstraints = { ...plan.targeting.actorConstraints, sourceText: "a creature with Hardness", complete: true, predicates: [{ kind: "gm-confirmed", question: "Does this creature have Hardness?" }] };
+            if (caustic?.ring && plan.resolution?.kind === "save") {
+                plan.resolution.reminders = [...(plan.resolution.reminders ?? []), { kind: "third-party-note", text: `Creatures within ${caustic.ring.feet} feet of the burst (but not in it) take ${caustic.ring.damage} acid splash damage (${caustic.ring.step} more every 2 ranks above 1st): cast the Splash variant on them.`, sourceText: caustic.sourceText }];
+                plan.compilerEvidence.thirdPartyPreamble = [...(plan.compilerEvidence.thirdPartyPreamble ?? []), caustic.sourceText];
+            }
+            // (Winter's Cold Embrace: spirit for a creature that shrugs off cold and has no darkvision; the darkness's light and sight the GM's.)
+            const embrace = source.flags?.["pf2e-automatic-resolution"]?.coldEmbrace;
+            if (embrace && plan.resolution?.lingering) {
+                plan.resolution.damageSwap = { from: embrace.from, to: embrace.to, when: "resistant-no-darkvision", sourceText: embrace.swapSentence };
+                plan.compilerEvidence.coldEmbrace = [embrace.swapSentence];
+                plan.resolution.reminders = [...(plan.resolution.reminders ?? []), { kind: "third-party-note", text: embrace.light, sourceText: embrace.light }];
+                plan.compilerEvidence.thirdPartyPreamble = [...(plan.compilerEvidence.thirdPartyPreamble ?? []), embrace.light];
+            }
+            // (Energy Exertion: the text's dice, untyped until the caster names its residual energy's damage type; the trait a note.)
+            const exertion = source.flags?.["pf2e-automatic-resolution"]?.energyExertion;
+            if (exertion && plan.resolution?.kind === "save" && plan.resolution.check?.statistic === "spell-attack" && plan.resolution.sharedDamage?.components?.length === 1) {
+                const formula = `(${exertion.dice === 1 ? "" : `${exertion.dice}*`}@item.rank)d4[untyped]`;
+                const [component] = plan.resolution.sharedDamage.components;
+                plan.resolution.sharedDamage = { mode: "formula", rollOnce: true, formula, components: [{ ...component, formula: formula.replace(/\[untyped\]$/, ""), type: "untyped" }], textDerived: true, degreeScaled: true };
+                plan.resolution.casterChoice = { kind: "damage-type", values: ["acid", "cold", "electricity", "fire", "sonic", "force", "mental", "poison", "spirit", "vitality", "void", "bludgeoning", "piercing", "slashing"],
+                    label: "Residual energy's damage type (air, earth or water: bludgeoning; wood: piercing; metal: slashing)" };
+                plan.compilerEvidence.casterChoice = exertion.typeSentence;
+                plan.resolution.reminders = [...(plan.resolution.reminders ?? []), { kind: "third-party-note", text: `${exertion.traitSentence}${exertion.expended ? " (This version expends your residual energy.)" : ""}`, sourceText: exertion.traitSentence }];
+                plan.compilerEvidence.thirdPartyPreamble = [...(plan.compilerEvidence.thirdPartyPreamble ?? []), exertion.traitSentence];
+            }
+            // (Technomancy Ray: the die by the caster's Crafting rank; fire, or the Variable Core's type, for the hit and the critical persistent damage.)
+            const ray = source.flags?.["pf2e-automatic-resolution"]?.technomancy;
+            const critical = plan.resolution?.outcomes?.criticalSuccess?.damage;
+            if (ray && plan.resolution?.kind === "save" && plan.resolution.check?.statistic === "spell-attack" && plan.resolution.sharedDamage?.components?.length === 1 && critical?.mode === "mixed"
+                && critical.formulas?.length === 1 && critical.formulas[0].formula === `${ray.persistent}[persistent,${ray.type}]`) {
+                const formula = `(@item.rank)d${ray.base}[untyped]`;
+                const [component] = plan.resolution.sharedDamage.components;
+                plan.resolution.sharedDamage = { mode: "formula", rollOnce: true, formula, components: [{ ...component, formula: `(@item.rank)d${ray.base}`, type: "untyped" }], textDerived: true, degreeScaled: true };
+                critical.formulas[0].formula = `${ray.persistent}[persistent,untyped]`;
+                plan.resolution.casterChoice = { kind: "damage-type", values: [ray.type, "acid", "cold", "electricity"], label: `Damage type (${ray.type}, or your Variable Core's)`, outcomeFormulas: true };
+                plan.compilerEvidence.casterChoice = ray.coreSentence;
+                plan.resolution.skillDie = { skill: "crafting", base: ray.base, byRank: ray.byRank, sourceText: ray.dieSentence };
+                plan.compilerEvidence.skillDie = ray.dieSentence;
+            }
+            // (Unhelpful Nudge: the push where the caster chooses during the Stride; the collision's second save, asked first of the GM.)
+            const nudge = source.flags?.["pf2e-automatic-resolution"]?.nudge;
+            if (nudge && plan.resolution?.kind === "save" && ["failure", "criticalFailure"].every(degree => plan.resolution.outcomes[degree]?.forcedMovement?.kind === "push")) {
+                const none = { damage: { mode: "none", multiplier: 0, sourceComponentIds: [] }, effects: [], terminal: null, manualInstructions: [], rawText: "The creature is unaffected." };
+                const prone = { ...cloneJSON(none), effects: [{ kind: "condition", slug: nudge.condition.name.toLowerCase(), name: nudge.condition.name, value: null, duration: null, source: "description-reference",
+                    reference: nudge.condition.id, raw: nudge.condition.raw }], rawText: `It falls ${nudge.condition.name}.` };
+                for (const degree of ["failure", "criticalFailure"]) {
+                    const outcome = plan.resolution.outcomes[degree];
+                    outcome.forcedMovement = { ...outcome.forcedMovement, direction: "chosen", sourceText: nudge.push };
+                    outcome.followUps = [{ id: `collision-${degree}`, kind: "save", complete: true, timing: { event: "after-primary-outcome", recurring: false, subject: "affected-actor" },
+                        check: { statistic: nudge.statistic, basic: false, dcSource: "source-actor", traits: [] },
+                        decisionWindows: { beforeRoll: true, nativeRollDialog: true, provisionalResult: true, rerollBeforeApplication: "replace", rerollAfterApplication: "manual-review", applicationRequiresConfirmation: true },
+                        gate: { kind: "gm-question", question: "Was it pushed into another creature or object?", sourceText: nudge.collision },
+                        outcomes: { criticalSuccess: cloneJSON(none), success: cloneJSON(none), failure: cloneJSON(prone), criticalFailure: cloneJSON(prone) } }];
+                }
+                plan.compilerEvidence.nudge = [nudge.push, nudge.collision];
+            }
+            // (Dynamic Vampiric Feast's one action: the caster's marker until the end of its next turn, read by its next damaging spell's card.)
+            const feast = source.flags?.["pf2e-automatic-resolution"]?.feast;
+            if (feast?.version === 1) {
+                plan = { ...plan, resolution: { kind: "stated-effect", check: null, sharedDamage: null, outcomes: plan.resolution?.outcomes ?? {}, postDamageTerminal: null, applications: [],
+                    statedEffect: { recipient: "self", seconds: 6, expiry: "turn-end", rules: [], vampiricNext: { fraction: 0.5, capPerRank: feast.capPerRank, rounds: feast.rounds, sourceText: feast.sourceText },
+                        notes: [`Your next spell cast before the end of your next turn grants temporary Hit Points equal to half the most damage it deals to a single creature (at most ${feast.capPerRank} × the spell's rank), lost after ${feast.rounds} rounds.`] } },
+                    automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "stated-effect"], pendingCapabilities: [] } };
+                plan.compilerEvidence.statedEffect = [feast.sourceText];
+            }
+            // (Dynamic Ignition's one-action square: a placed hazard — its fire to a creature entering it or ending its turn there, no save — for the rounds rolled; the
+            // attack versions' reminders.)
+            const ignition = source.flags?.["pf2e-automatic-resolution"]?.ignition;
+            if (ignition?.version === 1) {
+                const square = ignition.square;
+                plan = { ...plan, resolution: { kind: "incarnate", check: null, sharedDamage: null, outcomes: plan.resolution?.outcomes ?? {}, postDamageTerminal: null, applications: [],
+                    incarnate: { notes: ["Casting the one-action version again ends the previous square."], phases: [{ key: "square", title: "The burning square", traits: [], kind: "hazard",
+                        place: { type: "square", value: 5 }, events: ["enter", "turn-end"], formula: square.formula, type: square.type, roundsRoll: square.roundsRoll, rounds: Number(/d(\d+)$/.exec(square.roundsRoll)[1]),
+                        label: "Hazardous terrain", reminder: `Place the unoccupied square within ${square.range} feet: each creature entering it or ending its turn there takes the fire damage (no save), for ${square.roundsRoll} rounds.` }] } },
+                    automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "incarnate", "incarnate-parts"], pendingCapabilities: [], delegatedCapabilities: [] } };
+                plan.compilerEvidence.incarnate = [ignition.sourceText];
+                plan.diagnostics = (plan.diagnostics ?? []).filter(entry => entry.severity !== "warning");
+            } else if (ignition && plan.resolution?.check?.statistic === "spell-attack") {
+                plan.resolution.reminders = [...(plan.resolution.reminders ?? []), { kind: "third-party-note", text: ignition.melee ? "The melee version: the target must be within your melee reach (the dice are d6s)." : "A target within your melee reach can be attacked with the flame in melee instead: cast the Melee variant (d6s).", sourceText: ignition.sourceText }];
+                plan.compilerEvidence.thirdPartyPreamble = [...(plan.compilerEvidence.thirdPartyPreamble ?? []), ignition.sourceText];
+            }
+            // (Dynamic Gouging Claw: the claw Strike as the caster's Effect — PF2e's Strike rule element and critical specialization — then immune; the attack's type
+            // the caster's pick; the three-action version the claw, its reach until the end of the next turn, then the attack.)
+            const claw = source.flags?.["pf2e-automatic-resolution"]?.claw;
+            if (claw) {
+                const statedPlan = statedEffect => ({ ...cloneJSON(plan), resolution: { kind: "stated-effect", check: null, sharedDamage: null, outcomes: plan.resolution?.outcomes ?? {}, postDamageTerminal: null, applications: [], statedEffect },
+                    automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "stated-effect"], pendingCapabilities: [] } });
+                const strikeEffect = strike => ({ recipient: "self", seconds: 60, immunity: { key: `${plan.source.slug ?? "dynamic-gouging-claw"}:claw`, duration: { value: strike.immunityMinutes, unit: "minutes" } },
+                    rules: [{ key: "Strike", category: "unarmed", slug: "gouging-claw", label: "Claw", damage: { base: { damageType: strike.type, dice: strike.dice, die: strike.die } }, group: "knife", traits: ["agile", "finesse", "unarmed"] },
+                        { key: "CriticalSpecialization", predicate: ["item:slug:gouging-claw"] }],
+                    notes: [`A claw Strike for 1 minute (${strike.dice}${strike.die} ${strike.type}, agile, finesse, knife group, with its critical specialization effect); you're then temporarily immune to gaining it from this spell for ${strike.immunityMinutes} minutes.`] });
+                if (claw.version === 1) {
+                    plan = statedPlan(strikeEffect(claw.strike));
+                    plan.compilerEvidence.statedEffect = [claw.sourceText];
+                } else if (plan.resolution?.check?.statistic === "spell-attack" && plan.resolution.sharedDamage) {
+                    plan.resolution.sharedDamage = { ...plan.resolution.sharedDamage, mode: "formula", rollOnce: true, formula: claw.formula, textDerived: true,
+                        components: plan.resolution.sharedDamage.components.map(component => ({ ...component, type: "untyped" })) };
+                    plan.compilerEvidence.textFormula = claw.formula;
+                    plan.resolution.casterChoice = { kind: "damage-type", values: ["piercing", "slashing"], label: "Damage type" };
+                    plan.compilerEvidence.casterChoice = claw.choiceSentence;
+                    if (claw.version === 3) {
+                        plan.resolution.reminders = [...(plan.resolution.reminders ?? []), { kind: "third-party-note", text: `For this attack your reach is extended by ${claw.attackReach} feet.`, sourceText: claw.sourceText }];
+                        plan.compilerEvidence.thirdPartyPreamble = [...(plan.compilerEvidence.thirdPartyPreamble ?? []), claw.sourceText];
+                        const strikePlan = statedPlan(strikeEffect(claw.strike)), reachPlan = statedPlan({ recipient: "self", seconds: 6, expiry: "turn-end",
+                            rules: [{ key: "AdjustStrike", mode: "add", property: "weapon-traits", value: `reach-${5 + claw.reach}`, definition: ["item:slug:gouging-claw"] }],
+                            notes: [`The claw Strike's reach is ${claw.reach} feet longer until the end of your next turn.`] });
+                        strikePlan.compilerEvidence.statedEffect = reachPlan.compilerEvidence.statedEffect = [claw.sourceText];
+                        const attackPlan = plan;
+                        plan = { ...cloneJSON(attackPlan), resolution: { kind: "compound", check: null, sharedDamage: null, outcomes: attackPlan.resolution.outcomes, postDamageTerminal: null, applications: [],
+                            parts: [{ label: "The claw Strike", plan: strikePlan }, { label: "Its reach", plan: reachPlan }, { label: "The attack", plan: attackPlan }] },
+                            automation: { level: "automatic", confidence: 1, compiledCapabilities: ["source", "compound"], pendingCapabilities: [] } };
+                    }
+                }
+            }
+            // (Dynamic Telekinetic Projectile: the object's limits on the attack card; the one-action version the held weapon's range increment until the turn ends.)
+            const projectile = source.flags?.["pf2e-automatic-resolution"]?.projectile;
+            if (projectile?.notes && plan.resolution?.check?.statistic === "spell-attack") {
+                plan.resolution.reminders = [...(plan.resolution.reminders ?? []), ...projectile.notes.map(text => ({ kind: "third-party-note", text, sourceText: projectile.sourceText }))];
+                plan.compilerEvidence.thirdPartyPreamble = [...(plan.compilerEvidence.thirdPartyPreamble ?? []), projectile.sourceText];
+            }
+            if (projectile?.version === 1) {
+                plan.resolution = { kind: "stated-effect", check: null, sharedDamage: null, outcomes: plan.resolution.outcomes, postDamageTerminal: null, applications: [],
+                    statedEffect: { recipient: "self", seconds: 0, untilTurnEnd: true, rules: [
+                        { key: "ChoiceSet", flag: "weapon", prompt: "PF2E.SpecificRule.Prompt.Weapon", choices: { ownedItems: true, types: ["weapon"], predicate: ["item:ranged", "item:equipped"] } },
+                        { key: "AdjustStrike", mode: "add", property: "range-increment", value: projectile.feet, definition: ["item:id:{item|flags.system.rulesSelections.weapon}"] }],
+                        notes: ["The held ranged weapon picked: its range increment is 10 feet longer until the end of your turn."] } };
+                plan.automation = { level: "automatic", confidence: 1, compiledCapabilities: ["source", "stated-effect"], pendingCapabilities: [] };
+                plan.compilerEvidence.statedEffect = [source.system.description.value.replace(/<[^>]+>/g, "")];
+            }
+            // (An attack against a save's DC, again on each Sustain — Tidal Grasp.)
+            const dcAttack = source.flags?.["pf2e-automatic-resolution"]?.saveDCAttack;
+            if (dcAttack && plan.resolution?.check?.statistic === "spell-attack" && plan.resolution.sharedDamage) {
+                const [, , , damageSentence, sustainSentence, immunitySentence] = dcAttack.sentences;
+                plan.resolution.attackDefense = { statistic: dcAttack.statistic, sourceText: dcAttack.sentences[1] };
+                plan.resolution.sharedDamage = { ...plan.resolution.sharedDamage, mode: "formula", rollOnce: true, formula: dcAttack.formula, textDerived: true };
+                plan.compilerEvidence.phaseFormula = dcAttack.formula;
+                const spec = plan.lifecycle?.durationSpec;
+                const rounds = spec?.mode === "sustained" && spec.maximum?.mode === "fixed" ? Number(spec.maximum.value) * ({ rounds: 1, minutes: 10, hours: 600 }[spec.maximum.unit] ?? NaN) : NaN;
+                if (Number.isInteger(rounds)) {
+                    plan.resolution.repeatable = { window: "sustain", save: true, attacks: Math.min(101, rounds + 1), actions: 1, onCast: true, sourceText: sustainSentence };
+                    plan.compilerEvidence.sustainResave = [sustainSentence];
+                    plan.compilerEvidence.sustainAttackAgain = [sustainSentence];
+                }
+                plan.resolution.temporaryImmunity = { key: plan.source.slug ?? String(plan.source.name).toLowerCase().replace(/[^a-z]+/g, "-"), duration: { ...dcAttack.immunity }, degrees: ["criticalFailure"], sourceText: immunitySentence };
+                plan.targeting.actorConstraints = { ...plan.targeting.actorConstraints, sourceText: plan.targeting.target ?? "1 creature", complete: true, predicates: [{ kind: "gm-confirmed", question: dcAttack.sizeQuestion }] };
+                plan.resolution.reminders = [...(plan.resolution.reminders ?? []), { kind: "third-party-note", text: "If the target critically succeeds at an Escape against this Grabbed, it's temporarily immune to the spell for 1 minute (the GM's).", sourceText: immunitySentence }];
+                plan.compilerEvidence.thirdPartyPreamble = [...(plan.compilerEvidence.thirdPartyPreamble ?? []), immunitySentence];
+                plan.resolution.dataNotes = [...(plan.resolution.dataNotes ?? []), `The attack is against the target's ${dcAttack.statistic[0].toUpperCase()}${dcAttack.statistic.slice(1)} DC (the card adjusts PF2e's roll against AC); the critical success's damage is the text's, ${damageSentence.replace(/@Damage\[[^\]]*\]\]/, "").trim()}`];
+            }
+            // (The caster in its own area, saving a degree better — Blood Surge: the caster-share rule; the blood rage's parts reminders.)
+            const selfInArea = source.flags?.["pf2e-automatic-resolution"]?.selfInArea;
+            if (selfInArea && plan.resolution?.check?.basic === true && !plan.resolution.degreeAdjustment) {
+                plan.resolution.casterShare = { sourceText: selfInArea.sentence };
+                plan.resolution.degreeAdjustment = { predicate: { kind: "caster" }, map: { criticalSuccess: "criticalSuccess", success: "criticalSuccess", failure: "success", criticalFailure: "failure" }, sourceText: selfInArea.sentence };
+                plan.compilerEvidence.casterShare = [selfInArea.sentence, selfInArea.sentence];
+                plan.compilerEvidence.casterShareArea = true;
+                plan.resolution.reminders = [...(plan.resolution.reminders ?? []), ...selfInArea.reminders.map(entry => ({ kind: "third-party-note", ...entry }))];
+                plan.compilerEvidence.thirdPartyPreamble = [...(plan.compilerEvidence.thirdPartyPreamble ?? []), ...selfInArea.reminders.map(entry => entry.sourceText)];
+            }
+            // (An area and its terrain by the actions spent — Freezing Cold: the card's reminders.)
+            const actionAreas = source.flags?.["pf2e-automatic-resolution"]?.actionAreas;
+            if (actionAreas && plan.resolution?.check?.basic === true) {
+                plan.resolution.reminders = [...(plan.resolution.reminders ?? []), ...actionAreas.reminders.map(text => ({ kind: "third-party-note", text, sourceText: actionAreas.sourceText.join(" ") }))];
+                plan.compilerEvidence.thirdPartyPreamble = [...(plan.compilerEvidence.thirdPartyPreamble ?? []), actionAreas.sourceText.join(" ")];
+            }
+            // (The text's save where the item's data has none: a data note.)
+            const textSave = source.flags?.["pf2e-automatic-resolution"]?.textSave;
+            if (textSave && plan.resolution) plan.resolution.dataNotes = [...(plan.resolution.dataNotes ?? []), `PF2e's item has no save; the text's "${textSave}" is used.`];
+            // (A spell attack typed by the target's Strike: the darkness question, the card's retyping, the stated sentences.)
+            const strike = source.flags?.["pf2e-automatic-resolution"]?.targetStrike;
+            if (strike && plan.resolution?.check?.statistic === "spell-attack" && !plan.resolution.attackAdjustment && !plan.resolution.damageTypeFrom) {
+                plan.resolution.attackAdjustment = { question: "Is the target in dim light or darkness? (It's off-guard to this attack.)", modifierType: "untyped", sourceText: strike.sentences[1],
+                    choices: [{ label: "Yes: off-guard (+2)", value: 2 }, { label: "No", value: 0 }] };
+                plan.resolution.damageTypeFrom = { kind: "target-strike", sourceText: strike.sentences[2] };
+                plan.compilerEvidence.targetStrike = strike.sentences;
+                plan.resolution.dataNotes = [...(plan.resolution.dataNotes ?? []), `Target: ${strike.target} (the GM checks it can Strike). The item has no attack trait; its text makes a spell attack roll, read as PF2e's.`];
+            }
+            if (source.flags?.["pf2e-automatic-resolution"]?.versionImmunity && plan.resolution?.temporaryImmunity?.key)
+                plan.resolution.temporaryImmunity.key = `${plan.resolution.temporaryImmunity.key}:${source.flags["pf2e-automatic-resolution"].glyphVersion}-action`;
+            return plan;
+        }
         const type = item?.type ?? "missing";
         return {
             modelVersion: ABILITY_MODEL_VERSION,

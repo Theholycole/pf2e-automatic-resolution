@@ -1,0 +1,33 @@
+{
+  "label": "rank10Batch4",
+  "passed": true,
+  "at": "2026-10-05T05:54:30.285Z",
+  "details": {
+    "batch4": {
+      "stars": {
+        "inner": 82,
+        "outer": 52
+      },
+      "plane": {
+        "crushed": 67,
+        "push": true,
+        "ground": {
+          "lost": 15,
+          "terrain": true
+        }
+      },
+      "doom": 88,
+      "revel": {
+        "lost": 48,
+        "temp": 24,
+        "pal": 24
+      },
+      "glyph": {
+        "one": 61,
+        "two": 61,
+        "meteor": 66,
+        "marked": true
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "generatedAt": "2026-10-05T23:08:59.554Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "notesBatch2",
+      "passed": true,
+      "at": "2026-10-05T23:08:37.486Z",
+      "details": {
+        "notes2": {
+          "surge": {
+            "kind": "stated-effect",
+            "aura": 10,
+            "near": true,
+            "far": false,
+            "caster": true
+          }
+        }
+      }
+    }
+  ]
+}

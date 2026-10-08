@@ -1,0 +1,25 @@
+{
+ "label": "rank9Batch6",
+ "passed": true,
+ "at": "2026-10-04T23:15:44.468Z",
+ "details": {
+  "batch6": {
+   "first": {
+    "supported": true,
+    "highEligible": false,
+    "lost": [
+     130,
+     58,
+     30,
+     30
+    ],
+    "backlash": "backlash"
+   },
+   "second": {
+    "dead": true,
+    "backlash": "killed",
+    "casterLost": 0
+   }
+  }
+ }
+}

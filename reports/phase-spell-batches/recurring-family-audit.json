@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-10-03T21:22:34.808Z",
+  "generatedAt": "2026-10-05T09:18:58.823Z",
   "baseline": "2026-09-24T23:40:23.306Z",
   "scope": "All source-derived members of 3 overlapping families; excludes rituals and the deferred Phase 9 review list. Every member was recompiled under a detached name/ID. Route assessment is not live execution.",
-  "uniqueMembers": 76,
-  "executableSharedSaves": 547,
+  "uniqueMembers": 75,
+  "executableSharedSaves": 579,
   "newlySupported": [
     {
       "id": "gISYsBFby1TiXfBt",
@@ -592,6 +592,10 @@
     {
       "id": "Yrek2Yd4k3DPC2zV",
       "name": "Zenith Star"
+    },
+    {
+      "id": "6s0UW4bujggma9TC",
+      "name": "Fabricated Truth"
     },
     {
       "id": "f8hRqLJaxBVhF1u0",
@@ -1718,16 +1722,40 @@
       "name": "Claim Undead"
     },
     {
+      "id": "c3XygMbzrZMgV1y3",
+      "name": "Collective Transposition"
+    },
+    {
       "id": "ExQk8AwDphmckEmZ",
       "name": "Crimson Breath"
+    },
+    {
+      "id": "dN8QBNuTiaBHCKUe",
+      "name": "Cursed Metamorphosis"
     },
     {
       "id": "OsOhx3TGIZ7AhD0P",
       "name": "Dominate"
     },
     {
+      "id": "XULNb8ItUsfupxqH",
+      "name": "Dread Secret"
+    },
+    {
+      "id": "XOs8C2eZJAO3go0N",
+      "name": "Earth and Sky"
+    },
+    {
       "id": "ZvB9sV7NLdpDeoTw",
       "name": "Explosive Barrage"
+    },
+    {
+      "id": "ZZTLWMXijRDgE66m",
+      "name": "Expunge Blood"
+    },
+    {
+      "id": "ReUoodsqUYSTwSgE",
+      "name": "Fateful Condemnation"
     },
     {
       "id": "R5r4vtmlvOA8hDiF",
@@ -1774,6 +1802,10 @@
       "name": "Purple Worm Sting"
     },
     {
+      "id": "DOBs5ALM1titPYxe",
+      "name": "Seize Identity"
+    },
+    {
       "id": "8Umt1AzYfFbC4fui",
       "name": "Spellwrack"
     },
@@ -1782,16 +1814,36 @@
       "name": "Suffocate"
     },
     {
+      "id": "BokwLLK7OjK6ggHs",
+      "name": "Tanglecurse"
+    },
+    {
+      "id": "OOMQ8Z6EIrGt5NJ6",
+      "name": "Unexpected Transposition"
+    },
+    {
       "id": "fd31tAHSSGXyOxW6",
       "name": "Vampiric Exsanguination"
+    },
+    {
+      "id": "g2V4ID0pl1ZGAxZj",
+      "name": "Vitrifying Blast"
     },
     {
       "id": "B4p4cD9Q71mHTpOP",
       "name": "Attacked from Within"
     },
     {
+      "id": "dKWc83KKiXoIJkhp",
+      "name": "Beheading Buzz Saw"
+    },
+    {
       "id": "EgkypvUZIZkx1UlQ",
       "name": "Blightburn Blast"
+    },
+    {
+      "id": "hvV6IruyW4MAr0Ub",
+      "name": "Chrysopoetic Curse"
     },
     {
       "id": "1VOjUKd1pacI67RZ",
@@ -1806,6 +1858,10 @@
       "name": "Divine Decree"
     },
     {
+      "id": "73rToy0v5Ra9NvL6",
+      "name": "Duplicate Foe"
+    },
+    {
       "id": "0jadeyQIItIuRgeH",
       "name": "Eclipse Burst"
     },
@@ -1818,6 +1874,10 @@
       "name": "Frigid Flurry"
     },
     {
+      "id": "yWySiasyPZcRoe4d",
+      "name": "Heaving Earth"
+    },
+    {
       "id": "gMbrNFKz9NP3TR4s",
       "name": "Inexhaustible Cynicism"
     },
@@ -1826,8 +1886,28 @@
       "name": "Leng Sting"
     },
     {
+      "id": "qOeBQyC1z7OScHvP",
+      "name": "Maze of Locked Doors"
+    },
+    {
       "id": "Shiuhdb2nO6Qgk3k",
       "name": "Moonburst"
+    },
+    {
+      "id": "qO4xOJ0kAvhVGDpX",
+      "name": "Orb of Twisting Fate"
+    },
+    {
+      "id": "wU6hNzK8Yfqdmc8m",
+      "name": "Possession"
+    },
+    {
+      "id": "mBYqtWpvOT4oBm4Q",
+      "name": "Puppet Strings"
+    },
+    {
+      "id": "VTb0yI6P1bLkzuRr",
+      "name": "Shadow Raid"
     },
     {
       "id": "a3aQxCpoj1q1NQxC",
@@ -1842,6 +1922,10 @@
       "name": "Warp Mind"
     },
     {
+      "id": "XB65dUQipPCTNNIY",
+      "name": "Amalgamizing Leap"
+    },
+    {
       "id": "C2GYCH3TtUFqPfdX",
       "name": "Arctic Rift"
     },
@@ -1852,6 +1936,10 @@
     {
       "id": "qlxM7Ik3uUeUIOcv",
       "name": "Canticle of Everlasting Grief"
+    },
+    {
+      "id": "8fEfjvC01gNclDKJ",
+      "name": "Deluge"
     },
     {
       "id": "M0jQlpQYUr0pp2Sv",
@@ -1866,8 +1954,16 @@
       "name": "Divine Armageddon"
     },
     {
+      "id": "vm9O7ne48NM72yrJ",
+      "name": "Falling Sky"
+    },
+    {
       "id": "TvZiwZRianfTSbEg",
       "name": "Hypnopompic Terrors"
+    },
+    {
+      "id": "wTYxxYJWN348oV15",
+      "name": "Medusa's Wrath"
     },
     {
       "id": "BKIet436snMNcnez",
@@ -1886,8 +1982,20 @@
       "name": "Sudden Transposition"
     },
     {
+      "id": "yZpWaJzm7kUjKvlQ",
+      "name": "Temporary Possession"
+    },
+    {
       "id": "Jvyy6oVIQsD34MHB",
       "name": "Uncontrollable Dance"
+    },
+    {
+      "id": "YiIOsc8T6E2iDxgh",
+      "name": "Undermine Reality"
+    },
+    {
+      "id": "KY2xyMavZHAoG69D",
+      "name": "Arcane Explosion"
     },
     {
       "id": "MFPvs0ARxtThYPFq",
@@ -1898,12 +2006,32 @@
       "name": "Linnorm Sting"
     },
     {
+      "id": "AsRd1gNRSkHDq2Jx",
+      "name": "Magnetic Dominion"
+    },
+    {
+      "id": "10VcmSYNBrvBphu1",
+      "name": "Massacre"
+    },
+    {
+      "id": "fkDeKktdmbeplYRY",
+      "name": "Overwhelming Presence"
+    },
+    {
       "id": "MJx7DmjsWYzDZ3a4",
       "name": "Phantasmagoria"
     },
     {
+      "id": "m815cJACTzePdZAG",
+      "name": "Remake Physiology"
+    },
+    {
       "id": "ItZgGznUBhgWBwFG",
       "name": "Telepathic Demand"
+    },
+    {
+      "id": "z39jFoNJrobyn3MQ",
+      "name": "Undertaker"
     },
     {
       "id": "XjNROFtWnwovhCsq",
@@ -1986,15 +2114,14 @@
           "families": [
             "recurring-save"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
+          "route": "note",
+          "enabledRoute": true,
           "sharedSave": false,
           "previousSharedSave": false,
           "detail": [],
           "blockers": [
-            "residual-prose",
             "preamble:recipient-qualifier",
-            "unaccounted-prose"
+            "primary-save"
           ]
         },
         {
@@ -2022,22 +2149,13 @@
           "families": [
             "recurring-save"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
+          "route": "effect",
+          "enabledRoute": true,
           "sharedSave": false,
           "previousSharedSave": false,
           "detail": [],
           "blockers": [
-            "manual:conditional-effect",
-            "manual:attitude-or-hostility",
-            "residual-prose",
-            "preamble:ongoing-trigger",
-            "preamble:additional-condition",
-            "area-paragraph",
-            "unused-shared-damage",
-            "unaccounted-prose",
-            "manual-mechanic",
-            "condition-composition"
+            "primary-save"
           ]
         },
         {
@@ -2048,23 +2166,13 @@
           "families": [
             "recurring-save"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
+          "route": "effect",
+          "enabledRoute": true,
           "sharedSave": false,
           "previousSharedSave": false,
           "detail": [],
           "blockers": [
-            "manual:secondary-save",
-            "manual:conditional-effect",
-            "residual-prose",
-            "preamble:conditional-eligibility",
-            "preamble:modifier",
-            "item-duration-grammar",
-            "target-eligibility",
-            "lifecycle",
-            "unaccounted-prose",
-            "native-effect-composition",
-            "manual-mechanic"
+            "primary-save"
           ]
         },
         {
@@ -2075,14 +2183,12 @@
           "families": [
             "recurring-save"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
+          "route": "effect",
+          "enabledRoute": true,
           "sharedSave": false,
           "previousSharedSave": false,
           "detail": [],
           "blockers": [
-            "non-basic-save",
-            "description-semantics",
             "primary-save"
           ]
         },
@@ -2210,17 +2316,15 @@
           "phase": 3,
           "sourceFile": "spells/spells/rank-9/divinity-leech.json",
           "families": [
-            "recurring-save",
-            "degree-adjustment"
+            "recurring-save"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
+          "route": "effect",
+          "enabledRoute": true,
           "sharedSave": false,
           "previousSharedSave": false,
           "detail": [],
           "blockers": [
-            "preamble:ongoing-trigger",
-            "preamble:additional-condition"
+            "primary-save"
           ]
         },
         {
@@ -2313,15 +2417,12 @@
           "families": [
             "recurring-save"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
+          "route": "note",
+          "enabledRoute": true,
           "sharedSave": false,
           "previousSharedSave": false,
           "detail": [],
           "blockers": [
-            "non-basic-save",
-            "description-semantics",
-            "target-eligibility",
             "primary-save"
           ]
         },
@@ -2350,14 +2451,12 @@
           "families": [
             "recurring-save"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
+          "route": "effect",
+          "enabledRoute": true,
           "sharedSave": false,
           "previousSharedSave": false,
           "detail": [],
           "blockers": [
-            "no-primary-save",
-            "description-semantics",
             "primary-save"
           ]
         },
@@ -2452,16 +2551,15 @@
           "families": [
             "recurring-save"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
           "previousSharedSave": false,
-          "detail": [],
-          "blockers": [
-            "non-basic-save",
-            "description-semantics",
-            "primary-save"
-          ]
+          "detail": [
+            "criticalSuccess (escalate)",
+            "success (escalate)"
+          ],
+          "blockers": []
         },
         {
           "id": "moTWtlU84IScjnCh",
@@ -2471,17 +2569,13 @@
           "families": [
             "recurring-save"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
+          "route": "effect",
+          "enabledRoute": true,
           "sharedSave": false,
           "previousSharedSave": false,
           "detail": [],
           "blockers": [
-            "description-effects",
-            "description-target-predicates",
-            "description-lifecycle",
-            "basic-save-composition",
-            "unaccounted-prose"
+            "primary-save"
           ]
         },
         {
@@ -2524,15 +2618,12 @@
           "families": [
             "recurring-save"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
           "previousSharedSave": false,
           "detail": [],
-          "blockers": [
-            "residual-prose",
-            "unaccounted-prose"
-          ]
+          "blockers": []
         },
         {
           "id": "DCQHaLrYXMI37dvW",
@@ -2611,22 +2702,12 @@
             "recurring-save",
             "degree-adjustment"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
           "previousSharedSave": false,
           "detail": [],
-          "blockers": [
-            "manual:conditional-effect",
-            "residual-prose",
-            "preamble:ongoing-trigger",
-            "preamble:ends-early",
-            "preamble:additional-condition",
-            "preamble:restriction",
-            "preamble:degree-adjustment",
-            "unaccounted-prose",
-            "manual-mechanic"
-          ]
+          "blockers": []
         },
         {
           "id": "e4c73RBCQAZdYxau",
@@ -2655,19 +2736,12 @@
           "families": [
             "recurring-save"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
           "previousSharedSave": false,
           "detail": [],
-          "blockers": [
-            "manual:action-restriction",
-            "manual:conditional-effect",
-            "residual-prose",
-            "sustain-effect",
-            "unaccounted-prose",
-            "manual-mechanic"
-          ]
+          "blockers": []
         },
         {
           "id": "5zeSxzDxMSr0wgSF",
@@ -2728,20 +2802,12 @@
             "recurring-save",
             "degree-adjustment"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
           "previousSharedSave": false,
           "detail": [],
-          "blockers": [
-            "residual-prose",
-            "preamble:ongoing-trigger",
-            "preamble:restriction",
-            "preamble:degree-adjustment",
-            "item-duration-grammar",
-            "lifecycle",
-            "unaccounted-prose"
-          ]
+          "blockers": []
         },
         {
           "id": "RQjSQVZRG497cJhX",
@@ -2770,19 +2836,15 @@
           "families": [
             "recurring-save"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
           "previousSharedSave": false,
-          "detail": [],
-          "blockers": [
-            "residual-prose",
-            "item-duration-grammar",
-            "lifecycle",
-            "unaccounted-prose",
-            "follow-up-composition",
-            "native-effect-composition"
-          ]
+          "detail": [
+            "failure (escalate)",
+            "criticalFailure (escalate)"
+          ],
+          "blockers": []
         },
         {
           "id": "OmhnoYOzFhrp6rXv",
@@ -3056,25 +3118,6 @@
           ]
         },
         {
-          "id": "T5Mt4jXFuh14uREv",
-          "name": "Divinity Leech",
-          "phase": 3,
-          "sourceFile": "spells/spells/rank-9/divinity-leech.json",
-          "families": [
-            "recurring-save",
-            "degree-adjustment"
-          ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
-          "previousSharedSave": false,
-          "detail": [],
-          "blockers": [
-            "preamble:ongoing-trigger",
-            "preamble:additional-condition"
-          ]
-        },
-        {
           "id": "rVhHaWqUsVUO4GuY",
           "name": "Eject Soul",
           "phase": 2,
@@ -3203,22 +3246,12 @@
             "recurring-save",
             "degree-adjustment"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
           "previousSharedSave": false,
           "detail": [],
-          "blockers": [
-            "manual:conditional-effect",
-            "residual-prose",
-            "preamble:ongoing-trigger",
-            "preamble:ends-early",
-            "preamble:additional-condition",
-            "preamble:restriction",
-            "preamble:degree-adjustment",
-            "unaccounted-prose",
-            "manual-mechanic"
-          ]
+          "blockers": []
         },
         {
           "id": "v4QHuVOhFD1JMAqu",
@@ -3234,26 +3267,6 @@
           "previousSharedSave": false,
           "detail": [],
           "blockers": []
-        },
-        {
-          "id": "nPxYYID5JARKouSV",
-          "name": "Ray of Corruption",
-          "phase": 4,
-          "sourceFile": "spells/spells/rank-7/ray-of-corruption.json",
-          "families": [
-            "degree-adjustment"
-          ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
-          "previousSharedSave": false,
-          "detail": [],
-          "blockers": [
-            "description-effects",
-            "description-target-predicates",
-            "description-lifecycle",
-            "basic-save-composition"
-          ]
         },
         {
           "id": "APDrC83QljsyHenB",
@@ -3293,15 +3306,13 @@
           "families": [
             "degree-adjustment"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
+          "route": "ongoing",
+          "enabledRoute": true,
           "sharedSave": false,
           "previousSharedSave": false,
           "detail": [],
           "blockers": [
-            "residual-prose",
-            "preamble:additional-condition",
-            "unaccounted-prose"
+            "lingering-area"
           ]
         },
         {
@@ -3328,20 +3339,12 @@
             "recurring-save",
             "degree-adjustment"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
           "previousSharedSave": false,
           "detail": [],
-          "blockers": [
-            "residual-prose",
-            "preamble:ongoing-trigger",
-            "preamble:restriction",
-            "preamble:degree-adjustment",
-            "item-duration-grammar",
-            "lifecycle",
-            "unaccounted-prose"
-          ]
+          "blockers": []
         },
         {
           "id": "z39jFoNJrobyn3MQ",
@@ -3351,20 +3354,12 @@
           "families": [
             "degree-adjustment"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
           "previousSharedSave": false,
           "detail": [],
-          "blockers": [
-            "manual:terrain",
-            "manual:conditional-effect",
-            "residual-prose",
-            "preamble:modifier",
-            "preamble:degree-adjustment",
-            "unaccounted-prose",
-            "manual-mechanic"
-          ]
+          "blockers": []
         },
         {
           "id": "TT9owkeMBXJxcERB",
@@ -3391,19 +3386,13 @@
           "families": [
             "degree-adjustment"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
+          "route": "ongoing",
+          "enabledRoute": true,
           "sharedSave": false,
           "previousSharedSave": false,
           "detail": [],
           "blockers": [
-            "residual-prose",
-            "sustain-effect",
-            "preamble:conditional-eligibility",
-            "preamble:ongoing-trigger",
-            "preamble:modifier",
-            "preamble:degree-adjustment",
-            "unaccounted-prose"
+            "lingering-area"
           ]
         }
       ]
@@ -3411,139 +3400,39 @@
   ],
   "blockerCounts": [
     [
-      "unaccounted-prose",
-      13
-    ],
-    [
       "lingering-area",
-      12
-    ],
-    [
-      "residual-prose",
-      11
+      14
     ],
     [
       "primary-save",
-      7
-    ],
-    [
-      "manual:conditional-effect",
-      5
-    ],
-    [
-      "preamble:ongoing-trigger",
-      5
-    ],
-    [
-      "manual-mechanic",
-      5
-    ],
-    [
-      "preamble:additional-condition",
-      4
-    ],
-    [
-      "description-semantics",
-      4
-    ],
-    [
-      "preamble:degree-adjustment",
-      4
-    ],
-    [
-      "preamble:modifier",
-      3
-    ],
-    [
-      "item-duration-grammar",
-      3
-    ],
-    [
-      "target-eligibility",
-      3
-    ],
-    [
-      "lifecycle",
-      3
-    ],
-    [
-      "non-basic-save",
-      3
-    ],
-    [
-      "description-effects",
-      3
-    ],
-    [
-      "description-target-predicates",
-      3
-    ],
-    [
-      "description-lifecycle",
-      3
-    ],
-    [
-      "basic-save-composition",
-      3
-    ],
-    [
-      "preamble:conditional-eligibility",
-      2
-    ],
-    [
-      "native-effect-composition",
-      2
-    ],
-    [
-      "preamble:restriction",
-      2
-    ],
-    [
-      "sustain-effect",
-      2
+      11
     ],
     [
       "preamble:recipient-qualifier",
       1
     ],
     [
-      "manual:attitude-or-hostility",
+      "description-effects",
       1
     ],
     [
-      "area-paragraph",
+      "description-target-predicates",
       1
     ],
     [
-      "unused-shared-damage",
+      "description-lifecycle",
       1
     ],
     [
-      "condition-composition",
+      "target-eligibility",
       1
     ],
     [
-      "manual:secondary-save",
+      "basic-save-composition",
       1
     ],
     [
-      "no-primary-save",
-      1
-    ],
-    [
-      "preamble:ends-early",
-      1
-    ],
-    [
-      "manual:action-restriction",
-      1
-    ],
-    [
-      "manual:terrain",
-      1
-    ],
-    [
-      "follow-up-composition",
+      "unaccounted-prose",
       1
     ]
   ]

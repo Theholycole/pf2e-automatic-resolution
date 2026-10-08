@@ -1,0 +1,45 @@
+{
+ "batch32": {
+  "label": "thirdPartyFeaturesBatch32",
+  "passed": true,
+  "at": "2026-10-08T01:16:52.795Z",
+  "details": {
+   "thirdPartyFeatures32": {
+    "salt": {
+     "shapes": [
+      [
+       "Blue Salt Crystal",
+       null
+      ]
+     ],
+     "holder": "Blue Salt Crystal: 2 persistent acid (Drown)",
+     "rounds": 10,
+     "persistent": [
+      "2 acid"
+     ],
+     "after": []
+    },
+    "armed": true,
+    "marked": {
+     "name": "Gray Dust Ammunition (Lesser): backfire on the next spell",
+     "rounds": 10,
+     "disarmed": true
+    },
+    "backfire": {
+     "dc": 25,
+     "statistic": "fortitude",
+     "target": "PFTEST P23 Affliction tpf32 mage",
+     "formula": "8d4 force",
+     "total": 23,
+     "lost": 46,
+     "stupefied": 2,
+     "markGone": true
+    }
+   }
+  }
+ },
+ "reruns": {
+  "spellshapeBatch12": true,
+  "thirdPartyFeaturesBatch31": true
+ }
+}

@@ -24,8 +24,15 @@ const HEALS = [
     new RegExp(String.raw`^Just before applying the attack's damage, you recover ${DICE} Hit Points()\.$`),
     // A reaction to a death: "You prevent the target from dying and restore 5d8 Hit Points to the target." The healing,
     // applied before the death takes effect, is what prevents it.
-    new RegExp(String.raw`^You prevent the target from dying and restore ${DICE} Hit Points to the target()\.$`)
+    new RegExp(String.raw`^You prevent the target from dying and restore ${DICE} Hit Points to the target()\.$`),
+    // Quick Siphon (a third-party reaction): "You regain 10 Hit Points and can choose to immediately end one instance of persistent bleed damage
+    // you are suffering from." — the caster's healing; the ended persistent damage is the caster's pick on the card.
+    new RegExp(String.raw`^You regain ${DICE} Hit Points(?: and (can choose to immediately end one instance of persistent [a-z]+ damage you are suffering from))?\.$`)
 ];
+// That rider: which persistent damage the caster may end.
+const END_PERSISTENT = /^can choose to immediately end one instance of persistent ([a-z]+) damage you are suffering from$/;
+// "Heightened (+1) Increase the Hit Points you regain by 2." — a flat step, checked against PF2e's heightening entry.
+const FLAT_HEALING_STEP = /^Heightened \(\+(\d+)\) Increase the Hit Points you regain by (\d+)\.$/;
 // "You can spend 1 to 3 actions Casting this Spell, and you can target a number of creatures equal to the actions
 // spent." — PF2e's variants carry each count's Target; the cast variant's Target must name that many creatures.
 const ACTION_TARGETS = /^You can spend (\d) to (\d) actions Casting this Spell, and you can target a number of creatures equal to the actions spent\.$/;
@@ -71,7 +78,13 @@ function healingHeightening(adapted, component) {
     if (!start) return undefined;
     const text = htmlToPlainText(html.slice(start.index));
     const step = HEALING_STEP.exec(text);
-    if (!step) return undefined;
+    if (!step) {
+        // A flat step must be PF2e's entry exactly (the text wins only over dice).
+        const flat = FLAT_HEALING_STEP.exec(text), heightening = adapted.heightening;
+        if (!flat) return undefined;
+        const entry = String(heightening?.damage?.[component.id] ?? "").replace(/\s+/g, "");
+        return heightening?.type === "interval" && Number(heightening.interval) === Number(flat[1]) && entry === flat[2] && /^\d+$/.test(String(component.formula).trim()) ? undefined : null;
+    }
     const [interval, dice, faces] = [Number(step[1]), Number(step[2]), Number(step[3])];
     const base = /^(\d+)d(\d+)(?:\+\d+)?$/.exec(String(component.formula).replace(/\s+/g, ""));
     const heightening = adapted.heightening;
@@ -110,7 +123,7 @@ export function compileDirectHealing(adapted) {
     const html = stripHeighteningHTML(String(adapted.descriptionHTML ?? "").replace(PFS_NOTE, "").replace(trigger?.[0] ?? "\u0000", "")).replace(/@UUID\[Compendium\.pf2e\.spell-effects\.[^\]]+\]\{[^}]+\}/g, "");
     let dyingMax = null, perRank = null;
     const sentences = htmlToPlainText(html).split(/(?<=[.!?])\s+(?=[A-Z0-9])/).map(value => value.trim()).filter(Boolean);
-    let healed = null, extra = null, intro = false, actionTargets = null, noWoundedIncrease = false;
+    let healed = null, extra = null, intro = false, actionTargets = null, noWoundedIncrease = false, endPersistent = null;
     const remaining = [], narration = [], notes = trigger && /^(?:free|reaction)$/i.test(String(adapted.activation?.time ?? "").trim()) ? [{ kind: "trigger", text: `Trigger: ${trigger[1].trim()}` }] : [];
     if (trigger && !notes.length) return null;
     const rider = text => {
@@ -128,7 +141,11 @@ export function compileDirectHealing(adapted) {
         const fell = !healed && fallen && FALLEN.exec(sentence);
         if (fell) { healed = fell[2].replace(/\s+/g, ""); dyingMax = Number(fell[1]); notes.push({ kind: "free-stand", text: "Each creature healed can Stand as a free action, which doesn't provoke reactions." }); continue; }
         const heal = !healed && HEALS.map(pattern => pattern.exec(sentence)).find(Boolean);
-        if (heal) { healed = heal[1].replace(/\s+/g, ""); if (heal[2]) rider(heal[2]); continue; }
+        if (heal) { healed = heal[1].replace(/\s+/g, "");
+            const ends = heal[2] && END_PERSISTENT.exec(heal[2]);
+            if (ends) endPersistent = { damageType: ends[1], count: 1, optional: true };
+            else if (heal[2]) rider(heal[2]);
+            continue; }
         const byActions = ACTION_TARGETS.exec(sentence);
         if (byActions) { actionTargets = [Number(byActions[1]), Number(byActions[2])]; continue; }
         if (NO_WOUNDED.test(sentence) && healed) { noWoundedIncrease = true; continue; }
@@ -166,6 +183,7 @@ export function compileDirectHealing(adapted) {
             ...(dyingMax != null ? { alliesOnly: true, dyingMax } : {}),
             ...(perRank ? { perTriggeringRank: perRank } : {}),
             ...(noWoundedIncrease ? { noWoundedIncrease: true } : {}),
+            ...(endPersistent ? { endPersistent } : {}),
             ...(correction ? { heighteningCorrection: correction } : {}),
             ...(notes.length ? { notes } : {}) },
         remainingText: remaining,

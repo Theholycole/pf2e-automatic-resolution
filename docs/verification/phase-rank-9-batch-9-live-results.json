@@ -1,0 +1,46 @@
+{
+  "label": "rank9Batch9",
+  "passed": true,
+  "at": "2026-10-05T03:33:58.528Z",
+  "details": {
+    "batch9": {
+      "fate": {
+        "lost": 56,
+        "slowed": 1,
+        "doomed": true,
+        "friend": true,
+        "outsider": false,
+        "friendSlowed": 1
+      },
+      "presence": {
+        "counter": 6,
+        "fascinated": true,
+        "immune": true,
+        "paid": {
+          "note": false,
+          "fascinated": false
+        }
+      },
+      "tangle": {
+        "rolled": "drained",
+        "has": 1,
+        "others": [],
+        "terrain": true,
+        "radius": 250,
+        "followed": true
+      },
+      "grave": {
+        "lost": 80,
+        "prone": true,
+        "note": true
+      },
+      "seize": {
+        "lost": 11,
+        "disguise": true,
+        "silence": true,
+        "enfeebled": 2,
+        "voidLost": 19
+      }
+    }
+  }
+}

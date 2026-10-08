@@ -1,0 +1,67 @@
+{
+  "generatedAt": "2026-10-05T22:19:20.143Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "notesBatch1",
+      "passed": true,
+      "at": "2026-10-05T22:18:39.520Z",
+      "details": {
+        "notes1": {
+          "glimmer": {
+            "kind": "stated-effect",
+            "will": 2,
+            "perception": 2,
+            "hours": {
+              "value": 24,
+              "unit": "hours",
+              "expiry": "turn-start",
+              "sustained": false
+            }
+          },
+          "glimmerRefused": true,
+          "chameleon": {
+            "both": true,
+            "value": 3,
+            "predicate": [
+              "action:hide"
+            ]
+          },
+          "chameleon8": 4,
+          "penumbral": {
+            "value": 2,
+            "toggle": true
+          },
+          "device": "thievery:2:action:disable-a-device",
+          "lies": {
+            "off": 0,
+            "on": 4
+          },
+          "threefold": "RollOption,FlatModifier",
+          "gravity": "saving-throw,fortitude-dc",
+          "mists": {
+            "target": 4,
+            "caster": true
+          },
+          "stonesense": "tremorsense:100",
+          "elemental": "tremorsense:30",
+          "enhance": {
+            "plain": "low-light-vision",
+            "owl": "darkvision,low-light-vision"
+          },
+          "wings": 20,
+          "fins": {
+            "land": 25,
+            "swim": 25,
+            "now": 5
+          },
+          "ocean": {
+            "swim": 25,
+            "land": 25
+          }
+        }
+      }
+    }
+  ]
+}

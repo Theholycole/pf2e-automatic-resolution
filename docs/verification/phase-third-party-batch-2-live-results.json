@@ -1,0 +1,40 @@
+{
+  "generatedAt": "2026-10-06T21:50:23.590Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "thirdPartyBatch2",
+      "passed": true,
+      "at": "2026-10-06T21:49:48.824Z",
+      "details": {
+        "thirdParty2": {
+          "luck": {
+            "frightened": 1,
+            "note": "Residual Bad Luck: Frightened held after a failure",
+            "flagged": true,
+            "afterTurn": 1
+          },
+          "havok": {
+            "formula": "2d4 force",
+            "type": "force",
+            "lost": 5,
+            "offGuard": "origin:signature:c5300ff7-794e-54fb-978e-313fa76f93bf",
+            "signature": "origin:signature:c5300ff7-794e-54fb-978e-313fa76f93bf"
+          },
+          "howl": {
+            "frightened": 2,
+            "immunity": {
+              "duration": {
+                "value": 1,
+                "unit": "minutes"
+              },
+              "sourceText": "Regardless of their result, they become temporarily immune for 1 minute.",
+              "key": "creatures-howl"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

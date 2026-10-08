@@ -1,0 +1,130 @@
+{
+ "label": "thirdPartyFeaturesBatch3",
+ "passed": true,
+ "at": "2026-10-07T09:46:08.261Z",
+ "details": {
+  "thirdPartyFeatures3": {
+   "safe": {
+    "shapes": [
+     [
+      "Safe Spell",
+      true,
+      null
+     ]
+    ],
+    "excluded": [
+     "PFTEST P23 Affliction tpf3 ally one",
+     "PFTEST P23 Affliction tpf3 ally two"
+    ],
+    "foes": [
+     20,
+     20
+    ],
+    "allies": [
+     0,
+     0
+    ]
+   },
+   "compressed": {
+    "shapes": [
+     [
+      "Compressed Spell",
+      true,
+      null
+     ]
+    ],
+    "penalty": [
+     "saving-throw status -2"
+    ],
+    "excluded": [
+     "PFTEST P23 Affliction tpf3 foe two"
+    ],
+    "after": 0,
+    "lost": [
+     6,
+     0
+    ]
+   },
+   "reshaped": {
+    "shapes": [
+     [
+      "Reshaped Spell",
+      true,
+      null
+     ]
+    ],
+    "template": [
+     "line 30 feet"
+    ]
+   },
+   "lurking": {
+    "shapes": [
+     [
+      "The Lurking Storm",
+      true,
+      null
+     ]
+    ],
+    "instances": [
+     "14 bludgeoning",
+     "13 electricity"
+    ],
+    "split": 27,
+    "lost": 27
+   },
+   "sacrificial": {
+    "shapes": [
+     [
+      "Sacrificial Spell",
+      true,
+      null
+     ]
+    ],
+    "rule": "Sacrificial Spell: d12s for the healing",
+    "formula": "1d12 vitality",
+    "after": 0
+   },
+   "matter": {
+    "shapes": [
+     [
+      "Transmute Spell",
+      true,
+      null
+     ]
+    ],
+    "types": [
+     "fire"
+    ],
+    "lost": 2
+   },
+   "mind": {
+    "shapes": [
+     [
+      "Transmute Spell",
+      true,
+      null
+     ]
+    ],
+    "types": [
+     "mental"
+    ],
+    "total": 25,
+    "lost": 28
+   },
+   "spirit": {
+    "shapes": [
+     [
+      "Transmute Spell",
+      true,
+      null
+     ]
+    ],
+    "types": [
+     "spirit"
+    ],
+    "note": "Transmute Spell: no weakness to holy, spirit, unholy — no damage",
+    "lost": 0
+   }
+  }
+ }
+}

@@ -227,7 +227,18 @@ export function compileEffectNote(adapted, nativeSpellEffects) {
             companion = other;
         }
     }
-    if (linked.length !== 1 || (!companion && nativeSpellEffects.references.length !== 1) || Object.values(nativeSpellEffects.outcomes ?? {}).some(list => list.length)
+    // A Spell Effect granting the spell's own immunity Effect, both linked (Umbral Escape): the first is the link; the granted one comes with it.
+    let grantedImmunity = null;
+    if (!companion && linked.length === 2 && nativeSpellEffects.references.length === 2) {
+        const id = entry => /([A-Za-z0-9]{16})$/.exec(String(entry?.uuid ?? ""))?.[1] ?? null;
+        const granter = linked.find(entry => (entry.document?.mechanics?.rules ?? []).some(rule => rule.key === "GrantItem" && /([A-Za-z0-9]{16})$/.exec(String(rule.uuid ?? ""))?.[1] === id(linked.find(other => other !== entry))));
+        const granted = granter && linked.find(entry => entry !== granter);
+        if (granted && /^Spell Effect: (.+) Immunity$/.exec(granted.document?.name ?? "")?.[1] === /^Spell Effect: (.+)$/.exec(granter.document?.name ?? "")?.[1]
+            && !(granted.document?.mechanics?.rules ?? []).length && granted.document?.type === "effect") {
+            linked = [granter]; grantedImmunity = { uuid: granted.uuid, label: granted.label ?? granted.document?.name ?? null };
+        }
+    }
+    if (linked.length !== 1 || (!companion && !grantedImmunity && nativeSpellEffects.references.length !== 1) || Object.values(nativeSpellEffects.outcomes ?? {}).some(list => list.length)
         || (nativeSpellEffects.deferred ?? []).length || (nativeSpellEffects.sequences ?? []).length) return null;
     const effect = linked[0];
     if (effect.resolutionStatus !== "resolved" || effect.document?.type !== "effect") return refuse(22);
@@ -258,7 +269,7 @@ export function compileEffectNote(adapted, nativeSpellEffects) {
     const actor = effect.recipient?.actor;
     const recipient = actor === "source" ? "source" : actor === "target" && basics.creatures ? "target" : "ask";
     return { effectNote: { recipient, effect: { uuid: effect.uuid, label: effect.label, reference: effect.reference, sourceText: effect.sourceText,
-        recipientEvidence: effect.recipient?.evidence ?? null }, ...basics.note, ...(selfHeal ? { selfHeal: { perRank: Number(selfHeal[1]), sourceText: selfHeal[0] } } : {}),
+        recipientEvidence: effect.recipient?.evidence ?? null }, ...basics.note, ...(grantedImmunity ? { grantedImmunity } : {}), ...(selfHeal ? { selfHeal: { perRank: Number(selfHeal[1]), sourceText: selfHeal[0] } } : {}),
         ...(companion ? { companion: { uuid: companion.uuid, label: companion.label ?? companion.document?.name ?? null }, text: `${basics.note.text}\nPF2e's ${companion.label ?? companion.document?.name}: apply it yourself to each creature the aura affects (its tradition's rules).`.slice(0, 1400) } : {}) } };
 }
 

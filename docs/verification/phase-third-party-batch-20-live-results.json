@@ -1,0 +1,25 @@
+{
+ "label": "thirdPartyBatch20",
+ "passed": true,
+ "at": "2026-10-07T01:36:10.739Z",
+ "details": {
+  "thirdParty20": {
+   "shield": {
+    "status": "applied",
+    "actions": 2,
+    "effect": true,
+    "ac": 2,
+    "hardness": 7
+   },
+   "flight": {
+    "status": "applied",
+    "duration": "1 rounds turn-end",
+    "fly": 25
+   },
+   "ally": {
+    "status": "applied",
+    "duration": "1 minutes"
+   }
+  }
+ }
+}

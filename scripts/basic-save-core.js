@@ -1,5 +1,5 @@
 import { isExecutableImpossible } from "../src/compiler/impossible-spell.js";
-import { KILL_BENEFIT, VALUE_INCREASE, killEffectMatches } from "../src/compiler/kill-effect.js";
+import { KILL_BENEFIT, OR_INCREASE, VALUE_INCREASE, killEffectMatches } from "../src/compiler/kill-effect.js";
 import { casterRowEffectMatches } from "../src/compiler/caster-row-effect.js";
 import { validNoteEffect, validNoteRule } from "./note-effects.js";
 import { proveAllyEffect } from "../src/compiler/ally-enemy-split.js";
@@ -302,6 +302,19 @@ export function isWhileTargetConditionCasterNote(note, plan) {
         && note.duration?.mode === "fixed" && note.duration.sustained !== true && spec?.mode === "fixed" && note.duration.value === spec.value && note.duration.unit === spec.unit;
 }
 
+/**
+ * The caster's condition while a creature holds this cast's possession note (Possession's "your own body is Unconscious"): one per possessed creature,
+ * removed with that creature's note; its text the compiled sentences, its rule the condition.
+ */
+export function isWhileTargetNoteCasterNote(note, plan) {
+    const rule = note?.rules?.[0];
+    return note?.recipient === "source" && note.kind === "while-target-note" && typeof note.text === "string" && note.text.startsWith(note.sourceText ?? "\u0000")
+        && note.sourceText === plan?.compilerEvidence?.casterNote && Array.isArray(note.degrees) && note.degrees.length > 0
+        && note.degrees.every(degree => (plan.resolution.outcomes?.[degree]?.noteEffects ?? []).some(entry => entry.possession === true))
+        && note.rules?.length === 1 && rule.key === "GrantItem" && /^Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+$/.test(rule.uuid ?? "") && validNoteRule(rule)
+        && note.duration?.mode === "fixed";
+}
+
 /** Heightened secondary targets (Horrifying Blood Loss at 4th): one waived persistent-damage requirement, a count, the GM's question. */
 export function isSecondaryTargets(secondary, plan) {
     const predicates = plan?.targeting?.actorConstraints?.predicates ?? [];
@@ -354,7 +367,7 @@ export function executableCasterChoice(plan) {
     const choice = plan?.resolution?.casterChoice;
     if (choice == null) return true;
     if (!(Array.isArray(choice.values) && choice.values.length > 1 && new Set(choice.values).size === choice.values.length
-        && choice.values.every(value => typeof value === "string" && /^[a-z]+(?: [a-z]+)?$/.test(value)) && typeof choice.label === "string"
+        && choice.values.every(value => typeof value === "string" && (/^[a-z]+(?: [a-z]+)?$/.test(value) || (choice.kind === "condition" && /^[a-z]+-[a-z]+$/.test(value)))) && typeof choice.label === "string"
         && typeof plan.compilerEvidence?.casterChoice === "string")) return false;
     // A table row naming the types of the spell's two untyped entries (Chthonian Wrath): a basic save, each row a pair of damage types.
     if (choice.kind === "damage-pair") {
@@ -367,8 +380,13 @@ export function executableCasterChoice(plan) {
         const components = plan.resolution.sharedDamage?.components ?? [];
         // The text's damage (PF2e's item has none): its own formula, untyped until the caster picks.
         // (Or a degree save held on its target whose rows scale that damage: Murmuration.)
+        // (Every part of the text's damage the caster's type — Ravaging End's direct and persistent — the formula the compiler read.)
+        if (plan.resolution.sharedDamage?.mode === "formula" && choice.allPools === true) return plan.resolution.sharedDamage.textDerived === true && choice.flag == null
+            && plan.resolution.sharedDamage.formula === plan.compilerEvidence?.textFormula && (plan.resolution.sharedDamage.formula.match(/\[(?:persistent,)?untyped\]/g) ?? []).length === components.length
+            && components.length >= 1 && components.every(component => component.type === "untyped") && Object.keys(choice).every(key => ["kind", "values", "label", "allPools", "selected"].includes(key));
         if (plan.resolution.sharedDamage?.mode === "formula") return (plan.resolution.check?.basic === true || plan.resolution.sharedDamage.degreeScaled === true || plan.resolution.check?.statistic === "spell-attack") && plan.resolution.sharedDamage.textDerived === true
-            && /\[untyped\]$/.test(plan.resolution.sharedDamage.formula ?? "") && components.length === 1 && choice.flag == null;
+            // (Or the last pool of several — Falling Stars' "{…d10[bludgeoning],…d6[untyped]}".)
+            && /\[untyped\]\}?$/.test(plan.resolution.sharedDamage.formula ?? "") && (plan.resolution.sharedDamage.formula.match(/\[untyped\]/g) ?? []).length === 1 && components.length === 1 && choice.flag == null;
         return plan.resolution.check?.basic === true && plan.resolution.sharedDamage?.mode === "pf2e-item-damage" && components.length === 1
             && String(components[0].type).toLowerCase() === "untyped" && !components[0].category && choice.flag == null;
     }
@@ -407,7 +425,17 @@ export function executableCasterChoice(plan) {
     if (choice.kind === "option" && Array.isArray(choice.rows)) {
         const degrees = ["criticalSuccess", "success", "failure", "criticalFailure"];
         if (!(plan.resolution.check?.basic === false && ["fortitude", "reflex", "will"].includes(plan.resolution.check?.statistic) && !plan.resolution.sharedDamage
-            && choice.rows.length && choice.rows.every(degree => degrees.includes(degree)) && new Set(choice.rows).size === choice.rows.length && choice.options == null)) return false;
+            && choice.rows.length && choice.rows.every(degree => degrees.includes(degree)) && new Set(choice.rows).size === choice.rows.length && choice.options == null
+            // (A second pick on some rows: Sensory Deprivation's critical failure, "you can choose two options instead of one".)
+            && (choice.twoOn == null || (Array.isArray(choice.twoOn) && choice.twoOn.every(degree => choice.rows.includes(degree)) && Array.isArray(plan.compilerEvidence?.sensoryRows))))) return false;
+        // (Dream Come True: each pick a set of entries — conditions and notes — on every row; each row holds at least one for each pick.)
+        if (Array.isArray(plan.compilerEvidence?.optionSetRows)) return degrees.every(degree => {
+            const outcome = plan.resolution.outcomes?.[degree];
+            const tagged = [...(outcome?.effects ?? []), ...(outcome?.noteEffects ?? [])].filter(entry => entry.choiceGroup === "caster-option");
+            if (!choice.rows.includes(degree)) return tagged.length === 0;
+            return tagged.every(entry => choice.values.includes(entry.option)) && choice.values.every(value => tagged.some(entry => entry.option === value))
+                && (outcome.effects ?? []).filter(effect => effect.choiceGroup === "caster-option").every(effect => effect.kind === "condition");
+        });
         return degrees.every(degree => {
             const outcome = plan.resolution.outcomes?.[degree];
             const tagged = [...(outcome?.effects ?? []).filter(effect => effect.choiceGroup === "caster-option").map(effect => ({ entry: effect, condition: true })),
@@ -419,12 +447,24 @@ export function executableCasterChoice(plan) {
             const misfortune = Array.isArray(plan.compilerEvidence?.misfortuneRows);
             // (Invoke the Harrow: each boon or bane lasts the spell's own time from the cast — rounds, or a minute from 6th.)
             const harrow = Array.isArray(plan.compilerEvidence?.harrowSuits);
+            // (Sensory Deprivation: each restriction a note for the row's time — 1 round, or the spell's — disbelieved with a Seek.)
+            const sensory = Array.isArray(plan.compilerEvidence?.sensoryRows);
+            // (Careless Swings: each pick a GM-played note until the end of the target's next turn.)
+            const optionNotes = Array.isArray(plan.compilerEvidence?.optionNoteRows);
+            // (Beguile: each pick a condition lasting the sustained spell.)
+            const optionConditions = Array.isArray(plan.compilerEvidence?.optionConditionRows);
+            // (Planar Court: each attribute a note for the sustained spell, its one penalty to that attribute's "-based" statistics.)
+            const court = Array.isArray(plan.compilerEvidence?.courtRows);
             const rowLength = JSON.stringify((outcome?.effects ?? []).find(effect => effect.slug === "fascinated")?.duration ?? null);
             return tagged.length === choice.values.length && JSON.stringify(tagged.map(({ entry }) => entry.option).sort()) === JSON.stringify([...choice.values].sort())
                 && tagged.every(({ entry, condition }) => (!condition || entry.kind === "condition") && ((entry.duration?.expiry === "turn-start" && entry.duration?.anchor === "source-turn")
                     || (misfortune && !condition && entry.duration?.expiry === "turn-end" && entry.duration?.anchor === "target-turn" && entry.duration?.value === 1 && entry.rules?.length === 1 && entry.rules[0].key === "RollTwice")
                     || (course && (JSON.stringify(entry.duration) === rowLength || (condition && entry.slug === "prone" && entry.duration?.mode === "unlimited")))
-                    || (harrow && !condition && entry.duration?.anchor === "effect-start" && ["rounds", "minutes"].includes(entry.duration?.unit) && entry.endSave?.statistic === "will")));
+                    || (harrow && !condition && entry.duration?.anchor === "effect-start" && ["rounds", "minutes"].includes(entry.duration?.unit) && entry.endSave?.statistic === "will")
+                    || (sensory && !condition && entry.duration?.mode === "fixed" && ["rounds", "minutes"].includes(entry.duration?.unit) && entry.disbelieve?.statistic === "perception")
+                    || (optionNotes && !condition && entry.gmPlays === true && entry.duration?.expiry === "turn-end" && entry.duration?.anchor === "target-turn" && entry.duration?.value === 1)
+                    || (optionConditions && condition && entry.duration?.mode === "sustained" && entry.endsWhen?.[0]?.event === "spell-ended")
+                    || (court && !condition && entry.duration?.sustained === true && entry.rules?.length === 1 && /^(?:str|dex|con|int|wis|cha)-based$/.test(entry.rules[0].selector ?? ""))));
         });
     }
     if (choice.kind === "option" && plan.resolution.check?.statistic === "spell-attack") {
@@ -456,6 +496,11 @@ export function executableCasterChoice(plan) {
     if (choice.kind === "condition") {
         const rows = Object.values(plan.resolution.outcomes ?? {}).filter(outcome => (outcome.effects ?? []).some(effect => effect.choiceGroup === "caster-condition"));
         const grouped = rows.flatMap(outcome => outcome.effects.filter(effect => effect.choiceGroup === "caster-condition"));
+        // (Shadow Army: a lingering area's failing rows, each holding every listed condition once — the caster picks one when the area starts.)
+        if (Array.isArray(plan.compilerEvidence?.shadowArmy) && plan.compilerEvidence.shadowArmy.includes(plan.compilerEvidence.casterChoice))
+            return plan.resolution.check?.basic === false && rows.length === 2 && rows.every(outcome => (outcome.conditionChoiceClaims ?? []).length === 1
+                && JSON.stringify(outcome.effects.filter(effect => effect.choiceGroup === "caster-condition").map(effect => effect.slug)) === JSON.stringify(choice.values))
+                && grouped.every(effect => effect.kind === "condition");
         return plan.resolution.check?.statistic === "strike" && rows.length === 1 && (rows[0].conditionChoiceClaims ?? []).length === 1 && choice.values.length === 2
             && grouped.every(effect => effect.kind === "condition") && JSON.stringify(grouped.map(effect => effect.slug)) === JSON.stringify(choice.values);
     }
@@ -502,7 +547,13 @@ function validRepeatable(plan) {
             && repeat.sourceText === plan.compilerEvidence?.repeatable && Array.isArray(plan.compilerEvidence?.breathGate) && /^\d+d\d+$/.test(repeat.recharge?.formula ?? "")
             && repeat.recharge.unit === "rounds" && repeat.gate?.kind === "counteract" && /^[a-z ]+$/.test(repeat.gate.target ?? "") && typeof repeat.gate.text === "string")
         || (repeat.window === "subsequent-turns" && Number.isInteger(repeat.attacks) && repeat.attacks >= 2 && repeat.attacks <= 5 && repeat.actions === 1
-            && plan.lifecycle?.durationSpec?.mode === "fixed" && typeof repeat.sourceText === "string" && repeat.sourceText === plan.compilerEvidence?.repeatable)));
+            && plan.lifecycle?.durationSpec?.mode === "fixed" && typeof repeat.sourceText === "string" && repeat.sourceText === plan.compilerEvidence?.repeatable)
+        // (Or a save the creature attempts again the first time the caster Sustains each round: the Witches+ hexes — sustained, up to the maximum.)
+        || (repeat.window === "sustain" && repeat.save === true && Number.isInteger(repeat.attacks) && repeat.attacks >= 2 && repeat.attacks <= 101 && repeat.actions === 1
+            && plan.lifecycle?.durationSpec?.mode === "sustained" && plan.lifecycle.durationSpec.maximum?.mode === "fixed"
+            // (Or a spell attack made again on each Sustain: Tidal Grasp.)
+            && (plan.resolution.check?.statistic !== "spell-attack" || (plan.compilerEvidence?.sustainAttackAgain ?? []).includes(repeat.sourceText))
+            && typeof repeat.sourceText === "string" && (plan.compilerEvidence?.sustainResave ?? []).includes(repeat.sourceText))));
 }
 
 /** A basic save dealt with the caster's melee weapon (Invoke the Crimson Oath): the compiled sentence, a melee requirement, its critical roll. */
@@ -546,6 +597,15 @@ function validBoneArmor(plan) {
         && armor.ac >= 1 && armor.ac <= 4 && typeof armor.question === "string" && armor.question.length > 0);
 }
 
+/** A damage type read from the caster at the card ("the same type as your Arcane Cascade"), or none. */
+export function isDamageTypeFrom(from) {
+    // (Or the text's own type where the item's data names another: Judge Soul.)
+    // (Or the target's chosen Strike's type, picked at the card: Shadow's Betrayal.)
+    if (from?.kind === "target-strike") return typeof from.sourceText === "string" && Object.keys(from).every(key => ["kind", "sourceText"].includes(key));
+    if (from?.kind === "text") return /^[a-z]+$/.test(from.type ?? "") && typeof from.sourceText === "string" && Object.keys(from).every(key => ["kind", "type", "sourceText"].includes(key));
+    return from == null || (from.kind === "arcane-cascade" && /^[a-z]+$/.test(from.fallback ?? "") && typeof from.sourceText === "string" && Object.keys(from).every(key => ["kind", "fallback", "sourceText"].includes(key)));
+}
+
 export function isExecutableBasicSavePlan(plan) {
     if (plan?.resolution?.kind !== "save" || plan.automation?.level !== "automatic") return false;
     if (!validSacrifice(plan) || !validBoneArmor(plan) || !validConstellations(plan) || !validRepeatable(plan) || !validWeaponDamage(plan)) return false;
@@ -558,7 +618,8 @@ export function isExecutableBasicSavePlan(plan) {
     if (plan.compilerEvidence?.generatedSpeedPenalties) return false;
     // "formula": a lingering area's Sustain damage (`@Damage[(floor(@item.level/2))d10[bludgeoning]]`), rolled once from its own formula.
     const formulaShared = shared?.mode === "formula" && shared.rollOnce === true && shared.components?.length === 1
-        && executableFormula({ formula: shared.formula }) && /\[[a-z]+\]$/i.test(shared.formula);
+        // (Several pools in braces — Cataclysm's "{3d10[acid],…}" — end on the last pool's type.)
+        && executableFormula({ formula: shared.formula }) && /\[[a-z]+\]\}?$/i.test(shared.formula);
     if (!formulaShared && (shared?.mode !== "pf2e-item-damage" || shared.rollOnce !== true || !shared.components?.length)) return false;
     // Half the triggering damage (Retributive Pain): the card replaces the "0[type]" placeholder with the amount.
     const triggered = shared?.triggeredDamage;
@@ -652,6 +713,9 @@ export function executableDamageSwap(plan) {
     // (Awaken Entropy: the force instead for a creature the void doesn't affect — PF2e's own reading, from the sentence the compiler read.)
     if (swap.when === "not-affected") return /^[a-z]+$/.test(swap.from ?? "") && /^[a-z]+$/.test(swap.to ?? "") && swap.from !== swap.to && typeof swap.sourceText === "string"
         && (plan.compilerEvidence?.growingEntropy ?? []).includes(swap.sourceText) && components.length === 1 && components[0].type === swap.from && components[0].category == null && plan.resolution.dualMode == null;
+    // (Winter's Cold Embrace: spirit instead for a creature immune or resistant to cold that has no darkvision — PF2e's own immunities, resistances and senses.)
+    if (swap.when === "resistant-no-darkvision") return /^[a-z]+$/.test(swap.from ?? "") && /^[a-z]+$/.test(swap.to ?? "") && swap.from !== swap.to && typeof swap.sourceText === "string"
+        && (plan.compilerEvidence?.coldEmbrace ?? []).includes(swap.sourceText) && components.length === 1 && components[0].type === swap.from && components[0].category == null && plan.resolution.dualMode == null;
     // (Spiritual Torrent: the caster's own nature turns the vitality damage to void.)
     if (swap.when === "caster-undead") return swap.from === "vitality" && swap.to === "void" && typeof swap.sourceText === "string"
         && plan.resolution.sharedDamage?.mode === "pf2e-item-damage" && components.length === 1 && components[0].type === "vitality" && components[0].category == null
@@ -665,6 +729,11 @@ export function executableDamageSwap(plan) {
 export function damageSwapApplies(swap, actor) {
     if (!swap) return false;
     if (swap.when === "more-detrimental") return moreDetrimental(actor, swap.from, swap.to);
+    if (swap.when === "resistant-no-darkvision") { const attributes = actor?.attributes ?? actor?.system?.attributes ?? {};
+        const shrugs = (attributes.immunities ?? []).some(entry => entry.type === swap.from) || (attributes.resistances ?? []).some(entry => entry.type === swap.from) || (typeof actor?.isAffectedBy === "function" && !actor.isAffectedBy(swap.from));
+        const senses = actor?.perception?.senses ?? actor?.system?.perception?.senses ?? [];
+        const sees = [...(senses?.contents ?? senses ?? [])].some(sense => ["darkvision", "greater-darkvision", "greaterDarkvision"].includes(sense?.type));
+        return shrugs && !sees; }
     if (swap.when === "not-affected") { const attributes = actor?.attributes ?? actor?.system?.attributes ?? {};
         return (attributes.immunities ?? []).some(entry => entry.type === swap.from) || (typeof actor?.isAffectedBy === "function" && !actor.isAffectedBy(swap.from)); }
     const traits = actor?.traits ?? new Set(actor?.system?.traits?.value ?? []);
@@ -713,7 +782,8 @@ export function isTriggeredDamage(value) {
     if (!["explosion", "auditory"].includes(value?.trigger) && (value?.multiplier != null || value?.adjacent != null)) return false;
     // "… damage whenever it performs an auditory action or Casts a Spell": the row's own formula at the cast rank, each time.
     // ("… each time it Casts a Spell": Rend Magic's, the critical hit's doubled formula its own.)
-    if (["auditory-or-cast", "spell-cast"].includes(value?.trigger)) return typeof value.formula === "string" && /^(?:[\d\s()+*\/-]|@item\.(?:rank|level)|floor|ceil|d(?=\d))+$/.test(value.formula)
+    // ("… each time the creature takes an action with the move trait, it takes 1 force damage": Holding Glyph's, the GM reporting the action.)
+    if (["auditory-or-cast", "spell-cast", "move-action"].includes(value?.trigger)) return typeof value.formula === "string" && /^(?:[\d\s()+*\/-]|@item\.(?:rank|level)|floor|ceil|d(?=\d))+$/.test(value.formula)
         && /^[a-z]+$/.test(value.type ?? "") && value.frequency === "each" && value.endsSpell === false && Number.isInteger(value.baseRank) && value.dice == null;
     // "… takes 1d8 damage per different creature it intentionally damaged on that turn … The maximum is 4d8": the GM's count, at most maxCount;
     // once, or each turn (ending after a turn with none when endsOnZero).
@@ -737,6 +807,13 @@ export function isTriggeredDamage(value) {
         && value.conditions.every(condition => /^Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+$/.test(condition.uuid ?? "") && /^[a-z-]+$/.test(condition.slug ?? "")
             && Number.isInteger(condition.value) && condition.value >= 1 && condition.value <= 4))) return false;
     if (value?.trigger !== "noncompliance" && value?.conditions != null) return false;
+    // "spell-cast-rank": it Cast a Spell (the GM reports it and that spell's rank): `perRank` × that rank of `type` damage — once (the note ends), or each
+    // time; optionally a condition for a time each time (Old-Mage's Echo's Deafened until the start of its next turn).
+    if (value?.trigger === "spell-cast-rank") return Number.isInteger(value.perRank) && value.perRank > 0 && /^[a-z]+$/.test(value.type ?? "") && ["once", "each"].includes(value.frequency)
+        && value.endsSpell === (value.frequency === "once") && Number.isInteger(value.baseRank) && value.dice == null && value.formula == null
+        && (value.timedCondition == null || (/^Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+$/.test(value.timedCondition.uuid ?? "") && /^[a-z-]+$/.test(value.timedCondition.slug ?? "")
+            && value.timedCondition.duration?.value === 1 && value.timedCondition.duration.unit === "rounds" && ["turn-start", "turn-end"].includes(value.timedCondition.duration.expiry)));
+    if (value?.trigger !== "spell-cast-rank" && (value?.perRank != null || value?.timedCondition != null)) return false;
     // "bleed-gained": it gained persistent damage of `persistentType` (the GM reports it and its amount), once a round: that amount as `type` damage
     // (Achaekek's Clutch).
     if (value?.trigger === "bleed-gained") return /^[a-z]+$/.test(value.persistentType ?? "") && /^[a-z]+$/.test(value.type ?? "") && value.frequency === "round"
@@ -777,6 +854,8 @@ export function isDegreeAdjustment(adjustment) {
         || predicate?.kind === "caster"
         // (The caster's allies: "Allies within the storm who roll a success … get a critical success instead" — the caster filled in at the cast.)
         || predicate?.kind === "ally-of-caster"
+        // (Shadow Army: a creature holding this spell's note — its critical success — saves a degree better; the spell's item filled in at the cast.)
+        || (predicate?.kind === "note-held" && typeof predicate.label === "string" && predicate.label.length > 0)
         // (Read from PF2e's immunities: "Creatures that are immune to fire, … one degree of success better.")
         || (predicate?.kind === "immunity-any" && Array.isArray(predicate.immunities) && predicate.immunities.length > 0
             && predicate.immunities.every(type => typeof type === "string" && type.length > 0))
@@ -825,7 +904,8 @@ export function isStormArea(plan) {
 export function isCasterShare(plan) {
     const share = plan?.resolution?.casterShare, adjustment = plan?.resolution?.degreeAdjustment, evidence = plan?.compilerEvidence?.casterShare;
     return share != null && Array.isArray(evidence) && evidence.length === 2 && Object.keys(share).every(key => key === "sourceText") && share.sourceText === evidence[0]
-        && plan.resolution.check?.basic === true && !plan.targeting?.area
+        // (Or an area the caster must be in: Blood Surge.)
+        && plan.resolution.check?.basic === true && (!plan.targeting?.area || plan.compilerEvidence?.casterShareArea === true)
         && isDegreeAdjustment(adjustment) && adjustment.predicate.kind === "caster" && Object.keys(adjustment.predicate).length === 1 && adjustment.sourceText === evidence[1]
         && adjustment.map.criticalSuccess === "criticalSuccess" && adjustment.map.success === "criticalSuccess" && adjustment.map.failure === "success" && adjustment.map.criticalFailure === "failure";
 }
@@ -855,6 +935,18 @@ export function isWaveTerrain(plan) {
         && evidence.includes(hazard.sourceText) && /^\(\d+\+floor\(\(@item\.rank-\d+\)\/\d+\)\*\d+\)d(?:4|6|8|10|12)$/.test(hazard.formula ?? "");
 }
 
+/** Shadows the card places after the save (Shadow Raid): no terrain; the caster's type to each enemy ending its turn there; the GM's disbelief halves it. */
+export function isShadowTerrain(plan) {
+    const terrain = plan?.resolution?.areaTerrain, evidence = plan?.compilerEvidence?.shadowRaid, hazard = terrain?.hazard;
+    return terrain != null && Array.isArray(evidence) && Object.keys(terrain).every(key => ["durationSeconds", "sourceText", "noTerrain", "hazard", "disbelief", "notes"].includes(key))
+        && terrain.noTerrain === true && evidence.includes(terrain.sourceText) && plan.resolution.casterChoice?.kind === "damage-type" && plan.resolution.check?.basic === true
+        && hazard != null && Object.keys(hazard).every(key => ["events", "oncePerTurn", "chosenType", "formula", "type", "label", "enemiesOnly", "halvedOnDisbelief", "sourceText"].includes(key))
+        && JSON.stringify(hazard.events) === '["turn-end"]' && hazard.chosenType === true && hazard.type === "chosen" && hazard.enemiesOnly === true && hazard.halvedOnDisbelief === true
+        && /^\(\d+\+\d+\*min\(1,floor\(@item\.rank\/\d+\)\)\)d(?:4|6|8|10|12)$/.test(hazard.formula ?? "")
+        && terrain.disbelief?.halves === true && typeof terrain.disbelief.label === "string" && evidence.some(sentence => terrain.disbelief.sourceText.startsWith(sentence))
+        && Array.isArray(terrain.notes) && terrain.notes.every(note => typeof note === "string");
+}
+
 /** Bursts' hazardous terrain the card places after the save (Coral Eruption): the count, a per-square GM control of a rank formula, notes. */
 export function isReefTerrain(plan) {
     const terrain = plan?.resolution?.areaTerrain, evidence = plan?.compilerEvidence?.reefTerrain, hazard = terrain?.gmHazard;
@@ -871,6 +963,13 @@ export function degreeAdjustmentFor(adjustment, actor) {
     if (adjustment.predicate.kind === "gm-choice") return { status: "pending", question: adjustment.predicate.question, choices: adjustment.predicate.options.map(option => ({ key: option.key, label: option.label })) };
     // (Only the caster's own record applies it: the card sets that one.)
     if (adjustment.predicate.kind === "caster") return { status: "not-applicable", caster: true };
+    // (A quasi-real caster: every target's save is a degree better.)
+    if (adjustment.predicate.kind === "everyone") return { status: "applies", everyone: true };
+    if (adjustment.predicate.kind === "note-held") {
+        const held = (actor?.itemTypes?.effect ?? []).some(effect => { const runtime = effect.flags?.["pf2e-automatic-resolution"]?.runtime;
+            return runtime?.kind === "note-effect" && runtime.sourceItemUuid === adjustment.predicate.sourceItemUuid && effect.name === `${runtime.sourceItemName}: ${adjustment.predicate.label}`; });
+        return { status: held ? "applies" : "not-applicable", noteHeld: true };
+    }
     if (adjustment.predicate.kind === "ally-of-caster") {
         const caster = adjustment.predicate.casterUuid ? fromUuidSync(adjustment.predicate.casterUuid) : null;
         const ally = !!caster && actor && actor.uuid !== caster.uuid && (caster.isAllyOf?.(actor) ?? false);
@@ -1307,6 +1406,9 @@ function isExecutableSecondaryOutcome(outcome) {
 
 function isExecutableImmediateSecondarySave(followUp) {
     return followUp?.kind === "save"
+        // (Asked first when the text says when: Unhelpful Nudge's collision — the GM's question.)
+        && (followUp.gate == null || (followUp.gate.kind === "gm-question" && typeof followUp.gate.question === "string" && typeof followUp.gate.sourceText === "string"
+            && Object.keys(followUp.gate).every(key => ["kind", "question", "sourceText"].includes(key))))
         && followUp.complete === true
         && followUp.timing?.event === "after-primary-outcome"
         && followUp.timing.recurring === false
@@ -1341,6 +1443,14 @@ export function inspectDegreeSavePlan(plan) {
         if (move == null) continue;
         // (A pull "to the nearest empty space adjacent to you" has no distance; a move the target can refuse by falling Prone names how.)
         // "The target falls safely up to 120 feet.": a safe fall straight down.
+        // "… rises 10 feet into the air." (Whirlwind): straight up, the GM's reminder.
+        if (move.kind === "rise") {
+            if (!(Number.isInteger(move.distance) && move.distance > 0 && move.upTo === false && move.optional === false && move.direction === "up"
+                && Object.keys(move).every(key => ["kind", "distance", "upTo", "optional", "direction", "sourceText"].includes(key))
+                && new RegExp(`\\brises ${move.distance} feet into the air\\.$`).test(move.sourceText ?? "")))
+                block("forced-movement", `resolution.outcomes.${degree}.forcedMovement`, "A rise must be the stated distance up.");
+            continue;
+        }
         if (move.kind === "fall") {
             if (!(Number.isInteger(move.distance) && move.distance > 0 && move.upTo === true && move.optional === false && move.direction === "down" && move.safe === true
                 && Object.keys(move).every(key => ["kind", "distance", "upTo", "optional", "direction", "safe", "sourceText"].includes(key))
@@ -1348,9 +1458,11 @@ export function inspectDegreeSavePlan(plan) {
                 block("forced-movement", `resolution.outcomes.${degree}.forcedMovement`, "A fall must be the stated safe fall.");
             continue;
         }
-        if (!(["push", "pull"].includes(move.kind) && ((Number.isInteger(move.distance) && move.distance > 0) || (move.kind === "pull" && move.toAdjacent === true && move.distance == null)) && typeof move.upTo === "boolean"
+        if (!(["push", "pull"].includes(move.kind) && ((Number.isInteger(move.distance) && move.distance > 0) || (move.kind === "pull" && move.toAdjacent === true && move.distance == null)
+            // ("… and is drawn to the center of the whirlpool": all the way to the area's centre.)
+            || (move.kind === "pull" && move.toCenter === true && move.direction === "center" && move.distance == null)) && typeof move.upTo === "boolean"
             && (move.avoid == null || ["prone", "hazard-prone"].includes(move.avoid))
-            && typeof move.optional === "boolean" && ["any", "away", "toward", "center", "from-center"].includes(move.direction)
+            && typeof move.optional === "boolean" && ["any", "away", "toward", "center", "from-center", "chosen"].includes(move.direction)
             && (move.note == null || /^\d+ feet through a body of water$/.test(move.note))
             // ("Creatures that fail their save are pushed …" only in the 3-action cast of a "2 to 3" variant: the GM's reminder says so.)
             && (move.actions == null || (move.actions === 3 && String(plan.activation?.time ?? "").trim() === "2 to 3"))
@@ -1449,6 +1561,26 @@ export function inspectDegreeSavePlan(plan) {
         block("detonation", "resolution.detonation", "The mark's explosion needs the spell's damage, its sentence and an executable basic save.");
     // A basic save on each round's first Sustain for the targets whose save failed (Steal Shadow): a sustained degree save, its failing rows, the
     // compiled sentence, and an executable basic save of the spell's one damage entry.
+    // (Targeted Ward: the caster's bonus against the opponent by its save's row, from the sentences the compiler read.)
+    const ward = plan.resolution.casterWard;
+    if (ward != null && !(plan.resolution.check.basic === false && SAVE_DEGREES.every(degree => Number.isInteger(ward.byDegree?.[degree]) && ward.byDegree[degree] >= 0 && ward.byDegree[degree] <= 4)
+        && Number.isInteger(ward.heightened?.rank) && Number.isInteger(ward.heightened?.add) && Number.isInteger(ward.seconds) && ward.seconds > 0 && typeof ward.toggle === "boolean"
+        && (plan.compilerEvidence?.casterWard ?? []).includes(ward.sourceText) && (ward.note == null || (plan.compilerEvidence?.casterWard ?? []).some(sentence => sentence.endsWith(ward.note)))
+        && SAVE_DEGREES.every(degree => !(plan.resolution.outcomes?.[degree]?.effects ?? []).length)))
+        block("caster-ward", "resolution.casterWard", "The caster's ward needs each row's bonus, its time and the sentences the compiler read.");
+    // (Technomancy Ray: the text's base die replaced by the caster's skill rank's, from the sentence the compiler read.)
+    const skillDie = plan.resolution.skillDie;
+    if (skillDie != null && !(/^[a-z]+$/.test(skillDie.skill ?? "") && [4, 6, 8, 10, 12].includes(skillDie.base) && Object.entries(skillDie.byRank ?? {}).length > 0
+        && Object.entries(skillDie.byRank).every(([rank, faces]) => [1, 2, 3, 4].includes(Number(rank)) && [4, 6, 8, 10, 12].includes(faces) && faces > skillDie.base)
+        && skillDie.sourceText === plan.compilerEvidence?.skillDie && plan.resolution.sharedDamage?.mode === "formula" && new RegExp(`d${skillDie.base}\\[untyped\\]$`).test(plan.resolution.sharedDamage.formula ?? "")))
+        block("skill-die", "resolution.skillDie", "A die set by the caster's skill needs the text's dice and the sentence the compiler read.");
+    // (Warped Visage: one ally of a target that failed saves on the first Sustain each turn — its own plan with the immunity, from the sentence the compiler read.)
+    const allySave = plan.resolution.sustainAllySave;
+    if (allySave != null && !(plan.resolution.check.basic === false && plan.lifecycle?.sustained === true && Number.isInteger(allySave.radius) && allySave.radius > 0
+        && Array.isArray(allySave.degrees) && allySave.degrees.length > 0 && allySave.degrees.every(degree => ["failure", "criticalFailure"].includes(degree))
+        && (plan.compilerEvidence?.sustainAllySave ?? []).includes(allySave.sourceText) && allySave.plan?.resolution?.kind === "save" && allySave.plan.resolution.temporaryImmunity
+        && !allySave.plan.resolution.sustainAllySave && !allySave.plan.lifecycle?.sustained && inspectSavePlan(allySave.plan).supported))
+        block("sustain-ally-save", "resolution.sustainAllySave", "A Sustain's save for a target's ally needs the failing rows, its distance, the compiled sentence and its own executable plan.");
     const sustainStrike = plan.resolution.sustainStrike;
     if (sustainStrike != null && !(plan.resolution.check.basic === false && plan.lifecycle?.sustained === true && Array.isArray(sustainStrike.degrees) && sustainStrike.degrees.length > 0
         && sustainStrike.degrees.every(degree => ["failure", "criticalFailure"].includes(degree)) && ["fortitude", "reflex", "will"].includes(sustainStrike.statistic)
@@ -1497,6 +1629,31 @@ export function inspectDegreeSavePlan(plan) {
             if (note.triggeredDamage != null && !isTriggeredDamage(note.triggeredDamage)) block("triggered-damage", `resolution.outcomes.${degree}.noteEffects`, "Triggered damage needs its dice, type and frequency.");
         }
     }
+    // An aura around each target its row names (Fateful Condemnation): its radius and time, each row's rule for the target and its allies inside, a turn-start condition.
+    const aura = plan.resolution.targetAura;
+    if (aura != null && !(Number.isInteger(aura.radius) && aura.radius > 0 && aura.radius % 5 === 0 && Number.isFinite(aura.seconds) && aura.seconds > 0
+        && (plan.compilerEvidence?.lastingCurse ?? []).some(sentence => sentence.endsWith(aura.sourceText)) && Object.keys(aura.byDegree ?? {}).length > 0
+        && Object.entries(aura.byDegree).every(([degree, entry]) => ["success", "failure", "criticalFailure"].includes(degree) && typeof entry.label === "string" && Array.isArray(entry.rules)
+            // (Tanglecurse: each row's own radius and time, and difficult terrain for everyone in it.)
+            && (entry.radius == null || (Number.isInteger(entry.radius) && entry.radius > 0 && entry.radius % 5 === 0)) && (entry.seconds == null || (Number.isFinite(entry.seconds) && entry.seconds > 0))
+            && (entry.terrain == null || [2, 3].includes(entry.terrain.difficulty)) && (entry.rules.length > 0 || entry.terrain != null)
+            && entry.rules.every(rule => rule.key === "FlatModifier" && typeof rule.selector === "string" && ["status", "circumstance"].includes(rule.type) && Number.isInteger(rule.value) && rule.value < 0 && rule.value >= -4)
+            && (entry.allyTurnCondition == null || (/^Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+$/.test(entry.allyTurnCondition.uuid ?? "") && Number.isInteger(entry.allyTurnCondition.value) && entry.allyTurnCondition.rounds === 1)))))
+        block("target-aura", "resolution.targetAura", "An aura around the target needs its radius, time and each row's stated rule.");
+    // A copy of the target fighting for the caster (Duplicate Foe): the rows that make one, its stated Hit Points (and step), its loss each turn, its time.
+    const duplicate = plan.resolution.duplicate;
+    if (duplicate != null && !(Object.keys(duplicate.byDegree ?? {}).length > 0 && Object.entries(duplicate.byDegree).every(([degree, entry]) => ["success", "failure", "criticalFailure"].includes(degree)
+            && (entry.halfDamage == null || entry.halfDamage === true) && (entry.maxRounds == null || (Number.isInteger(entry.maxRounds) && entry.maxRounds > 0)))
+        && Number.isInteger(duplicate.hp?.base) && duplicate.hp.base > 0 && Number.isInteger(duplicate.hp.step) && Number.isInteger(duplicate.hp.interval) && duplicate.hp.interval > 0
+        && /^\d+d\d+$/.test(duplicate.hpLoss ?? "") && Number.isFinite(duplicate.seconds) && duplicate.seconds > 0
+        && Array.isArray(plan.compilerEvidence?.creatureCopy) && plan.compilerEvidence.creatureCopy.includes(duplicate.sourceText)))
+        block("duplicate", "resolution.duplicate", "A creature copy needs the rows that make it, its Hit Points, its loss each turn and the claimed text.");
+    // The spell's controls (Puppet Strings' forced Strike): each part as the controls card runs it, for the rows that give them.
+    const controls = plan.resolution.controls;
+    if (controls != null && !(Array.isArray(controls.parts) && !inspectParts(controls.parts).length && Array.isArray(controls.degrees)
+        && controls.degrees.length > 0 && controls.degrees.every(degree => ["criticalSuccess", "success", "failure", "criticalFailure"].includes(degree)) && typeof controls.label === "string"
+        && Array.isArray(plan.compilerEvidence?.forcedActions) && plan.compilerEvidence.forcedActions.includes(controls.sourceText)))
+        block("controls", "resolution.controls", "The spell's controls need their parts, the rows that give them and the claimed sentence.");
     // Row GM notes: only the known kinds, each claiming its exact sentence.
     // A behaviour rule (user decision): only beside something the row really applies.
     const grabbed = outcome => (outcome.effects ?? []).some(effect => effect.slug === "grabbed");
@@ -1561,6 +1718,11 @@ export function inspectDegreeSavePlan(plan) {
     if (traitBonus != null && !(/^[a-z-]+$/.test(traitBonus.trait ?? "") && Number.isInteger(traitBonus.value) && traitBonus.value > 0 && traitBonus.value <= 4 && ["circumstance", "status"].includes(traitBonus.type)
         && Array.isArray(plan.compilerEvidence?.petrifyingRows) && plan.compilerEvidence.petrifyingRows.includes(traitBonus.sourceText)))
         block("trait-save-bonus", "resolution.traitSaveBonus", "A trait's save bonus needs its stated trait, value and sentence.");
+    // A spell attack against a save's DC (Tidal Grasp): the stated statistic and sentence.
+    const attackDefense = plan.resolution.attackDefense;
+    if (attackDefense != null && !(plan.resolution.check?.statistic === "spell-attack" && ["fortitude", "reflex", "will"].includes(attackDefense.statistic) && typeof attackDefense.sourceText === "string"
+        && Object.keys(attackDefense).every(key => ["statistic", "sourceText"].includes(key))))
+        block("attack-defense", "resolution.attackDefense", "An attack against a save's DC needs its statistic and sentence.");
     // A GM-answered attack adjustment: a spell attack, choices with whole-number values, an optional persistent roll.
     // A save adjustment ("If …, it gains a +4 circumstance bonus to its save") uses the same question on a save.
     const adjustment = plan.resolution.attackAdjustment;
@@ -1585,7 +1747,17 @@ export function inspectDegreeSavePlan(plan) {
     // spell attack's cover and concealment rule.
     if (reminders != null && !(Array.isArray(reminders) && reminders.every(reminder => typeof reminder?.text === "string" && reminder.text.length > 0
         && ((["counteract-along-path", "counteract-overlap"].includes(reminder.kind) && ["light", "darkness"].includes(reminder.target))
+            // (A stated counteract modifier and rank against the light or darkness in the area: an incarnate's part.)
+            || (reminder.kind === "counteract-fixed" && ["light", "darkness"].includes(reminder.target) && Number.isInteger(reminder.modifier) && reminder.modifier > 0 && reminder.modifier <= 40
+                && Number.isInteger(reminder.rank) && reminder.rank >= 1 && reminder.rank <= 10)
             || (reminder.kind === "attack-cover" && plan.resolution.check.statistic === "spell-attack")
+            // (Ending the required spell and centring the area: a third-party finale, third-party-rows.js.)
+            || (reminder.kind === "required-spell" && (plan.compilerEvidence?.thirdPartyPreamble ?? []).includes(reminder.sourceText))
+            // (A third-party lead sentence the GM acts on: Drown's non-breathers.)
+            || (reminder.kind === "third-party-note" && (plan.compilerEvidence?.thirdPartyPreamble ?? []).includes(reminder.sourceText))
+            // (A third-party basic save's light left in the area, and the line's length at the cast rank: basic-feature-riders.js.)
+            || (reminder.kind === "area-light" && (plan.compilerEvidence?.basicFeatureRiders ?? []).includes(reminder.sourceText))
+            || (reminder.kind === "area-size" && Array.isArray(plan.compilerEvidence?.basicFeatureRiders) && /^Heightened \(\+1\)/.test(reminder.sourceText ?? ""))
             // A lodged projectile's removal (an Athletics check against the spell DC, as an Interact action).
             || (reminder.kind === "lodged-removal" && plan.resolution.check.statistic === "spell-attack" && typeof plan.compilerEvidence?.lodgedRemoval === "string"
                 && reminder.sourceText === plan.compilerEvidence.lodgedRemoval)
@@ -1659,7 +1831,7 @@ export function inspectDegreeSavePlan(plan) {
             // Ranger's Bramble: the borrowed rider's note (one of its own compiled sentences, unlinked).
             || (reminder.kind === "borrowed-rider-note" && typeof reminder.text === "string" && (plan.compilerEvidence?.borrowedRider?.sentences ?? []).some(sentence => sentence.replace(/@UUID\[[^\]]+\]\{([^}]+)\}/g, "$1") === reminder.text))
             || (reminder.kind === "spell-note" && typeof reminder.text === "string" && reminder.text.length > 0
-                && [plan.compilerEvidence?.auraModes, plan.compilerEvidence?.harrowSuits, plan.compilerEvidence?.saveModes, plan.compilerEvidence?.lingeringModes, plan.compilerEvidence?.twinIllusion, plan.compilerEvidence?.areaFollowUp, plan.compilerEvidence?.invitationSave, plan.compilerEvidence?.censureRows, plan.compilerEvidence?.boundPenalty, plan.compilerEvidence?.stolenVoice, plan.compilerEvidence?.savedRows, plan.compilerEvidence?.smallSave, plan.compilerEvidence?.gmCommand, plan.compilerEvidence?.entrancedRows, plan.compilerEvidence?.trueNameCommand, plan.compilerEvidence?.reviewRows, plan.compilerEvidence?.insightRows, plan.compilerEvidence?.stasisRows, plan.compilerEvidence?.dragonRoar, plan.compilerEvidence?.hallucinationRows, plan.compilerEvidence?.luringRows, plan.compilerEvidence?.suggestionRows, plan.compilerEvidence?.nightmareSwap, plan.compilerEvidence?.weaveRows, plan.compilerEvidence?.mindRead, plan.compilerEvidence?.graspingSnakes, plan.compilerEvidence?.deadWhispers, plan.compilerEvidence?.stoneBind, plan.compilerEvidence?.faithCrisis, plan.compilerEvidence?.blameShift, plan.compilerEvidence?.stoneReshape, plan.compilerEvidence?.wakingVisions, plan.compilerEvidence?.enthrallRows, plan.compilerEvidence?.comedyRows, plan.compilerEvidence?.geyserRows, plan.compilerEvidence?.stoneGarden, plan.compilerEvidence?.mirrorRing, plan.compilerEvidence?.radiantWall, plan.compilerEvidence?.starLines, plan.compilerEvidence?.lostNames, plan.compilerEvidence?.realityUnravel, plan.compilerEvidence?.shadowTheft, plan.compilerEvidence?.adorationRows, plan.compilerEvidence?.glassCage, plan.compilerEvidence?.chainRows, plan.compilerEvidence?.chainSave, plan.compilerEvidence?.bladeWall, plan.compilerEvidence?.burstSalvo, plan.compilerEvidence?.casterStorm, plan.compilerEvidence?.mistHazard, plan.compilerEvidence?.smallSave, plan.compilerEvidence?.destructionImplement, plan.compilerEvidence?.bloodspray, plan.compilerEvidence?.mantisMark, plan.compilerEvidence?.coalsDemand, plan.compilerEvidence?.knowledgeUnravel, plan.compilerEvidence?.detonatingMark, plan.compilerEvidence?.drawLightning, plan.compilerEvidence?.skySteal, plan.compilerEvidence?.sorrowAura, plan.compilerEvidence?.timeMorass, plan.compilerEvidence?.liftedAfflictionImmunity, plan.compilerEvidence?.truthRing, plan.compilerEvidence?.pressureZone, plan.compilerEvidence?.impalingLance].some(sentences => Array.isArray(sentences) && sentences.includes(reminder.sourceText)))
+                && [plan.compilerEvidence?.auraModes, plan.compilerEvidence?.harrowSuits, plan.compilerEvidence?.saveModes, plan.compilerEvidence?.lingeringModes, plan.compilerEvidence?.twinIllusion, plan.compilerEvidence?.areaFollowUp, plan.compilerEvidence?.sustainAllySave, plan.compilerEvidence?.invitationSave, plan.compilerEvidence?.censureRows, plan.compilerEvidence?.boundPenalty, plan.compilerEvidence?.stolenVoice, plan.compilerEvidence?.savedRows, plan.compilerEvidence?.smallSave, plan.compilerEvidence?.gmCommand, plan.compilerEvidence?.entrancedRows, plan.compilerEvidence?.trueNameCommand, plan.compilerEvidence?.reviewRows, plan.compilerEvidence?.insightRows, plan.compilerEvidence?.stasisRows, plan.compilerEvidence?.dragonRoar, plan.compilerEvidence?.hallucinationRows, plan.compilerEvidence?.luringRows, plan.compilerEvidence?.suggestionRows, plan.compilerEvidence?.nightmareSwap, plan.compilerEvidence?.weaveRows, plan.compilerEvidence?.mindRead, plan.compilerEvidence?.graspingSnakes, plan.compilerEvidence?.deadWhispers, plan.compilerEvidence?.stoneBind, plan.compilerEvidence?.faithCrisis, plan.compilerEvidence?.blameShift, plan.compilerEvidence?.stoneReshape, plan.compilerEvidence?.wakingVisions, plan.compilerEvidence?.enthrallRows, plan.compilerEvidence?.comedyRows, plan.compilerEvidence?.geyserRows, plan.compilerEvidence?.stoneGarden, plan.compilerEvidence?.mirrorRing, plan.compilerEvidence?.radiantWall, plan.compilerEvidence?.starLines, plan.compilerEvidence?.lostNames, plan.compilerEvidence?.realityUnravel, plan.compilerEvidence?.shadowTheft, plan.compilerEvidence?.adorationRows, plan.compilerEvidence?.glassCage, plan.compilerEvidence?.chainRows, plan.compilerEvidence?.chainSave, plan.compilerEvidence?.bladeWall, plan.compilerEvidence?.burstSalvo, plan.compilerEvidence?.casterStorm, plan.compilerEvidence?.mistHazard, plan.compilerEvidence?.smallSave, plan.compilerEvidence?.destructionImplement, plan.compilerEvidence?.bloodspray, plan.compilerEvidence?.mantisMark, plan.compilerEvidence?.coalsDemand, plan.compilerEvidence?.knowledgeUnravel, plan.compilerEvidence?.detonatingMark, plan.compilerEvidence?.drawLightning, plan.compilerEvidence?.skySteal, plan.compilerEvidence?.sorrowAura, plan.compilerEvidence?.timeMorass, plan.compilerEvidence?.liftedAfflictionImmunity, plan.compilerEvidence?.truthRing, plan.compilerEvidence?.pressureZone, plan.compilerEvidence?.impalingLance, plan.compilerEvidence?.decapitationSave, plan.compilerEvidence?.trappedRows, plan.compilerEvidence?.fallingArea, plan.compilerEvidence?.thirdPartyPreamble].some(sentences => Array.isArray(sentences) && sentences.includes(reminder.sourceText)))
             // Weapon Storm: the caster's choice of area, and the weapon's critical specialization on a critical failure (the GM's).
             || (["area-choice", "weapon-critical-specialization"].includes(reminder.kind) && plan.resolution.weaponDamage?.mode === "dice" && Array.isArray(plan.compilerEvidence?.weaponDice)
                 && typeof reminder.text === "string" && reminder.text.length > 0)
@@ -1669,6 +1841,10 @@ export function inspectDegreeSavePlan(plan) {
             || (reminder.kind === "save-timing" && typeof plan.compilerEvidence?.saveTiming === "string" && reminder.sourceText === plan.compilerEvidence.saveTiming)
             // Unattended objects in the area pushed too (the module moves creatures only).
             || (reminder.kind === "object-push" && typeof plan.compilerEvidence?.objectPush === "string" && reminder.sourceText === plan.compilerEvidence.objectPush)
+            // (A teleport spell's notes: willing creatures, line of sight, the redirected attack — its claimed sentences.)
+            || (reminder.kind === "teleport-note" && plan.resolution.controls != null && Array.isArray(plan.compilerEvidence?.teleportSpell) && plan.compilerEvidence.teleportSpell.includes(reminder.sourceText))
+            // (Arcane Explosion: the caster's form after the blast — its claimed sentences.)
+            || (reminder.kind === "caster-form" && plan.resolution.casterForm != null && Array.isArray(plan.compilerEvidence?.casterForm) && plan.compilerEvidence.casterForm.includes(reminder.sourceText))
             // A spell that moves an object target instead of the creature's save (Grasping Vine): the object branch is the GM's.
             || (reminder.kind === "object-branch" && typeof plan.compilerEvidence?.objectMove === "string" && reminder.sourceText === plan.compilerEvidence.objectMove)
             // What the caster does for a target that failed a basic save (Recall Knowledge with its modifier).
@@ -1678,6 +1854,13 @@ export function inspectDegreeSavePlan(plan) {
             || (reminder.kind === "removal" && plan.resolution.check.statistic === "spell-attack"
                 && Object.values(plan.resolution.outcomes ?? {}).some(outcome => (outcome.effects ?? []).some(isPersistentLinkedLifetime)))))))
         block("reminders", "resolution.reminders", "Only known GM reminders can accompany an automated spell.");
+    // (Arcane Explosion: PF2e's Effect on the caster after the blast, its aura's dice and type, its claimed sentences.)
+    const casterForm = plan.resolution.casterForm;
+    if (casterForm != null && !(typeof casterForm.effect?.uuid === "string" && /^Compendium\.pf2e\.spell-effects\.Item\.[A-Za-z0-9]+$/.test(casterForm.effect.uuid) && Array.isArray(casterForm.auras)
+        && casterForm.auras.every(aura => Number(aura.radius) > 0 && /^\d+d\d+$/.test(String(aura.formula)) && /^[a-z]+$/.test(String(aura.type)) && Array.isArray(aura.events) && aura.events.length > 0
+            && aura.events.every(event => ["enter", "turn-start", "turn-end"].includes(event)))
+        && Array.isArray(plan.compilerEvidence?.casterForm) && plan.compilerEvidence.casterForm.length > 0))
+        block("caster-form", "resolution.casterForm", "The caster's form needs PF2e's Effect, its aura's dice and type, and the claimed sentences.");
     if (plan.resolution.check.basic === true && !plan.compilerEvidence?.basicConditionRider
         && !plan.compilerEvidence?.basicPersistentDamageRider && !plan.compilerEvidence?.basicDamageBenefit && !plan.compilerEvidence?.basicEffectRider
         && !plan.compilerEvidence?.basicFollowUp
@@ -1698,7 +1881,9 @@ export function inspectDegreeSavePlan(plan) {
         && !(Array.isArray(plan.compilerEvidence?.runewell) && plan.compilerEvidence?.lingeringExposure === true)
         // (Call the Ten: the shielded targets are the bolster's.)
         && !(Array.isArray(plan.compilerEvidence?.spiritChoice) && plan.resolution.bolster?.claim?.kind === "resistance")
-        && !(plan.compilerEvidence?.basicAfflictionRider && isAfflictionHandoffPlan(plan))) block("basic-save-composition", "resolution.check.basic", "Basic-save riders have not been completely compiled.");
+        && !(plan.compilerEvidence?.basicAfflictionRider && isAfflictionHandoffPlan(plan))
+        // (The caster's features — the Arcane Cascade's type, a choice of areas, off-guard to the caster: basic-feature-riders.js.)
+        && !(Array.isArray(plan.compilerEvidence?.basicFeatureRiders) && plan.compilerEvidence.basicFeatureRiders.length > 0 && isDamageTypeFrom(plan.resolution.damageTypeFrom))) block("basic-save-composition", "resolution.check.basic", "Basic-save riders have not been completely compiled.");
     if (plan.automation?.level !== "guided") block("automation-level", "automation.level", "This plan is not a guided degree-outcome resolution.");
     for (const capability of plan.automation?.pendingCapabilities ?? []) block("compiler-gap", "automation.pendingCapabilities", capability);
     // Affliction progression is the accepted delegated exception, but only
@@ -1742,7 +1927,7 @@ export function inspectDegreeSavePlan(plan) {
         || (plan.resolution.repeatable?.window === "turn" && raw === "until the end of your turn");
     // "until the start of your next turn" / "until the end of the target's next turn": each row's conditions and notes carry
     // their own timing (conditions lasting "for the duration" are refused above), so the spell needs no controller.
-    const turnBoundary = plan.lifecycle?.durationSpec?.mode === "turn-boundary" && ["until the start of your next turn", "until the end of the target's next turn", "until the end of your target's next turn"].includes(raw);
+    const turnBoundary = plan.lifecycle?.durationSpec?.mode === "turn-boundary" && ["until the start of your next turn", "until the end of your next turn", "until the end of the target's next turn", "until the end of your target's next turn"].includes(raw);
     // A sustained spell whose only lasting part is the beneficiary's own sustained Effect (the save damages once).
     const beneficiaryLifetime = plan.resolution.beneficiaryEffect != null && plan.resolution.check.basic === true && plan.lifecycle?.durationSpec?.mode === "sustained";
     // A sustained basic save whose lasting part is what the caster plays while Sustaining (a note Effect on the caster).
@@ -1819,7 +2004,7 @@ export function inspectDegreeSavePlan(plan) {
     if (plan.resolution.secondaryTargets != null && !isSecondaryTargets(plan.resolution.secondaryTargets, plan))
         block("secondary-targets", "resolution.secondaryTargets", "Secondary targets need the waived requirement, a count and the GM's question.");
     if (plan.resolution.casterNote != null && !(casterNoteLifetime && isSustainedCasterNote(plan.resolution.casterNote, plan))
-        && !(plan.resolution.check.basic === true && isWhileTargetConditionCasterNote(plan.resolution.casterNote, plan)))
+        && !(plan.resolution.check.basic === true && isWhileTargetConditionCasterNote(plan.resolution.casterNote, plan)) && !isWhileTargetNoteCasterNote(plan.resolution.casterNote, plan))
         block("caster-note", "resolution.casterNote", "A caster note needs a sustained basic save and the compiled sentence.");
     // (The storm's Sustain: the area the card places is the sustained part.)
     // (Or the caster's own Effect is what lasts: Poltergeist's Fury's storm, from the sentences the compiler read.)
@@ -1843,6 +2028,11 @@ export function inspectDegreeSavePlan(plan) {
             || (dismissal.payoff.kind === "damage" && dismissal.payoff.recipient === "marked-target" && plan.resolution.casterMark?.kind === "strike-bonus"
                 && typeof dismissal.payoff.condition === "string" && /^[a-z]+$/.test(dismissal.payoff.damageType ?? "") && dismissal.payoff.sourceText === plan.compilerEvidence?.dismissPayoff
                 && /^(?:\(ceil\(@item\.(?:level|rank)\/\d\)\+\d\)d\d+|\d+d\d+)$/.test(dismissal.payoff.formula ?? ""))))) block("dismissal", "lifecycle.dismissal", "Only cast-wide Dismiss by the caster is supported.");
+    // (The damage's type read from the caster or the text: Arcane Cascade, or the text's own over the item's — the sentence the compiler read.)
+    if (plan.resolution.damageTypeFrom != null && !(isDamageTypeFrom(plan.resolution.damageTypeFrom)
+        && (plan.resolution.damageTypeFrom.kind !== "text" || (plan.compilerEvidence?.thirdPartyPreamble ?? []).includes(plan.resolution.damageTypeFrom.sourceText))
+        && (plan.resolution.damageTypeFrom.kind !== "target-strike" || (plan.compilerEvidence?.targetStrike ?? []).includes(plan.resolution.damageTypeFrom.sourceText))))
+        block("damage-type-from", "resolution.damageTypeFrom", "The damage's type from the caster or the text needs its stated sentence.");
     if (plan.resolution.postDamageTerminal != null && !isPostDamageDeath(plan.resolution.postDamageTerminal)) block("post-damage-terminal", "resolution.postDamageTerminal", "Post-damage terminal consequences are not supported by this route.");
     if (plan.resolution.degreeAdjustment != null && !isDegreeAdjustment(plan.resolution.degreeAdjustment)) block("degree-adjustment", "resolution.degreeAdjustment", "The degree adjustment is not a supported shape.");
     if (plan.resolution.casterBenefit != null && !isCasterDamageBenefit(plan.resolution.casterBenefit, plan)) block("caster-benefit", "resolution.casterBenefit", "The caster benefit is not a supported damage-derived shape.");
@@ -1919,7 +2109,13 @@ export function inspectDegreeSavePlan(plan) {
     const splash = plan.resolution.splash != null && executableSplash(plan);
     if (plan.resolution.splash != null && !splash) block("splash", "resolution.splash", "Splash damage needs one attack target, the splash entries, and hit/critical-hit rows.");
     const textShared = shared?.mode === "formula" && shared.textDerived === true && shared.rollOnce === true && shared.components?.length === 1
-        && executableFormula({ formula: shared.formula }) && (/\[untyped\]$/.test(shared.formula) && ["damage-type", "option"].includes(plan.resolution.casterChoice?.kind)
+        && executableFormula({ formula: shared.formula }) && (/\[untyped\]\}?$/.test(shared.formula) && (shared.formula.match(/\[untyped\]/g) ?? []).length === 1 && ["damage-type", "option"].includes(plan.resolution.casterChoice?.kind)
+            // (Or a third-party spell's damage from its text, the item having none — Creeping Cold's persistent cold: third-party-rows.js.)
+            || (!plan.resolution.casterChoice && typeof plan.compilerEvidence?.textFormula === "string" && shared.formula === plan.compilerEvidence.textFormula
+                && new RegExp(`\\[${shared.components[0].category === "persistent" ? "persistent," : ""}${shared.components[0].type}\\]$`).test(shared.formula))
+            // (Or a third-party version's heightening, the text's step where PF2e's variant data steps otherwise: glyph-versions.js.)
+            || (!plan.resolution.casterChoice && typeof plan.compilerEvidence?.glyphFormula === "string" && shared.formula === plan.compilerEvidence.glyphFormula
+                && new RegExp(`\\[${shared.components[0].type}\\]$`).test(shared.formula))
             // (Or the text's own type, no choice: Unsettling Perspective's mental damage, the formula the one the compiler read.)
             || (!plan.resolution.casterChoice && shared.formula === plan.compilerEvidence?.textDamage?.formula && Array.isArray(plan.compilerEvidence?.insightRows)
                 && new RegExp(`\\[${shared.components[0].type}\\]$`).test(shared.formula) && shared.components[0].type !== "untyped")
@@ -1969,10 +2165,33 @@ export function inspectDegreeSavePlan(plan) {
     const basicPersistent = plan.resolution.check?.basic === true && shared?.mode === "pf2e-item-damage" && shared.components?.length === 2
         && shared.components.filter(component => component.category === "persistent").length === 1 && typeof plan.compilerEvidence?.basicPersistent === "string"
         && shared.components.every(component => new RegExp(`\\b${String(component.formula).replace(/\s+/g, "")} ${component.category === "persistent" ? "persistent " : ""}${component.type === "untyped" ? "" : `${component.type} `}damage\\b`).test(plan.compilerEvidence.basicPersistent));
-    if (shared && !textShared && !auraShared && (shared.mode !== "pf2e-item-damage" || shared.rollOnce !== true
+    // A table save whose rows scale both its entries — one persistent — as a basic save would (Beheading Buzz-Saw: "takes 5d10 slashing damage and 4d6
+    // persistent bleed damage, with a Reflex save", success unaffected, failure full, critical failure double): the sentence the compiler read names both.
+    const rowPersistent = plan.resolution.check?.basic === false && shared?.mode === "pf2e-item-damage" && shared.components?.length === 2
+        && shared.components.filter(component => component.category === "persistent").length === 1 && shared.components.filter(component => !component.category).length === 1
+        && Array.isArray(plan.compilerEvidence?.decapitationSave) && shared.components.every(component => plan.compilerEvidence.decapitationSave.some(sentence =>
+            new RegExp(`\\b${String(component.formula).replace(/\s+/g, "")} ${component.category === "persistent" ? "persistent " : ""}${component.type} damage\\b`).test(sentence)))
+        && SAVE_DEGREES.every(degree => ["none", "shared"].includes(plan.resolution.outcomes?.[degree]?.damage?.mode ?? "none"));
+    // Falling Sky: each creature above the ground falls to it, twice the falling damage for the distance (the distance itself) to a maximum, from the sentence
+    // the compiler read.
+    const areaFall = plan.resolution.areaFall;
+    if (areaFall != null && !(Object.keys(areaFall).every(key => ["multiplier", "cap", "type", "sourceText"].includes(key)) && areaFall.multiplier === 2 && Number.isInteger(areaFall.cap)
+        && areaFall.cap > 0 && /^[a-z]+$/.test(areaFall.type ?? "") && (plan.compilerEvidence?.fallingArea ?? []).includes(areaFall.sourceText)))
+        block("area-fall", "resolution.areaFall", "An area's fall needs its stated sentence and maximum.");
+    // "If massacre doesn't kill even a single creature, … an additional 30 void damage to every living creature in the line … and 30 void damage to you.": a
+    // flat amount after the card, from the sentence the compiler read.
+    const backlash = plan.resolution.backlash;
+    if (backlash != null && !(Object.keys(backlash).every(key => ["formula", "caster", "when", "livingOnly", "sourceText"].includes(key)) && /^\d+\[[a-z]+\]$/.test(backlash.formula ?? "")
+        && /^\d+\[[a-z]+\]$/.test(backlash.caster ?? "") && backlash.when === "none-killed" && backlash.livingOnly === true && plan.resolution.postDamageTerminal?.kind === "death"
+        && (plan.compilerEvidence?.backlashSave ?? []).includes(backlash.sourceText)))
+        block("backlash", "resolution.backlash", "A backlash needs its stated sentence, a flat amount and the spell's death at 0 Hit Points.");
+    // (Or a third-party spell's text damage of several parts, all of the caster's type: Ravaging End.)
+    const choiceShared = shared?.mode === "formula" && shared.textDerived === true && shared.rollOnce === true && plan.resolution.casterChoice?.allPools === true
+        && shared.formula === plan.compilerEvidence?.textFormula && executableFormula({ formula: shared.formula });
+    if (shared && !textShared && !auraShared && !choiceShared && (shared.mode !== "pf2e-item-damage" || shared.rollOnce !== true
         || !shared.components?.length || shared.components.some(component => component.category
             && !(selective && component.category === "persistent") && !(splash && component.category === "splash") && !(persistentScaled && component.category === "persistent")
-            && !(basicPersistent && component.category === "persistent")))) block("shared-damage", "resolution.sharedDamage", "Shared damage contains an unsupported roll mode or category.");
+            && !(basicPersistent && component.category === "persistent") && !(rowPersistent && component.category === "persistent")))) block("shared-damage", "resolution.sharedDamage", "Shared damage contains an unsupported roll mode or category.");
     for (const degree of SAVE_DEGREES) {
         const outcome = plan.resolution.outcomes?.[degree], path = `resolution.outcomes.${degree}`;
         if (!outcome) { block("missing-outcome", path, "Every save degree requires an outcome."); continue; }
@@ -2014,6 +2233,17 @@ export function inspectDegreeSavePlan(plan) {
                 && attributes.length === 6 && new Set(attributes).size === 6 && ["str", "dex", "con", "int", "wis", "cha"].every(key => attributes.includes(key))))
                 block("attribute-condition", `${path}.effects`, "Attribute-chosen conditions need each option once and all six attributes.");
         }
+        // (Unfathomable Song: each condition names the roll's results giving it; a critical failure reads the roll plus the offset.)
+        const resultTagged = (outcome.effects ?? []).filter(effect => effect.choiceGroup === "condition-roll-results");
+        if (resultTagged.length) {
+            const roll = plan.resolution.conditionRoll;
+            const faces = Number(/^1d(\d+)$/.exec(roll?.formula ?? "")?.[1] ?? 0);
+            if (!(roll?.kind === "degree-results" && faces >= 2 && Number.isInteger(roll.criticalOffset) && roll.criticalOffset >= 0 && resultTagged.length === (outcome.effects ?? []).length
+                && ["failure", "criticalFailure"].includes(degree) && Array.isArray(plan.compilerEvidence?.unfathomableSong)
+                && resultTagged.every(effect => Array.isArray(effect.rollResults) && effect.rollResults.length >= 1 && effect.rollResults.every(result => Number.isInteger(result)
+                    && result >= 1 + (degree === "criticalFailure" ? roll.criticalOffset : 0) && result <= faces + (degree === "criticalFailure" ? roll.criticalOffset : 0)))))
+                block("condition-roll", `${path}.effects`, "Rolled table conditions need the roll and the results giving each.");
+        }
         const rolledChoices = (outcome.effects ?? []).filter(effect => effect.choiceGroup === "condition-roll");
         if (rolledChoices.length) {
             const roll = plan.resolution.conditionRoll;
@@ -2033,8 +2263,10 @@ export function inspectDegreeSavePlan(plan) {
         const questionGate = gate => gate.kind === "gm-question" && typeof gate.question === "string" && gate.question.length > 5
             && (/^If (?:the creature|the target|it) is /.test(gate.sourceText ?? "") || (Array.isArray(plan.compilerEvidence?.realityUnravel) && plan.compilerEvidence.realityUnravel.includes(gate.sourceText))
                 // (Steal the Sky: whether the descent hit a surface.)
-                || (Array.isArray(plan.compilerEvidence?.skySteal) && plan.compilerEvidence.skySteal.includes(gate.sourceText)))
-            && Object.keys(gate).every(key => ["kind", "question", "sourceText"].includes(key));
+                || (Array.isArray(plan.compilerEvidence?.skySteal) && plan.compilerEvidence.skySteal.includes(gate.sourceText))
+                // (Or a keyed question from a sentence the compiler read: Chrysopoetic Curse's "If the target is wearing any armor or clothing".)
+                || (typeof gate.key === "string" && /^[a-z-]+$/.test(gate.key) && (plan.compilerEvidence?.gateSentences ?? []).includes(gate.sourceText)))
+            && Object.keys(gate).every(key => ["kind", "question", "sourceText", "key"].includes(key));
         if ((outcome.effects ?? []).some(effect => effect.gate != null && !asleepGate(effect.gate) && !questionGate(effect.gate) && !(effect.gate.kind === "adjustment-and-damaged" && adjustment?.appliesTo === "save"
             && adjustment.choices.some(choice => choice.value !== 0) && degree !== "criticalSuccess"))) block("condition-gate", `${path}.effects`, "A gated condition needs the save question it depends on.");
         // A row's damage only on the GM's answer: the same question as a gated condition in the row.
@@ -2046,7 +2278,11 @@ export function inspectDegreeSavePlan(plan) {
             block("persistent-ends-with", `${path}.persistentEndsWith`, "Persistent damage ending with a condition needs a failing row that deals it and grants that condition.");
         if (outcome.conditionFloor != null && (!isConditionFloor(outcome.conditionFloor) || (outcome.conditionFloor.lifetime === "spell" && !isSustainedConditionPlan(plan))))
             block("condition-floor", `${path}.conditionFloor`, "The condition floor is not a supported curse shape.");
-        if ((outcome.effects ?? []).some(effect => effect.recurringSave && effect.recurringSave.statistic !== plan.resolution.check.statistic)) block("recurring-save", `${path}.effects`, "A recurring save must use the primary save statistic and DC.");
+        // (A Strike's rows decide the condition; its later saves are the item's own — Medusa's Wrath's Fortitude — from the sentence the compiler read.)
+        if ((outcome.effects ?? []).some(effect => effect.recurringSave && effect.recurringSave.statistic !== plan.resolution.check.statistic
+            && !(plan.resolution.check.statistic === "strike" && effect.recurringSave.mode === "escalate" && effect.recurringSave.sourceText === plan.compilerEvidence?.strikeEscalate)
+            // (Vitrifying Blast: a Reflex blast whose stated ongoing save is Fortitude, from the row the compiler read.)
+            && !(effect.recurringSave.mode === "escalate" && (plan.compilerEvidence?.vitrify ?? []).includes(`Failure ${effect.recurringSave.sourceText}`)))) block("recurring-save", `${path}.effects`, "A recurring save must use the primary save statistic and DC.");
         const damage = outcome.damage;
         if (damage?.mode === "none") {
             if (damage.multiplier !== 0) block("damage-multiplier", `${path}.damage`, "No-damage outcomes require a zero multiplier.");
@@ -2079,14 +2315,17 @@ function rowDealsPersistent(plan, outcome, damageType) {
     const ids = damage?.mode === "mixed" ? damage.shared?.sourceComponentIds : damage?.sourceComponentIds;
     return (ids ?? []).some(id => (plan.resolution.sharedDamage?.components ?? []).some(component => component.id === id && component.category === "persistent"
             && String(component.type).toLowerCase() === damageType))
-        || (damage?.mode === "mixed" && (damage.formulas ?? []).some(entry => String(entry.formula ?? "").endsWith(`[persistent,${damageType}]`)));
+        // (A row's own formulas — "takes @Damage[2d6[persistent,bleed]] damage" with no shared damage — deal it too.)
+        || (["mixed", "formulas"].includes(damage?.mode) && (damage.formulas ?? []).some(entry => String(entry.formula ?? "").endsWith(`[persistent,${damageType}]`)));
 }
 
 /** "You are Stunned 1 and the spell ends.": the caster's condition (once per cast), and the spell's end. */
 /** "The target resists being banished and you are Stunned 1.": the caster's condition only (the spell goes on). */
 export function isCasterConditionOnly(outcome) {
     const entries = outcome?.casterConditions;
-    const match = /^The target resists being [a-z]+ and you are @UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{([A-Z][a-z-]+)(?: (\d))?\}\.$/.exec(entries?.[0]?.sourceText ?? "");
+    // (Or "You see your own fate closing in on you and become Frightened 1.": The End is Nigh's critical success.)
+    // (Or "You become Doomed 1.": Planar Court's critical success, its narration claimed apart.)
+    const match = /^(?:The target resists being [a-z]+ and you are|You [a-z ,']{3,60} and become|You become) @UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{([A-Z][a-z-]+)(?: (\d))?\}\.$/.exec(entries?.[0]?.sourceText ?? "");
     return Array.isArray(entries) && entries.length === 1 && !!match && outcome.endsSpell == null && !(outcome.effects ?? []).length
         && entries[0].slug === match[1].toLowerCase() && entries[0].value === (match[2] ? Number(match[2]) : null)
         && Object.keys(entries[0]).every(key => ["slug", "value", "sourceText"].includes(key));
@@ -2118,7 +2357,7 @@ export function isPrimaryDeath(terminal) {
 /** "The target's Dying value increases by 1.": PF2e's own increase of that condition, by the stated amount. */
 export function isConditionIncreases(increases) {
     return Array.isArray(increases) && increases.length === 1 && increases.every(entry => {
-        const match = VALUE_INCREASE.exec(entry?.sourceText ?? "");
+        const match = VALUE_INCREASE.exec(entry?.sourceText ?? "") ?? OR_INCREASE.exec(entry?.sourceText ?? "");
         return match && entry.slug === match[1].toLowerCase() && entry.amount === Number(match[2]) && entry.amount >= 1
             && Object.keys(entry).every(key => ["slug", "amount", "sourceText"].includes(key));
     });
@@ -2212,7 +2451,7 @@ export function isExecutableLingeringPlan(plan) {
             && inspectSavePlan(lingeringExposurePlan(plan, { event: "enter" })).supported))
         // A region the GM draws (Bridge of Vines' bridge), and the rows' difficult terrain for the creature (the region's per-creature cost), from the
         // sentences the compiler read.
-        && (lingering.drawnArea == null || (typeof lingering.drawnArea === "string" && lingering.centre === "placed" && Array.isArray(plan.compilerEvidence?.bridgeRows ?? plan.compilerEvidence?.rowTerrain)))
+        && (lingering.drawnArea == null || (typeof lingering.drawnArea === "string" && lingering.centre === "placed" && Array.isArray(plan.compilerEvidence?.bridgeRows ?? plan.compilerEvidence?.rowTerrain ?? plan.compilerEvidence?.dreamHazard)))
         && (lingering.rowTerrain == null || (Array.isArray(lingering.rowTerrain.degrees) && lingering.rowTerrain.degrees.length > 0 && lingering.rowTerrain.degrees.every(degree => SAVE_DEGREES.includes(degree))
             && ["spell", "next-turn-start"].includes(lingering.rowTerrain.until) && lingering.centre === "placed"
             && (plan.compilerEvidence?.bridgeRows ?? plan.compilerEvidence?.rowTerrain ?? []).includes(lingering.rowTerrain.sourceText)))
@@ -2222,9 +2461,33 @@ export function isExecutableLingeringPlan(plan) {
         && (lingering.recastEnds == null || lingering.recastEnds === true)
         && (lingering.dismissible == null || lingering.dismissible === true)
         && (lingering.notes == null || (Array.isArray(lingering.notes) && lingering.notes.every(note => typeof note === "string" && note.length > 0)))
+        // (Dread Mosquito Storm: the stated damage at each listed exposure, before its save.)
+        && (lingering.exposureDamage == null || (/^\d+(?:d\d+)?$/.test(lingering.exposureDamage.formula ?? "") && /^[a-z]+$/.test(lingering.exposureDamage.type ?? "")
+            && Array.isArray(lingering.exposureDamage.events) && lingering.exposureDamage.events.length > 0 && lingering.exposureDamage.events.every(event => events.includes(event))
+            && (plan.compilerEvidence?.mosquitoStorm ?? []).includes(lingering.exposureDamage.sourceText)))
+        // (Unbreaking Wave Barrier: the emanation is a region on the caster that follows its token.)
+        && (lingering.areaOnCaster == null || (lingering.areaOnCaster === true && lingering.centre === "placed" && lingering.area?.type === "emanation" && Array.isArray(plan.compilerEvidence?.waveBarrier)))
+        // (Stars of Another Sky: the GM marks a creature at the top of the cylinder; it then takes the stated damage as each of its turns starts.)
+        && (lingering.gmMark == null || (typeof lingering.gmMark.label === "string" && /^\d+d\d+$/.test(lingering.gmMark.dice) && /^[a-z]+$/.test(lingering.gmMark.type)
+            && [1, 2].includes(lingering.gmMark.soulless) && typeof lingering.gmMark.diesAtZero === "boolean" && (plan.compilerEvidence?.starsSky ?? []).some(sentence => sentence.includes(lingering.gmMark.sourceText))))
+        // (Tear the Veil: terrain only for the living, and a draining burst at the centre — Drained up to its maximum, then the death save.)
+        && (lingering.terrain?.living == null || (lingering.terrain.living === true && lingering.livingOnly === true && Array.isArray(plan.compilerEvidence?.tearVeil)))
+        && (lingering.drainCenter == null || (Number.isInteger(lingering.drainCenter.radius) && lingering.drainCenter.radius > 0 && lingering.centre === "placed"
+            && /^Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+$/.test(lingering.drainCenter.uuid) && Number.isInteger(lingering.drainCenter.max) && lingering.drainCenter.max >= 1 && lingering.drainCenter.max <= 4
+            && ["fortitude", "reflex", "will"].includes(lingering.drainCenter.statistic) && /^[a-z]+$/.test(lingering.drainCenter.becomes)
+            && (plan.compilerEvidence?.tearVeil ?? []).some(sentence => lingering.drainCenter.sourceText.startsWith(sentence))))
+        // (Indolent Haze: the sleepers' damage at the stated exposures, and the rows' Prone that's Unconscious for a creature already prone.)
+        && (lingering.sleeperDamage == null || (Number.isInteger(lingering.sleeperDamage.dice) && lingering.sleeperDamage.dice > 0 && [4, 6, 8, 10, 12].includes(lingering.sleeperDamage.faces)
+            && /^[a-z]+$/.test(lingering.sleeperDamage.type) && lingering.sleeperDamage.slug === "unconscious" && Array.isArray(lingering.sleeperDamage.events)
+            && lingering.sleeperDamage.events.every(event => ["initial", "turn-end"].includes(event) && (event === "initial" ? lingering.initial === true : lingering.events.includes(event)))
+            && Number.isInteger(lingering.sleeperDamage.baseRank) && (lingering.sleeperDamage.step == null || (Number.isInteger(lingering.sleeperDamage.step.interval) && Number.isInteger(lingering.sleeperDamage.step.dice)))
+            && (plan.compilerEvidence?.indolentHaze ?? []).some(sentence => sentence.includes(lingering.sleeperDamage.sourceText.split(" as ")[0]))))
+        && ["criticalSuccess", "success", "failure", "criticalFailure"].every(degree => (plan.resolution.outcomes?.[degree]?.effects ?? []).every(effect => effect.insteadIfHeld == null
+            || (effect.kind === "condition" && typeof effect.insteadIfHeld.ifHeld === "string" && effect.insteadIfHeld.ifHeld === effect.slug && /^[a-z-]+$/.test(effect.insteadIfHeld.slug)
+                && /^Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+$/.test(effect.insteadIfHeld.uuid) && Array.isArray(plan.compilerEvidence?.indolentHaze))))
         // Disbelievers exempt from later exposures (Visions of Danger): the GM's Perception control, from the sentences the compiler read.
         && (lingering.disbelief == null || (lingering.disbelief.statistic === "perception" && /^[a-z0-9-]+$/.test(lingering.disbelief.key ?? "")
-            && Array.isArray(plan.compilerEvidence?.disbelievedArea) && plan.compilerEvidence.disbelievedArea.join(" ").includes(String(lingering.disbelief.sourceText ?? "\u0000").split(" ").slice(0, 6).join(" "))))
+            && Array.isArray(plan.compilerEvidence?.disbelievedArea ?? plan.compilerEvidence?.dreamHazard) && (plan.compilerEvidence.disbelievedArea ?? plan.compilerEvidence.dreamHazard).join(" ").includes(String(lingering.disbelief.sourceText ?? "\u0000").split(" ").slice(0, 6).join(" "))))
         // Only creatures not immune to that damage are exposed: the plan's target check says so.
         && (lingering.notImmune == null || (/^[a-z]+$/.test(lingering.notImmune) && (plan.targeting?.actorConstraints?.predicates ?? []).some(predicate => predicate.kind === "not-immune-damage" && predicate.damageType === lingering.notImmune)))
         && typeof lingering.initial === "boolean" && typeof lingering.oncePerRound === "boolean" && typeof lingering.excludeCaster === "boolean"
@@ -2241,7 +2504,17 @@ export function isExecutableLingeringPlan(plan) {
                 && lingering.initial === true && Array.isArray(plan.compilerEvidence?.auraModes) && lingering.sourceText.every(sentence => plan.compilerEvidence.auraModes.includes(sentence)))
             // (Or several targets' reach, saved against as an enemy's turn ends: Bloody Tendrils' thralls, from the sentence the compiler read.)
             || (lingering.centre === "targets" && Number.isInteger(lingering.aura.feet) && lingering.aura.feet % 5 === 0 && Object.keys(lingering.aura).length === 1 && events.join() === "turn-end"
-                && lingering.enemiesOnly === true && Array.isArray(plan.compilerEvidence?.bloodTendrils) && lingering.sourceText.every(sentence => plan.compilerEvidence.bloodTendrils.includes(sentence))))
+                && lingering.enemiesOnly === true && Array.isArray(plan.compilerEvidence?.bloodTendrils) && lingering.sourceText.every(sentence => plan.compilerEvidence.bloodTendrils.includes(sentence)))
+            // (Or a willing ally's light, growing on the first Sustain each round to its maximum, saved against as an enemy's turn ends: Aura of
+            // Violent Light, from the sentences the compiler read, with the module's Effect on the ally.)
+            || (lingering.centre === "targets" && JSON.stringify(lingering.aura) === JSON.stringify({ feet: lingering.aura.feet }) && Number.isInteger(lingering.aura.feet) && lingering.aura.feet % 5 === 0
+                && events.join() === "turn-end" && lingering.enemiesOnly === true && lingering.sustained === true && lingering.anchorAlly === true
+                && Number.isInteger(lingering.auraGrowth?.feet) && lingering.auraGrowth.feet % 5 === 0 && Number.isInteger(lingering.auraGrowth.maximum) && lingering.auraGrowth.maximum > lingering.aura.feet
+                && /^Compendium\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.Item\.[A-Za-z0-9]{16}$/.test(lingering.anchorEffect?.uuid ?? "")
+                && Array.isArray(plan.compilerEvidence?.violentLight) && [...lingering.sourceText, lingering.auraGrowth.sourceText].every(sentence => plan.compilerEvidence.violentLight.includes(sentence))))
+        // (Divine Eclipse: the creatures blessed with light — the cast's targets up to the number — from the sentence the compiler read.)
+        && (lingering.blessed == null || (lingering.centre === "caster" && Number.isInteger(lingering.blessed.max) && lingering.blessed.max >= 1 && Number.isInteger(lingering.blessed.bright)
+            && /^Compendium\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.Item\.[A-Za-z0-9]{16}$/.test(lingering.blessed.effect?.uuid ?? "") && (plan.compilerEvidence?.divineEclipse ?? []).includes(lingering.blessed.sourceText)))
         && (lingering.maxTargets == null || (lingering.centre === "targets" && Number.isInteger(lingering.maxTargets.count) && lingering.maxTargets.count >= 1 && Number.isInteger(lingering.maxTargets.baseRank)))
         && (lingering.memberCondition == null || (typeof lingering.memberCondition.slug === "string" && /^[a-z-]+$/.test(lingering.memberCondition.slug)
             && (lingering.memberCondition.value == null || (Number.isInteger(lingering.memberCondition.value) && lingering.memberCondition.value > 0))
@@ -2285,8 +2558,16 @@ export function isExecutableLingeringPlan(plan) {
         && (lingering.failedAttackDamage == null || isFailedAttackDamage(plan))
         // Hazardous terrain dealing the item's damage per square moved into (the record's control), growing on each Sustain (Wildfire).
         && ((lingering.hazardMove == null && lingering.sustainGrowth == null) || isHazardMove(plan) || isOptionalExpansion(lingering) || isSustainGrowth(lingering))
+        // (Darklight: the placed region fully dark — Foundry's darkness level — and up to a count of allies spared, from the sentences the compiler read.)
+        && (lingering.darkness == null || (lingering.darkness.mode === 0 && lingering.darkness.modifier === 1 && lingering.centre === "placed"
+            && (plan.compilerEvidence?.darknessField ?? []).includes(lingering.darkness.sourceText)))
+        && (lingering.spared == null || (Number.isInteger(lingering.spared.count) && lingering.spared.count >= 1 && lingering.spared.count <= 6
+            && (plan.compilerEvidence?.darknessField ?? []).includes(lingering.spared.sourceText)))
         // (The area's rules for the caster's allies inside only — Divine Aura's wards.)
-        && (lingering.memberAllies == null || (lingering.memberAllies === true && (lingering.memberRules ?? []).length > 0 && lingering.centre === "caster"))
+        && (lingering.memberAllies == null || (lingering.memberAllies === true && (lingering.memberRules ?? []).length > 0 && lingering.centre === "caster" && lingering.memberCaster == null)
+            // (Or a placed square holding the caster too — Cosmic Glow's Recall Knowledge bonus — from the sentences the compiler read.)
+            || (lingering.memberAllies === true && lingering.memberCaster === true && lingering.centre === "placed" && lingering.moveOnSustain === true
+                && Array.isArray(plan.compilerEvidence?.cosmicGlow) && lingering.sourceText.every(sentence => plan.compilerEvidence.cosmicGlow.includes(sentence))))
         // Shifting Sand: the in-area Effect's rules — toggles and status modifiers only.
         && (lingering.memberRules == null || (Array.isArray(lingering.memberRules) && lingering.memberRules.length > 0 && lingering.memberRules.every(rule => (rule.key === "RollOption" && rule.toggleable === true)
             || (rule.key === "FlatModifier" && ["status", "circumstance"].includes(rule.type) && typeof rule.selector === "string"))))
@@ -2304,7 +2585,7 @@ export function isExecutableLingeringPlan(plan) {
             && typeof lingering.thrallGrowth.sourceText === "string"))
         // The caster's own Effect when the area starts: it must still give exactly the stated benefit.
         && (lingering.casterEffect == null || (typeof lingering.casterEffect.uuid === "string" && typeof lingering.casterEffect.claimText === "string"
-            && inspectCasterBenefitClaim(lingering.casterEffect.document, lingering.casterEffect.claimText, { rank: plan.rank }).supported))
+            && inspectCasterBenefitClaim(lingering.casterEffect.document, lingering.casterEffect.claimText, { rank: plan.rank, spellDuration: lingering.sustained ? "sustained" : null }).supported))
         // The caster's retaliation marker for the area's lifetime (Shroud of Flame's touch): a flat formula of the cast rank, on the caster's emanation.
         && (lingering.retaliation == null || (lingering.centre === "caster" && Array.isArray(lingering.retaliation.triggers) && lingering.retaliation.triggers.length === 1
             && lingering.retaliation.triggers.every(trigger => typeof trigger.trigger === "string" && /^[a-z]+$/.test(trigger.damage?.type ?? "")
@@ -2358,7 +2639,9 @@ export function isOptionalExpansion(lingering) {
         && Number.isInteger(growth.feet) && growth.feet > 0 && growth.feet % 5 === 0 && typeof growth.sourceText === "string" && lingering.sustained === true
         && (growth.maximum == null || (Number.isInteger(growth.maximum) && growth.maximum > Number(lingering.area?.value)))
         // (Or the caster's own emanation, up to its stated maximum: Morass of Ages.)
-        && ((lingering.centre === "placed" && lingering.area?.type === "burst") || (lingering.centre === "caster" && lingering.area?.type === "emanation" && Number.isInteger(growth.maximum)));
+        && ((lingering.centre === "placed" && lingering.area?.type === "burst") || (lingering.centre === "caster" && lingering.area?.type === "emanation" && Number.isInteger(growth.maximum))
+            // (Or the caster's emanation as a region following its token: Unbreaking Wave Barrier.)
+            || (lingering.centre === "placed" && lingering.areaOnCaster === true && lingering.area?.type === "emanation"));
 }
 
 /** The per-square hazard: the plan's one damage entry, on a sustained placed area that grows on each Sustain. */
@@ -2632,7 +2915,12 @@ export function inspectSavePlan(plan) {
     // A second save for the creatures around the target, unless it got a stated result (Grisly Growths): its own executable plan.
     const follow = plan?.resolution?.areaFollowUp;
     if (follow != null && !(Number.isInteger(follow.radius) && follow.radius > 0 && Array.isArray(follow.unless) && follow.unless.every(degree => SAVE_DEGREES.includes(degree))
-        && (plan.compilerEvidence?.areaFollowUp ?? []).includes(follow.sourceText) && follow.plan?.resolution?.kind === "save" && follow.plan.resolution.temporaryImmunity
+        && (plan.compilerEvidence?.areaFollowUp ?? []).includes(follow.sourceText) && follow.plan?.resolution?.kind === "save"
+        // (Grisly Growths' second save with its immunity; or Propagating Arc's spread — a basic save for the others around the target, half beyond the inner
+        // distance, only when one is within it.)
+        && (follow.outer == null ? follow.plan.resolution.temporaryImmunity && follow.excludeCentre == null && follow.needsInner == null
+            : Number.isInteger(follow.outer.radius) && follow.outer.radius > follow.radius && follow.outer.half === true && follow.excludeCentre === true && follow.needsInner === true
+                && follow.plan.resolution.check?.basic === true && plan.resolution.check?.basic === true)
         && !follow.plan.resolution.areaFollowUp && inspectSavePlan(follow.plan).supported && !plan.targeting?.area))
         return {supported: false, route: "area-follow-up", blockers: [{code: "area-follow-up", path: "resolution.areaFollowUp", message: "The second save around the target needs its own executable plan, distance and sentence."}]};
     // Healing in a second area by the most a creature lost in the first (Blood-Feasting Breath).
@@ -2650,7 +2938,7 @@ export function inspectSavePlan(plan) {
         && areaTerrain.hazard == null && areaTerrain.sustained == null && (plan.compilerEvidence?.incarnateTerrain ?? []).includes(areaTerrain.sourceText);
     if (areaTerrain != null && !roundTerrain && !(Number.isInteger(areaTerrain.durationSeconds) && areaTerrain.durationSeconds > 0 && areaTerrain.durationSeconds % 60 === 0
         && typeof areaTerrain.sourceText === "string" && ((plan.compilerEvidence?.elementVariant ?? []).includes(areaTerrain.sourceText) && areaTerrain.hazard == null && areaTerrain.sustained == null
-            || isStormArea(plan) || isReefTerrain(plan) || isWaveTerrain(plan))))
+            || isStormArea(plan) || isReefTerrain(plan) || isWaveTerrain(plan) || isShadowTerrain(plan))))
         return {supported: false, route: "area-terrain", blockers: [{code: "area-terrain", path: "resolution.areaTerrain", message: "Terrain the card places needs its stated sentence and time."}]};
     const split = plan?.resolution?.sharedDamage?.diceSplit;
     const splitComponents = plan?.resolution?.sharedDamage?.components ?? [];
@@ -2668,10 +2956,235 @@ export function isExecutableSavePlan(plan) {
     return inspectSavePlan(plan).supported;
 }
 
+/**
+ * An incarnate's parts, each checked as the runtime will carry it out: a save, attack or lingering part's own plan; damage or healing dice; a generated
+ * Effect's note (rules, granted conditions, d20 limit, time); PF2e's Effect; conditions reduced; a cast spell's own plan; a cloud's rules. Returns the
+ * reasons a part can't run (empty when every part can).
+ */
+export function inspectIncarnatePlan(plan) {
+    const data = plan?.resolution?.kind === "incarnate" ? plan.resolution.incarnate : null;
+    if (!data) return ["Not an incarnate plan."];
+    const sets = data.options ? (data.options.choices ?? []).map(choice => choice.phases ?? []) : [data.phases ?? []];
+    // (A conjured creature's statistics: Dragon Turret's.)
+    const c = data.conjure;
+    const conjure = c == null || (typeof c.name === "string" && ["tiny", "sm", "med", "lg", "huge", "grg"].includes(c.size) && [c.ac, c.hp, c.rangeFeet].every(value => Number.isInteger(value) && value > 0) && Number.isInteger(c.saves) && c.saves >= 0
+        && Array.isArray(c.immunities) && c.immunities.every(type => /^[a-z-]+$/.test(type)) && Array.isArray(c.weaknesses) && Array.isArray(c.resistances) && Array.isArray(c.traits)
+        && Number.isFinite(c.durationSeconds) && c.durationSeconds > 0 && typeof c.sustained === "boolean"
+        && (c.concealing == null || (Number.isInteger(c.concealing.radius) && c.concealing.radius > 0)) && (c.object == null || c.object === true)
+        // (Ice Guardian: its statistics each rank up, and its side's cover beside it — circumstance AC only.)
+        && (c.step == null || [c.step.baseRank, c.step.hp, c.step.ac, c.step.weakness].every(value => Number.isInteger(value) && value >= 0))
+        && (c.coverAura == null || (Number.isInteger(c.coverAura.feet) && c.coverAura.feet > 0 && c.coverAura.rules?.length === 1 && c.coverAura.rules[0].key === "FlatModifier"
+            && c.coverAura.rules[0].selector === "ac" && c.coverAura.rules[0].type === "circumstance" && [1, 2, 4].includes(c.coverAura.rules[0].value))));
+    // (A card whose parts' Effects last the spell's time — Unbreaking Wave Containment's hold, Sustained; Doom Mark's marks — and the marks' payoff.)
+    // (Parts whose Effects or watched triggers belong to the card's record need one.)
+    const needsRecord = sets.some(phases => phases.some(part => ["link", "leech", "mimic", "death-mark", "word", "emblem", "revive", "shock", "seed", "pod", "gift"].includes(part?.kind)));
+    const lasting = data.lasting == null ? !needsRecord : (Number.isInteger(data.lasting.seconds) && data.lasting.seconds > 0 && typeof data.lasting.sustained === "boolean");
+    const mark = data.markTrigger == null || (data.lasting != null && Array.isArray(data.markTrigger.conditions) && data.markTrigger.conditions.length > 0
+        && data.markTrigger.conditions.every(entry => /^Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+$/.test(entry.uuid ?? "") && /^[a-z-]+$/.test(entry.slug ?? "") && (entry.value == null || Number.isInteger(entry.value)))
+        && Number.isInteger(data.markTrigger.rounds) && data.markTrigger.rounds > 0);
+    return [...(conjure ? [] : ["The conjured creature's statistics can't be read."]), ...(lasting ? [] : ["The card's time can't be read."]), ...(mark ? [] : ["The marks' payoff can't be read."]),
+        ...sets.flatMap(phases => inspectParts(phases))];
+}
+
+/** The reasons a card's parts (an incarnate's phases, a spell's controls) can't run: empty when every part can. */
+export function inspectParts(phases) {
+    const problems = [];
+    // (Fixed Heightened entries read as "ternary(gte(@item.rank,9),3,2)": Fire Seeds' flames.)
+    const formula = value => typeof value === "string" && /^(?:[\d\s()+*\/,-]|@item\.(?:rank|level)|max|min|floor|ceil|ternary|gte|d(?=\d)|\{|\}|\[[a-z,]+\])+$/.test(value) && /\d+d\d+|\)d\d+/.test(value);
+    {
+        if (!phases.length) problems.push("A card has no parts.");
+        const keys = new Set();
+        for (const part of phases) {
+            const where = `${part?.key ?? "?"} (${part?.title ?? "?"})`;
+            if (!part?.key || keys.has(part.key)) problems.push(`${where}: a part needs its own key.`);
+            keys.add(part?.key);
+            if (part?.note) { if (part.kind != null && part.kind !== "note") problems.push(`${where}: a note part is only text.`); continue; }
+            const kind = part?.kind ?? "save";
+            if (kind === "save" || kind === "attack") {
+                const ok = (part.linger ? isExecutableLingeringPlan(part.plan) : isExecutableSavePlan(part.plan))
+                    && (part.byRank == null || (Array.isArray(part.byRank) && part.byRank.every(entry => Number.isInteger(entry.minRank) && isExecutableSavePlan(entry.plan))));
+                if (!ok) problems.push(`${where}: its ${part.linger ? "lingering area" : "save"} plan isn't executable.`);
+                if (kind === "attack" && !(part.plan?.resolution?.check?.statistic === "spell-attack" && Number.isInteger(part.count) && part.count > 0)) problems.push(`${where}: spell attacks need their count.`);
+                if (part.repeat && !(typeof part.repeat.trigger === "string" && part.repeat.trigger.length > 0)) problems.push(`${where}: a repeated save needs its trigger.`);
+                if (part.immunityRounds != null && !(Number.isInteger(part.immunityRounds) && part.immunityRounds > 0)) problems.push(`${where}: immunity needs whole rounds.`);
+            } else if (kind === "damage" || kind === "heal") {
+                if (!formula(part.formula)) problems.push(`${where}: its dice can't be read.`);
+                if (part.count != null && !(Number.isInteger(part.count) && part.count > 0)) problems.push(`${where}: its creature count isn't whole.`);
+            } else if (kind === "effect") {
+                const grants = (part.grants ?? []).map(grant => ({ key: "GrantItem", uuid: grant.uuid, flag: `condition${String(grant.slug).split("-").map(word => word[0].toUpperCase() + word.slice(1)).join("")}`,
+                    ...(grant.value ? { alterations: [{ mode: "override", property: "badge-value", value: grant.value }] } : {}), ...(grant.predicate ? { predicate: grant.predicate } : {}) }));
+                if (!validNoteEffect({ label: part.label, text: part.text, sourceText: part.sourceText, rules: [...(part.rules ?? []), ...grants], duration: part.duration, ...(part.d20Clamp ? { d20Clamp: part.d20Clamp } : {}), ...(part.turnStartAttack ? { turnStartAttack: part.turnStartAttack } : {}), ...(part.endsInDeath ? { endsInDeath: true } : {}), ...(part.zeroToOne ? { zeroToOne: true } : {}) }))
+                    problems.push(`${where}: its Effect's rules or time can't be made.`);
+                const byRank = entry => entry == null || (Number.isInteger(entry.base) && entry.base > 0 && Object.entries(entry.byRank ?? {}).every(([rank, value]) => /^\d+$/.test(rank) && Number.isInteger(value) && value > 0));
+                if (!byRank(part.acSet) || !byRank(part.tempHp)) problems.push(`${where}: its stated AC or temporary Hit Points can't be read.`);
+            } else if (kind === "native-effect") {
+                if (!/^Compendium\.pf2e\.spell-effects\.Item\.[^\]]+$/.test(part.uuid ?? "")) problems.push(`${where}: PF2e's Effect link is missing.`);
+            } else if (kind === "reduce-conditions") {
+                if (!(Array.isArray(part.slugs) && part.slugs.length && part.slugs.every(slug => /^[a-z-]+$/.test(slug)) && Number.isInteger(part.by) && part.by > 0)) problems.push(`${where}: the conditions to reduce can't be read.`);
+            } else if (kind === "cast-spell") {
+                if (!/^Compendium\.pf2e\.spells-srd\.Item\.[A-Za-z0-9]+$/.test(part.uuid ?? "") || !Number.isInteger(part.rank)) problems.push(`${where}: the cast spell or its rank is missing.`);
+                const cast = part.plan;
+                const runs = cast?.resolution?.kind === "save" ? (cast.resolution.lingering ? isExecutableLingeringPlan(cast) : isExecutableSavePlan(cast))
+                    : !!cast?.resolution && !["unsupported", "unsafe"].includes(cast.automation?.level) && !(cast.automation?.pendingCapabilities ?? []).length;
+                if (!runs) problems.push(`${where}: ${part.name ?? "the cast spell"} can't be resolved by its own route.`);
+                if (part.durationRounds != null && !(Number.isInteger(part.durationRounds) && part.durationRounds > 0)) problems.push(`${where}: the shortened time isn't whole rounds.`);
+            } else if (kind === "cloud") {
+                if (!(part.durationSeconds > 0 && part.area?.value > 0 && Array.isArray(part.memberRules) && part.memberRules.every(rule => (rule.key === "GrantItem" && /^Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+$/.test(rule.uuid ?? "")
+                    && Array.isArray(rule.predicate) && rule.predicate.every(term => /^self:trait:[a-z]+$/.test(term)))
+                    || (rule.key === "Sense" && rule.selector === "truesight" && Array.isArray(rule.predicate) && rule.predicate.every(term => /^self:trait:[a-z]+$/.test(term))))))
+                    problems.push(`${where}: the cloud's area, time or rules can't be read.`);
+            } else if (kind === "check-copy") {
+                // (Reanimate Foe: the caster's skill check against the level DC; a copy with stated Hit Points and loss, or a thrall.)
+                const copy = result => Number.isInteger(result?.hp) && result.hp > 0 && /^(?:\d+|\d+d\d+)$/.test(String(result.hpLoss ?? "")) && Number.isInteger(result.seconds) && result.seconds > 0
+                    && typeof result.halfDamage === "boolean";
+                if (!/^[a-z-]+$/.test(part.skill ?? "") || !["criticalSuccess", "success", "failure", "criticalFailure"].every(degree => copy(part.results?.[degree]) || part.results?.[degree]?.thrall === true))
+                    problems.push(`${where}: the check and its results can't be read.`);
+            } else if (kind === "summon") {
+                // (Gray Shadow's named creature, beside the dying target; Shambling Horror's listed stat blocks, at the corpse.)
+                const uuidOk = uuid => /^Compendium\.pf2e\.[a-z-]+\.Actor\.[A-Za-z0-9]+$/.test(uuid ?? "");
+                if (!((uuidOk(part.actorUuid) && !part.candidates) || (Array.isArray(part.candidates) && part.candidates.length > 0 && part.candidates.every(entry => (entry.uuid == null || uuidOk(entry.uuid))
+                    && typeof entry.name === "string" && Number.isInteger(entry.level) && ["tiny", "sm", "med", "lg", "huge", "grg"].includes(entry.size)))) || !(Number.isFinite(part.seconds) && part.seconds > 0) || part.near !== "target")
+                    problems.push(`${where}: the creature to summon, its place or its time can't be read.`);
+            } else if (kind === "terrain") {
+                // (Elemental Confluence's wood: difficult terrain in the conjured thing's area for whole rounds.)
+                // (Or a placed shape — Flesh Tsunami's 60-foot cone of greater difficult terrain.)
+                const placed = part.place != null && ["cone", "burst", "line", "emanation"].includes(part.place.type) && Number.isInteger(part.place.value) && part.place.value > 0 && [2, 3].includes(part.difficulty);
+                if (!((part.onConjured === true || placed) && Number.isInteger(part.rounds) && part.rounds > 0)) problems.push(`${where}: the terrain's area or time can't be read.`);
+            } else if (kind === "hazard") {
+                // (Burning Blossoms' petals: a placed area dealing its damage, no save, to each creature ending its turn there, for whole rounds.)
+                // (Or a flat amount of a type the caster picks, on difficult ground: Planar Collision's 15 of the plane's type.)
+                // (Pierce the Sky's lines: one drawn from the caster to each targeted creature, damaging a creature entering or starting its turn there, once a round.)
+                const between = part.between === true && part.place == null && JSON.stringify(part.events) === '["enter","turn-start"]' && part.oncePerRound === true;
+                // (Or a square that burns a creature entering it or ending its turn there, for rounds rolled when it's placed: Dynamic Ignition.)
+                const square = part.place?.type === "square" && JSON.stringify(part.events) === '["enter","turn-end"]' && /^\d+d\d+$/.test(part.roundsRoll ?? "");
+                if (!((between || square || (part.place != null && ["burst", "emanation", "cone", "line"].includes(part.place.type) && Number.isInteger(part.place.value) && part.place.value > 0
+                    && JSON.stringify(part.events) === '["turn-end"]')) && (formula(part.formula) || /^\d+$/.test(part.formula ?? "") || (square && /^\(\d+\+@item\.(?:rank|level)\)$/.test(part.formula ?? ""))) && (/^[a-z]+$/.test(part.type ?? "")
+                        || (Array.isArray(part.typeChoice) && part.typeChoice.length > 1 && part.typeChoice.every(value => /^[a-z]+$/.test(value))))
+                    && (part.terrain == null || [2, 3].includes(part.terrain)) && Number.isInteger(part.rounds) && part.rounds > 0 && typeof part.label === "string"))
+                    problems.push(`${where}: the area's damage, its trigger or its time can't be read.`);
+            } else if (["true-target", "covenant", "heartbolt"].includes(kind)) {
+                // (support-cards.js: PF2e's Effect and the rest of the text — True Target's mark, Sacred Covenant's pact; Heartbolt's bolt and plume.)
+                const whole = value => Number.isInteger(value) && value > 0;
+                const effect = value => /^Compendium\.pf2e\.spell-effects\.Item\.[A-Za-z0-9]+$/.test(value ?? "");
+                const ok = kind === "true-target" ? whole(part.count) && effect(part.effectUuid) && /^[a-z-]+$/.test(part.markSlug ?? "")
+                    : kind === "covenant" ? whole(part.count) && whole(part.hp) && whole(part.wounded) && effect(part.effectUuid)
+                    : whole(part.radius) && formula(part.boltFormula) && /floor\(@item\.rank \/ 2\) \* \d+/.test(part.plumeFormula ?? "") && isExecutableSavePlan(part.boltPlan) && isExecutableSavePlan(part.plumePlan);
+                if (!ok) problems.push(`${where}: the Effect, its mark or the healing can't be read.`);
+            } else if (["seed", "pod", "gift"].includes(kind)) {
+                // (Things picked up and used, pickup-cards.js: a thrown burst's save and its burning ground; a season's pod; a gift's benefits.)
+                const whole = value => Number.isInteger(value) && value > 0;
+                const ok = kind === "gift" ? whole(part.radius) && formula(part.heal) && Array.isArray(part.conditions) && part.conditions.length > 1 && part.conditions.every(slug => /^[a-z-]+$/.test(slug))
+                        && whole(part.by) && whole(part.eachBy) && Array.isArray(part.afflictions) && !!part.repeat
+                    : isExecutableSavePlan(part.plan) && part.place?.type === "burst" && whole(part.place.value) && whole(part.range)
+                        && (kind === "pod" || (whole(part.count) && formula(part.flames?.formula) && /^[a-z]+$/.test(part.flames?.type ?? "") && whole(part.flames?.seconds)
+                            && JSON.stringify(part.flames?.events) === '["enter","turn-end"]' && !!part.repeat));
+                if (!ok) problems.push(`${where}: the thing's burst, save or benefits can't be read.`);
+            } else if (["raise", "revive", "shock", "renewal"].includes(kind)) {
+                // (Spells bringing creatures back, revival-cards.js: the levels, the healing, the debilitation, the supercharge, the day's recovery.)
+                const condition = entry => /^Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+$/.test(entry?.uuid ?? "");
+                const whole = value => Number.isInteger(value) && value > 0;
+                const weak = value => Array.isArray(value?.conditions) && value.conditions.length > 0 && value.conditions.every(entry => condition(entry) && whole(entry.value)) && whole(value.days);
+                const ok = kind === "raise" ? Object.entries(part.levels ?? {}).length > 0 && Object.entries(part.levels).every(([rank, level]) => /^\d+$/.test(rank) && whole(level)) && whole(part.hp) && weak(part.debilitation) && typeof part.question === "string"
+                    : kind === "revive" ? /^\d+d\d+\+\d+$/.test(part.formula ?? "") && weak(part.debilitation) && typeof part.question === "string"
+                    : kind === "shock" ? formula(part.formula) && whole(part.wounded) && condition(part.quickened) && /^Compendium\.pf2e\.spells-srd\.Item\.[A-Za-z0-9]+$/.test(part.innate?.uuid ?? "")
+                        && whole(part.innate.rank) && whole(part.innate.baseRank) && Number.isInteger(part.innate.step) && condition(part.cloud) && whole(part.seconds)
+                    : whole(part.count) && part.hours === 24 && whole(part.immuneDays);
+                if (!ok) problems.push(`${where}: the revival's numbers or links can't be read.`);
+            } else if (["link", "sacrifice", "fury", "leech", "mimic", "death-mark", "word", "emblem"].includes(kind)) {
+                // (Spells answering a trigger, trigger-cards.js: each part's stated save, numbers and links.)
+                const save = ["fortitude", "reflex", "will"].includes(part.statistic);
+                const condition = entry => /^Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+$/.test(entry?.uuid ?? "");
+                const whole = value => Number.isInteger(value) && value > 0;
+                const ok = kind === "link" ? save && whole(part.range) && whole(part.immunityRounds)
+                    : kind === "sacrifice" ? save && typeof part.question === "string"
+                    : kind === "fury" ? save && condition(part.hidden) && whole(part.minutes)
+                    : kind === "leech" ? save && /^[a-z]+$/.test(part.tradition ?? "") && /^\d+d\d+$/.test(part.heal ?? "") && condition(part.stunned) && whole(part.stunned.value) && whole(part.stunned.criticalRounds) && !!part.repeat
+                        && phases.some(other => other.leechTargets === true && other.kind === "save")
+                    : kind === "mimic" ? whole(part.sustainMinutes) && part.sameTradition === true
+                    : kind === "death-mark" ? typeof part.reminder === "string" && phases.some(other => other.kind === "word")
+                    : kind === "word" ? save && whole(part.immuneHours) && [part.success, part.failure].every(row => condition(row) && /^[a-z-]+$/.test(row.slug ?? "") && whole(row.value) && whole(row.perRank)) && whole(part.failure.deathImmuneHours)
+                    : whole(part.bonus) && [part.die, part.critDie, part.heightened?.die, part.heightened?.critDie, part.heightened?.minRank, part.rounds].every(whole) && /^[a-z]+$/.test(part.type ?? "") && condition(part.offGuard);
+                if (!ok) problems.push(`${where}: the trigger's save, numbers or links can't be read.`);
+            } else if (kind === "attack-save") {
+                // (Ray of Corruption: the module's spell attack against the target's AC; a hit starts the save — a degree worse on a critical hit.)
+                if (!(isExecutableSavePlan(part.plan) && part.plan.resolution?.check?.statistic !== "spell-attack" && Number.isInteger(part.range) && part.range > 0 && typeof part.critWorse === "boolean" && part.repeat))
+                    problems.push(`${where}: the attack's save can't be read.`);
+            } else if (kind === "charge") {
+                // (Comet Charge: the caster's flight to a space beside the target, then a hidden attack part — one for a metal target when the text says so.)
+                const hiddenAttack = name => phases.some(other => other.key === name && other.hidden === true && other.kind === "attack");
+                if (!(Number.isInteger(part.feet) && part.feet > 0 && hiddenAttack(part.attack) && (part.metalAttack == null || (hiddenAttack(part.metalAttack) && typeof part.question === "string"))
+                    && /^Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+$/.test(part.offGuard?.uuid ?? "")))
+                    problems.push(`${where}: the charge's distance or its attack can't be read.`);
+            } else if (kind === "teeth") {
+                // (Ravenous Darkness: the placed darkness, the spell attack against each creature's save DC, the teeth's damage and penalty.)
+                if (!(part.place?.type === "burst" && Number.isInteger(part.place.value) && part.place.value > 0 && Number.isInteger(part.seconds) && part.seconds > 0
+                    && /^Compendium\.pf2e\.spells-srd\.Item\.[A-Za-z0-9]+$/.test(part.darkness?.uuid ?? "") && Number.isInteger(part.darkness?.rank) && ["fortitude", "reflex", "will"].includes(part.statistic)
+                    && /^\d+d\d+$/.test(part.formula ?? "") && /^\d+d\d+$/.test(part.gnaw ?? "") && /^[a-z]+$/.test(part.type ?? "") && /^[a-z]+$/.test(part.gnawType ?? "") && Number.isInteger(part.speedPenalty) && part.speedPenalty > 0))
+                    problems.push(`${where}: the darkness, the attack or the teeth can't be read.`);
+            } else if (kind === "teleport") {
+                // (A teleport on the card: the targets or the caster moved within the stated feet, or two creatures swapping places.)
+                if (!(["move", "swap"].includes(part.mode) && ["target", "caster", "targets"].includes(part.who) && (part.mode === "swap" || (Number.isInteger(part.within) && part.within > 0 && ["caster", "self"].includes(part.from)))
+                    && (part.count == null || (Number.isInteger(part.count) && part.count > 0)) && (part.immunity == null || (typeof part.immunity.key === "string" && Number.isInteger(part.immunity.duration?.value)))))
+                    problems.push(`${where}: the teleport's range or who moves can't be read.`);
+            } else if (kind === "mode") {
+                // (A mode card's mode: the area's state — generated or PF2e's member Effects, terrain — and its own action, a hidden part on the same card.)
+                const member = entry => entry == null || (typeof entry.generated?.name === "string" && Array.isArray(entry.generated.rules) && entry.generated.rules.every(rule => ["FlatModifier", "GrantItem", "AdjustModifier", "RollOption", "Note"].includes(rule.key)))
+                    || /^Compendium\.pf2e\.spell-effects\.Item\.[A-Za-z0-9]+$/.test(entry.uuid ?? "");
+                const state = part.state ?? {};
+                if (!(member(state.memberEffect) && (state.memberEffects ?? []).every(member) && member(state.member) && (state.slot == null || (Number.isInteger(state.slot) && state.slot > 0))
+                    && (state.terrain == null || [2, 3].includes(state.terrain.difficulty))
+                    // (Control Sand: a held shield's stats, the area's new size, a following hazard of stated dice and basic save.)
+                    && (state.shield == null || (Number.isInteger(state.shield.hardness) && Number.isInteger(state.shield.hp) && state.shield.hp > 0))
+                    && (state.radius == null || (Number.isInteger(state.radius) && state.radius > 0))
+                    && (state.child == null || (Number.isInteger(state.child.radius) && /^\d+d\d+$/.test(state.child.formula ?? "") && /^[a-z]+$/.test(state.child.type ?? "")))
+                    && (part.action == null || phases.some(other => other.key === part.action && other.hidden === true)) && part.repeat))
+                    problems.push(`${where}: the mode's area state or its action can't be read.`);
+            } else if (kind === "temp-share") {
+                // (Vampiric Revelry: the caster's temporary Hit Points from another part's save card, for the allies.)
+                if (!(typeof part.from === "string" && phases.some(other => other.key === part.from && other.plan?.resolution?.casterBenefit) && Number.isInteger(part.seconds) && part.seconds > 0))
+                    problems.push(`${where}: the shared temporary Hit Points need the part they come from and their time.`);
+            } else if (kind === "beam-roll" || kind === "sequence") {
+                // (Prismatic Spray's beams: a die whose results name hidden parts on the card, and the "twice" result. Prismatic Wall's layers: hidden parts, in order.)
+                const hiddenPart = name => phases.some(other => other.key === name && other.hidden === true && other !== part);
+                if (!(kind === "sequence" ? Array.isArray(part.sequence) && part.sequence.length > 0 && part.sequence.every(hiddenPart)
+                    : Number.isInteger(part.die) && part.die > 1 && part.table && Object.entries(part.table).every(([face, name]) => Number(face) >= 1 && Number(face) <= part.die && hiddenPart(name))
+                        && Number.isInteger(part.twice) && part.twice >= 1 && part.twice <= part.die && !part.table[part.twice] && new Set(Object.values(part.table)).size >= 2 && Object.keys(part.table).length === part.die - 1))
+                    problems.push(`${where}: the parts it runs can't be read.`);
+            } else if (kind === "fumarole") {
+                // (Rainbow Fumarole: each die result's damage and added effect, the "All" result, the save, the placed area and its time.)
+                const formula = value => typeof value === "string" && /^\{?(\d+(d\d+)?\[[a-z]+(,[a-z]+)?\],?)+\}?$/.test(value);
+                const effect = value => value == null || ((value.conditions ?? []).every(entry => /^Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+$/.test(entry.uuid ?? "") && /^[a-z-]+$/.test(entry.slug ?? ""))
+                    && (value.push == null || Number.isInteger(value.push)) && (value.rounds == null || Number.isInteger(value.rounds)) && ((value.conditions?.length ?? 0) > 0 || value.push));
+                const colors = Object.entries(part.colors ?? {});
+                if (!(Number.isInteger(part.die) && colors.length >= 2 && colors.every(([face, entry]) => Number(face) >= 1 && Number(face) <= part.die && typeof entry.name === "string" && formula(entry.formula) && effect(entry.effect))
+                    && (part.all == null || (Number.isInteger(part.all) && !part.colors[part.all])) && ["fortitude", "reflex", "will"].includes(part.statistic)
+                    && ["burst", "cylinder", "emanation"].includes(part.area?.type) && Number.isInteger(part.area?.value) && Number.isInteger(part.seconds) && part.seconds > 0 && (part.terrain == null || [2, 3].includes(part.terrain))))
+                    problems.push(`${where}: the colors, save or area can't be read.`);
+            } else if (kind === "glyph") {
+                if (!(["fortitude", "reflex", "will"].includes(part.statistic) && /^\d+d\d+\[[a-z]+\]$/.test(part.formula ?? "") && Number.isInteger(part.seconds) && part.seconds > 0))
+                    problems.push(`${where}: the glyph's save, dice or time can't be read.`);
+            } else if (kind === "launch") {
+                // (Wrathful Storm's tornado: the targets thrown up the stated feet, then PF2e's falling.)
+                if (!(Number.isInteger(part.feet) && part.feet > 0)) problems.push(`${where}: the launch's height can't be read.`);
+            } else if (kind === "fuse") {
+                // (Amalgamizing Leap: the target taken into the caster — the caster's stated temporary Hit Points and extra reach until the end of its next turn.)
+                if (!(Number.isInteger(part.tempHP) && part.tempHP > 0 && Number.isInteger(part.reach) && part.reach > 0)) problems.push(`${where}: the fusion's temporary Hit Points or reach can't be read.`);
+            } else if (kind === "hp-share" || kind === "elevate" || kind === "descend") {
+                if ((kind !== "hp-share" && !(Number.isInteger(part.feet) && part.feet > 0)) || (kind === "descend" && part.stepFeet != null && !Number.isInteger(part.stepFeet))) problems.push(`${where}: the movement's distance can't be read.`);
+            } else if (kind === "destroy-thrall") {
+                if (typeof part.reminder !== "string" || !part.reminder) problems.push(`${where}: the thrall to destroy needs its reminder.`);
+            } else problems.push(`${where}: the module doesn't carry out a ${kind} part.`);
+        }
+    }
+    return problems;
+}
+
 export function outcomeForTarget(state, target) {
     // A creature with the trait the spell treats differently (Flense's undead) uses that table.
-    if (target?.traitVariant && state.traitVariant?.outcomes) return state.traitVariant.outcomes[target?.degree] ?? null;
-    return state.outcomes?.[target?.degree] ?? null;
+    const outcome = target?.traitVariant && state.traitVariant?.outcomes ? state.traitVariant.outcomes[target?.degree] ?? null : state.outcomes?.[target?.degree] ?? null;
+    // (Split Shot's second target: "no effects beyond the spell's initial damage" — the row's damage alone.)
+    if (target?.shapeDamageOnly && outcome) return outcome.damage ? { damage: outcome.damage } : null;
+    return outcome;
 }
 
 export function targetParticipates(target) {
@@ -2732,6 +3245,8 @@ export function dualEnergyMode(dualMode, actor) {
 export function synchronizeSecondary(state, target) {
     const followUp = (outcomeForTarget(state, target)?.followUps ?? [])[0] ?? null;
     if (!followUp) return target.secondary = null;
+    // (Only when the GM says so: "If the creature would be pushed into another creature or object, it must attempt a Reflex save".)
+    if (followUp.gate?.kind === "gm-question" && gateAnswerFor(target, followUp.gate) !== "yes") return target.secondary = null;
     // (Only creatures up to the stated level attempt it.)
     if (followUp.maxLevel != null && Number(target.level) > followUp.maxLevel) return target.secondary = null;
     if (target.secondary?.followUpId === followUp.id) return target.secondary;
@@ -2748,7 +3263,9 @@ export function targetOutcomeNotes(state, target) {
     return [...(outcomeForTarget(state, target)?.noteEffects ?? []), ...(secondaryOutcomeForTarget(state, target)?.noteEffects ?? [])].filter(note => !note.choiceGroup
         || (note.choiceGroup === "condition-roll" && state.conditionRoll?.slug != null && note.choice === state.conditionRoll.slug)
         // A form's note: only the form the caster picked.
-        || (note.choiceGroup === "caster-option" && state.casterChoice?.kind === "option" && note.option === state.casterChoice.selected));
+        || (note.choiceGroup === "caster-option" && state.casterChoice?.kind === "option" && note.option === state.casterChoice.selected)
+        // (The second pick, on its rows.)
+        || (note.choiceGroup === "caster-option" && state.casterChoice?.also != null && (state.casterChoice.twoOn ?? []).includes(target?.degree) && note.option === state.casterChoice.also));
 }
 
 /** Outcome indices are scoped to the current branch, never reused after a reroll. */
@@ -2759,6 +3276,11 @@ export function targetOutcomeConditions(state, target) {
     // A condition chosen by the cast's roll: only the rolled (or chosen) one applies.
     ].filter(effect => !effect.choiceGroup
         || (effect.choiceGroup === "condition-roll" && state.conditionRoll?.slug != null && effect.slug === state.conditionRoll.slug)
+        // (A critical failure's second rolled condition.)
+        || (effect.choiceGroup === "condition-roll" && target?.degree === "criticalFailure" && state.conditionRoll?.second?.slug != null && effect.slug === state.conditionRoll.second.slug)
+        // (Unfathomable Song: the roll's result for this target's degree — a critical failure's one higher.)
+        || (effect.choiceGroup === "condition-roll-results" && Number.isInteger(state.conditionRoll?.rolled)
+            && (effect.rollResults ?? []).includes(state.conditionRoll.rolled + (target?.degree === "criticalFailure" ? Number(state.conditionRoll.criticalOffset ?? 0) : 0)))
         // Only when the caster's damage-dice question was answered yes ("if the target can cast divine spells, it's Stupefied 1").
         || (effect.choiceGroup === "dice-upgrade-yes" && state.diceUpgrade?.answer === "yes")
         // The caster's pick between the row's two conditions.
@@ -2845,7 +3367,12 @@ export function correctSaveTarget(state, targetId, correction, userId) {
         case "gate-no": {
             // The GM's answer for a gated condition in the target's row ("Is it already exposed to bright light?").
             if (!target.degree || !gmQuestionGate(state, target)) throw new Error("This target's row has no question to answer.");
-            target.gateAnswer = { answer: correction.action === "gate-yes" ? "yes" : "no", userId };
+            // (A keyed question — Chrysopoetic Curse's armor and held objects — is answered on its own.)
+            const gateKey = typeof correction.degree === "string" && correction.degree && gmQuestionGates(state, target).some(gate => gate.key === correction.degree) ? correction.degree : null;
+            if (gateKey) target.gateAnswers = { ...(target.gateAnswers ?? {}), [gateKey]: { answer: correction.action === "gate-yes" ? "yes" : "no", userId } };
+            else target.gateAnswer = { answer: correction.action === "gate-yes" ? "yes" : "no", userId };
+            // (A second save the answer opens — Unhelpful Nudge's collision.)
+            synchronizeSecondary(state, target);
             break;
         }
         case "upgrade-yes":
@@ -2929,6 +3456,11 @@ export function secondaryOutcomeForTarget(state, target) {
 }
 
 export function damageMultiplierForTarget(state, target) {
+    // (A spellshape's second target — Split Shot: "half the amount of damage it would normally deal".)
+    return baseDamageMultiplier(state, target) * (target?.shapeHalf ? 0.5 : 1);
+}
+
+function baseDamageMultiplier(state, target) {
     // Bony Barrage's bone armor: the caster and its allies in the area take no damage from the spell.
     if (target?.boneArmor === true) return 0;
     // (Damage only for creatures of the named traits: Life's Flowing River.)
@@ -3037,12 +3569,27 @@ export function recordSecondarySave(state, targetId, result) {
     return { status: "recorded", target, secondary };
 }
 
+/** Every distinct GM question gating the target's row (by key; one unkeyed). */
+export function gmQuestionGates(state, target) {
+    if (!target?.degree) return [];
+    const outcome = outcomeForTarget(state, target);
+    const gates = [...(outcome?.effects ?? []).map(effect => effect.gate), ...(outcome?.damage?.formulas ?? []).map(entry => entry.gate), ...(outcome?.followUps ?? []).map(followUp => followUp.gate)]
+        .filter(gate => gate?.kind === "gm-question");
+    return gates.filter((gate, index) => gates.findIndex(other => (other.key ?? "") === (gate.key ?? "")) === index);
+}
+
+/** The GM's answer to a gate for this target: its key's, or the row's single answer. */
+export function gateAnswerFor(target, gate) {
+    return gate?.key ? target?.gateAnswers?.[gate.key]?.answer ?? null : target?.gateAnswer?.answer ?? null;
+}
+
 /** The GM question gating a condition in the target's row, or null. */
 export function gmQuestionGate(state, target) {
     if (!target?.degree) return null;
     const outcome = outcomeForTarget(state, target);
     // (Or a row whose only gated part is its damage.)
-    return (outcome?.effects ?? []).find(effect => effect.gate?.kind === "gm-question")?.gate ?? (outcome?.damage?.formulas ?? []).find(entry => entry.gate?.kind === "gm-question")?.gate ?? null;
+    return (outcome?.effects ?? []).find(effect => effect.gate?.kind === "gm-question")?.gate ?? (outcome?.damage?.formulas ?? []).find(entry => entry.gate?.kind === "gm-question")?.gate
+        ?? (outcome?.followUps ?? []).find(followUp => followUp.gate?.kind === "gm-question")?.gate ?? null;
 }
 
 export function saveCollectionReadiness(state) {
@@ -3069,7 +3616,11 @@ export function saveCollectionReadiness(state) {
     if (state.sacrifice?.pick === "minion" && !state.sacrifice.selected) return { ready: false, reason: "Caster: choose the minion the spell destroys." };
     if (state.boneArmor && state.boneArmor.answer == null) return { ready: false, reason: `Caster: ${state.boneArmor.question}` };
     if (state.casterChoice && !state.casterChoice.selected && choiceNeeded) return { ready: false, reason: `Caster: choose the ${state.casterChoice.label.toLowerCase()} before finalizing.` };
+    if (state.casterChoice?.twoOn?.length && state.casterChoice.selected && !state.casterChoice.also && (state.targets ?? []).some(target => state.casterChoice.twoOn.includes(target.degree)))
+        return { ready: false, reason: `Choose the second ${String(state.casterChoice.label ?? "option").toLowerCase()} (a ${state.casterChoice.twoOn.join(" or ")} gets two).` };
     if (state.conditionRoll && !state.conditionRoll.slug) return { ready: false, reason: `The ${state.conditionRoll.formula} rolled ${state.conditionRoll.rolled ?? "?"}: the caster chooses the condition before finalizing.` };
+    if (state.conditionRoll?.second && !state.conditionRoll.second.slug && (state.targets ?? []).some(target => target.degree === "criticalFailure"))
+        return { ready: false, reason: `The critical failure's second ${state.conditionRoll.formula} rolled ${state.conditionRoll.second.rolled}: the caster chooses a different condition.` };
     const unzoned = (state.targets ?? []).filter(target => !target.excluded && target.zone?.status === "pending");
     if (unzoned.length) return { ready: false, reason: `GM: ${unzoned[0].name}: ${state.traitVariant?.question ?? "choose its square"}` };
     const unbolstered = (state.targets ?? []).filter(target => !target.excluded && target.bolster?.status === "pending");
@@ -3079,8 +3630,8 @@ export function saveCollectionReadiness(state) {
     const missing = (state.targets ?? []).filter(target => targetParticipates(target) && !target.degree);
     if (missing.length) return { ready: false, reason: `${missing.length} saving throw${missing.length === 1 ? " is" : "s are"} still required.` };
     // A condition gated on the GM's answer for that creature's row.
-    const unanswered = (state.targets ?? []).filter(target => targetParticipates(target) && gmQuestionGate(state, target) && !target.gateAnswer);
-    if (unanswered.length) return { ready: false, reason: `GM: ${unanswered[0].name}: ${gmQuestionGate(state, unanswered[0]).question}` };
+    const unanswered = (state.targets ?? []).filter(target => targetParticipates(target) && gmQuestionGates(state, target).some(gate => !gateAnswerFor(target, gate)));
+    if (unanswered.length) return { ready: false, reason: `GM: ${unanswered[0].name}: ${gmQuestionGates(state, unanswered[0]).find(gate => !gateAnswerFor(unanswered[0], gate)).question}` };
     const missingSecondary = (state.targets ?? []).filter(target =>
         targetParticipates(target) && target.secondary && !target.secondary.degree);
     if (missingSecondary.length) {

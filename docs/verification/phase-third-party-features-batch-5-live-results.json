@@ -1,0 +1,65 @@
+{
+ "label": "thirdPartyFeaturesBatch5",
+ "passed": true,
+ "at": "2026-10-07T10:01:41.706Z",
+ "details": {
+  "thirdPartyFeatures5": {
+   "drain": {
+    "shapes": [
+     [
+      "Drain Destiny",
+      true,
+      null
+     ]
+    ],
+    "caster": 2,
+    "foe": 1
+   },
+   "report": {
+    "shapes": [
+     [
+      "Reporting Spell",
+      true,
+      null
+     ]
+    ],
+    "text": "Reporting Spell — PFTEST P23 Affliction tpf5 foe: its lowest save is fortitude (+10); it is weak to fire 5 (the spell's damage); reflex is both its weakest and its highest save (all equal).",
+    "whisper": 1,
+    "immune": true
+   },
+   "enlightening": {
+    "shapes": [
+     [
+      "Enlightening Spell",
+      true,
+      null
+     ]
+    ],
+    "heroism": true,
+    "effect": true
+   },
+   "feint": {
+    "shapes": [
+     [
+      "Beguiling Feint",
+      true,
+      null
+     ]
+    ],
+    "feint": {
+     "degree": "criticalSuccess",
+     "dc": -20,
+     "total": 15,
+     "actorUuid": "Actor.w6fregbvPZr2D2GX",
+     "offGuardUuid": "Actor.w6fregbvPZr2D2GX.Item.17VTvsEQq71Umwsl"
+    },
+    "int": [
+     "Beguiling Feint: Intelligence instead of Charisma 4"
+    ],
+    "during": true,
+    "after": false,
+    "concealed": "<p>you are Concealed to the creature until the end of your next turn. You can use this concealment to Hide.</p>"
+   }
+  }
+ }
+}

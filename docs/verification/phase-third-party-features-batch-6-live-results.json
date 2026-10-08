@@ -1,0 +1,38 @@
+{
+ "label": "thirdPartyFeaturesBatch6",
+ "passed": true,
+ "at": "2026-10-07T10:07:09.176Z",
+ "details": {
+  "thirdPartyFeatures6": {
+   "seeking": {
+    "shapes": [
+     [
+      "Seeking Spell",
+      true,
+      null
+     ]
+    ],
+    "cover": "cover reduced 2",
+    "reminder": "Sustain on your next turn to roll the spell attack again"
+   },
+   "table": {
+    "tag": [
+     "Spell Tag",
+     true,
+     "its range isn't touch"
+    ],
+    "tandem": [
+     "Tandem Casting",
+     true,
+     null
+    ],
+    "distilled": [
+     "Distilled Magic",
+     true,
+     null
+    ],
+    "effects": 0
+   }
+  }
+ }
+}

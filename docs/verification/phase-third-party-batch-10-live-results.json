@@ -1,0 +1,75 @@
+{
+ "label": "thirdPartyBatch10",
+ "passed": true,
+ "at": "2026-10-07T00:01:00.777Z",
+ "details": {
+  "thirdParty10": {
+   "rivulet": {
+    "status": "applied",
+    "formula": "4d4 bleed",
+    "total": 12,
+    "lost": 12,
+    "temp": 15,
+    "persistent": 0,
+    "effect": {
+     "value": 1,
+     "unit": "rounds",
+     "expiry": "turn-end",
+     "sustained": false
+    }
+   },
+   "icon": {
+    "supports": true,
+    "targets": 2,
+    "total": 9,
+    "lost": [
+     18,
+     18
+    ],
+    "frightened": [
+     2,
+     2
+    ],
+    "ended": true
+   },
+   "drown": {
+    "note": "Drown: Drowning bubble",
+    "endSave": "fortitude",
+    "penalty": {
+     "key": "FlatModifier",
+     "selector": [
+      "check"
+     ],
+     "type": "status",
+     "value": -2,
+     "predicate": [
+      {
+       "or": [
+        "item:trait:auditory",
+        "item:trait:linguistic"
+       ]
+      }
+     ],
+     "label": "Drown",
+     "slug": null,
+     "priority": 100,
+     "ignored": false,
+     "requiresEquipped": null,
+     "requiresInvestment": null,
+     "force": false,
+     "hideIfDisabled": false,
+     "fromEquipment": true,
+     "critical": null,
+     "removeAfterRoll": false,
+     "battleForm": false
+    },
+    "rounds": 1
+   },
+   "tow": {
+    "pull": true,
+    "note": "Kinetic Tow: Kinetic tow",
+    "endSave": "fortitude"
+   }
+  }
+ }
+}

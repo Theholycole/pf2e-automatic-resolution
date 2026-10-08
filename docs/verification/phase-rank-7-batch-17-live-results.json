@@ -1,0 +1,41 @@
+{
+  "label": "rank7Batch17",
+  "passed": true,
+  "at": "2026-10-05T02:40:03.130Z",
+  "details": {
+    "batch17": {
+      "casterAC": true,
+      "radius": 150,
+      "exposed": true,
+      "push": true,
+      "collision": true,
+      "rowTerrain": [
+        2
+      ],
+      "grown": {
+        "radius": 250,
+        "follow": 250,
+        "area": 10
+      },
+      "followed": true,
+      "ended": {
+        "region": false,
+        "ac": false
+      },
+      "raid": {
+        "lost": 28,
+        "type": "piercing",
+        "noTerrain": true,
+        "disbelief": [
+          "disbelieved"
+        ],
+        "turnEnd": {
+          "struck": 15,
+          "doubter": 6,
+          "halfNote": true,
+          "piercing": true
+        }
+      }
+    }
+  }
+}

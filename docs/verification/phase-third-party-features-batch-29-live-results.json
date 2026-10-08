@@ -1,0 +1,34 @@
+{
+ "batch29": {
+  "label": "thirdPartyFeaturesBatch29",
+  "passed": true,
+  "at": "2026-10-08T00:32:56.797Z",
+  "details": {
+   "thirdPartyFeatures29": {
+    "opened": 4,
+    "fireEssence": 0,
+    "afterFire": 0,
+    "armorEssence": 0,
+    "afterArmor": {
+     "maintaining": 1,
+     "armor": true
+    },
+    "refocus": {
+     "maintaining": 0,
+     "armor": false
+    },
+    "inEncounter": true,
+    "bell": {
+     "opened": 4,
+     "after": 0,
+     "maintaining": 0
+    },
+    "bellTwice": true,
+    "chalice": {
+     "hp": 15,
+     "reservoir": 12
+    }
+   }
+  }
+ }
+}

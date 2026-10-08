@@ -1,0 +1,66 @@
+{
+ "batch27": {
+  "label": "thirdPartyFeaturesBatch27",
+  "passed": true,
+  "at": "2026-10-08T00:18:00.802Z",
+  "details": {
+   "thirdPartyFeatures27": {
+    "pool": {
+     "max": 4,
+     "draw": 2
+    },
+    "atStart": 0,
+    "steps": [
+     [
+      "Electric Arc",
+      2
+     ],
+     [
+      "Breathe Fire 2",
+      3
+     ],
+     [
+      "Breathe Fire 3",
+      4
+     ],
+     [
+      "Breathe Fire 4",
+      0
+     ],
+     [
+      "Electric Arc, no rebirth",
+      0
+     ],
+     [
+      "Electric Arc, rebirth",
+      2
+     ],
+     [
+      "Mystic Armor 1",
+      3
+     ],
+     [
+      "Sure Strike 1",
+      0
+     ]
+    ],
+    "terminus": {
+     "name": "Effect: Terminus of Power",
+     "cycle": 1,
+     "record": {
+      "combatId": "Aw0uOopR9IpAXUYE",
+      "cycles": 1,
+      "leaks": 0
+     }
+    },
+    "armor": true,
+    "leaks": 1,
+    "afterEnd": {
+     "essence": 0,
+     "armor": false,
+     "terminus": false
+    }
+   }
+  }
+ }
+}

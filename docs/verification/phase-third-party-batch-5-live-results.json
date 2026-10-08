@@ -1,0 +1,55 @@
+{
+ "label": "thirdPartyBatch5",
+ "passed": true,
+ "at": "2026-10-06T23:07:02.993Z",
+ "details": {
+  "thirdParty5": {
+   "staff": {
+    "formula": "1d8 bludgeoning",
+    "lost": 2,
+    "push": {
+     "kind": "push",
+     "distance": 5,
+     "upTo": true,
+     "optional": true,
+     "direction": "away"
+    }
+   },
+   "lance": {
+    "dazzled": true,
+    "lost": 12
+   },
+   "needle": {
+    "enfeebled": 1,
+    "lost": 4,
+    "afterEnd": 0
+   },
+   "echo": {
+    "note": true,
+    "lost": 6,
+    "total": 6,
+    "deafened": true
+   },
+   "silence": {
+    "stupefied": 1,
+    "flat": {
+     "dc": 11
+    },
+    "rules": [
+     "GrantItem",
+     [
+      "spell-attack-roll"
+     ],
+     [
+      "spell-dc"
+     ]
+    ],
+    "flatRolled": true
+   },
+   "doom": {
+    "repeat": "sustain",
+    "ended": true
+   }
+  }
+ }
+}

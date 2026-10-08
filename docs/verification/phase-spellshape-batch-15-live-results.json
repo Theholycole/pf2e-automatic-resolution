@@ -1,0 +1,21 @@
+{
+  "generatedAt": "2026-10-05T20:50:00.405Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "spellshapeBatch15",
+      "passed": true,
+      "at": "2026-10-05T20:49:43.561Z",
+      "details": {
+        "spellshape15": {
+          "shape": "true:ok",
+          "bleed": [
+            "3bleed",
+            ""
+          ]
+        }
+      }
+    }
+  ]
+}

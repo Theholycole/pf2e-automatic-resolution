@@ -28,7 +28,7 @@ export function rewriteBladeWall(adapted) {
         gmAction: { actions: ["pass"], label: "tried to pass through the wall", sourceText: sentences[2] },
         reminders: [
             { kind: "spell-note", text: `The wall is a straight line ${shape[1]} feet high and ${shape[2]} feet long (place the line), and it provides cover.`, sourceText: sentences[1] },
-            { kind: "spell-note", text: `${sentences[4]} (When cast: move each creature that succeeded.)`, sourceText: sentences[4] },
+            { kind: "spell-note", text: `${sentences[4]} (The module moves each creature that succeeded to the nearest space outside the wall; the GM moves it to the other side if it chooses.)`, sourceText: sentences[4] },
             { kind: "spell-note", text: `${sentences[5]} (Use the area's control when a creature tries to pass through.)`, sourceText: sentences[5] }],
         sentences
     };

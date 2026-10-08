@@ -1,0 +1,24 @@
+{
+ "batch21": {
+  "label": "thirdPartyFeaturesBatch21",
+  "passed": true,
+  "at": "2026-10-07T22:58:53.314Z",
+  "details": {
+   "thirdPartyFeatures21": {
+    "Celestial Shift": {
+     "kind": "effect",
+     "effect": "Spell Effect: Celestial Shift (Angel)",
+     "form": true,
+     "size": "tiny"
+    },
+    "Aberration Shift": {
+     "kind": "effect",
+     "effect": "Spell Effect: Aberration Shift (Eldritch Aspect) (Flier)",
+     "form": true,
+     "size": "tiny"
+    },
+    "grantedPrompts": 1
+   }
+  }
+ }
+}

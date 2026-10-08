@@ -1,0 +1,22 @@
+{
+  "generatedAt": "2026-10-05T23:33:24.269Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "notesBatch7",
+      "passed": true,
+      "at": "2026-10-05T23:33:23.035Z",
+      "details": {
+        "notes7": {
+          "card": {
+            "gm": "Objects take the damage too (the GM moves them). The creature is pushed. The GM deletes this marker to keep it.GM: PFTEST notePress (the GM picks)",
+            "player": "Objects take the damage too. The creature is pushed.Press",
+            "buttonWorks": true,
+            "public": true
+          }
+        }
+      }
+    }
+  ]
+}

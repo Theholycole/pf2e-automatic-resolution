@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-10-03T21:22:34.808Z",
+  "generatedAt": "2026-10-05T09:18:58.823Z",
   "baseline": "2026-09-25T00:33:15.798Z",
   "scope": "All source-derived members of 1 overlapping families; excludes rituals and the deferred Phase 9 review list. Every member was recompiled under a detached name/ID. Route assessment is not live execution.",
-  "uniqueMembers": 40,
-  "executableSharedSaves": 547,
+  "uniqueMembers": 38,
+  "executableSharedSaves": 579,
   "newlySupported": [
     {
       "id": "gISYsBFby1TiXfBt",
@@ -580,6 +580,10 @@
     {
       "id": "Yrek2Yd4k3DPC2zV",
       "name": "Zenith Star"
+    },
+    {
+      "id": "6s0UW4bujggma9TC",
+      "name": "Fabricated Truth"
     },
     {
       "id": "f8hRqLJaxBVhF1u0",
@@ -1682,16 +1686,40 @@
       "name": "Claim Undead"
     },
     {
+      "id": "c3XygMbzrZMgV1y3",
+      "name": "Collective Transposition"
+    },
+    {
       "id": "ExQk8AwDphmckEmZ",
       "name": "Crimson Breath"
+    },
+    {
+      "id": "dN8QBNuTiaBHCKUe",
+      "name": "Cursed Metamorphosis"
     },
     {
       "id": "OsOhx3TGIZ7AhD0P",
       "name": "Dominate"
     },
     {
+      "id": "XULNb8ItUsfupxqH",
+      "name": "Dread Secret"
+    },
+    {
+      "id": "XOs8C2eZJAO3go0N",
+      "name": "Earth and Sky"
+    },
+    {
       "id": "ZvB9sV7NLdpDeoTw",
       "name": "Explosive Barrage"
+    },
+    {
+      "id": "ZZTLWMXijRDgE66m",
+      "name": "Expunge Blood"
+    },
+    {
+      "id": "ReUoodsqUYSTwSgE",
+      "name": "Fateful Condemnation"
     },
     {
       "id": "R5r4vtmlvOA8hDiF",
@@ -1738,6 +1766,10 @@
       "name": "Purple Worm Sting"
     },
     {
+      "id": "DOBs5ALM1titPYxe",
+      "name": "Seize Identity"
+    },
+    {
       "id": "8Umt1AzYfFbC4fui",
       "name": "Spellwrack"
     },
@@ -1746,12 +1778,32 @@
       "name": "Suffocate"
     },
     {
+      "id": "BokwLLK7OjK6ggHs",
+      "name": "Tanglecurse"
+    },
+    {
+      "id": "OOMQ8Z6EIrGt5NJ6",
+      "name": "Unexpected Transposition"
+    },
+    {
+      "id": "g2V4ID0pl1ZGAxZj",
+      "name": "Vitrifying Blast"
+    },
+    {
       "id": "B4p4cD9Q71mHTpOP",
       "name": "Attacked from Within"
     },
     {
+      "id": "dKWc83KKiXoIJkhp",
+      "name": "Beheading Buzz Saw"
+    },
+    {
       "id": "EgkypvUZIZkx1UlQ",
       "name": "Blightburn Blast"
+    },
+    {
+      "id": "hvV6IruyW4MAr0Ub",
+      "name": "Chrysopoetic Curse"
     },
     {
       "id": "1VOjUKd1pacI67RZ",
@@ -1766,6 +1818,10 @@
       "name": "Divine Decree"
     },
     {
+      "id": "73rToy0v5Ra9NvL6",
+      "name": "Duplicate Foe"
+    },
+    {
       "id": "0jadeyQIItIuRgeH",
       "name": "Eclipse Burst"
     },
@@ -1778,6 +1834,10 @@
       "name": "Frigid Flurry"
     },
     {
+      "id": "yWySiasyPZcRoe4d",
+      "name": "Heaving Earth"
+    },
+    {
       "id": "gMbrNFKz9NP3TR4s",
       "name": "Inexhaustible Cynicism"
     },
@@ -1786,8 +1846,28 @@
       "name": "Leng Sting"
     },
     {
+      "id": "qOeBQyC1z7OScHvP",
+      "name": "Maze of Locked Doors"
+    },
+    {
       "id": "Shiuhdb2nO6Qgk3k",
       "name": "Moonburst"
+    },
+    {
+      "id": "qO4xOJ0kAvhVGDpX",
+      "name": "Orb of Twisting Fate"
+    },
+    {
+      "id": "wU6hNzK8Yfqdmc8m",
+      "name": "Possession"
+    },
+    {
+      "id": "mBYqtWpvOT4oBm4Q",
+      "name": "Puppet Strings"
+    },
+    {
+      "id": "VTb0yI6P1bLkzuRr",
+      "name": "Shadow Raid"
     },
     {
       "id": "a3aQxCpoj1q1NQxC",
@@ -1802,12 +1882,20 @@
       "name": "Warp Mind"
     },
     {
+      "id": "XB65dUQipPCTNNIY",
+      "name": "Amalgamizing Leap"
+    },
+    {
       "id": "C2GYCH3TtUFqPfdX",
       "name": "Arctic Rift"
     },
     {
       "id": "qlxM7Ik3uUeUIOcv",
       "name": "Canticle of Everlasting Grief"
+    },
+    {
+      "id": "8fEfjvC01gNclDKJ",
+      "name": "Deluge"
     },
     {
       "id": "M0jQlpQYUr0pp2Sv",
@@ -1818,8 +1906,16 @@
       "name": "Divine Armageddon"
     },
     {
+      "id": "vm9O7ne48NM72yrJ",
+      "name": "Falling Sky"
+    },
+    {
       "id": "TvZiwZRianfTSbEg",
       "name": "Hypnopompic Terrors"
+    },
+    {
+      "id": "wTYxxYJWN348oV15",
+      "name": "Medusa's Wrath"
     },
     {
       "id": "BKIet436snMNcnez",
@@ -1838,8 +1934,20 @@
       "name": "Sudden Transposition"
     },
     {
+      "id": "yZpWaJzm7kUjKvlQ",
+      "name": "Temporary Possession"
+    },
+    {
       "id": "Jvyy6oVIQsD34MHB",
       "name": "Uncontrollable Dance"
+    },
+    {
+      "id": "YiIOsc8T6E2iDxgh",
+      "name": "Undermine Reality"
+    },
+    {
+      "id": "KY2xyMavZHAoG69D",
+      "name": "Arcane Explosion"
     },
     {
       "id": "MFPvs0ARxtThYPFq",
@@ -1850,12 +1958,32 @@
       "name": "Linnorm Sting"
     },
     {
+      "id": "AsRd1gNRSkHDq2Jx",
+      "name": "Magnetic Dominion"
+    },
+    {
+      "id": "10VcmSYNBrvBphu1",
+      "name": "Massacre"
+    },
+    {
+      "id": "fkDeKktdmbeplYRY",
+      "name": "Overwhelming Presence"
+    },
+    {
       "id": "MJx7DmjsWYzDZ3a4",
       "name": "Phantasmagoria"
     },
     {
+      "id": "m815cJACTzePdZAG",
+      "name": "Remake Physiology"
+    },
+    {
       "id": "ItZgGznUBhgWBwFG",
       "name": "Telepathic Demand"
+    },
+    {
+      "id": "z39jFoNJrobyn3MQ",
+      "name": "Undertaker"
     },
     {
       "id": "XjNROFtWnwovhCsq",
@@ -1907,20 +2035,12 @@
           "families": [
             "basic-rider"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
           "previousSharedSave": false,
           "detail": [],
-          "blockers": [
-            "description-effects",
-            "description-target-predicates",
-            "description-lifecycle",
-            "native-spell-effect-scope",
-            "dismissal",
-            "basic-save-composition",
-            "unaccounted-prose"
-          ]
+          "blockers": []
         },
         {
           "id": "7PnjDM52lb4LEqHR",
@@ -2132,28 +2252,6 @@
             "criticalFailure"
           ],
           "blockers": []
-        },
-        {
-          "id": "yWySiasyPZcRoe4d",
-          "name": "Heaving Earth",
-          "phase": 7,
-          "sourceFile": "spells/spells/rank-7/heaving-earth.json",
-          "families": [
-            "basic-rider"
-          ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
-          "previousSharedSave": false,
-          "detail": [],
-          "blockers": [
-            "description-effects",
-            "description-target-predicates",
-            "description-lifecycle",
-            "target-eligibility",
-            "basic-save-composition",
-            "unaccounted-prose"
-          ]
         },
         {
           "id": "eSEmqOBuywoJ6tYd",
@@ -2388,28 +2486,6 @@
           "blockers": []
         },
         {
-          "id": "XYhU3Wi94n1RKxTa",
-          "name": "Storm Lord",
-          "phase": 7,
-          "sourceFile": "spells/spells/rank-9/storm-lord.json",
-          "families": [
-            "basic-rider"
-          ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
-          "previousSharedSave": false,
-          "detail": [],
-          "blockers": [
-            "description-effects",
-            "description-target-predicates",
-            "description-lifecycle",
-            "basic-save-composition",
-            "lifecycle",
-            "unaccounted-prose"
-          ]
-        },
-        {
           "id": "ho1jSoYKrHUNnM90",
           "name": "Tempest Surge",
           "phase": 2,
@@ -2610,43 +2686,27 @@
   "blockerCounts": [
     [
       "description-effects",
-      7
+      4
     ],
     [
       "description-target-predicates",
-      7
+      4
     ],
     [
       "description-lifecycle",
-      7
+      4
     ],
     [
       "basic-save-composition",
-      7
+      4
     ],
     [
       "unaccounted-prose",
-      7
+      4
     ],
     [
       "lingering-area",
       3
-    ],
-    [
-      "native-spell-effect-scope",
-      1
-    ],
-    [
-      "dismissal",
-      1
-    ],
-    [
-      "target-eligibility",
-      1
-    ],
-    [
-      "lifecycle",
-      1
     ]
   ]
 }

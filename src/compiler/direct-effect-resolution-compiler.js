@@ -416,6 +416,7 @@ export function analyzeNativeEffectCompleteness(adapted, effect, termination = n
         ...(counteractOther ? [counteractOther[0]] : []), ...(autoCounteract ? [autoCounteract[0], ...(autoCounteractAfter ? [autoCounteractAfter[0]] : [])] : []), ...(optionCost ? [optionCost[0]] : []), ...(endPersistent ? [tempEnd[0].trim(), chooseEnd[0].trim()] : []), ...(hideNote ? [hideNote] : [])]
         .reduce((remaining, sentence) => remaining.replace(sentence, ""), fullText).trim();
     const blockers = [];
+    if (globalThis.process?.env?.DER_TEXT) console.error("DERTEXT", JSON.stringify(text));
 
     if (!profile) blockers.push("effect-document-not-audited");
     if (profile && keys.size === 0) blockers.push("effect-has-no-rule-elements");
@@ -692,7 +693,7 @@ export function compileDirectEffectResolution(adapted, nativeEffects, outcomes) 
     const termination = (nativeEffects.terminations ?? [])
         .find(candidate => candidate.id === effect.terminationId) ?? null;
     const completeness = analyzeNativeEffectCompleteness(adapted, effect, termination);
-    if (globalThis.process?.env?.DER_DEBUG) console.error("DER", JSON.stringify(completeness.blockers));
+    if (globalThis.process?.env?.DER_DEBUG) console.error("DER", JSON.stringify(completeness.blockers), JSON.stringify(effect.recipient), !!effect.reactionCast);
     // The structural duration-bound recipient rule only proves who receives a
     // complete Effect; it never enables a partial one.
     if ((String(effect.recipient?.evidence ?? "").startsWith("duration-bound") || effect.recipient?.actor === "area-allies" || effect.recipient?.evidence === "native-aura-centre" || effect.reactionCast) && !completeness.complete) return null;

@@ -1,0 +1,35 @@
+{
+  "label": "rank6Batch22",
+  "passed": true,
+  "at": "2026-10-05T03:23:06.148Z",
+  "details": {
+    "batch22": {
+      "calc": {
+        "thrallGone": true,
+        "slowed": 1,
+        "weakness": 10,
+        "escalating": true,
+        "afterSlowedGone": {
+          "slowed": false,
+          "note": null
+        }
+      },
+      "glass": {
+        "slowed": 1,
+        "weakness": 3,
+        "at2": 6,
+        "gone": null
+      },
+      "gold": {
+        "encumbered": true,
+        "clumsy": 1,
+        "hardness": true,
+        "questions": 2
+      },
+      "secret": {
+        "frightened": 1,
+        "note": true
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
 {
-  "at": "2026-10-03T21:23:49.559Z",
+  "at": "2026-10-05T09:24:13.189Z",
   "passed": true,
-  "uniqueMembers": 306,
+  "uniqueMembers": 300,
   "baselineSharedSaves": 66,
   "newlySupported": [
     "Acid Splash",
@@ -152,6 +152,7 @@
     "Winter Bolt",
     "Withering Grasp",
     "Zenith Star",
+    "Fabricated Truth",
     "Acid Arrow",
     "Acid Grip",
     "Advanced Scurvy",
@@ -435,9 +436,15 @@
     "Catch Your Name",
     "Chain Lightning",
     "Claim Undead",
+    "Collective Transposition",
     "Crimson Breath",
+    "Cursed Metamorphosis",
     "Dominate",
+    "Dread Secret",
+    "Earth and Sky",
     "Explosive Barrage",
+    "Expunge Blood",
+    "Fateful Condemnation",
     "Frost Pillar",
     "Heinous Future",
     "Lignify",
@@ -449,40 +456,65 @@
     "Phantasmal Calamity",
     "Poltergeist's Fury",
     "Purple Worm Sting",
+    "Seize Identity",
     "Spellwrack",
     "Suffocate",
+    "Tanglecurse",
+    "Unexpected Transposition",
     "Vampiric Exsanguination",
+    "Vitrifying Blast",
     "Attacked from Within",
+    "Beheading Buzz Saw",
     "Blightburn Blast",
+    "Chrysopoetic Curse",
     "Curse of the Spirit Orchestra",
     "Defy the Gods",
     "Divine Decree",
+    "Duplicate Foe",
     "Eclipse Burst",
     "Execute",
     "Frigid Flurry",
+    "Heaving Earth",
     "Inexhaustible Cynicism",
     "Leng Sting",
+    "Maze of Locked Doors",
     "Moonburst",
+    "Orb of Twisting Fate",
+    "Possession",
+    "Puppet Strings",
+    "Shadow Raid",
     "Shadow's Web",
     "Sunburst",
     "Telekinetic Bombardment",
     "Warp Mind",
+    "Amalgamizing Leap",
     "Arctic Rift",
     "Boil Blood",
     "Canticle of Everlasting Grief",
+    "Deluge",
     "Desiccate",
     "Devour Life",
     "Divine Armageddon",
+    "Falling Sky",
     "Hypnopompic Terrors",
+    "Medusa's Wrath",
     "Polar Ray",
     "Spirit Song",
     "Spiritual Epidemic",
     "Sudden Transposition",
+    "Temporary Possession",
     "Uncontrollable Dance",
+    "Undermine Reality",
+    "Arcane Explosion",
     "Dimensional Excision",
     "Linnorm Sting",
+    "Magnetic Dominion",
+    "Massacre",
+    "Overwhelming Presence",
     "Phantasmagoria",
+    "Remake Physiology",
     "Telepathic Demand",
+    "Undertaker",
     "Unfolding Wind Crash",
     "Unspeakable Shadow",
     "Wails of the Damned",
@@ -496,13 +528,13 @@
     },
     {
       "id": "damage-condition",
-      "total": 145,
-      "passed": 145
+      "total": 142,
+      "passed": 142
     },
     {
       "id": "timed-condition",
-      "total": 195,
-      "passed": 195
+      "total": 190,
+      "passed": 190
     },
     {
       "id": "inherited-duration",
@@ -778,8 +810,8 @@
       "families": [
         "speed-penalty"
       ],
-      "supported": false,
-      "detachedSupported": false,
+      "supported": true,
+      "detachedSupported": true,
       "passed": true
     },
     {
@@ -1164,17 +1196,6 @@
       "passed": true
     },
     {
-      "id": "kWDt0JcKPgX6MvdD",
-      "name": "Burning Blossoms",
-      "families": [
-        "damage-condition",
-        "timed-condition"
-      ],
-      "supported": false,
-      "detachedSupported": false,
-      "passed": true
-    },
-    {
       "id": "vGMbpV7GWIFPNUaZ",
       "name": "Bursting Bloom",
       "families": [
@@ -1343,6 +1364,16 @@
       "passed": true
     },
     {
+      "id": "XOs8C2eZJAO3go0N",
+      "name": "Earth and Sky",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
       "id": "0jadeyQIItIuRgeH",
       "name": "Eclipse Burst",
       "families": [
@@ -1371,17 +1402,6 @@
       ],
       "supported": true,
       "detachedSupported": true,
-      "passed": true
-    },
-    {
-      "id": "ReUoodsqUYSTwSgE",
-      "name": "Fateful Condemnation",
-      "families": [
-        "damage-condition",
-        "inherited-duration"
-      ],
-      "supported": false,
-      "detachedSupported": false,
       "passed": true
     },
     {
@@ -1554,6 +1574,16 @@
       "passed": true
     },
     {
+      "id": "yWySiasyPZcRoe4d",
+      "name": "Heaving Earth",
+      "families": [
+        "damage-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
       "id": "TvZiwZRianfTSbEg",
       "name": "Hypnopompic Terrors",
       "families": [
@@ -1583,16 +1613,6 @@
       ],
       "supported": true,
       "detachedSupported": true,
-      "passed": true
-    },
-    {
-      "id": "xh6hPMDx2n4OaBU7",
-      "name": "Indolent Haze",
-      "families": [
-        "damage-condition"
-      ],
-      "supported": false,
-      "detachedSupported": false,
       "passed": true
     },
     {
@@ -1915,10 +1935,11 @@
       "passed": true
     },
     {
-      "id": "DOBs5ALM1titPYxe",
-      "name": "Seize Identity",
+      "id": "hvKtmoHwekDZ5iOH",
+      "name": "Shadow Army",
       "families": [
-        "damage-condition"
+        "damage-condition",
+        "timed-condition"
       ],
       "supported": false,
       "detachedSupported": false,
@@ -2231,17 +2252,6 @@
       "passed": true
     },
     {
-      "id": "A7NXFVgENRVtYoe3",
-      "name": "Trim the Blight",
-      "families": [
-        "damage-condition",
-        "timed-condition"
-      ],
-      "supported": false,
-      "detachedSupported": false,
-      "passed": true
-    },
-    {
       "id": "XjNROFtWnwovhCsq",
       "name": "Unfolding Wind Crash",
       "families": [
@@ -2325,17 +2335,6 @@
       "passed": true
     },
     {
-      "id": "tPtTKe0X1dDwoDmQ",
-      "name": "Vibrant Vibrato",
-      "families": [
-        "damage-condition",
-        "inherited-duration"
-      ],
-      "supported": false,
-      "detachedSupported": false,
-      "passed": true
-    },
-    {
       "id": "Jmxru8zMdYMRuO5n",
       "name": "Vision of Death",
       "families": [
@@ -2362,8 +2361,8 @@
       "families": [
         "damage-condition"
       ],
-      "supported": false,
-      "detachedSupported": false,
+      "supported": true,
+      "detachedSupported": true,
       "passed": true
     },
     {
@@ -2465,8 +2464,8 @@
       "families": [
         "timed-condition"
       ],
-      "supported": false,
-      "detachedSupported": false,
+      "supported": true,
+      "detachedSupported": true,
       "passed": true
     },
     {
@@ -2500,16 +2499,6 @@
       "passed": true
     },
     {
-      "id": "m34WOIGZCEg1h76G",
-      "name": "Blanket of Stars",
-      "families": [
-        "timed-condition"
-      ],
-      "supported": false,
-      "detachedSupported": false,
-      "passed": true
-    },
-    {
       "id": "Q56HLIHVKY6bC5W3",
       "name": "Blinding Beauty",
       "families": [
@@ -2517,16 +2506,6 @@
       ],
       "supported": true,
       "detachedSupported": true,
-      "passed": true
-    },
-    {
-      "id": "NhGXgmI3AjkkwnPk",
-      "name": "Blinding Fury",
-      "families": [
-        "timed-condition"
-      ],
-      "supported": false,
-      "detachedSupported": false,
       "passed": true
     },
     {
@@ -2550,16 +2529,6 @@
       "passed": true
     },
     {
-      "id": "L13n9NKvfGLApse1",
-      "name": "Calcification",
-      "families": [
-        "timed-condition"
-      ],
-      "supported": false,
-      "detachedSupported": false,
-      "passed": true
-    },
-    {
       "id": "jJphHQlENHFlSElH",
       "name": "Captivating Adoration",
       "families": [
@@ -2572,6 +2541,16 @@
     {
       "id": "4y2DMq9DV5HvmnxC",
       "name": "Chroma Leach",
+      "families": [
+        "timed-condition"
+      ],
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "hvV6IruyW4MAr0Ub",
+      "name": "Chrysopoetic Curse",
       "families": [
         "timed-condition"
       ],
@@ -2791,16 +2770,6 @@
       "passed": true
     },
     {
-      "id": "T5Mt4jXFuh14uREv",
-      "name": "Divinity Leech",
-      "families": [
-        "timed-condition"
-      ],
-      "supported": false,
-      "detachedSupported": false,
-      "passed": true
-    },
-    {
       "id": "UKsIOWmMx4hSpafl",
       "name": "Dizzying Colors",
       "families": [
@@ -2878,8 +2847,8 @@
       "families": [
         "timed-condition"
       ],
-      "supported": false,
-      "detachedSupported": false,
+      "supported": true,
+      "detachedSupported": true,
       "passed": true
     },
     {
@@ -2888,8 +2857,19 @@
       "families": [
         "timed-condition"
       ],
-      "supported": false,
-      "detachedSupported": false,
+      "supported": true,
+      "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "ReUoodsqUYSTwSgE",
+      "name": "Fateful Condemnation",
+      "families": [
+        "timed-condition",
+        "inherited-duration"
+      ],
+      "supported": true,
+      "detachedSupported": true,
       "passed": true
     },
     {
@@ -3239,8 +3219,8 @@
       "families": [
         "timed-condition"
       ],
-      "supported": false,
-      "detachedSupported": false,
+      "supported": true,
+      "detachedSupported": true,
       "passed": true
     },
     {
@@ -3421,26 +3401,6 @@
       ],
       "supported": true,
       "detachedSupported": true,
-      "passed": true
-    },
-    {
-      "id": "kLxJx7BECVgHh2vb",
-      "name": "Temporal Ward",
-      "families": [
-        "timed-condition"
-      ],
-      "supported": false,
-      "detachedSupported": false,
-      "passed": true
-    },
-    {
-      "id": "yZpWaJzm7kUjKvlQ",
-      "name": "Temporary Possession",
-      "families": [
-        "timed-condition"
-      ],
-      "supported": false,
-      "detachedSupported": false,
       "passed": true
     },
     {
@@ -3652,6 +3612,16 @@
       ],
       "supported": true,
       "detachedSupported": true,
+      "passed": true
+    },
+    {
+      "id": "tPtTKe0X1dDwoDmQ",
+      "name": "Vibrant Vibrato",
+      "families": [
+        "inherited-duration"
+      ],
+      "supported": false,
+      "detachedSupported": false,
       "passed": true
     },
     {

@@ -1,0 +1,118 @@
+{
+  "generatedAt": "2026-10-05T12:25:27.304Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "spellshapeBatch12",
+      "passed": true,
+      "at": "2026-10-05T12:23:03.810Z",
+      "details": {
+        "spellshape12": {
+          "heraldic": {
+            "allyHealed": 6,
+            "card": true,
+            "foe": 6,
+            "targets": [
+              "Copy B",
+              "Copy A",
+              "PFTEST Corrections Linked",
+              "PFTEST Corrections Noise success token",
+              "PFTEST Corrections Noise failure token",
+              "PFTEST Corrections Noise critical token",
+              "PFTEST Corrections Secondary token",
+              "PFTEST Corrections Living override token",
+              "PFTEST Corrections Undead token",
+              "PFTEST Corrections Living blocked token",
+              "PFTEST Corrections High-level secondary",
+              "PFTEST Outcomes weak",
+              "PFTEST Outcomes immune",
+              "PFTEST Outcomes overkill",
+              "PFTEST Outcomes interrupted partial",
+              "PFTEST Outcomes weak",
+              "PFTEST Outcomes immune",
+              "PFTEST Outcomes overkill",
+              "PFTEST Ongoing expiry",
+              "PFTEST Ongoing expiry",
+              "PFTEST Ongoing Petrify target",
+              "PFTEST Corrections Caster",
+              "PFTEST Ongoing Petrify target",
+              "PFTEST Ongoing Petrify target",
+              "PFTEST Ongoing Flame target",
+              "PFTEST Ongoing Flame target",
+              "PFTEST Ongoing Flame target",
+              "PFTEST Ongoing Petrify permanent",
+              "PFTEST Ongoing Aura caster",
+              "PFTEST Ongoing Aura recipient",
+              "PFTEST Ongoing Aura caster",
+              "PFTEST Ongoing Aura recipient",
+              "PFTEST Ongoing Player save",
+              "PFTEST Ongoing Flame unconscious recipient",
+              "PFTEST Ongoing Flame dead recipient",
+              "PFTEST Ongoing Flame missing recipient",
+              "PFTEST Ongoing Tie A",
+              "PFTEST Ongoing Tie B",
+              "PFTEST Ongoing Later",
+              "PFTEST Ongoing Tie A",
+              "PFTEST Ongoing Tie B",
+              "PFTEST Ongoing Later",
+              "PFTEST Ongoing Aura caster",
+              "PFTEST Ongoing Aura recipient",
+              "PFTEST Ongoing Flame target",
+              "PFTEST P23 Affliction ss12 foe"
+            ]
+          },
+          "arrival": {
+            "card": true,
+            "type": "fire",
+            "hit": [
+              "PFTEST Corrections Noise failure token",
+              "PFTEST Corrections Noise critical token",
+              "PFTEST Corrections Undead token",
+              "PFTEST Corrections Living blocked token",
+              "PFTEST P23 Affliction ss12 caster",
+              "PFTEST P23 Affliction ss12 foe"
+            ]
+          },
+          "metamorphosis": {
+            "card": true,
+            "type": "cold",
+            "foe": 5
+          },
+          "detonation": {
+            "circle": true,
+            "type": "fire",
+            "card": true,
+            "formula": "3d6 fire"
+          },
+          "vexing": {
+            "card": true,
+            "targets": [
+              "PFTEST Corrections Player",
+              "PFTEST Corrections Linked",
+              "PFTEST Corrections Noise critical token",
+              "PFTEST Corrections Living blocked token",
+              "Forceful Hand: hand",
+              "PFTEST P23 Affliction ss12 foe"
+            ],
+            "prone": true
+          },
+          "grasping": {
+            "card": true,
+            "statistic": "fortitude"
+          },
+          "command": {
+            "degree": "criticalFailure",
+            "minion": true,
+            "note": true
+          },
+          "daunting": {
+            "frightened": 3,
+            "stupefied": 2,
+            "stupefiedAfter": false
+          }
+        }
+      }
+    }
+  ]
+}

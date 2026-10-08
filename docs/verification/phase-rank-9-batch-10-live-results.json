@@ -1,0 +1,23 @@
+{
+  "label": "rank9Batch10",
+  "passed": true,
+  "at": "2026-10-05T04:14:44.971Z",
+  "details": {
+    "batch10": {
+      "blast": {
+        "near": 52,
+        "far": 26,
+        "effect": true,
+        "aura": true,
+        "push": true,
+        "incorporeal": true
+      },
+      "adjacent": 31,
+      "end": {
+        "hp": 500,
+        "max": 500,
+        "aura": false
+      }
+    }
+  }
+}

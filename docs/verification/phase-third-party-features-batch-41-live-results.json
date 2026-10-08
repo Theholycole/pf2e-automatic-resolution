@@ -1,0 +1,67 @@
+{
+ "label": "thirdPartyFeaturesBatch41",
+ "passed": true,
+ "at": "2026-10-08T09:01:42.680Z",
+ "details": {
+  "thirdPartyFeatures41": {
+   "fickle": {
+    "said": "Fickle Fate (Rebuttal): Sure Strike (rank 1, arcane prepared) expended (rank 1). PFTEST P23 Affliction tpf41 foe: +2 status to misfortune checks, −2 to fortune checks.",
+    "rules": [
+     "2 misfortune",
+     "-2 fortune"
+    ],
+    "expended": [
+     "Sure Strike"
+    ]
+   },
+   "adaptable": {
+    "said": "Adaptable Energy (Unravel): Fireball (rank 3, arcane prepared) expended (rank 3). fire resistance 6 for PFTEST P23 Affliction tpf41 wizard, Forceful Hand: hand, Ice Guardian: ice guardian, PFTEST P23 Affliction tpf41 ally, 3 rounds.",
+    "wizard": [
+     "Adaptable Energy: fire resistance 6"
+    ],
+    "ally": [
+     "Adaptable Energy: fire resistance 6"
+    ]
+   },
+   "force": {
+    "said": "Force Disruption (Rebuttal): Force Barrage (rank 1, arcane prepared) expended (rank 1). 1d6 force (basic reflex) to ice guardian, PFTEST P23 Affliction tpf41 foe. Creature's that come in contact with objects during this movement are Off-Guard until the beginning of their turn.",
+    "card": {
+     "statistic": "reflex",
+     "targets": [
+      "Ice Guardian: ice guardian",
+      "PFTEST P23 Affliction tpf41 foe"
+     ],
+     "damage": [
+      "1d6 force"
+     ]
+    }
+   },
+   "immortality": {
+    "said": "Immortality Clause (Unravel): Fear (rank 10, arcane prepared) expended (rank 10). Effect: Immortality Clause for 1 minute.",
+    "effect": "Effect: Immortality Clause",
+    "regen": [
+     "force",
+     "spirit"
+    ]
+   },
+   "incarnation": {
+    "said": "Impromptu Incarnation (Rebuttal): Summon Animal (rank 1, arcane prepared) expended (rank 1). Swamp Beetle summoned as an incarnate, two sizes larger, reach +10, Immobilized; departs at the end of your next turn. Your summon must target the triggering enemy with any hostile actions and it appears adjacent to you..",
+    "size": "2x2",
+    "baseSize": "sm",
+    "actorSize": "lg",
+    "immobilized": true
+   },
+   "jump": {
+    "said": "Dimensional Jump (Rebuttal): Sure Strike (rank 1, arcane prepared) expended (rank 1). teleport up to 10 feet (move the token). You create a portal at the end of your Step, teleporting you in the same direction of your Step."
+   },
+   "smite": {
+    "said": "Channel Smite+ (2 actions): a rank-2 slot as Harm (divine spontaneous) expended; the next melee Strike deals 2d8 as spirit.",
+    "slot2": 0,
+    "outcome": "criticalSuccess",
+    "formula": "2d8 spirit",
+    "total": 13,
+    "lost": 13
+   }
+  }
+ }
+}

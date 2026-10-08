@@ -1,41 +1,41 @@
 # Spell enablement report
 
-Snapshot: 2026-10-03T21:23:42.710Z. PF2e 8.5.0 installed fixtures, evaluated against the current runtime route priority.
+Snapshot: 2026-10-07T00:02:30.231Z. PF2e 8.5.0 installed fixtures, evaluated against the current runtime route priority.
 
 **Enabled means the module offers an automation path, not that every rule, rank or variant is fully verified.** Native Effect routes can explicitly leave mechanics to the user. The census does not execute live casts.
 
 | Catalog | Total | Enabled route | No enabled route |
 | --- | --- | --- | --- |
-| Non-ritual spells (including focus spells and cantrips) | 1827 | 1677 | 150 |
-| Accepted milestone (adds 43 qualifying rituals) | 1870 | 1720 | 150 |
-| All installed documents (includes excluded/skipped rituals) | 1994 | 1787 | 207 |
+| Non-ritual spells (including focus spells and cantrips) | 1827 | 1827 | 0 |
+| Accepted milestone (adds 43 qualifying rituals) | 1870 | 1870 | 0 |
+| All installed documents (includes excluded/skipped rituals) | 1994 | 1937 | 57 |
 
-**Note only (counted apart):** 356 non-ritual spells have no mechanical rule the module could apply; casting one gives a rule-less note Effect with the spell's rules for its duration (on the caster, with a line to mark the area, for a spell placed in the environment). All 356 are counted as enabled (resolved; user decisions: cantrips and rank 1 on 2026-09-29, every rank on 2026-09-30), and so are the 78 note-only rituals (user decision 2026-10-03).
+**Note only (counted apart):** 358 non-ritual spells have no mechanical rule the module could apply; casting one gives a rule-less note Effect with the spell's rules for its duration (on the caster, with a line to mark the area, for a spell placed in the environment). All 358 are counted as enabled (resolved; user decisions: cantrips and rank 1 on 2026-09-29, every rank on 2026-09-30), and so are the 78 note-only rituals (user decision 2026-10-03).
 
-**Effect + note (counted apart):** 4 non-ritual spells link a PF2e Effect the module can't prove covers the text (or can't tell who receives it). Casting one applies PF2e's Effect as PF2e defines it, plus a note Effect with the spell's text; they are not in the enabled counts either.
+**Effect + note (counted apart):** 0 non-ritual spells link a PF2e Effect the module can't prove covers the text (or can't tell who receives it). Casting one applies PF2e's Effect as PF2e defines it, plus a note Effect with the spell's text; they are not in the enabled counts either.
 
 ## Enabled route breakdown
 
 | Route | Distinct spells |
 | --- | --- |
-| Shared save resolution | 567 |
-| Dedicated ongoing workflow | 141 |
-| Native Effect application | 566 |
+| Shared save resolution | 599 |
+| Dedicated ongoing workflow | 152 |
+| Native Effect application | 671 |
 | Immediate workflow (Phase 4) | 3 |
 | Strike spell with caster Effects | 3 |
 | Form workflow (Phase 5) | 3 |
 | Affliction-care workflow | 35 |
 | Messaging workflow | 3 |
 
-The 566 native Effect routes comprise **513 without compiler-listed gaps and 53 guided/partial routes**. Neither category is a count of fully verified spells. Specialized workflows can override generic Effect plans, so adding compiler kinds to workflow counts would double-count some spells. 110 of 167 installed rituals currently have a module resolution route; 43 rituals belong to the accepted milestone.
+The 671 native Effect routes comprise **618 without compiler-listed gaps and 53 guided/partial routes**. Neither category is a count of fully verified spells. Specialized workflows can override generic Effect plans, so adding compiler kinds to workflow counts would double-count some spells. 110 of 167 installed rituals currently have a module resolution route; 43 rituals belong to the accepted milestone.
 
 ## Phase 2 and Phase 3 interpretation
 
 The phases specify capabilities that can apply to the same spell. Phase 2 covers outcome application; Phase 3 supplies ongoing management to save outcomes and native Effects as well as dedicated workflows. The [provisional grouped phase worklist](phase-spell-batches/README.md) records candidate memberships for planning. Its phase groups overlap and are not exclusive completion denominators.
 
-- **567 executable shared save plans**: 56 basic damage-only saves and 511 degree-outcome saves (including basic saves with riders). These use the shared outcome and applicable ongoing machinery.
-- **141 dedicated ongoing workflows**: Acid Storm, Ancestral Winds, Animated Assault, Animus Mine, Antlion Trap, Aqueous Orb, Ash Cloud, Asterism, Astral Rain, Awaken Entropy, Bandit's Doom, Bane, Blade Barrier, Bless, Bloody Tendrils, Bralani Referendum, Bramble Bush, Breath of Drought, Bridge of Vines, Captivating Adoration, Carrion Mire, Cave Fangs, Cinder Swarm, Circle of Weakness, Clinging Ice, Cloak of Light, Confusing Colors, Conjured Clockwork, Consuming Darkness, Corpse Bloom, Corrosive Muck, Crescent Scepter, Crown of Prophets, Cyclone Rondo, Devouring Void, Diamond Dust, Discomfiting Whispers, Divine Aura, Door to Beyond, Draconic Barrage, Earth's Bile, Entangling Flora, Entrancing Eyes, Ephemeral Hazards, Etheric Shards, Evil Eye, Fallen Soldier's Lament, Fallow Field, Fear, Fiendish Rift, Flame Vortex, Floating Flame, Forbidden Thought, Freezing Rain, Frozen Fog, Gasping Marsh, Gift of the Anemos, Glass Shield, Gleaming Pet, Glimmer of Charm, Gluttonous Growth, Grasping Earth, Gust of Wind, Hallowed Ground, Haunting Spirit, Horizon's Veil, Howling Blizzard, Hungry Depths, Hypnotize, Incendiary Fog, Instant Minefield, Interstellar Void, Invoke Spirits, Iron Rain, Life's Flowing River, Living Terrain, Luring Wail, Malediction, Metal Reverberation, Mind Games, Mirror Malefactors, Morass of Ages, Murmuration, Mushroom Patch, Needle of Vengeance, Noxious Vapors, Nymph's Grace, Oneiric Mire, Overflowing Sorrow, Pact Broker, Paralyze, Personal Runewell, Petal Storm, Phantom Orchestra, Pollen Pods, Pressure Zone, Purifying Veil, Pyrotechnics, Radiant Globe, Ranger's Bramble, Rime Slick, Ring of Truth, Rose's Thorns, Rouse Skeletons, Rust Cloud, Sanguine Mist, Sawtooth Terrain, Scatter Scree, Scouring Sand, Sea of Thought, Sepulchral Mask, Shattering Gem, Shifting Sand, Shroud of Flame, Slither, Songbird's Call, Stagnate Time, Stifling Stillness, Sting of the Sea, Stinking Cloud, Strange Geometry, Suspended Retribution, Swamp of Sloth, Swampcall, The Queen's Rainbow, Tomorrow's Dawn, Toxic Cloud, Trickster's Mirrors, Unbounded Sphere, Undertow, Unravel Existence, Unseasonable Squall, Veil of Spirits, Vibrant Pattern, Visions of Danger, Voracious Gestalt, Wall of Radiance, Wall of Wind, Whispers of a Dead Goddess, Wildfire, Zombie Horde. Together with shared saves, these are **708 distinct save/ongoing spells with enabled routes**.
-- **566 additional native Effect routes** use shared application and lifecycle infrastructure, including partial mechanics belonging to later phases. These three route groups contain **1274 distinct enabled spells**, a runtime route count rather than a Phase 2–3 completion count.
+- **599 executable shared save plans**: 57 basic damage-only saves and 542 degree-outcome saves (including basic saves with riders). These use the shared outcome and applicable ongoing machinery.
+- **152 dedicated ongoing workflows**: Acid Storm, Ancestral Winds, Animated Assault, Animus Mine, Antlion Trap, Aqueous Orb, Ash Cloud, Asterism, Astral Rain, Awaken Entropy, Bandit's Doom, Bane, Blade Barrier, Bless, Bloody Tendrils, Bralani Referendum, Bramble Bush, Breath of Drought, Bridge of Vines, Captivating Adoration, Carrion Mire, Cave Fangs, Cinder Swarm, Circle of Weakness, Clinging Ice, Cloak of Light, Confusing Colors, Conjured Clockwork, Consuming Darkness, Corpse Bloom, Corrosive Muck, Crescent Scepter, Crown of Prophets, Cyclone Rondo, Darklight, Devouring Void, Diamond Dust, Discomfiting Whispers, Divine Aura, Door to Beyond, Draconic Barrage, Dread Mosquito Storm, Earth's Bile, Entangling Flora, Entrancing Eyes, Ephemeral Hazards, Etheric Shards, Evil Eye, Fallen Soldier's Lament, Fallow Field, Fear, Fiendish Rift, Flame Vortex, Floating Flame, Forbidden Thought, Freezing Rain, Frozen Fog, Gasping Marsh, Gift of the Anemos, Glass Shield, Gleaming Pet, Glimmer of Charm, Gluttonous Growth, Grasping Earth, Gust of Wind, Hallowed Ground, Haunting Spirit, Horizon's Veil, Howling Blizzard, Hungry Depths, Hypnotize, Incendiary Fog, Indolent Haze, Instant Minefield, Interstellar Void, Invoke Spirits, Iron Rain, Life's Flowing River, Living Terrain, Luring Wail, Malediction, Metal Reverberation, Mind Games, Mirror Malefactors, Morass of Ages, Murmuration, Mushroom Patch, Needle of Vengeance, Noxious Vapors, Nymph's Grace, Oneiric Mire, Overflowing Sorrow, Pact Broker, Paralyze, Personal Runewell, Petal Storm, Phantom Orchestra, Pollen Pods, Pressure Zone, Purifying Veil, Pyrotechnics, Radiant Globe, Ranger's Bramble, Rime Slick, Ring of Truth, Rose's Thorns, Rouse Skeletons, Rust Cloud, Sanguine Mist, Sawtooth Terrain, Scatter Scree, Scouring Sand, Sea of Thought, Sepulchral Mask, Shadow Army, Shattering Gem, Shifting Sand, Shroud of Flame, Slither, Songbird's Call, Stagnate Time, Stars of Another Sky, Stifling Stillness, Sting of the Sea, Stinking Cloud, Strange Geometry, Suspended Retribution, Swamp of Sloth, Swampcall, Tear the Veil, The Queen's Rainbow, Tomorrow's Dawn, Toxic Cloud, Trickster's Mirrors, Unbounded Sphere, Unbreaking Wave Barrier, Undertow, Unfathomable Song, Unravel Existence, Unseasonable Squall, Vacuum, Veil of Spirits, Vibrant Pattern, Visions of Danger, Voracious Gestalt, Wall of Radiance, Wall of Wind, Whirlpool, Whirlwind, Whispers of a Dead Goddess, Wildfire, Zombie Horde. Together with shared saves, these are **751 distinct save/ongoing spells with enabled routes**.
+- **671 additional native Effect routes** use shared application and lifecycle infrastructure, including partial mechanics belonging to later phases. These three route groups contain **1422 distinct enabled spells**, a runtime route count rather than a Phase 2–3 completion count.
 - The remaining enabled routes comprise 3 Phase 4 immediate workflows and 3 Phase 5 form workflows.
 
 The older condition/ongoing ledger is a structural candidate set. It mixes phases and does not cover every specialized or native Effect route. Its “not-executable-save” label does **not** mean no module automation: native Effect routes use a different gate. Do not use that ledger as an exclusive Phase 2–3 denominator or an unsupported-spell total.
@@ -72,10 +72,12 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Airlift | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Alarm | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Albatross Curse | Native Effect application | No compiler-listed gaps; not complete verification |
+| All is One, One is All | Native Effect application | No compiler-listed gaps; not complete verification |
 | All-Encompassing Hunger | Shared save resolution | Workflow enabled; see verification scope |
 | Allegro | Native Effect application | No compiler-listed gaps; not complete verification |
 | Allfood | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Alter Reality | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Amalgamizing Leap | Shared save resolution | Workflow enabled; see verification scope |
 | Amity Cycle | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Anathematic Reprisal | Shared save resolution | Workflow enabled; see verification scope |
 | Ancestral Defense | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
@@ -112,6 +114,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Aqueous Blast | Shared save resolution | Workflow enabled; see verification scope |
 | Aqueous Orb | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Arcane Countermeasure | Native Effect application | No compiler-listed gaps; not complete verification |
+| Arcane Explosion | Shared save resolution | Workflow enabled; see verification scope |
 | Arcane Weaving | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Arctic Rift | Shared save resolution | Workflow enabled; see verification scope |
 | Armor of Bones | Native Effect application | No compiler-listed gaps; not complete verification |
@@ -127,12 +130,15 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Ashen Wind | Shared save resolution | Workflow enabled; see verification scope |
 | Aspirational State | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Asterism | Dedicated ongoing workflow | Workflow enabled; see verification scope |
+| Astral Labyrinth | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Astral Projection | Native Effect application | No compiler-listed gaps; not complete verification |
 | Astral Rain | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Athletic Rush | Native Effect application | No compiler-listed gaps; not complete verification |
 | Attacked from Within | Shared save resolution | Workflow enabled; see verification scope |
 | Augmented Body | Native Effect application | Partial native Effect automation |
 | Augury | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Aura of the Unremarkable | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Avatar | Native Effect application | No compiler-listed gaps; not complete verification |
 | Avenging Wildwood | Shared save resolution | Workflow enabled; see verification scope |
 | Awaken Animal | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Awaken Curse | Native Effect application | No compiler-listed gaps; not complete verification |
@@ -149,9 +155,11 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Befitting Attire | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Befuddle | Shared save resolution | Workflow enabled; see verification scope |
 | Begone | Shared save resolution | Workflow enabled; see verification scope |
+| Beheading Buzz Saw | Shared save resolution | Workflow enabled; see verification scope |
 | Behold the Weave | Shared save resolution | Workflow enabled; see verification scope |
 | Belittling Boast | Native Effect application | No compiler-listed gaps; not complete verification |
 | Benediction | Native Effect application | No compiler-listed gaps; not complete verification |
+| Beseech Arcanotheign | Native Effect application | No compiler-listed gaps; not complete verification |
 | Beseech the Sphinx | Native Effect application | No compiler-listed gaps; not complete verification |
 | Bestial Curse | Shared save resolution | Workflow enabled; see verification scope |
 | Bilocation | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
@@ -164,6 +172,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Black Tentacles | Native Effect application | No compiler-listed gaps; not complete verification |
 | Blackfinger's Blades | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Blade Barrier | Dedicated ongoing workflow | Workflow enabled; see verification scope |
+| Blanket of Stars | Native Effect application | No compiler-listed gaps; not complete verification |
 | Blast of the Bellows | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Blastback | Shared save resolution | Workflow enabled; see verification scope |
 | Blazing Armory | Native Effect application | No compiler-listed gaps; not complete verification |
@@ -172,6 +181,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Blazing Dive | Shared save resolution | Workflow enabled; see verification scope |
 | Blazing Fissure | Shared save resolution | Workflow enabled; see verification scope |
 | Bless | Dedicated ongoing workflow | Workflow enabled; see verification scope |
+| Blessed Boundary | Native Effect application | No compiler-listed gaps; not complete verification |
 | Blessing of Defiance | Native Effect application | No compiler-listed gaps; not complete verification |
 | Blessing of Vigor | Native Effect application | No compiler-listed gaps; not complete verification |
 | Blightburn Blast | Shared save resolution | Workflow enabled; see verification scope |
@@ -179,6 +189,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Blinding Beauty | Shared save resolution | Workflow enabled; see verification scope |
 | Blinding Bottle | Shared save resolution | Workflow enabled; see verification scope |
 | Blinding Foam | Shared save resolution | Workflow enabled; see verification scope |
+| Blinding Fury | Native Effect application | No compiler-listed gaps; not complete verification |
 | Blindness | Shared save resolution | Workflow enabled; see verification scope |
 | Blink Charge | Native Effect application | No compiler-listed gaps; not complete verification |
 | Blister | Shared save resolution | Workflow enabled; see verification scope |
@@ -214,7 +225,9 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Boots on the Ground | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Bottle the Storm | Native Effect application | No compiler-listed gaps; not complete verification |
 | Bottomless Stomach | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Bound in Death | Native Effect application | No compiler-listed gaps; not complete verification |
 | Bountiful Oasis | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Bounty of the Sky | Native Effect application | No compiler-listed gaps; not complete verification |
 | Bracing Tendrils | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Brain Drain | Shared save resolution | Workflow enabled; see verification scope |
 | Bralani Referendum | Dedicated ongoing workflow | Workflow enabled; see verification scope |
@@ -232,6 +245,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Bullhorn | Native Effect application | Partial native Effect automation |
 | Buoyant Bubbles | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Burglar's Blind | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Burning Blossoms | Native Effect application | No compiler-listed gaps; not complete verification |
 | Burning Trail | Native Effect application | No compiler-listed gaps; not complete verification |
 | Burrow Ward | Native Effect application | No compiler-listed gaps; not complete verification |
 | Bursting Bloom | Shared save resolution | Workflow enabled; see verification scope |
@@ -239,8 +253,11 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Buzzing Bites | Shared save resolution | Workflow enabled; see verification scope |
 | Buzzing Servants | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Cackle | Native Effect application | No compiler-listed gaps; not complete verification |
+| Calcification | Native Effect application | No compiler-listed gaps; not complete verification |
 | Calcium Rain | Shared save resolution | Workflow enabled; see verification scope |
+| Call Fluxwraith | Native Effect application | No compiler-listed gaps; not complete verification |
 | Call of the Grave | Shared save resolution | Workflow enabled; see verification scope |
+| Call of the Quenching | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Call Spirit | Native Effect application | No compiler-listed gaps; not complete verification |
 | Call The Blood | Shared save resolution | Workflow enabled; see verification scope |
 | Call the Ten | Shared save resolution | Workflow enabled; see verification scope |
@@ -255,6 +272,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Carryall | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Cast into Time | Shared save resolution | Workflow enabled; see verification scope |
 | Caster's Imposition | Shared save resolution | Workflow enabled; see verification scope |
+| Cataclysm | Native Effect application | No compiler-listed gaps; not complete verification |
 | Catch Your Name | Shared save resolution | Workflow enabled; see verification scope |
 | Caustic Blast | Shared save resolution | Workflow enabled; see verification scope |
 | Cauterize Wounds | Native Effect application | No compiler-listed gaps; not complete verification |
@@ -263,7 +281,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Celestial Brand | Native Effect application | No compiler-listed gaps; not complete verification |
 | Censure Falsehoods | Shared save resolution | Workflow enabled; see verification scope |
 | Chain Lightning | Shared save resolution | Workflow enabled; see verification scope |
-| Chameleon Coat | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Chameleon Coat | Native Effect application | No compiler-listed gaps; not complete verification |
 | Champion's Sacrifice | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Channel Arrogance | Shared save resolution | Workflow enabled; see verification scope |
 | Charged Javelin | Shared save resolution | Workflow enabled; see verification scope |
@@ -274,12 +292,13 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Chastising Retort | Shared save resolution | Workflow enabled; see verification scope |
 | Chilling Darkness | Shared save resolution | Workflow enabled; see verification scope |
 | Chilling Spray | Shared save resolution | Workflow enabled; see verification scope |
-| Chosen Gravity | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Chosen Gravity | Native Effect application | No compiler-listed gaps; not complete verification |
 | Chroma Leach | Shared save resolution | Workflow enabled; see verification scope |
 | Chromatic Armor | Native Effect application | No compiler-listed gaps; not complete verification |
 | Chromatic Image | Native Effect application | No compiler-listed gaps; not complete verification |
 | Chromatic Ray | Native Effect application | No compiler-listed gaps; not complete verification |
 | Chromatic Wall | Native Effect application | No compiler-listed gaps; not complete verification |
+| Chrysopoetic Curse | Shared save resolution | Workflow enabled; see verification scope |
 | Chthonian Wrath | Shared save resolution | Workflow enabled; see verification scope |
 | Cinder Gaze | Native Effect application | No compiler-listed gaps; not complete verification |
 | Cinder Scribe | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
@@ -312,7 +331,9 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Clownish Curse | Shared save resolution | Workflow enabled; see verification scope |
 | Coiling Dance | Native Effect application | No compiler-listed gaps; not complete verification |
 | Collective Memories | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Collective Transposition | Shared save resolution | Workflow enabled; see verification scope |
 | Combustion | Shared save resolution | Workflow enabled; see verification scope |
+| Comet Charge | Native Effect application | No compiler-listed gaps; not complete verification |
 | Command | Shared save resolution | Workflow enabled; see verification scope |
 | Commanding Lash | Shared save resolution | Workflow enabled; see verification scope |
 | Commune with Corazal | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
@@ -334,6 +355,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Conjured Conveyance | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Conjurer's Countermeasure | Native Effect application | Partial native Effect automation |
 | Connective Current | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Conquering Soldiers | Native Effect application | No compiler-listed gaps; not complete verification |
 | Consecrate | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Consecrate Flesh | Native Effect application | No compiler-listed gaps; not complete verification |
 | Construct Mindscape | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
@@ -341,6 +363,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Contagious Idea | Native Effect application | No compiler-listed gaps; not complete verification |
 | Containment | Shared save resolution | Workflow enabled; see verification scope |
 | Contingency | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Control Sand | Native Effect application | No compiler-listed gaps; not complete verification |
 | Control Water | Shared save resolution | Workflow enabled; see verification scope |
 | Coral Eruption | Shared save resolution | Workflow enabled; see verification scope |
 | Coral Scourge | Shared save resolution | Workflow enabled; see verification scope |
@@ -348,6 +371,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Cornucopia | Native Effect application | No compiler-listed gaps; not complete verification |
 | Corpse Bloom | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Corpse Communion | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Corrosive Body | Native Effect application | No compiler-listed gaps; not complete verification |
 | Corrosive Muck | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Cosmic Form | Native Effect application | Partial native Effect automation |
 | Counter Performance | Native Effect application | No compiler-listed gaps; not complete verification |
@@ -383,6 +407,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Curse of Lost Time | Shared save resolution | Workflow enabled; see verification scope |
 | Curse of Recoil | Shared save resolution | Workflow enabled; see verification scope |
 | Curse of the Spirit Orchestra | Shared save resolution | Workflow enabled; see verification scope |
+| Cursed Metamorphosis | Shared save resolution | Workflow enabled; see verification scope |
 | Cutting Eye | Native Effect application | No compiler-listed gaps; not complete verification |
 | Cutting Insult | Shared save resolution | Workflow enabled; see verification scope |
 | Cycle of Retribution | Shared save resolution | Workflow enabled; see verification scope |
@@ -390,10 +415,12 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Daemon Form | Native Effect application | Partial native Effect automation |
 | Dance of Darkness | Native Effect application | No compiler-listed gaps; not complete verification |
 | Dancing Blade | Shared save resolution | Workflow enabled; see verification scope |
+| Dancing Fountain | Native Effect application | No compiler-listed gaps; not complete verification |
 | Dancing Shield | Native Effect application | No compiler-listed gaps; not complete verification |
 | Darkened Eyes | Shared save resolution | Workflow enabled; see verification scope |
 | Darkened Forest Form | Native Effect application | No compiler-listed gaps; not complete verification |
 | Darkened Sight | Native Effect application | No compiler-listed gaps; not complete verification |
+| Darklight | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Darkness | Native Effect application | No compiler-listed gaps; not complete verification |
 | Darkvision | Native Effect application | No compiler-listed gaps; not complete verification |
 | Dawnflower's Light | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
@@ -418,9 +445,11 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Defensive Prescience | Shared save resolution | Workflow enabled; see verification scope |
 | Defy the Gods | Shared save resolution | Workflow enabled; see verification scope |
 | Dehydrate | Shared save resolution | Workflow enabled; see verification scope |
+| Deity's Strike | Native Effect application | No compiler-listed gaps; not complete verification |
 | Déjà Vu | Shared save resolution | Workflow enabled; see verification scope |
 | Delay Affliction | Affliction-care workflow | Workflow enabled; see verification scope |
 | Delay Consequence | Native Effect application | No compiler-listed gaps; not complete verification |
+| Deluge | Shared save resolution | Workflow enabled; see verification scope |
 | Delusional Pride | Shared save resolution | Workflow enabled; see verification scope |
 | Demon Form | Native Effect application | Partial native Effect automation |
 | Demonic Pact | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
@@ -452,7 +481,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Dirge of Doom | Native Effect application | No compiler-listed gaps; not complete verification |
 | Dirge of Remembrance | Shared save resolution | Workflow enabled; see verification scope |
 | Disappearance | Native Effect application | No compiler-listed gaps; not complete verification |
-| Discern Lies | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Discern Lies | Native Effect application | No compiler-listed gaps; not complete verification |
 | Discern Secrets | Native Effect application | Partial native Effect automation |
 | Discomfiting Whispers | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Disguise Magic | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
@@ -483,15 +512,18 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Divine Vessel | Native Effect application | Partial native Effect automation |
 | Divine Wrath | Shared save resolution | Workflow enabled; see verification scope |
 | Diviner's Sight | Native Effect application | No compiler-listed gaps; not complete verification |
+| Divinity Leech | Native Effect application | No compiler-listed gaps; not complete verification |
 | Dizzying Colors | Shared save resolution | Workflow enabled; see verification scope |
 | Dome of Tranquility | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Dominate | Shared save resolution | Workflow enabled; see verification scope |
 | Domora's Defense | Native Effect application | No compiler-listed gaps; not complete verification |
+| Doom Mark | Native Effect application | No compiler-listed gaps; not complete verification |
 | Door to Beyond | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Downpour | Native Effect application | No compiler-listed gaps; not complete verification |
 | Draconic Barrage | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Dragon Breath | Shared save resolution | Workflow enabled; see verification scope |
 | Dragon Form | Form workflow (Phase 5) | Workflow enabled; see verification scope |
+| Dragon Turret | Native Effect application | No compiler-listed gaps; not complete verification |
 | Dragon Wings | Native Effect application | No compiler-listed gaps; not complete verification |
 | Drain Life | Shared save resolution | Workflow enabled; see verification scope |
 | Drain Planar Connection | Native Effect application | No compiler-listed gaps; not complete verification |
@@ -499,18 +531,23 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Draw Ire | Shared save resolution | Workflow enabled; see verification scope |
 | Draw Moisture | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Draw the Lightning | Shared save resolution | Workflow enabled; see verification scope |
+| Dread Mosquito Storm | Dedicated ongoing workflow | Workflow enabled; see verification scope |
+| Dread Secret | Shared save resolution | Workflow enabled; see verification scope |
 | Dream Council | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Dream Message | Messaging workflow | Workflow enabled; see verification scope |
 | Dreamer's Call | Shared save resolution | Workflow enabled; see verification scope |
 | Dreaming Potential | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Drop Dead | Native Effect application | No compiler-listed gaps; not complete verification |
 | Dull Ambition | Shared save resolution | Workflow enabled; see verification scope |
+| Duplicate Foe | Shared save resolution | Workflow enabled; see verification scope |
 | Dust Storm | Native Effect application | No compiler-listed gaps; not complete verification |
 | Dutiful Challenge | Native Effect application | No compiler-listed gaps; not complete verification |
 | Eagle's Cry | Shared save resolution | Workflow enabled; see verification scope |
+| Earth and Sky | Shared save resolution | Workflow enabled; see verification scope |
 | Earth's Bile | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Earthbind | Shared save resolution | Workflow enabled; see verification scope |
 | Earthbreaker Stride | Native Effect application | Partial native Effect automation |
+| Earthquake | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Earthworks | Native Effect application | No compiler-listed gaps; not complete verification |
 | Eat Fire | Native Effect application | No compiler-listed gaps; not complete verification |
 | Echo Jump | Shared save resolution | Workflow enabled; see verification scope |
@@ -529,11 +566,12 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Elemental Betrayal | Native Effect application | No compiler-listed gaps; not complete verification |
 | Elemental Blast | Shared save resolution | Workflow enabled; see verification scope |
 | Elemental Breath | Shared save resolution | Workflow enabled; see verification scope |
+| Elemental Confluence | Native Effect application | No compiler-listed gaps; not complete verification |
 | Elemental Counter | Affliction-care workflow | Workflow enabled; see verification scope |
 | Elemental Form | Native Effect application | Partial native Effect automation |
 | Elemental Gift | Native Effect application | Partial native Effect automation |
 | Elemental Motion | Native Effect application | No compiler-listed gaps; not complete verification |
-| Elemental Sense | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Elemental Sense | Native Effect application | No compiler-listed gaps; not complete verification |
 | Elemental Sentinel | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Elemental Sheath | Native Effect application | No compiler-listed gaps; not complete verification |
 | Elemental Tempest | Native Effect application | No compiler-listed gaps; not complete verification |
@@ -557,7 +595,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Enervation | Shared save resolution | Workflow enabled; see verification scope |
 | Enfeeble | Shared save resolution | Workflow enabled; see verification scope |
 | Engrave Memory | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
-| Enhance Senses | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Enhance Senses | Native Effect application | No compiler-listed gaps; not complete verification |
 | Enhance Victuals | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Enlarge | Native Effect application | No compiler-listed gaps; not complete verification |
 | Enlarge Companion | Native Effect application | No compiler-listed gaps; not complete verification |
@@ -592,6 +630,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Exploding Earth | Shared save resolution | Workflow enabled; see verification scope |
 | Explosive Barrage | Shared save resolution | Workflow enabled; see verification scope |
 | Explosive Dust | Native Effect application | No compiler-listed gaps; not complete verification |
+| Expunge Blood | Shared save resolution | Workflow enabled; see verification scope |
 | Extend Blood Magic | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Extend Boost | Native Effect application | No compiler-listed gaps; not complete verification |
 | Extend Spell | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
@@ -599,11 +638,14 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Extract Poison | Native Effect application | No compiler-listed gaps; not complete verification |
 | Extradimensional Cover | Native Effect application | No compiler-listed gaps; not complete verification |
 | Eyes of the Dead | Native Effect application | No compiler-listed gaps; not complete verification |
+| Fabricated Truth | Shared save resolution | Workflow enabled; see verification scope |
 | Face in the Crowd | Native Effect application | Partial native Effect automation |
 | Fact Check | Native Effect application | No compiler-listed gaps; not complete verification |
 | Faerie Dust | Shared save resolution | Workflow enabled; see verification scope |
 | Faerie Fire | Native Effect application | No compiler-listed gaps; not complete verification |
 | Fallen Soldier's Lament | Dedicated ongoing workflow | Workflow enabled; see verification scope |
+| Falling Sky | Shared save resolution | Workflow enabled; see verification scope |
+| Falling Stars | Native Effect application | No compiler-listed gaps; not complete verification |
 | Fallow Field | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | False Nature | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | False Vision | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
@@ -622,13 +664,14 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Fate's Travels | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Fated Confrontation | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Fated Healing | Native Effect application | No compiler-listed gaps; not complete verification |
+| Fateful Condemnation | Shared save resolution | Workflow enabled; see verification scope |
 | Favorable Review | Shared save resolution | Workflow enabled; see verification scope |
 | Fear | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Fear the Sun | Shared save resolution | Workflow enabled; see verification scope |
 | Fearful Feast | Shared save resolution | Workflow enabled; see verification scope |
 | Feast of Ashes | Shared save resolution | Workflow enabled; see verification scope |
 | Feast of Supplication | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
-| Feet to Fins | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Feet to Fins | Native Effect application | No compiler-listed gaps; not complete verification |
 | Feral Shades | Shared save resolution | Workflow enabled; see verification scope |
 | Ferrous Form | Native Effect application | Partial native Effect automation |
 | Fetch | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
@@ -642,8 +685,10 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Fiery Body | Native Effect application | Partial native Effect automation |
 | Figment | Native Effect application | No compiler-listed gaps; not complete verification |
 | Filter Air | Native Effect application | No compiler-listed gaps; not complete verification |
+| Final Fate of the Locust Host | Native Effect application | No compiler-listed gaps; not complete verification |
 | Final Sacrifice | Shared save resolution | Workflow enabled; see verification scope |
 | Fire Ray | Shared save resolution | Workflow enabled; see verification scope |
+| Fire Seeds | Native Effect application | No compiler-listed gaps; not complete verification |
 | Fire Shield | Native Effect application | No compiler-listed gaps; not complete verification |
 | Fire's Pathway | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Fireball | Shared save resolution | Workflow enabled; see verification scope |
@@ -661,6 +706,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Flashy Disappearance | Native Effect application | No compiler-listed gaps; not complete verification |
 | Fleet Step | Native Effect application | No compiler-listed gaps; not complete verification |
 | Flense | Shared save resolution | Workflow enabled; see verification scope |
+| Flesh Tsunami | Native Effect application | No compiler-listed gaps; not complete verification |
 | Flicker | Native Effect application | Partial native Effect automation |
 | Floating Flame | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Floating Harness | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
@@ -686,6 +732,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Forceful Hand | Native Effect application | No compiler-listed gaps; not complete verification |
 | Foresee the Path | Native Effect application | No compiler-listed gaps; not complete verification |
 | Foresight | Native Effect application | Partial native Effect automation |
+| Forest of Gates | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Forge | Shared save resolution | Workflow enabled; see verification scope |
 | Forgotten Lines | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Form of the Sandpoint Devil | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
@@ -718,6 +765,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Garden of Death | Native Effect application | No compiler-listed gaps; not complete verification |
 | Garden of Healing | Native Effect application | No compiler-listed gaps; not complete verification |
 | Garden of Stone | Shared save resolution | Workflow enabled; see verification scope |
+| Garden of the Green Man's Growth | Native Effect application | No compiler-listed gaps; not complete verification |
 | Gasping Marsh | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Gate | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Gathering Call | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
@@ -764,6 +812,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Gravity Wave | Shared save resolution | Workflow enabled; see verification scope |
 | Gravity Weapon | Native Effect application | No compiler-listed gaps; not complete verification |
 | Gravity Well | Shared save resolution | Workflow enabled; see verification scope |
+| Gray Shadow | Native Effect application | No compiler-listed gaps; not complete verification |
 | Grease | Shared save resolution | Workflow enabled; see verification scope |
 | Grim Tendrils | Shared save resolution | Workflow enabled; see verification scope |
 | Grisly Growths | Shared save resolution | Workflow enabled; see verification scope |
@@ -773,6 +822,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Guided Introspection | Native Effect application | Partial native Effect automation |
 | Guiding Star | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Gust of Wind | Dedicated ongoing workflow | Workflow enabled; see verification scope |
+| Hag's Fruit | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Halcyon Infusion | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Halcyon Mists | Native Effect application | No compiler-listed gaps; not complete verification |
 | Hallowed Ground | Dedicated ongoing workflow | Workflow enabled; see verification scope |
@@ -792,8 +842,10 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Healing Well | Native Effect application | No compiler-listed gaps; not complete verification |
 | Heart's Desire | Shared save resolution | Workflow enabled; see verification scope |
 | Heart's Hook | Shared save resolution | Workflow enabled; see verification scope |
+| Heartbolt | Native Effect application | No compiler-listed gaps; not complete verification |
 | Heat Metal | Shared save resolution | Workflow enabled; see verification scope |
 | Heatvision | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Heaving Earth | Shared save resolution | Workflow enabled; see verification scope |
 | Hedge Prison | Shared save resolution | Workflow enabled; see verification scope |
 | Heinous Future | Shared save resolution | Workflow enabled; see verification scope |
 | Hellfire Plume | Shared save resolution | Workflow enabled; see verification scope |
@@ -810,6 +862,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Hollow Heart | Shared save resolution | Workflow enabled; see verification scope |
 | Hologram Cage | Native Effect application | No compiler-listed gaps; not complete verification |
 | Holy Cascade | Shared save resolution | Workflow enabled; see verification scope |
+| Holy Host | Native Effect application | No compiler-listed gaps; not complete verification |
 | Holy Light | Shared save resolution | Workflow enabled; see verification scope |
 | Home Among Mulberry Leaves | Shared save resolution | Workflow enabled; see verification scope |
 | Honeyed Words | Native Effect application | Partial native Effect automation |
@@ -849,6 +902,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Imaginary Weapon | Shared save resolution | Workflow enabled; see verification scope |
 | Imitate Fauna | Native Effect application | No compiler-listed gaps; not complete verification |
 | Imp Sting | Shared save resolution | Workflow enabled; see verification scope |
+| Impaling Briars | Native Effect application | No compiler-listed gaps; not complete verification |
 | Impaling Spike | Shared save resolution | Workflow enabled; see verification scope |
 | Impart Empathy | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Impeccable Flow | Native Effect application | No compiler-listed gaps; not complete verification |
@@ -859,14 +913,21 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Imprinting Hand | Shared save resolution | Workflow enabled; see verification scope |
 | Imprisonment | Native Effect application | No compiler-listed gaps; not complete verification |
 | Incarnate Ancestry | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Incarnate Ancient Specter | Native Effect application | No compiler-listed gaps; not complete verification |
+| Incarnate Archmage | Native Effect application | No compiler-listed gaps; not complete verification |
+| Incarnate Deific Herald | Native Effect application | No compiler-listed gaps; not complete verification |
+| Incarnate Draconic Legion | Native Effect application | No compiler-listed gaps; not complete verification |
 | Incarnate Faerie Revelers | Native Effect application | No compiler-listed gaps; not complete verification |
+| Incarnate Kaiju | Native Effect application | No compiler-listed gaps; not complete verification |
 | Incarnate Shadow Minuet | Native Effect application | No compiler-listed gaps; not complete verification |
 | Incarnate Skeletal Giant | Native Effect application | No compiler-listed gaps; not complete verification |
 | Incarnate Tempest of Shades | Native Effect application | No compiler-listed gaps; not complete verification |
+| Incarnate Wild Rose | Native Effect application | No compiler-listed gaps; not complete verification |
 | Incendiary Ashes | Shared save resolution | Workflow enabled; see verification scope |
 | Incendiary Aura | Native Effect application | No compiler-listed gaps; not complete verification |
 | Incendiary Fog | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Indestructibility | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Indolent Haze | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Inertia Lock | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Inevitable Destination | Shared save resolution | Workflow enabled; see verification scope |
 | Inevitable Disaster | Shared save resolution | Workflow enabled; see verification scope |
@@ -876,6 +937,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Infectious Enthusiasm | Native Effect application | No compiler-listed gaps; not complete verification |
 | Infectious Melody | Shared save resolution | Workflow enabled; see verification scope |
 | Infiltrator's Tunnel | Native Effect application | No compiler-listed gaps; not complete verification |
+| Infinitesimal Collapse Field | Native Effect application | No compiler-listed gaps; not complete verification |
 | Information Overload | Shared save resolution | Workflow enabled; see verification scope |
 | Infuse Vitality | Native Effect application | No compiler-listed gaps; not complete verification |
 | Inkshot | Shared save resolution | Workflow enabled; see verification scope |
@@ -908,6 +970,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Isolation | Shared save resolution | Workflow enabled; see verification scope |
 | It is Written | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Item Facade | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Jassim's Allegiance | Native Effect application | No compiler-listed gaps; not complete verification |
 | Jealous Hex | Shared save resolution | Workflow enabled; see verification scope |
 | Join Pasts | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Jump | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
@@ -944,6 +1007,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Life's Flowing River | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Life's Fresh Bloom | Native Effect application | No compiler-listed gaps; not complete verification |
 | Lifelink Surge | Native Effect application | No compiler-listed gaps; not complete verification |
+| Lifewood Cage | Native Effect application | No compiler-listed gaps; not complete verification |
 | Lift Nature's Caul | Shared save resolution | Workflow enabled; see verification scope |
 | Light | Native Effect application | No compiler-listed gaps; not complete verification |
 | Light of Revelation | Native Effect application | No compiler-listed gaps; not complete verification |
@@ -967,6 +1031,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Loremaster's Etude | Native Effect application | No compiler-listed gaps; not complete verification |
 | Lose the Path | Shared save resolution | Workflow enabled; see verification scope |
 | Lotus Walk | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Love's Sacrifice | Native Effect application | No compiler-listed gaps; not complete verification |
 | Loyalty's Ward | Native Effect application | No compiler-listed gaps; not complete verification |
 | Lucky Break | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Lucky Month | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
@@ -985,6 +1050,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Magical Fetters | Shared save resolution | Workflow enabled; see verification scope |
 | Magnetic Acceleration | Shared save resolution | Workflow enabled; see verification scope |
 | Magnetic Attraction | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Magnetic Dominion | Shared save resolution | Workflow enabled; see verification scope |
 | Magnetic Repulsion | Native Effect application | No compiler-listed gaps; not complete verification |
 | Magnetize | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Malediction | Dedicated ongoing workflow | Workflow enabled; see verification scope |
@@ -996,6 +1062,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Manifold Lives | Shared save resolution | Workflow enabled; see verification scope |
 | Mantis Form | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Mantis's Grasp | Shared save resolution | Workflow enabled; see verification scope |
+| Mantle of Heaven's Slopes | Native Effect application | No compiler-listed gaps; not complete verification |
 | Mantle of the Frozen Heart | Native Effect application | Partial native Effect automation |
 | Mantle of the Magma Heart | Native Effect application | No compiler-listed gaps; not complete verification |
 | Mantle of the Melting Heart | Native Effect application | Partial native Effect automation |
@@ -1005,6 +1072,9 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Martyr's Intervention | Native Effect application | No compiler-listed gaps; not complete verification |
 | Marvelous Mount | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Mask of Terror | Native Effect application | No compiler-listed gaps; not complete verification |
+| Massacre | Shared save resolution | Workflow enabled; see verification scope |
+| Maze of Locked Doors | Shared save resolution | Workflow enabled; see verification scope |
+| Medusa's Wrath | Shared save resolution | Workflow enabled; see verification scope |
 | Menacing Lament | Native Effect application | No compiler-listed gaps; not complete verification |
 | Mending | Native Effect application | No compiler-listed gaps; not complete verification |
 | Mental Map | Shared save resolution | Workflow enabled; see verification scope |
@@ -1013,7 +1083,10 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Message Rune | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Metal Merged | Native Effect application | No compiler-listed gaps; not complete verification |
 | Metal Reverberation | Dedicated ongoing workflow | Workflow enabled; see verification scope |
+| Metallic Meteorite Glyph | Native Effect application | No compiler-listed gaps; not complete verification |
+| Metamorphosis | Native Effect application | No compiler-listed gaps; not complete verification |
 | Migration | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Mimic Spell | Native Effect application | No compiler-listed gaps; not complete verification |
 | Mimic Undead | Native Effect application | Partial native Effect automation |
 | Mind Games | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Mind of Menace | Native Effect application | No compiler-listed gaps; not complete verification |
@@ -1033,7 +1106,9 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Mist | Native Effect application | No compiler-listed gaps; not complete verification |
 | Mist Sight | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Misty Memory | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Moment of Renewal | Native Effect application | No compiler-listed gaps; not complete verification |
 | Momentary Recovery | Native Effect application | No compiler-listed gaps; not complete verification |
+| Monstrosity Form | Native Effect application | No compiler-listed gaps; not complete verification |
 | Moon Frenzy | Native Effect application | No compiler-listed gaps; not complete verification |
 | Moonbeam | Shared save resolution | Workflow enabled; see verification scope |
 | Moonburst | Shared save resolution | Workflow enabled; see verification scope |
@@ -1044,7 +1119,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Moth's Supper | Native Effect application | No compiler-listed gaps; not complete verification |
 | Mother's Blessing | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Mountain Resilience | Native Effect application | No compiler-listed gaps; not complete verification |
-| Movanic Glimmer | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Movanic Glimmer | Native Effect application | No compiler-listed gaps; not complete verification |
 | Mud Pit | Native Effect application | No compiler-listed gaps; not complete verification |
 | Murder of Crows | Shared save resolution | Workflow enabled; see verification scope |
 | Murderous Vine | Native Effect application | No compiler-listed gaps; not complete verification |
@@ -1052,11 +1127,14 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Muscle Barrier | Native Effect application | No compiler-listed gaps; not complete verification |
 | Mushroom Patch | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Musical Accompaniment | Native Effect application | Partial native Effect automation |
+| Musical Shift | Native Effect application | No compiler-listed gaps; not complete verification |
 | Mutilate | Shared save resolution | Workflow enabled; see verification scope |
 | Mycological Malady | Shared save resolution | Workflow enabled; see verification scope |
 | Mystic Armor | Native Effect application | No compiler-listed gaps; not complete verification |
 | Mystic Beacon | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Nature Incarnate | Native Effect application | No compiler-listed gaps; not complete verification |
 | Nature's Bounty | Native Effect application | No compiler-listed gaps; not complete verification |
+| Nature's Enmity | Native Effect application | No compiler-listed gaps; not complete verification |
 | Nature's Pathway | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Nature's Reprisal | Native Effect application | No compiler-listed gaps; not complete verification |
 | Necromancer's Generosity | Native Effect application | No compiler-listed gaps; not complete verification |
@@ -1089,9 +1167,11 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Omnidirectional Scan | Native Effect application | No compiler-listed gaps; not complete verification |
 | One with Plants | Native Effect application | No compiler-listed gaps; not complete verification |
 | One with Stone | Native Effect application | No compiler-listed gaps; not complete verification |
+| One with the Land | Native Effect application | No compiler-listed gaps; not complete verification |
 | Oneiric Mire | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Ooze Form | Native Effect application | Partial native Effect automation |
 | Open the Wall of Ghosts | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Orb of Twisting Fate | Shared save resolution | Workflow enabled; see verification scope |
 | Ordained Purpose | Shared save resolution | Workflow enabled; see verification scope |
 | Organsight | Native Effect application | No compiler-listed gaps; not complete verification |
 | Osseous Cage | Shared save resolution | Workflow enabled; see verification scope |
@@ -1102,6 +1182,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Overselling Flourish | Shared save resolution | Workflow enabled; see verification scope |
 | Overstuff | Shared save resolution | Workflow enabled; see verification scope |
 | Overwhelming Memory | Shared save resolution | Workflow enabled; see verification scope |
+| Overwhelming Presence | Shared save resolution | Workflow enabled; see verification scope |
 | Pack Attack | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Pack Breaker | Shared save resolution | Workflow enabled; see verification scope |
 | Pact Broker | Dedicated ongoing workflow | Workflow enabled; see verification scope |
@@ -1112,13 +1193,14 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Paralyze | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Paranoia | Shared save resolution | Workflow enabled; see verification scope |
 | Parch | Shared save resolution | Workflow enabled; see verification scope |
-| Part the Mists to Paradise | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Part the Mists to Paradise | Native Effect application | No compiler-listed gaps; not complete verification |
 | Path of Least Resistance | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Patron's Protector | Native Effect application | No compiler-listed gaps; not complete verification |
 | Patron's Puppet | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Pave Ground | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Peaceful Bubble | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Peaceful Rest | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
-| Penumbral Disguise | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Penumbral Disguise | Native Effect application | No compiler-listed gaps; not complete verification |
 | Penumbral Shroud | Shared save resolution | Workflow enabled; see verification scope |
 | Perceive the Threads of Fate | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Percussive Impact | Shared save resolution | Workflow enabled; see verification scope |
@@ -1154,10 +1236,13 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Phase Familiar | Native Effect application | No compiler-listed gaps; not complete verification |
 | Phoenix Ward | Native Effect application | No compiler-listed gaps; not complete verification |
 | Physical Boost | Native Effect application | No compiler-listed gaps; not complete verification |
+| Pied Piping | Native Effect application | No compiler-listed gaps; not complete verification |
+| Pierce the Sky | Native Effect application | No compiler-listed gaps; not complete verification |
 | Pillar of Water | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Pillars of Sand | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Pinpoint | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Plague Shot | Native Effect application | No compiler-listed gaps; not complete verification |
+| Planar Collision | Native Effect application | No compiler-listed gaps; not complete verification |
 | Planar Displacement | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Planar Palace | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Planar Seal | Affliction-care workflow | Workflow enabled; see verification scope |
@@ -1171,6 +1256,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Portrait of Spite | Native Effect application | No compiler-listed gaps; not complete verification |
 | Portrait of the Artist | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Positive Attunement | Native Effect application | No compiler-listed gaps; not complete verification |
+| Possession | Shared save resolution | Workflow enabled; see verification scope |
 | Power of the Beasts | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Power Word Blind | Native Effect application | No compiler-listed gaps; not complete verification |
 | Power Word Kill | Native Effect application | No compiler-listed gaps; not complete verification |
@@ -1184,9 +1270,12 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Primal Chorus | Native Effect application | No compiler-listed gaps; not complete verification |
 | Primal Herd | Native Effect application | No compiler-listed gaps; not complete verification |
 | Primal Phenomenon | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Primal Summons | Native Effect application | No compiler-listed gaps; not complete verification |
 | Prismatic Armor | Native Effect application | No compiler-listed gaps; not complete verification |
 | Prismatic Shield | Native Effect application | Partial native Effect automation |
 | Prismatic Sphere | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Prismatic Spray | Native Effect application | No compiler-listed gaps; not complete verification |
+| Prismatic Wall | Native Effect application | No compiler-listed gaps; not complete verification |
 | Procyal Philosophy | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Project Image | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Proliferating Eyes | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
@@ -1199,6 +1288,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Protector Tree | Native Effect application | No compiler-listed gaps; not complete verification |
 | Protector's Sacrifice | Native Effect application | No compiler-listed gaps; not complete verification |
 | Protector's Sphere | Native Effect application | No compiler-listed gaps; not complete verification |
+| Proximal Shift | Native Effect application | No compiler-listed gaps; not complete verification |
 | Prying Survey | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Psychic Outburst | Shared save resolution | Workflow enabled; see verification scope |
 | Puff of Poison | Shared save resolution | Workflow enabled; see verification scope |
@@ -1207,6 +1297,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Pulverizing Wake | Shared save resolution | Workflow enabled; see verification scope |
 | Pummeling Rubble | Shared save resolution | Workflow enabled; see verification scope |
 | Punishing Winds | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Puppet Strings | Shared save resolution | Workflow enabled; see verification scope |
 | Purging Toxins | Affliction-care workflow | Workflow enabled; see verification scope |
 | Purify Tanglebriar | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Purifying Icicle | Shared save resolution | Workflow enabled; see verification scope |
@@ -1218,6 +1309,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Pyroclastic Truth | Shared save resolution | Workflow enabled; see verification scope |
 | Pyrotechnics | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Qi Blast | Shared save resolution | Workflow enabled; see verification scope |
+| Qi Form | Native Effect application | No compiler-listed gaps; not complete verification |
 | Qi Rush | Native Effect application | No compiler-listed gaps; not complete verification |
 | Quandary | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Quantic Dampening | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
@@ -1229,7 +1321,9 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Radiant Globe | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Radiant Heart of Devotion | Native Effect application | No compiler-listed gaps; not complete verification |
 | Raga of Remembrance | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Rainbow Fumarole | Native Effect application | No compiler-listed gaps; not complete verification |
 | Rainbow's End | Shared save resolution | Workflow enabled; see verification scope |
+| Raise Dead | Native Effect application | No compiler-listed gaps; not complete verification |
 | Raise Runelord | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Rally Point | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Rallying Anthem | Native Effect application | No compiler-listed gaps; not complete verification |
@@ -1240,12 +1334,15 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Rapid Adaptation | Native Effect application | Partial native Effect automation |
 | Rapid Retreat | Native Effect application | No compiler-listed gaps; not complete verification |
 | Ravening Maw | Native Effect application | No compiler-listed gaps; not complete verification |
+| Ravenous Darkness | Native Effect application | No compiler-listed gaps; not complete verification |
 | Ravenous Portal | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Ray of Corruption | Native Effect application | No compiler-listed gaps; not complete verification |
 | Ray of Frost | Shared save resolution | Workflow enabled; see verification scope |
 | Read Aura | Native Effect application | No compiler-listed gaps; not complete verification |
 | Read Fate | Native Effect application | No compiler-listed gaps; not complete verification |
 | Read Omens | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Read the Air | Native Effect application | No compiler-listed gaps; not complete verification |
+| Reanimate Foe | Native Effect application | No compiler-listed gaps; not complete verification |
 | Reaper's Lantern | Native Effect application | No compiler-listed gaps; not complete verification |
 | Reblooded | Shared save resolution | Workflow enabled; see verification scope |
 | Rebounding Barrier | Native Effect application | No compiler-listed gaps; not complete verification |
@@ -1264,16 +1361,19 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Reinforced Rations | Native Effect application | No compiler-listed gaps; not complete verification |
 | Rejuvenating Flames | Shared save resolution | Workflow enabled; see verification scope |
 | Remake | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Remake Physiology | Shared save resolution | Workflow enabled; see verification scope |
 | Remember the Lost | Shared save resolution | Workflow enabled; see verification scope |
 | Rend Magic | Shared save resolution | Workflow enabled; see verification scope |
 | Repel Metal | Native Effect application | No compiler-listed gaps; not complete verification |
 | Repelling Pulse | Shared save resolution | Workflow enabled; see verification scope |
 | Replicate | Native Effect application | No compiler-listed gaps; not complete verification |
+| Repulsion | Native Effect application | No compiler-listed gaps; not complete verification |
 | Resist Energy | Native Effect application | No compiler-listed gaps; not complete verification |
 | Resplendent Mansion | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Rest Eternal | Native Effect application | No compiler-listed gaps; not complete verification |
 | Restoration | Affliction-care workflow | Workflow enabled; see verification scope |
 | Restorative Moment | Affliction-care workflow | Workflow enabled; see verification scope |
+| Restore Ground | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Restraining Chains | Shared save resolution | Workflow enabled; see verification scope |
 | Restyle | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Retreat Among the Rains | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
@@ -1286,6 +1386,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Revealing Light | Shared save resolution | Workflow enabled; see verification scope |
 | Revel in Retribution | Native Effect application | No compiler-listed gaps; not complete verification |
 | Reverse Gravity | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Revival | Native Effect application | No compiler-listed gaps; not complete verification |
 | Rewinding Step | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Rewrite Memory | Shared save resolution | Workflow enabled; see verification scope |
 | Rewrite Possibility | Native Effect application | No compiler-listed gaps; not complete verification |
@@ -1315,6 +1416,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Rust Cloud | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Rusting Grasp | Native Effect application | No compiler-listed gaps; not complete verification |
 | Sacred Beasts | Shared save resolution | Workflow enabled; see verification scope |
+| Sacred Covenant | Native Effect application | No compiler-listed gaps; not complete verification |
 | Sacred Form | Native Effect application | Partial native Effect automation |
 | Sacred Nimbus | Native Effect application | No compiler-listed gaps; not complete verification |
 | Safe Passage | Native Effect application | No compiler-listed gaps; not complete verification |
@@ -1336,6 +1438,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Scouting Eye | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Scramble Body | Shared save resolution | Workflow enabled; see verification scope |
 | Scrounger's Glee | Shared save resolution | Workflow enabled; see verification scope |
+| Scrying | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Scrying Ripples | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Sculpt Sound | Shared save resolution | Workflow enabled; see verification scope |
 | Sea of Thought | Dedicated ongoing workflow | Workflow enabled; see verification scope |
@@ -1347,15 +1450,19 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Secure Siege Weapons | Native Effect application | No compiler-listed gaps; not complete verification |
 | See the Unseen | Native Effect application | No compiler-listed gaps; not complete verification |
 | Seed of Mercy | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Seize Identity | Shared save resolution | Workflow enabled; see verification scope |
 | Seize Soul | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Sending | Messaging workflow | Workflow enabled; see verification scope |
 | Separation | Native Effect application | No compiler-listed gaps; not complete verification |
 | Sepulchral Mask | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Serrate | Native Effect application | No compiler-listed gaps; not complete verification |
+| Shadow Army | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Shadow Blast | Shared save resolution | Workflow enabled; see verification scope |
 | Shadow Double | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Shadow Illusion | Native Effect application | No compiler-listed gaps; not complete verification |
 | Shadow Jump | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Shadow Projectile | Shared save resolution | Workflow enabled; see verification scope |
+| Shadow Raid | Shared save resolution | Workflow enabled; see verification scope |
 | Shadow Siphon | Affliction-care workflow | Workflow enabled; see verification scope |
 | Shadow Spy | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Shadow Strike | Shared save resolution | Workflow enabled; see verification scope |
@@ -1363,6 +1470,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Shadow's Web | Shared save resolution | Workflow enabled; see verification scope |
 | Shaken Confidence | Shared save resolution | Workflow enabled; see verification scope |
 | Shall not Falter, Shall not Rout | Native Effect application | No compiler-listed gaps; not complete verification |
+| Shambling Horror | Native Effect application | No compiler-listed gaps; not complete verification |
 | Shape Stone | Shared save resolution | Workflow enabled; see verification scope |
 | Shape Wood | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Share Burden | Native Effect application | No compiler-listed gaps; not complete verification |
@@ -1387,7 +1495,9 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Shifting Sand | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Shillelagh | Native Effect application | No compiler-listed gaps; not complete verification |
 | Shining Starlight Attack | Shared save resolution | Workflow enabled; see verification scope |
+| Shipwreck | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Shock and Awe | Shared save resolution | Workflow enabled; see verification scope |
+| Shock to the System | Native Effect application | No compiler-listed gaps; not complete verification |
 | Shocking Grasp | Shared save resolution | Workflow enabled; see verification scope |
 | Shockwave | Shared save resolution | Workflow enabled; see verification scope |
 | Shooting Star | Native Effect application | No compiler-listed gaps; not complete verification |
@@ -1428,6 +1538,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Song of Marching | Native Effect application | No compiler-listed gaps; not complete verification |
 | Song of Silver | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Song of Strength | Native Effect application | No compiler-listed gaps; not complete verification |
+| Song of the Fallen | Native Effect application | No compiler-listed gaps; not complete verification |
 | Song of the Soul | Native Effect application | No compiler-listed gaps; not complete verification |
 | Songbird's Call | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Soothe | Native Effect application | No compiler-listed gaps; not complete verification |
@@ -1454,7 +1565,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Spell Riposte | Affliction-care workflow | Workflow enabled; see verification scope |
 | Spell Turning | Affliction-care workflow | Workflow enabled; see verification scope |
 | Spellmaster's Ward | Native Effect application | No compiler-listed gaps; not complete verification |
-| Spellsurge | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Spellsurge | Native Effect application | No compiler-listed gaps; not complete verification |
 | Spellwrack | Shared save resolution | Workflow enabled; see verification scope |
 | Spider Sting | Shared save resolution | Workflow enabled; see verification scope |
 | Spike Stones | Native Effect application | No compiler-listed gaps; not complete verification |
@@ -1488,6 +1599,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Spy's Mark | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Stabilize | Native Effect application | No compiler-listed gaps; not complete verification |
 | Stagnate Time | Dedicated ongoing workflow | Workflow enabled; see verification scope |
+| Stars of Another Sky | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Stasis | Shared save resolution | Workflow enabled; see verification scope |
 | Statuette | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Status | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
@@ -1504,9 +1616,11 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Stoke the Heart | Native Effect application | No compiler-listed gaps; not complete verification |
 | Stone Lance | Shared save resolution | Workflow enabled; see verification scope |
 | Stone to Flesh | Native Effect application | No compiler-listed gaps; not complete verification |
-| Stonesense | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Stonesense | Native Effect application | No compiler-listed gaps; not complete verification |
 | Stop Heart | Shared save resolution | Workflow enabled; see verification scope |
 | Store Time | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Storm Lord | Native Effect application | No compiler-listed gaps; not complete verification |
+| Storm of Vengeance | Native Effect application | No compiler-listed gaps; not complete verification |
 | Stormburst | Shared save resolution | Workflow enabled; see verification scope |
 | Stormwind Flight | Native Effect application | No compiler-listed gaps; not complete verification |
 | Strange Geometry | Dedicated ongoing workflow | Workflow enabled; see verification scope |
@@ -1526,23 +1640,28 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Suggestion | Shared save resolution | Workflow enabled; see verification scope |
 | Summerland Spell | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Summon Anarch | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Summon Ancient Fleshforged | Native Effect application | No compiler-listed gaps; not complete verification |
 | Summon Animal | Native Effect application | No compiler-listed gaps; not complete verification |
 | Summon Axiom | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Summon Celestial | Native Effect application | No compiler-listed gaps; not complete verification |
 | Summon Construct | Native Effect application | No compiler-listed gaps; not complete verification |
 | Summon Dragon | Native Effect application | No compiler-listed gaps; not complete verification |
 | Summon Elemental | Native Effect application | No compiler-listed gaps; not complete verification |
+| Summon Elemental Herald | Native Effect application | No compiler-listed gaps; not complete verification |
 | Summon Entity | Native Effect application | No compiler-listed gaps; not complete verification |
 | Summon Fey | Native Effect application | No compiler-listed gaps; not complete verification |
 | Summon Fiend | Native Effect application | No compiler-listed gaps; not complete verification |
 | Summon Giant | Native Effect application | No compiler-listed gaps; not complete verification |
 | Summon Healing Servitor | Native Effect application | No compiler-listed gaps; not complete verification |
 | Summon Instrument | Native Effect application | No compiler-listed gaps; not complete verification |
+| Summon Irii | Native Effect application | No compiler-listed gaps; not complete verification |
 | Summon Lesser Servitor | Native Effect application | No compiler-listed gaps; not complete verification |
 | Summon Monitor | Native Effect application | No compiler-listed gaps; not complete verification |
+| Summon Oliphaunt of Jandelay | Native Effect application | No compiler-listed gaps; not complete verification |
 | Summon Plant or Fungus | Native Effect application | No compiler-listed gaps; not complete verification |
 | Summon Stampede | Native Effect application | No compiler-listed gaps; not complete verification |
 | Summon Undead | Native Effect application | No compiler-listed gaps; not complete verification |
+| Summon Warden of the Wild | Native Effect application | No compiler-listed gaps; not complete verification |
 | Summoner's Precaution | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Summoner's Visage | Native Effect application | No compiler-listed gaps; not complete verification |
 | Sun Blade | Shared save resolution | Workflow enabled; see verification scope |
@@ -1573,7 +1692,10 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Talking Corpse | Shared save resolution | Workflow enabled; see verification scope |
 | Tame | Shared save resolution | Workflow enabled; see verification scope |
 | Tangle Vine | Shared save resolution | Workflow enabled; see verification scope |
+| Tanglecurse | Shared save resolution | Workflow enabled; see verification scope |
+| Tangling Creepers | Native Effect application | No compiler-listed gaps; not complete verification |
 | Tattoo Whispers | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Tear the Veil | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Teeth to Terror | Shared save resolution | Workflow enabled; see verification scope |
 | Telekinetic Bombardment | Shared save resolution | Workflow enabled; see verification scope |
 | Telekinetic Hand | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
@@ -1592,7 +1714,9 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Tempest Touch | Shared save resolution | Workflow enabled; see verification scope |
 | Temporal Distortion | Shared save resolution | Workflow enabled; see verification scope |
 | Temporal Twin | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Temporal Ward | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Temporary Glyph | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Temporary Possession | Shared save resolution | Workflow enabled; see verification scope |
 | Temporary Tool | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Tempt Fate | Native Effect application | No compiler-listed gaps; not complete verification |
 | Tentacular Innervation | Native Effect application | No compiler-listed gaps; not complete verification |
@@ -1606,6 +1730,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | The Parrot's Whisper | Shared save resolution | Workflow enabled; see verification scope |
 | The Queen's Rainbow | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | The Unseeing Blade Master | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Theogeny | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Thermal Remedy | Native Effect application | No compiler-listed gaps; not complete verification |
 | Thermal Stasis | Native Effect application | No compiler-listed gaps; not complete verification |
 | Thicket of Knives | Native Effect application | No compiler-listed gaps; not complete verification |
@@ -1613,7 +1738,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Thoughtful Gift | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Thrall Charge | Native Effect application | No compiler-listed gaps; not complete verification |
 | Threatening Mimicry | Shared save resolution | Workflow enabled; see verification scope |
-| Threefold Aspect | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Threefold Aspect | Native Effect application | No compiler-listed gaps; not complete verification |
 | Threefold Limb | Shared save resolution | Workflow enabled; see verification scope |
 | Thunder Echo | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Thunderburst | Shared save resolution | Workflow enabled; see verification scope |
@@ -1629,12 +1754,13 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Time Skip | Native Effect application | No compiler-listed gaps; not complete verification |
 | Timely Reminder | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Timely Tutor | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
-| Tiny Wings | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Tiny Wings | Native Effect application | No compiler-listed gaps; not complete verification |
 | Tireless Worker | Affliction-care workflow | Workflow enabled; see verification scope |
 | Tomorrow's Dawn | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Tornadic Gale | Shared save resolution | Workflow enabled; see verification scope |
 | Tortoise and the Hare | Shared save resolution | Workflow enabled; see verification scope |
 | Torturous Trauma | Shared save resolution | Workflow enabled; see verification scope |
+| Touch of Death | Native Effect application | No compiler-listed gaps; not complete verification |
 | Touch of Obedience | Shared save resolution | Workflow enabled; see verification scope |
 | Touch of the Moon | Native Effect application | No compiler-listed gaps; not complete verification |
 | Touch of the Void | Shared save resolution | Workflow enabled; see verification scope |
@@ -1654,12 +1780,15 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Traveler's Transit | Native Effect application | No compiler-listed gaps; not complete verification |
 | Traveling Workshop | Native Effect application | No compiler-listed gaps; not complete verification |
 | Tree of Life and Death | Native Effect application | No compiler-listed gaps; not complete verification |
+| Tree of Seasons | Native Effect application | No compiler-listed gaps; not complete verification |
 | Tremor Signs | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Tremorsense | Native Effect application | No compiler-listed gaps; not complete verification |
 | Trickster's Feathers | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Trickster's Mirrors | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Trickster's Twin | Shared save resolution | Workflow enabled; see verification scope |
+| Trim the Blight | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Triple Time | Native Effect application | No compiler-listed gaps; not complete verification |
+| True Target | Native Effect application | No compiler-listed gaps; not complete verification |
 | Truesight | Affliction-care workflow | Workflow enabled; see verification scope |
 | Truespeech | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Turbulent Tide | Shared save resolution | Workflow enabled; see verification scope |
@@ -1670,17 +1799,25 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Umbral Mindtheft | Native Effect application | No compiler-listed gaps; not complete verification |
 | Unbearable Cacophony | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Unblinking Flame Aura | Native Effect application | No compiler-listed gaps; not complete verification |
+| Unblinking Flame Emblem | Native Effect application | No compiler-listed gaps; not complete verification |
 | Unblinking Flame Ignition | Native Effect application | No compiler-listed gaps; not complete verification |
 | Unblinking Flame Revelation | Affliction-care workflow | Workflow enabled; see verification scope |
 | Unbounded Sphere | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Unbreaking Wave Advance | Shared save resolution | Workflow enabled; see verification scope |
+| Unbreaking Wave Barrier | Dedicated ongoing workflow | Workflow enabled; see verification scope |
+| Unbreaking Wave Containment | Native Effect application | No compiler-listed gaps; not complete verification |
 | Unbreaking Wave Vapor | Native Effect application | No compiler-listed gaps; not complete verification |
 | Unbroken Panoply | Native Effect application | No compiler-listed gaps; not complete verification |
 | Uncontrollable Dance | Shared save resolution | Workflow enabled; see verification scope |
-| Uncover Device | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Uncover Device | Native Effect application | No compiler-listed gaps; not complete verification |
 | Undeath's Blessing | Shared save resolution | Workflow enabled; see verification scope |
+| Under Sunless Skies | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Undermine Reality | Shared save resolution | Workflow enabled; see verification scope |
+| Undertaker | Shared save resolution | Workflow enabled; see verification scope |
 | Undertow | Dedicated ongoing workflow | Workflow enabled; see verification scope |
+| Unexpected Transposition | Shared save resolution | Workflow enabled; see verification scope |
 | Unexpected Windfall | Shared save resolution | Workflow enabled; see verification scope |
+| Unfathomable Song | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Unfetter Eidolon | Native Effect application | No compiler-listed gaps; not complete verification |
 | Unfettered Mark | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Unfettered Movement | Native Effect application | No compiler-listed gaps; not complete verification |
@@ -1689,12 +1826,14 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Unfolding Wind Buffet | Shared save resolution | Workflow enabled; see verification scope |
 | Unfolding Wind Crash | Shared save resolution | Workflow enabled; see verification scope |
 | Unfolding Wind Rush | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Unholy Army | Native Effect application | No compiler-listed gaps; not complete verification |
 | Unimpeded Stride | Native Effect application | No compiler-listed gaps; not complete verification |
 | Unity | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Unravel Existence | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Unravel Knowledge | Shared save resolution | Workflow enabled; see verification scope |
 | Unraveling Blast | Shared save resolution | Workflow enabled; see verification scope |
 | Unrelenting Gravity | Shared save resolution | Workflow enabled; see verification scope |
+| Unrelenting Observation | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Unsealing of Secrets | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Unseasonable Squall | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Unsettling Knowledge | Shared save resolution | Workflow enabled; see verification scope |
@@ -1708,17 +1847,21 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Untwisting Iron Roots | Shared save resolution | Workflow enabled; see verification scope |
 | Unusual Anatomy | Native Effect application | No compiler-listed gaps; not complete verification |
 | Updraft | Shared save resolution | Workflow enabled; see verification scope |
+| Upheaval | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Uplifting Overture | Native Effect application | No compiler-listed gaps; not complete verification |
 | Utter Destruction | Shared save resolution | Workflow enabled; see verification scope |
+| Vacuum | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Valiant Anthem | Native Effect application | No compiler-listed gaps; not complete verification |
 | Vampiric Exsanguination | Shared save resolution | Workflow enabled; see verification scope |
 | Vampiric Feast | Shared save resolution | Workflow enabled; see verification scope |
 | Vampiric Maiden | Shared save resolution | Workflow enabled; see verification scope |
+| Vampiric Revelry | Native Effect application | No compiler-listed gaps; not complete verification |
 | Vanish Weapon | Native Effect application | No compiler-listed gaps; not complete verification |
 | Vanishing Tracks | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Vapor Form | Native Effect application | No compiler-listed gaps; not complete verification |
 | Variable Gravity | Native Effect application | No compiler-listed gaps; not complete verification |
 | Vector Screen | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
+| Veil of Broken Reality | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Veil of Confidence | Native Effect application | No compiler-listed gaps; not complete verification |
 | Veil of Dreams | Shared save resolution | Workflow enabled; see verification scope |
 | Veil of Privacy | Affliction-care workflow | Workflow enabled; see verification scope |
@@ -1729,6 +1872,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Verminous Lure | Native Effect application | No compiler-listed gaps; not complete verification |
 | Vibrant Pattern | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Vibrant Thorns | Native Effect application | No compiler-listed gaps; not complete verification |
+| Vibrant Vibrato | Native Effect application | No compiler-listed gaps; not complete verification |
 | Vicious Howl | Native Effect application | No compiler-listed gaps; not complete verification |
 | Vicious Jealousy | Shared save resolution | Workflow enabled; see verification scope |
 | Victory Cry | Native Effect application | No compiler-listed gaps; not complete verification |
@@ -1742,9 +1886,11 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Vital Luminance | Native Effect application | No compiler-listed gaps; not complete verification |
 | Vital Seed | Native Effect application | No compiler-listed gaps; not complete verification |
 | Vitality Lash | Shared save resolution | Workflow enabled; see verification scope |
+| Vitrifying Blast | Shared save resolution | Workflow enabled; see verification scope |
 | Voice on the Breeze | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Void Harvest | Native Effect application | No compiler-listed gaps; not complete verification |
 | Void Warp | Shared save resolution | Workflow enabled; see verification scope |
+| Volcanic Eruption | Native Effect application | No compiler-listed gaps; not complete verification |
 | Vomit Swarm | Shared save resolution | Workflow enabled; see verification scope |
 | Voracious Gestalt | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Wails of the Damned | Shared save resolution | Workflow enabled; see verification scope |
@@ -1781,6 +1927,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Waters of Prediction | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Wave of Despair | Shared save resolution | Workflow enabled; see verification scope |
 | Weaken Earth | Shared save resolution | Workflow enabled; see verification scope |
+| Weapon of Judgment | Native Effect application | No compiler-listed gaps; not complete verification |
 | Weapon Storm | Shared save resolution | Workflow enabled; see verification scope |
 | Weapon Surge | Native Effect application | No compiler-listed gaps; not complete verification |
 | Weapon Tide | Shared save resolution | Workflow enabled; see verification scope |
@@ -1794,6 +1941,8 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Weird | Shared save resolution | Workflow enabled; see verification scope |
 | Whirling Flames | Shared save resolution | Workflow enabled; see verification scope |
 | Whirling Scarves | Native Effect application | No compiler-listed gaps; not complete verification |
+| Whirlpool | Dedicated ongoing workflow | Workflow enabled; see verification scope |
+| Whirlwind | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Whispering Quiet | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Whispers of a Dead Goddess | Dedicated ongoing workflow | Workflow enabled; see verification scope |
 | Whispers of the Void | Shared save resolution | Workflow enabled; see verification scope |
@@ -1823,6 +1972,7 @@ Live evidence is recorded separately in [Phase 2](../docs/verification/phase-2-r
 | Word of Truth | Native Effect application | No compiler-listed gaps; not complete verification |
 | Wordsmith | Spell note (not mechanical; reported apart) | Workflow enabled; see verification scope |
 | Worm's Repast | Shared save resolution | Workflow enabled; see verification scope |
+| Wrathful Storm | Native Effect application | No compiler-listed gaps; not complete verification |
 | Wronged Monk's Wrath | Shared save resolution | Workflow enabled; see verification scope |
 | Wyvern Sting | Shared save resolution | Workflow enabled; see verification scope |
 | Ymeri's Mark | Shared save resolution | Workflow enabled; see verification scope |

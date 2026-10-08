@@ -1,0 +1,23 @@
+{
+ "label": "thirdPartyBatch36",
+ "passed": true,
+ "at": "2026-10-07T03:30:19.933Z",
+ "details": {
+  "thirdParty36": {
+   "blessing": [
+    "fast @item.level",
+    "light 5/10"
+   ],
+   "fastHealing": null,
+   "nearAsked": false,
+   "darkAsked": true,
+   "dark": {
+    "formula": "6d4 cold",
+    "total": 16,
+    "lost": 16
+   },
+   "farAsked": false,
+   "afterLeaving": false
+  }
+ }
+}

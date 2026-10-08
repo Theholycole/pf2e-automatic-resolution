@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-10-03T21:22:34.808Z",
+  "generatedAt": "2026-10-05T09:18:58.823Z",
   "baseline": "2026-09-25T00:41:31.419Z",
   "scope": "All source-derived members of 2 overlapping families; excludes rituals and the deferred Phase 9 review list. Every member was recompiled under a detached name/ID. Route assessment is not live execution.",
-  "uniqueMembers": 37,
-  "executableSharedSaves": 547,
+  "uniqueMembers": 35,
+  "executableSharedSaves": 579,
   "newlySupported": [
     {
       "id": "gISYsBFby1TiXfBt",
@@ -576,6 +576,10 @@
     {
       "id": "Yrek2Yd4k3DPC2zV",
       "name": "Zenith Star"
+    },
+    {
+      "id": "6s0UW4bujggma9TC",
+      "name": "Fabricated Truth"
     },
     {
       "id": "f8hRqLJaxBVhF1u0",
@@ -1674,16 +1678,40 @@
       "name": "Claim Undead"
     },
     {
+      "id": "c3XygMbzrZMgV1y3",
+      "name": "Collective Transposition"
+    },
+    {
       "id": "ExQk8AwDphmckEmZ",
       "name": "Crimson Breath"
+    },
+    {
+      "id": "dN8QBNuTiaBHCKUe",
+      "name": "Cursed Metamorphosis"
     },
     {
       "id": "OsOhx3TGIZ7AhD0P",
       "name": "Dominate"
     },
     {
+      "id": "XULNb8ItUsfupxqH",
+      "name": "Dread Secret"
+    },
+    {
+      "id": "XOs8C2eZJAO3go0N",
+      "name": "Earth and Sky"
+    },
+    {
       "id": "ZvB9sV7NLdpDeoTw",
       "name": "Explosive Barrage"
+    },
+    {
+      "id": "ZZTLWMXijRDgE66m",
+      "name": "Expunge Blood"
+    },
+    {
+      "id": "ReUoodsqUYSTwSgE",
+      "name": "Fateful Condemnation"
     },
     {
       "id": "R5r4vtmlvOA8hDiF",
@@ -1730,6 +1758,10 @@
       "name": "Purple Worm Sting"
     },
     {
+      "id": "DOBs5ALM1titPYxe",
+      "name": "Seize Identity"
+    },
+    {
       "id": "8Umt1AzYfFbC4fui",
       "name": "Spellwrack"
     },
@@ -1738,12 +1770,32 @@
       "name": "Suffocate"
     },
     {
+      "id": "BokwLLK7OjK6ggHs",
+      "name": "Tanglecurse"
+    },
+    {
+      "id": "OOMQ8Z6EIrGt5NJ6",
+      "name": "Unexpected Transposition"
+    },
+    {
+      "id": "g2V4ID0pl1ZGAxZj",
+      "name": "Vitrifying Blast"
+    },
+    {
       "id": "B4p4cD9Q71mHTpOP",
       "name": "Attacked from Within"
     },
     {
+      "id": "dKWc83KKiXoIJkhp",
+      "name": "Beheading Buzz Saw"
+    },
+    {
       "id": "EgkypvUZIZkx1UlQ",
       "name": "Blightburn Blast"
+    },
+    {
+      "id": "hvV6IruyW4MAr0Ub",
+      "name": "Chrysopoetic Curse"
     },
     {
       "id": "1VOjUKd1pacI67RZ",
@@ -1758,6 +1810,10 @@
       "name": "Divine Decree"
     },
     {
+      "id": "73rToy0v5Ra9NvL6",
+      "name": "Duplicate Foe"
+    },
+    {
       "id": "0jadeyQIItIuRgeH",
       "name": "Eclipse Burst"
     },
@@ -1770,6 +1826,10 @@
       "name": "Frigid Flurry"
     },
     {
+      "id": "yWySiasyPZcRoe4d",
+      "name": "Heaving Earth"
+    },
+    {
       "id": "gMbrNFKz9NP3TR4s",
       "name": "Inexhaustible Cynicism"
     },
@@ -1778,8 +1838,28 @@
       "name": "Leng Sting"
     },
     {
+      "id": "qOeBQyC1z7OScHvP",
+      "name": "Maze of Locked Doors"
+    },
+    {
       "id": "Shiuhdb2nO6Qgk3k",
       "name": "Moonburst"
+    },
+    {
+      "id": "qO4xOJ0kAvhVGDpX",
+      "name": "Orb of Twisting Fate"
+    },
+    {
+      "id": "wU6hNzK8Yfqdmc8m",
+      "name": "Possession"
+    },
+    {
+      "id": "mBYqtWpvOT4oBm4Q",
+      "name": "Puppet Strings"
+    },
+    {
+      "id": "VTb0yI6P1bLkzuRr",
+      "name": "Shadow Raid"
     },
     {
       "id": "a3aQxCpoj1q1NQxC",
@@ -1794,12 +1874,20 @@
       "name": "Warp Mind"
     },
     {
+      "id": "XB65dUQipPCTNNIY",
+      "name": "Amalgamizing Leap"
+    },
+    {
       "id": "C2GYCH3TtUFqPfdX",
       "name": "Arctic Rift"
     },
     {
       "id": "qlxM7Ik3uUeUIOcv",
       "name": "Canticle of Everlasting Grief"
+    },
+    {
+      "id": "8fEfjvC01gNclDKJ",
+      "name": "Deluge"
     },
     {
       "id": "M0jQlpQYUr0pp2Sv",
@@ -1810,8 +1898,16 @@
       "name": "Divine Armageddon"
     },
     {
+      "id": "vm9O7ne48NM72yrJ",
+      "name": "Falling Sky"
+    },
+    {
       "id": "TvZiwZRianfTSbEg",
       "name": "Hypnopompic Terrors"
+    },
+    {
+      "id": "wTYxxYJWN348oV15",
+      "name": "Medusa's Wrath"
     },
     {
       "id": "BKIet436snMNcnez",
@@ -1830,8 +1926,20 @@
       "name": "Sudden Transposition"
     },
     {
+      "id": "yZpWaJzm7kUjKvlQ",
+      "name": "Temporary Possession"
+    },
+    {
       "id": "Jvyy6oVIQsD34MHB",
       "name": "Uncontrollable Dance"
+    },
+    {
+      "id": "YiIOsc8T6E2iDxgh",
+      "name": "Undermine Reality"
+    },
+    {
+      "id": "KY2xyMavZHAoG69D",
+      "name": "Arcane Explosion"
     },
     {
       "id": "MFPvs0ARxtThYPFq",
@@ -1842,12 +1950,32 @@
       "name": "Linnorm Sting"
     },
     {
+      "id": "AsRd1gNRSkHDq2Jx",
+      "name": "Magnetic Dominion"
+    },
+    {
+      "id": "10VcmSYNBrvBphu1",
+      "name": "Massacre"
+    },
+    {
+      "id": "fkDeKktdmbeplYRY",
+      "name": "Overwhelming Presence"
+    },
+    {
       "id": "MJx7DmjsWYzDZ3a4",
       "name": "Phantasmagoria"
     },
     {
+      "id": "m815cJACTzePdZAG",
+      "name": "Remake Physiology"
+    },
+    {
       "id": "ItZgGznUBhgWBwFG",
       "name": "Telepathic Demand"
+    },
+    {
+      "id": "z39jFoNJrobyn3MQ",
+      "name": "Undertaker"
     },
     {
       "id": "XjNROFtWnwovhCsq",
@@ -2043,27 +2171,6 @@
           ]
         },
         {
-          "id": "T5Mt4jXFuh14uREv",
-          "name": "Divinity Leech",
-          "phase": 3,
-          "sourceFile": "spells/spells/rank-9/divinity-leech.json",
-          "families": [
-            "degree-adjustment",
-            "timed-stunned"
-          ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
-          "previousSharedSave": false,
-          "detail": [
-            "timed Stunned on criticalFailure"
-          ],
-          "blockers": [
-            "preamble:ongoing-trigger",
-            "preamble:additional-condition"
-          ]
-        },
-        {
           "id": "rVhHaWqUsVUO4GuY",
           "name": "Eject Soul",
           "phase": 2,
@@ -2208,22 +2315,12 @@
           "families": [
             "degree-adjustment"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
           "previousSharedSave": false,
           "detail": [],
-          "blockers": [
-            "manual:conditional-effect",
-            "residual-prose",
-            "preamble:ongoing-trigger",
-            "preamble:ends-early",
-            "preamble:additional-condition",
-            "preamble:restriction",
-            "preamble:degree-adjustment",
-            "unaccounted-prose",
-            "manual-mechanic"
-          ]
+          "blockers": []
         },
         {
           "id": "v4QHuVOhFD1JMAqu",
@@ -2241,26 +2338,6 @@
             "degree adjustment (air)"
           ],
           "blockers": []
-        },
-        {
-          "id": "nPxYYID5JARKouSV",
-          "name": "Ray of Corruption",
-          "phase": 4,
-          "sourceFile": "spells/spells/rank-7/ray-of-corruption.json",
-          "families": [
-            "degree-adjustment"
-          ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
-          "previousSharedSave": false,
-          "detail": [],
-          "blockers": [
-            "description-effects",
-            "description-target-predicates",
-            "description-lifecycle",
-            "basic-save-composition"
-          ]
         },
         {
           "id": "APDrC83QljsyHenB",
@@ -2302,15 +2379,15 @@
           "families": [
             "degree-adjustment"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
+          "route": "ongoing",
+          "enabledRoute": true,
           "sharedSave": false,
           "previousSharedSave": false,
-          "detail": [],
+          "detail": [
+            "degree adjustment (GM-confirmed)"
+          ],
           "blockers": [
-            "residual-prose",
-            "preamble:additional-condition",
-            "unaccounted-prose"
+            "lingering-area"
           ]
         },
         {
@@ -2338,20 +2415,12 @@
           "families": [
             "degree-adjustment"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
           "previousSharedSave": false,
           "detail": [],
-          "blockers": [
-            "residual-prose",
-            "preamble:ongoing-trigger",
-            "preamble:restriction",
-            "preamble:degree-adjustment",
-            "item-duration-grammar",
-            "lifecycle",
-            "unaccounted-prose"
-          ]
+          "blockers": []
         },
         {
           "id": "z39jFoNJrobyn3MQ",
@@ -2361,20 +2430,12 @@
           "families": [
             "degree-adjustment"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
           "previousSharedSave": false,
           "detail": [],
-          "blockers": [
-            "manual:terrain",
-            "manual:conditional-effect",
-            "residual-prose",
-            "preamble:modifier",
-            "preamble:degree-adjustment",
-            "unaccounted-prose",
-            "manual-mechanic"
-          ]
+          "blockers": []
         },
         {
           "id": "TT9owkeMBXJxcERB",
@@ -2403,19 +2464,15 @@
           "families": [
             "degree-adjustment"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
+          "route": "ongoing",
+          "enabledRoute": true,
           "sharedSave": false,
           "previousSharedSave": false,
-          "detail": [],
+          "detail": [
+            "degree adjustment (GM-confirmed)"
+          ],
           "blockers": [
-            "residual-prose",
-            "sustain-effect",
-            "preamble:conditional-eligibility",
-            "preamble:ongoing-trigger",
-            "preamble:modifier",
-            "preamble:degree-adjustment",
-            "unaccounted-prose"
+            "lingering-area"
           ]
         }
       ]
@@ -2439,27 +2496,6 @@
           "previousSharedSave": false,
           "detail": [],
           "blockers": []
-        },
-        {
-          "id": "T5Mt4jXFuh14uREv",
-          "name": "Divinity Leech",
-          "phase": 3,
-          "sourceFile": "spells/spells/rank-9/divinity-leech.json",
-          "families": [
-            "degree-adjustment",
-            "timed-stunned"
-          ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
-          "previousSharedSave": false,
-          "detail": [
-            "timed Stunned on criticalFailure"
-          ],
-          "blockers": [
-            "preamble:ongoing-trigger",
-            "preamble:additional-condition"
-          ]
         },
         {
           "id": "UKsIOWmMx4hSpafl",
@@ -2504,22 +2540,14 @@
           "families": [
             "timed-stunned"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
           "previousSharedSave": false,
           "detail": [
             "timed Stunned on criticalFailure"
           ],
-          "blockers": [
-            "manual:conditional-effect",
-            "residual-prose",
-            "preamble:damage",
-            "area-paragraph",
-            "preamble:recipient-qualifier",
-            "unaccounted-prose",
-            "manual-mechanic"
-          ]
+          "blockers": []
         },
         {
           "id": "HreHc5elibW9hVK8",
@@ -2578,20 +2606,15 @@
           "families": [
             "timed-stunned"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
+          "route": "ongoing",
+          "enabledRoute": true,
           "sharedSave": false,
           "previousSharedSave": false,
           "detail": [
             "timed Stunned on criticalFailure"
           ],
           "blockers": [
-            "manual:temporary-immunity",
-            "residual-prose",
-            "sustain-effect",
-            "preamble:ongoing-trigger",
-            "unaccounted-prose",
-            "manual-mechanic"
+            "lingering-area"
           ]
         }
       ]
@@ -2599,103 +2622,31 @@
   ],
   "blockerCounts": [
     [
-      "unaccounted-prose",
-      8
-    ],
-    [
-      "residual-prose",
-      7
-    ],
-    [
-      "preamble:ongoing-trigger",
+      "lingering-area",
       5
     ],
     [
-      "manual-mechanic",
-      4
-    ],
-    [
-      "preamble:degree-adjustment",
-      4
-    ],
-    [
-      "preamble:additional-condition",
-      3
-    ],
-    [
-      "manual:conditional-effect",
-      3
-    ],
-    [
-      "lingering-area",
-      2
-    ],
-    [
       "description-effects",
-      2
+      1
     ],
     [
       "description-target-predicates",
-      2
+      1
     ],
     [
       "description-lifecycle",
-      2
-    ],
-    [
-      "basic-save-composition",
-      2
-    ],
-    [
-      "preamble:restriction",
-      2
-    ],
-    [
-      "preamble:modifier",
-      2
-    ],
-    [
-      "sustain-effect",
-      2
+      1
     ],
     [
       "target-eligibility",
       1
     ],
     [
-      "preamble:damage",
+      "basic-save-composition",
       1
     ],
     [
-      "area-paragraph",
-      1
-    ],
-    [
-      "preamble:recipient-qualifier",
-      1
-    ],
-    [
-      "preamble:ends-early",
-      1
-    ],
-    [
-      "item-duration-grammar",
-      1
-    ],
-    [
-      "lifecycle",
-      1
-    ],
-    [
-      "manual:terrain",
-      1
-    ],
-    [
-      "manual:temporary-immunity",
-      1
-    ],
-    [
-      "preamble:conditional-eligibility",
+      "unaccounted-prose",
       1
     ]
   ]

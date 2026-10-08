@@ -1,0 +1,20 @@
+{
+  "generatedAt": "2026-10-05T23:42:35.097Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "notesBatch10",
+      "passed": true,
+      "at": "2026-10-05T23:42:33.850Z",
+      "details": {
+        "notes10": {
+          "flavor": {
+            "gm": "PFTEST spell: the shard flies (the GM moves it). The GM rolls in secret.",
+            "player": "PFTEST spell: the shard flies."
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "label": "rank8Batch18",
+  "passed": true,
+  "at": "2026-10-05T06:12:20.881Z",
+  "details": {
+    "batch18": {
+      "spray": {
+        "red": 50,
+        "keys": [
+          "orange",
+          "yellow"
+        ],
+        "potent": 130
+      },
+      "fum": {
+        "color": "Blue",
+        "lost": 60,
+        "paralyzed": true,
+        "terrain": true,
+        "all": {
+          "color": "All",
+          "lost": 100,
+          "prone": true
+        }
+      },
+      "wall": {
+        "blinded": true,
+        "layers": [
+          "layer-red",
+          "layer-orange",
+          "layer-yellow",
+          "layer-green",
+          "layer-blue",
+          "layer-indigo",
+          "layer-violet"
+        ],
+        "cards": 7,
+        "lost": 85
+      }
+    }
+  }
+}

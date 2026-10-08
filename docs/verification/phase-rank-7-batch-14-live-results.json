@@ -1,0 +1,72 @@
+{
+  "batch": "phase-rank-7-batch-14",
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "module": "0.8.2",
+  "results": [
+    {
+      "label": "rank7Batch14",
+      "passed": true,
+      "at": "2026-10-05T01:00:13.956Z",
+      "details": {
+        "batch14": {
+          "strings": {
+            "clumsy": 1,
+            "slowed": 1,
+            "held": {
+              "timing": "turn-end",
+              "mode": "end",
+              "statistic": "fortitude"
+            },
+            "controls": 1,
+            "strike": {
+              "statistic": "spell-attack",
+              "formula": "7d6 slashing",
+              "lost": 20
+            },
+            "again": "again"
+          },
+          "possession": {
+            "partial": {
+              "timing": "turn-start",
+              "mode": "turn-condition",
+              "statistic": "will",
+              "condition": {
+                "slug": "controlled",
+                "value": null,
+                "uuid": "Compendium.pf2e.conditionitems.Item.9qGBRpbX9NEwtAAr"
+              },
+              "endOnCriticalSuccess": true
+            },
+            "body": true,
+            "paralyzed": true,
+            "bodyAfter": false,
+            "full": {
+              "controlled": true,
+              "minion": true
+            }
+          },
+          "temporary": {
+            "note": true,
+            "controlled": true,
+            "minion": true,
+            "casterLost": 10,
+            "after": {
+              "stunned": 1,
+              "controlled": false,
+              "minion": false
+            }
+          },
+          "song": {
+            "temp": 60,
+            "slowed": 1,
+            "used": "Song of the Fallen: dead creatures was used instead.",
+            "deadAgain": true,
+            "undeadDead": true
+          }
+        }
+      }
+    }
+  ]
+}

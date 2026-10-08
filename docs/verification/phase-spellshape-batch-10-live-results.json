@@ -1,0 +1,35 @@
+{
+  "generatedAt": "2026-10-05T12:22:05.928Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "spellshapeBatch10",
+      "passed": true,
+      "at": "2026-10-05T12:21:03.695Z",
+      "details": {
+        "spellshape10": {
+          "split": {
+            "first": 26,
+            "second": 13
+          },
+          "tempest": {
+            "foe": 24,
+            "ally": 21,
+            "resistance": [
+              6
+            ]
+          },
+          "splitHex": 1,
+          "mythic": {
+            "rank": 5,
+            "dc": 25,
+            "before": 17
+          },
+          "simple": 4,
+          "read": "true:ok,true:ok"
+        }
+      }
+    }
+  ]
+}

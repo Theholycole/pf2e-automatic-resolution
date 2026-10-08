@@ -1,0 +1,59 @@
+{
+  "batch": "phase-rank-7-batch-15",
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "module": "0.8.2",
+  "results": [
+    {
+      "label": "rank7Batch15",
+      "passed": true,
+      "at": "2026-10-05T01:21:10.767Z",
+      "details": {
+        "batch15": {
+          "turret": {
+            "ac": 40,
+            "hp": 250,
+            "fort": 30,
+            "prone": true,
+            "breath": {
+              "formula": "13d8 mental",
+              "lost": 65
+            },
+            "gone": true
+          },
+          "duplicate": {
+            "hp": 70,
+            "minion": true,
+            "immunities": 0,
+            "loss": "4d6",
+            "half": false,
+            "first": true,
+            "decayed": 17,
+            "halved": 5
+          },
+          "reanimate": {
+            "degree": "criticalSuccess",
+            "dc": 30,
+            "hp": 100,
+            "loss": "15"
+          },
+          "cage": {
+            "ac": 10,
+            "hp": 40,
+            "resist": [
+              "all-damage:20"
+            ],
+            "trapped": true
+          },
+          "confluence": {
+            "concealed": true,
+            "ac": 30,
+            "terrain": true,
+            "cleaned": true
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+ "batch11": {
+  "label": "thirdPartyFeaturesBatch11",
+  "passed": true,
+  "at": "2026-10-07T20:55:09.442Z",
+  "details": {
+   "thirdPartyFeatures11": {
+    "steady": {
+     "dc": 10,
+     "refund": true,
+     "lost": true,
+     "refunded": "applied",
+     "slots": [
+      2,
+      3
+     ]
+    },
+    "comfort": {
+     "level": 2,
+     "rules": [
+      "min(3,max(1,@item.level))",
+      "-min(3,max(1,@item.level))"
+     ]
+    },
+    "scholar": {
+     "mod": -1,
+     "total": 27,
+     "left": 0
+    },
+    "cloaked": {
+     "shapes": [
+      [
+       "Extended Cloaking",
+       "passive",
+       null
+      ],
+      [
+       "Cloaked Casting",
+       "passive",
+       null
+      ],
+      [
+       "Scholar's Lore",
+       "passive",
+       null
+      ]
+     ],
+     "during": -1,
+     "after": [],
+     "concealed": "2 rounds"
+    },
+    "familiar": {
+     "shapes": [
+      [
+       "Monstrous Familiar",
+       "passive",
+       null
+      ],
+      [
+       "Extended Cloaking",
+       "passive",
+       null
+      ],
+      [
+       "Scholar's Lore",
+       "passive",
+       null
+      ]
+     ],
+     "form": true,
+     "monstrous": true,
+     "caster": false,
+     "temp": 40
+    },
+    "slotCharged": {
+     "shapes": [
+      [
+       "Extended Cloaking",
+       "passive",
+       null
+      ],
+      [
+       "Cloaked Casting",
+       "passive",
+       null
+      ],
+      [
+       "Scholar's Lore",
+       "passive",
+       null
+      ],
+      [
+       "Slot-Charged Spell",
+       "feat",
+       null
+      ]
+     ],
+     "castRank": 3,
+     "expended": true
+    }
+   }
+  }
+ },
+ "steadyRecheck": {
+  "label": "spellFeaturesBatch3",
+  "passed": true,
+  "at": "2026-10-07T20:55:42.131Z",
+  "details": {
+   "features3": {
+    "stupefied": {
+     "lost": "disrupted (Stupefied 20: flat check DC 25 failed)",
+     "refused": "The spell was lost (disrupted (Stupefied 20: flat check DC 25 failed)); it has no effect."
+    },
+    "steady": {
+     "card": true,
+     "kept": true,
+     "lostMatches": true
+    },
+    "communal": {
+     "card": true,
+     "healed": 2,
+     "amount": 2
+    },
+    "counter": {
+     "offer": true,
+     "choices": "Counterspell",
+     "expended": true,
+     "degree": 1,
+     "countered": false,
+     "lostMatches": true
+    }
+   }
+  }
+ }
+}

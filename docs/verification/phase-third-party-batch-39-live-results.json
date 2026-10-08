@@ -1,0 +1,22 @@
+{
+ "label": "thirdPartyBatch39",
+ "passed": true,
+ "at": "2026-10-07T03:43:23.042Z",
+ "details": {
+  "thirdParty39": {
+   "fire": {
+    "resist": [
+     "fire 5"
+    ],
+    "duration": [
+     1,
+     "minutes"
+    ]
+   },
+   "ac": {
+    "resist": [],
+    "ac": 1
+   }
+  }
+ }
+}

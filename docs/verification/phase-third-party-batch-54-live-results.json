@@ -1,0 +1,98 @@
+{
+ "label": "thirdPartyBatch54",
+ "passed": true,
+ "at": "2026-10-07T05:51:34.002Z",
+ "details": {
+  "thirdParty54": {
+   "cast": {
+    "stats": {
+     "height": 45,
+     "hp": 70,
+     "ac": 33
+    },
+    "hp": 70,
+    "ac": 33,
+    "immobilized": true,
+    "size": [
+     3,
+     3
+    ],
+    "moved": [
+     {
+      "name": "PFTEST Corrections Linked",
+      "to": {
+       "x": 600,
+       "y": 100
+      }
+     },
+     {
+      "name": "PFTEST P23 Affliction tp54 inside",
+      "to": {
+       "x": 400,
+       "y": 300
+      }
+     }
+    ],
+    "insideAt": [
+     4,
+     3
+    ],
+    "first": "success",
+    "grabbed": true
+   },
+   "again": {
+    "degree": "criticalSuccess",
+    "restrained": true,
+    "grabbed": false,
+    "holds": 1
+   },
+   "ended": {
+    "tree": false
+   }
+  }
+ },
+ "rerun": {
+  "thirdPartyBatch50": {
+   "label": "thirdPartyBatch50",
+   "passed": true,
+   "at": "2026-10-07T05:51:47.550Z",
+   "details": {
+    "thirdParty50": {
+     "cast": {
+      "status": "applied",
+      "dice": 1,
+      "moved": [
+       {
+        "name": "PFTEST P23 Affliction tp50 foe",
+        "to": {
+         "x": 500,
+         "y": 500
+        }
+       }
+      ],
+      "foeAt": [
+       5,
+       5
+      ],
+      "walls": 12,
+      "terrain": true,
+      "exemption": true,
+      "ally": [
+       "1d10 force crit"
+      ],
+      "foe": [
+       "1d10 force crit"
+      ]
+     },
+     "ended": {
+      "walls": 0,
+      "terrain": false,
+      "beside": false,
+      "exemption": false,
+      "ally": []
+     }
+    }
+   }
+  }
+ }
+}

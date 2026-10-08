@@ -1,0 +1,50 @@
+{
+ "label": "thirdPartyBatch27",
+ "passed": true,
+ "at": "2026-10-07T02:43:06.327Z",
+ "details": {
+  "thirdParty27": {
+   "one": {
+    "status": "applied",
+    "frightened": 1
+   },
+   "two": {
+    "status": "applied",
+    "frightened": 0,
+    "effect": {
+     "rules": [
+      [
+       [
+        "saving-throw"
+       ],
+       2,
+       "status",
+       "fear"
+      ]
+     ],
+     "duration": [
+      1,
+      "minutes"
+     ]
+    }
+   },
+   "three": {
+    "status": "applied",
+    "near": [
+     0,
+     0
+    ],
+    "far": 2
+   },
+   "held": {
+    "status": "applied",
+    "frightened": 1,
+    "kept": 1,
+    "counteract": {
+     "target": "PFTEST P23 Affliction tp27 held's PFTEST ongoing fear",
+     "button": true
+    }
+   }
+  }
+ }
+}

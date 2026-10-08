@@ -1,0 +1,68 @@
+{
+ "batch16": {
+  "label": "thirdPartyFeaturesBatch16",
+  "passed": true,
+  "at": "2026-10-07T21:45:51.807Z",
+  "details": {
+   "thirdPartyFeatures16": {
+    "offered": [
+     "Seal the Wicket: a rank 3 slot (rank 3, arcane spontaneous)",
+     "Seal the Wicket: a rank 5 slot (rank 5, arcane spontaneous)",
+     "Archmage's Counter: no slot, counteract rank 5",
+     "Archmage's Counter: no slot, counteract rank 5 — spend a Mythic Point"
+    ],
+    "archmage": {
+     "result": {
+      "degree": 3,
+      "countered": true,
+      "spell": null
+     },
+     "flavor": "<strong>Archmage's Counter</strong>: counteract check against DC 17 (rank 5 vs 3) — critical success, countered",
+     "slots": 3
+    },
+    "haughty": {
+     "card": true,
+     "degree": 0,
+     "immune": true
+    },
+    "residual": {
+     "card": true,
+     "trait": "fire",
+     "level": 3,
+     "selection": "fire"
+    }
+   }
+  }
+ },
+ "counterspellRecheck": {
+  "label": "spellFeaturesBatch3",
+  "passed": true,
+  "at": "2026-10-07T21:46:01.909Z",
+  "details": {
+   "features3": {
+    "stupefied": {
+     "lost": "disrupted (Stupefied 20: flat check DC 25 failed)",
+     "refused": "The spell was lost (disrupted (Stupefied 20: flat check DC 25 failed)); it has no effect."
+    },
+    "steady": {
+     "card": true,
+     "kept": false,
+     "lostMatches": true
+    },
+    "communal": {
+     "card": true,
+     "healed": 2,
+     "amount": 2
+    },
+    "counter": {
+     "offer": true,
+     "choices": "Counterspell",
+     "expended": true,
+     "degree": 2,
+     "countered": true,
+     "lostMatches": true
+    }
+   }
+  }
+ }
+}

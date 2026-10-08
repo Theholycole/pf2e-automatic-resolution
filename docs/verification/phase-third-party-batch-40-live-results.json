@@ -1,0 +1,30 @@
+{
+ "label": "thirdPartyBatch40",
+ "passed": true,
+ "at": "2026-10-07T03:46:45.423Z",
+ "details": {
+  "thirdParty40": {
+   "options": [
+    [
+     "aid",
+     "occultism"
+    ],
+    [
+     "concealed",
+     null
+    ]
+   ],
+   "aid": {
+    "degree": "success",
+    "value": 1,
+    "effect": 1
+   },
+   "second": "Secret of the Forebearers: the forebearers already Aided this turn.",
+   "concealed": true,
+   "legend": {
+    "degree": "criticalSuccess",
+    "value": 4
+   }
+  }
+ }
+}

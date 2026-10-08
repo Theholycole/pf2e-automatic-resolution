@@ -21,6 +21,9 @@ const ROWS = {
 };
 const HEADINGS = { criticalSuccess: "Critical Success", success: "Success", failure: "Failure", criticalFailure: "Critical Failure" };
 const HEIGHTENED = /^<p>\s*<strong>\s*Heightened \(\+(\d+)\)\s*<\/strong>\s*The ([a-z]+) damage and persistent ([a-z]+) damage increase by (\d+) \((\d+) on a critical failure\)\.\s*<\/p>$/;
+// (Witches+'s Personal Blizzard+: "Heightened (+2) The cold damage increases by 1d6 and the persistent cold damage increases by 2 (2d6 and 4 on a critical
+// failure).")
+const HEIGHTENED_DICE = /^<p>\s*<strong>\s*Heightened \(\+(\d+)\)\s*<\/strong>\s*The ([a-z]+) damage increases by (\d+)d(\d+) and the persistent ([a-z]+) damage increases by (\d+) \((\d+)d(\d+) and (\d+) on a critical failure\)\.\s*<\/p>$/;
 const split = text => text.replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s+(?=[A-Z@])/).map(sentence => sentence.trim()).filter(Boolean);
 
 /** Returns {sustainedSaveDamage, claimed} or null. */
@@ -45,21 +48,34 @@ export function compileSustainedSaveDamage(adapted) {
     const type = hit[2];
     if (rows.success[0][1] !== hit[1] || rows.success[0][2] !== type || hit[4] !== type || rows.criticalFailure[0][1] !== type || rows.criticalFailure[0][2] !== type) return null;
     const heightened = HEIGHTENED.exec(rest[0]);
-    if (!heightened || heightened[2] !== type || heightened[3] !== type) return null;
+    const diced = heightened ? null : HEIGHTENED_DICE.exec(rest[0]);
+    let step;
+    if (heightened && heightened[2] === type && heightened[3] === type)
+        step = { interval: Number(heightened[1]), flat: Number(heightened[4]), criticalFlat: Number(heightened[5]) };
+    else if (diced && diced[2] === type && diced[5] === type && diced[4] === diced[8])
+        step = { interval: Number(diced[1]), directDice: Number(diced[3]), persistentFlat: Number(diced[6]), criticalDirectDice: Number(diced[7]), criticalPersistentFlat: Number(diced[9]) };
+    else return null;
     return {
         sustainedSaveDamage: { statistic: adapted.defense.statistic, type, durationSeconds: Number(minutes[1]) * 60,
             success: { formula: rows.success[0][1] }, failure: { formula: hit[1], persistent: hit[3] }, criticalFailure: { formula: rows.criticalFailure[0][3], persistent: rows.criticalFailure[0][3] },
             concealed: { uuid: rows.failure[2][1], text: rows.failure[2][0].replace(/@UUID\[[^\]]+\]\{([^}]+)\}/g, "$1") },
-            step: { interval: Number(heightened[1]), flat: Number(heightened[4]), criticalFlat: Number(heightened[5]) } },
+            step },
         claimed: [...lead, ...Object.values(rows).flat().map(match => match[0]), htmlToPlainText(rest[0]).trim()]
     };
 }
 
-/** The formulas at a cast rank: each die expression plus the flat step (the critical failure's own step). */
+/** The formulas at a cast rank: each die expression plus the flat step (the critical failure's own step), or more dice and a flat persistent step. */
 export function sustainedSaveDamageAt(data, degree, castRank, baseRank) {
     const steps = Math.max(0, Math.floor((Number(castRank) - Number(baseRank)) / data.step.interval));
-    const add = degree === "criticalFailure" ? steps * data.step.criticalFlat : steps * data.step.flat;
-    const plus = formula => add ? `(${formula}+${add})` : formula;
+    const critical = degree === "criticalFailure";
     const row = data[degree];
-    return { direct: `${plus(row.formula)}[${data.type}]`, persistent: row.persistent ? `${plus(row.persistent)}[persistent,${data.type}]` : null };
+    const plus = (formula, add) => add ? `(${formula}+${add})` : formula;
+    const moreDice = (formula, dice) => { const m = /^(\d+)d(\d+)$/.exec(formula); return m && dice ? `${Number(m[1]) + dice}d${m[2]}` : formula; };
+    if (data.step.flat != null) {
+        const add = critical ? steps * data.step.criticalFlat : steps * data.step.flat;
+        return { direct: `${plus(row.formula, add)}[${data.type}]`, persistent: row.persistent ? `${plus(row.persistent, add)}[persistent,${data.type}]` : null };
+    }
+    const dice = steps * (critical ? data.step.criticalDirectDice : data.step.directDice);
+    const flat = steps * (critical ? data.step.criticalPersistentFlat : data.step.persistentFlat);
+    return { direct: `${moreDice(row.formula, dice)}[${data.type}]`, persistent: row.persistent ? `${plus(row.persistent, flat)}[persistent,${data.type}]` : null };
 }

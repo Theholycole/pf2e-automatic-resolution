@@ -1,0 +1,48 @@
+{
+  "generatedAt": "2026-10-05T10:21:54.298Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "spellshapeBatch3",
+      "passed": true,
+      "at": "2026-10-05T10:20:33.738Z",
+      "details": {
+        "spellshape3": {
+          "burning": [
+            "1d6acid",
+            "2fire"
+          ],
+          "focusBefore": 1,
+          "consecrate": {
+            "focus": 0,
+            "more": [
+              "Consecrate Spell: a Focus Point spent",
+              "Consecrate Spell: 1 vitality more"
+            ]
+          },
+          "detonating": {
+            "beside": 2
+          },
+          "rebuke": {
+            "one": false,
+            "two": true,
+            "weakness": 10,
+            "immune": true
+          },
+          "forcible": 5,
+          "chaotic": {
+            "rolled": 3,
+            "types": [
+              "acid"
+            ],
+            "sickened": [
+              1,
+              false
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

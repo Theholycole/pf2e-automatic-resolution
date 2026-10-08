@@ -1,0 +1,35 @@
+{
+ "label": "thirdPartyBatch64",
+ "passed": true,
+ "at": "2026-10-07T06:35:48.487Z",
+ "details": {
+  "thirdParty64": {
+   "cast": {
+    "hp": 20,
+    "reduce": 5,
+    "radius": 10
+   },
+   "claw": {
+    "a": 7,
+    "b": 7,
+    "shield": 15
+   },
+   "outside": {
+    "c": 12,
+    "shield": 15
+   },
+   "inward": {
+    "c": 7,
+    "shield": 10
+   },
+   "last": {
+    "a": 10,
+    "shield": 5
+   },
+   "final": {
+    "b": 10,
+    "region": false
+   }
+  }
+ }
+}

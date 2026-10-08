@@ -51,10 +51,13 @@ test('Evil Eye guards only its own active floor and permits independent recovery
  assert.equal(runtime.protectCondition({getFlag:()=>undefined},null,{},true),undefined);
 });
 test('a complete degree table cannot hide immunity or ongoing rules in the preamble',async()=>{
- for(const name of ['rank-6/blanket-of-stars','rank-6/expunge-blood']){
+ // (Expunge Blood's preamble is now read rule by rule — its blood question and bleeding Clumsy: test/rank-7-batch-12.test.js. Blanket of Stars'
+ // preamble is its form, 2026-10-05: the module's Effect, and the table its aura's save — test/rank-6-batch-23.test.js.)
+ for(const name of ['rank-6/blanket-of-stars']){
   const p=compileAbility(await fixture(name));
   assert.equal(isExecutableSavePlan(p),false,name);
-  assert.ok(p.automation.pendingCapabilities.some(x=>x.startsWith('preamble:')),name);
+  assert.equal(p.resolution.kind,'generated-form',name);
+  assert.ok(p.resolution.formRiders.auras.some(aura=>aura.save?.rows?.failure),name);
  }
 });
 import {nativeConditionTiming} from '../scripts/condition-timing.js';

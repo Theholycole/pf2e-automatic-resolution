@@ -1,0 +1,93 @@
+{
+ "label": "rank8Batch10",
+ "passed": true,
+ "at": "2026-10-04T23:42:11.802Z",
+ "details": {
+  "batch10": {
+   "casts": [
+    {
+     "name": "Earthquake",
+     "kind": "spell-note",
+     "gmHandled": "world-scale",
+     "options": [
+      "shaking-ground",
+      "fissures",
+      "collapse"
+     ],
+     "whispered": true
+    },
+    {
+     "name": "Scrying",
+     "kind": "spell-note",
+     "gmHandled": "information",
+     "options": [],
+     "whispered": true
+    },
+    {
+     "name": "Forest of Gates",
+     "kind": "spell-note",
+     "gmHandled": "travel",
+     "options": [],
+     "whispered": true
+    },
+    {
+     "name": "Restore Ground",
+     "kind": "spell-note",
+     "gmHandled": "world-scale",
+     "options": [
+      "collapse"
+     ],
+     "whispered": true
+    },
+    {
+     "name": "Under Sunless Skies",
+     "kind": "spell-note",
+     "gmHandled": "world-scale",
+     "options": [
+      "allies",
+      "enemies"
+     ],
+     "whispered": true
+    },
+    {
+     "name": "Theogeny",
+     "kind": "spell-note",
+     "gmHandled": "world-scale",
+     "options": [
+      "allies-holy",
+      "foes-holy",
+      "allies-unholy",
+      "foes-unholy"
+     ],
+     "whispered": true
+    }
+   ],
+   "shaking": [
+    true,
+    true
+   ],
+   "collapse": {
+    "lost": [
+     39,
+     0
+    ],
+    "prone": [
+     true,
+     false
+    ]
+   },
+   "restore": [
+    "collapse"
+   ],
+   "sunless": {
+    "temp": 40,
+    "will": 3
+   },
+   "theogeny": {
+    "weakness": 5,
+    "unholy": true
+   },
+   "gmOnly": true
+  }
+ }
+}

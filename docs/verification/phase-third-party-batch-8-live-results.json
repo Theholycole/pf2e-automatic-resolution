@@ -1,0 +1,29 @@
+{
+ "label": "thirdPartyBatch8",
+ "passed": true,
+ "at": "2026-10-06T23:34:45.099Z",
+ "details": {
+  "thirdParty8": {
+   "nigh": {
+    "frightened": 2,
+    "note": true,
+    "afterOne": 1,
+    "afterTwo": 1,
+    "noteAfterSave": false,
+    "casterFrightened": 1
+   },
+   "sense": {
+    "forbids": [
+     "auditory",
+     "manipulate"
+    ],
+    "dazzled": false,
+    "refused": "Sensory Deprivation: Sensory deprivation (hands): it can't take actions with the manipulate trait"
+   },
+   "bewilder": {
+    "note": "Bewilder: Bewildered",
+    "recurring": "will"
+   }
+  }
+ }
+}

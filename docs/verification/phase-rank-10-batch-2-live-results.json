@@ -1,0 +1,52 @@
+{
+  "label": "rank10Batch2",
+  "passed": true,
+  "at": "2026-10-05T02:28:23.940Z",
+  "details": {
+    "batch2": {
+      "pipe": {
+        "follower": "criticalFailure",
+        "listener": "criticalSuccess",
+        "controlled": true,
+        "minion": true,
+        "listenerFascinated": false,
+        "immune": true,
+        "afterLeaving": true,
+        "ended": {
+          "controlled": false,
+          "minion": false
+        }
+      },
+      "wave": {
+        "thrallsGone": true,
+        "terrain": 3,
+        "immobilized": true
+      },
+      "army": {
+        "seerLost": 0,
+        "sees": true,
+        "struckLost": 29,
+        "struck": [
+          "slowed"
+        ],
+        "later": [
+          {
+            "adjust": "applies",
+            "from": "failure",
+            "to": "success"
+          }
+        ]
+      },
+      "vac": {
+        "holding": true,
+        "stunned": 1,
+        "gasperHolding": true,
+        "unconscious": true,
+        "suffocating": true,
+        "sustain": [
+          "applies"
+        ]
+      }
+    }
+  }
+}

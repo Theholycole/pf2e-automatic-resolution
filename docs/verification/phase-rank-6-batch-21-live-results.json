@@ -1,0 +1,62 @@
+{
+  "batch": "phase-rank-6-batch-21",
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "module": "0.8.2",
+  "results": [
+    {
+      "label": "rank6Batch21",
+      "passed": true,
+      "at": "2026-10-05T01:34:38.998Z",
+      "details": {
+        "batch21": {
+          "gray": {
+            "name": "Greater Shadow",
+            "effect": true,
+            "minion": true,
+            "gone": true
+          },
+          "horror": {
+            "name": "Plague Zombie",
+            "level": 1,
+            "minion": true,
+            "at": [
+              true
+            ]
+          },
+          "illusion": {
+            "formula": "3d8",
+            "actor": true
+          },
+          "primal": {
+            "effect": true,
+            "fly": null
+          },
+          "patron": {
+            "ac": 28,
+            "size": "lg",
+            "temp": 20,
+            "check": {
+              "formula": "4d10 bludgeoning",
+              "push": null
+            },
+            "after": {
+              "hp": 1,
+              "form": false
+            }
+          },
+          "judge": {
+            "formula": "4d10 spirit",
+            "lost": 32,
+            "again": "again"
+          },
+          "shell": {
+            "formula": "7d8 force",
+            "lost": 36
+          }
+        }
+      }
+    }
+  ]
+}

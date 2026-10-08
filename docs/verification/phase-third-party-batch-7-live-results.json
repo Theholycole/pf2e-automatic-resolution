@@ -1,0 +1,32 @@
+{
+ "label": "thirdPartyBatch7",
+ "passed": true,
+ "at": "2026-10-06T23:25:44.940Z",
+ "details": {
+  "thirdParty7": {
+   "hemo": {
+    "weakness": [
+     1
+    ],
+    "control": true,
+    "drained": 1,
+    "again": "Hemophilia: that only happens the first time.",
+    "drainedAfter": 1
+   },
+   "cold": {
+    "formula": "2d6 persistent cold",
+    "persistent": "2d6",
+    "reflex": -1,
+    "reflexAfter": 0
+   },
+   "ravage": {
+    "formula": "1d4 fire + 2 persistent fire",
+    "lost": 6,
+    "persistent": "2 * 2",
+    "dc": 17,
+    "tied": true,
+    "after": false
+   }
+  }
+ }
+}

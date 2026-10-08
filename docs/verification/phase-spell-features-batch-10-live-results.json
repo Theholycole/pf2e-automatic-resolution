@@ -1,0 +1,57 @@
+{
+  "generatedAt": "2026-10-06T10:53:56.736Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "spellFeaturesBatch10",
+      "passed": true,
+      "at": "2026-10-06T10:52:42.291Z",
+      "details": {
+        "features10": {
+          "nethys": {
+            "check": 14,
+            "lost": null,
+            "consistent": true
+          },
+          "sarenrae": {
+            "curse": true,
+            "manHp": 0,
+            "manUnconscious": true,
+            "ghoulHp": 0,
+            "ghoulUnconscious": false
+          },
+          "river": {
+            "armed": true,
+            "formula": "4d4 vitality"
+          }
+        }
+      }
+    },
+    {
+      "label": "spellFeaturesBatch10",
+      "passed": true,
+      "at": "2026-10-06T10:53:27.004Z",
+      "details": {
+        "features10": {
+          "nethys": {
+            "check": 9,
+            "lost": "Nethys - Moderate Curse: the opposite spell of the same rank is cast instead",
+            "consistent": true
+          },
+          "sarenrae": {
+            "curse": true,
+            "manHp": 0,
+            "manUnconscious": true,
+            "ghoulHp": 0,
+            "ghoulUnconscious": false
+          },
+          "river": {
+            "armed": true,
+            "formula": "4d4 vitality"
+          }
+        }
+      }
+    }
+  ]
+}

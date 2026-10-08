@@ -40,10 +40,10 @@ test('Travel by Turtle: a note; the heightened durations of 1 day, 1 week (7 day
     assert.equal(noteOf(compile(withText(await spell('rank-3/travel-by-turtle'), html => html.replaceAll('turtle', 'beast')))), null);
 });
 
-test('Tiny Wings: the familiar\'s fly Speed is a BaseSpeed rule on the note', async () => {
-    const note = noteOf(compile(await spell('rank-3/tiny-wings')));
-    assert.deepEqual(note.rules, [{key: 'BaseSpeed', selector: 'fly', value: 20}]);
-    assert.equal(note.recipient, 'target');
+test('Tiny Wings: the familiar\'s fly Speed is a BaseSpeed rule (a stated Effect since notes batch 1, with the +15 feet for a familiar that flies)', async () => {
+    const stated = compile(await spell('rank-3/tiny-wings')).resolution.statedEffect;
+    assert.deepEqual(stated.rules, [{key: 'BaseSpeed', selector: 'fly', value: 20}]);
+    assert.equal(stated.recipient, 'familiar');
     // A Speed the caster gains on a familiar's spell is refused (the recipient is the familiar).
     assert.equal(noteOf(compile(withText(await spell('rank-3/tiny-wings'), html => html.replace('Your familiar gains a 20-foot fly Speed.', 'You gain a 20-foot fly Speed.')))), null);
 });

@@ -210,7 +210,7 @@ export function compileActorTargetConstraints(targeting, {
     }
     // Plural or willing creature targets, and the caster's own companion or eidolon
     // (the caster targets it; no trait proves which creature that is).
-    if (/^(?:one|\d+|up to (?:one|\d+)|\d+ to \d+) willing creatures?$/.test(target) || /^(?:1|one) ally$/.test(target) || /^you and up to \d+ (?:allies|willing creatures)$/.test(target)
+    if (/^(?:one|\d+|up to (?:one|\d+)|\d+ to \d+) willing creatures?$/.test(target) || /^(?:1|one) (?:willing )?ally$/.test(target) || /^you and up to \d+ (?:allies|willing creatures)$/.test(target)
         || /^your (?:animal companion|eidolon|companion)(?: or (?:eidolon|animal companion))?$/.test(target)
         // "one of your animal companions you can perceive": the caster's pick, as with "your companion".
         || /^one of your animal companions you can perceive$/.test(target)
@@ -252,7 +252,7 @@ export function compileActorTargetConstraints(targeting, {
     if (/^(?:1|one) living or undead creature$/.test(target)) return { sourceText, supportsActorTargets: true, complete: true, predicates: [{ kind: "living-or-undead" }] };
     if (/^(?:1|one) corporeal creature$/.test(target)) return { sourceText, supportsActorTargets: true, complete: true, predicates: [{ kind: "trait", slug: "incorporeal", present: false }] };
     if (/^(?:1|one) living humanoid$/.test(target)) return { sourceText, supportsActorTargets: true, complete: true, predicates: [{ kind: "living-creature" }, { kind: "trait", slug: "humanoid", present: true }] };
-    if (/^(?:1|one) creature taking bleed damage$/.test(target)) return { sourceText, supportsActorTargets: true, complete: true, predicates: [{ kind: "persistent-damage", damageType: "bleed" }] };
+    if (/^(?:1|one) creature taking (?:persistent )?bleed damage$/.test(target)) return { sourceText, supportsActorTargets: true, complete: true, predicates: [{ kind: "persistent-damage", damageType: "bleed" }] };
     const asked = [
         [/^(?:1|one) creature standing on the ground$/, "Is the creature standing on the ground?"],
         [/^(?:1|one) flying creature$/, "Is the creature flying?"],
@@ -286,6 +286,8 @@ export function compileActorTargetConstraints(targeting, {
     if (/^(?:1|one) living creature that needs to breathe$/i.test(target)) {
         return { sourceText, supportsActorTargets: true, complete: true, predicates: [{ kind: "living-creature" }, { kind: "gm-confirmed", question: "Does this creature need to breathe?" }] };
     }
+    // "1 diseased creature" (Witches+'s Sudden Outbreak): the GM confirms it has a disease (PF2e's afflictions are the GM's).
+    if (/^(?:1|one) diseased creature$/i.test(target)) return { sourceText, supportsActorTargets: true, complete: true, predicates: [{ kind: "gm-confirmed", question: "Does this creature have a disease?" }] };
     // "1 living creature that has a soul": living (PF2e traits), and the GM confirms it has a soul.
     if (/^(?:1|one) living creature that has a soul$/i.test(target)) {
         return { sourceText, supportsActorTargets: true, complete: true, predicates: [{ kind: "living-creature" }, { kind: "gm-confirmed", question: "Does this creature have a soul?" }] };

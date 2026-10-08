@@ -203,7 +203,9 @@ export function inspectCasterBenefitClaim(document, claimText, { rank, spellDura
     const expected = /until the beginning of your next turn/i.test(claim) || /\bAt the end of the movement, /.test(claim) ? { unit: "rounds", value: 1, expiry: "turn-start" }
         : /until the end of your next turn/i.test(claim) ? { unit: "rounds", value: 1, expiry: "turn-end" }
             : /\bfor the duration\b/i.test(claim) && /^1 round$/i.test(String(spellDuration ?? "").trim()) ? { unit: "rounds", value: 1 }
-                : /\bfor 1 minute\.?$/i.test(claim) ? { unit: "minutes", value: 1 } : null;
+                : /\bfor 1 minute\.?$/i.test(claim) ? { unit: "minutes", value: 1 }
+                    // (A sustained spell's benefit with no time of its own — "You gain a +1 status bonus to AC." — lasts while it's sustained.)
+                    : spellDuration === "sustained" && !/\b(?:for|until)\b/i.test(claim) ? { sustained: true } : null;
     if (!expected || Object.entries(expected).some(([key, value]) => duration[key] !== value)) return fail("the Effect's duration isn't the stated one");
     return { supported: true, reason: null };
 }

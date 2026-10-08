@@ -6096,6 +6096,1056 @@ See [verification](verification/phase-rank-8-batch-7.md).
 
 See [verification](verification/phase-rank-6-batch-20.md).
 
+### Rank 7 batch 12 — Orb of Twisting Fate, Beheading Buzz Saw, Expunge Blood
+
+- **Lasting behaviour notes** by result, a **table save with persistent damage and a death save**, and a **condition that rises while bleeding**.
+
+See [verification](verification/phase-rank-7-batch-12.md).
+
+### Rank 8 batch 8 — Maze of Locked Doors, Medusa's Wrath
+
+- **Trapped notes by result** with the hallway reminder, and **a Strike whose Slowed escalates to Petrified**.
+
+See [verification](verification/phase-rank-8-batch-8.md).
+
+### Rank 9 batch 6 — Massacre
+
+- **A level-limited death line** with death at 0 HP and **a backlash when it kills no one**.
+
+See [verification](verification/phase-rank-9-batch-6.md).
+
+### Rank 8 batch 9 — Falling Sky
+
+- **Flyers slammed to the ground** (falling damage from their elevation) and **everyone's save** for Prone and Stunned.
+
+See [verification](verification/phase-rank-8-batch-9.md).
+
+### Rank 7 batch 13 — Darklight
+
+- **A draining field of darkness**: the region dark, a basic save on entering or starting a turn inside, chosen allies spared.
+
+See [verification](verification/phase-rank-7-batch-13.md).
+
+### Rank 8 batch 10 — GM-handled spells and GM options
+
+- **The user's GM-handled ruling** (16 world-scale and information/travel/ward spells), with **GM options** on the world-scale ones that can affect creatures.
+
+See [verification](verification/phase-rank-8-batch-10.md).
+
+### Rank 8 batch 11 — incarnates by parts
+
+- **Incarnates by parts** (`incarnate-phases.js`, `compileIncarnateParts`): each Arrive and Depart becomes save, attack, cloud, damage, healing, Effect, condition-reduction or cast-spell parts, each checked by `inspectIncarnatePlan`. The incarnate card runs each part on the creatures the GM targets.
+- **d20 limits** (`d20-clamp.js`) and **turn-start note damage** (`incarnate-parts-runtime.js`).
+
+See [verification](verification/phase-rank-8-batch-11.md).
+
+### Rank 7 batch 14 — control (group 2a)
+
+- **Controls card** for a save's controls (Puppet Strings' forced Strike and Stride, Possession's body-died save, Temporary Possession's thrall).
+- **Note endings** (`note-end-runtime.js`: `thenCondition`, `endsInDeath`, `hpShare`), Controlled with the caster's ownership for each turn the start-of-turn save fails, and the caster's condition while a possession note lasts.
+
+See [verification](verification/phase-rank-7-batch-14.md).
+
+### Rank 7 batch 15 — conjured tokens and copies (group 2b)
+
+- **Conjured tokens** on incarnate-style cards: stated statistics, removed with the spell or at 0 HP, with a concealing area that follows the token.
+- **Creature copies:** `copyCreature`, Duplicate Foe's `duplicate`, and the `check-copy` part. A copy loses HP after the caster's turn and can halve its Strike damage. Buttons can act on the conjured token, and the `terrain` part makes its area difficult terrain.
+
+See [verification](verification/phase-rank-7-batch-15.md).
+
+### Rank 6 batch 21 — the rest of group 2
+
+- **Summon parts** (a named creature beside a dying target, ended with its Dying; a listed stat block fitted to the corpse), **form Effects by rank** (AC set, temporary HP, 1 HP instead of 0), plans by rank on parts, and ChoiceSet preselection.
+
+See [verification](verification/phase-rank-6-batch-21.md).
+
+### Rank 7 batch 16 — group 3, part 1
+
+- **Lantern auras with degree rows** (per-degree Effects held while inside, enemies-only, sustained, a chosen radius), a row condition's **`insteadIfHeld`**, and a lingering area's **`sleeperDamage`**.
+
+See [verification](verification/phase-rank-7-batch-16.md).
+
+### Rank 8 batch 14 — group 3, part 2
+
+- Row movement toward/to the center and **rises**, **living-only terrain**, the **draining center** child area (`drainCenter`), and the **GM mark** (`gmMark`) with turn-start damage that can kill.
+
+See [verification](verification/phase-rank-8-batch-14.md).
+
+### Rank 10 batch 2 — group 3, part 3
+
+- Save-once auras whose rows last outside the area, with immunity, minion control, a default radius and Dismiss; placed **greater terrain** parts; the lingering **condition choice**; and the **`note-held`** degree adjustment.
+
+See [verification](verification/phase-rank-10-batch-2.md).
+
+### Rank 7 batch 17 — group 3, part 4
+
+- Lingering areas made as a **region following the caster** (row terrain, optional expansion), **sustained caster Effects**, and the **shadows' area** (an enemies-only hazard of the chosen type; disbelief halves it).
+
+See [verification](verification/phase-rank-7-batch-17.md).
+
+### Rank 9 batch 7 — group 3, part 5
+
+- Note Effects ended by **total damage** (`damageLimit`, also with an unlimited Escape note) and **turn-start attacks** (`turnStartAttack`: flat check, basic save, damage, Off-Guard).
+
+See [verification](verification/phase-rank-9-batch-7.md).
+
+### Rank 9 batch 8 — the end of group 3
+
+- The **`hazard`** card part, **rolled tables read by degree** (`rollResults`, a critical failure's offset), lingering **`exposureDamage`**, and lingering-area **afflictions** with their own maximum duration.
+
+See [verification](verification/phase-rank-9-batch-8.md).
+
+### Rank 8 batch 15 — group 4, part 1
+
+- Lasting states as **row note Effects**, with the note flags `halfStrikes`, `sourceSavesBetter` and `turnStartFlat`, and the outcome lifecycle for "varies".
+
+See [verification](verification/phase-rank-8-batch-15.md).
+
+### Rank 6 batch 22 — group 4, part 2
+
+- **Keyed GM questions** on row conditions, **condition-linked notes** (`withCondition`: ended with the condition, Weakness scaled by its value), and Weakness rules on row notes.
+
+See [verification](verification/phase-rank-6-batch-22.md).
+
+### Rank 9 batch 9: group 4, part 3
+
+- **Target-following auras** (`targetAura`: a region on the target, a penalty for allies inside it, conditions applied by degree), **counter badges** on note Effects, and a **rolled condition** chosen by degree.
+
+See [verification](verification/phase-rank-9-batch-9.md).
+
+### Rank 8 batch 16: group 5, part 1
+
+- **Form riders** (`form-riders.js`): a form's auras are regions following the caster, with damage or saves; turn-end recovery; moving saves on the form's card. Each applies only to the option picked on PF2e's Effect.
+
+See [verification](verification/phase-rank-8-batch-16.md).
+
+### Rank 7 batch 18: group 5, part 2
+
+- The form's card gains **retaliate** and **temp-hp** parts (temporary Hit Points once a round, ending with the form), plus spell-attack Strikes with a chosen type.
+
+See [verification](verification/phase-rank-7-batch-18.md).
+
+### Rank 9 batch 10: group 5, part 3
+
+- **A caster's form after a save** (`casterForm`): PF2e's Effect and a following aura at Finalize. When a form's Effect ends, its auras end, and full Hit Points are restored where stated (`form-aura-runtime.js`).
+
+See [verification](verification/phase-rank-9-batch-10.md).
+
+### Rank 6 batch 23: group 5, part 4
+
+- **Generated forms** (`generated-form`, `generated-forms.js`): the module's Effect from the text, with toggle grants, option slots and saving auras.
+
+See [verification](verification/phase-rank-6-batch-23.md).
+
+### Rank 10 batch 3: the end of group 5
+
+- Generated forms answer PF2e's choice ahead (`choiceSelections`). The form's card gains **cast-form**, which casts one of the caster's polymorph spells with stated temporary Hit Points, each form once.
+
+See [verification](verification/phase-rank-10-batch-3.md).
+
+### Rank 6 batch 24: group 7, part 1
+
+- **Teleports** (`teleport-runtime.js`): a space picked and checked (range, inside the area, unoccupied), then the token moved at once; swaps; Hit Point sharing; descent and elevation parts on spell cards.
+
+See [verification](verification/phase-rank-6-batch-24.md).
+
+### Rank 8 batch 17: the end of group 7
+
+- The card's **fuse** part: the target hidden, the caster's temporary Hit Points and reach, and the target's return beside the caster when the Effect ends.
+
+See [verification](verification/phase-rank-8-batch-17.md).
+
+### Rank 9 batch 11: group 8, part 1
+
+- **Mode cards** (`mode-cards.js`): the card's area (`setAreaMode`: member Effects in slots, terrain), modes with hidden actions, "never twice in a row", and the launch part.
+
+See [verification](verification/phase-rank-9-batch-11.md).
+
+### Rank 7 batch 19: the end of group 8
+
+- Mode areas gain an area's own condition save (while inside, with immunity), resizing, child hazards, held shields, kept saves (`remembered`) with turn-end damage and the leaving trigger, and the chosen radius.
+
+See [verification](verification/phase-rank-7-batch-19.md).
+
+### Rank 10 batch 4: group 9, part 1
+
+- **Blast cards** (`blast-cards.js`): multi-pool text formulas with a picked type, the hazard's picked type and terrain, temporary Hit Points shared with allies (**temp-share**), and **glyph** turn-end saves.
+
+See [verification](verification/phase-rank-10-batch-4.md).
+
+### Rank 8 batch 18: group 9, part 2
+
+- **Prismatic cards** (`prismatic-cards.js`): the **beam-roll**, **sequence** and **fumarole** parts. Area hazards with a basic save now apply a failure's added effect. Referenced spells are loaded two levels deep.
+
+See [verification](verification/phase-rank-8-batch-18.md).
+
+### Rank 7 batch 20: group 10, attack shapes
+
+- **Attack cards** (`attack-shapes.js`, `scripts/attack-shapes-runtime.js`): the **attack-save**, **charge** and **teeth** parts and hazard lines between the caster and its targets.
+- A card's **lasting record** (Sustained or timed) holds its parts' Effects and ends them with the spell.
+- The marks' payoff at 0 Hit Points.
+- Save cards take a card's degree adjustment and attack bonus.
+
+See [verification](verification/phase-rank-7-batch-20.md).
+
+### Rank 8 batch 19: group 11, triggers
+
+- **Trigger cards** (`trigger-cards.js`, `scripts/trigger-runtime.js`): the **link**, **sacrifice**, **fury**, **leech**, **mimic**, **death-mark**, **word** and **emblem** parts.
+- Hooks on damage taken (the link, the fury's curse) and on spells cast (the leech).
+- Self parts.
+- Cards that replace an earlier casting.
+
+See [verification](verification/phase-rank-8-batch-19.md).
+
+### Rank 10 batch 5: group 13, revival
+
+- **Revival cards** (`revival-cards.js`, `scripts/revival-runtime.js`): the **raise**, **revive**, **shock** and **renewal** parts.
+- Held healing for raised creatures and their death when the spell ends.
+- Region areas ending at the end of a creature's next turn.
+
+See [verification](verification/phase-rank-10-batch-5.md).
+
+### Rank 6 batch 25: group 14, things picked up
+
+- **Pickup cards** (`pickup-cards.js`, `scripts/pickup-runtime.js`): the **seed**, **pod** and **gift** parts.
+- The card's things as an item on the caster.
+- One burning area shared by every throw.
+- Affliction stages lowered.
+
+See [verification](verification/phase-rank-6-batch-25.md).
+
+### Rank 9 batch 12: groups 15 and 16
+
+- **Support cards** (`support-cards.js`, `scripts/support-runtime.js`): the **true-target**, **covenant** and **heartbolt** parts.
+- Placed card areas holding PF2e's Effect.
+- The covenant's hold at 0 Hit Points.
+
+See [verification](verification/phase-rank-9-batch-12.md).
+
+### Rank 9 batch 13: the user's answers
+
+- Save cards can lower the creature's resistances by a stated amount (Cataclysm), using PF2e's own record of each resistance it applied.
+- Damage moved between creatures asks the GM for its type when PF2e didn't record one.
+- A form's Heightened extra die reaches its own auras and moving saves.
+
+See [verification](verification/phase-rank-9-batch-13.md).
+
+### Spellshape batch 1: the core
+
+- **Spellshapes and wands** (`src/compiler/spellshape-readers.js`, `scripts/spellshape-runtime.js`): the cast's spellshape (PF2e's selector, or a feat armed by its card) and wand, read into requirements and riders. PF2e's selector is switched off after the cast. The save card applies the riders.
+
+See [verification](verification/phase-spellshape-batch-1.md) and the plan, `docs/planning/spellshape-wand-plan.md`.
+
+### Spellshape batch 2: family B riders
+
+- Riders on damaged or hit-or-failed creatures, rank-long and caster-turn durations, PF2e's linked Effects, reductions, marks, GM notes, and widened lines.
+- Named-spell and damage-type requirements; wands' "…, but …" clauses.
+- Arming by card for any spellshape feat.
+
+See [verification](verification/phase-spellshape-batch-2.md).
+
+- **Spellshape family C (save card):** persistent and splash damage by rank on damaged creatures, a Focus Point spent for extra damage, one chosen damaged creature for a generated or PF2e Effect (ChoiceSet preset with the spell's type), and Chaotic Spell's d6 rolled once per cast. See [verification](verification/phase-spellshape-batch-3.md).
+
+- **Spellshape family B wands (batch 4):** conditions with their own durations and an end-of-turn save ending one; a condition following the spell's (`syncShapeFollow`); persistent damage on a condition the spell grants; a trait for the spell's affliction; rider Effects tied to the spell's own Effects (`shapeTieEnded`: gone with them, or a condition when they run their course); turn-start damage while the spell's condition lasts. A wand's unresolvable stored spell is replaced by its current printing (`currentPrinting` in `main.js`). See [verification](verification/phase-spellshape-batch-4.md).
+
+- **Spellshape family A (batch 5):** the shaped area (`baseArea`, `grownArea`) kept on the cast as `shaping.area` and given to its template in `widenCastTemplate` (enlarged, never shrunk); range and origin riders read as the table's; Reach of the Dead's thrall destroyed in `recordShaping`; equipment wands armed by their card or counted by their PF2e toggle (switched off after). See [verification](verification/phase-spellshape-batch-5.md).
+
+- **Spellshape family E (batch 6):** cast riders on the caster or a chosen ally as the cast is recorded (`applyCastRiders`: resistances, PF2e Effects with their choice, Dualistic Synergy, Familiar's Resolve); Vampiric Spell's temporary Hit Points after the card; Safeguard Spell leaves the caster off the save card. See [verification](verification/phase-spellshape-batch-6.md).
+
+- **Spellshape family J (batch 7):** a spent slot given back for the feats that don't expend it (`refundSlot`, as a cast rider); the casting feats (subtle, fewer actions, reactions, cover, senses) read as the table's. See [verification](verification/phase-spellshape-batch-7.md).
+
+- **Spellshape family D (batch 8):** the card's damage retyped (every type, `shapeTypeSwapFor`), given a chosen metal (`shapeMaterialFor`), resistances by type lowered up to the caster's level (`shapeResistanceLowersFor`, with Cataclysm's add-back); nonlethal knock-outs at 0 Hit Points. See [verification](verification/phase-spellshape-batch-8.md).
+
+- **Spellshape family F (batch 9):** riders on the creature PF2e's applied healing or damage reaches (`shapeOnApplied`, from the message's spell id to the shaped cast): PF2e Effects, Strike dice, Martyr's Hit Points, extra healing, counteracts through the care runtime; Healing Transformation's healing at the cast; casts with no roll (no `spell-cast` context) recorded too. See [verification](verification/phase-spellshape-batch-9.md).
+
+- **Spellshape family G and the rank (batch 10):** targets singled out on the card (`assignShapeTargets`: half damage only, damage less the rank), the cast's rank changed (`shaping.castRank`) and the DC with mythic proficiency (`mythicDC`). See [verification](verification/phase-spellshape-batch-10.md).
+
+- **Spellshape families H and I (batch 11):** terrain Regions of the spellshape's own (`shapeTerrain`, from the cast's template, around a creature, or a placed burst) with their hazard (`shapeTerrainMove`, `shapeTerrainTurnEnd`) and end (`expireShapeTerrain`); Echoing Spell's second casting gets its slot back. See [verification](verification/phase-spellshape-batch-11.md).
+
+- **Spellshape family C cards (batch 12):** a spellshape's own save card built from its numbers and compiled at the caster's DC (`startShapeCard`, `shapeDC`); cards at the cast (`castCards`), cards with a button (`runShapeCard`: the summoned creature, the circle, the surge's centre, the undead), the circle detonating on the caster's turn (`detonateOnTurn`); Daunting Spell's rows with Stupefied while frightened. See [verification](verification/phase-spellshape-batch-12.md).
+
+- **Spellshapes, the last feats (batch 13):** all 131 read. Dousing, Shadow, Shared Sight, Sinbladed, Spell Shroud, Vigorous Anthem, Coven Spell (its card the reaction: the ally who cast last), Apparition's Reflection; feats with no lead read sentence by sentence. See [verification](verification/phase-spellshape-batch-13.md).
+
+- **Spellshape wands (batch 14):** all 49 wand kinds read. Terrain from the spell's area (with a turn-end save), the landing and kill-burst cards, counteracts through the care runtime, turn-start healing; a wand's other rules whispered to the GM at the cast (`wandRule`). See [verification](verification/phase-spellshape-batch-14.md).
+
+- **Sinbladed Spell (batch 15):** no check on the spell (the user's answer); bleed equal to the rank on a hit or failed save. See [verification](verification/phase-spellshape-batch-15.md).
+
+### Forced movement and the watching wands (spellshape batch 16)
+
+Pushes and pulls the module carries out move the token itself (`forced-movement.js`): walls and the scene's edge stop it, and it never ends in another creature's space (it ends adjacent instead). The wands that watch PF2e's checks or the turns (Hawthorn, Shocking Haze, the Spider, Traitorous Thoughts, Shardstorm, Thundering Echoes, Toxic Blades) put an Effect with `spellshapeWatch` on the creature they follow; Continuation lengthens the cast's Effects. Evidence: `docs/verification/phase-spellshape-batch-16.md`.
+
+### Wands at the card and the template (spellshape batch 17)
+
+Wands that act on the spell's outcome or its placed template: the Ash Puppet's zombie, which also works from Disintegrate's immediate card; Contagious Frailty's spread; Choking Mist's Remaining Air; Fey Flames' Will card; Caustic Effluence's ground; Toxic Blades' poison exposure. Wand casts now work with the immediate runtime, and consumable wands with no stored spell arm the next cast. Evidence: `docs/verification/phase-spellshape-batch-17.md`.
+
+### The wands' buttons (spellshape batch 18)
+
+Refracting Rays, Chromatic Burst, Legerdemain, Teeming Ghosts, Shattering Images and Rolling Flames post a card at the cast. Its button acts on the targeted token: the ray again, the burst card, the spotlight's Will card, frightened 2, the shards, and the rolling flames' terrain. Evidence: `docs/verification/phase-spellshape-batch-18.md`.
+
+### Stated bonuses, Speeds and senses (notes batch 1)
+
+The `stated-effect` note family turns stated bonuses, Speeds and senses into Effects for the right recipients: the caster, each target, the caster and the targets, or the familiar. It handles toggles, options and alternatives. Spells: Movanic Glimmer, Chameleon Coat, Penumbral Disguise, Uncover Device, Discern Lies, Threefold Aspect, Chosen Gravity, Part the Mists to Paradise, Stonesense, Elemental Sense, Enhance Senses, Tiny Wings, Feet to Fins. Evidence: `docs/verification/phase-notes-batch-1.md`.
+
+### Forced-movement notes (notes batch 3)
+
+The module now moves creatures out of an area (Garden of Stone, Blade Barrier, Lifewood Cage), to an adjacent space (Frost Pillar) and into a line (Tornadic Gale). A push stopped by a wall knocks the creature Prone (Arcane Explosion) or deals damage for the feet left (Planar Collision). Incarnate cards give their pushes a centre. Evidence: `docs/verification/phase-notes-batch-3.md`.
+
+### Spellsurge's aura and Theogeny's punishment (notes batch 2)
+
+Spellsurge's Interference is PF2e's Aura rule handing a world Effect (+2 circumstance to saves against mental effects) to every creature within 10 feet. Theogeny's foes take 10 spirit on critical hits and critically failed saves, through note-watchers.js. Evidence: `docs/verification/phase-notes-batch-2.md`.
+
+### GM notes for the GM only; the remaining notes (notes batch 4)
+
+GM notes (gm-notes.js) are whispered when they stand alone and removed from shared cards on players' screens. The module now also carries out Vacuum's suffocation, Stone Lance's "on the ground", Pact Broker's penalty to Lie, Pyrotechnics' creature fire source, Theogeny's punishment and Musical Shift's flat and sharp. Evidence: `docs/verification/phase-notes-batch-4.md`.
+
+### GM notes hidden in Effect descriptions (notes batch 5)
+
+GM notes in Effect descriptions carry PF2e's `data-visibility="gm"`. It's added on creation, on description updates, and once for existing Effects when the world loads, so PF2e hides those notes from players. Evidence: `docs/verification/phase-notes-batch-5.md`.
+
+### GM asides split into GM notes (notes batch 6)
+
+GM asides in an Effect's description — a parenthesis naming the GM, or a sentence starting "The GM" — become GM notes of their own, hidden from players. Evidence: `docs/verification/phase-notes-batch-6.md`.
+
+### GM asides in chat cards (notes batch 7)
+
+On players' clients, a shared card's GM asides — parentheses naming the GM, and "The GM …" sentences — are taken out of its text, text node by text node, so buttons keep working. Evidence: `docs/verification/phase-notes-batch-7.md`.
+
+### GM asides in button labels (notes batch 8)
+
+Players' clients also take GM asides out of a card's button labels (text only; the handlers stay). Evidence: `docs/verification/phase-notes-batch-8.md`.
+
+### GM asides in Effect names (notes batch 9)
+
+An Effect name's GM asides are moved into its description as GM notes hidden from players; this happens on creation, on rename and once at world load. Evidence: `docs/verification/phase-notes-batch-9.md`.
+
+### GM asides in chat message flavors (notes batch 10)
+
+Players' clients also take GM asides out of a message's flavor line. Evidence: `docs/verification/phase-notes-batch-10.md`.
+
+### GM asides in roll tooltips (notes batch 11)
+
+Players' clients also take GM asides out of roll tooltips: the dice tooltip's text, and data-tooltip, title and aria-label attributes. Evidence: `docs/verification/phase-notes-batch-11.md`.
+
+### Text-built damage as PF2e spell damage (spell features batch 1)
+
+Damage the module builds from the text is rolled as PF2e spell damage: a copy of the spell with that damage, at the cast rank, through getDamage. The caster's spell-damage rules now apply to it. Evidence: `docs/verification/phase-spell-features-batch-1.md`.
+
+### Sorcerer blood magic (spell features batch 2)
+
+Casting a blood magic spell posts the bloodline's options, read from PF2e's text: an Effect for the caster or a target, damage per rank, Concealed, or Hag's spite. Tenacious Blood Magic, Blood Sovereignty, Blood Rising and Blood Ascendancy are handled too. Evidence: `docs/verification/phase-spell-features-batch-2.md`.
+
+### Casting rules (spell features batch 3)
+
+Stupefied's flat check, Steady Spellcasting, Communal Healing and Counterspell (with Master's and Mythic) run on each cast. A lost spell's cards refuse to resolve. Evidence: `docs/verification/phase-spell-features-batch-3.md`.
+
+### Items whose activation is a spellshape (spell features batch 4)
+
+Grimoires, rings, tattoos, runes, a scythe and a potion arm their activation for the next spell, read from PF2e's text (`src/compiler/item-spellshape.js`). Their riders are in `scripts/item-spellshape-runtime.js`: an attack against a save DC, rerolled 1s, regeneration, turn-start save areas, Strike dice and retaliation, cards, the Lie, and the feats they borrow. Evidence: `docs/verification/phase-spell-features-batch-4.md`.
+
+### Items that cast a spell (spell features batch 5)
+
+Spellhearts, weapons and charms cast their spells through PF2e from an entry pinned to the item's DC and attack (`src/compiler/item-casts.js`, `scripts/item-cast-runtime.js`). Then the spellheart's benefit applies where it's affixed. Spell Reservoir stores a cast spell and releases it on a hit at DC 30. Evidence: `docs/verification/phase-spell-features-batch-5.md`.
+
+### Items that act on a spell cast (spell features batch 6)
+
+Rune of Sin's resistance to divine spells, Book of Warding Prayers' card, and the Reflecting Shield and Spell Duelist's Siphon counteract reactions run on each cast (`scripts/spell-trigger-items-runtime.js`). Evidence: `docs/verification/phase-spell-features-batch-6.md`.
+
+### Conditions on casting (spell features batch 7)
+
+Restrained, Grabbed, Deafened, Fascinated and Confused casters, and concealed or hidden targets, are checked as each spell is cast (`scripts/casting-rules-runtime.js`). A failed flat check loses the spell or drops the missed target. Evidence: `docs/verification/phase-spell-features-batch-7.md`.
+
+### Actions that change a spell (spell features batch 8)
+
+Spellstrike and the shots (the Strike decides the spell attack), Intercession Spell, Dueling Counter, Absorb into the Aegis, Only You and I, Ring Bell and Draw From the Pages (`scripts/spell-actions-runtime.js`). Evidence: `docs/verification/phase-spell-features-batch-8.md`.
+
+### Creature abilities on spells (spell features batch 9)
+
+Creature abilities read from each creature's own text run on each cast: aura and reaction counteracts, Intercept Summons, Blasphemous Aura's halved healing, Eldritch Attraction, Warped Fulu's immunity to item spells, Channel Magic and Metamagic Alteration (`scripts/creature-spell-abilities-runtime.js`). Evidence: `docs/verification/phase-spell-features-batch-9.md`.
+
+### Boons, curses and relics on spells (spell features batch 10)
+
+Nethys's Moderate Curse's flat check, Sarenrae's Major Curse's nonlethal spells, and River's Reflection's swapped vitality and void apply on each cast. The rest of PF2e's compendiums were read. Evidence: `docs/verification/phase-spell-features-batch-10.md`.
+
+### Third-party content (third-party batch 1)
+
+The third-party modules' spells: their older link forms read, their own Effects catalogued and loaded from their packs. Census: `node tools/third-party-census.mjs`. Evidence: `docs/verification/phase-third-party-batch-1.md`.
+
+### Third-party batch 2
+
+Residual Bad Luck's held frightened (a watched note), Wreak Havok's Arcane Cascade type, area choice and off-guard against the caster, and Creature's Howl's plural immunity. Evidence: `docs/verification/phase-third-party-batch-2.md`.
+
+### Third-party batch 3
+
+Third-party rows read into generated Effects (`src/compiler/third-party-rows.js`: Cursed Mark, Demand Compliance, Golden Touch). Each module's own Effect is checked rule by rule at each degree (`moduleEffectAt`, `sameStatedRules`), and the text's Effect is applied. Also Hand of Judgement's GM save question and Grand Finale's later dazzled and required-spell reminder. Evidence: `docs/verification/phase-third-party-batch-3.md`.
+
+### Third-party batch 4
+
+Ray of Light's basic-save riders and third-party condition riders (`basic-feature-riders.js`). Effect + note proofs for Cosmic Tune, Virtue's Light (stacking holy weakness), Glutton For Blood and Dual-Pattern Strike (overrides, confirm, caster choice). Module Effects' `flags.pf2e.rulesSelections` is rewritten to `flags.system.rulesSelections`. Plain degree headings are read. The "Dynamic" spells' action-glyph versions are read in `glyph-versions.js` (the text's heightened formula, version immunity, next-attack off-guard). Evidence: `docs/verification/phase-third-party-batch-4.md`.
+
+### Third-party batch 5
+
+Spell attacks from third-party text (curly apostrophes, "the AC of a target within", an optional push away, a critical hit's condition). Staff Striker's grip variants. Dynamic Divine Lance. Needle of Vengeance+'s held critical condition, attached to the held spell (`parentCastId`). Old-Mage's Echo's `spell-cast-rank` triggered damage. Silence of the Archmage's note flat check on casting (`castFlatCheck`). The Witches+ save on each Sustain (`repeatable.save`, `endsRepeat`). Evidence: `docs/verification/phase-third-party-batch-5.md`.
+
+### Third-party batch 6
+
+The Witches+ hexes that save again on each Sustain:
+- Holding Glyph: a toggle-gated penalty, and `move-action` triggered damage.
+- Realityflicker: the rolled condition with a critical failure's second roll (`conditionRoll.criticalSecond`).
+- Lost in the Crowd: off-guard to the caster, can't flank until a Seek succeeds (Perception disbelief that ends only its note).
+- Judge Soul: `damageTypeFrom.kind "text"` with the void/vitality swap, death at 0 HP, and Drained raised by "or increases its drained value".
+
+Evidence: `docs/verification/phase-third-party-batch-6.md`.
+
+### Third-party batch 7
+
+Hemophilia: a weakness note, and a once-only Drained increase (`triggeredIncrease.once`). Creeping Cold: the text's persistent damage (`textFormula`), and a penalty while it lasts. Ravaging End: an `allPools` caster type, and persistent damage held by the row's note (`holdsPersistent` → `endsWithEffectUuid`, the row's DC). Evidence: `docs/verification/phase-third-party-batch-7.md`.
+
+### Third-party batch 8
+
+The End is Nigh: the caster's Frightened on a critical success, a misfortune note, and a frightened floor (`conditionFloor`, `note-watchers.js`). Sensory Deprivation: two caster picks on a critical failure (`casterChoice.twoOn`), and the restricted trait's spells refused (`castForbid`). Bewilder: a GM-played note with the end-of-turn save. Evidence: `docs/verification/phase-third-party-batch-8.md`.
+
+### Third-party batch 9
+
+Quick Siphon: the caster's healing, then one persistent bleed it may end (`healing.endPersistent`). Umbral Escape: the module's Effect proved, its "all" resistance patched to "all-damage", its granted immunity Effect accepted (`grantedImmunity`). Shadow's Betrayal: a spell attack from the text, the darkness question, and the damage typed by the target's Strike (`damageTypeFrom.kind: "target-strike"`). Careless Swings: the caster's trait, as a note. Shade of Night: a note whose text follows the cast rank (`rankText`). Evidence: `docs/verification/phase-third-party-batch-9.md`.
+
+### Third-party batch 10
+
+Siphoning Rivulet: the text's bleed rolled as damage now (`damage.immediate`, PF2e's `evaluatePersistent`), the caster's temporary Hit Points from the total bleed (`damage.siphon`). Unknowable Icon: a rune's stored trigger whose Trigger saves every targeted creature on one card (`storedTrigger.area`). Drown: a penalty on checks with item traits (selector `check`), the held breath's note with its re-save, `third-party-note` reminders. Kinetic Tow: forced movement toward the caster's pick (`direction: "chosen"`). Evidence: `docs/verification/phase-third-party-batch-10.md`.
+
+### Third-party batch 11
+
+The text's save where the item has none (`fitTextSave`, Eternal Slumber: Unconscious for the spell or for good, the Drowsy note). Summon Jury as an incarnate (bold phase titles, the penalties' heightening kept): its row notes' modifiers take the cast rank's value (`rankValues`), and a "next" roll's is removed after it. Sudden Outbreak: the GM-confirmed diseased target, and its disease saves in GM-played notes. Evidence: `docs/verification/phase-third-party-batch-11.md`.
+
+### Third-party batch 12
+
+Ruler of Everything: "creatures are temporarily immune" read as the immunity; the nobility bonus as the GM's save question; Prone with GM-played behaviour notes. Web of Darkness: Speed penalties as `all-speeds` notes for the spell, the strands' AC and HP at the cast rank, Immobilized for the spell. Divine Adjudication: the damage rows; the caster's conditional bonus a GM note. Evidence: `docs/verification/phase-third-party-batch-12.md`.
+
+### Third-party batch 13
+
+Beguile: the caster's voice or appearance on the card, its condition for the sustained spell (`optionConditionRows`), the GM's notes. Dream Come True: fantasy or nightmare as sets of entries on every row (`optionSetRows`), Stupefied ending with Off-Guard, the nightmare's frightened floor and its Confused while frightened, and the rows' own times where the item's duration "varies" (`rowDurations`). Evidence: `docs/verification/phase-third-party-batch-13.md`.
+
+### Third-party batch 14
+
+Effect + note proofs: Liberator's Ferocity (the resistance and damage bonus at twice the rank; the text's round over an Effect with no end, via `durationOverride`), Weapon Trance (Team+) (PF2e's proficiency equivalences, the cursebound bonus), Volley My Ally (the heightened Strike range). Evidence: `docs/verification/phase-third-party-batch-14.md`.
+
+### Third-party batch 15
+
+Freezing Cold: one basic save where the action counts change only the area and terrain (`fitActionAreas`, reminders). Blood Surge: the caster in its own area, one degree better (the caster-share rule, now for an area the caster must be in: `casterShareArea`), with the blood rage's parts as reminders. Evidence: `docs/verification/phase-third-party-batch-15.md`.
+
+### Third-party batch 16
+
+The user's 2026-10-06 ruling: third-party spells of the 2026-10-04 GM-handled kinds count the same. Seven are GM cards (`user-rulings.js` with the ruling's date): If Walls Could Talk, Fall to Ruin, Raise Mountain, Thousand-Year Flood, State of the Art, Sacrosanct Promise, From Thine Sight. Raise Mountain and Thousand-Year Flood have GM options (the latter rolling the text's formula, since its item has no damage). Evidence: `docs/verification/phase-third-party-batch-16.md`.
+
+### Third-party batch 17
+
+Tidal Grasp: a spell attack against a save's DC (`resolution.attackDefense`, the card's adjustment from AC), Grabbed until the end of the next turn or an Escape, the critical success's text damage, the attack again on each Sustain (`sustainAttackAgain`), immunity on the attack's critical failure, and the target's size by rank as the GM's question. Evidence: `docs/verification/phase-third-party-batch-17.md`.
+
+### Third-party batch 18
+
+Effect + note proofs: Wishful Thinking (its choices, a second from 9th, the fly Speed and +1 from 6th, each listed effect's rules; `heightenedClaims`) and Life of the Party (the treat's temporary Hit Points by rank and damage bonus). The Effect + note route presets PF2e's choices from `choiceSelections`. Evidence: `docs/verification/phase-third-party-batch-18.md`.
+
+### Third-party batch 19
+
+Dynamic Caustic Blast by variant (`fitCausticVersion`): the Hardness notes by rank, the burst's table with its critical persistent acid, and the Splash variant's no-save ring (direct damage on any number of targets). Dynamic Telekinetic Projectile (`fitProjectileVersion`): the held weapon's range until the turn ends (`untilTurnEnd`, 0 rounds), and each type variant's attack. Evidence: `docs/verification/phase-third-party-batch-19.md`.
+
+### Third-party batch 20
+
+Action versions: a "1 to 3"-action spell with no PF2e variants compiles each count's version, and the card asks the actions spent (`action-versions`; Dynamic Shield, each version official Shield's sequence). Dynamic Fly: each variant's Effect proved (`fitFlyVersion`), with the text's end-of-next-turn duration. Proofs now strip a module's own Effect link and accept both land-Speed paths. Evidence: `docs/verification/phase-third-party-batch-20.md`.
+
+### Third-party batch 21
+
+Dynamic Gouging Claw (`fitClawVersion`): the claw Strike as PF2e's Strike rule element with its critical specialization, then immune (the stated-effect route's immunity); the bleeding attack with the caster's type; and a new `compound` plan (the claw, its reach until the next turn ends, then the attack's card). A live audit of all 172 resolved spells, after which the proofs read PF2e's bracket values (`ruleValueAt`). Evidence: `docs/verification/phase-third-party-batch-21.md`.
+
+### Third-party batch 22
+
+Dynamic Ignition (`fitIgnitionVersion`): the burning square (a hazard part: a square, entering or ending a turn, rounds rolled at placement; incarnate cards keep a variant's overlays), and the attacks with their persistent fire. Dynamic Vampiric Feast (`fitFeastVersion`): the next spell's temporary-HP marker read by the save card's finalize, and the touch and ranged versions as official Vampiric Feast. Evidence: `docs/verification/phase-third-party-batch-22.md`.
+
+### Third-party batch 23
+
+Winter's Cold Embrace (`fitColdEmbrace`): the burst's turn-end basic Fortitude cold, spirit instead for a creature that is cold-immune or cold-resistant and has no darkvision (`damageSwap` `resistant-no-darkvision`). Aura of Violent Light (`violent-light.js`): a willing ally's aura saved against as enemies end their turns, growing 5 feet on the first Sustain each round to 15. The module's Effect is on the ally, its badge raised with the aura (`auraGrowth`, `anchorEffect`, `anchorAlly`). Evidence: `docs/verification/phase-third-party-batch-23.md`.
+
+### Third-party batch 24
+
+Propagating Arc (`propagating-arc.js`): the target's basic save, then on its failure an `areaFollowUp` card for the others around it (`outer`, `excludeCentre`, `needsInner`): the text's (rank)d6 formula with a basic save, half beyond 10 feet (`halfTargetUuids` → `shapeHalf`), none when no one is within 10 feet. Warped Visage (`sustain-ally-save.js`): Enfeebled while sustained; the first Sustain each turn gives one ally of a failed target within 30 feet a Will save card against Frightened, with immunity (`sustainAllySave`). Evidence: `docs/verification/phase-third-party-batch-24.md`.
+
+### Third-party batch 25
+
+Cosmic Glow (`cosmic-glow.js`): a placed square's basic save when cast and on each Sustain after the GM moves it (`moveOnSustain`), Fascinated on a critical failure; the caster and its allies inside hold the +2 Recall Knowledge Effect (`memberRules`, `memberAllies`, `memberCaster`) and can be left out of the damage on review. Evidence: `docs/verification/phase-third-party-batch-25.md`.
+
+### Third-party batch 26
+
+View Internal Anatomy (`stated-effect.js` `anatomy`): the caster's precision damage (the rank's amount) on Strikes and damaging spell attacks against the one targeted creature (`againstTarget`, its signature filled in), the creature's physical facts whispered to the GM (reveal kind `anatomy`), and a GM option for an ally who Aided. Evidence: `docs/verification/phase-third-party-batch-26.md`.
+
+### Third-party batch 27
+
+Hope Prevails (`condition-lower.js`): three `action-versions`, each a `condition-lower` plan that lowers Frightened by 2: the touched target, a target with the proved module Effect (+2 vs fear), or every creature in the caster's 30-foot emanation. A frightened condition an Effect grants is kept, and the card has the GM's counteract button. Evidence: `docs/verification/phase-third-party-batch-27.md`.
+
+### Third-party batch 28
+
+Energy Exertion (`fitEnergyExertion`): each PF2e variant is a spell attack whose text dice, `(@item.rank)d4` or `(2*@item.rank)d4`, stay untyped until the card asks for the residual energy's damage type (`casterChoice` `damage-type`); the trait is a note. Evidence: `docs/verification/phase-third-party-batch-28.md`.
+
+### Third-party batch 29
+
+Technomancy Ray (`fitTechnomancyRay`): a spell attack whose die the caster's Crafting rank sets when rolled (`skillDie`: d4, d6 at master, d8 at legendary); double damage and 1 persistent damage on a critical hit; fire, or the Variable Core's type asked on the card, which retypes the row's persistent damage too (`casterChoice.outcomeFormulas`). Evidence: `docs/verification/phase-third-party-batch-29.md`.
+
+### Third-party batch 30
+
+Mark of Mystery (`mark-ward.js`, `mark-ward-runtime.js`): ward Effects on the caster and the targeted ally. An attack roll on either, or a module save card against either, starts the spell's Will save card for that creature (Frightened 1 or 2, immune for an hour), asked once each; a creature of the caster's tradition's types (or a dragon or spellcaster of it) gets the module's proved −1 penalty Effect first. Evidence: `docs/verification/phase-third-party-batch-30.md`.
+
+### Third-party batch 31
+
+Unhelpful Nudge (`fitNudge`): a failed save pushes 10 feet where the caster chooses during the Stride. A gated follow-up save (the GM's "pushed into another creature or object?") makes it Prone on a failure. Row follow-up saves can now carry a GM-question gate (`synchronizeSecondary`, `gmQuestionGates`). Evidence: `docs/verification/phase-third-party-batch-31.md`.
+
+### Third-party batch 32
+
+Targeted Ward (`targeted-ward.js`): three `action-versions`, each the opponent's Will save card. At Finalize the caster's 4-round Effect (`casterWard`) has a ChoiceSet for the defense and the row's status bonus to it against that opponent (one more from 5th rank). The one-action version's bonus is behind a toggle. Evidence: `docs/verification/phase-third-party-batch-32.md`.
+
+### Third-party batch 33
+
+Discern Secrets+ (`stated-effect.js` `secrets`): the caster chooses +1 status on the targets' Recall Knowledge, Seek and Sense Motive rolls, or the removal of each target's Concealed (one an Effect grants is kept, with the counteract), while sustained. Two targets from 5th rank (`maxTargets`); the module's dead Effect links are claimed (`ignoresLinks`). Evidence: `docs/verification/phase-third-party-batch-33.md`.
+
+### Third-party batch 34
+
+Enchanting Rhapsody (`rhapsody-aura.js`): the caster's emanation, saved against by enemies when cast and as their turns end. Its rows are notes (−1/−2 to mental saves, Fascinated granted, the dance a GM note) that last while the creature is in the area and, with `afterLeaveRounds`, 1 round after it leaves. A critical success is immune for a minute. Evidence: `docs/verification/phase-third-party-batch-34.md`.
+
+### Third-party batch 35
+
+Overwhelming Festivities (`trigger-aura.js`, `trigger-aura-runtime.js`): the module's Aura on the caster, its radius proved at each rank. An enemy holding its Effect that fails an emotion save, or newly becomes Frightened, takes the text's persistent mental damage at the cast rank (the active GM's watcher). Evidence: `docs/verification/phase-third-party-batch-35.md`.
+
+### Third-party batch 36
+
+Divine Eclipse (`divine-eclipse.js`): the caster's 60-foot emanation, saved against as turns end except by the blessed and creatures within their bright light. Up to 5 blessed targets hold the module's proved light and fast-healing Effect while inside (`blessed`, `syncBlessed`). Evidence: `docs/verification/phase-third-party-batch-36.md`.
+
+### Third-party batch 37
+
+Shadow Puppetry (`pulse-area.js`): the placed burst deals the text's dice of the caster's chosen type to each creature in it, with no save, when cast and on the first Sustain each turn (region area `sustainPulse`, `areaPulse`). Evidence: `docs/verification/phase-third-party-batch-37.md`.
+
+### Third-party batch 38
+
+Channel Imperial Dragon (`stated-effect.js` `imperialDragon`): the caster's Effect from the text (the dragon traits, resistance to its damage type, +1 to saves against its trait). The dragon comes from the caster's Imperial Dragon Emissary flag or is asked from the dedication's five (`presetFlag`). The Sustain's Diplomacy and Intimidation bonus is a self GM option until the end of the caster's next turn. Evidence: `docs/verification/phase-third-party-batch-38.md`.
+
+### Third-party batch 39
+
+Metamorphic Armor (`rule-sets.js` `metamorphic`): the caster's switchable 1-minute Effect. Each listed resistance type (half the level, or half + 2 for energy), +1 circumstance AC, or +1 status Reflex against area spells is an option, switched when it Strikes. Evidence: `docs/verification/phase-third-party-batch-39.md`.
+
+### Third-party batch 40
+
+Secret of the Forebearers (`stated-effect.js` `forebearers`): the patron's skill is asked at the cast. The card's `aid-roll` option is the forebearers' once-a-turn Aid (that skill against DC 15, a failure a success, legendary a critical success; the bonus on the next attack roll or skill check). After an aided success, the second option makes the caster Concealed until its next turn. Evidence: `docs/verification/phase-third-party-batch-40.md`.
+
+### Third-party batch 41
+
+Shadow Wield (`fitShadowWield`): each variant (melee 1d8, ranged 1d6) is a spell attack repeated on Sustain, with the caster's type among bludgeoning, piercing and slashing and void for the GM's "more detrimental". The card also sets a spell's own type toggle (its suboptions) to its choice before rolling, so the item's type overrides follow it. Evidence: `docs/verification/phase-third-party-batch-41.md`.
+
+### Third-party batch 42
+
+Chorus Made Manifest (`swarm-form.js`): the caster's 1-minute Effect with the swarm form's rules (traits, resistance, weaknesses, low-light vision, fly 60) behind its toggle. The Choral Swarm Attack is a card option starting its own basic Fortitude save in the cone (the text's formula; Deafened on a critical failure). Evidence: `docs/verification/phase-third-party-batch-42.md`.
+
+### Third-party batch 43
+
+Planar Court (`courtRows`): the text's Will save (the text-save fitter reads it at a sentence's end). The caster names an attribute on the card, and the failing rows are sustained notes with a −1/−2 status penalty to that attribute's checks, DCs and saves (`-based`). The caster is Doomed 1 on a critical success. Readers can now name row narration (`narration`). Evidence: `docs/verification/phase-third-party-batch-43.md`.
+
+### Third-party batch 44
+
+Ice Guardian (`ice-guardian.js`): the conjured Large guardian token, its stats by rank (`conjure.step`). A following region gives the caster and its allies beside it lesser cover (`conjure.coverAura`, member rules, the guardian excluded). The Sustain's standard cover is a card part. Evidence: `docs/verification/phase-third-party-batch-44.md`.
+
+### Third-party batch 45
+
+Hyper-Arcane Pressure Point Strike (`pressure-point.js`): the struck creature is marked. The card's activation option starts the text's Fortitude save, using the caster's unarmed Strike damage read at the cast (`strikeDamage`) by the row, with Enfeebled 1/2 for a round and a flat-check note; activating ends the spell (`endsCast`). Evidence: `docs/verification/phase-third-party-batch-45.md`.
+
+### Third-party batch 46
+
+Coalesce Form, Untamed Aspect Shift and Witch's Bottle (`proxy-cast.js`, kind `proxy-cast`): the caster picks the spell the text names (the daily polymorph; Pest Shift, or Animal Shift from 2nd; one of its own hex spells), and the module resolves that spell as its own card would. Coalesce and Untamed cast it at this spell's rank; Untamed adds the +2 attack toggle; Witch's Bottle slows the caster by the hex's actions. Evidence: `docs/verification/phase-third-party-batch-46.md`.
+
+### Third-party batch 47
+
+Fractal Frosting (`proxy-cast.js` shaper) and Manifest Wicket Dominion (new `wicket-dominion.js`, kind `caster-dominion`).
+- **Fractal Frosting:** casts Frostbite at its rank. For the minute, a caster Effect (`castShaper`) adds spellshape riders to every Frostbite cast: difficult terrain around each target, and from 9th rank a Speed penalty of –5 or –15 feet by the result.
+- **Manifest Wicket Dominion:** a stationary emanation. The caster alone holds a +rank status bonus to damage and healing while inside (`memberCasterOnly`).
+
+Also changed:
+- Plain Ongoing reconciles now coalesce.
+- The test cleanup removes orphaned records.
+
+Evidence: `docs/verification/phase-third-party-batch-47.md`.
+
+### Third-party batch 48
+
+Promised Renewal (new `promised-renewal.js`, kind `renewal`):
+- **A corpse:** the plant growth starts at once.
+- **A dying creature:** it gets the Fortitude save card (Dying +2, or +3 on a critical failure). If the save kills it, the growth starts around it (`renewalOnKill`, on `saveApplied`).
+- **The growth:** a region with difficult terrain, giving fast healing to fungus, plant and wood minions, both grown by the Heightened (+2) entry.
+
+Evidence: `docs/verification/phase-third-party-batch-48.md`.
+
+### Third-party batch 49
+
+Instant Surgery (new `instant-surgery.js`, kind `attribute-surgery`): the caster's spell attack against the target's AC, +2 circumstance with View Internal Anatomy aimed at it.
+- **Critical hit:** two attributes, each boosted or depleted.
+- **Hit:** one attribute boosted and one depleted.
+
+The result is the target's 1-minute Effect, ±1 status to the `<attr>-based` selectors (±2 from 8th rank). Evidence: `docs/verification/phase-third-party-batch-49.md`.
+
+### Third-party batch 50
+
+Garden of Crystals (new `crystal-garden.js`, kind `crystal-garden`):
+- The caster's emanation of difficult terrain, with a reminder Effect that the caster ignores it.
+- Three clusters placed by the caster: walled off, with creatures inside moved to the nearest free adjacent space.
+- The squares around the clusters: a member rule of critical-only force dice (1d10, +1d10 every 2 ranks). The module's Effect is checked against this at every rank.
+- With no duration, it lasts until the GM ends it (`durationSeconds: null`). Walls, regions and the reminder end with it (`extraEntryUuids`).
+
+Evidence: `docs/verification/phase-third-party-batch-50.md`.
+
+### Third-party batch 51
+
+Gruesome Marionettist (new `blood-marionette.js`, kind `marionette`):
+- The caster names the prohibited and directed actions.
+- The target's Fortitude save sets the bleed: half and until the caster's next turn, full, or double, the last two for the sustained minute.
+- The target's Effect card has the GM's controls (`marionetteAct`):
+  - "prohibited" applies the persistent bleed at the cast rank;
+  - "directed" makes the target immune until its next turn.
+
+Evidence: `docs/verification/phase-third-party-batch-51.md`.
+
+### Third-party batch 52
+
+Mind's Eye Wink (new `dream-hazard.js`, kind `dream-hazard`):
+- **The area:** a lingering Will save in the GM's drawn squares. Creatures in it when cast, or entering it, save.
+  - A failure gives Stupefied 1 while inside and for 1 round after leaving.
+  - A critical failure gives Stupefied 2 while inside, then Stupefied 1 after leaving. A new note option, `afterLeaveRules`, holds those after-leaving rules.
+  - Disbelief is the area's Perception control.
+- **The object:** the holder's save on the card; a failure gives −1/−2 to checks, behind a toggle.
+
+Evidence: `docs/verification/phase-third-party-batch-52.md`.
+
+### Third-party batch 53
+
+Lucky Decision (new `fate-roll.js`, kind `fate-roll`): the d20 is kept on the caster's Effect, with two reactions on the card (`fateAct`):
+- **Your Good Luck:** a forced fortune SubstituteRoll, one rule per selector.
+- **Their Bad Luck:** the enemy's Will save, then its one-roll penalty, plus the kept result on a failure.
+
+Either reaction ends the spell. Evidence: `docs/verification/phase-third-party-batch-53.md`.
+
+### Third-party batch 54
+
+Wooden Engulfment (new `engulfing-tree.js`, kind `engulfing-tree`):
+- **The tree:** a token with HP and AC at the rank, Immobilized. Creatures in its square are moved beside it (`moveOutOfBoxes`, now shared with Garden of Crystals).
+- **The grab** (`treeGrab`): the caster's spell attack against the Reflex DC, giving Grabbed, or Restrained on a critical success, until the end of the caster's next turn.
+
+Garden of Crystals was re-run live after the refactor. Evidence: `docs/verification/phase-third-party-batch-54.md`.
+
+### Third-party batch 55
+
+Famed Figure (`illusory-creature.js` `compileFamedFigure`, kind `illusory-creature`): Illusory Creature's token and card.
+- Melee Strike (1+rank)d4 and ranged Strike rank d4 (30 feet), with the multiple attack penalty.
+- Casting it again ends the caster's earlier image.
+
+Illusory Creature's live case was re-run; its fixed waits are now polls. Evidence: `docs/verification/phase-third-party-batch-55.md`.
+
+### Third-party batch 56
+
+Coiling Grasp (new `weapon-grapple.js`, kind `weapon-grapple`):
+- The Grapple rolls the higher of Athletics and the spell attack against Fortitude, after the Heightened size check.
+- Critical success: Immobilized. Success: Grabbed. Each lasts until the end of the caster's next turn.
+- Each Sustain tries again (`weaponGrapple`).
+- On a critical failure, the target chooses to grab the caster or knock it Prone.
+
+Evidence: `docs/verification/phase-third-party-batch-56.md`.
+
+### Third-party batch 57
+
+Dream Logic (new `dream-table.js`, kind `dream-table`): each creature in the aura saves, or takes a failure if willing.
+- A failure rolls the 1d4 table. A critical failure rolls twice and the caster picks.
+- The entries: Object Fallacy's +1; Static Time lengthening timed Effects; Untethered, the module's fly Effect, checked against the text; Warped Energy's per-type DamageAlteration.
+
+Evidence: `docs/verification/phase-third-party-batch-57.md`.
+
+### Third-party batch 58
+
+Honorable Death (new `honor-duel.js`, kind `honor-duel`): the champion and the Will save, then the target's Effect for its row's time.
+- **End-of-turn control** (`honorAct`): if the target took no hostile action, 2×rank spirit damage with a basic save. On the longer rows a recovery save follows (−1 round, or ended).
+- **At 0 HP:** the target dies (`honorDeath`). The module reads "a creature" as the target, logged for review.
+
+Evidence: `docs/verification/phase-third-party-batch-58.md`.
+
+### Third-party batch 59
+
+Shine Spotlight (new `spotlight.js`, kind `spotlight`):
+- The burst is a region: +1 status to Perform and −1 circumstance to Stealth, from the text.
+- Non-allied onlookers within 15 feet save, or become Fascinated and Off-Guard until the spell ends.
+- The performer's control (`spotlightPerform`) uses its Performance against each onlooker's Will DC.
+
+Evidence: `docs/verification/phase-third-party-batch-59.md`.
+
+### Third-party batch 60
+
+Coiling Creepers (new `creeper-maneuver.js`, kind `creeper-maneuver`):
+- The burst is difficult terrain.
+- The card's maneuver control (`creepersAct`): Disarm, Reposition or Trip with the spell attack modifier and multiple attack penalty, against a creature in or beside the area that is Huge or smaller.
+- A cleared square is cut from the region.
+
+Evidence: `docs/verification/phase-third-party-batch-60.md`.
+
+### Third-party batch 61
+
+Long Live the Revolution (new `rally-cry.js`, kind `rally-cry`):
+- The act of rebellion is kept on the caster's Effect.
+- The saves (`rallySaves`) are PF2e's, with incapacitation. Willing creatures fail, opposed ones get +4, and critical successes add cheers up to +4.
+- Rebels are Fascinated, with a toggled +1. Their controls (`rallyAct`) are a new save, or persuasion (not on a critical failure).
+- Immunity lasts 1 hour, and the Sustain lets newcomers save.
+
+Evidence: `docs/verification/phase-third-party-batch-61.md`.
+
+### Third-party batch 62
+
+Unleash True Power (new `true-power.js`, kind `true-power`):
+- **Heightening:** the caster's Effect shapes every other spell +1 rank, up to 10th. This uses `castShaper` with `spellSlug: "*"`; the rank-change rider gained a numeric cap.
+- **Through the patron** (`truePowerCast`): 1d6 spirit per rank, basic Fortitude.
+- **The end:** a 10d6 spirit basic Fortitude save card for the caster and every creature within 10 feet (a `deleteItem` hook).
+
+Evidence: `docs/verification/phase-third-party-batch-62.md`.
+
+### Third-party batch 63
+
+Mystic Bomb (new `mystic-bomb.js`, kind `mystic-bomb`): the bomb's region, its damage of the Arcane Cascade's type.
+- With creatures in it, it explodes at once: a basic Reflex save card from a variant of the spell.
+- Otherwise it waits, with controls (`bombAct`): explode, grow (+5 ft to 20), and Aid (+1d6/+2d6, limited uses).
+
+Evidence: `docs/verification/phase-third-party-batch-63.md`.
+
+### Third-party batch 64
+
+Spirit Boundary (new `spirit-boundary.js`, kind `spirit-boundary`):
+- The shield's version is chosen by the actions spent. Its inline HP and reduction are checked against the Heightened entry.
+- The burst is a region for the minute.
+- Damage whose origin is across the edge is reduced (`boundaryOnDamage`), the shield taking it once per effect, until it is destroyed at 0 HP.
+
+Evidence: `docs/verification/phase-third-party-batch-64.md`.
+
+### Third-party batch 65
+
+Seeds of Divinity (new `divine-seeds.js`, kind `divine-seeds`):
+- Seeds sprout into bush tokens, with HP and AC at the rank.
+- The Sustain's grow control (`seedsAct`) works once a bush is a round old:
+  - hazardous: an enter hazard of {piercing, poison} on its square;
+  - bountiful: a fruit giving temporary HP and the cursebound damage bonus.
+- The bushes end with the spell.
+
+Evidence: `docs/verification/phase-third-party-batch-65.md`.
+
+### Third-party batch 66
+
+Prism of Power (new `power-prism.js`, kind `power-prism`): the prism is a 5-foot region for the minute, with the chosen option on the card (`prismAct`):
+- **Scatter:** one spell attack against up to 2 ACs within 5 feet.
+- **Diffract:** the cone size from the feet left.
+- **Refract:** a GM note.
+
+Evidence: `docs/verification/phase-third-party-batch-66.md`.
+
+### Third-party batch 67
+
+Animated Spark (new `animated-spark.js`, kind `animated-spark`):
+- The objects become a PF2e familiar mastered by the caster, with Construct, 2 chosen abilities, and a weakness equal to the caster's level.
+- Its token lasts the sustained 10 minutes; casting again ends the earlier one.
+- Disperse (`sparkDisperse`): a (1+rank)d4 basic Reflex save card in a 5-foot emanation, then the spell ends.
+
+Evidence: `docs/verification/phase-third-party-batch-67.md`.
+
+### Third-party batch 68
+
+The last two, per the user's decisions:
+- **The empty Dynamic Breathe Fire** (`writtenTwin`, `proxy-cast` with variants) casts its written copy.
+- **Patron's Apocalypse** (new `patron-apocalypse.js`, kind `patron-apocalypse`, with the book's table in `supplements/patrons-apocalypse.js`):
+  - burst regions with a basic-save turn-start hazard and the type's effects;
+  - the Sustain's move leaves hazardous terrain.
+- Lingering hazards gained `alwaysEffect` (rules for some rounds, persistent damage), and `startRegionArea` gained `enemiesOnly` and `concealment`.
+
+All 227 resolved. Evidence: `docs/verification/phase-third-party-batch-68.md`.
+
+### Third-party features batch 1
+
+The "+" modules' spellshapes are read by `readPlusSpellshape` (`plus-spellshapes.js`), the fallback of `readSpellshapeFeat`. The first seven:
+- Persistent Spell and Bleeding Spell: persistent riders (`oneTarget`, the spell's type, `critDouble`).
+- Trepidation Spell: a conditions rider with `unlessImmune`.
+- Heightened Spell: a rank change.
+- Dueling Wand: a `self-rules` cast rider.
+- Draining Cast: a slot refund and an `hp-cost`.
+- Befuddling Spell: a note.
+
+The new `belowHighest` requirement uses the caster's highest castable rank. Evidence: `docs/verification/phase-third-party-features-batch-1.md`.
+
+### Third-party features batch 2
+
+More "+" spellshapes in `plus-spellshapes.js`. A leading Requirements becomes a table requirement unless the form reads it.
+- Heroic Recovery+: a `healed-effect` with `atLevel` rules.
+- Mighty Summons: a rank change capped at 10.
+- Storm Spell: area terrain whose damage is the rank, whose rounds are the cursebound value, and whose type is chosen at the cast. It requires `minCursebound` and `inEncounter`.
+- Travel Channel, Ride the Spell (`rangeOrArea`), Slot Rehearsed Reload: the table's.
+- Tenacious Magic: mythic proficiency.
+
+Evidence: `docs/verification/phase-third-party-features-batch-2.md`.
+
+### Third-party features batch 3
+
+Seven "+" spellshapes, in `plus-spellshapes.js`, that change a spell's targets, area or damage:
+- Safe Spell (`exclude-allies`) and Compressed Spell (`compress`, its save penalty for that card) work on the card's targets.
+- Reshaped Spell (`reshape`) changes the template.
+- The Lurking Storm (`damage-split`) splits the rolled damage.
+- Sacrificial Spell: a `self-rules` with `untilRoll`, removed with the next roll.
+- Transmute Spell (`transmute`): an essence chosen at the cast; Mind adds flat damage, Spirit skips creatures without the weakness.
+- Huddle Channel: the table's.
+
+Evidence: `docs/verification/phase-third-party-features-batch-3.md`.
+
+### Third-party features batch 4
+
+Magic+'s mystic duo:
+- `mysticLinkEffect` and `mysticDuoOf` find the link and the duo, and the `mysticLink` requirement is checked.
+- Eldritch Resilience (`duo-effect`) puts the module's Effect on the duo, tied to the link.
+- Spell and Steel uses `extra-damage`, with `cantripFormula` and `damageTypeFrom: "duo-weapon"`.
+
+Linked Target Spell, Twinned Target Spell and Ally Form use `redirect-self`: a self-only Effect gets its recipients from `shapeSelfRecipients`, and `shapeSelfAfter` ties, caps or ends the copies. Evidence: `docs/verification/phase-third-party-features-batch-4.md`.
+
+### Third-party features batch 5
+
+Four more "+" spellshapes:
+- Drain Destiny (`mythic-drain`): Mythic Points on a hit.
+- Reporting Spell (`report`): one fact about an affected enemy, whispered; the enemy immune for a day.
+- Enlightening Spell (`ally-recipient-effect`, through `shapeRecipientsAfter` from the Effect route and the healing path): the module's Effect on the allies reached, when the caster is cursebound.
+- Beguiling Feint (`feint-check`): Deception against Perception on the card, Intelligence instead of Charisma, with Off-Guard for the spell or on the caster.
+
+Evidence: `docs/verification/phase-third-party-features-batch-5.md`.
+
+### Third-party features batch 6
+
+Seeking Spell:
+- `cover-reduce`: `shapeCoverReduceFor` adds a modifier to the card's attack roll, never more than the target's cover bonus.
+- `seek-retry`: a Sustain reminder after a plain miss.
+
+Tandem Casting, Spell Tag (`touchOnly`), Distilled Magic, Mixed-Potency Tincture, Recharging Spellgun and Elemental Study Notes are table rules; the last four are marked `passive`. Evidence: `docs/verification/phase-third-party-features-batch-6.md`.
+
+### Third-party features batch 7
+
+`readItemSpellshape` falls back to `readPlusItemSpellshape`: each spellshape activation of a "+" item is read as a feat. This covers the Power Rings' Veracious Spell and the scepters' Sicken Spell, Energy Ablation, Heighten Spell, Reach Spell, Dangerous Odds and Purifying Spell.
+
+`recordShaping` also finds an item that offers PF2e's spellshape selector suboption, and reads its activation of that name. Evidence: `docs/verification/phase-third-party-features-batch-7.md`.
+
+### Third-party features batch 8
+
+The Power Ring runes:
+- Hone Spell (`hone`) leaves one target on the card, and `rollSave` replaces its save with the caster's spell attack (with the ring's bonus), mapped to save degrees.
+- Veracious Summon (`summon-strike-bonus`) uses the summon route's `shapeSummonedAfter` to give the summoned creature a status bonus to its Strikes.
+- `powerRingBonus` reads the worn ring's bonus.
+
+Evidence: `docs/verification/phase-third-party-features-batch-8.md`.
+
+### Third-party features batch 9
+
+Fury of a Thousand uses riders for each spell (`spell`); only the cast spell's are kept. Murmuration's `dual-damage` (`shapeDualFor`) deals the damage in full as each type, per the user's decision. `effect-value` (`shapeAdjustEffects`) sets Murmuration's −3 and Song of Strength's +2.
+
+Held-trigger spells keep the cast's message. When they trigger, the card reads that cast's spellshape riders through `shapeMessageId`. Evidence: `docs/verification/phase-third-party-features-batch-9.md`.
+
+### Third-party features batch 10
+
+Text rules: `readTextRules` (`plus-feature-rules.js`) gives a passive feature's rules from its text. `text-rules.js` wraps `ItemPF2e#prepareRuleElements` so they apply in memory; nothing is saved, and official items are untouched.
+
+Passive cast riders: `readPassiveCastRider` is read at every cast the holder makes.
+
+The first entries:
+- Rudimentary Perfectionism: twice only from a slot.
+- Power of Blood: the bleed (`self-persistent`) and the flat-check notes.
+- Wayward Gifts: the Effect verified, and the primal gift's temporary Hit Points on PF2e's Sustain (`waywardSustain`).
+
+Evidence: `docs/verification/phase-third-party-features-batch-10.md`.
+
+### Third-party features batch 11
+
+- Steady Spellcasting's card reads its DC and its slot refund from the feat's text (Magus+'s Steady Spellcasting+: DC 10, the slot given back).
+- Text rules fix the Effects of Comfort of Struggle (`levelFrom: "origin-cursebound"`, set by `textRulesOnCreate`) and Scholar's Lore.
+- New passive riders:
+  - `offguard-save-penalty` (Cloaked Casting) and `offguard-concealed` (Extended Cloaking);
+  - `redirect-self` to the familiar, optional (Monstrous Familiar);
+  - `consume-target-effect` (Scholar's Lore).
+- Slot-Charged Spell (`slot-charge`).
+
+Evidence: `docs/verification/phase-third-party-features-batch-11.md`.
+
+### Third-party features batch 12
+
+Magic+'s wickets (`readWicket`) are passive riders. They require the caster inside its dominion (the dominion region's `casterDominion` flag, `wicketDominionOf`) and a slot or Focus spell with a wicket trait.
+
+At the cast, riders are filtered by `ifTraits`, by `minLevel` (Overwhelming Wicket at 11th) and by `threaded` (once a round), and optional damage swaps are asked.
+
+The first four:
+- Luminor: persistent fire; Blinded.
+- Propulsor: a push with `attackDegrees`; a `damaged-save` card.
+- Erosior: terrain around creatures while the dominion lasts; `degree-rules` Speed penalty.
+- Verdor: Immobilized.
+
+Evidence: `docs/verification/phase-third-party-features-batch-12.md`.
+
+### Third-party features batch 13
+
+The other seven wickets:
+- Mortisor (`targeted-condition`, `on-kill-rules`);
+- Savior (`healed-full-effect`);
+- Atmosphor (`self-rules` with `until`, `follow`);
+- Desolator (notes);
+- Fabricator (`dominion-creature-effect`, gone with the dominion);
+- Magnetor (`magnet-pull`, `target-rules`);
+- Ardor (`twin-target`).
+
+Wicket Infusion (`infuse-trait`) gives the wicket's riders the chosen trait. Evidence: `docs/verification/phase-third-party-features-batch-13.md`.
+
+### Third-party features batch 14
+
+- Table-only features (`TABLE` in `plus-feature-rules.js`) are read but add nothing at the cast.
+- Worn equipment carries passive riders, such as Embodiment: a `self-rules` with the ring's bonus, for the spell's duration.
+- Text rules fix Effect: Embodiment Ring Rune.
+- The form lists are checked when the module loads.
+
+Evidence: `docs/verification/phase-third-party-features-batch-14.md`.
+
+### Third-party features batch 15
+
+"+" features that regain a Focus Point (`readFocusRegain`) do so when their card is posted (`focusRegainOnCard`), up to the pool's maximum and within their frequency. Emergency Infusion bleeds first; Monastic Practices checks Religion against the level's DC first. Evidence: `docs/verification/phase-third-party-features-batch-15.md`.
+
+### Third-party features batch 16
+
+`readCastReaction` reads four reactions:
+- Archmage's Counter (no slot, half-level rank, optional Mythic Point) and Seal the Wicket (wicket-trait slots) join the Counterspell options.
+- Haughty Correction and Residual Energy Capture are casting-rules cards.
+
+Evidence: `docs/verification/phase-third-party-features-batch-16.md`.
+
+### Third-party features batch 17
+
+Features that cast a spell themselves (`readActionCast`, `actionCastOnCard`): Become Elemental (Elemental Form at 7th with the text's +31/+14 and +10 feet) and Create Elemental (Summon Elemental at half the level, the energy's trait) spend the residual energy. Constructed Spark replaces the Animated Spark cast with Summon Construct at the highest rank (`replace-spell`). Evidence: `docs/verification/phase-third-party-features-batch-17.md`.
+
+### Third-party features batch 18
+
+The Wildblood instinct: its module rules for rage damage on spells are verified against the text; Effect: Wildblood Infusion is given after each cast (the spell's damage type, replacing an earlier one); Explosive Blood doubles the rage damage on spells and melee Strikes until the end of the next turn (requires raging). Evidence: `docs/verification/phase-third-party-features-batch-18.md`.
+
+### Third-party features batch 19
+
+Magic+'s aspect summons summon their aspect creature at the cast rank, with the module's statistics Effect from the caster (`#aspectStatistics`; choices by PF2e's choice sets or `aspectSelections`). Aspect Sage gives the summoned aspect one aspect ability it lacks (`aspect-ability` rider). Evidence: `docs/verification/phase-third-party-features-batch-19.md`.
+
+### Third-party features batch 20
+
+Colossal Summon gives a 10th-rank summon its listed abilities (`colossal` rider): Gargantuan in 6 by 6 squares, +20 feet, Trample, Earth-Shatterer (casts Earthquake from an innate entry, once per minute) and the Megalophobia aura (a following aura's Will save with direct condition rows, then immunity), which ends before the summon is removed. Colossal Aspect Form answers an aspect form's size ahead (`form-choice`, `shapeChoiceSelectionsFor`): Gargantuan with reach 25, a 6-by-6 token and Trample, undone as the form ends. Evidence: `docs/verification/phase-third-party-features-batch-20.md`.
+
+### Third-party features batch 21
+
+A module's Effect linked without its name is named from the native Effect catalog (`normalizeLegacyLinks(item, catalog)`), so Celestial Shift and Aberration Shift apply their aspect battle forms instead of compiling as notes. Evidence: `docs/verification/phase-third-party-features-batch-21.md`.
+
+### Third-party features batch 22
+
+Magus+'s Spellstrike variants (Imposing, Pummeling, Flaying, Banishing, Living Grimoire, Inverted Energy) are armed by their card. The next fitting cast is delivered by a Spellstrike (`spellstrike` rider), and the caster's first Strike after it applies the variant by its degree (`applySpellstrikeVariant` in `spell-actions-runtime.js`). Evidence: `docs/verification/phase-third-party-features-batch-22.md`.
+
+### Third-party features batch 23
+
+A delivered cast is read from the Strike `deliveredStrikeMessage` picks: the mystic duo's (Scissored Assault), the spellgun's attack (Big Shot), the first successful of two (Dual-Weapon Spellstrike, its second Strike −3 or −2 agile) or the Strike after Residual Spellstrike (−5 or −4). Reverse Spellstrike expends the highest slot and casts the hostile spell that targeted the magus, delivered. Each cast's targets are kept on its message. Evidence: `docs/verification/phase-third-party-features-batch-23.md`.
+
+### Third-party features batch 24
+
+Whirling Wand Strike (a wand's spell, Spellstruck if the caster says so, +half the rank to the Strike's damage) and Eat This! (the module's eat-this toggle for the Strike). `readSpellstrikeFeature` reads the Spellstrike permissions, Dealer of Death's card draw (applied on the caster's Spellstrike Strikes by `spellstrikeFeatures`) and Slide Slice's critical-hit reminder. Evidence: `docs/verification/phase-third-party-features-batch-24.md`.
+
+### Third-party features batch 25
+
+An Arcane Cascade stance's damage type comes from the actor's latest spell (`cascadeTypeAhead`, wrapping PF2e's item creation): PF2e's force or the same-turn spell's type, Magus+'s the spell's type. Havok Cascade's havok spells deal the level in damage to the caster and fail if it's avoided (`self-damage`). Reservoir of Power and Puppet String are applied from their cards. Evidence: `docs/verification/phase-third-party-features-batch-25.md`.
+
+### Third-party features batch 26
+
+Don Visage (an Arcana check after a spell: the module's Effect for 3 or 4 rounds), Slidecasting (a cast and a move in the same combat turn: the Slidecast Effect, its bonus status, once a turn, `slidecastNow`) and Invigorate (a creature brought to 0 by the magus's spell or Spellstrike: its card, the Effect on the magus and its familiar, `invigorateOnDamage`). Evidence: `docs/verification/phase-third-party-features-batch-26.md`.
+
+### Third-party features batch 27
+
+Magic+'s essence casting around its own pool (`scripts/essence-runtime.js`): each essence caster's cast read with the pool from before it — a completed cycle gives the caster's terminus at that cycle, a leak is counted, a draw after either without Essence Rebirth is undone; combat start sets the pool (Initial Draw); combat end ends the essence spells' Effects and records. Evidence: `docs/verification/phase-third-party-features-batch-27.md`.
+
+### Third-party features batch 28
+
+Essence casting E2 (`scripts/essence-runtime.js`): Channel Essence Leak's choice on a leak; Essence Conduit's +1 on the next 1- or 2-action cast (no leak for a 1-action essence spell) with Weave Conduit's essence benefit; Life Essence Reservoir — its size from the healing spells, spent by essence-spell healing (the excess taken back), refilled on Refocus. Evidence: `docs/verification/phase-third-party-features-batch-28.md`.
+
+### Third-party features batch 29
+
+Essence casting E3a (`scripts/essence-runtime.js`): the Incantations action and the essence items' activations arm the next essence spell — an incantation out of combat (the pool opened and put back; Maintaining Incantations unless Incantation Mastery; a new one ending the long one), the bell (in combat, no cost), the amulet (no reduction), the chalice (free healing) — and Refocus dismisses incantations and gives back their reductions. Evidence: `docs/verification/phase-third-party-features-batch-29.md`.
+
+### Third-party features batch 30
+
+Essence casting E3b (`scripts/essence-runtime.js`): Unstable Draw (a draw 1 above the essence draw, the flat check, the next essence spell's leak, Unstable Aura's reminder), Terminus of Life's temporary Hit Points, Essence Summoner's bonus to a summon from an essence spell, and the essence spells' 1-day temporary immunity (an immune target left out of the cast). Evidence: `docs/verification/phase-third-party-features-batch-30.md`.
+
+### Third-party features batch 31
+
+Magic+'s power ring runes, read from the worn rune (`src/compiler/plus-feature-rules.js` PASSIVE, `scripts/spellshape-runtime.js`):
+- The `attack-crit` rider, on a critical spell attack hit or a natural 20: Immobilizing, Ramming and Perishing open a save card at the rune's DC; Scourging adds persistent damage.
+- Overwhelming's natural 19 with Veracious Spell (`basic-save-runtime.js`).
+- Energy's Gather Power and Release Power buttons.
+
+The census now also reads the essence items and the Energy rune. Evidence: `docs/verification/phase-third-party-features-batch-31.md`.
+
+### Third-party features batch 32
+
+Blue Salt Crystal, a catalyst for Drown (`src/compiler/item-spellshape.js` and the `spell-persistent` rider in `scripts/spellshape-runtime.js`), and Gray Dust Ammunition (`scripts/plus-ammo-runtime.js`: the card arms the next Strike, a hit marks the creature, its next cast opens the save card). `startShapeCard` can take a spellcasting entry. Evidence: `docs/verification/phase-third-party-features-batch-32.md`.
+
+### Third-party features batch 33
+
+Cast riders:
+- Arcane Generator and Transmogrification Boost: the `borrowed-damage` rider and `borrowedDamage` in `scripts/spellshape-runtime.js`, with the `hasSave` requirement.
+- Essence Strike: the `essence-strike` action in `scripts/text-rules.js`.
+- Essence Mystic Dedication: the `havok-choice` rider in `recordShaping`, and the conflux alias in `spellshape-readers.js`.
+- Geojibom's Guidance: the NAMED item cast's overcharge frequency and `selfLight` in `scripts/item-cast-runtime.js`.
+
+Evidence: `docs/verification/phase-third-party-features-batch-33.md`.
+
+### Third-party features batch 34
+
+Spell Ignition (the `spell-ignition` action in `scripts/text-rules.js`: a terrain region whose turn-end save now also deals damage and can spare the caster, in `shapeTerrainTurnEnd`) and Cone of Figments (the `cone-burst` Spellstrike hit rider in `scripts/spell-actions-runtime.js`). Evidence: `docs/verification/phase-third-party-features-batch-34.md`.
+
+### Third-party features batch 35
+
+Triplicate Casting: the `triplicate` action (`scripts/text-rules.js`) arms the caster; `triplicateOnCast` gives back every slot of its three casts but the highest rank's. Evidence: `docs/verification/phase-third-party-features-batch-35.md`.
+
+### Third-party features batch 36
+
+The focus-pool features (`scripts/plus-focus-runtime.js`, hooked in `main.js`): Golden Core's Refocus, I Am Omnipotent!'s free wizard focus spells, Bargain Soul's Focus Point and slot, Revitalizing Bun's restore button. Evidence: `docs/verification/phase-third-party-features-batch-36.md`.
+
+### Third-party features batch 37
+
+The counteract features (`scripts/plus-counteract-runtime.js`): a card whose button counteracts on the targeted creature (Dismiss Paltry Magic, Oracle's Eyes, Snuff Out and its void alternative, Spell Pyrophore and its burn). Evidence: `docs/verification/phase-third-party-features-batch-37.md`.
+
+### Third-party features batch 38
+
+Cast riders:
+- Stigmata: its action, its Harm persistent rider (`degreesByActions`, `whileCasterBleeding`, the `per4levels-d4` formula), and its Heal part (`scripts/plus-cast-riders-runtime.js` `stigmataOnHealing`).
+- Archmemory (`regain-last-slot`) and Spell Eating (`eat-slot`).
+- Black Book Hex: the `self-damage` rider's `rank` formula and damage type.
+- Outsider Caller (`summonBurstOnCast`).
+
+The card handlers now ignore messages with a roll context. Evidence: `docs/verification/phase-third-party-features-batch-38.md`.
+
+### Third-party features batch 39
+
+The witch's hex familiar abilities (`scripts/plus-hex-familiar-runtime.js`: on a hex cast or Sustain, the auras' and targets' module Effects, Sunlit Dawn, Reprising Melody, Stumbling Steps; the rest GM reminders). Evidence: `docs/verification/phase-third-party-features-batch-39.md`.
+
+### Third-party features batch 40
+
+Consume Item Magic and Vital Pululation (`scripts/text-rules.js` actions), and the Evolution Surge add-ons (`scripts/plus-cast-riders-runtime.js` `surgeAddonOnCreate`). The rest of the spell-modifier triage is recorded in the audit. Evidence: `docs/verification/phase-third-party-features-batch-40.md`.
+
+### Third-party features batch 41
+
+Wizards+'s exploits and Channel Smite+ (`scripts/plus-exploit-runtime.js`): the exploit card's Rebuttal and Unravel, paid with a slot meeting the Cost; Channel Smite+'s expended Harm or Heal on the next melee Strike. Evidence: `docs/verification/phase-third-party-features-batch-41.md`.
+
+### Third-party features batch 42
+
+PF2e's 107 catalysts (`src/compiler/catalysts.js` via `readItemSpellshape`). Each arms its spell's next cast. Riders by text, PF2e's Effects at the cast, Thunderbird Tuft's retaliation, Wood-Rotted Root's spores (`catalystSporesOnDamage`, with `installDamageTypeMemory`), and catalyst notes to the GM at the cast. Evidence: `docs/verification/phase-third-party-features-batch-42.md`.
+
+### Third-party features batch 43
+
+PF2e's catalysts that were GM notes, now automated (`scripts/catalyst-runtime.js`).
+
+- **Hook points:** cast riders, save-card riders, the Effects' patches once the cast resolves (or its lingering area starts), and event hooks (damage with its recorded source, destroyed images, flat checks, turns, moves, Effects ending, casts in a form, the spell shield's Shield Block).
+- **Other changes:** a lingering area's initial save carries the cast's spellshapes and catalysts.
+- **Evidence:** `docs/verification/phase-third-party-features-batch-43.md`.
+
 ### PF2e variants (action counts)
 
 A spell cast as a PF2e variant is resolved as that variant: the card records its overlay ids and reloads the spell with them for every roll. A base card of a spell with variants lists which variants are automated. The census compiles each variant.

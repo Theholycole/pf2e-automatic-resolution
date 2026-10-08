@@ -1,0 +1,51 @@
+{
+  "generatedAt": "2026-10-05T21:50:08.885Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "spellshapeBatch18",
+      "passed": true,
+      "at": "2026-10-05T21:49:12.853Z",
+      "details": {
+        "spellshape18": {
+          "refract": {
+            "first": true,
+            "degree": 3,
+            "otherLost": 50,
+            "again": true,
+            "chain": 2,
+            "twice": "PFTEST P23 Affliction ss18 foe was already targeted."
+          },
+          "burst": {
+            "type": "fire",
+            "targets": "Copy B,Forceful Hand: hand,PFTEST Corrections Caster,PFTEST Corrections High-level secondary,PFTEST Corrections Linked,PFTEST Corrections Living blocked token,PFTEST Corrections Living override token,PFTEST Corrections Noise critical token,PFTEST Corrections Noise failure token,PFTEST Corrections Noise success token,PFTEST Corrections Secondary token,PFTEST Corrections Undead token,PFTEST Ongoing Flame dead recipient,PFTEST Ongoing Flame missing recipient,PFTEST Ongoing Flame target,PFTEST Ongoing Flame target,PFTEST Ongoing Flame target,PFTEST Ongoing Flame target,PFTEST Ongoing Flame unconscious recipient,PFTEST Ongoing Later,PFTEST Ongoing Later,PFTEST Ongoing Petrify permanent,PFTEST Ongoing Petrify target,PFTEST Ongoing Petrify target,PFTEST Ongoing Petrify target,PFTEST Ongoing Player save,PFTEST Ongoing Tie A,PFTEST Ongoing Tie A,PFTEST Ongoing Tie B,PFTEST Ongoing Tie B,PFTEST Ongoing expiry,PFTEST Ongoing expiry,PFTEST Outcomes immune,PFTEST Outcomes immune,PFTEST Outcomes interrupted partial,PFTEST Outcomes overkill,PFTEST Outcomes overkill,PFTEST Outcomes weak,PFTEST Outcomes weak,PFTEST P23 Affliction ss18 caster,PFTEST P23 Affliction ss18 foe",
+            "armorGone": true
+          },
+          "legerdemain": {
+            "targets": 49,
+            "names": "Copy A,Copy B,PFTEST Corrections Caster,PFTEST Corrections High-level secondary,PFTEST Corrections Linked,PFTEST Corrections Living blocked token,PFTEST Corrections Living override token,PFTEST Corrections Noise critical token,PFTEST Corrections Noise failure token,PFTEST Corrections Noise success token,PFTEST Corrections Secondary token,PFTEST Corrections Undead token,PFTEST Ongoing Aura caster,PFTEST Ongoing Aura caster,PFTEST Ongoing Aura caster,PFTEST Ongoing Aura recipient,PFTEST Ongoing Aura recipient,PFTEST Ongoing Aura recipient,PFTEST Ongoing Flame dead recipient,PFTEST Ongoing Flame missing recipient,PFTEST Ongoing Flame target,PFTEST Ongoing Flame target,PFTEST Ongoing Flame target,PFTEST Ongoing Flame target,PFTEST Ongoing Flame unconscious recipient,PFTEST Ongoing Later,PFTEST Ongoing Later,PFTEST Ongoing Petrify permanent,PFTEST Ongoing Petrify target,PFTEST Ongoing Petrify target,PFTEST Ongoing Petrify target,PFTEST Ongoing Player save,PFTEST Ongoing Tie A,PFTEST Ongoing Tie A,PFTEST Ongoing Tie B,PFTEST Ongoing Tie B,PFTEST Ongoing expiry,PFTEST Ongoing expiry,PFTEST Outcomes immune,PFTEST Outcomes immune,PFTEST Outcomes interrupted partial,PFTEST Outcomes overkill,PFTEST Outcomes overkill,PFTEST Outcomes weak,PFTEST Outcomes weak,PFTEST P23 Affliction ss18 foe,PFTEST P23 Affliction ss18 other",
+            "fascinated": true
+          },
+          "teeming": {
+            "frightened": 2,
+            "temp": 0,
+            "vitality": false
+          },
+          "shattering": {
+            "adjacent": true,
+            "foeLost": 5,
+            "far": false,
+            "otherLost": 0
+          },
+          "rolling": {
+            "region": true,
+            "size": 3,
+            "difficult": true,
+            "stillLost": 1
+          }
+        }
+      }
+    }
+  ]
+}

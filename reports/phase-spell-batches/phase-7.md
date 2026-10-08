@@ -8,63 +8,15 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 
 | Rule family | Spells | Not enabled | Wording cohorts |
 | --- | --- | --- | --- |
-| Forced movement | 36 | 3 | 11 |
-| Movement action | 29 | 2 | 24 |
-| Object / structure creation | 6 | 1 | 5 |
-| Teleportation | 48 | 5 | 33 |
-| Terrain | 76 | 20 | 41 |
-| Wall / barrier | 17 | 1 | 8 |
+| Forced movement | 36 | 0 | 11 |
+| Movement action | 29 | 0 | 24 |
+| Object / structure creation | 6 | 0 | 5 |
+| Teleportation | 48 | 0 | 33 |
+| Terrain | 76 | 0 | 41 |
+| Wall / barrier | 17 | 0 | 8 |
 
 
-## P7-001 — Forced movement: Heaving Earth
-
-**4 spells; 1 not enabled.** Suggested source-reading anchor: Heaving Earth. This is not a verified-test designation.
-
-**Test contract:** Direction/distance; degree scaling; size restrictions; obstacles/falls; placement review; per-target movement.
-
-**Shared signals:** Forced movement
-
-**Anchor wording:** A creature that fails this save is pushed 10 feet away from you..
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Heaving Earth](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/heaving-earth.json) | 7 | Not enabled | 2 | 1.00 | reflex; basic; duration outcome/text; target 1 creature or object on the ground |
-| [Blastback](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/blastback.json) | 3 | Enabled route | 2 | 0.22 | reflex; basic; duration outcome/text; target source/area/text |
-| [Elemental Annihilation Wave](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/elemental-annihilation-wave.json) | 3 | Enabled route | 2 | 0.16 | reflex; basic; duration outcome/text; target source/area/text |
-| [Unfolding Wind Buffet](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/unfolding-wind-buffet.json) | 5 | Enabled route | 2 | 0.15 | fortitude; non-basic/no save; duration outcome/text; target source/area/text |
-
-
-## P7-002 — Forced movement: Arcane Explosion
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Arcane Explosion. This is not a verified-test designation.
-
-**Test contract:** Direction/distance; degree scaling; size restrictions; obstacles/falls; placement review; per-target movement.
-
-**Shared signals:** Area exposure, Basic-save damage, Native condition, Forced movement, Modifier / resistance
-
-**Anchor wording:** Creatures that fail are also pushed 10 feet directly away from you; creatures that can't complete this forced movement are knocked Prone (but creatures who reduce this movement, such as with an ability or feat, don't fall prone).
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Arcane Explosion](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/arcane-explosion.json) | 9 | Not enabled | 2, 3 | 1.00 | fortitude; basic; duration outcome/text; target source/area/text |
-
-
-## P7-003 — Forced movement: Blessed Boundary
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Blessed Boundary. This is not a verified-test designation.
-
-**Test contract:** Direction/distance; degree scaling; size restrictions; obstacles/falls; placement review; per-target movement.
-
-**Shared signals:** Turn trigger or boundary, Save-result condition rider, Forced movement
-
-**Anchor wording:** Failure The creature takes full damage, is pushed up to 10 feet in the direction of your choice, and ends its movement..
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Blessed Boundary](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/blessed-boundary.json) | 6 | Not enabled | 2, 3 | 1.00 | reflex; basic; duration 1 minute; target source/area/text |
-
-
-## P7-004 — Forced movement: Pummeling Rubble
+## P7-001 — Forced movement: Pummeling Rubble
 
 **12 spells; 0 not enabled.** Suggested source-reading anchor: Pummeling Rubble. This is not a verified-test designation.
 
@@ -90,7 +42,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Glacial Skewer](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/glacial-skewer.json) | 5 | Enabled route | 2, 3, 4 | 0.29 | no primary save; non-basic/no save; duration outcome/text; target 1 creature |
 
 
-## P7-005 — Forced movement: Buffeting Winds
+## P7-002 — Forced movement: Buffeting Winds
 
 **5 spells; 0 not enabled.** Suggested source-reading anchor: Buffeting Winds. This is not a verified-test designation.
 
@@ -109,7 +61,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Banishing Touch](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/banishing-touch.json) | 2 | Enabled route | 4 | 0.17 | no primary save; non-basic/no save; duration outcome/text; target 1 creature |
 
 
-## P7-006 — Forced movement: Retrieving Hook
+## P7-003 — Forced movement: Retrieving Hook
 
 **5 spells; 0 not enabled.** Suggested source-reading anchor: Retrieving Hook. This is not a verified-test designation.
 
@@ -128,7 +80,25 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Undertow](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/undertow.json) | 3 | Enabled route | 2, 3 | 0.22 | fortitude; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P7-007 — Forced movement: Unseasonable Squall
+## P7-004 — Forced movement: Heaving Earth
+
+**4 spells; 0 not enabled.** Suggested source-reading anchor: Heaving Earth. This is not a verified-test designation.
+
+**Test contract:** Direction/distance; degree scaling; size restrictions; obstacles/falls; placement review; per-target movement.
+
+**Shared signals:** Forced movement
+
+**Anchor wording:** A creature that fails this save is pushed 10 feet away from you..
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Heaving Earth](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/heaving-earth.json) | 7 | Enabled route | 2 | 1.00 | reflex; basic; duration outcome/text; target 1 creature or object on the ground |
+| [Blastback](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/blastback.json) | 3 | Enabled route | 2 | 0.22 | reflex; basic; duration outcome/text; target source/area/text |
+| [Elemental Annihilation Wave](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/elemental-annihilation-wave.json) | 3 | Enabled route | 2 | 0.16 | reflex; basic; duration outcome/text; target source/area/text |
+| [Unfolding Wind Buffet](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/unfolding-wind-buffet.json) | 5 | Enabled route | 2 | 0.15 | fortitude; non-basic/no save; duration outcome/text; target source/area/text |
+
+
+## P7-005 — Forced movement: Unseasonable Squall
 
 **3 spells; 0 not enabled.** Suggested source-reading anchor: Unseasonable Squall. This is not a verified-test designation.
 
@@ -145,7 +115,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Hydraulic Push](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/hydraulic-push.json) | 1 | Enabled route | 2, 4 | 0.15 | no primary save; non-basic/no save; duration outcome/text; target 1 creature or unattended object |
 
 
-## P7-008 — Forced movement: Fractious Echo
+## P7-006 — Forced movement: Fractious Echo
 
 **2 spells; 0 not enabled.** Suggested source-reading anchor: Fractious Echo. This is not a verified-test designation.
 
@@ -159,6 +129,36 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | --- | --- | --- | --- | --- | --- |
 | [Fractious Echo](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/fractious-echo.json) | 3 | Note only (resolved) | 3, 4 | 1.00 | no primary save; non-basic/no save; duration until the end of your next turn; target source/area/text |
 | [Turbulent Tide](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/turbulent-tide.json) | 1 | Enabled route | 2, 4 | 0.19 | fortitude; non-basic/no save; duration outcome/text; target source/area/text |
+
+
+## P7-007 — Forced movement: Arcane Explosion
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Arcane Explosion. This is not a verified-test designation.
+
+**Test contract:** Direction/distance; degree scaling; size restrictions; obstacles/falls; placement review; per-target movement.
+
+**Shared signals:** Area exposure, Basic-save damage, Native condition, Forced movement, Modifier / resistance
+
+**Anchor wording:** Creatures that fail are also pushed 10 feet directly away from you; creatures that can't complete this forced movement are knocked Prone (but creatures who reduce this movement, such as with an ability or feat, don't fall prone).
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Arcane Explosion](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/arcane-explosion.json) | 9 | Enabled route | 2, 3 | 1.00 | fortitude; basic; duration outcome/text; target source/area/text |
+
+
+## P7-008 — Forced movement: Blessed Boundary
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Blessed Boundary. This is not a verified-test designation.
+
+**Test contract:** Direction/distance; degree scaling; size restrictions; obstacles/falls; placement review; per-target movement.
+
+**Shared signals:** Turn trigger or boundary, Save-result condition rider, Forced movement
+
+**Anchor wording:** Failure The creature takes full damage, is pushed up to 10 feet in the direction of your choice, and ends its movement..
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Blessed Boundary](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/blessed-boundary.json) | 6 | Enabled route | 2, 3 | 1.00 | reflex; basic; duration 1 minute; target source/area/text |
 
 
 ## P7-009 — Forced movement: Boneshaker
@@ -206,38 +206,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Life's Flowing River](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/lifes-flowing-river.json) | 4 | Enabled route | 2, 3 | 1.00 | will; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P7-012 — Movement action: Blazing Dive
-
-**2 spells; 1 not enabled.** Suggested source-reading anchor: Blazing Dive. This is not a verified-test designation.
-
-**Test contract:** Movement mode/action; restrictions; intervening reactions; path/space; independent destination confirmation.
-
-**Shared signals:** Movement action
-
-**Anchor wording:** You Fly 15 feet straight up into the air, then Fly in a straight line to an empty space of your choice on the ground within 60 feet.
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Blazing Dive](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/blazing-dive.json) | 3 | Enabled route | 2 | 1.00 | reflex; basic; duration outcome/text; target source/area/text |
-| [Comet Charge](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/comet-charge.json) | 7 | Not enabled | 2, 3, 4 | 0.21 | no primary save; non-basic/no save; duration outcome/text; target 1 creature |
-
-
-## P7-013 — Movement action: Earth and Sky
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Earth and Sky. This is not a verified-test designation.
-
-**Test contract:** Movement mode/action; restrictions; intervening reactions; path/space; independent destination confirmation.
-
-**Shared signals:** Ending or dismissal, Save-result condition rider, Movement action
-
-**Anchor wording:** You fly directly upward, up to 100 feet into the air.
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Earth and Sky](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/earth-and-sky.json) | 6 | Not enabled | 2, 3 | 1.00 | fortitude; non-basic/no save; duration outcome/text; target source/area/text |
-
-
-## P7-014 — Movement action: Pyrefowl Rebuke
+## P7-012 — Movement action: Pyrefowl Rebuke
 
 **3 spells; 0 not enabled.** Suggested source-reading anchor: Pyrefowl Rebuke. This is not a verified-test designation.
 
@@ -254,7 +223,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Airlift](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/airlift.json) | 4 | Note only (resolved) | 2 | 0.15 | reflex; non-basic/no save; duration outcome/text; target source/area/text |
 
 
-## P7-015 — Movement action: Agile Feet
+## P7-013 — Movement action: Agile Feet
 
 **2 spells; 0 not enabled.** Suggested source-reading anchor: Agile Feet. This is not a verified-test designation.
 
@@ -270,7 +239,23 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Augmented Body](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/augmented-body.json) | 1 | Partial Effect | 2, 3, 4 | 0.18 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P7-016 — Movement action: Flashy Disappearance
+## P7-014 — Movement action: Blazing Dive
+
+**2 spells; 0 not enabled.** Suggested source-reading anchor: Blazing Dive. This is not a verified-test designation.
+
+**Test contract:** Movement mode/action; restrictions; intervening reactions; path/space; independent destination confirmation.
+
+**Shared signals:** Movement action
+
+**Anchor wording:** You Fly 15 feet straight up into the air, then Fly in a straight line to an empty space of your choice on the ground within 60 feet.
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Blazing Dive](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/blazing-dive.json) | 3 | Enabled route | 2 | 1.00 | reflex; basic; duration outcome/text; target source/area/text |
+| [Comet Charge](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/comet-charge.json) | 7 | Enabled route | 2, 3, 4 | 0.21 | no primary save; non-basic/no save; duration outcome/text; target 1 creature |
+
+
+## P7-015 — Movement action: Flashy Disappearance
 
 **2 spells; 0 not enabled.** Suggested source-reading anchor: Flashy Disappearance. This is not a verified-test designation.
 
@@ -286,7 +271,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Flowing Strike](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/flowing-strike.json) | 5 | Enabled route | 2, 4 | 0.27 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
 
 
-## P7-017 — Movement action: Agitate
+## P7-016 — Movement action: Agitate
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Agitate. This is not a verified-test designation.
 
@@ -301,7 +286,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Agitate](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/agitate.json) | 1 | Enabled route | 2, 3 | 1.00 | will; non-basic/no save; duration varies; target 1 creature |
 
 
-## P7-018 — Movement action: Canopy Crawler
+## P7-017 — Movement action: Canopy Crawler
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Canopy Crawler. This is not a verified-test designation.
 
@@ -316,7 +301,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Canopy Crawler](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/canopy-crawler.json) | 2 | Enabled route | 3, 4 | 1.00 | no primary save; non-basic/no save; duration 10 minutes; target yourself or your animal companion |
 
 
-## P7-019 — Movement action: Connective Current
+## P7-018 — Movement action: Connective Current
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Connective Current. This is not a verified-test designation.
 
@@ -329,6 +314,21 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
 | --- | --- | --- | --- | --- | --- |
 | [Connective Current](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/connective-current.json) | 1 | Note only (resolved) | 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target 1 enemy |
+
+
+## P7-019 — Movement action: Earth and Sky
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Earth and Sky. This is not a verified-test designation.
+
+**Test contract:** Movement mode/action; restrictions; intervening reactions; path/space; independent destination confirmation.
+
+**Shared signals:** Ending or dismissal, Save-result condition rider, Movement action
+
+**Anchor wording:** You fly directly upward, up to 100 feet into the air.
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Earth and Sky](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/earth-and-sky.json) | 6 | Enabled route | 2, 3 | 1.00 | fortitude; non-basic/no save; duration outcome/text; target source/area/text |
 
 
 ## P7-020 — Movement action: Earthbreaker Stride
@@ -573,7 +573,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 
 ## P7-036 — Object / structure creation: Illusory Object
 
-**2 spells; 1 not enabled.** Suggested source-reading anchor: Illusory Object. This is not a verified-test designation.
+**2 spells; 0 not enabled.** Suggested source-reading anchor: Illusory Object. This is not a verified-test designation.
 
 **Test contract:** Object eligibility/size; placement; durability; actor/token/document identity; permanent consequences.
 
@@ -584,7 +584,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
 | --- | --- | --- | --- | --- | --- |
 | [Illusory Object](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/illusory-object.json) | 1 | Note only (resolved) | 3, 4 | 1.00 | no primary save; non-basic/no save; duration 10 minutes; target source/area/text |
-| [Shadow Illusion](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/shadow-illusion.json) | 6 | Not enabled | 3, 4 | 0.27 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
+| [Shadow Illusion](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/shadow-illusion.json) | 6 | Enabled route | 3, 4 | 0.27 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
 
 
 ## P7-037 — Object / structure creation: Creation
@@ -649,7 +649,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 
 ## P7-041 — Teleportation: Reclined Apport
 
-**6 spells; 1 not enabled.** Suggested source-reading anchor: Reclined Apport. This is not a verified-test designation.
+**6 spells; 0 not enabled.** Suggested source-reading anchor: Reclined Apport. This is not a verified-test designation.
 
 **Test contract:** Range/rank; eligible passengers; destination constraints; visibility; cross-scene transfer; atomic move or review.
 
@@ -664,70 +664,10 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Snare Hopping](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/snare-hopping.json) | 1 | Note only (resolved) | 4 | 0.23 | no primary save; non-basic/no save; duration outcome/text; target one snare you built |
 | [Warping Pull](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/warping-pull.json) | 2 | Enabled route | 2 | 0.20 | no primary save; non-basic/no save; duration outcome/text; target 1 willing creature that would take damage from the triggering effect |
 | [Sudden Transposition](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/sudden-transposition.json) | 8 | Enabled route | 2, 3 | 0.18 | fortitude; non-basic/no save; duration outcome/text; target up to 2 creatures |
-| [Collective Transposition](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/collective-transposition.json) | 6 | Not enabled | 2 | 0.15 | will; non-basic/no save; duration outcome/text; target up to 2 creatures |
+| [Collective Transposition](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/collective-transposition.json) | 6 | Enabled route | 2 | 0.15 | will; non-basic/no save; duration outcome/text; target up to 2 creatures |
 
 
-## P7-042 — Teleportation: Forest of Gates
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Forest of Gates. This is not a verified-test designation.
-
-**Test contract:** Range/rank; eligible passengers; destination constraints; visibility; cross-scene transfer; atomic move or review.
-
-**Shared signals:** Save-result condition rider, Native condition, Healing / recipient mode, Choice / casting variant, Incarnate arrival/departure
-
-**Anchor wording:** Critical Failure You and your allies exit the forest within 1 mile of your original location..
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Forest of Gates](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/forest-of-gates.json) | 9 | Not enabled | 2, 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 hour; target you and up to 6 willing creatures |
-
-
-## P7-043 — Teleportation: Maze of Locked Doors
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Maze of Locked Doors. This is not a verified-test designation.
-
-**Test contract:** Range/rank; eligible passengers; destination constraints; visibility; cross-scene transfer; atomic move or review.
-
-**Shared signals:** Save-result condition rider, Counteract, Teleportation
-
-**Anchor wording:** Teleportation effects of 6th level or lower are automatically suppressed within the extradimensional hallway; higher-level teleportation effects require the caster to succeed at a counteract check against your spell DC or they fail..
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Maze of Locked Doors](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/maze-of-locked-doors.json) | 7 | Not enabled | 2, 3, 4 | 1.00 | will; non-basic/no save; duration outcome/text; target 1 creature |
-
-
-## P7-044 — Teleportation: Proximal Shift
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Proximal Shift. This is not a verified-test designation.
-
-**Test contract:** Range/rank; eligible passengers; destination constraints; visibility; cross-scene transfer; atomic move or review.
-
-**Shared signals:** Basic-save damage, Native condition, Teleportation, Terrain
-
-**Anchor wording:** At the GM's discretion, the spell might have additional effects based on the nature of the material teleported with you.
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Proximal Shift](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/proximal-shift.json) | 6 | Not enabled | 2 | 1.00 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
-
-
-## P7-045 — Teleportation: Unexpected Transposition
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Unexpected Transposition. This is not a verified-test designation.
-
-**Test contract:** Range/rank; eligible passengers; destination constraints; visibility; cross-scene transfer; atomic move or review.
-
-**Shared signals:** Temporary immunity
-
-**Anchor wording:** After the swap, you and the target are both temporarily immune to unexpected transposition spells for 1 minute..
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Unexpected Transposition](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/unexpected-transposition.json) | 6 | Not enabled | 2, 3 | 1.00 | will; non-basic/no save; duration outcome/text; target 1 creature other than the triggering enemy |
-
-
-## P7-046 — Teleportation: Momentary Recovery
+## P7-042 — Teleportation: Momentary Recovery
 
 **4 spells; 0 not enabled.** Suggested source-reading anchor: Momentary Recovery. This is not a verified-test designation.
 
@@ -745,7 +685,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Hop, Skip, Jump](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/hop-skip-jump.json) | 4 | Note only (resolved) | 3, 4 | 0.15 | no primary save; non-basic/no save; duration 3 rounds; target source/area/text |
 
 
-## P7-047 — Teleportation: Spiritual Transport
+## P7-043 — Teleportation: Spiritual Transport
 
 **3 spells; 0 not enabled.** Suggested source-reading anchor: Spiritual Transport. This is not a verified-test designation.
 
@@ -762,7 +702,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Rapid Retreat](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/rapid-retreat.json) | 4 | Enabled route | 2, 3 | 0.16 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
 
 
-## P7-048 — Teleportation: Dimensional Steps
+## P7-044 — Teleportation: Dimensional Steps
 
 **2 spells; 0 not enabled.** Suggested source-reading anchor: Dimensional Steps. This is not a verified-test designation.
 
@@ -778,7 +718,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Shrink the Span](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/shrink-the-span.json) | 3 | Note only (resolved) | 4 | 0.44 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
 
 
-## P7-049 — Teleportation: Disruptive Transfer
+## P7-045 — Teleportation: Disruptive Transfer
 
 **2 spells; 0 not enabled.** Suggested source-reading anchor: Disruptive Transfer. This is not a verified-test designation.
 
@@ -794,7 +734,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Blink Charge](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/blink-charge.json) | 5 | Enabled route | 4 | 0.19 | no primary save; non-basic/no save; duration outcome/text; target 1 creature |
 
 
-## P7-050 — Teleportation: Fire's Pathway
+## P7-046 — Teleportation: Fire's Pathway
 
 **2 spells; 0 not enabled.** Suggested source-reading anchor: Fire's Pathway. This is not a verified-test designation.
 
@@ -810,7 +750,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Nature's Pathway](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/natures-pathway.json) | 5 | Note only (resolved) | 3, 4 | 0.69 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
 
 
-## P7-051 — Teleportation: Space Fold Gate
+## P7-047 — Teleportation: Space Fold Gate
 
 **2 spells; 0 not enabled.** Suggested source-reading anchor: Space Fold Gate. This is not a verified-test designation.
 
@@ -826,7 +766,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Tesseract Tunnel](../../.cache/pf2e-test-fixtures/spells/spells/cantrip/tesseract-tunnel.json) | 5 | Note only (resolved) | 3, 4 | 0.64 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P7-052 — Teleportation: Translocate
+## P7-048 — Teleportation: Translocate
 
 **2 spells; 0 not enabled.** Suggested source-reading anchor: Translocate. This is not a verified-test designation.
 
@@ -842,7 +782,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Take Your Places](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/take-your-places.json) | 8 | Note only (resolved) | 3, 4 | 0.43 | no primary save; non-basic/no save; duration outcome/text; target up to 4 willing creatures |
 
 
-## P7-053 — Teleportation: Dimensional Assault
+## P7-049 — Teleportation: Dimensional Assault
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Dimensional Assault. This is not a verified-test designation.
 
@@ -857,7 +797,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Dimensional Assault](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/dimensional-assault.json) | 1 | Enabled route | 4 | 1.00 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
 
 
-## P7-054 — Teleportation: Dimensional Drop
+## P7-050 — Teleportation: Dimensional Drop
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Dimensional Drop. This is not a verified-test designation.
 
@@ -872,7 +812,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Dimensional Drop](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/dimensional-drop.json) | 2 | Enabled route | 2 | 1.00 | reflex; non-basic/no save; duration outcome/text; target 1 creature standing on the ground |
 
 
-## P7-055 — Teleportation: Dimensional Excision
+## P7-051 — Teleportation: Dimensional Excision
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Dimensional Excision. This is not a verified-test designation.
 
@@ -887,7 +827,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Dimensional Excision](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/dimensional-excision.json) | 9 | Enabled route | 2, 3 | 1.00 | will; basic; duration outcome/text; target 1 creature |
 
 
-## P7-056 — Teleportation: Dive and Breach
+## P7-052 — Teleportation: Dive and Breach
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Dive and Breach. This is not a verified-test designation.
 
@@ -902,7 +842,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Dive and Breach](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/dive-and-breach.json) | 3 | Enabled route | 2, 3 | 1.00 | reflex; basic; duration outcome/text; target source/area/text |
 
 
-## P7-057 — Teleportation: Ethereal Jaunt
+## P7-053 — Teleportation: Ethereal Jaunt
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Ethereal Jaunt. This is not a verified-test designation.
 
@@ -917,7 +857,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Ethereal Jaunt](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/ethereal-jaunt.json) | 7 | Note only (resolved) | 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P7-058 — Teleportation: Familiar's Call
+## P7-054 — Teleportation: Familiar's Call
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Familiar's Call. This is not a verified-test designation.
 
@@ -932,7 +872,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Familiar's Call](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/familiars-call.json) | 3 | Note only (resolved) | 4 | 1.00 | no primary save; non-basic/no save; duration outcome/text; target your familiar |
 
 
-## P7-059 — Teleportation: Far Reach
+## P7-055 — Teleportation: Far Reach
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Far Reach. This is not a verified-test designation.
 
@@ -947,7 +887,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Far Reach](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/far-reach.json) | 3 | Note only (resolved) | 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P7-060 — Teleportation: Fetch
+## P7-056 — Teleportation: Fetch
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Fetch. This is not a verified-test designation.
 
@@ -962,7 +902,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Fetch](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/fetch.json) | 4 | Note only (resolved) | 4 | 1.00 | no primary save; non-basic/no save; duration outcome/text; target your companion |
 
 
-## P7-061 — Teleportation: Flicker
+## P7-057 — Teleportation: Flicker
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Flicker. This is not a verified-test designation.
 
@@ -977,7 +917,22 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Flicker](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/flicker.json) | 4 | Partial Effect | 2, 3 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P7-062 — Teleportation: Gate
+## P7-058 — Teleportation: Forest of Gates
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Forest of Gates. This is not a verified-test designation.
+
+**Test contract:** Range/rank; eligible passengers; destination constraints; visibility; cross-scene transfer; atomic move or review.
+
+**Shared signals:** Save-result condition rider, Native condition, Healing / recipient mode, Choice / casting variant, Incarnate arrival/departure
+
+**Anchor wording:** Critical Failure You and your allies exit the forest within 1 mile of your original location..
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Forest of Gates](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/forest-of-gates.json) | 9 | Note only (resolved) | 2, 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 hour; target you and up to 6 willing creatures |
+
+
+## P7-059 — Teleportation: Gate
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Gate. This is not a verified-test designation.
 
@@ -992,7 +947,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Gate](../../.cache/pf2e-test-fixtures/spells/spells/rank-10/gate.json) | 10 | Note only (resolved) | 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P7-063 — Teleportation: Infiltrator's Tunnel
+## P7-060 — Teleportation: Infiltrator's Tunnel
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Infiltrator's Tunnel. This is not a verified-test designation.
 
@@ -1007,7 +962,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Infiltrator's Tunnel](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/infiltrators-tunnel.json) | 4 | Enabled route | 2, 3 | 1.00 | will; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P7-064 — Teleportation: Interplanar Teleport
+## P7-061 — Teleportation: Interplanar Teleport
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Interplanar Teleport. This is not a verified-test designation.
 
@@ -1022,7 +977,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Interplanar Teleport](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/interplanar-teleport.json) | 7 | Note only (resolved) | 4 | 1.00 | no primary save; non-basic/no save; duration outcome/text; target up to 8 willing creatures |
 
 
-## P7-065 — Teleportation: King's Castle
+## P7-062 — Teleportation: King's Castle
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: King's Castle. This is not a verified-test designation.
 
@@ -1037,7 +992,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [King's Castle](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/kings-castle.json) | 5 | Note only (resolved) | 4 | 1.00 | no primary save; non-basic/no save; duration outcome/text; target 1 willing creature |
 
 
-## P7-066 — Teleportation: Magic Mailbox
+## P7-063 — Teleportation: Magic Mailbox
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Magic Mailbox. This is not a verified-test designation.
 
@@ -1052,7 +1007,37 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Magic Mailbox](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/magic-mailbox.json) | 4 | Note only (resolved) | 3, 4 | 1.00 | no primary save; non-basic/no save; duration until your next daily preparations; target 2 containers, each no larger than 5 feet in any dimension |
 
 
-## P7-067 — Teleportation: Quandary
+## P7-064 — Teleportation: Maze of Locked Doors
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Maze of Locked Doors. This is not a verified-test designation.
+
+**Test contract:** Range/rank; eligible passengers; destination constraints; visibility; cross-scene transfer; atomic move or review.
+
+**Shared signals:** Save-result condition rider, Counteract, Teleportation
+
+**Anchor wording:** Teleportation effects of 6th level or lower are automatically suppressed within the extradimensional hallway; higher-level teleportation effects require the caster to succeed at a counteract check against your spell DC or they fail..
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Maze of Locked Doors](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/maze-of-locked-doors.json) | 7 | Enabled route | 2, 3, 4 | 1.00 | will; non-basic/no save; duration outcome/text; target 1 creature |
+
+
+## P7-065 — Teleportation: Proximal Shift
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Proximal Shift. This is not a verified-test designation.
+
+**Test contract:** Range/rank; eligible passengers; destination constraints; visibility; cross-scene transfer; atomic move or review.
+
+**Shared signals:** Basic-save damage, Native condition, Teleportation, Terrain
+
+**Anchor wording:** At the GM's discretion, the spell might have additional effects based on the nature of the material teleported with you.
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Proximal Shift](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/proximal-shift.json) | 6 | Enabled route | 2 | 1.00 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
+
+
+## P7-066 — Teleportation: Quandary
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Quandary. This is not a verified-test designation.
 
@@ -1067,7 +1052,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Quandary](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/quandary.json) | 8 | Note only (resolved) | 3, 4 | 1.00 | no primary save; non-basic/no save; duration outcome/text; target 1 creature |
 
 
-## P7-068 — Teleportation: Return Beacon
+## P7-067 — Teleportation: Return Beacon
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Return Beacon. This is not a verified-test designation.
 
@@ -1082,7 +1067,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Return Beacon](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/return-beacon.json) | 5 | Note only (resolved) | 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 hour; target source/area/text |
 
 
-## P7-069 — Teleportation: Teleport
+## P7-068 — Teleportation: Teleport
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Teleport. This is not a verified-test designation.
 
@@ -1097,7 +1082,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Teleport](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/teleport.json) | 6 | Note only (resolved) | 4 | 1.00 | no primary save; non-basic/no save; duration outcome/text; target you and up to 4 targets touched, either willing creatures or objects roughly the size of a creature. |
 
 
-## P7-070 — Teleportation: Terrain Transposition
+## P7-069 — Teleportation: Terrain Transposition
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Terrain Transposition. This is not a verified-test designation.
 
@@ -1112,7 +1097,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Terrain Transposition](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/terrain-transposition.json) | 5 | Note only (resolved) | 4 | 1.00 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
 
 
-## P7-071 — Teleportation: Thoughtful Gift
+## P7-070 — Teleportation: Thoughtful Gift
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Thoughtful Gift. This is not a verified-test designation.
 
@@ -1127,7 +1112,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Thoughtful Gift](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/thoughtful-gift.json) | 1 | Note only (resolved) | 4 | 1.00 | no primary save; non-basic/no save; duration outcome/text; target 1 willing creature |
 
 
-## P7-072 — Teleportation: Trade Items
+## P7-071 — Teleportation: Trade Items
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Trade Items. This is not a verified-test designation.
 
@@ -1142,7 +1127,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Trade Items](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/trade-items.json) | 3 | Note only (resolved) | 2 | 1.00 | reflex; non-basic/no save; duration outcome/text; target 1 item you're holding and 1 item in another creature's possession you can see, each no more than light Bulk |
 
 
-## P7-073 — Teleportation: Umbral Journey
+## P7-072 — Teleportation: Umbral Journey
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Umbral Journey. This is not a verified-test designation.
 
@@ -1157,29 +1142,24 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Umbral Journey](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/umbral-journey.json) | 5 | Note only (resolved) | 3, 4 | 1.00 | no primary save; non-basic/no save; duration 8 hours; target you and up to 10 willing creatures touched |
 
 
-## P7-074 — Terrain: Wrathful Storm
+## P7-073 — Teleportation: Unexpected Transposition
 
-**6 spells; 3 not enabled.** Suggested source-reading anchor: Wrathful Storm. This is not a verified-test designation.
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Unexpected Transposition. This is not a verified-test designation.
 
-**Test contract:** Area geometry; terrain type/cost; entry/exposure; hazards; duration; preserve unrelated scene objects.
+**Test contract:** Range/rank; eligible passengers; destination constraints; visibility; cross-scene transfer; atomic move or review.
 
-**Shared signals:** Terrain
+**Shared signals:** Temporary immunity
 
-**Anchor wording:** The air in the area is greater difficult terrain for flying creatures.
+**Anchor wording:** After the swap, you and the target are both temporarily immune to unexpected transposition spells for 1 minute..
 
 | Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
 | --- | --- | --- | --- | --- | --- |
-| [Wrathful Storm](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/wrathful-storm.json) | 9 | Not enabled | 2, 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
-| [Storm of Vengeance](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/storm-of-vengeance.json) | 9 | Not enabled | 2, 3, 4 | 0.45 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
-| [Rouse Skeletons](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/rouse-skeletons.json) | 3 | Enabled route | 2, 3 | 0.18 | reflex; basic; duration 1 minute; target source/area/text |
-| [Ice Storm](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/ice-storm.json) | 4 | Enabled route | 2, 3 | 0.18 | reflex; basic; duration 1 minute; target source/area/text |
-| [Tear the Veil](../../.cache/pf2e-test-fixtures/spells/spells/rank-10/tear-the-veil.json) | 10 | Not enabled | 2, 3 | 0.18 | fortitude; non-basic/no save; duration 1 minute; target source/area/text |
-| [Flame Vortex](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/flame-vortex.json) | 6 | Enabled route | 2, 3 | 0.15 | reflex; basic; duration 1 minute; target source/area/text |
+| [Unexpected Transposition](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/unexpected-transposition.json) | 6 | Enabled route | 2, 3 | 1.00 | will; non-basic/no save; duration outcome/text; target 1 creature other than the triggering enemy |
 
 
-## P7-075 — Terrain: Earthworks
+## P7-074 — Terrain: Earthworks
 
-**12 spells; 2 not enabled.** Suggested source-reading anchor: Earthworks. This is not a verified-test designation.
+**12 spells; 0 not enabled.** Suggested source-reading anchor: Earthworks. This is not a verified-test designation.
 
 **Test contract:** Area geometry; terrain type/cost; entry/exposure; hazards; duration; preserve unrelated scene objects.
 
@@ -1197,32 +1177,15 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Cave Fangs](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/cave-fangs.json) | 3 | Enabled route | 2, 3 | 0.24 | reflex; basic; duration 1 minute; target source/area/text |
 | [Nature's Reprisal](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/natures-reprisal.json) | 6 | Enabled route | 3, 4 | 0.24 | no primary save; non-basic/no save; duration 1 minute; target all squares on the ground that contain plants in an 80-foot burst |
 | [Elemental Breath](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/elemental-breath.json) | 5 | Enabled route | 2, 4 | 0.23 | reflex; basic; duration outcome/text; target source/area/text |
-| [Trim the Blight](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/trim-the-blight.json) | 9 | Not enabled | 2, 3 | 0.23 | fortitude; non-basic/no save; duration varies; target source/area/text |
+| [Trim the Blight](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/trim-the-blight.json) | 9 | Note only (resolved) | 2, 3 | 0.23 | fortitude; non-basic/no save; duration varies; target source/area/text |
 | [Punishing Winds](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/punishing-winds.json) | 8 | Note only (resolved) | 3, 4 | 0.21 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
-| [Restore Ground](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/restore-ground.json) | 7 | Not enabled | 3, 4 | 0.21 | no primary save; non-basic/no save; duration varies; target source/area/text |
+| [Restore Ground](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/restore-ground.json) | 7 | Note only (resolved) | 3, 4 | 0.21 | no primary save; non-basic/no save; duration varies; target source/area/text |
 | [Coral Eruption](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/coral-eruption.json) | 4 | Enabled route | 2, 3 | 0.20 | reflex; basic; duration 1 minute; target source/area/text |
 
 
-## P7-076 — Terrain: Whirlwind
+## P7-075 — Terrain: Entangling Flora
 
-**3 spells; 2 not enabled.** Suggested source-reading anchor: Whirlwind. This is not a verified-test designation.
-
-**Test contract:** Area geometry; terrain type/cost; entry/exposure; hazards; duration; preserve unrelated scene objects.
-
-**Shared signals:** Sustain, Area exposure, Terrain
-
-**Anchor wording:** All squares in the whirlwind are difficult terrain..
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Whirlwind](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/whirlwind.json) | 8 | Not enabled | 2, 3, 4 | 1.00 | reflex; non-basic/no save; duration 1 minute; target source/area/text |
-| [Whirlpool](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/whirlpool.json) | 8 | Not enabled | 2, 3 | 0.17 | reflex; non-basic/no save; duration 1 minute; target source/area/text |
-| [Zombie Horde](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/zombie-horde.json) | 3 | Enabled route | 2, 3 | 0.15 | fortitude; non-basic/no save; duration 1 minute; target 1 of your thralls |
-
-
-## P7-077 — Terrain: Entangling Flora
-
-**10 spells; 1 not enabled.** Suggested source-reading anchor: Entangling Flora. This is not a verified-test designation.
+**10 spells; 0 not enabled.** Suggested source-reading anchor: Entangling Flora. This is not a verified-test designation.
 
 **Test contract:** Area geometry; terrain type/cost; entry/exposure; hazards; duration; preserve unrelated scene objects.
 
@@ -1240,195 +1203,31 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Corrosive Muck](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/corrosive-muck.json) | 5 | Enabled route | 2, 3 | 0.21 | reflex; basic; duration 1 minute; target source/area/text |
 | [Swampcall](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/swampcall.json) | 1 | Enabled route | 2, 3 | 0.20 | reflex; non-basic/no save; duration 1 minute; target source/area/text |
 | [Rime Slick](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/rime-slick.json) | 2 | Enabled route | 2, 3 | 0.18 | reflex; basic; duration 1 minute; target source/area/text |
-| [Storm Lord](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/storm-lord.json) | 9 | Not enabled | 2, 3 | 0.18 | reflex; basic; duration 1 minute; target source/area/text |
+| [Storm Lord](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/storm-lord.json) | 9 | Enabled route | 2, 3 | 0.18 | reflex; basic; duration 1 minute; target source/area/text |
 | [Horizon's Veil](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/horizons-veil.json) | 5 | Enabled route | 2, 3 | 0.17 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P7-078 — Terrain: Bramble Bush
+## P7-076 — Terrain: Wrathful Storm
 
-**4 spells; 1 not enabled.** Suggested source-reading anchor: Bramble Bush. This is not a verified-test designation.
-
-**Test contract:** Area geometry; terrain type/cost; entry/exposure; hazards; duration; preserve unrelated scene objects.
-
-**Shared signals:** Basic-save damage, Terrain
-
-**Anchor wording:** Until the start of your next turn, the area is difficult terrain and hazardous terrain.
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Bramble Bush](../../.cache/pf2e-test-fixtures/spells/spells/cantrip/bramble-bush.json) | 1 | Enabled route | 2, 3 | 1.00 | reflex; basic; duration outcome/text; target source/area/text |
-| [Howling Blizzard](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/howling-blizzard.json) | 5 | Enabled route | 2, 3 | 0.24 | reflex; basic; duration outcome/text; target source/area/text |
-| [Planar Collision](../../.cache/pf2e-test-fixtures/spells/spells/rank-10/planar-collision.json) | 10 | Not enabled | 2, 3, 4 | 0.17 | reflex; basic; duration outcome/text; target source/area/text |
-| [Swamp of Sloth](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/swamp-of-sloth.json) | 3 | Enabled route | 2, 3 | 0.17 | fortitude; basic; duration 1 minute; target source/area/text |
-
-
-## P7-079 — Terrain: Rubble Step
-
-**2 spells; 1 not enabled.** Suggested source-reading anchor: Rubble Step. This is not a verified-test designation.
+**6 spells; 0 not enabled.** Suggested source-reading anchor: Wrathful Storm. This is not a verified-test designation.
 
 **Test contract:** Area geometry; terrain type/cost; entry/exposure; hazards; duration; preserve unrelated scene objects.
 
 **Shared signals:** Terrain
 
-**Anchor wording:** For 2 rounds, when the target willingly moves out of a space, and if the target is in contact with the ground, the ground in that space becomes difficult terrain.
+**Anchor wording:** The air in the area is greater difficult terrain for flying creatures.
 
 | Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
 | --- | --- | --- | --- | --- | --- |
-| [Rubble Step](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/rubble-step.json) | 2 | Note only (resolved) | 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target 1 willing creature |
-| [Undertaker](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/undertaker.json) | 9 | Not enabled | 2, 3 | 0.18 | fortitude; non-basic/no save; duration outcome/text; target 1 living creature |
-
-
-## P7-080 — Terrain: Earthquake
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Earthquake. This is not a verified-test designation.
-
-**Test contract:** Area geometry; terrain type/cost; entry/exposure; hazards; duration; preserve unrelated scene objects.
-
-**Shared signals:** Turn trigger or boundary, Save-result condition rider, Basic-save damage, Native condition, Terrain, Modifier / resistance
-
-**Anchor wording:** Shaking Ground The ground is difficult terrain, and creatures on it take a -2 circumstance penalty to attack rolls, AC, and skill checks.
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Earthquake](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/earthquake.json) | 8 | Not enabled | 2, 3 | 1.00 | reflex; basic; duration 1 round; target source/area/text |
-
-
-## P7-081 — Terrain: Elemental Confluence
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Elemental Confluence. This is not a verified-test designation.
-
-**Test contract:** Area geometry; terrain type/cost; entry/exposure; hazards; duration; preserve unrelated scene objects.
-
-**Shared signals:** Sustain, Save-result condition rider, Basic-save damage, Persistent damage, Attack and dependent result, Terrain, Modifier / resistance
-
-**Anchor wording:** Wood (wood) Roots and stumps grow, making ground in the area difficult terrain for 1 round..
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Elemental Confluence](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/elemental-confluence.json) | 6 | Not enabled | 2, 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
-
-
-## P7-082 — Terrain: Pierce the Sky
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Pierce the Sky. This is not a verified-test designation.
-
-**Test contract:** Area geometry; terrain type/cost; entry/exposure; hazards; duration; preserve unrelated scene objects.
-
-**Shared signals:** Area exposure, Save-result condition rider, Native condition, Attack and dependent result, Terrain
-
-**Anchor wording:** Regardless of the result, each arrow leaves a line of hazardous terrain between you and the target that lasts for 1 minute.
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Pierce the Sky](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/pierce-the-sky.json) | 9 | Not enabled | 2, 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target up to 3 creatures |
-
-
-## P7-083 — Terrain: Rainbow Fumarole
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Rainbow Fumarole. This is not a verified-test designation.
-
-**Test contract:** Area geometry; terrain type/cost; entry/exposure; hazards; duration; preserve unrelated scene objects.
-
-**Shared signals:** Area exposure, Basic-save damage, Persistent damage, Native condition, Choice / casting variant, Terrain
-
-**Anchor wording:** Squares within the area of the rainbow fumarole are difficult terrain..
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Rainbow Fumarole](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/rainbow-fumarole.json) | 8 | Not enabled | 2, 3, 4 | 1.00 | reflex; basic; duration 1 minute; target source/area/text |
-
-
-## P7-084 — Terrain: Repulsion
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Repulsion. This is not a verified-test designation.
-
-**Test contract:** Area geometry; terrain type/cost; entry/exposure; hazards; duration; preserve unrelated scene objects.
-
-**Shared signals:** Aura membership, Area exposure, Terrain
-
-**Anchor wording:** Success The creature treats each square in the area as difficult terrain when moving closer to you..
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Repulsion](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/repulsion.json) | 6 | Not enabled | 2, 3 | 1.00 | will; non-basic/no save; duration 1 minute; target source/area/text |
-
-
-## P7-085 — Terrain: Shipwreck
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Shipwreck. This is not a verified-test designation.
-
-**Test contract:** Area geometry; terrain type/cost; entry/exposure; hazards; duration; preserve unrelated scene objects.
-
-**Shared signals:** Save-result condition rider, Terrain
-
-**Anchor wording:** Success The vehicle becomes uncontrolled, and spaces within it become difficult terrain..
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Shipwreck](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/shipwreck.json) | 8 | Not enabled | 2 | 1.00 | fortitude; non-basic/no save; duration outcome/text; target 1 vehicle |
-
-
-## P7-086 — Terrain: Tanglecurse
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Tanglecurse. This is not a verified-test designation.
-
-**Test contract:** Area geometry; terrain type/cost; entry/exposure; hazards; duration; preserve unrelated scene objects.
-
-**Shared signals:** Area exposure, Save-result condition rider, Native condition, Terrain
-
-**Anchor wording:** This area is difficult terrain for creatures that enter the area.
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Tanglecurse](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/tanglecurse.json) | 6 | Not enabled | 2, 3 | 1.00 | will; non-basic/no save; duration outcome/text; target 1 creature |
-
-
-## P7-087 — Terrain: Unbreaking Wave Barrier
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Unbreaking Wave Barrier. This is not a verified-test designation.
-
-**Test contract:** Area geometry; terrain type/cost; entry/exposure; hazards; duration; preserve unrelated scene objects.
-
-**Shared signals:** Sustain, Area exposure, Save-result condition rider, Native condition, Terrain, Forced movement, Modifier / resistance
-
-**Anchor wording:** Success The creature isn't pushed, but the space within the barrier is difficult terrain for it..
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Unbreaking Wave Barrier](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/unbreaking-wave-barrier.json) | 7 | Not enabled | 2, 3 | 1.00 | fortitude; non-basic/no save; duration outcome/text; target source/area/text |
-
-
-## P7-088 — Terrain: Upheaval
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Upheaval. This is not a verified-test designation.
-
-**Test contract:** Area geometry; terrain type/cost; entry/exposure; hazards; duration; preserve unrelated scene objects.
-
-**Shared signals:** Save-result condition rider, Native condition, Terrain
-
-**Anchor wording:** Stone Debris The area becomes difficult terrain..
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Upheaval](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/upheaval.json) | 9 | Not enabled | 2 | 1.00 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
-
-
-## P7-089 — Terrain: Volcanic Eruption
-
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Volcanic Eruption. This is not a verified-test designation.
-
-**Test contract:** Area geometry; terrain type/cost; entry/exposure; hazards; duration; preserve unrelated scene objects.
-
-**Shared signals:** Save-result condition rider, Native condition, Terrain, Modifier / resistance
-
-**Anchor wording:** All normal terrain is difficult terrain to a flying creature, and such creatures immediately descend 20 feet the moment they're encased, but they don't take damage from this fall.
-
-| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
-| --- | --- | --- | --- | --- | --- |
-| [Volcanic Eruption](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/volcanic-eruption.json) | 7 | Not enabled | 2 | 1.00 | reflex; non-basic/no save; duration outcome/text; target source/area/text |
-
-
-## P7-090 — Terrain: Wildfire
+| [Wrathful Storm](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/wrathful-storm.json) | 9 | Enabled route | 2, 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
+| [Storm of Vengeance](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/storm-of-vengeance.json) | 9 | Enabled route | 2, 3, 4 | 0.45 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
+| [Rouse Skeletons](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/rouse-skeletons.json) | 3 | Enabled route | 2, 3 | 0.18 | reflex; basic; duration 1 minute; target source/area/text |
+| [Ice Storm](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/ice-storm.json) | 4 | Enabled route | 2, 3 | 0.18 | reflex; basic; duration 1 minute; target source/area/text |
+| [Tear the Veil](../../.cache/pf2e-test-fixtures/spells/spells/rank-10/tear-the-veil.json) | 10 | Enabled route | 2, 3 | 0.18 | fortitude; non-basic/no save; duration 1 minute; target source/area/text |
+| [Flame Vortex](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/flame-vortex.json) | 6 | Enabled route | 2, 3 | 0.15 | reflex; basic; duration 1 minute; target source/area/text |
+
+
+## P7-077 — Terrain: Wildfire
 
 **5 spells; 0 not enabled.** Suggested source-reading anchor: Wildfire. This is not a verified-test designation.
 
@@ -1447,7 +1246,58 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Etheric Shards](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/etheric-shards.json) | 5 | Enabled route | 2, 3 | 0.16 | reflex; basic; duration 1 minute; target source/area/text |
 
 
-## P7-091 — Terrain: 500 Toads
+## P7-078 — Terrain: Bramble Bush
+
+**4 spells; 0 not enabled.** Suggested source-reading anchor: Bramble Bush. This is not a verified-test designation.
+
+**Test contract:** Area geometry; terrain type/cost; entry/exposure; hazards; duration; preserve unrelated scene objects.
+
+**Shared signals:** Basic-save damage, Terrain
+
+**Anchor wording:** Until the start of your next turn, the area is difficult terrain and hazardous terrain.
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Bramble Bush](../../.cache/pf2e-test-fixtures/spells/spells/cantrip/bramble-bush.json) | 1 | Enabled route | 2, 3 | 1.00 | reflex; basic; duration outcome/text; target source/area/text |
+| [Howling Blizzard](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/howling-blizzard.json) | 5 | Enabled route | 2, 3 | 0.24 | reflex; basic; duration outcome/text; target source/area/text |
+| [Planar Collision](../../.cache/pf2e-test-fixtures/spells/spells/rank-10/planar-collision.json) | 10 | Enabled route | 2, 3, 4 | 0.17 | reflex; basic; duration outcome/text; target source/area/text |
+| [Swamp of Sloth](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/swamp-of-sloth.json) | 3 | Enabled route | 2, 3 | 0.17 | fortitude; basic; duration 1 minute; target source/area/text |
+
+
+## P7-079 — Terrain: Whirlwind
+
+**3 spells; 0 not enabled.** Suggested source-reading anchor: Whirlwind. This is not a verified-test designation.
+
+**Test contract:** Area geometry; terrain type/cost; entry/exposure; hazards; duration; preserve unrelated scene objects.
+
+**Shared signals:** Sustain, Area exposure, Terrain
+
+**Anchor wording:** All squares in the whirlwind are difficult terrain..
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Whirlwind](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/whirlwind.json) | 8 | Enabled route | 2, 3, 4 | 1.00 | reflex; non-basic/no save; duration 1 minute; target source/area/text |
+| [Whirlpool](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/whirlpool.json) | 8 | Enabled route | 2, 3 | 0.17 | reflex; non-basic/no save; duration 1 minute; target source/area/text |
+| [Zombie Horde](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/zombie-horde.json) | 3 | Enabled route | 2, 3 | 0.15 | fortitude; non-basic/no save; duration 1 minute; target 1 of your thralls |
+
+
+## P7-080 — Terrain: Rubble Step
+
+**2 spells; 0 not enabled.** Suggested source-reading anchor: Rubble Step. This is not a verified-test designation.
+
+**Test contract:** Area geometry; terrain type/cost; entry/exposure; hazards; duration; preserve unrelated scene objects.
+
+**Shared signals:** Terrain
+
+**Anchor wording:** For 2 rounds, when the target willingly moves out of a space, and if the target is in contact with the ground, the ground in that space becomes difficult terrain.
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Rubble Step](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/rubble-step.json) | 2 | Note only (resolved) | 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target 1 willing creature |
+| [Undertaker](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/undertaker.json) | 9 | Enabled route | 2, 3 | 0.18 | fortitude; non-basic/no save; duration outcome/text; target 1 living creature |
+
+
+## P7-081 — Terrain: 500 Toads
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: 500 Toads. This is not a verified-test designation.
 
@@ -1462,7 +1312,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [500 Toads](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/500-toads.json) | 1 | Enabled route | 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 round; target source/area/text |
 
 
-## P7-092 — Terrain: Antlion Trap
+## P7-082 — Terrain: Antlion Trap
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Antlion Trap. This is not a verified-test designation.
 
@@ -1477,7 +1327,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Antlion Trap](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/antlion-trap.json) | 3 | Enabled route | 2, 3 | 1.00 | reflex; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P7-093 — Terrain: Blast of the Bellows
+## P7-083 — Terrain: Blast of the Bellows
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Blast of the Bellows. This is not a verified-test designation.
 
@@ -1492,7 +1342,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Blast of the Bellows](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/blast-of-the-bellows.json) | 2 | Note only (resolved) | 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P7-094 — Terrain: Crystallized Vapors
+## P7-084 — Terrain: Crystallized Vapors
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Crystallized Vapors. This is not a verified-test designation.
 
@@ -1507,7 +1357,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Crystallized Vapors](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/crystallized-vapors.json) | 4 | Enabled route | 2, 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P7-095 — Terrain: Cyclone Rondo
+## P7-085 — Terrain: Cyclone Rondo
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Cyclone Rondo. This is not a verified-test designation.
 
@@ -1522,7 +1372,37 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Cyclone Rondo](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/cyclone-rondo.json) | 3 | Enabled route | 2, 3 | 1.00 | reflex; basic; duration 1 minute; target source/area/text |
 
 
-## P7-096 — Terrain: Elemental Gift
+## P7-086 — Terrain: Earthquake
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Earthquake. This is not a verified-test designation.
+
+**Test contract:** Area geometry; terrain type/cost; entry/exposure; hazards; duration; preserve unrelated scene objects.
+
+**Shared signals:** Turn trigger or boundary, Save-result condition rider, Basic-save damage, Native condition, Terrain, Modifier / resistance
+
+**Anchor wording:** Shaking Ground The ground is difficult terrain, and creatures on it take a -2 circumstance penalty to attack rolls, AC, and skill checks.
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Earthquake](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/earthquake.json) | 8 | Note only (resolved) | 2, 3 | 1.00 | reflex; basic; duration 1 round; target source/area/text |
+
+
+## P7-087 — Terrain: Elemental Confluence
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Elemental Confluence. This is not a verified-test designation.
+
+**Test contract:** Area geometry; terrain type/cost; entry/exposure; hazards; duration; preserve unrelated scene objects.
+
+**Shared signals:** Sustain, Save-result condition rider, Basic-save damage, Persistent damage, Attack and dependent result, Terrain, Modifier / resistance
+
+**Anchor wording:** Wood (wood) Roots and stumps grow, making ground in the area difficult terrain for 1 round..
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Elemental Confluence](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/elemental-confluence.json) | 6 | Enabled route | 2, 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
+
+
+## P7-088 — Terrain: Elemental Gift
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Elemental Gift. This is not a verified-test designation.
 
@@ -1537,7 +1417,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Elemental Gift](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/elemental-gift.json) | 4 | Partial Effect | 2, 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target 1 willing creature |
 
 
-## P7-097 — Terrain: Field of Razors
+## P7-089 — Terrain: Field of Razors
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Field of Razors. This is not a verified-test designation.
 
@@ -1552,7 +1432,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Field of Razors](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/field-of-razors.json) | 6 | Enabled route | 2, 3 | 1.00 | reflex; basic; duration outcome/text; target source/area/text |
 
 
-## P7-098 — Terrain: Garden of Stone
+## P7-090 — Terrain: Garden of Stone
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Garden of Stone. This is not a verified-test designation.
 
@@ -1567,7 +1447,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Garden of Stone](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/garden-of-stone.json) | 3 | Enabled route | 2, 3 | 1.00 | reflex; basic; duration 1 minute; target source/area/text |
 
 
-## P7-099 — Terrain: Gluttonous Growth
+## P7-091 — Terrain: Gluttonous Growth
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Gluttonous Growth. This is not a verified-test designation.
 
@@ -1582,7 +1462,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Gluttonous Growth](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/gluttonous-growth.json) | 5 | Enabled route | 2, 3 | 1.00 | reflex; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P7-100 — Terrain: Heart's Desire
+## P7-092 — Terrain: Heart's Desire
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Heart's Desire. This is not a verified-test designation.
 
@@ -1597,7 +1477,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Heart's Desire](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/hearts-desire.json) | 3 | Enabled route | 2, 3 | 1.00 | will; non-basic/no save; duration varies; target 1 creature |
 
 
-## P7-101 — Terrain: Helpful Wood Spirits
+## P7-093 — Terrain: Helpful Wood Spirits
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Helpful Wood Spirits. This is not a verified-test designation.
 
@@ -1612,7 +1492,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Helpful Wood Spirits](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/helpful-wood-spirits.json) | 2 | Enabled route | 2, 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P7-102 — Terrain: Iron Rain
+## P7-094 — Terrain: Iron Rain
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Iron Rain. This is not a verified-test designation.
 
@@ -1627,7 +1507,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Iron Rain](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/iron-rain.json) | 3 | Enabled route | 2, 3 | 1.00 | reflex; basic; duration 1 minute; target source/area/text |
 
 
-## P7-103 — Terrain: Magnetic Repulsion
+## P7-095 — Terrain: Magnetic Repulsion
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Magnetic Repulsion. This is not a verified-test designation.
 
@@ -1642,7 +1522,22 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Magnetic Repulsion](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/magnetic-repulsion.json) | 2 | Enabled route | 2, 3 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P7-104 — Terrain: Pillar of Water
+## P7-096 — Terrain: Pierce the Sky
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Pierce the Sky. This is not a verified-test designation.
+
+**Test contract:** Area geometry; terrain type/cost; entry/exposure; hazards; duration; preserve unrelated scene objects.
+
+**Shared signals:** Area exposure, Save-result condition rider, Native condition, Attack and dependent result, Terrain
+
+**Anchor wording:** Regardless of the result, each arrow leaves a line of hazardous terrain between you and the target that lasts for 1 minute.
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Pierce the Sky](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/pierce-the-sky.json) | 9 | Enabled route | 2, 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target up to 3 creatures |
+
+
+## P7-097 — Terrain: Pillar of Water
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Pillar of Water. This is not a verified-test designation.
 
@@ -1657,7 +1552,22 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Pillar of Water](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/pillar-of-water.json) | 3 | Note only (resolved) | 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P7-105 — Terrain: Ranage's Circle
+## P7-098 — Terrain: Rainbow Fumarole
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Rainbow Fumarole. This is not a verified-test designation.
+
+**Test contract:** Area geometry; terrain type/cost; entry/exposure; hazards; duration; preserve unrelated scene objects.
+
+**Shared signals:** Area exposure, Basic-save damage, Persistent damage, Native condition, Choice / casting variant, Terrain
+
+**Anchor wording:** Squares within the area of the rainbow fumarole are difficult terrain..
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Rainbow Fumarole](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/rainbow-fumarole.json) | 8 | Enabled route | 2, 3, 4 | 1.00 | reflex; basic; duration 1 minute; target source/area/text |
+
+
+## P7-099 — Terrain: Ranage's Circle
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Ranage's Circle. This is not a verified-test designation.
 
@@ -1672,7 +1582,22 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Ranage's Circle](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/ranages-circle.json) | 4 | Enabled route | 2, 3 | 1.00 | fortitude; non-basic/no save; duration varies; target 1 creature |
 
 
-## P7-106 — Terrain: River Carving Mountains
+## P7-100 — Terrain: Repulsion
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Repulsion. This is not a verified-test designation.
+
+**Test contract:** Area geometry; terrain type/cost; entry/exposure; hazards; duration; preserve unrelated scene objects.
+
+**Shared signals:** Aura membership, Area exposure, Terrain
+
+**Anchor wording:** Success The creature treats each square in the area as difficult terrain when moving closer to you..
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Repulsion](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/repulsion.json) | 6 | Enabled route | 2, 3 | 1.00 | will; non-basic/no save; duration 1 minute; target source/area/text |
+
+
+## P7-101 — Terrain: River Carving Mountains
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: River Carving Mountains. This is not a verified-test designation.
 
@@ -1687,7 +1612,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [River Carving Mountains](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/river-carving-mountains.json) | 1 | Enabled route | 2, 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P7-107 — Terrain: Sawtooth Terrain
+## P7-102 — Terrain: Sawtooth Terrain
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Sawtooth Terrain. This is not a verified-test designation.
 
@@ -1702,7 +1627,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Sawtooth Terrain](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/sawtooth-terrain.json) | 5 | Enabled route | 2, 3, 4 | 1.00 | reflex; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P7-108 — Terrain: Shifting Sand
+## P7-103 — Terrain: Shifting Sand
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Shifting Sand. This is not a verified-test designation.
 
@@ -1717,7 +1642,22 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Shifting Sand](../../.cache/pf2e-test-fixtures/spells/spells/rank-3/shifting-sand.json) | 3 | Enabled route | 2, 3 | 1.00 | reflex; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P7-109 — Terrain: Solid Fog
+## P7-104 — Terrain: Shipwreck
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Shipwreck. This is not a verified-test designation.
+
+**Test contract:** Area geometry; terrain type/cost; entry/exposure; hazards; duration; preserve unrelated scene objects.
+
+**Shared signals:** Save-result condition rider, Terrain
+
+**Anchor wording:** Success The vehicle becomes uncontrolled, and spaces within it become difficult terrain..
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Shipwreck](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/shipwreck.json) | 8 | Note only (resolved) | 2 | 1.00 | fortitude; non-basic/no save; duration outcome/text; target 1 vehicle |
+
+
+## P7-105 — Terrain: Solid Fog
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Solid Fog. This is not a verified-test designation.
 
@@ -1732,7 +1672,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Solid Fog](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/solid-fog.json) | 4 | Note only (resolved) | 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P7-110 — Terrain: Strange Geometry
+## P7-106 — Terrain: Strange Geometry
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Strange Geometry. This is not a verified-test designation.
 
@@ -1747,7 +1687,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Strange Geometry](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/strange-geometry.json) | 5 | Enabled route | 2, 3 | 1.00 | will; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P7-111 — Terrain: Tacky Pine Sap
+## P7-107 — Terrain: Tacky Pine Sap
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Tacky Pine Sap. This is not a verified-test designation.
 
@@ -1762,7 +1702,22 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Tacky Pine Sap](../../.cache/pf2e-test-fixtures/spells/spells/rank-2/tacky-pine-sap.json) | 2 | Enabled route | 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 minute; target source/area/text |
 
 
-## P7-112 — Terrain: Telekinetic Bombardment
+## P7-108 — Terrain: Tanglecurse
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Tanglecurse. This is not a verified-test designation.
+
+**Test contract:** Area geometry; terrain type/cost; entry/exposure; hazards; duration; preserve unrelated scene objects.
+
+**Shared signals:** Area exposure, Save-result condition rider, Native condition, Terrain
+
+**Anchor wording:** This area is difficult terrain for creatures that enter the area.
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Tanglecurse](../../.cache/pf2e-test-fixtures/spells/spells/rank-6/tanglecurse.json) | 6 | Enabled route | 2, 3 | 1.00 | will; non-basic/no save; duration outcome/text; target 1 creature |
+
+
+## P7-109 — Terrain: Telekinetic Bombardment
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Telekinetic Bombardment. This is not a verified-test designation.
 
@@ -1777,7 +1732,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Telekinetic Bombardment](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/telekinetic-bombardment.json) | 7 | Enabled route | 2, 3 | 1.00 | reflex; non-basic/no save; duration outcome/text; target source/area/text |
 
 
-## P7-113 — Terrain: Transmute Rock And Mud
+## P7-110 — Terrain: Transmute Rock And Mud
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Transmute Rock And Mud. This is not a verified-test designation.
 
@@ -1792,7 +1747,37 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Transmute Rock And Mud](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/transmute-rock-and-mud.json) | 5 | Enabled route | 2, 4 | 1.00 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
 
 
-## P7-114 — Terrain: Verdant Sprout
+## P7-111 — Terrain: Unbreaking Wave Barrier
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Unbreaking Wave Barrier. This is not a verified-test designation.
+
+**Test contract:** Area geometry; terrain type/cost; entry/exposure; hazards; duration; preserve unrelated scene objects.
+
+**Shared signals:** Sustain, Area exposure, Save-result condition rider, Native condition, Terrain, Forced movement, Modifier / resistance
+
+**Anchor wording:** Success The creature isn't pushed, but the space within the barrier is difficult terrain for it..
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Unbreaking Wave Barrier](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/unbreaking-wave-barrier.json) | 7 | Enabled route | 2, 3 | 1.00 | fortitude; non-basic/no save; duration outcome/text; target source/area/text |
+
+
+## P7-112 — Terrain: Upheaval
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Upheaval. This is not a verified-test designation.
+
+**Test contract:** Area geometry; terrain type/cost; entry/exposure; hazards; duration; preserve unrelated scene objects.
+
+**Shared signals:** Save-result condition rider, Native condition, Terrain
+
+**Anchor wording:** Stone Debris The area becomes difficult terrain..
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Upheaval](../../.cache/pf2e-test-fixtures/spells/spells/rank-9/upheaval.json) | 9 | Note only (resolved) | 2 | 1.00 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
+
+
+## P7-113 — Terrain: Verdant Sprout
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Verdant Sprout. This is not a verified-test designation.
 
@@ -1807,22 +1792,22 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Verdant Sprout](../../.cache/pf2e-test-fixtures/spells/spells/rank-1/verdant-sprout.json) | 1 | Note only (resolved) | 4 | 1.00 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
 
 
-## P7-115 — Wall / barrier: Prismatic Wall
+## P7-114 — Terrain: Volcanic Eruption
 
-**1 spells; 1 not enabled.** Suggested source-reading anchor: Prismatic Wall. This is not a verified-test designation.
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Volcanic Eruption. This is not a verified-test designation.
 
-**Test contract:** Dimensions and placement; collision/sight; occupied spaces; defenses/HP; permanent versus temporary cleanup.
+**Test contract:** Area geometry; terrain type/cost; entry/exposure; hazards; duration; preserve unrelated scene objects.
 
-**Shared signals:** Temporary immunity, Ending or dismissal, Save-result condition rider, Native condition, Counteract, Wall / barrier
+**Shared signals:** Save-result condition rider, Native condition, Terrain, Modifier / resistance
 
-**Anchor wording:** ou create an opaque wall of shimmering, multicolored light.
+**Anchor wording:** All normal terrain is difficult terrain to a flying creature, and such creatures immediately descend 20 feet the moment they're encased, but they don't take damage from this fall.
 
 | Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
 | --- | --- | --- | --- | --- | --- |
-| [Prismatic Wall](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/prismatic-wall.json) | 8 | Not enabled | 2, 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 hour; target source/area/text |
+| [Volcanic Eruption](../../.cache/pf2e-test-fixtures/spells/spells/rank-7/volcanic-eruption.json) | 7 | Enabled route | 2 | 1.00 | reflex; non-basic/no save; duration outcome/text; target source/area/text |
 
 
-## P7-116 — Wall / barrier: Wall of Shadow
+## P7-115 — Wall / barrier: Wall of Shadow
 
 **7 spells; 0 not enabled.** Suggested source-reading anchor: Wall of Shadow. This is not a verified-test designation.
 
@@ -1843,7 +1828,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Wall Of Mirrors](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/wall-of-mirrors.json) | 4 | Enabled route | 4 | 0.21 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
 
 
-## P7-117 — Wall / barrier: Wall of Fire
+## P7-116 — Wall / barrier: Wall of Fire
 
 **4 spells; 0 not enabled.** Suggested source-reading anchor: Wall of Fire. This is not a verified-test designation.
 
@@ -1861,7 +1846,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Chromatic Wall](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/chromatic-wall.json) | 5 | Enabled route | 2, 3, 4 | 0.17 | no primary save; non-basic/no save; duration 10 minutes; target source/area/text |
 
 
-## P7-118 — Wall / barrier: Invisibility Curtain
+## P7-117 — Wall / barrier: Invisibility Curtain
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Invisibility Curtain. This is not a verified-test designation.
 
@@ -1876,7 +1861,7 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | [Invisibility Curtain](../../.cache/pf2e-test-fixtures/spells/spells/rank-4/invisibility-curtain.json) | 4 | Note only (resolved) | 3, 4 | 1.00 | no primary save; non-basic/no save; duration outcome/text; target source/area/text |
 
 
-## P7-119 — Wall / barrier: Magic Passage
+## P7-118 — Wall / barrier: Magic Passage
 
 **1 spells; 0 not enabled.** Suggested source-reading anchor: Magic Passage. This is not a verified-test designation.
 
@@ -1889,6 +1874,21 @@ Descriptions are grouped first by rule family, then by normalized word/bigram si
 | Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
 | --- | --- | --- | --- | --- | --- |
 | [Magic Passage](../../.cache/pf2e-test-fixtures/spells/spells/rank-5/magic-passage.json) | 5 | Note only (resolved) | 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 hour; target source/area/text |
+
+
+## P7-119 — Wall / barrier: Prismatic Wall
+
+**1 spells; 0 not enabled.** Suggested source-reading anchor: Prismatic Wall. This is not a verified-test designation.
+
+**Test contract:** Dimensions and placement; collision/sight; occupied spaces; defenses/HP; permanent versus temporary cleanup.
+
+**Shared signals:** Temporary immunity, Ending or dismissal, Save-result condition rider, Native condition, Counteract, Wall / barrier
+
+**Anchor wording:** ou create an opaque wall of shimmering, multicolored light.
+
+| Spell / source | Rank | Module route | Other phase signals | Similarity to anchor | Mechanical differences to preserve |
+| --- | --- | --- | --- | --- | --- |
+| [Prismatic Wall](../../.cache/pf2e-test-fixtures/spells/spells/rank-8/prismatic-wall.json) | 8 | Enabled route | 2, 3, 4 | 1.00 | no primary save; non-basic/no save; duration 1 hour; target source/area/text |
 
 
 ## P7-120 — Wall / barrier: Sea Surge
@@ -1942,18 +1942,18 @@ These spells are owned by another primary worklist; reuse their listed batch ins
 
 | Spell | Primary phase / batch | Matched signals |
 | --- | --- | --- |
-| Element Embodied | P5 / P5-001 | Area exposure, Ending or dismissal, Basic-save damage, Persistent damage, Native condition, Healing / recipient mode, Choice / casting variant, Creature transformation, Terrain, Modifier / resistance |
-| Amalgamizing Leap | P5 / P5-004 | Turn trigger or boundary, Save-result condition rider, Granted movement speed, Native condition, Choice / casting variant, Teleportation |
-| Patron's Protector | P5 / P5-007 | Sustain, Save-result condition rider, Basic-save damage, Forced movement, Modifier / resistance |
-| Elemental Form | P5 / P5-014 | Ending or dismissal, Persistent damage, Choice / casting variant, Creature transformation, Forced movement, Modifier / resistance |
+| Element Embodied | P5 / P5-002 | Area exposure, Ending or dismissal, Basic-save damage, Persistent damage, Native condition, Healing / recipient mode, Choice / casting variant, Creature transformation, Terrain, Modifier / resistance |
+| Elemental Form | P5 / P5-009 | Ending or dismissal, Persistent damage, Choice / casting variant, Creature transformation, Forced movement, Modifier / resistance |
+| Amalgamizing Leap | P5 / P5-012 | Turn trigger or boundary, Save-result condition rider, Granted movement speed, Native condition, Choice / casting variant, Teleportation |
+| Patron's Protector | P5 / P5-025 | Sustain, Save-result condition rider, Basic-save damage, Forced movement, Modifier / resistance |
 | Spectral Advance | P5 / P5-031 | Movement action, Modifier / resistance |
 | Holy Host | P6 / P6-011 | Save-result condition rider, Basic-save damage, Persistent damage, Native condition, Healing / recipient mode, Choice / casting variant, Incarnate arrival/departure, Forced movement, Information / adjudication, Modifier / resistance |
 | Incarnate Kaiju | P6 / P6-011 | Turn trigger or boundary, Area exposure, Save-result condition rider, Basic-save damage, Persistent damage, Native condition, Choice / casting variant, Incarnate arrival/departure, Forced movement, Modifier / resistance |
 | Pest Swarm | P6 / P6-011 | Save-result condition rider, Basic-save damage, Persistent damage, Native condition, Choice / casting variant, Incarnate arrival/departure, Terrain, Delegated affliction, Modifier / resistance |
-| Summon Elemental Herald | P6 / P6-012 | Save-result condition rider, Basic-save damage, Persistent damage, Native condition, Choice / casting variant, Incarnate arrival/departure, Terrain, Forced movement, Modifier / resistance |
-| Garden of the Green Man's Growth | P6 / P6-017 | Save-result condition rider, Basic-save damage, Native condition, Incarnate arrival/departure, Terrain, Forced movement |
-| Summon Oliphaunt of Jandelay | P6 / P6-024 | Basic-save damage, Incarnate arrival/departure, Forced movement |
-| Summon Warden of the Wild | P6 / P6-025 | Temporary immunity, Save-result condition rider, Basic-save damage, Native condition, Incarnate arrival/departure, Terrain, Forced movement |
+| Summon Elemental Herald | P6 / P6-013 | Save-result condition rider, Basic-save damage, Persistent damage, Native condition, Choice / casting variant, Incarnate arrival/departure, Terrain, Forced movement, Modifier / resistance |
+| Garden of the Green Man's Growth | P6 / P6-018 | Save-result condition rider, Basic-save damage, Native condition, Incarnate arrival/departure, Terrain, Forced movement |
+| Summon Oliphaunt of Jandelay | P6 / P6-030 | Basic-save damage, Incarnate arrival/departure, Forced movement |
+| Summon Warden of the Wild | P6 / P6-032 | Temporary immunity, Save-result condition rider, Basic-save damage, Native condition, Incarnate arrival/departure, Terrain, Forced movement |
 | Footholds and Foothills | P8 / P8-001 | Save-result condition rider, Terrain |
 | Labyrinthine Prison | P8 / P8-015 | Area exposure, Save-result condition rider, Native condition |
 | Mindscape Shift | P8 / P8-018 | Area exposure, Save-result condition rider, Teleportation |

@@ -28,8 +28,10 @@ test('Eclipse Burst: Blinded for an unlimited duration, only on the condition it
     assert.equal(effects(plan, 'criticalFailure').find(effect => effect.slug === 'blinded').duration.mode, 'unlimited');
     // In a table without sentence breaks, the phrase belongs to its own row's condition: row 1's Frightened 2 has no
     // timer (it doesn't take row 5's unlimited duration, nor row 2's "for 1 round").
+    // (Since rank 9 batch 8 the table is read by degree: Frightened 2 is the failure's result 1 — a critical failure's 1d4+1 never reaches it.)
     const song = compileAbility(await spell('rank-9/unfathomable-song'));
-    assert.equal(effects(song, 'criticalFailure').find(effect => effect.slug === 'frightened').duration ?? null, null);
+    assert.equal(effects(song, 'failure').find(effect => effect.slug === 'frightened').duration ?? null, null);
+    assert.equal(effects(song, 'criticalFailure').some(effect => effect.slug === 'frightened'), false);
 });
 
 test("Heinous Future and Day's Weight: conditions ended or lowered by rest", async () => {

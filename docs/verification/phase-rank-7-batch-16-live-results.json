@@ -1,0 +1,79 @@
+{
+  "label": "rank7Batch16",
+  "passed": true,
+  "at": "2026-10-05T01:54:52.573Z",
+  "details": {
+    "batch16": {
+      "fieldAsked": [
+        "field foe"
+      ],
+      "fieldDegree": "criticalFailure",
+      "fieldHeld": {
+        "encumbered": true,
+        "slowed": 1,
+        "note": true
+      },
+      "fieldLeft": {
+        "encumbered": false,
+        "slowed": null,
+        "note": false
+      },
+      "fieldBack": {
+        "encumbered": true,
+        "slowed": 1,
+        "note": true,
+        "newCards": 0
+      },
+      "fieldEnded": {
+        "encumbered": false,
+        "slowed": null,
+        "note": false
+      },
+      "repAsked": [
+        "repulsion near"
+      ],
+      "repRadius": 10,
+      "repDegree": "criticalFailure",
+      "repNote": [
+        "Critical failure against Repulsion, while within its area.  The creature can't move closer to you within the area. Only when it moves toward you of its own accord: if you move closer to it, it doesn't need to move away."
+      ],
+      "initialExposed": [
+        "haze failing",
+        "haze lying",
+        "haze sleeper",
+        "haze standing"
+      ],
+      "haze": {
+        "standing": {
+          "prone": true,
+          "unconscious": false
+        },
+        "lying": {
+          "prone": true,
+          "unconscious": true
+        },
+        "failing": {
+          "prone": true,
+          "unconscious": false,
+          "note": true
+        },
+        "sleeper": {
+          "prone": true,
+          "unconscious": true,
+          "lost": 15
+        }
+      },
+      "turnEndExposed": [
+        [
+          "haze sleeper",
+          "turn-end"
+        ]
+      ],
+      "turnEnd": {
+        "lost": 18,
+        "unconscious": true,
+        "sleeperResults": 2
+      }
+    }
+  }
+}

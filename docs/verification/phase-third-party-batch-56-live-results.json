@@ -1,0 +1,26 @@
+{
+ "label": "thirdPartyBatch56",
+ "passed": true,
+ "at": "2026-10-07T06:01:17.524Z",
+ "details": {
+  "thirdParty56": {
+   "refused": "Coiling Grasp: PFTEST P23 Affliction tp56 giant is larger than Large.",
+   "first": {
+    "degree": "success",
+    "grabbed": true,
+    "statistic": "spell-attack"
+   },
+   "sustain": {
+    "degree": "criticalSuccess",
+    "immobilized": true,
+    "grabbed": false,
+    "holds": 1
+   },
+   "critFail": {
+    "choice": "prone",
+    "prone": true,
+    "holds": 0
+   }
+  }
+ }
+}

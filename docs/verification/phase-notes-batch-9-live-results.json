@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-10-05T23:36:08.871Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "notesBatch9",
+      "passed": true,
+      "at": "2026-10-05T23:36:05.968Z",
+      "details": {
+        "notes9": {
+          "created": {
+            "name": "PFTEST cover",
+            "gm": true,
+            "player": false
+          },
+          "renamed": {
+            "name": "PFTEST renamed",
+            "gm": true
+          }
+        }
+      }
+    }
+  ]
+}

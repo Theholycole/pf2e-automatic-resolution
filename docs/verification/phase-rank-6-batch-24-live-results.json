@@ -1,0 +1,65 @@
+{
+  "label": "rank6Batch24",
+  "passed": true,
+  "at": "2026-10-05T04:49:28.463Z",
+  "details": {
+    "batch24": {
+      "swap": {
+        "caster": {
+          "x": 800,
+          "y": 400
+        },
+        "decoy": {
+          "x": 500,
+          "y": 400
+        },
+        "immune": [
+          true,
+          true
+        ]
+      },
+      "shuffle": {
+        "far": "Collective Transposition: PFTEST P23 Affliction ct a: That space is 50 feet away; the spell allows 30.",
+        "a": {
+          "x": 900,
+          "y": 1100
+        }
+      },
+      "magnet": {
+        "pulled": {
+          "x": 2000,
+          "y": 800
+        },
+        "cast": "applied",
+        "repulsion": true
+      },
+      "meld": {
+        "one": {
+          "x": 900,
+          "y": 1300
+        },
+        "two": {
+          "x": 700,
+          "y": 1300
+        },
+        "hp": [
+          250,
+          250
+        ],
+        "bad": "All is One, One is All: each creature gets 1 to its maximum Hit Points."
+      },
+      "shift": {
+        "crater": {
+          "lost": 5,
+          "prone": true
+        },
+        "caster": {
+          "x": 2000,
+          "y": 1300
+        },
+        "debris": 29,
+        "terrain": true
+      }
+    }
+  }
+}

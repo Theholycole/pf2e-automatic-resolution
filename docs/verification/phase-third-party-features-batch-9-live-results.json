@@ -1,0 +1,84 @@
+{
+ "batch9": {
+  "label": "thirdPartyFeaturesBatch9",
+  "passed": true,
+  "at": "2026-10-07T20:32:08.683Z",
+  "details": {
+   "thirdPartyFeatures9": {
+    "murmuration": {
+     "shapes": [
+      [
+       "Fury of a Thousand",
+       true,
+       null,
+       "dual-damage,effect-value"
+      ]
+     ],
+     "failure": {
+      "lost": 4,
+      "dual": 2,
+      "formula": "2 piercing + 2 sonic",
+      "types": [
+       "piercing",
+       "sonic"
+      ],
+      "effect": []
+     },
+     "critical": {
+      "lost": 12,
+      "dual": null,
+      "formula": null,
+      "types": [],
+      "effect": [
+       "FlatModifier:-3"
+      ]
+     }
+    },
+    "song": {
+     "shapes": [
+      [
+       "Fury of a Thousand",
+       true,
+       null,
+       "effect-value"
+      ]
+     ],
+     "rules": [
+      "athletics 2",
+      "fortitude/reflex 2"
+     ]
+    }
+   }
+  }
+ },
+ "murmurationRecheck": {
+  "label": "cr1Batch118",
+  "passed": true,
+  "at": "2026-10-07T20:32:33.511Z",
+  "details": {
+   "murmuration": {
+    "rank": 1,
+    "failure": {
+     "lost": 1,
+     "total": 1,
+     "formula": "1d4 sonic",
+     "outcome": [
+      "(@item.rank)d4[sonic],(@item.rank)d4[piercing]=null"
+     ],
+     "effect": []
+    },
+    "critical": {
+     "lost": 4,
+     "total": null,
+     "formula": null,
+     "outcome": [
+      "(@item.rank)d4[sonic],(@item.rank)d4[piercing]=4"
+     ],
+     "effect": [
+      "FlatModifier:-2"
+     ]
+    }
+   }
+  }
+ }
+}

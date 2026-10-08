@@ -1,0 +1,32 @@
+{
+ "label": "thirdPartyBatch22",
+ "passed": true,
+ "at": "2026-10-07T01:51:35.703Z",
+ "details": {
+  "thirdParty22": {
+   "square": {
+    "status": "started",
+    "record": true,
+    "record_": "{\"journalId\":\"as5O0LuxO5AUDQAd\",\"schema\":1,\"revision\":2,\"status\":\"active\",\"entries\":[{\"uuid\":\"Scene.pCgysuwHQ8wg9vST.Region.4AsOSJMQiPumHbLJ\",\"actorUuid\":\"Actor.ZVre71LvB94SmE0l\",\"status\":\"active\",\"permanent\":false}],\"obligations\":[],\"createdAt\":30702,\"lastWorldTime\":30702,\"clock\":{\"worldTime\":30702,\"combatId\":null,\"started\":false,\"round\":0,\"turn\":0,\"actorUuid\":null,\"roster\":[]},\"castId\":\"CTTtjCEq"
+   },
+   "critical": {
+    "total": 11,
+    "lost": 22,
+    "persistent": [
+     "fire"
+    ]
+   },
+   "marker": {
+    "marked": true,
+    "lost": 10,
+    "temp": 5,
+    "markerGone": true
+   },
+   "feast": {
+    "lost": 27,
+    "temp": 13,
+    "duration": "3 rounds"
+   }
+  }
+ }
+}

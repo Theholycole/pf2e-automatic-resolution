@@ -52,8 +52,50 @@ function compileStruckDamage(adapted, sentences, component) {
             "The ally can immediately attempt to Shove the creature struck, even if its hands are full.", ...(shove ? [shove] : [])] } };
 }
 
+// A reaction adding to a creature's bleed (Magic+'s Siphoning Rivulet): "Trigger A creature within range takes persistent bleed damage" / "The target increases
+// the triggering bleed damage by 4d4, and you gain temporary Hit Points equal to the total bleed damage they took that lasts until the end of your next turn."
+// / "Heightened (+1) The damage increases by 1d4." PF2e's entry is persistent bleed, but the text adds to the bleed taken this once: the text's dice as bleed
+// damage now (heightened as its entry says); the caster's temporary Hit Points the triggering bleed (the caster gives it) plus what this dealt, until the end
+// of its next turn.
+const BLEED_TRIGGER = /^Trigger A creature within range takes persistent bleed damage\.?$/;
+const BLEED_ADDS = /^The target increases the triggering bleed damage by (\d+)d(\d+), and you gain temporary Hit Points equal to the total bleed damage they took that lasts until the end of your next turn\.$/;
+const BLEED_STEP = /^Heightened \(\+(\d+)\) The damage increases by (\d+)d(\d+)\.$/;
+function compileBleedSiphon(adapted) {
+    const components = adapted.damageComponents ?? [];
+    const [trigger, body, heightened, ...rest] = String(adapted.descriptionHTML ?? "").split(/<hr\b[^>]*>/i).map(part => htmlToPlainText(part).replace(/\s+/g, " ").trim());
+    if (rest.length || !BLEED_TRIGGER.test(trigger ?? "") || components.length !== 1 || components[0].category !== "persistent" || String(components[0].type).toLowerCase() !== "bleed") return null;
+    const sentences = String(body ?? "").split(/(?<=[.!?])\s+(?=[A-Z@])/).filter(Boolean);
+    const adds = BLEED_ADDS.exec(sentences.at(-1) ?? "");
+    if (!adds || sentences.length > 2 || (sentences.length === 2 && RULE_WORDS.test(sentences[0].replace(/\bthe target's blood\b/, "")))) return null;
+    if (String(components[0].formula).replace(/\s+/g, "") !== `${adds[1]}d${adds[2]}`) return null;
+    const step = BLEED_STEP.exec(heightened ?? ""), data = adapted.heightening;
+    if (heightened && (!step || step[3] !== adds[2] || data?.type !== "interval" || Number(data.interval) !== Number(step[1]) || String(data.damage?.[components[0].id] ?? "").replace(/\s+/g, "") !== `${step[2]}d${step[3]}`)) return null;
+    const baseRank = Number(adapted.rank) || 1;
+    const formula = step ? `(${adds[1]}+floor((@item.rank - ${baseRank})/${Number(step[1])})*${Number(step[2])})d${adds[2]}[bleed]` : `${adds[1]}d${adds[2]}[bleed]`;
+    return { damage: { recipient: "target", count: 1, sourceText: sentences.at(-1), formula, immediate: true, siphon: { plusTriggering: "bleed", rounds: 1, expiry: "turn-end" },
+        dataNote: "PF2e's entry is persistent bleed; the text adds to the triggering bleed this once, so it's rolled as bleed damage now.",
+        notes: [`Trigger: ${trigger.replace(/^Trigger /, "").replace(/\.?$/, ".")}`] } };
+}
+
+// A splash ring with no save (Dynamic Caustic Blast's three-action "Splash" variant, glyph-versions.js): "Each creature within 10 feet of the burst (but not in it)
+// takes 2 acid splash damage." — the variant's splash entry, heightened by its data's step, on each creature the caster targets.
+const SPLASH_RING = /^Each creature within (\d+) feet of the burst \(but not in it\) takes (\d+) ([a-z]+) splash damage\.$/;
+function compileSplashRing(adapted) {
+    const components = adapted.damageComponents ?? [];
+    const ring = SPLASH_RING.exec(htmlToPlainText(String(adapted.descriptionHTML ?? "")).replace(/\s+/g, " ").trim());
+    if (!ring || components.length !== 1 || components[0].category !== "splash" || String(components[0].formula).replace(/\s+/g, "") !== ring[2] || String(components[0].type).toLowerCase() !== ring[3]) return null;
+    const heightening = adapted.heightening, step = heightening?.type === "interval" ? String(heightening.damage?.[components[0].id] ?? "").replace(/\s+/g, "") : "";
+    if (heightening && !/^\d+$/.test(step)) return null;
+    const baseRank = Number(adapted.rank) || 1;
+    const formula = step ? `(${ring[2]}+floor((@item.rank - ${baseRank})/${Number(heightening.interval)})*${step})[splash,${ring[3]}]` : `${ring[2]}[splash,${ring[3]}]`;
+    return { damage: { recipient: "target", count: null, any: true, sourceText: ring[0], formula, notes: [`Target each creature within ${ring[1]} feet of the burst but not in it.`] } };
+}
+
 export function compileDirectDamage(adapted) {
     if (adapted.defense?.kind && adapted.defense.kind !== "none") return null;
+    if (adapted.targeting?.area) { const ring = compileSplashRing(adapted); if (ring) return ring; }
+    if (/^the triggering creature$/i.test(String(adapted.targeting?.target ?? "").trim()) && /^reaction$/i.test(String(adapted.activation?.time ?? "").trim()) && !adapted.targeting?.area)
+        return compileBleedSiphon(adapted);
     if (/^the triggering ally$/i.test(String(adapted.targeting?.target ?? "").trim()) && /^reaction$/i.test(String(adapted.activation?.time ?? "").trim()) && !adapted.targeting?.area) {
         const components = adapted.damageComponents ?? [];
         if (components.length > 1 || (components.length && (components[0].category || components[0].kinds?.join() !== "damage"))) return null;

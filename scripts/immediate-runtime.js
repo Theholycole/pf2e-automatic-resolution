@@ -1,3 +1,4 @@
+import { assertSpellNotLost, dropMissedTargets } from './casting-rules-runtime.js';
 import { MODULE_ID } from './effect-runtime.js';
 import { clone, randomID, escapeHTML as esc, activeUsers } from './runtime-utils.js';
 import { applyDamageWithReceipt, confirmedDamageSummary } from './native-damage-receipt.js';
@@ -5,6 +6,7 @@ import { isDying, recoverFromDying, revivedNote } from './dying-recovery.js';
 import { coordinatorId } from './ongoing-core.js';
 import { IMMEDIATE_FLAG, PROFILES, DEGREES, degree, effectiveCheck, saveDegree, needsSave, readiness, recordCheck, correctTarget, validateChoices, checkAudience } from './immediate-core.js';
 import { castSpellFromUuid } from './cast-spell.js';
+import { shapeDisintegrated } from './spellshape-runtime.js';
 const stateOf = card => clone(card.getFlag(MODULE_ID, IMMEDIATE_FLAG));
 const actorOf = target => target.actor ?? target;
 const tokenOf = target => target.documentName === 'Token' ? target : target.document?.documentName === 'Token' ? target.document : null;
@@ -57,6 +59,14 @@ export class ImmediateRuntime {
         return `<section><h3>${esc(s.name)} — ${s.status==='completed'?'Results':'Immediate resolution'}</h3><p>Rank ${s.rank}${s.actions?`, ${s.actions} action(s)`:''} · ${esc(s.status)}</p><p>${esc(s.reviewReason??'Native casting resources remain spent. Resolve reactions before finalizing.')}</p><ul>${s.targets.map(t=>`<li><strong>${esc(t.name)}</strong>${t.shards?` — ${t.shards} shard(s)`:''}${t.mode==='healing'?' — healing':''}${t.excluded?(t.mode==='unaffected'?' — Unaffected: not a valid Heal recipient':' — Excluded'):''}${t.eligibilityOverride?' — GM eligibility override':''}${['attack','save'].map(stage=>t[stage]?`<p>${stage}: ${esc(t[stage].total)} (${esc(t[stage].degree)}) — d20 ${esc(t[stage].natural??'?')}, modifier ${esc(t[stage].modifier??'?')}${t[`${stage}Override`]?` → GM: ${esc(t[`${stage}Override`].degree)}`:''}</p>`:'').join('')}${s.kind==='disintegrate'&&t.save?`<p>Effective Fortitude result: ${saveDegree(s,t)}</p>`:''}${t.disintegrated?'<p>Disintegrated into fine powder; gear remains.</p>':''}${t.objectDestroyed?'<p>Selected object destroyed.</p>':''}${t.formula?`<p>Native roll: ${esc(t.formula)} = ${t.roll.total}${t.multiplier>0?` × ${t.multiplier}`:''}.</p>`:''}${t.receipt?`<p>Applied: ${t.receipt.damage} damage, ${t.receipt.healing} healing.</p>`:''}${t.revived?`<p>${esc(revivedNote(t.revived))}</p>`:''}${s.status==='collecting'?`${s.kind==='disintegrate'&&!t.excluded?button('attack',t.attack?'Reroll attack':'Roll attack',t.id):''}${needsSave(s,t)?button('save',t.save?'Reroll Fortitude':'Roll Fortitude',t.id):''}${button('correct','GM corrections',t.id)}`:''}</li>`).join('')}</ul>${s.status==='collecting'?button('targets',s.kind==='disintegrate'?'Replace with current target':'Add current targets')+button('rank','Correct cast rank')+button('finalize',s.kind==='disintegrate'?'Finalize attack and resolve':'Finalize saves and resolve'):''}${s.status==='completed'||s.status==='review'?`<p>Confirmed totals: ${summary.damage} damage; ${summary.healing} healing${summary.incomplete?' (incomplete)':''}.</p>`:''}</section>`;
     }
     async start(item,options={}) {
+        // (A spell lost to a disruption or a counterspell has no effect: casting-rules-runtime.js.)
+        assertSpellNotLost(options?.sourceMessageId ?? null);
+        // (A concealed or hidden target the spell's flat check missed is left out.)
+        if (options?.sourceMessageId) {
+            const kept = dropMissedTargets(options.sourceMessageId, options.targets ?? null);
+            if (Array.isArray(kept) && !kept.length && (options.targets ?? [...(game.user?.targets ?? [])]).length) throw new Error("The spell's concealed or hidden flat check missed every target; it has no effect on them.");
+            options = { ...options, targets: kept ?? options.targets };
+        }
         const kind=await this.verify(item), rank=Number(options.castRank??item.rank);
         const source=item.original??item;
         let actions=kind==='disintegrate'?2:Number(options.actions??item.system.time.value);
@@ -141,7 +151,8 @@ export class ImmediateRuntime {
         throw Error('Unknown immediate control.');
     }
     async prepare(data,user) {
-        const item=await fromUuid(data.itemUuid);if(!item?.actor||!owns(user,item.actor))throw Error('You do not own the caster.');
+        // (A wand's spell has no item of its own: PF2e's copy of the spell the wand holds, cast-spell.js.)
+        const item=await castSpellFromUuid({sourceItemUuid:data.itemUuid});if(!item?.actor||!owns(user,item.actor))throw Error('You do not own the caster.');
         const kind=await this.verify(item);
         const sourceCard=data.sourceMessageId?game.messages.get(data.sourceMessageId):null;
         if(data.sourceMessageId&&!sourceCard)throw Error('The native source card is missing.');
@@ -266,7 +277,9 @@ export class ImmediateRuntime {
                         // Healed back from Dying: Dying and Unconscious end, Wounded rises (dying-recovery.js).
                         if(wasDying)t.revived=await recoverFromDying(actor,true);
                         t.damageResults=[{receipt:t.receipt,formula:t.formula,multiplier}];await this.update(card,s);
-                        if(s.kind==='disintegrate'&&t.hpBefore>0&&t.receipt.damage>0&&actor.hitPoints.value===0){await actor.toggleStatusEffect('dead',{active:true});t.disintegrated=true;}
+                        if(s.kind==='disintegrate'&&t.hpBefore>0&&t.receipt.damage>0&&actor.hitPoints.value===0){await actor.toggleStatusEffect('dead',{active:true});t.disintegrated=true;
+                            // A Wand of the Ash Puppet's cast: the powder rises as the caster's sulfur zombie (spellshape-runtime.js).
+                            try{t.ashPuppet=await shapeDisintegrated(s,actor,token);}catch(error){t.ashPuppet={error:error.message};}}
                     }
                 }
                 t.applicationStatus='applied';await this.update(card,s);

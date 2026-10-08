@@ -1,0 +1,71 @@
+{
+ "label": "thirdPartyBatch16",
+ "passed": true,
+ "at": "2026-10-07T00:56:42.059Z",
+ "details": {
+  "thirdParty16": {
+   "casts": [
+    {
+     "name": "If Walls Could Talk",
+     "gmHandled": "information",
+     "ruling": "2026-10-06",
+     "options": [],
+     "whispered": true
+    },
+    {
+     "name": "Fall to Ruin",
+     "gmHandled": "world-scale",
+     "ruling": "2026-10-06",
+     "options": [],
+     "whispered": true
+    },
+    {
+     "name": "Raise Mountain",
+     "gmHandled": "world-scale",
+     "ruling": "2026-10-06",
+     "options": [
+      "save"
+     ],
+     "whispered": true
+    },
+    {
+     "name": "Thousand-Year Flood",
+     "gmHandled": "world-scale",
+     "ruling": "2026-10-06",
+     "options": [
+      "tossed"
+     ],
+     "whispered": true
+    },
+    {
+     "name": "State of the Art",
+     "gmHandled": "world-scale",
+     "ruling": "2026-10-06",
+     "options": [],
+     "whispered": true
+    },
+    {
+     "name": "Sacrosanct Promise",
+     "gmHandled": "non-combat",
+     "ruling": "2026-10-06",
+     "options": [],
+     "whispered": true
+    },
+    {
+     "name": "From Thine Sight",
+     "gmHandled": "non-combat",
+     "ruling": "2026-10-06",
+     "options": [],
+     "whispered": true
+    }
+   ],
+   "mountain": {
+    "prone": true
+   },
+   "flood": {
+    "total": 50,
+    "lost": 50
+   }
+  }
+ }
+}

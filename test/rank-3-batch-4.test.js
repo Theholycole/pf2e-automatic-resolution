@@ -69,6 +69,7 @@ test('Stinking Cloud: without Mist\'s rules, or with a changed rule, it is not a
 
 test('Infinitesimal Collapse Field keeps both conditions while in the area', async () => {
     const plan = compile(await spell('rank-7/infinitesimal-collapse-field'));
-    assert.equal(plan.resolution.outcomes.failure.effects.length, 2);
-    assert.ok(plan.resolution.outcomes.failure.effects.every(effect => (effect.endsWhen ?? []).some(event => event.event === 'leave-area')));
+    // (Since rank-7 batch 16: the save-once aura, its failure row's two conditions held while inside.)
+    assert.equal(plan.resolution.kind, 'lantern-aura');
+    assert.deepEqual(plan.resolution.lanternAura.rows.failure.conditions.map(condition => condition.slug), ['encumbered', 'slowed']);
 });

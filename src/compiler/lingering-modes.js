@@ -61,7 +61,7 @@ export function extractLingeringModes(adapted) {
                 + Object.entries(DEGREES).map(([heading, degree]) => `<p><strong>${heading}</strong> ${built[degree]}</p>`).join("") });
         claimed.push(...sentences, ...Object.values(rows));
     }
-    return { modes, notes: [`Target the fire source: a non-magical fire the size of a campfire or smaller is extinguished; if the fire source is a creature, it takes ${cold[1]} ${cold[2]} damage (roll it from this card's reminder) and isn't extinguished. Place the area there.`],
+    return { modes, sourceCreatureDamage: { formula: cold[1], type: cold[2] }, notes: [`Target the fire source: a non-magical fire the size of a campfire or smaller is extinguished; if the fire source is a creature, it takes ${cold[1]} ${cold[2]} damage (the module deals it to the targeted creature when the area starts) and isn't extinguished. Place the area there.`],
         coldDamage: { formula: cold[1], type: cold[2] }, sentences: claimed };
 }
 

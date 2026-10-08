@@ -1,0 +1,42 @@
+{
+ "label": "thirdPartyBatch50",
+ "passed": true,
+ "at": "2026-10-07T05:28:17.239Z",
+ "details": {
+  "thirdParty50": {
+   "cast": {
+    "status": "applied",
+    "dice": 1,
+    "moved": [
+     {
+      "name": "PFTEST P23 Affliction tp50 foe",
+      "to": {
+       "x": 500,
+       "y": 500
+      }
+     }
+    ],
+    "foeAt": [
+     5,
+     5
+    ],
+    "walls": 12,
+    "terrain": true,
+    "exemption": true,
+    "ally": [
+     "1d10 force crit"
+    ],
+    "foe": [
+     "1d10 force crit"
+    ]
+   },
+   "ended": {
+    "walls": 0,
+    "terrain": false,
+    "beside": false,
+    "exemption": false,
+    "ally": []
+   }
+  }
+ }
+}

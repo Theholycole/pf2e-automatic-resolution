@@ -1,0 +1,37 @@
+{
+ "label": "thirdPartyFeaturesBatch36",
+ "passed": true,
+ "at": "2026-10-08T01:50:32.713Z",
+ "details": {
+  "thirdPartyFeatures36": {
+   "golden": {
+    "at6": 2,
+    "at18": 3
+   },
+   "omnipotent": {
+    "effect": true,
+    "stupefied": 1,
+    "focusAfterBolt": 1,
+    "spared": true,
+    "immune": true,
+    "refused": true
+   },
+   "bargain": {
+    "focus": 1,
+    "slots": [
+     3,
+     3,
+     1
+    ],
+    "doomed": 1,
+    "drained": 1
+   },
+   "bun": {
+    "revitalized": true,
+    "focus": 1,
+    "immune": true,
+    "revitalizedAfter": false
+   }
+  }
+ }
+}

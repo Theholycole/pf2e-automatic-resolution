@@ -1,0 +1,35 @@
+{
+ "batch26": {
+  "label": "thirdPartyFeaturesBatch26",
+  "passed": true,
+  "at": "2026-10-08T00:02:54.587Z",
+  "details": {
+   "thirdPartyFeatures26": {
+    "visage": {
+     "effect": "Effect: Arcane Cascade: Don Visage (Fire) (Fearsome)",
+     "rounds": 4,
+     "type": "fire"
+    },
+    "slideBeforeMove": false,
+    "slide": {
+     "count": 1,
+     "rounds": 2,
+     "reflex": "status"
+    },
+    "slideAgain": 1,
+    "invigorate": {
+     "hp": 0,
+     "offered": true,
+     "result": {
+      "invigorated": [
+       "PFTEST P23 Affliction tpf26 magus",
+       "PFTEST P23 Affliction tpf26 black blade"
+      ]
+     },
+     "magus": true,
+     "familiar": true
+    }
+   }
+  }
+ }
+}

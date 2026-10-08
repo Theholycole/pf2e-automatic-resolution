@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-10-03T21:22:34.808Z",
+  "generatedAt": "2026-10-05T09:18:58.823Z",
   "baseline": "2026-09-25T00:20:20.245Z",
   "scope": "All source-derived members of 3 overlapping families; excludes rituals and the deferred Phase 9 review list. Every member was recompiled under a detached name/ID. Route assessment is not live execution.",
-  "uniqueMembers": 129,
-  "executableSharedSaves": 547,
+  "uniqueMembers": 116,
+  "executableSharedSaves": 579,
   "newlySupported": [
     {
       "id": "gISYsBFby1TiXfBt",
@@ -588,6 +588,10 @@
     {
       "id": "Yrek2Yd4k3DPC2zV",
       "name": "Zenith Star"
+    },
+    {
+      "id": "6s0UW4bujggma9TC",
+      "name": "Fabricated Truth"
     },
     {
       "id": "f8hRqLJaxBVhF1u0",
@@ -1698,16 +1702,40 @@
       "name": "Claim Undead"
     },
     {
+      "id": "c3XygMbzrZMgV1y3",
+      "name": "Collective Transposition"
+    },
+    {
       "id": "ExQk8AwDphmckEmZ",
       "name": "Crimson Breath"
+    },
+    {
+      "id": "dN8QBNuTiaBHCKUe",
+      "name": "Cursed Metamorphosis"
     },
     {
       "id": "OsOhx3TGIZ7AhD0P",
       "name": "Dominate"
     },
     {
+      "id": "XULNb8ItUsfupxqH",
+      "name": "Dread Secret"
+    },
+    {
+      "id": "XOs8C2eZJAO3go0N",
+      "name": "Earth and Sky"
+    },
+    {
       "id": "ZvB9sV7NLdpDeoTw",
       "name": "Explosive Barrage"
+    },
+    {
+      "id": "ZZTLWMXijRDgE66m",
+      "name": "Expunge Blood"
+    },
+    {
+      "id": "ReUoodsqUYSTwSgE",
+      "name": "Fateful Condemnation"
     },
     {
       "id": "R5r4vtmlvOA8hDiF",
@@ -1754,6 +1782,10 @@
       "name": "Purple Worm Sting"
     },
     {
+      "id": "DOBs5ALM1titPYxe",
+      "name": "Seize Identity"
+    },
+    {
       "id": "8Umt1AzYfFbC4fui",
       "name": "Spellwrack"
     },
@@ -1762,12 +1794,32 @@
       "name": "Suffocate"
     },
     {
+      "id": "BokwLLK7OjK6ggHs",
+      "name": "Tanglecurse"
+    },
+    {
+      "id": "OOMQ8Z6EIrGt5NJ6",
+      "name": "Unexpected Transposition"
+    },
+    {
+      "id": "g2V4ID0pl1ZGAxZj",
+      "name": "Vitrifying Blast"
+    },
+    {
       "id": "B4p4cD9Q71mHTpOP",
       "name": "Attacked from Within"
     },
     {
+      "id": "dKWc83KKiXoIJkhp",
+      "name": "Beheading Buzz Saw"
+    },
+    {
       "id": "EgkypvUZIZkx1UlQ",
       "name": "Blightburn Blast"
+    },
+    {
+      "id": "hvV6IruyW4MAr0Ub",
+      "name": "Chrysopoetic Curse"
     },
     {
       "id": "1VOjUKd1pacI67RZ",
@@ -1782,6 +1834,10 @@
       "name": "Divine Decree"
     },
     {
+      "id": "73rToy0v5Ra9NvL6",
+      "name": "Duplicate Foe"
+    },
+    {
       "id": "0jadeyQIItIuRgeH",
       "name": "Eclipse Burst"
     },
@@ -1794,6 +1850,10 @@
       "name": "Frigid Flurry"
     },
     {
+      "id": "yWySiasyPZcRoe4d",
+      "name": "Heaving Earth"
+    },
+    {
       "id": "gMbrNFKz9NP3TR4s",
       "name": "Inexhaustible Cynicism"
     },
@@ -1802,8 +1862,28 @@
       "name": "Leng Sting"
     },
     {
+      "id": "qOeBQyC1z7OScHvP",
+      "name": "Maze of Locked Doors"
+    },
+    {
       "id": "Shiuhdb2nO6Qgk3k",
       "name": "Moonburst"
+    },
+    {
+      "id": "qO4xOJ0kAvhVGDpX",
+      "name": "Orb of Twisting Fate"
+    },
+    {
+      "id": "wU6hNzK8Yfqdmc8m",
+      "name": "Possession"
+    },
+    {
+      "id": "mBYqtWpvOT4oBm4Q",
+      "name": "Puppet Strings"
+    },
+    {
+      "id": "VTb0yI6P1bLkzuRr",
+      "name": "Shadow Raid"
     },
     {
       "id": "a3aQxCpoj1q1NQxC",
@@ -1818,6 +1898,10 @@
       "name": "Warp Mind"
     },
     {
+      "id": "XB65dUQipPCTNNIY",
+      "name": "Amalgamizing Leap"
+    },
+    {
       "id": "C2GYCH3TtUFqPfdX",
       "name": "Arctic Rift"
     },
@@ -1830,6 +1914,10 @@
       "name": "Canticle of Everlasting Grief"
     },
     {
+      "id": "8fEfjvC01gNclDKJ",
+      "name": "Deluge"
+    },
+    {
       "id": "M0jQlpQYUr0pp2Sv",
       "name": "Desiccate"
     },
@@ -1838,8 +1926,16 @@
       "name": "Divine Armageddon"
     },
     {
+      "id": "vm9O7ne48NM72yrJ",
+      "name": "Falling Sky"
+    },
+    {
       "id": "TvZiwZRianfTSbEg",
       "name": "Hypnopompic Terrors"
+    },
+    {
+      "id": "wTYxxYJWN348oV15",
+      "name": "Medusa's Wrath"
     },
     {
       "id": "BKIet436snMNcnez",
@@ -1858,8 +1954,20 @@
       "name": "Sudden Transposition"
     },
     {
+      "id": "yZpWaJzm7kUjKvlQ",
+      "name": "Temporary Possession"
+    },
+    {
       "id": "Jvyy6oVIQsD34MHB",
       "name": "Uncontrollable Dance"
+    },
+    {
+      "id": "YiIOsc8T6E2iDxgh",
+      "name": "Undermine Reality"
+    },
+    {
+      "id": "KY2xyMavZHAoG69D",
+      "name": "Arcane Explosion"
     },
     {
       "id": "MFPvs0ARxtThYPFq",
@@ -1870,12 +1978,32 @@
       "name": "Linnorm Sting"
     },
     {
+      "id": "AsRd1gNRSkHDq2Jx",
+      "name": "Magnetic Dominion"
+    },
+    {
+      "id": "10VcmSYNBrvBphu1",
+      "name": "Massacre"
+    },
+    {
+      "id": "fkDeKktdmbeplYRY",
+      "name": "Overwhelming Presence"
+    },
+    {
       "id": "MJx7DmjsWYzDZ3a4",
       "name": "Phantasmagoria"
     },
     {
+      "id": "m815cJACTzePdZAG",
+      "name": "Remake Physiology"
+    },
+    {
       "id": "ItZgGznUBhgWBwFG",
       "name": "Telepathic Demand"
+    },
+    {
+      "id": "z39jFoNJrobyn3MQ",
+      "name": "Undertaker"
     },
     {
       "id": "XjNROFtWnwovhCsq",
@@ -1958,14 +2086,12 @@
           "families": [
             "self-help-ending"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
+          "route": "effect",
+          "enabledRoute": true,
           "sharedSave": false,
           "previousSharedSave": false,
           "detail": [],
           "blockers": [
-            "no-primary-save",
-            "description-semantics",
             "primary-save"
           ]
         },
@@ -2236,17 +2362,14 @@
             "state-immunity",
             "preamble-trigger"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
           "previousSharedSave": false,
           "detail": [
             "GM-confirmed eligibility"
           ],
-          "blockers": [
-            "preamble:ongoing-trigger",
-            "preamble:modifier"
-          ]
+          "blockers": []
         },
         {
           "id": "H481wmQUtEUhxHzi",
@@ -2291,19 +2414,13 @@
             "state-immunity",
             "preamble-trigger"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
+          "route": "ongoing",
+          "enabledRoute": true,
           "sharedSave": false,
           "previousSharedSave": false,
           "detail": [],
           "blockers": [
-            "residual-prose",
-            "sustain-effect",
-            "preamble:conditional-eligibility",
-            "preamble:ongoing-trigger",
-            "preamble:modifier",
-            "preamble:degree-adjustment",
-            "unaccounted-prose"
+            "lingering-area"
           ]
         }
       ]
@@ -2375,20 +2492,12 @@
           "families": [
             "preamble-trigger"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
           "previousSharedSave": false,
           "detail": [],
-          "blockers": [
-            "description-effects",
-            "description-target-predicates",
-            "description-lifecycle",
-            "native-spell-effect-scope",
-            "dismissal",
-            "basic-save-composition",
-            "unaccounted-prose"
-          ]
+          "blockers": []
         },
         {
           "id": "KG7amdeXWc7MjGXe",
@@ -2405,26 +2514,6 @@
           "detail": [],
           "blockers": [
             "lingering-area"
-          ]
-        },
-        {
-          "id": "BI4iwu3nApyIG0zY",
-          "name": "Astral Labyrinth",
-          "phase": 2,
-          "sourceFile": "spells/spells/rank-9/astral-labyrinth.json",
-          "families": [
-            "preamble-trigger"
-          ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
-          "previousSharedSave": false,
-          "detail": [],
-          "blockers": [
-            "residual-prose",
-            "preamble:counteract",
-            "preamble:restriction",
-            "unaccounted-prose"
           ]
         },
         {
@@ -2494,25 +2583,6 @@
             "GM-confirmed eligibility"
           ],
           "blockers": []
-        },
-        {
-          "id": "m34WOIGZCEg1h76G",
-          "name": "Blanket of Stars",
-          "phase": 3,
-          "sourceFile": "spells/spells/rank-6/blanket-of-stars.json",
-          "families": [
-            "preamble-trigger"
-          ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
-          "previousSharedSave": false,
-          "detail": [],
-          "blockers": [
-            "preamble:ongoing-trigger",
-            "preamble:modifier",
-            "preamble:additional-condition"
-          ]
         },
         {
           "id": "NacrNSvfODxpZena",
@@ -2596,54 +2666,6 @@
           "previousSharedSave": false,
           "detail": [],
           "blockers": []
-        },
-        {
-          "id": "kWDt0JcKPgX6MvdD",
-          "name": "Burning Blossoms",
-          "phase": 3,
-          "sourceFile": "spells/spells/rank-8/burning-blossoms.json",
-          "families": [
-            "preamble-trigger"
-          ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
-          "previousSharedSave": false,
-          "detail": [],
-          "blockers": [
-            "manual:conditional-effect",
-            "manual:attitude-or-hostility",
-            "residual-prose",
-            "preamble:ongoing-trigger",
-            "preamble:additional-condition",
-            "area-paragraph",
-            "unused-shared-damage",
-            "unaccounted-prose",
-            "manual-mechanic",
-            "condition-composition"
-          ]
-        },
-        {
-          "id": "rillrYLb7V2mRyU7",
-          "name": "Call of the Quenching",
-          "phase": 3,
-          "sourceFile": "spells/spells/rank-7/call-of-the-quenching.json",
-          "families": [
-            "preamble-trigger"
-          ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
-          "previousSharedSave": false,
-          "detail": [],
-          "blockers": [
-            "description-effects",
-            "description-target-predicates",
-            "description-lifecycle",
-            "area-paragraph",
-            "basic-save-composition",
-            "unaccounted-prose"
-          ]
         },
         {
           "id": "jJphHQlENHFlSElH",
@@ -2821,17 +2843,13 @@
           "families": [
             "preamble-trigger"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
+          "route": "ongoing",
+          "enabledRoute": true,
           "sharedSave": false,
           "previousSharedSave": false,
           "detail": [],
           "blockers": [
-            "description-effects",
-            "description-target-predicates",
-            "description-lifecycle",
-            "basic-save-composition",
-            "unaccounted-prose"
+            "lingering-area"
           ]
         },
         {
@@ -2953,17 +2971,13 @@
           "families": [
             "preamble-trigger"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
+          "route": "ongoing",
+          "enabledRoute": true,
           "sharedSave": false,
           "previousSharedSave": false,
           "detail": [],
           "blockers": [
-            "affliction-handoff:lifecycle",
-            "residual-prose",
-            "preamble:ongoing-trigger",
-            "delegated-capability",
-            "unaccounted-prose"
+            "lingering-area"
           ]
         },
         {
@@ -3037,17 +3051,14 @@
             "state-immunity",
             "preamble-trigger"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
           "previousSharedSave": false,
           "detail": [
             "GM-confirmed eligibility"
           ],
-          "blockers": [
-            "preamble:ongoing-trigger",
-            "preamble:modifier"
-          ]
+          "blockers": []
         },
         {
           "id": "6s0UW4bujggma9TC",
@@ -3057,40 +3068,12 @@
           "families": [
             "preamble-trigger"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
           "previousSharedSave": false,
           "detail": [],
-          "blockers": [
-            "residual-prose",
-            "preamble:counteract",
-            "preamble:restriction",
-            "item-duration-grammar",
-            "lifecycle",
-            "unaccounted-prose"
-          ]
-        },
-        {
-          "id": "kuoYff1csM5eAcAP",
-          "name": "Fire Seeds",
-          "phase": 3,
-          "sourceFile": "spells/spells/rank-6/fire-seeds.json",
-          "families": [
-            "preamble-trigger"
-          ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
-          "previousSharedSave": false,
-          "detail": [],
-          "blockers": [
-            "description-effects",
-            "description-target-predicates",
-            "description-lifecycle",
-            "basic-save-composition",
-            "unaccounted-prose"
-          ]
+          "blockers": []
         },
         {
           "id": "IKBjimvThvQIu2sO",
@@ -3205,26 +3188,6 @@
           "detail": [],
           "blockers": [
             "lingering-area"
-          ]
-        },
-        {
-          "id": "29tJyuEfFP43lMcM",
-          "name": "Infinitesimal Collapse Field",
-          "phase": 3,
-          "sourceFile": "spells/spells/rank-7/infinitesimal-collapse-field.json",
-          "families": [
-            "preamble-trigger"
-          ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
-          "previousSharedSave": false,
-          "detail": [],
-          "blockers": [
-            "residual-prose",
-            "preamble:ongoing-trigger",
-            "leave-area-lifetime",
-            "unaccounted-prose"
           ]
         },
         {
@@ -3386,14 +3349,12 @@
           "families": [
             "preamble-trigger"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
           "previousSharedSave": false,
           "detail": [],
-          "blockers": [
-            "preamble:counteract"
-          ]
+          "blockers": []
         },
         {
           "id": "PEGECeEtEmXEzwBT",
@@ -3484,28 +3445,6 @@
           ]
         },
         {
-          "id": "x1YwD1E9LW8upBj6",
-          "name": "Patron's Protector",
-          "phase": 5,
-          "sourceFile": "spells/spells/rank-6/patrons-protector.json",
-          "families": [
-            "preamble-trigger"
-          ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
-          "previousSharedSave": false,
-          "detail": [],
-          "blockers": [
-            "description-effects",
-            "description-target-predicates",
-            "description-lifecycle",
-            "basic-save-composition",
-            "lifecycle",
-            "unaccounted-prose"
-          ]
-        },
-        {
           "id": "D31YX7zvRBvenTAz",
           "name": "Petal Storm",
           "phase": 3,
@@ -3520,49 +3459,6 @@
           "detail": [],
           "blockers": [
             "lingering-area"
-          ]
-        },
-        {
-          "id": "Um0aaJotqMKGmAlR",
-          "name": "Pied Piping",
-          "phase": 3,
-          "sourceFile": "spells/spells/rank-10/pied-piping.json",
-          "families": [
-            "preamble-trigger"
-          ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
-          "previousSharedSave": false,
-          "detail": [],
-          "blockers": [
-            "residual-prose",
-            "preamble:temporary-immunity",
-            "preamble:conditional-eligibility",
-            "preamble:ongoing-trigger",
-            "preamble:modifier",
-            "unaccounted-prose"
-          ]
-        },
-        {
-          "id": "A125k5hYixepbzNb",
-          "name": "Planar Collision",
-          "phase": 7,
-          "sourceFile": "spells/spells/rank-10/planar-collision.json",
-          "families": [
-            "preamble-trigger"
-          ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
-          "previousSharedSave": false,
-          "detail": [],
-          "blockers": [
-            "description-effects",
-            "description-target-predicates",
-            "description-lifecycle",
-            "basic-save-composition",
-            "unaccounted-prose"
           ]
         },
         {
@@ -3605,22 +3501,12 @@
           "families": [
             "preamble-trigger"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
           "previousSharedSave": false,
           "detail": [],
-          "blockers": [
-            "manual:conditional-effect",
-            "residual-prose",
-            "preamble:ongoing-trigger",
-            "preamble:ends-early",
-            "preamble:additional-condition",
-            "preamble:restriction",
-            "preamble:degree-adjustment",
-            "unaccounted-prose",
-            "manual-mechanic"
-          ]
+          "blockers": []
         },
         {
           "id": "e4c73RBCQAZdYxau",
@@ -3698,27 +3584,6 @@
           "previousSharedSave": false,
           "detail": [],
           "blockers": []
-        },
-        {
-          "id": "yrZA4k2VAqEP8xx7",
-          "name": "Repulsion",
-          "phase": 7,
-          "sourceFile": "spells/spells/rank-6/repulsion.json",
-          "families": [
-            "preamble-trigger"
-          ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
-          "previousSharedSave": false,
-          "detail": [],
-          "blockers": [
-            "manual:terrain",
-            "residual-prose",
-            "preamble:ongoing-trigger",
-            "unaccounted-prose",
-            "manual-mechanic"
-          ]
         },
         {
           "id": "aewxsale5xWEPKLk",
@@ -3996,28 +3861,6 @@
           ]
         },
         {
-          "id": "A7NXFVgENRVtYoe3",
-          "name": "Trim the Blight",
-          "phase": 7,
-          "sourceFile": "spells/spells/rank-9/trim-the-blight.json",
-          "families": [
-            "preamble-trigger"
-          ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
-          "previousSharedSave": false,
-          "detail": [],
-          "blockers": [
-            "condition-duration-scope",
-            "residual-prose",
-            "preamble:terrain",
-            "preamble:gm-adjudication",
-            "preamble:recipient-qualifier",
-            "unaccounted-prose"
-          ]
-        },
-        {
           "id": "b4cst3WNzl4X7Bdr",
           "name": "Unbounded Sphere",
           "phase": 3,
@@ -4073,41 +3916,13 @@
             "state-immunity",
             "preamble-trigger"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
+          "route": "ongoing",
+          "enabledRoute": true,
           "sharedSave": false,
           "previousSharedSave": false,
           "detail": [],
           "blockers": [
-            "residual-prose",
-            "sustain-effect",
-            "preamble:conditional-eligibility",
-            "preamble:ongoing-trigger",
-            "preamble:modifier",
-            "preamble:degree-adjustment",
-            "unaccounted-prose"
-          ]
-        },
-        {
-          "id": "VbP3EPkHDvDKX3eM",
-          "name": "Veil of Broken Reality",
-          "phase": 3,
-          "sourceFile": "spells/spells/rank-10/veil-of-broken-reality.json",
-          "families": [
-            "preamble-trigger"
-          ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
-          "previousSharedSave": false,
-          "detail": [],
-          "blockers": [
-            "residual-prose",
-            "preamble:temporary-immunity",
-            "preamble:conditional-eligibility",
-            "preamble:ongoing-trigger",
-            "area-paragraph",
-            "unaccounted-prose"
+            "lingering-area"
           ]
         },
         {
@@ -4125,30 +3940,6 @@
           "detail": [],
           "blockers": [
             "lingering-area"
-          ]
-        },
-        {
-          "id": "tPtTKe0X1dDwoDmQ",
-          "name": "Vibrant Vibrato",
-          "phase": 3,
-          "sourceFile": "spells/spells/rank-7/vibrant-vibrato.json",
-          "families": [
-            "preamble-trigger"
-          ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
-          "previousSharedSave": false,
-          "detail": [],
-          "blockers": [
-            "manual:conditional-effect",
-            "residual-prose",
-            "sustain-effect",
-            "preamble:ongoing-trigger",
-            "preamble:restriction",
-            "unused-shared-damage",
-            "unaccounted-prose",
-            "manual-mechanic"
           ]
         },
         {
@@ -4223,154 +4014,30 @@
   "blockerCounts": [
     [
       "lingering-area",
-      45
-    ],
-    [
-      "unaccounted-prose",
-      19
-    ],
-    [
-      "residual-prose",
-      12
-    ],
-    [
-      "preamble:ongoing-trigger",
-      11
-    ],
-    [
-      "description-effects",
-      7
-    ],
-    [
-      "description-target-predicates",
-      7
-    ],
-    [
-      "description-lifecycle",
-      7
-    ],
-    [
-      "basic-save-composition",
-      7
+      48
     ],
     [
       "primary-save",
       7
     ],
     [
-      "preamble:restriction",
-      4
-    ],
-    [
-      "preamble:modifier",
-      4
-    ],
-    [
-      "manual-mechanic",
-      4
-    ],
-    [
-      "preamble:counteract",
-      3
-    ],
-    [
-      "preamble:additional-condition",
-      3
-    ],
-    [
-      "manual:conditional-effect",
-      3
-    ],
-    [
-      "area-paragraph",
-      3
-    ],
-    [
-      "preamble:conditional-eligibility",
-      3
-    ],
-    [
-      "unused-shared-damage",
-      2
-    ],
-    [
-      "lifecycle",
-      2
-    ],
-    [
-      "preamble:temporary-immunity",
-      2
-    ],
-    [
-      "preamble:degree-adjustment",
-      2
-    ],
-    [
-      "sustain-effect",
-      2
-    ],
-    [
-      "native-spell-effect-scope",
+      "description-effects",
       1
     ],
     [
-      "dismissal",
+      "description-target-predicates",
       1
     ],
     [
-      "manual:attitude-or-hostility",
+      "description-lifecycle",
       1
     ],
     [
-      "condition-composition",
+      "basic-save-composition",
       1
     ],
     [
-      "no-primary-save",
-      1
-    ],
-    [
-      "description-semantics",
-      1
-    ],
-    [
-      "affliction-handoff:lifecycle",
-      1
-    ],
-    [
-      "delegated-capability",
-      1
-    ],
-    [
-      "item-duration-grammar",
-      1
-    ],
-    [
-      "leave-area-lifetime",
-      1
-    ],
-    [
-      "preamble:ends-early",
-      1
-    ],
-    [
-      "manual:terrain",
-      1
-    ],
-    [
-      "condition-duration-scope",
-      1
-    ],
-    [
-      "preamble:terrain",
-      1
-    ],
-    [
-      "preamble:gm-adjudication",
-      1
-    ],
-    [
-      "preamble:recipient-qualifier",
+      "unaccounted-prose",
       1
     ]
   ]

@@ -1,0 +1,116 @@
+{
+ "label": "thirdPartyBatch4",
+ "passed": true,
+ "at": "2026-10-06T22:44:57.314Z",
+ "details": {
+  "thirdParty4": {
+   "ray": {
+    "modifier": -2,
+    "blinded": true,
+    "dazzled": true,
+    "dazzledRounds": 11,
+    "lost": 2,
+    "reminders": [
+     "area-light",
+     "area-size"
+    ]
+   },
+   "tune": {
+    "status": "applied",
+    "will": 1,
+    "fascinated": true
+   },
+   "virtue": {
+    "status": "applied",
+    "holy": [
+     7
+    ]
+   },
+   "dual": {
+    "status": "applied",
+    "weaknesses": [
+     "fire 2"
+    ],
+    "effects": [
+     {
+      "name": "Spell Effect: Dual-Pattern Strike (Fire)",
+      "rules": [
+       {
+        "choices": [
+         {
+          "label": "PF2E.TraitAcid",
+          "value": "acid"
+         },
+         {
+          "label": "PF2E.TraitCold",
+          "value": "cold"
+         },
+         {
+          "label": "PF2E.TraitElectricity",
+          "value": "electricity"
+         },
+         {
+          "label": "PF2E.TraitFire",
+          "value": "fire"
+         },
+         {
+          "label": "PF2E.TraitForce",
+          "value": "force"
+         },
+         {
+          "label": "PF2E.TraitVoid",
+          "value": "void"
+         },
+         {
+          "label": "PF2E.TraitVitality",
+          "value": "vitality"
+         },
+         {
+          "label": "PF2E.TraitMental",
+          "value": "mental"
+         },
+         {
+          "label": "PF2E.TraitPoison",
+          "value": "poison"
+         }
+        ],
+        "flag": "dualPatternStrikeWeakness",
+        "key": "ChoiceSet",
+        "prompt": "PF2E.SpecificRule.Prompt.DamageType",
+        "selection": "fire"
+       },
+       {
+        "key": "Weakness",
+        "type": "{item|flags.system.rulesSelections.dualPatternStrikeWeakness}",
+        "value": "2+floor((@item.level - 1)/2)*1"
+       }
+      ],
+      "flags": {
+       "rulesSelections": {
+        "dualPatternStrikeWeakness": "fire"
+       }
+      }
+     },
+     {
+      "name": "Spell Note: Dual-Pattern Strike",
+      "rules": [],
+      "flags": null
+     }
+    ]
+   },
+   "crescendo": {
+    "stunned": 3,
+    "deafened": true
+   },
+   "daze": {
+    "note": "Dynamic Daze: Off-guard to the caster's next attack",
+    "immunityKey": "daze:1-action",
+    "after": false
+   },
+   "breathe": {
+    "formula": "4d6 fire",
+    "lost": 14
+   }
+  }
+ }
+}

@@ -1,0 +1,1711 @@
+[
+ {
+  "name": "Cursed Mark",
+  "module": "clerics-remaster",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "State of the Art",
+  "module": "clerics-remaster",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Mantle of Nobility",
+  "module": "clerics-remaster",
+  "route": "effect",
+  "kind": "effect",
+  "pending": []
+ },
+ {
+  "name": "Virtue's Light",
+  "module": "clerics-remaster",
+  "route": "effect",
+  "kind": "effect-note",
+  "pending": []
+ },
+ {
+  "name": "Ruler of Everything",
+  "module": "clerics-remaster",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Honorable Death",
+  "module": "clerics-remaster",
+  "route": "effect",
+  "kind": "honor-duel",
+  "pending": []
+ },
+ {
+  "name": "Residual Bad Luck",
+  "module": "clerics-remaster",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Repairomancy",
+  "module": "clerics-remaster",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "If Walls Could Talk",
+  "module": "clerics-remaster",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Fall to Ruin",
+  "module": "clerics-remaster",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Divine Adjudication",
+  "module": "clerics-remaster",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Planar Court",
+  "module": "clerics-remaster",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Sacrosanct Promise",
+  "module": "clerics-remaster",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Liberator's Ferocity",
+  "module": "clerics-remaster",
+  "route": "effect",
+  "kind": "effect-note",
+  "pending": []
+ },
+ {
+  "name": "Hope Prevails",
+  "module": "clerics-remaster",
+  "route": "effect",
+  "kind": "action-versions",
+  "pending": []
+ },
+ {
+  "name": "Long Live the Revolution",
+  "module": "clerics-remaster",
+  "route": "effect",
+  "kind": "rally-cry",
+  "pending": []
+ },
+ {
+  "name": "From Thine Sight",
+  "module": "clerics-remaster",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Heretic's Disguise",
+  "module": "clerics-remaster",
+  "route": "effect",
+  "kind": "effect",
+  "pending": []
+ },
+ {
+  "name": "Dual-Pattern Strike",
+  "module": "magus",
+  "route": "effect",
+  "kind": "effect-note",
+  "pending": []
+ },
+ {
+  "name": "Quantum Shot",
+  "module": "magus",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Mystic Bomb",
+  "module": "magus",
+  "route": "effect",
+  "kind": "mystic-bomb",
+  "pending": []
+ },
+ {
+  "name": "Coiling Grasp",
+  "module": "magus",
+  "route": "effect",
+  "kind": "weapon-grapple",
+  "pending": []
+ },
+ {
+  "name": "Metamorphic Armor",
+  "module": "magus",
+  "route": "effect",
+  "kind": "rule-set",
+  "pending": []
+ },
+ {
+  "name": "Force Manipulate",
+  "module": "magus",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": [
+   "target-eligibility"
+  ]
+ },
+ {
+  "name": "Wreak Havok",
+  "module": "magus",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Hyper-Arcane Pressure Point Strike",
+  "module": "magus",
+  "route": "effect",
+  "kind": "stated-effect",
+  "pending": []
+ },
+ {
+  "name": "Cascading Weapon Blast",
+  "module": "magus",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Rebounding Figment Strike",
+  "module": "magus",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Blood Surge",
+  "module": "pf2e-team-plus-barbarians",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Technomancy Ray",
+  "module": "pf2e-team-plus-inventors",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Dynamic Ignition",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "unsupported",
+  "pending": [
+   "no-primary-save",
+   "description-semantics",
+   "target-eligibility"
+  ]
+ },
+ {
+  "name": "Targeted Ward",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "action-versions",
+  "pending": []
+ },
+ {
+  "name": "Dynamic Invisibility",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "unsupported",
+  "pending": [
+   "no-primary-save",
+   "description-semantics",
+   "item-duration-grammar",
+   "target-eligibility"
+  ]
+ },
+ {
+  "name": "Summon Ooze Aspect",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "summon",
+  "pending": []
+ },
+ {
+  "name": "Summon Animal Aspect",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "summon",
+  "pending": []
+ },
+ {
+  "name": "Fiend Shift",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "effect",
+  "pending": []
+ },
+ {
+  "name": "Boom-a-rang",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "unsupported",
+  "pending": [
+   "basic-save-without-structured-damage",
+   "description-semantics"
+  ]
+ },
+ {
+  "name": "Ooze Shift",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "effect",
+  "pending": []
+ },
+ {
+  "name": "Summon Thurse Aspect",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "summon",
+  "pending": []
+ },
+ {
+  "name": "Celestial Shift",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "effect",
+  "pending": []
+ },
+ {
+  "name": "Dynamic Electric Arc",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "unsupported",
+  "pending": [
+   "basic-save-without-structured-damage",
+   "description-semantics",
+   "target-eligibility"
+  ]
+ },
+ {
+  "name": "Summon Celestial Aspect",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "summon",
+  "pending": []
+ },
+ {
+  "name": "Localized Eclipse",
+  "module": "pf2e-team-plus-magic",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Thousand-Year Flood",
+  "module": "pf2e-team-plus-magic",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Summon Fiend Aspect",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "summon",
+  "pending": []
+ },
+ {
+  "name": "Dynamic Vampiric Feast",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "unsupported",
+  "pending": [
+   "non-basic-save",
+   "description-semantics",
+   "target-eligibility"
+  ]
+ },
+ {
+  "name": "Dynamic Divine Lance",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "unsupported",
+  "pending": [
+   "no-primary-save",
+   "description-semantics",
+   "native-spell-effect-scope"
+  ]
+ },
+ {
+  "name": "Unhelpful Nudge",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Dynamic Guidance",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "effect-sequence",
+  "pending": [
+   "target-eligibility"
+  ]
+ },
+ {
+  "name": "Careless Swings",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Dynamic Translocate",
+  "module": "pf2e-team-plus-magic",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": [
+   "target-eligibility"
+  ]
+ },
+ {
+  "name": "Darkened Forest Shift",
+  "module": "pf2e-team-plus-magic",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Dynamic Gouging Claw",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "unsupported",
+  "pending": [
+   "no-primary-save",
+   "description-semantics",
+   "native-spell-effect-scope",
+   "target-eligibility"
+  ]
+ },
+ {
+  "name": "Creeping Cold",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Dynamic Haste",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "effect",
+  "pending": [
+   "item-duration-grammar"
+  ]
+ },
+ {
+  "name": "Summon Fey Aspect",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "summon",
+  "pending": []
+ },
+ {
+  "name": "Fey Shift",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "effect",
+  "pending": []
+ },
+ {
+  "name": "Fountain of Blood",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Shade of Night",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Summon Construct Aspect",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "summon",
+  "pending": []
+ },
+ {
+  "name": "Pest Shift",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "effect",
+  "pending": []
+ },
+ {
+  "name": "Dynamic Caustic Blast",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "unsupported",
+  "pending": [
+   "no-primary-save",
+   "description-semantics"
+  ]
+ },
+ {
+  "name": "Dynamic Fireball",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "unsupported",
+  "pending": [
+   "basic-save-without-structured-damage",
+   "description-semantics"
+  ]
+ },
+ {
+  "name": "Crushing Stampede",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "save",
+  "pending": [
+   "manual:summoning",
+   "manual:conditional-effect",
+   "residual-prose"
+  ]
+ },
+ {
+  "name": "Dynamic Fly",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "unsupported",
+  "pending": [
+   "no-primary-save",
+   "description-semantics",
+   "native-spell-effect-scope",
+   "item-duration-grammar",
+   "target-eligibility"
+  ]
+ },
+ {
+  "name": "Construct Shift",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "effect",
+  "pending": []
+ },
+ {
+  "name": "Spirit Boundary",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "spirit-boundary",
+  "pending": []
+ },
+ {
+  "name": "Elemental Shift",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "effect",
+  "pending": []
+ },
+ {
+  "name": "Undead Shift",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "effect",
+  "pending": []
+ },
+ {
+  "name": "Winter's Cold Embrace",
+  "module": "pf2e-team-plus-magic",
+  "route": "ongoing",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Dragon Shift",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "effect",
+  "pending": []
+ },
+ {
+  "name": "Summon Monitor Aspect",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "summon",
+  "pending": []
+ },
+ {
+  "name": "Dynamic Haunting Hymn",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "unsupported",
+  "pending": [
+   "basic-save-without-structured-damage",
+   "description-semantics"
+  ]
+ },
+ {
+  "name": "Thurse Shift",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "effect",
+  "pending": []
+ },
+ {
+  "name": "Summon Plant Aspect",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "summon",
+  "pending": []
+ },
+ {
+  "name": "Dynamic Breathe Fire",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "proxy-cast",
+  "pending": []
+ },
+ {
+  "name": "Awaken Forbisen",
+  "module": "pf2e-team-plus-magic",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Dynamic Void Warp",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "unsupported",
+  "pending": [
+   "basic-save-without-structured-damage",
+   "description-semantics"
+  ]
+ },
+ {
+  "name": "Dynamic Lightning Bolt",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "unsupported",
+  "pending": [
+   "basic-save-without-structured-damage",
+   "description-semantics"
+  ]
+ },
+ {
+  "name": "Summon Undead Aspect",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "summon",
+  "pending": []
+ },
+ {
+  "name": "Dynamic Telekinetic Projectile",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "unsupported",
+  "pending": [
+   "no-primary-save",
+   "description-semantics"
+  ]
+ },
+ {
+  "name": "Shadow's Betrayal",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Volley My Ally",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "effect-note",
+  "pending": []
+ },
+ {
+  "name": "Summon Dragon Aspect",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "summon",
+  "pending": []
+ },
+ {
+  "name": "Animal Shift",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "effect",
+  "pending": []
+ },
+ {
+  "name": "Drown",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Aberration Shift",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "effect",
+  "pending": []
+ },
+ {
+  "name": "Siphoning Rivulet",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "direct-damage",
+  "pending": []
+ },
+ {
+  "name": "Gruesome Marionettist",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "marionette",
+  "pending": []
+ },
+ {
+  "name": "Plant Shift",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "effect",
+  "pending": []
+ },
+ {
+  "name": "Lucky Decision",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "fate-roll",
+  "pending": []
+ },
+ {
+  "name": "Propagating Arc",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Dynamic Daze",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "unsupported",
+  "pending": [
+   "basic-save-without-structured-damage",
+   "description-semantics"
+  ]
+ },
+ {
+  "name": "Dynamic Breathe Fire",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "unsupported",
+  "pending": [
+   "basic-save-without-structured-damage",
+   "description-semantics"
+  ]
+ },
+ {
+  "name": "Untamed Aspect Shift",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "proxy-cast",
+  "pending": []
+ },
+ {
+  "name": "Kinetic Tow",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Dynamic Vitality Lash",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "unsupported",
+  "pending": [
+   "basic-save-without-structured-damage",
+   "description-semantics",
+   "native-spell-effect-scope"
+  ]
+ },
+ {
+  "name": "Dynamic Shield",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "action-versions",
+  "pending": []
+ },
+ {
+  "name": "Summon Entity Aspect",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "summon",
+  "pending": []
+ },
+ {
+  "name": "Monitor Shift",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "effect",
+  "pending": []
+ },
+ {
+  "name": "Umbral Escape",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "effect-note",
+  "pending": []
+ },
+ {
+  "name": "Dynamic Frostbite",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "unsupported",
+  "pending": [
+   "basic-save-without-structured-damage",
+   "description-semantics",
+   "native-spell-effect-scope"
+  ]
+ },
+ {
+  "name": "Hemophilia",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Summon Elemental Aspect",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "summon",
+  "pending": []
+ },
+ {
+  "name": "Bewilder",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Quick Siphon",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "healing",
+  "pending": []
+ },
+ {
+  "name": "Shadow Injection",
+  "module": "pf2e-team-plus-magic",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Manifest Wicket Dominion",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "caster-dominion",
+  "pending": []
+ },
+ {
+  "name": "Old-Mage's Echo",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Coalesce Form",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "proxy-cast",
+  "pending": []
+ },
+ {
+  "name": "Summon Accomplice",
+  "module": "pf2e-team-plus-magic",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Glutton For Blood",
+  "module": "pf2e-team-plus-magic",
+  "route": "effect",
+  "kind": "effect-note",
+  "pending": [
+   "item-duration-grammar"
+  ]
+ },
+ {
+  "name": "Silence of The Archmage",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Shadow Wield",
+  "module": "pf2e-team-plus-magic",
+  "route": "save",
+  "kind": "unsupported",
+  "pending": [
+   "no-primary-save",
+   "description-semantics"
+  ]
+ },
+ {
+  "name": "Tools of Darkness",
+  "module": "pf2e-team-plus-magic",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Explosive Crescendo",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Cease to Be",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Automummification",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "effect",
+  "kind": "effect",
+  "pending": []
+ },
+ {
+  "name": "Dream Come True",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Hide From Doom",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Seeds of Divinity",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "effect",
+  "kind": "divine-seeds",
+  "pending": []
+ },
+ {
+  "name": "Raise Mountain",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Promised Renewal",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "effect",
+  "kind": "renewal",
+  "pending": []
+ },
+ {
+  "name": "Dream Logic",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "effect",
+  "kind": "dream-table",
+  "pending": []
+ },
+ {
+  "name": "Moonlit Folly",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "effect",
+  "kind": "effect",
+  "pending": []
+ },
+ {
+  "name": "Life of the Party",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "effect",
+  "kind": "effect-note",
+  "pending": []
+ },
+ {
+  "name": "Terrible Size",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "effect",
+  "kind": "effect",
+  "pending": []
+ },
+ {
+  "name": "Overwhelming Festivities",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "effect",
+  "kind": "trigger-aura",
+  "pending": []
+ },
+ {
+  "name": "Shadowcopy",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "The End is Nigh",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Glacial Sculpting",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Divine Eclipse",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "ongoing",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Mind's Eye Wink",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "effect",
+  "kind": "dream-hazard",
+  "pending": []
+ },
+ {
+  "name": "Sharp Note",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Spiraling Dance",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Hand in the Dark",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Assume Destiny",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Golden Touch",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Ice Guardian",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "effect",
+  "kind": "incarnate",
+  "pending": []
+ },
+ {
+  "name": "Fractal Frosting",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "effect",
+  "kind": "proxy-cast",
+  "pending": []
+ },
+ {
+  "name": "Juggernaut of Jagged Stone",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "effect",
+  "kind": "effect",
+  "pending": [
+   "direct-effect:description-damage"
+  ]
+ },
+ {
+  "name": "Ray of Light",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Creature's Howl",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Wooden Engulfment",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "effect",
+  "kind": "engulfing-tree",
+  "pending": []
+ },
+ {
+  "name": "Melt In Sunlight",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "effect",
+  "kind": "effect",
+  "pending": []
+ },
+ {
+  "name": "Weapon Trance (Team+)",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "effect",
+  "kind": "effect-note",
+  "pending": []
+ },
+ {
+  "name": "Freezing Cold",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Enchanting Rhapsody",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "ongoing",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Wishful Thinking",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "effect",
+  "kind": "effect-note",
+  "pending": []
+ },
+ {
+  "name": "Unknowable Icon",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "ongoing",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Prism of Power",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "effect",
+  "kind": "power-prism",
+  "pending": []
+ },
+ {
+  "name": "Matchmaker",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Seismic Shift",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "The More The Merrier",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Garden of Crystals",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "effect",
+  "kind": "crystal-garden",
+  "pending": []
+ },
+ {
+  "name": "Body of the Beast",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "effect",
+  "kind": "effect",
+  "pending": [
+   "direct-effect:description-damage"
+  ]
+ },
+ {
+  "name": "Web of Darkness",
+  "module": "pf2e-team-plus-oracles-remastered",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Bird's Eye View",
+  "module": "pf2e-team-plus-tian-xia",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Chorus Made Manifest",
+  "module": "pf2e-team-plus-tian-xia",
+  "route": "effect",
+  "kind": "stated-effect",
+  "pending": []
+ },
+ {
+  "name": "Channel Imperial Dragon",
+  "module": "pf2e-team-plus-tian-xia",
+  "route": "effect",
+  "kind": "stated-effect",
+  "pending": []
+ },
+ {
+  "name": "Sword Qi Wave",
+  "module": "pf2e-team-plus-tian-xia",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Obscured From Kaiju",
+  "module": "pf2e-team-plus-tian-xia",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Calm the Torrent",
+  "module": "pf2e-team-plus-tian-xia",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": [
+   "target-eligibility"
+  ]
+ },
+ {
+  "name": "Titan's Feud",
+  "module": "pf2e-team-plus-tian-xia",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": [
+   "target-eligibility"
+  ]
+ },
+ {
+  "name": "Project Location",
+  "module": "pf2e-team-plus-tian-xia",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": [
+   "target-eligibility"
+  ]
+ },
+ {
+  "name": "Staff Striker",
+  "module": "pf2e-team-plus-wizards",
+  "route": "save",
+  "kind": "unsupported",
+  "pending": [
+   "no-primary-save",
+   "description-semantics"
+  ]
+ },
+ {
+  "name": "Potent Portals",
+  "module": "pf2e-team-plus-wizards",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Quasiplanar Flux",
+  "module": "pf2e-team-plus-wizards",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "View Internal Anatomy",
+  "module": "pf2e-team-plus-wizards",
+  "route": "effect",
+  "kind": "stated-effect",
+  "pending": []
+ },
+ {
+  "name": "Arcane Uplift",
+  "module": "pf2e-team-plus-wizards",
+  "route": "effect",
+  "kind": "effect",
+  "pending": []
+ },
+ {
+  "name": "Darkness Form",
+  "module": "pf2e-team-plus-wizards",
+  "route": "effect",
+  "kind": "effect",
+  "pending": [
+   "direct-effect:description-damage",
+   "direct-effect:granted-or-follow-up-action"
+  ]
+ },
+ {
+  "name": "Cosmic Glow",
+  "module": "pf2e-team-plus-wizards",
+  "route": "ongoing",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Form Constellation",
+  "module": "pf2e-team-plus-wizards",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Hand of Judgement",
+  "module": "pf2e-team-plus-wizards",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Grand Finale",
+  "module": "pf2e-team-plus-wizards",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Energy Exertion",
+  "module": "pf2e-team-plus-wizards",
+  "route": "save",
+  "kind": "unsupported",
+  "pending": [
+   "no-primary-save",
+   "description-semantics"
+  ]
+ },
+ {
+  "name": "Shadow Puppetry",
+  "module": "pf2e-team-plus-wizards",
+  "route": "effect",
+  "kind": "pulse-area",
+  "pending": []
+ },
+ {
+  "name": "Perilous Road Ahead",
+  "module": "pf2e-team-plus-wizards",
+  "route": "effect",
+  "kind": "effect",
+  "pending": [
+   "direct-effect:condition-interaction",
+   "direct-effect:temporary-immunity",
+   "direct-effect:choice-resolution",
+   "target-eligibility"
+  ]
+ },
+ {
+  "name": "Magic Map",
+  "module": "pf2e-team-plus-wizards",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Instant Surgery",
+  "module": "pf2e-team-plus-wizards",
+  "route": "effect",
+  "kind": "attribute-surgery",
+  "pending": []
+ },
+ {
+  "name": "Summon Jury",
+  "module": "pf2e-team-plus-wizards",
+  "route": "effect",
+  "kind": "incarnate",
+  "pending": []
+ },
+ {
+  "name": "Shine Spotlight",
+  "module": "pf2e-team-plus-wizards",
+  "route": "effect",
+  "kind": "spotlight",
+  "pending": []
+ },
+ {
+  "name": "Animated Spark",
+  "module": "pf2e-team-plus-wizards",
+  "route": "effect",
+  "kind": "animated-spark",
+  "pending": []
+ },
+ {
+  "name": "Witch's Bottle",
+  "module": "witches-remaster",
+  "route": "effect",
+  "kind": "proxy-cast",
+  "pending": []
+ },
+ {
+  "name": "Demand Compliance",
+  "module": "witches-remaster",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Nudge Fate+",
+  "module": "witches-remaster",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Warped Visage",
+  "module": "witches-remaster",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Famed Figure",
+  "module": "witches-remaster",
+  "route": "effect",
+  "kind": "illusory-creature",
+  "pending": []
+ },
+ {
+  "name": "Autonomous Actor",
+  "module": "witches-remaster",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Mark of Mystery",
+  "module": "witches-remaster",
+  "route": "effect",
+  "kind": "mark-ward",
+  "pending": []
+ },
+ {
+  "name": "Familiar Lesson",
+  "module": "witches-remaster",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Accursed Formation",
+  "module": "witches-remaster",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Binding Summon",
+  "module": "witches-remaster",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": [
+   "target-eligibility"
+  ]
+ },
+ {
+  "name": "Secret of the Forebearers",
+  "module": "witches-remaster",
+  "route": "effect",
+  "kind": "stated-effect",
+  "pending": []
+ },
+ {
+  "name": "Conjure Gadget",
+  "module": "witches-remaster",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": [
+   "target-eligibility"
+  ]
+ },
+ {
+  "name": "Grant Wish",
+  "module": "witches-remaster",
+  "route": "effect",
+  "kind": "effect",
+  "pending": [
+   "direct-effect:condition-interaction",
+   "direct-effect:choice-resolution"
+  ]
+ },
+ {
+  "name": "Sudden Outbreak",
+  "module": "witches-remaster",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Evil Eye+",
+  "module": "witches-remaster",
+  "route": "ongoing",
+  "kind": "unsupported",
+  "pending": [
+   "non-basic-save",
+   "description-semantics"
+  ]
+ },
+ {
+  "name": "Aura of Violent Light",
+  "module": "witches-remaster",
+  "route": "ongoing",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Personal Blizzard+",
+  "module": "witches-remaster",
+  "route": "effect",
+  "kind": "sustained-save-damage",
+  "pending": []
+ },
+ {
+  "name": "Beguile",
+  "module": "witches-remaster",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Coiling Creepers",
+  "module": "witches-remaster",
+  "route": "effect",
+  "kind": "creeper-maneuver",
+  "pending": []
+ },
+ {
+  "name": "Spirit's Touch",
+  "module": "witches-remaster",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Specular Portals",
+  "module": "witches-remaster",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Protective Visitation",
+  "module": "witches-remaster",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Chant",
+  "module": "witches-remaster",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Eternal Slumber",
+  "module": "witches-remaster",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Holding Glyph",
+  "module": "witches-remaster",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Fabled Familiar",
+  "module": "witches-remaster",
+  "route": "effect",
+  "kind": "effect",
+  "pending": [
+   "direct-effect:choice-resolution"
+  ]
+ },
+ {
+  "name": "Cosmic Tune",
+  "module": "witches-remaster",
+  "route": "effect",
+  "kind": "effect-note",
+  "pending": []
+ },
+ {
+  "name": "Patron's Apocalypse",
+  "module": "witches-remaster",
+  "route": "effect",
+  "kind": "patron-apocalypse",
+  "pending": []
+ },
+ {
+  "name": "Discern Secrets+",
+  "module": "witches-remaster",
+  "route": "effect",
+  "kind": "stated-effect",
+  "pending": []
+ },
+ {
+  "name": "Sensory Deprivation",
+  "module": "witches-remaster",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Realityflicker",
+  "module": "witches-remaster",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Unleash True Power",
+  "module": "witches-remaster",
+  "route": "effect",
+  "kind": "true-power",
+  "pending": []
+ },
+ {
+  "name": "Tidal Grasp",
+  "module": "witches-remaster",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Lost in the Crowd",
+  "module": "witches-remaster",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Judge Soul",
+  "module": "witches-remaster",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Devoted Glory",
+  "module": "witches-remaster",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Brief Lesson",
+  "module": "witches-remaster",
+  "route": "effect",
+  "kind": "effect",
+  "pending": []
+ },
+ {
+  "name": "Elemental Betrayal+",
+  "module": "witches-remaster",
+  "route": "effect",
+  "kind": "effect",
+  "pending": []
+ },
+ {
+  "name": "Melodious Provocateur",
+  "module": "witches-remaster",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Lurking Doom",
+  "module": "witches-remaster",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Ravaging End",
+  "module": "witches-remaster",
+  "route": "save",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Needle of Vengeance+",
+  "module": "witches-remaster",
+  "route": "ongoing",
+  "kind": "save",
+  "pending": []
+ },
+ {
+  "name": "Swamp Emergence",
+  "module": "witches-remaster",
+  "route": "note",
+  "kind": "spell-note",
+  "pending": []
+ },
+ {
+  "name": "Soothsayer's Prediction",
+  "module": "witches-remaster",
+  "route": "effect",
+  "kind": "effect",
+  "pending": []
+ }
+]

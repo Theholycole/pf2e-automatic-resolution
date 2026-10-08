@@ -1,0 +1,27 @@
+{
+ "label": "thirdPartyBatch14",
+ "passed": true,
+ "at": "2026-10-07T00:31:00.189Z",
+ "details": {
+  "thirdParty14": {
+   "liberator": {
+    "status": "applied",
+    "resist": [
+     "all-damage 4"
+    ],
+    "duration": "1 rounds",
+    "damage": "@item.level*2"
+   },
+   "trance": {
+    "status": "applied",
+    "selection": true,
+    "rules": 5
+   },
+   "volley": {
+    "status": "applied",
+    "rule": "AdjustStrike",
+    "level": 5
+   }
+  }
+ }
+}

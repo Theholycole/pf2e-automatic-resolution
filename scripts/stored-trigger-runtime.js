@@ -2,6 +2,7 @@
 // tracked in Ongoing spells for the spell's duration. When the trigger happens, the GM (or the caster's owner) targets
 // the triggering creature and uses "Trigger <spell>": an ordinary save card opens for it, and the spell ends (or, for a
 // trigger any number of creatures can set off, stays set).
+import { assertSpellNotLost, dropMissedTargets } from "./casting-rules-runtime.js";
 import { isExecutableStoredTriggerPlan, storedPoolHp, storedTriggerExposurePlan, detonationPlan } from "./basic-save-core.js";
 import { escapeHTML, randomID } from "./runtime-utils.js";
 import { ONGOING_FLAG } from "./ongoing-core.js";
@@ -27,6 +28,10 @@ export class StoredTriggerRuntime {
     supports(plan) { return isExecutableStoredTriggerPlan(plan); }
 
     async start(spell, plan, { sourceActor = spell?.actor, castRank = spell?.rank, sourceMessageId = null, targets = null } = {}) {
+        // (A spell lost to a disruption or a counterspell has no effect: casting-rules-runtime.js.)
+        assertSpellNotLost(sourceMessageId);
+        // (A concealed or hidden target the spell's flat check missed is left out.)
+        targets = dropMissedTargets(sourceMessageId, targets) ?? targets;
         if (!this.supports(plan)) throw new Error(`${plan?.source?.name ?? "Spell"} is not an executable stored-trigger spell.`);
         const stored = plan.resolution.storedTrigger;
         if (stored.held) return this.#startHeld(spell, plan, { sourceActor, castRank, sourceMessageId, targets: targets ?? [...(game.user?.targets ?? [])] });
@@ -102,7 +107,9 @@ export class StoredTriggerRuntime {
         }
         const metadata = { schema: 1, kind: "stored-trigger", castInstanceId, sourceActorUuid: sourceActor.uuid, sourceItemUuid: spell.uuid, sourceItemName: spell.name,
             sourceItemSlug: plan.source.slug, castRank: Number(castRank), storedTrigger: stored, targetActorUuid: target.uuid, targetTokenUuid: token.uuid, targetName: token.name,
-            ...(stored.pool ? { poolHp } : {}) };
+            ...(stored.pool ? { poolHp } : {}),
+            // (The cast's message: its spellshapes apply when the spell is triggered — Fury of a Thousand on Murmuration.)
+            ...(sourceMessageId ? { sourceMessageId } : {}) };
         const [effect] = await target.createEmbeddedDocuments("Item", [{
             name: stored.pool ? `${spell.name} (${stored.pool.label}: ${poolHp} HP)` : `${spell.name} (waiting for its trigger)`, type: "effect", img: spell.img,
             flags: { [MODULE_ID]: { runtime: metadata, ...(stored.pool ? { poolHp } : {}) } },
@@ -114,9 +121,19 @@ export class StoredTriggerRuntime {
         const journal = await this.ongoing.begin({ castId: castInstanceId, name: spell.name, kind: "native", sourceActorUuid: sourceActor.uuid, sourceItemUuid: spell.uuid, recipientUuids: [target.uuid],
             ...(stored.sustained ? { sustained: true, castRound: this.ongoing.clock?.().round ?? 0, maximumAt: game.time.worldTime + stored.durationSeconds } : {}) });
         await this.ongoing.attach(journal, effect);
+        // (A rule on the caster for the spell's time — Pact Broker's penalty to Lie to a target that accepted: its toggle.)
+        let casterEffect = null;
+        if (stored.casterRules) {
+            const rules = [{ key: "RollOption", domain: "all", option: stored.casterRules.toggle.option, toggleable: true, label: stored.casterRules.toggle.label, value: false }, ...foundry.utils.deepClone(stored.casterRules.rules)];
+            [casterEffect] = await sourceActor.createEmbeddedDocuments("Item", [{ name: `${spell.name} (${target.name})`, type: "effect", img: spell.img,
+                flags: { [MODULE_ID]: { runtime: { schema: 1, kind: "stored-trigger-caster", castInstanceId, sourceActorUuid: sourceActor.uuid, sourceItemUuid: spell.uuid, sourceItemName: spell.name, targetActorUuid: sourceActor.uuid } } },
+                system: { level: { value: Number(castRank) }, duration, start: { value: game.time.worldTime, initiative }, rules,
+                    description: { value: `<p>Switch on “${escapeHTML(stored.casterRules.toggle.label)}” once ${escapeHTML(target.name)} accepts.</p>` } } }]);
+            await this.ongoing.attach(journal, casterEffect);
+        }
         await this.ongoing.activate(journal);
         if (sourceMessageId) try { await game.messages.get(sourceMessageId)?.setFlag(MODULE_ID, "ongoingCastId", castInstanceId); } catch (_) {}
-        return { status: "set", castId: castInstanceId, effectUuid: effect.uuid };
+        return { status: "set", castId: castInstanceId, effectUuid: effect.uuid, ...(casterEffect ? { casterEffectUuid: casterEffect.uuid } : {}) };
     }
 
     /**
@@ -411,14 +428,20 @@ export class StoredTriggerRuntime {
                 try { await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: caster }), flavor: `<strong>${escapeHTML(entry.metadata.sourceItemName)}</strong>: ${escapeHTML(row.label)} — ${escapeHTML(attacker.name)}` }); } catch (_) {}
                 const spell = await castSpellFromUuid(entry.metadata);
                 await applyDamageWithReceipt(attacker, { damage: roll, token: attackerToken.object ?? attackerToken, item: spell ?? undefined, rollOptions: new Set(), skipIWR: false }, randomID());
-                if (row.condition) await attacker.increaseCondition(row.condition.slug, row.condition.value ? { value: row.condition.value } : {});
+                if (row.condition) {
+                    // (PF2e adds the value to an existing condition: raise it to the row's value, never lower it.)
+                    const current = Number(attacker.getCondition?.(row.condition.slug)?.value ?? 0);
+                    if (!row.condition.value) { if (!attacker.hasCondition?.(row.condition.slug)) await attacker.increaseCondition(row.condition.slug); }
+                    else if (current < row.condition.value) await attacker.increaseCondition(row.condition.slug, { value: row.condition.value - current });
+                }
                 color.applied = true;
             }
             outcome = `${outcome} The image was ${row?.label ?? "?"}${row && !attacker ? " (target the attacker and apply it by hand)" : ""}.`;
         }
         const ended = images <= 0;
         try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: caster }), content: `<p><strong>${escapeHTML(entry.metadata.sourceItemName)}</strong>: ${escapeHTML(outcome)} ${ended ? "The last image is gone; the spell ends." : `${images} image${images === 1 ? "" : "s"} left.`}</p>`,
-            flags: { [MODULE_ID]: { kind: "image-decoys", castId, images, result } } }); } catch (_) {}
+            // (Fearcracker: an image destroyed, and by whom — catalyst-runtime.js.)
+            flags: { [MODULE_ID]: { kind: "image-decoys", castId, images, result, destroyed: images < Number(decoys.images), attackerUuid } } }); } catch (_) {}
         if (ended) await this.ongoing.end(journal, { reason: "images-destroyed" });
         else if (images !== decoys.images) await effect.update({ name: effect.name.replace(/\(\d+ images?\)/, `(${images} image${images === 1 ? "" : "s"})`), [`flags.${MODULE_ID}.runtime.imageDecoys.images`]: images });
         return { status: ended ? "ended" : "resolved", hitsCaster: /hits you|becomes a hit/.test(outcome), critical: /critical hit\./.test(outcome), images, roll: roll?.total ?? null, color };
@@ -556,12 +579,14 @@ export class StoredTriggerRuntime {
         const entry = record?.entries?.find(candidate => candidate.uuid === uuid && candidate.status === "active");
         const increase = entry?.metadata?.triggeredIncrease;
         if (!increase) throw new Error("This creature has no condition to raise.");
-        const actor = (await fromUuid(uuid))?.actor;
+        const note = await fromUuid(uuid), actor = note?.actor;
         if (!actor) throw new Error("The creature is gone.");
+        if (increase.once && note.getFlag(MODULE_ID, "increaseUsed")) throw new Error(`${entry.metadata.sourceItemName}: that only happens the first time.`);
         const current = Number(actor.getCondition?.(increase.slug)?.value ?? 0);
         if (current >= increase.maximum) return { status: "at-maximum", value: current };
         // (PF2e's increase adds 1, clamped to the maximum.)
         await actor.increaseCondition(increase.slug, { max: increase.maximum });
+        if (increase.once) await note.setFlag(MODULE_ID, "increaseUsed", true);
         return { status: "raised", value: Number(actor.getCondition?.(increase.slug)?.value ?? current + 1) };
     }
 
@@ -666,7 +691,7 @@ export class StoredTriggerRuntime {
         const trigger = entry?.metadata?.triggeredDamage;
         if (!trigger) throw new Error("This creature has no triggered damage.");
         const what = { "no-move": "didn't Stride, Fly or Swim this turn", "no-escape": "didn't Escape before the spell ended", explosion: "— the lodged projectile explodes", "spell-affected": "became affected by a spell with a duration", "no-seek": "ended its turn without Seeking or otherwise trying to disbelieve its surroundings",
-            "auditory-or-cast": "performed an auditory action or Cast a Spell", "spell-cast": "Cast a Spell", daily: "went another day without sating its hunger", hourly: "went another hour without quenching its thirst", auditory: "used an action with the auditory trait", "attack-against-caster": "attempted a Strike or spell attack against the caster (the rune is discharged)", "cage-broken": "is cut by the shards of its broken cage", "weapon-hit": critical ? "was critically hit by the target weapon" : "was hit by the target weapon", "strike-wound": `took at least ${trigger.threshold} ${damageType} damage from a single Strike`, "bleed-gained": `gained persistent ${trigger.persistentType} damage (${amount})`, noncompliance: "didn't comply with the demand", "ability-used": `used ${trigger.variants?.[variant]?.label ?? "the chosen ability"}`, "creatures-damaged": `damaged ${count} different creature${count === 1 ? "" : "s"} this turn`,
+            "auditory-or-cast": "performed an auditory action or Cast a Spell", "spell-cast": "Cast a Spell", "move-action": "took an action with the move trait", "spell-cast-rank": `Cast a rank-${amount} spell`, daily: "went another day without sating its hunger", hourly: "went another hour without quenching its thirst", auditory: "used an action with the auditory trait", "attack-against-caster": "attempted a Strike or spell attack against the caster (the rune is discharged)", "cage-broken": "is cut by the shards of its broken cage", "weapon-hit": critical ? "was critically hit by the target weapon" : "was hit by the target weapon", "strike-wound": `took at least ${trigger.threshold} ${damageType} damage from a single Strike`, "bleed-gained": `gained persistent ${trigger.persistentType} damage (${amount})`, noncompliance: "didn't comply with the demand", "ability-used": `used ${trigger.variants?.[variant]?.label ?? "the chosen ability"}`, "creatures-damaged": `damaged ${count} different creature${count === 1 ? "" : "s"} this turn`,
             "attack-result": `made an attack that was a ${(trigger.results ?? []).map(result => result === "criticalFailure" ? "critical failure" : "failure").join(" or ")}` }[trigger.trigger] ?? "took a hostile action";
         // Warrior's Regret: the GM's count of the different creatures it damaged this turn (at most the stated number).
         if (trigger.trigger === "creatures-damaged" && !(Number.isInteger(count) && count >= 0 && count <= trigger.maxCount))
@@ -699,13 +724,15 @@ export class StoredTriggerRuntime {
         // (Unravel Knowledge: the variant the GM picks — the chosen ability, or a basic or untrained one — with its own dice and heightening.)
         const chosenVariant = trigger.trigger === "ability-used" ? trigger.variants?.[Number(variant)] : null;
         if (trigger.trigger === "ability-used" && !chosenVariant) throw new Error(`${entry.metadata.sourceItemName}: choose which kind of ability it used.`);
+        // (Old-Mage's Echo: the cast spell's rank the GM gives.)
+        if (trigger.trigger === "spell-cast-rank" && !(Number.isInteger(Number(amount)) && Number(amount) >= 0 && Number(amount) <= 10)) throw new Error(`${entry.metadata.sourceItemName}: give the rank of the spell it cast (0 to 10).`);
         // (Achaekek's Clutch: the persistent damage's amount the GM gives — a number or dice.)
         if (trigger.trigger === "bleed-gained" && !/^\s*\d+(?:d\d+)?(?:\s*\+\s*\d+(?:d\d+)?)*\s*$/.test(String(amount ?? ""))) throw new Error(`${entry.metadata.sourceItemName}: give the persistent ${trigger.persistentType} damage's amount (for example 1d6 or 4).`);
         // (Bloodspray Curse: the wounding Strike's type, one of the row's.)
         if (trigger.trigger === "strike-wound" && !(trigger.types ?? []).includes(damageType)) throw new Error(`${entry.metadata.sourceItemName}: choose the Strike's damage type (${(trigger.types ?? []).join(" or ")}).`);
         // (Implement of Destruction's failing rows: the weapon's added damage is persistent.)
         const type = trigger.trigger === "strike-wound" ? damageType : trigger.persistent ? `persistent,${trigger.type}` : trigger.type;
-        const roll = await new DamageRoll(trigger.trigger === "bleed-gained" ? `(${String(amount).trim()})[${type}]` : formula ? `(${formula})[${type}]` : doubled ? `(2*(${dice}d${scaled.die}))[${type}]` : `(${dice}d${scaled.die})[${type}]`).evaluate();
+        const roll = await new DamageRoll(trigger.trigger === "bleed-gained" ? `(${String(amount).trim()})[${type}]` : trigger.trigger === "spell-cast-rank" ? `${Number(trigger.perRank) * Number(amount)}[${type}]` : formula ? `(${formula})[${type}]` : doubled ? `(2*(${dice}d${scaled.die}))[${type}]` : `(${dice}d${scaled.die})[${type}]`).evaluate();
         try { await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: caster }), flavor: `<strong>${escapeHTML(entry.metadata.sourceItemName)}</strong>: ${escapeHTML(actor.name)} ${what}` }); } catch (_) {}
         const spell = await castSpellFromUuid(entry.metadata);
         const token = actor.getActiveTokens?.()?.[0]?.document;
@@ -751,7 +778,7 @@ export class StoredTriggerRuntime {
                 criticalCondition = { slug: spec.slug, value: spec.value, effectUuid: created?.uuid ?? null, whilePersistent: true };
             } else {
                 const current = Number(actor.getCondition?.(spec.slug)?.value ?? 0);
-                if (current < spec.value) await actor.increaseCondition(spec.slug, { value: spec.value });
+                if (current < spec.value) await actor.increaseCondition(spec.slug, { value: spec.value - current }); // (PF2e adds the value to an existing condition.)
                 criticalCondition = { slug: spec.slug, value: Math.max(current, spec.value), whilePersistent: false };
             }
         }
@@ -759,13 +786,22 @@ export class StoredTriggerRuntime {
         const conditionsApplied = [];
         for (const spec of trigger.conditions ?? []) {
             const current = Number(actor.getCondition?.(spec.slug)?.value ?? 0);
-            if (current < spec.value) await actor.increaseCondition(spec.slug, { value: spec.value });
+            if (current < spec.value) await actor.increaseCondition(spec.slug, { value: spec.value - current }); // (PF2e adds the value to an existing condition.)
             conditionsApplied.push({ slug: spec.slug, value: Math.max(current, spec.value) });
         }
         // (Skyglass Prison: the broken cage no longer holds it — this cast's restraint on the creature ends too.)
         if (trigger.trigger === "cage-broken") {
             const held = (actor.itemTypes?.effect ?? []).filter(effect => effect.id !== note.id && effect.flags?.[MODULE_ID]?.outcomeEffect?.castId === record.castId);
             if (held.length) await actor.deleteEmbeddedDocuments("Item", held.map(effect => effect.id), { [MODULE_ID]: { reason: "cage-broken" } });
+        }
+        // (Old-Mage's Echo's critical failure: Deafened until the start of its next turn, each time — an Effect holding PF2e's condition.)
+        if (trigger.timedCondition) {
+            const spec = trigger.timedCondition, condition = await fromUuid(spec.uuid);
+            const start = { value: game.time.worldTime, initiative: game.combat?.combatants?.find(combatant => combatant.actor?.uuid === actor.uuid)?.initiative ?? null };
+            await actor.createEmbeddedDocuments("Item", [{ name: `${entry.metadata.sourceItemName}: ${condition?.name ?? spec.slug}`, type: "effect", img: condition?.img ?? "icons/svg/deaf.svg",
+                system: { duration: { value: 1, unit: "rounds", expiry: spec.duration.expiry, sustained: false }, start,
+                    rules: [{ key: "GrantItem", uuid: spec.uuid, flag: `condition${spec.slug.replace(/(^|-)([a-z])/g, (_m, _d, c) => c.toUpperCase())}`, allowDuplicate: true, onDeleteActions: { grantee: "cascade" } }] } }]);
+            conditionsApplied.push({ slug: spec.slug, value: null, rounds: 1 });
         }
         if (trigger.endsSpell) { await note.delete(); ended = true; }
         else if (trigger.frequency === "round" && round) await note.setFlag(MODULE_ID, "hostileRound", round);
@@ -973,8 +1009,8 @@ export class StoredTriggerRuntime {
     }
 
     /** The trigger happened: the targeted creature saves, and the spell ends. */
-    async trigger({ castId, uuid, targetUuid }, user = game.user) {
-        if (!this.ongoing.isCoordinator()) return this.ongoing.request("stored-trigger", { castId, uuid, targetUuid });
+    async trigger({ castId, uuid, targetUuid, targetUuids = null }, user = game.user) {
+        if (!this.ongoing.isCoordinator()) return this.ongoing.request("stored-trigger", { castId, uuid, targetUuid, ...(targetUuids ? { targetUuids } : {}) });
         const journal = this.ongoing.find(castId);
         const record = journal?.getFlag(MODULE_ID, ONGOING_FLAG);
         const entry = record?.entries?.find(candidate => candidate.uuid === uuid && candidate.status === "active");
@@ -983,9 +1019,17 @@ export class StoredTriggerRuntime {
         const caster = await fromUuid(metadata.sourceActorUuid);
         if (!user.isGM && !caster?.testUserPermission(user, "OWNER")) throw new Error("You don't control this spell.");
         // Held on the cast's target: always that creature (a pool's burst: the attacker who broke it).
-        const target = await fromUuid(metadata.storedTrigger.held && metadata.storedTrigger.saveTarget !== "attacker" ? metadata.targetTokenUuid : targetUuid);
+        const target = await fromUuid(metadata.storedTrigger.held && metadata.storedTrigger.saveTarget !== "attacker" ? metadata.targetTokenUuid : targetUuid ?? targetUuids?.[0]);
         const token = target?.documentName === "Token" ? target : target?.document ?? null;
         if (!token?.actor) throw new Error(`${metadata.sourceItemName}: target the creature that triggered it.`);
+        // (A rune's area — Unknowable Icon: every creature the GM targets near it saves on one card.)
+        const tokens = [token];
+        if (metadata.storedTrigger.area && Array.isArray(targetUuids)) for (const each of targetUuids.slice(1)) {
+            const found = await fromUuid(each);
+            const other = found?.documentName === "Token" ? found : found?.document ?? null;
+            if (!other?.actor) throw new Error(`${metadata.sourceItemName}: a targeted creature is gone.`);
+            if (!tokens.some(entry => entry.id === other.id)) tokens.push(other);
+        }
         const spell = await castSpellFromUuid(metadata);
         if (!spell) throw new Error(`${metadata.sourceItemName}: the spell is no longer on the caster.`);
         const plan = await game.modules.get(MODULE_ID).api.compile(spell);
@@ -997,8 +1041,11 @@ export class StoredTriggerRuntime {
             casterChoice = marker?.flags?.system?.rulesSelections?.[metadata.storedTrigger.effectMarker.flag] ?? undefined;
             if (!plan.resolution.casterChoice?.values?.includes(casterChoice)) throw new Error(`${metadata.sourceItemName}: choose the damage type on the Effect first.`);
         }
-        const { card } = await this.saves.start(spell, { plan: storedTriggerExposurePlan(plan), sourceActor: caster, targets: [token], castRank: metadata.castRank, skipConfirmation: true,
-            ...(casterChoice ? { casterChoice } : {}) });
+        // (A condition lasting the spell — Needle of Vengeance+'s critical failure — is attached to this held spell's record: it ends with it.)
+        const exposure = storedTriggerExposurePlan(plan);
+        const lasting = metadata.storedTrigger.attachConditions === true;
+        const { card } = await this.saves.start(spell, { plan: exposure, sourceActor: caster, targets: tokens, castRank: metadata.castRank, skipConfirmation: true,
+            ...(casterChoice ? { casterChoice } : {}), ...(lasting ? { parentCastId: record.castId } : {}), ...(metadata.sourceMessageId ? { shapeMessageId: metadata.sourceMessageId } : {}) });
         const rowNotes = metadata.storedTrigger.rowNotes ?? [];
         if (rowNotes.length) await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: caster }), whisper: ChatMessage.getWhisperRecipients("GM").map(each => each.id),
             content: `<section class="pf2e-auto-runtime-card"><header><strong>${escapeHTML(metadata.sourceItemName)} — triggered by ${escapeHTML(token.name)}</strong></header>${rowNotes.map(note => `<p><strong>GM, on a ${escapeHTML(note.degree.replace(/([A-Z])/g, " $1").toLowerCase())}:</strong> ${escapeHTML(note.text)}</p>`).join("")}</section>` });

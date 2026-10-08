@@ -1,0 +1,42 @@
+{
+ "label": "thirdPartyBatch23",
+ "passed": true,
+ "at": "2026-10-07T02:07:19.850Z",
+ "details": {
+  "thirdParty23": {
+   "shrugSetup": {
+    "resist": [
+     "cold"
+    ],
+    "senses": []
+   },
+   "shrug": {
+    "formula": "12d4 cold",
+    "total": 31,
+    "swapped": "cold → spirit",
+    "lost": 31
+   },
+   "plain": {
+    "formula": "12d4 cold",
+    "total": 32,
+    "swapped": null,
+    "lost": 32
+   },
+   "enemyCentre": "Aura of Violent Light targets 1 willing ally.",
+   "badgeStart": 1,
+   "near": {
+    "formula": "7 fire + 7 spirit",
+    "total": 14,
+    "swapped": null,
+    "lost": 14
+   },
+   "farFirst": false,
+   "grown": {
+    "feet": 10,
+    "badge": 2
+   },
+   "farAfter": true,
+   "effectEnded": true
+  }
+ }
+}

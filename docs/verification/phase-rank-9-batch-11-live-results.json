@@ -1,0 +1,72 @@
+{
+  "label": "rank9Batch11",
+  "passed": true,
+  "at": "2026-10-05T05:35:51.421Z",
+  "details": {
+    "batch11": {
+      "lord": {
+        "rain": true,
+        "rainCaster": true,
+        "acrobatics": true,
+        "wind": {
+          "rainGone": true,
+          "wind": true,
+          "terrain": true
+        },
+        "bolt": {
+          "lost": 37,
+          "deafened": true
+        }
+      },
+      "wrath": {
+        "base": true,
+        "hail": [
+          25,
+          25
+        ],
+        "again": "Wrathful Storm: Hail can't be chosen twice in a row.",
+        "tornado": {
+          "lost": 20,
+          "prone": true
+        },
+        "blizzard": {
+          "lost": 21,
+          "concealed": true,
+          "terrain": true
+        }
+      },
+      "venge": {
+        "deafened": true,
+        "penalty": true,
+        "acid": 20,
+        "again": "Storm of Vengeance: Acid Rain can't be chosen twice in a row."
+      },
+      "music": {
+        "foe": [
+          "natural"
+        ],
+        "friend": [
+          "triple"
+        ],
+        "after": {
+          "foe": [
+            "flat"
+          ],
+          "friend": [
+            "triple"
+          ]
+        }
+      },
+      "fountain": {
+        "rings": 34,
+        "again": "Dancing Fountain: Power Rings can't be chosen twice in a row.",
+        "spray": true
+      },
+      "briars": {
+        "terrain": true,
+        "immobilized": true,
+        "impaled": 34
+      }
+    }
+  }
+}

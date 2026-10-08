@@ -1,6 +1,6 @@
 # Spells that can resolve, by rank
 
-Generated 2026-10-03 from the current compiler output (Foundry 14.367, PF2e 8.5.0), with the same counts as [the status by phase](spell-resolution-status.md). "Can resolve" means the module has an enabled automatic route for the spell; for some spells, that route automates only part of the spell. Ranks are PF2e's spell ranks; cantrips are listed apart from rank 1, and rituals are counted at their rank.
+Generated 2026-10-05 from the current compiler output (Foundry 14.367, PF2e 8.5.0), with the same counts as [the status by phase](spell-resolution-status.md). "Can resolve" means the module has an enabled automatic route for the spell; for some spells, that route automates only part of the spell. Ranks are PF2e's spell ranks; cantrips are listed apart from rank 1, and rituals are counted at their rank.
 
 Regenerate with `python3 tools/build-spell-resolution-status.py`.
 
@@ -16,12 +16,12 @@ Regenerate with `python3 tools/build-spell-resolution-status.py`.
 | Rank 3 | 261 | 65 | 0 | 0 | 261 | 100% | 253 / 253 | 8 / 8 |
 | Rank 4 | 285 | 63 | 0 | 0 | 285 | 100% | 280 / 280 | 5 / 5 |
 | Rank 5 | 202 | 37 | 0 | 0 | 202 | 100% | 192 / 192 | 10 / 10 |
-| Rank 6 | 81 | 17 | 1 | 36 | 117 | 69% | 78 / 114 | 3 / 3 |
-| Rank 7 | 55 | 13 | 1 | 32 | 87 | 63% | 53 / 85 | 2 / 2 |
-| Rank 8 | 36 | 12 | 0 | 31 | 67 | 54% | 32 / 63 | 4 / 4 |
-| Rank 9 | 27 | 7 | 1 | 33 | 60 | 45% | 24 / 57 | 3 / 3 |
-| Rank 10 | 21 | 13 | 1 | 18 | 39 | 54% | 18 / 36 | 3 / 3 |
-| **All** | **1720** | **367** | **4** | **150** | **1870** | **92%** | | |
+| Rank 6 | 117 | 21 | 0 | 0 | 117 | 100% | 114 / 114 | 3 / 3 |
+| Rank 7 | 87 | 15 | 0 | 0 | 87 | 100% | 85 / 85 | 2 / 2 |
+| Rank 8 | 67 | 15 | 0 | 0 | 67 | 100% | 63 / 63 | 4 / 4 |
+| Rank 9 | 60 | 12 | 0 | 0 | 60 | 100% | 57 / 57 | 3 / 3 |
+| Rank 10 | 39 | 15 | 0 | 0 | 39 | 100% | 36 / 36 | 3 / 3 |
+| **All** | **1870** | **383** | **0** | **0** | **1870** | **100%** | | |
 
 ## By rank and phase
 
@@ -35,11 +35,11 @@ Can resolve / total, by each spell's primary phase.
 | Rank 3 | 76 / 76 | 85 / 85 | 34 / 34 | 7 / 7 | 3 / 3 | 40 / 40 | 8 / 8 | 8 / 8 |
 | Rank 4 | 105 / 105 | 97 / 97 | 27 / 27 | 11 / 11 | 3 / 3 | 34 / 34 | 5 / 5 | 3 / 3 |
 | Rank 5 | 58 / 58 | 55 / 55 | 24 / 24 | 5 / 5 | 12 / 12 | 35 / 35 | 10 / 10 | 3 / 3 |
-| Rank 6 | 25 / 32 | 30 / 43 | 5 / 9 | 9 / 11 | 1 / 2 | 7 / 16 | 3 / 3 | 1 / 1 |
-| Rank 7 | 19 / 23 | 14 / 30 | 8 / 11 | 3 / 4 | 4 / 6 | 4 / 10 | 2 / 2 | 1 / 1 |
-| Rank 8 | 11 / 15 | 8 / 16 | 4 / 7 | 2 / 4 | 1 / 8 | 5 / 11 | 4 / 4 | 1 / 2 |
-| Rank 9 | 11 / 17 | 8 / 17 | 4 / 5 | 0 / 2 | 0 / 6 | 1 / 10 | 3 / 3 | — |
-| Rank 10 | 0 / 3 | 4 / 10 | 2 / 2 | 3 / 5 | 2 / 7 | 1 / 3 | 3 / 3 | 6 / 6 |
+| Rank 6 | 32 / 32 | 43 / 43 | 9 / 9 | 11 / 11 | 2 / 2 | 16 / 16 | 3 / 3 | 1 / 1 |
+| Rank 7 | 23 / 23 | 30 / 30 | 11 / 11 | 4 / 4 | 6 / 6 | 10 / 10 | 2 / 2 | 1 / 1 |
+| Rank 8 | 15 / 15 | 16 / 16 | 7 / 7 | 4 / 4 | 8 / 8 | 11 / 11 | 4 / 4 | 2 / 2 |
+| Rank 9 | 17 / 17 | 17 / 17 | 5 / 5 | 2 / 2 | 6 / 6 | 10 / 10 | 3 / 3 | — |
+| Rank 10 | 3 / 3 | 10 / 10 | 2 / 2 | 5 / 5 | 7 / 7 | 3 / 3 | 3 / 3 | 6 / 6 |
 
 ## Spells that can resolve
 
@@ -79,33 +79,33 @@ Aberrant Form, Abyssal Plague, Acid Storm, Ancestral Winds, Arcane Countermeasur
 
 </details>
 
-<details><summary>Rank 6: 81</summary>
+<details><summary>Rank 6: 117</summary>
 
-Accelerated Decomposition, Ancestral Form, Arrow Salvo, Ash Form, Awaken Entropy, Binding Circle, Blade Barrier, Boots on the Ground, Bridge of Graves, Cast into Time, Catch Your Name, Chain Lightning, Champion's Sacrifice, Chromatic Image, Claim Undead, Crimson Breath, Cryostasis, Daemon Form, Demon Form, Devil Form, Disintegrate, Dominate, Dragon Form, Entreat the Many, Explosive Barrage, Field of Life, Field of Razors, Flame Vortex, Flaming Fusillade, For Love, For Lightning, Frost Pillar, Frozen Fog, Halcyon Infusion, Heinous Future, Heroic Feat, Life-Giving Form, Lignify, Living Thunderbolt, Lure Dream, Manifold Lives, Mislead, Missed Cue, Moonlight Bridge, Nature's Reprisal, Necrotize, Never Mind, Pain of Ages, Personal Ocean, Petrify, Phantasmal Calamity, Phantom Orchestra, Poltergeist's Fury, Purple Worm Sting, Revel in Retribution, Rose's Thorns, Sacred Form, Scintillating Safeguard, Siege Weapon's Blessing, Skeleton Army, Sleepless Season, Speak With Water, Speaking Sky, Spellsurge, Spellwrack, Spirit Blast, Stone to Flesh, Suffocate, Suspended Retribution, Teleport, Tempest Form, Tentacular Innervation, Terminate Bloodline, Truesight, Utter Destruction, Vampiric Exsanguination, Vibrant Pattern, Wall of Force, Wall of Metal, Word of Revision, Zealous Conviction, Zero Gravity
-
-</details>
-
-<details><summary>Rank 7: 55</summary>
-
-Angel Form, Attacked from Within, Blightburn Blast, Contingency, Cosmic Form, Curse of the Spirit Orchestra, Defy the Gods, Devouring Void, Divine Decree, Divine Vessel, Eclipse Burst, Energy Aegis, Entrancing Eyes, Ethereal Jaunt, Execute, Fiendish Rift, Fiery Body, Frigid Flurry, Hasted Assault, Hungry Depths, Incarnate Tempest of Shades, Inexhaustible Cynicism, Interplanar Teleport, Leng Sting, Mask of Terror, Momentary Recovery, Moonburst, Planar Palace, Planar Seal, Pollen Pods, Power Word Blind, Prismatic Armor, Project Image, Recall Legacy, Recurring Nightmare, Regenerate, Retrocognition, Return To Essence, Reverse Gravity, Shadow's Web, Skeletal Lancers, Soothing Ballad, Spell Riposte, Spell Turning, Summon Stampede, Sunburst, Telekinetic Bombardment, Teleportation Circle, Time Beacon, Unbearable Cacophony, Unfettered Pack, Unfolding Wind Blitz, Untwisting Iron Augmentation, Visions of Danger, Warp Mind
+Accelerated Decomposition, Ancestral Form, Arrow Salvo, Ash Form, Aura of the Unremarkable, Awaken Entropy, Binding Circle, Blade Barrier, Blanket of Stars, Blessed Boundary, Blinding Fury, Boots on the Ground, Bound in Death, Bounty of the Sky, Bridge of Graves, Cast into Time, Catch Your Name, Chain Lightning, Champion's Sacrifice, Chromatic Image, Claim Undead, Collective Transposition, Crimson Breath, Cryostasis, Cursed Metamorphosis, Daemon Form, Demon Form, Devil Form, Disintegrate, Dominate, Doom Mark, Dragon Form, Dread Secret, Earth and Sky, Elemental Confluence, Entreat the Many, Explosive Barrage, Expunge Blood, Fateful Condemnation, Field of Life, Field of Razors, Fire Seeds, Flame Vortex, Flaming Fusillade, For Love, For Lightning, Frost Pillar, Frozen Fog, Gray Shadow, Hag's Fruit, Halcyon Infusion, Heartbolt, Heinous Future, Heroic Feat, Incarnate Wild Rose, Life-Giving Form, Lignify, Living Thunderbolt, Lure Dream, Manifold Lives, Mantle of Heaven's Slopes, Mislead, Missed Cue, Moonlight Bridge, Nature's Reprisal, Necrotize, Never Mind, Pain of Ages, Patron's Protector, Personal Ocean, Petrify, Phantasmal Calamity, Phantom Orchestra, Poltergeist's Fury, Primal Summons, Proximal Shift, Purple Worm Sting, Raise Dead, Ravenous Darkness, Repulsion, Revel in Retribution, Rose's Thorns, Sacred Form, Scintillating Safeguard, Scrying, Seize Identity, Shadow Illusion, Shambling Horror, Siege Weapon's Blessing, Skeleton Army, Sleepless Season, Speak With Water, Speaking Sky, Spellsurge, Spellwrack, Spirit Blast, Stone to Flesh, Suffocate, Suspended Retribution, Tanglecurse, Tangling Creepers, Teleport, Tempest Form, Temporal Ward, Tentacular Innervation, Terminate Bloodline, Tree of Seasons, Truesight, Unexpected Transposition, Utter Destruction, Vampiric Exsanguination, Vibrant Pattern, Vitrifying Blast, Wall of Force, Wall of Metal, Word of Revision, Zealous Conviction, Zero Gravity
 
 </details>
 
-<details><summary>Rank 8: 36</summary>
+<details><summary>Rank 7: 87</summary>
 
-Antimagic Field, Arctic Rift, Awaken Curse, Boil Blood, Canticle of Everlasting Grief, Clockwork Devotion, Clone Companion, Confusing Colors, Desiccate, Devour Life, Disappearance, Divine Armageddon, Divine Aura, Divine Inspiration, Dream Council, Earthbreaker Stride, Ferrous Form, Freedom, Hidden Mind, Hypnopompic Terrors, Imprisonment, Migration, Part the Mists to Paradise, Pinpoint, Polar Ray, Power Word Stun, Prying Survey, Punishing Winds, Quandary, Rite of the Red Star, Spirit Song, Spiritual Epidemic, Stop Heart, Sudden Transposition, Take Your Places, Uncontrollable Dance
-
-</details>
-
-<details><summary>Rank 9: 27</summary>
-
-Bilocation, Crusade, Detonate Magic, Dimensional Excision, Disjunction, Embrace Nothingness, Foresight, Implosion, Linnorm Sting, Phantasmagoria, Power Word Kill, Prismatic Shield, Prismatic Sphere, Proliferating Eyes, Purify Tanglebriar, Resplendent Mansion, Seize Soul, Separation, Telepathic Demand, Unblinking Flame Ignition, Unfolding Wind Crash, Unspeakable Shadow, Untwisting Iron Pillar, Void Harvest, Voracious Gestalt, Wails of the Damned, Weird
+Angel Form, Attacked from Within, Beheading Buzz Saw, Blightburn Blast, Call of the Quenching, Chrysopoetic Curse, Comet Charge, Contingency, Control Sand, Corrosive Body, Cosmic Form, Curse of the Spirit Orchestra, Dancing Fountain, Darklight, Defy the Gods, Deity's Strike, Devouring Void, Divine Decree, Divine Vessel, Duplicate Foe, Eclipse Burst, Energy Aegis, Entrancing Eyes, Ethereal Jaunt, Execute, Fiendish Rift, Fiery Body, Final Fate of the Locust Host, Frigid Flurry, Hasted Assault, Heaving Earth, Hungry Depths, Incarnate Ancient Specter, Incarnate Tempest of Shades, Indolent Haze, Inexhaustible Cynicism, Infinitesimal Collapse Field, Interplanar Teleport, Leng Sting, Lifewood Cage, Love's Sacrifice, Mask of Terror, Maze of Locked Doors, Momentary Recovery, Moonburst, Orb of Twisting Fate, Planar Palace, Planar Seal, Pollen Pods, Possession, Power Word Blind, Prismatic Armor, Prismatic Spray, Project Image, Puppet Strings, Ray of Corruption, Recall Legacy, Recurring Nightmare, Regenerate, Restore Ground, Retrocognition, Return To Essence, Reverse Gravity, Shadow Raid, Shadow's Web, Shock to the System, Skeletal Lancers, Soothing Ballad, Spell Riposte, Spell Turning, Summon Stampede, Sunburst, Telekinetic Bombardment, Teleportation Circle, Time Beacon, True Target, Unbearable Cacophony, Unblinking Flame Emblem, Unbreaking Wave Barrier, Unfettered Pack, Unfolding Wind Blitz, Untwisting Iron Augmentation, Vacuum, Vibrant Vibrato, Visions of Danger, Volcanic Eruption, Warp Mind
 
 </details>
 
-<details><summary>Rank 10: 21</summary>
+<details><summary>Rank 8: 67</summary>
 
-Alter Reality, Apex Companion, Dinosaur Fort, Element Embodied, Fatal Aria, Fated Confrontation, Freeze Time, Gate, Hero's Defiance, Indestructibility, Living Graveyard, Manifestation, Miracle, Nullify, Perfected Thrall, Perfection of Essence, Primal Herd, Primal Phenomenon, Raga of Remembrance, Remake, Wish
+All is One, One is All, Amalgamizing Leap, Antimagic Field, Arctic Rift, Awaken Curse, Boil Blood, Burning Blossoms, Canticle of Everlasting Grief, Clockwork Devotion, Clone Companion, Confusing Colors, Deluge, Desiccate, Devour Life, Disappearance, Divine Armageddon, Divine Aura, Divine Inspiration, Dream Council, Earthbreaker Stride, Earthquake, Falling Sky, Ferrous Form, Flesh Tsunami, Freedom, Hidden Mind, Holy Host, Hypnopompic Terrors, Impaling Briars, Imprisonment, Incarnate Archmage, Incarnate Deific Herald, Medusa's Wrath, Metallic Meteorite Glyph, Migration, Mimic Spell, Moment of Renewal, Monstrosity Form, Musical Shift, Part the Mists to Paradise, Pinpoint, Polar Ray, Power Word Stun, Prismatic Wall, Prying Survey, Punishing Winds, Quandary, Rainbow Fumarole, Rite of the Red Star, Shipwreck, Spirit Song, Spiritual Epidemic, Stars of Another Sky, Stop Heart, Sudden Transposition, Summon Elemental Herald, Summon Irii, Summon Warden of the Wild, Take Your Places, Temporary Possession, Touch of Death, Uncontrollable Dance, Undermine Reality, Unholy Army, Unrelenting Observation, Whirlpool, Whirlwind
+
+</details>
+
+<details><summary>Rank 9: 60</summary>
+
+Arcane Explosion, Astral Labyrinth, Beseech Arcanotheign, Bilocation, Calcification, Call Fluxwraith, Crusade, Detonate Magic, Dimensional Excision, Disjunction, Divinity Leech, Dread Mosquito Storm, Embrace Nothingness, Falling Stars, Foresight, Forest of Gates, Implosion, Incarnate Draconic Legion, Linnorm Sting, Magnetic Dominion, Massacre, Metamorphosis, Nature's Enmity, One with the Land, Overwhelming Presence, Phantasmagoria, Pierce the Sky, Power Word Kill, Prismatic Shield, Prismatic Sphere, Proliferating Eyes, Purify Tanglebriar, Qi Form, Reanimate Foe, Remake Physiology, Resplendent Mansion, Sacred Covenant, Seize Soul, Separation, Storm Lord, Storm of Vengeance, Summon Ancient Fleshforged, Telepathic Demand, Trim the Blight, Unblinking Flame Ignition, Unbreaking Wave Containment, Under Sunless Skies, Undertaker, Unfathomable Song, Unfolding Wind Crash, Unspeakable Shadow, Untwisting Iron Pillar, Upheaval, Vampiric Revelry, Void Harvest, Voracious Gestalt, Wails of the Damned, Weapon of Judgment, Weird, Wrathful Storm
+
+</details>
+
+<details><summary>Rank 10: 39</summary>
+
+Alter Reality, Apex Companion, Avatar, Cataclysm, Conquering Soldiers, Dinosaur Fort, Dragon Turret, Element Embodied, Fabricated Truth, Fatal Aria, Fated Confrontation, Freeze Time, Garden of the Green Man's Growth, Gate, Hero's Defiance, Incarnate Kaiju, Indestructibility, Jassim's Allegiance, Living Graveyard, Manifestation, Miracle, Nature Incarnate, Nullify, Perfected Thrall, Perfection of Essence, Pied Piping, Planar Collision, Primal Herd, Primal Phenomenon, Raga of Remembrance, Remake, Revival, Shadow Army, Song of the Fallen, Summon Oliphaunt of Jandelay, Tear the Veil, Theogeny, Veil of Broken Reality, Wish
 
 </details>
 
@@ -147,33 +147,33 @@ Blackfinger's Blades, Blind Eye, Chameleon Coat, Desperate Repair, Dreaming Pote
 
 </details>
 
-<details><summary>Rank 6: 17</summary>
+<details><summary>Rank 6: 21</summary>
 
-Boots on the Ground, Bridge of Graves, Champion's Sacrifice, Cryostasis, Halcyon Infusion, Heroic Feat, Lure Dream, Moonlight Bridge, Personal Ocean, Siege Weapon's Blessing, Speak With Water, Spellsurge, Teleport, Terminate Bloodline, Wall of Metal, Word of Revision, Zero Gravity
-
-</details>
-
-<details><summary>Rank 7: 13</summary>
-
-Contingency, Ethereal Jaunt, Interplanar Teleport, Planar Palace, Project Image, Recall Legacy, Retrocognition, Reverse Gravity, Teleportation Circle, Time Beacon, Unbearable Cacophony, Unfettered Pack, Unfolding Wind Blitz
+Aura of the Unremarkable, Boots on the Ground, Bridge of Graves, Champion's Sacrifice, Cryostasis, Hag's Fruit, Halcyon Infusion, Heroic Feat, Lure Dream, Moonlight Bridge, Personal Ocean, Scrying, Siege Weapon's Blessing, Speak With Water, Spellsurge, Teleport, Temporal Ward, Terminate Bloodline, Wall of Metal, Word of Revision, Zero Gravity
 
 </details>
 
-<details><summary>Rank 8: 12</summary>
+<details><summary>Rank 7: 15</summary>
 
-Antimagic Field, Clone Companion, Divine Inspiration, Dream Council, Migration, Part the Mists to Paradise, Pinpoint, Prying Survey, Punishing Winds, Quandary, Rite of the Red Star, Take Your Places
-
-</details>
-
-<details><summary>Rank 9: 7</summary>
-
-Bilocation, Crusade, Prismatic Sphere, Proliferating Eyes, Purify Tanglebriar, Resplendent Mansion, Seize Soul
+Call of the Quenching, Contingency, Ethereal Jaunt, Interplanar Teleport, Planar Palace, Project Image, Recall Legacy, Restore Ground, Retrocognition, Reverse Gravity, Teleportation Circle, Time Beacon, Unbearable Cacophony, Unfettered Pack, Unfolding Wind Blitz
 
 </details>
 
-<details><summary>Rank 10: 13</summary>
+<details><summary>Rank 8: 15</summary>
 
-Alter Reality, Dinosaur Fort, Fated Confrontation, Freeze Time, Gate, Indestructibility, Manifestation, Miracle, Perfection of Essence, Primal Phenomenon, Raga of Remembrance, Remake, Wish
+Antimagic Field, Clone Companion, Divine Inspiration, Dream Council, Earthquake, Migration, Part the Mists to Paradise, Pinpoint, Prying Survey, Punishing Winds, Quandary, Rite of the Red Star, Shipwreck, Take Your Places, Unrelenting Observation
+
+</details>
+
+<details><summary>Rank 9: 12</summary>
+
+Astral Labyrinth, Bilocation, Crusade, Forest of Gates, Prismatic Sphere, Proliferating Eyes, Purify Tanglebriar, Resplendent Mansion, Seize Soul, Trim the Blight, Under Sunless Skies, Upheaval
+
+</details>
+
+<details><summary>Rank 10: 15</summary>
+
+Alter Reality, Dinosaur Fort, Fated Confrontation, Freeze Time, Gate, Indestructibility, Manifestation, Miracle, Perfection of Essence, Primal Phenomenon, Raga of Remembrance, Remake, Theogeny, Veil of Broken Reality, Wish
 
 </details>
 
@@ -215,15 +215,15 @@ None.
 
 </details>
 
-<details><summary>Rank 6: 1</summary>
+<details><summary>Rank 6: 0</summary>
 
-Tangling Creepers
+None.
 
 </details>
 
-<details><summary>Rank 7: 1</summary>
+<details><summary>Rank 7: 0</summary>
 
-True Target
+None.
 
 </details>
 
@@ -233,14 +233,14 @@ None.
 
 </details>
 
-<details><summary>Rank 9: 1</summary>
+<details><summary>Rank 9: 0</summary>
 
-Sacred Covenant
+None.
 
 </details>
 
-<details><summary>Rank 10: 1</summary>
+<details><summary>Rank 10: 0</summary>
 
-Nature Incarnate
+None.
 
 </details>

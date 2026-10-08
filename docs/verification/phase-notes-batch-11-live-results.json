@@ -1,0 +1,26 @@
+{
+  "generatedAt": "2026-10-05T23:50:40.844Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "notesBatch11",
+      "passed": true,
+      "at": "2026-10-05T23:50:39.553Z",
+      "details": {
+        "notes11": {
+          "tips": {
+            "gm": {
+              "tooltip": "1d6 (the GM adds 2)",
+              "tag": "Status bonus (the GM's choice)"
+            },
+            "player": {
+              "tooltip": "1d6",
+              "tag": "Status bonus"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

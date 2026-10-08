@@ -31,8 +31,9 @@ const noteOf = plan => plan.resolution.kind === 'spell-note' && plan.automation.
 // attackers' penalty "whenever" — situational), Elemental Sense (the chosen sense; seeing Invisible creatures as Concealed is what the caster
 // perceives).
 
-test('Mystic Beacon, Magnetize and Elemental Sense are notes', async () => {
-    for (const path of ['rank-4/mystic-beacon', 'rank-4/magnetize', 'rank-4/elemental-sense']) assert.ok(noteOf(compile(await spell(path))), path);
+test('Mystic Beacon and Magnetize are notes (Elemental Sense: its senses a stated Effect since notes batch 1)', async () => {
+    for (const path of ['rank-4/mystic-beacon', 'rank-4/magnetize']) assert.ok(noteOf(compile(await spell(path))), path);
+    assert.equal(compile(await spell('rank-4/elemental-sense')).resolution.kind, 'stated-effect');
     // Magnetize's penalty without its "Whenever" situation is refused.
     assert.equal(noteOf(compile(withText(await spell('rank-4/magnetize'), html => html.replace('Whenever a creature within 15 feet Strikes a creature other than the magnetized target with a metal melee weapon, the attacker', 'The attacker')))), null);
 });

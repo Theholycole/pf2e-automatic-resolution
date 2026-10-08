@@ -1,0 +1,63 @@
+{
+ "label": "thirdPartyFeaturesBatch2",
+ "passed": true,
+ "at": "2026-10-07T09:39:17.728Z",
+ "details": {
+  "thirdPartyFeatures2": {
+   "heroic": [
+    "land-speed 10",
+    "attack 2",
+    "damage 1"
+   ],
+   "mighty": {
+    "shapes": [
+     [
+      "Mighty Summons",
+      true,
+      null
+     ]
+    ],
+    "castRank": 3
+   },
+   "cursebound": 2,
+   "stormOutside": "you aren't in an encounter",
+   "storm": {
+    "shapes": [
+     [
+      "Storm Spell",
+      true,
+      null
+     ]
+    ],
+    "made": true,
+    "difficult": true,
+    "rounds": 2,
+    "hazard": "2 bludgeoning",
+    "lost": 4
+   },
+   "tenacious": {
+    "shapes": [
+     [
+      "Tenacious Magic",
+      true,
+      null
+     ]
+    ],
+    "dc": 36,
+    "before": 28
+   },
+   "ride": [
+    [
+     "Ride the Spell",
+     true,
+     null
+    ],
+    [
+     "Ride the Spell",
+     true,
+     "it has no range or area"
+    ]
+   ]
+  }
+ }
+}

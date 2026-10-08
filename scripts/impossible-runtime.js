@@ -65,8 +65,9 @@ export async function lethologicOnDamage(message) {
     const of = type => options.has(type) || options.has(`item:damage:type:${type}`) || options.has(`damage:type:${type}`)
         || (applied.persistent ?? []).some(entry => String(entry).includes(type));
     const out = {};
-    if (of(data.frightened.damageType) && (actor.getCondition?.("frightened")?.value ?? 0) < data.frightened.value) {
-        await actor.increaseCondition("frightened", { value: data.frightened.value });
+    const frightenedNow = Number(actor.getCondition?.("frightened")?.value ?? 0);
+    if (of(data.frightened.damageType) && frightenedNow < data.frightened.value) {
+        await actor.increaseCondition("frightened", { value: data.frightened.value - frightenedNow }); // (PF2e adds the value to an existing condition.)
         out.frightened = data.frightened.value;
     }
     if (of(data.deathAtZero.damageType) && Number(actor.system?.attributes?.hp?.value ?? 1) <= 0) {

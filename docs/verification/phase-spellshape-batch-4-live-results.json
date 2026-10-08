@@ -1,0 +1,87 @@
+{
+  "generatedAt": "2026-10-05T10:43:23.083Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "spellshapeBatch4",
+      "passed": true,
+      "at": "2026-10-05T10:41:51.038Z",
+      "details": {
+        "spellshape4": {
+          "dazzling": {
+            "hit": [
+              "blinded=1",
+              "dazzled=3"
+            ],
+            "crit": [
+              "blinded=1",
+              "blinded=3+save",
+              "dazzled=3"
+            ],
+            "blinded": true,
+            "saveEnded": true
+          },
+          "doom": {
+            "frightened": 3,
+            "stupefied": 4,
+            "watched": 1,
+            "stupefied2": 0,
+            "source": [
+              [
+                "Impending Doom: Frightened 3",
+                "FSB9ZtcR5bYph3cF"
+              ]
+            ],
+            "follow": [
+              "FSB9ZtcR5bYph3cF",
+              null
+            ]
+          },
+          "slumberResults": [
+            [
+              "unconscious|Unconscious|applied|e",
+              "prone|Prone|applied|e",
+              "|Note: Asleep|applied|e",
+              "|Wand of Tormented Slumber: 1d6 persistent mental|applied|-"
+            ],
+            [
+              "|Note: Perception penalty|applied|e"
+            ]
+          ],
+          "slumberConditions": [
+            [
+              "unconscious<Sleep: Unconscious",
+              "blinded<Unconscious",
+              "prone<Unconscious",
+              "prone<Sleep: Prone",
+              "persistent-damage<none"
+            ],
+            []
+          ],
+          "slumber": [
+            "mental",
+            ""
+          ],
+          "pernicious": [
+            {
+              "name": "Affliction Effect: Spider Sting",
+              "virulent": true
+            }
+          ],
+          "dance": {
+            "tie": true,
+            "tieOnSuccess": 0,
+            "fatigued": true,
+            "tieGone": true
+          },
+          "shock": {
+            "tie": true,
+            "paralyzed": true,
+            "damage": 8
+          }
+        }
+      }
+    }
+  ]
+}

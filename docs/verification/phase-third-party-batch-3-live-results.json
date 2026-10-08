@@ -1,0 +1,67 @@
+{
+ "label": "thirdPartyBatch3",
+ "passed": true,
+ "at": "2026-10-06T22:10:23.772Z",
+ "details": {
+  "thirdParty3": {
+   "mark": {
+    "note": "Cursed Mark: Cursed mark",
+    "rule": {
+     "key": "RollTwice",
+     "selector": [
+      "saving-throw"
+     ],
+     "keep": "lower",
+     "removeAfterRoll": true,
+     "slug": null,
+     "priority": 100,
+     "ignored": false,
+     "predicate": [],
+     "requiresEquipped": null,
+     "requiresInvestment": null
+    },
+    "duration": "1 minutes",
+    "twice": 2,
+    "after": false
+   },
+   "demand": {
+    "will": -2,
+    "athletics": -2,
+    "notes": [
+     "Demand Compliance: Demand Compliance penalty",
+     "Demand Compliance: Demand"
+    ]
+   },
+   "gold": {
+    "weaknesses": [
+     "bludgeoning 8",
+     "electricity 8"
+    ],
+    "stealth": -2,
+    "slowed": 1,
+    "dataNote": "The module's own Effect: Golden Touch matches the text at success, failure, criticalFailure; the module applies the text's Effect, for the text's time."
+   },
+   "hand": {
+    "modifier": -2,
+    "answer": -2,
+    "prone": true,
+    "lost": 34
+   },
+   "finale": {
+    "blinded": true,
+    "deafened": true,
+    "dazzled": false,
+    "lost": 78,
+    "dazzledRounds": null,
+    "items": [
+     "effect:Grand Finale: Blinded, Deafened:1",
+     "effect:Grand Finale: Dazzled:11",
+     "condition:Blinded:-1",
+     "condition:Deafened:-1",
+     "condition:Dazzled:-1"
+    ],
+    "reminder": "required-spell"
+   }
+  }
+ }
+}

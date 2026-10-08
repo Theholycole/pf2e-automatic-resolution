@@ -36,7 +36,9 @@ export function rewriteImpalingLance(adapted) {
             + `<p><strong>Success</strong> The target takes full damage and ${penalty}.</p><p><strong>Failure</strong> The target is unaffected.</p>`
             + `<hr /><p><strong>Heightened (+1)</strong> Increase the damage by ${step[1]}d${step[2]}.</p>`,
         escapeDamage: { base: Number(bleed[1]), perRank: Number(step[3]), baseRank: Number(adapted.rank) || 1, type: "bleed", sourceText: sentences[at + 3] },
-        reminder: { kind: "spell-note", text: `${sentences[at + 2]} Remove the Immobilized from a creature that isn't on the ground. ${sentences[at + 4]}`, sourceText: sentences[at + 2] },
+        // ("if the creature is on the ground": the module takes the Immobilized off a creature above the ground — its elevation.)
+        groundOnly: { slug: CONDITION_NAMES[crit[2]].toLowerCase(), uuid: crit[1] },
+        reminder: { kind: "spell-note", text: `${sentences[at + 2]} (The module removes the Immobilized from a creature above the ground.) ${sentences[at + 4]}`, sourceText: sentences[at + 2] },
         sentences: [...sentences, htmlToPlainText(heightened).trim()]
     };
 }

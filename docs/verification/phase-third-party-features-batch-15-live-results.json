@@ -1,0 +1,20 @@
+{
+ "label": "thirdPartyFeaturesBatch15",
+ "passed": true,
+ "at": "2026-10-07T21:39:40.501Z",
+ "details": {
+  "thirdPartyFeatures15": {
+   "pool": {
+    "max": 3,
+    "value": 1
+   },
+   "wield": 2,
+   "again": 2,
+   "infusion": 3,
+   "bleed": [
+    "4 bleed"
+   ],
+   "full": 3
+  }
+ }
+}

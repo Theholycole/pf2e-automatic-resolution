@@ -1,0 +1,24 @@
+{
+ "label": "rank7Batch13",
+ "passed": true,
+ "at": "2026-10-04T23:24:43.528Z",
+ "details": {
+  "batch13": {
+   "start": {
+    "supported": true,
+    "dark": true,
+    "allySpared": true,
+    "foeSpared": false
+   },
+   "exposed": [
+    "foe"
+   ],
+   "foeFormula": "2d6 bludgeoning + 2d6 void",
+   "lost": {
+    "foe": 22,
+    "ally": 0
+   },
+   "afterEnd": false
+  }
+ }
+}

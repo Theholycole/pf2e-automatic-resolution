@@ -1,0 +1,54 @@
+{
+ "batch23": {
+  "label": "thirdPartyFeaturesBatch23",
+  "passed": true,
+  "at": "2026-10-07T23:28:18.013Z",
+  "details": {
+   "thirdPartyFeatures23": {
+    "dual": {
+     "dual": {
+      "penalty": 3,
+      "agilePenalty": 2
+     },
+     "first": "criticalFailure",
+     "second": "criticalSuccess",
+     "penalty": [
+      -3,
+      1
+     ],
+     "deliveredBy": "second"
+    },
+    "residual": {
+     "failed": true,
+     "residual": true,
+     "penalty": [
+      -5,
+      1
+     ],
+     "deliveredBy": "residual",
+     "said": true
+    },
+    "reverse": {
+     "slots": [
+      2,
+      1
+     ],
+     "spell": "Ignition",
+     "rank": 5,
+     "delivered": true,
+     "borrowed": true,
+     "cleanup": true,
+     "removed": true
+    },
+    "scissored": {
+     "striker": true,
+     "deliveredBy": "duo"
+    },
+    "bigShot": {
+     "kind": "big-shot",
+     "deliveredBy": "attack"
+    }
+   }
+  }
+ }
+}

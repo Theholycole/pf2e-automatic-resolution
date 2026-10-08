@@ -1,0 +1,85 @@
+{
+ "batch31": {
+  "label": "thirdPartyFeaturesBatch31",
+  "passed": true,
+  "at": "2026-10-08T01:05:08.806Z",
+  "details": {
+   "thirdPartyFeatures31": {
+    "overwhelmingRules": [
+     "ItemAlteration"
+    ],
+    "immobilizing": {
+     "shapes": [
+      [
+       "Immobilizing (Cold)",
+       null
+      ]
+     ],
+     "dc": 24,
+     "statistic": "fortitude",
+     "slowed": 1
+    },
+    "ramming": {
+     "shapes": [
+      [
+       "Ramming",
+       null
+      ]
+     ],
+     "dc": 22,
+     "moved": 20
+    },
+    "scourging": {
+     "shapes": [
+      [
+       "Scourging (Fire)",
+       null
+      ]
+     ],
+     "persistent": [
+      "5d4 fire",
+      "1d10 fire"
+     ]
+    },
+    "perishing": {
+     "natural": 20,
+     "card": {
+      "dc": 37,
+      "statistic": "fortitude",
+      "rank": 9
+     }
+    },
+    "overwhelming": {
+     "veracious": {
+      "natural": 19,
+      "degree": "criticalSuccess"
+     },
+     "plain": {
+      "natural": 19,
+      "degree": "success"
+     }
+    },
+    "energy": {
+     "gather": true,
+     "charge": "Gathered Power (fire)",
+     "release": true,
+     "chargeGone": true,
+     "ray": {
+      "ring": {
+       "value": 2,
+       "label": "Power ring",
+       "type": "item"
+      },
+      "formula": "5d4 fire",
+      "damage": 14,
+      "lost": 14
+     }
+    }
+   }
+  }
+ },
+ "reruns": {
+  "thirdPartyFeaturesBatch7": true,
+  "thirdPartyFeaturesBatch8": true
+ }
+}

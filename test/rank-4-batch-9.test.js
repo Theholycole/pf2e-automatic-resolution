@@ -32,7 +32,7 @@ const proved = source => { const plan = compile(source); return plan.resolution.
 test('Fire Shield: PF2e\'s shield and resistance proved (each step), the Shield Block damage a roll at the cast rank', async () => {
     const plan = proved(await spell('rank-4/fire-shield'));
     assert.ok(plan);
-    assert.ok(plan.resolution.effectNote.proof.notes.some(note => note.includes('@Damage[(2+floor((@item.level-4)/2)*1)d6[fire]]')));
+    assert.ok(plan.resolution.effectNote.proof.notes.some(note => note.includes('@Damage[(2+floor((@item.level - 4)/2)*1)d6[fire]]')));
     // Wrong statistics are refused: resistance, Hardness, HP, the step.
     for (const [from, to] of [['cold resistance 5', 'cold resistance 10'], ['Hardness 10', 'Hardness 5'], ['has 40 HP', 'has 30 HP'], ['the HP increase by 10', 'the HP increase by 5']])
         assert.equal(proved(withText(await spell('rank-4/fire-shield'), html => html.replace(from, to))), null, from);

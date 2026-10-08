@@ -1,0 +1,41 @@
+{
+  "generatedAt": "2026-10-05T11:30:05.455Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "spellshapeBatch8",
+      "passed": true,
+      "at": "2026-10-05T11:28:48.994Z",
+      "details": {
+        "spellshape8": {
+          "secret": [
+            "spirit"
+          ],
+          "bounty": {
+            "rolled": 6,
+            "dealt": 11,
+            "iwr": [
+              "weakness:silver"
+            ]
+          },
+          "overwhelming": {
+            "rolled": 20,
+            "dealt": 20
+          },
+          "nonlethal": {
+            "hp": 0,
+            "unconscious": true,
+            "dying": false,
+            "dead": false
+          },
+          "mercy": {
+            "unconscious": true,
+            "dead": false
+          },
+          "steam": "true:ok"
+        }
+      }
+    }
+  ]
+}

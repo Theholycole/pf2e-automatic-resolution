@@ -1,0 +1,24 @@
+{
+ "label": "thirdPartyBatch41",
+ "passed": true,
+ "at": "2026-10-07T03:54:06.754Z",
+ "details": {
+  "thirdParty41": {
+   "melee": {
+    "formula": "2d8 slashing",
+    "total": 9,
+    "lost": 9
+   },
+   "repeat": {
+    "formula": "2d8 void",
+    "total": 14,
+    "lost": 28
+   },
+   "ranged": {
+    "formula": "2d6 piercing",
+    "total": 8,
+    "lost": 8
+   }
+  }
+ }
+}

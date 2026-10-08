@@ -21,9 +21,10 @@ test('numbers in spell notes: a created thing\'s statistics and situational bonu
 });
 
 test('numbers in spell notes: kept strict', async () => {
-    // An unconditional clause beside a situational one isn't read as situational: since rank 4 batch 7 its two bonuses are the note's rules.
+    // An unconditional clause beside a situational one isn't read as situational: since notes batch 1 (2026-10-05) both bonuses and the Command bonus
+    // are a stated Effect.
     const glimmer = compileAbility(await spell('rank-4/movanic-glimmer'));
-    assert.deepEqual(glimmer.resolution.note.rules.map(rule => [rule.selector, rule.value]), [['perception', 2], ['will', 2]]);
+    assert.deepEqual(glimmer.resolution.statedEffect.rules.map(rule => [[rule.selector].flat().join(), rule.value]), [['perception,will', 2], ['nature', 1]]);
     assert.notEqual(compileAbility(withText(await spell('rank-4/movanic-glimmer'), text => text.replace('and any Nature checks to Command the target Animal gain', 'and it gains'))).resolution.kind, 'spell-note');
     // Temporary Hit Points, resistance and Speeds stay off the route.
     assert.notEqual(compileAbility(await spell('rank-1/deaths-call')).resolution.kind, 'spell-note');

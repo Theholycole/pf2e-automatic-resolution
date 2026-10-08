@@ -1,0 +1,38 @@
+{
+  "generatedAt": "2026-10-05T12:43:05.689Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "spellshapeBatch14",
+      "passed": true,
+      "at": "2026-10-05T12:41:35.439Z",
+      "details": {
+        "spellshape14": {
+          "snowfields": {
+            "made": true,
+            "difficult": true,
+            "minutes": 1
+          },
+          "hopeless": {
+            "card": true,
+            "frightened": 1
+          },
+          "crushing": {
+            "offGuard": true,
+            "terrain": true
+          },
+          "slaughter": {
+            "foeHp": 0,
+            "allyLost": 14
+          },
+          "purificationDialog": true,
+          "purification": true,
+          "purificationRank": "2",
+          "overflowing": 15,
+          "shattering": true
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+ "label": "thirdPartyBatch42",
+ "passed": true,
+ "at": "2026-10-07T03:58:43.094Z",
+ "details": {
+  "thirdParty42": {
+   "off": {
+    "traits": [],
+    "resist": [],
+    "weak": [],
+    "fly": null
+   },
+   "on": {
+    "traits": [
+     "animal",
+     "swarm"
+    ],
+    "resist": [
+     "physical 8"
+    ],
+    "weak": [
+     "area-damage 8",
+     "splash-damage 8"
+    ],
+    "fly": 60
+   },
+   "offAgain": {
+    "traits": [],
+    "resist": [],
+    "weak": [],
+    "fly": null
+   },
+   "attack": {
+    "formula": "4d6 sonic",
+    "total": 10,
+    "lost": 20,
+    "deafened": true
+   }
+  }
+ }
+}

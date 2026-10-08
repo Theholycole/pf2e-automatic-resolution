@@ -2,7 +2,7 @@
 // caster's player at the time the text says). The Parrot's Whisper: the target's highest weakness.
 import { escapeHTML } from "./runtime-utils.js";
 
-export const REVEAL_KINDS = new Set(["highest-weakness", "weaknesses-and-lowest-save", "intelligence-compare", "gm-command"]);
+export const REVEAL_KINDS = new Set(["highest-weakness", "weaknesses-and-lowest-save", "intelligence-compare", "gm-command", "anatomy"]);
 
 /** "higher", "equal" or "lower": the creature's Intelligence modifier against the caster's (Mind Reading). */
 export function compareIntelligence(actor, caster) {
@@ -29,6 +29,18 @@ export async function revealInformation(actor, { kind, sourceActorUuid, spellNam
     if (kind === "gm-command") return ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: caster ?? undefined }), whisper: game.users.filter(user => user.isGM).map(user => user.id),
         content: `<p><strong>${escapeHTML(spellName)}</strong> — GM, ${escapeHTML(actor.name)}: ${escapeHTML(command ?? "")}</p>`,
         flags: { "pf2e-automatic-resolution": { kind: "reveal", reveal: { kind, actorUuid: actor.uuid, result: command } } } });
+    // View Internal Anatomy: a successful Recall Knowledge about its biology — its physical facts to the GM, who answers the caster (user decision 2026-10-03b).
+    if (kind === "anatomy") {
+        const list = key => (actor?.system?.attributes?.[key] ?? []).map(entry => `${entry.type ?? entry.label}${entry.value != null ? ` ${entry.value}` : ""}`);
+        const saves = ["fortitude", "reflex", "will"].map(slug => ({ slug, mod: Number(actor?.saves?.[slug]?.mod ?? NaN) })).filter(entry => Number.isFinite(entry.mod));
+        const lowest = saves.length ? saves.filter(entry => entry.mod === Math.min(...saves.map(save => save.mod))).map(entry => entry.slug) : [];
+        const facts = { weakestSave: lowest, resistances: list("resistances"), weaknesses: list("weaknesses"), immunities: list("immunities") };
+        return ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: caster ?? undefined }), whisper: game.users.filter(user => user.isGM).map(user => user.id),
+            content: `<p><strong>${escapeHTML(spellName)}</strong> — GM, ${escapeHTML(actor.name)}'s anatomy (tell ${escapeHTML(caster?.name ?? "the caster")} what a successful Recall Knowledge about its biology reveals): `
+                + `weakest save ${escapeHTML(lowest.join(" and ") || "unknown")}; resistances ${escapeHTML(facts.resistances.join(", ") || "none")}; weaknesses ${escapeHTML(facts.weaknesses.join(", ") || "none")}; immunities ${escapeHTML(facts.immunities.join(", ") || "none")}. `
+                + `If it's disguised and its anatomy would show it (not illusion magic of a higher rank), tell them it's in disguise.</p>`,
+            flags: { "pf2e-automatic-resolution": { kind: "reveal", reveal: { kind, actorUuid: actor.uuid, result: facts } } } });
+    }
     let found = kind === "intelligence-compare" ? null : highestWeaknesses(actor), text = found ? `${actor.name}'s highest weakness: ${found.join(", ")}.` : `${actor.name} has no weaknesses.`;
     // Mind Reading: whether its Intelligence modifier is higher than, equal to, or lower than the caster's.
     if (kind === "intelligence-compare") {

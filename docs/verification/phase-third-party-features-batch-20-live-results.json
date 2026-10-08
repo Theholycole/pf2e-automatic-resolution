@@ -1,0 +1,58 @@
+{
+ "batch20": {
+  "label": "thirdPartyFeaturesBatch20",
+  "passed": true,
+  "at": "2026-10-07T22:53:36.674Z",
+  "details": {
+   "thirdPartyFeatures20": {
+    "colossal": {
+     "name": "Sea Serpent",
+     "size": "grg",
+     "token": [
+      6,
+      6
+     ],
+     "land": 40,
+     "speedBefore": 20,
+     "trample": true,
+     "trampleDice": false,
+     "shatterer": true,
+     "region": true,
+     "ongoing": 1
+    },
+    "quake": true,
+    "quakeAgain": true,
+    "megalophobia": {
+     "frightened": 3,
+     "fleeing": true,
+     "immune": true
+    },
+    "aspectForm": {
+     "form": "Spell Effect: Animal Shift (Aerial Aspect)",
+     "shift": {
+      "reach": 25,
+      "size": "grg",
+      "sizeNum": 6
+     },
+     "size": "grg",
+     "token": [
+      6,
+      6
+     ],
+     "trample": true,
+     "after": {
+      "token": [
+       1,
+       1
+      ],
+      "trample": false
+     }
+    },
+    "ended": {
+     "regions": 0,
+     "summon": false
+    }
+   }
+  }
+ }
+}

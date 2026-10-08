@@ -1,0 +1,124 @@
+{
+ "batch19": {
+  "label": "thirdPartyFeaturesBatch19",
+  "passed": true,
+  "at": "2026-10-07T22:37:26.375Z",
+  "details": {
+   "thirdPartyFeatures19": {
+    "plan": {
+     "kind": "summon",
+     "actor": "Animal Aspect",
+     "statistics": "Spell Effect: Animal Aspect Statistics"
+    },
+    "summon": {
+     "status": "applied",
+     "error": null,
+     "name": "Animal Aspect",
+     "level": 3,
+     "stats": "Spell Effect: Animal Shift (Predator Aspect) (Fort +1, Ref +0, Will –2)",
+     "aspectDC": 16,
+     "form": "predator",
+     "ac": 16,
+     "size": "med",
+     "sage": true,
+     "casterEffect": "Summon Animal Aspect",
+     "casterSpellDC": 18
+    },
+    "removed": true
+   }
+  }
+ },
+ "aspectSummons": [
+  {
+   "spell": "Summon Ooze Aspect",
+   "kind": "summon",
+   "creature": "Ooze Aspect",
+   "statistics": "Spell Effect: Ooze Shift",
+   "rangeFeet": 30
+  },
+  {
+   "spell": "Summon Animal Aspect",
+   "kind": "summon",
+   "creature": "Animal Aspect",
+   "statistics": "Spell Effect: Animal Shift",
+   "rangeFeet": 30
+  },
+  {
+   "spell": "Summon Thurse Aspect",
+   "kind": "summon",
+   "creature": "Thurse Aspect",
+   "statistics": "Spell Effect: Thurse Shift",
+   "rangeFeet": 30
+  },
+  {
+   "spell": "Summon Celestial Aspect",
+   "kind": "summon",
+   "creature": "Celestial Aspect",
+   "statistics": "Spell Effect: Celestial Shift",
+   "rangeFeet": 30
+  },
+  {
+   "spell": "Summon Fiend Aspect",
+   "kind": "summon",
+   "creature": "Fiend Aspect",
+   "statistics": "Spell Effect: Fiend Shift",
+   "rangeFeet": 30
+  },
+  {
+   "spell": "Summon Fey Aspect",
+   "kind": "summon",
+   "creature": "Fey Aspect",
+   "statistics": "Spell Effect: Fey Shift",
+   "rangeFeet": 5
+  },
+  {
+   "spell": "Summon Construct Aspect",
+   "kind": "summon",
+   "creature": "Construct Aspect",
+   "statistics": "Spell Effect: Construct Shift",
+   "rangeFeet": 30
+  },
+  {
+   "spell": "Summon Monitor Aspect",
+   "kind": "summon",
+   "creature": "Monitor Aspect",
+   "statistics": "Spell Effect: Monitor Shift",
+   "rangeFeet": 30
+  },
+  {
+   "spell": "Summon Plant Aspect",
+   "kind": "summon",
+   "creature": "Plant Aspect",
+   "statistics": "Spell Effect: Plant Shift",
+   "rangeFeet": 30
+  },
+  {
+   "spell": "Summon Undead Aspect",
+   "kind": "summon",
+   "creature": "Undead Aspect",
+   "statistics": "Spell Effect: Undead Shift",
+   "rangeFeet": 30
+  },
+  {
+   "spell": "Summon Dragon Aspect",
+   "kind": "summon",
+   "creature": "Dragon Aspect",
+   "statistics": "Spell Effect: Dragon Shift",
+   "rangeFeet": 30
+  },
+  {
+   "spell": "Summon Entity Aspect",
+   "kind": "summon",
+   "creature": "Entity Aspect",
+   "statistics": "Spell Effect: Aberration Shift",
+   "rangeFeet": 30
+  },
+  {
+   "spell": "Summon Elemental Aspect",
+   "kind": "summon",
+   "creature": "Elemental Aspect",
+   "statistics": "Spell Effect: Elemental Shift",
+   "rangeFeet": 30
+  }
+ ]
+}

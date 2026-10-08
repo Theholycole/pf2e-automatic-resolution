@@ -1,0 +1,61 @@
+{
+  "label": "spellshapeBatch1",
+  "passed": true,
+  "at": "2026-10-05T09:45:13.746Z",
+  "details": {
+    "spellshape1": {
+      "intimidating": {
+        "recorded": [
+          "Intimidating Spell"
+        ],
+        "off": true,
+        "frightened": [
+          1,
+          2
+        ]
+      },
+      "reverberating": {
+        "deafened": [
+          true,
+          false
+        ],
+        "sonic": true
+      },
+      "armed": true,
+      "knockback": [
+        "Knockback Spell: pushed 5 feet away from the center of the burst (move the token)",
+        "Knockback Spell: pushed 10 feet away from the center of the burst (move the token)"
+      ],
+      "thunderclap": [
+        {
+          "deafened": true,
+          "prone": false
+        },
+        {
+          "deafened": true,
+          "prone": true
+        }
+      ],
+      "scintillating": [
+        {
+          "dazzled": true,
+          "blinded": false
+        },
+        {
+          "dazzled": false,
+          "blinded": true
+        }
+      ],
+      "fear": "it deals no damage",
+      "wand": {
+        "recorded": [
+          "Wand of Smoldering Fireballs (3rd-Rank Spell)"
+        ],
+        "persistent": [
+          true,
+          false
+        ]
+      }
+    }
+  }
+}

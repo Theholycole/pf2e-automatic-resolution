@@ -1,0 +1,27 @@
+{
+ "label": "rank8Batch8",
+ "passed": true,
+ "at": "2026-10-04T23:11:03.762Z",
+ "details": {
+  "batch8": {
+   "maze": {
+    "supported": true,
+    "notes": [
+     "1 rounds",
+     "1 minutes",
+     "10 minutes"
+    ],
+    "doors": true
+   },
+   "medusa": {
+    "supported": true,
+    "degree": "criticalSuccess",
+    "slowed": 2,
+    "after": [
+     "petrified",
+     "no card"
+    ]
+   }
+  }
+ }
+}

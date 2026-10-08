@@ -1,0 +1,36 @@
+{
+  "label": "rank10Batch3",
+  "passed": true,
+  "at": "2026-10-05T04:36:17.484Z",
+  "details": {
+    "batch3": {
+      "avatar": {
+        "effect": true,
+        "size": "huge",
+        "ac": 44,
+        "level": 19,
+        "greatsword": true,
+        "immobilized": true,
+        "temp": 30
+      },
+      "meta": {
+        "holder": true,
+        "first": "Monstrosity Form",
+        "form": true,
+        "temp": 40,
+        "shroud": true,
+        "size": "huge",
+        "again": "Metamorphosis: Monstrosity Form's form was already used during this casting.",
+        "second": {
+          "spell": "Elemental Form",
+          "monstrosity": false,
+          "elemental": true,
+          "temp": 40
+        },
+        "ended": {
+          "elemental": false
+        }
+      }
+    }
+  }
+}

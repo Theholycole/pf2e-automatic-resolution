@@ -1,0 +1,71 @@
+{
+ "label": "thirdPartyFeaturesBatch4",
+ "passed": true,
+ "at": "2026-10-07T09:53:07.279Z",
+ "details": {
+  "thirdPartyFeatures4": {
+   "unlinked": "your mystic link isn't active",
+   "resilience": {
+    "shapes": [
+     [
+      "Eldritch Resilience",
+      true,
+      null
+     ]
+    ],
+    "temp": 6,
+    "effect": 1,
+    "afterLink": 0
+   },
+   "steel": {
+    "shapes": [
+     [
+      "Spell and Steel",
+      true,
+      null
+     ]
+    ],
+    "total": 18,
+    "lost": 24,
+    "riders": "null"
+   },
+   "linked": {
+    "shapes": [
+     [
+      "Linked Target Spell",
+      true,
+      null
+     ]
+    ],
+    "duo": 1,
+    "caster": 0,
+    "tied": true,
+    "again": 1
+   },
+   "twinned": {
+    "shapes": [
+     [
+      "Twinned Target Spell",
+      true,
+      null
+     ]
+    ],
+    "duo": 1,
+    "caster": 1,
+    "afterLink": 0
+   },
+   "allyForm": {
+    "shapes": [
+     [
+      "Ally Form",
+      true,
+      null
+     ]
+    ],
+    "duo": true,
+    "caster": 0,
+    "duration": "1 minutes"
+   }
+  }
+ }
+}

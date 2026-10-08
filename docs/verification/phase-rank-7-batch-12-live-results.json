@@ -1,0 +1,40 @@
+{
+ "label": "rank7Batch12",
+ "passed": true,
+ "at": "2026-10-04T23:01:42.464Z",
+ "details": {
+  "batch12": {
+   "orb": {
+    "supported": true,
+    "notes": [
+     "1 rounds",
+     "10 rounds",
+     "1 minutes"
+    ],
+    "recurringCard": true
+   },
+   "saw": {
+    "supported": true,
+    "lost": [
+     0,
+     22
+    ],
+    "bleed": [
+     null,
+     "4d6"
+    ],
+    "dead": true,
+    "reminder": true
+   },
+   "blood": {
+    "supported": true,
+    "question": true,
+    "drained": 2,
+    "clumsy": 1,
+    "drainedTimer": "-1 unlimited",
+    "clumsyBleeding": 2,
+    "clumsyAfter": 1
+   }
+  }
+ }
+}

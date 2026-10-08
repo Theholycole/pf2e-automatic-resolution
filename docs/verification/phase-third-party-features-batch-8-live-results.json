@@ -1,0 +1,48 @@
+{
+ "label": "thirdPartyFeaturesBatch8",
+ "passed": true,
+ "at": "2026-10-07T10:25:23.873Z",
+ "details": {
+  "thirdPartyFeatures8": {
+   "hone": {
+    "shapes": [
+     [
+      "Precision",
+      true,
+      null
+     ]
+    ],
+    "excluded": [
+     "PFTEST P23 Affliction tpf8 two"
+    ],
+    "attackOutcome": "criticalSuccess",
+    "degree": "criticalFailure",
+    "ring": [
+     "item 2"
+    ],
+    "lost": [
+     56,
+     0
+    ],
+    "total": 28
+   },
+   "summon": {
+    "shapes": [
+     [
+      "Calling",
+      true,
+      null
+     ]
+    ],
+    "status": "applied",
+    "summoned": "Swamp Beetle",
+    "effects": [
+     "Calling: +2 to Strikes"
+    ],
+    "bonus": [
+     "status 2"
+    ]
+   }
+  }
+ }
+}

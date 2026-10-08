@@ -141,7 +141,9 @@ export function compileAfflictionHandoff(plan, adapted) {
     const block = parseAfflictionBlock(adapted.descriptionHTML);
     if (!block || plan.resolution?.kind !== "save" || plan.resolution.check?.basic !== false) return null;
     // A lasting cast only when the block says the affliction ends with the spell (the affliction Effect then ends with the cast).
-    if ((plan.lifecycle?.durationSpec?.mode !== "instantaneous" || plan.lifecycle?.sustained) && !block.endsWithSpell) return { blocked: "lifecycle" };
+    // (Or a lasting area that afflicts the creatures it exposes, with the affliction's own maximum duration: Dread Mosquito Storm's disease outlives nothing.)
+    const areaAffliction = adapted.lingeringAffliction === true && !plan.lifecycle?.sustained && !!block.maximumDuration;
+    if ((plan.lifecycle?.durationSpec?.mode !== "instantaneous" || plan.lifecycle?.sustained) && !block.endsWithSpell && !areaAffliction) return { blocked: "lifecycle" };
     const components = adapted.damageComponents ?? [];
     const single = components.length === 1 && components[0].kinds?.length === 1 && components[0].kinds[0] === "damage"
         && !components[0].category ? components[0] : null;

@@ -1,0 +1,53 @@
+{
+ "label": "thirdPartyBatch38",
+ "passed": true,
+ "at": "2026-10-07T03:40:11.706Z",
+ "details": {
+  "thirdParty38": {
+   "sea": {
+    "choice": "sea",
+    "traits": [
+     "dragon",
+     "water"
+    ],
+    "resistances": [
+     "cold 3"
+    ],
+    "saveRule": [
+     "water"
+    ],
+    "sustain": {
+     "value": 1,
+     "duration": [
+      1,
+      "rounds",
+      "turn-end"
+     ]
+    },
+    "option": "applied"
+   },
+   "sky": {
+    "choice": "sky",
+    "traits": [
+     "dragon",
+     "electricity"
+    ],
+    "resistances": [
+     "electricity 6"
+    ],
+    "saveRule": [
+     "electricity"
+    ],
+    "sustain": {
+     "value": 2,
+     "duration": [
+      1,
+      "rounds",
+      "turn-end"
+     ]
+    },
+    "option": "applied"
+   }
+  }
+ }
+}

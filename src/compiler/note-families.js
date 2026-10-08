@@ -20,6 +20,7 @@ import { compileMarchingSong, compileSharedLore, compileUnarmedReach } from "./r
 import { compileAttackWard, compileStrikeAbsorber } from "./ward-families.js";
 import { compileSummon } from "./summon-families.js";
 import { compileRuleSet } from "./rule-sets.js";
+import { compileStatedEffect } from "./stated-effect.js";
 import { compileConjuredItem, compileItemRepair } from "./item-families.js";
 import { compileAidAttack, compileFormChoice, compileHideReaction, compileSeekWhistle } from "./check-actions.js";
 import { compileCoverSquare, compileLureSave, compileSaveRetry } from "./area-saves.js";
@@ -74,6 +75,7 @@ const FAMILIES = [
     { kind: "strike-absorber", key: "strikeAbsorber", compile: adapted => compileStrikeAbsorber(adapted) },
     { kind: "summon", key: "summon", compile: adapted => compileSummon(adapted) },
     { kind: "rule-set", key: "ruleSet", compile: adapted => compileRuleSet(adapted) },
+    { kind: "stated-effect", key: "statedEffect", compile: adapted => compileStatedEffect(adapted) },
     { kind: "conjured-item", key: "conjuredItem", compile: adapted => compileConjuredItem(adapted) },
     { kind: "item-repair", key: "itemRepair", compile: adapted => compileItemRepair(adapted) },
     { kind: "hide-reaction", key: "hideReaction", compile: adapted => compileHideReaction(adapted) },

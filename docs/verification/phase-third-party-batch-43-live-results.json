@@ -1,0 +1,19 @@
+{
+ "label": "thirdPartyBatch43",
+ "passed": true,
+ "at": "2026-10-07T04:04:18.015Z",
+ "details": {
+  "thirdParty43": {
+   "str": {
+    "athletics": -1,
+    "perception": 0
+   },
+   "wis": {
+    "athletics": 0,
+    "perception": -2
+   },
+   "doomedBefore": 0,
+   "doomed": 1
+  }
+ }
+}

@@ -1,0 +1,59 @@
+{
+  "label": "rank8Batch17",
+  "passed": true,
+  "at": "2026-10-05T04:57:42.374Z",
+  "details": {
+    "batch17": {
+      "heave": {
+        "lost": 60,
+        "prone": true,
+        "push": true,
+        "tremors": {
+          "lost": 0,
+          "push": true
+        }
+      },
+      "launch": {
+        "a": [
+          50,
+          true
+        ],
+        "b": [
+          100,
+          true
+        ],
+        "c": 0,
+        "elevation": 100
+      },
+      "pour": {
+        "push": true,
+        "low": [
+          30,
+          true,
+          0
+        ],
+        "high": [
+          0,
+          30
+        ]
+      },
+      "leap": {
+        "enfeebled": 1,
+        "pieceTemp": 20,
+        "fused": {
+          "caster": {
+            "x": 2000,
+            "y": 1100
+          },
+          "hidden": true,
+          "temp": 40,
+          "reach": 5
+        },
+        "released": {
+          "hidden": false,
+          "adjacent": true
+        }
+      }
+    }
+  }
+}

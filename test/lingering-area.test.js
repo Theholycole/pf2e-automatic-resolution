@@ -91,8 +91,8 @@ test('degree-save areas: the preamble says who saves and when; the degree table 
 test('degree-save triggers refuse qualified subjects and cast-only saves', async () => {
     // (Gluttonous Growth's "unless it's already Grabbed or Restrained" is its skipWhile since rank 5 batch 31: test/rank-5-batch-31.test.js.)
     // (Since rank 5 batch 30 "all living creatures in the area" is a lingering subject — the card refuses nonliving creatures — but Tear the Veil
-    // stays unresolved by its other rules.)
-    assert.equal(isExecutableLingeringPlan(compileAbility(await fixture('rank-10/tear-the-veil.json'))), false);
+    // stayed unresolved by its other rules until rank 8 batch 14, which reads them: test/rank-8-batch-14.test.js.)
+    assert.equal(isExecutableLingeringPlan(compileAbility(await fixture('rank-10/tear-the-veil.json'))), true);
     // A save only when the spell is cast is an ordinary area save (Swampcall's terrain makes it a lingering area: batch 88).
     const swampSource = await fixture('rank-1/swampcall.json');
     const swamp = compileAbility(detached(swampSource, swampSource.system.description.value.replace('The area becomes difficult terrain. ', '')));

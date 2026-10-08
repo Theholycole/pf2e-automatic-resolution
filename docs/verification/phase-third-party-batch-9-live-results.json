@@ -1,0 +1,43 @@
+{
+ "label": "thirdPartyBatch9",
+ "passed": true,
+ "at": "2026-10-06T23:48:56.829Z",
+ "details": {
+  "thirdParty9": {
+   "siphon": {
+    "status": "applied",
+    "healed": 10,
+    "bleed": 0,
+    "ended": "Persistent Damage (2 bleed)"
+   },
+   "umbral": {
+    "status": "applied",
+    "resist": [
+     "all-damage 8"
+    ],
+    "effects": [
+     "Spell Effect: Umbral Escape",
+     "Spell Effect: Umbral Escape Immunity",
+     "Spell Note: Umbral Escape (area)",
+     "Umbral Escape (temporarily immune)"
+    ]
+   },
+   "shadow": {
+    "type": "fire",
+    "adjust": 2,
+    "formula": "2d8 fire",
+    "lost": 11,
+    "total": 11
+   },
+   "careless": {
+    "note": "Careless Swings: Careless swings (move)",
+    "text": "<p><strong>GM / player:</strong> Until the end of its next turn, each of its Strikes has the move trait (reactions to move actions can trigger).</p><p><em>The module doesn't enforce this; it reminds you until the effect ends.</em></p>"
+   },
+   "shade": {
+    "text": "<p><strong>GM / player:</strong> Its vision is reduced: greater darkvision becomes low-light vision, and darkvision and low-light vision become no special vision. Any light sensitivity it has is suppressed.</p><p><em>The module doesn't enforce this; it reminds you until the effect ends.</em></p>",
+    "rounds": 10,
+    "blinded": true
+   }
+  }
+ }
+}

@@ -6,6 +6,8 @@ import { htmlToPlainText } from "./description-parser.js";
 
 export const KILL_BENEFIT = /^If this kills it, you gain (\d+) temporary HP and a \+(\d+) status bonus to attack and damage rolls for (\d+) (minute|round)s?\.$/;
 export const VALUE_INCREASE = /^The target's @UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{([A-Z][a-z]+)\} value increases by (\d)\.$/;
+// (Judge Soul, Witches+: "… is Drained 1 or increases its drained value by 1 if it was already drained." — the same increase, within a row with damage.)
+export const OR_INCREASE = /^is @UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{([A-Z][a-z]+) (\d)\} or increases its ([a-z]+) value by \2 if it was already \3$/;
 
 /** The Effect's rules match the sentence: TempHP and a status FlatModifier to attack and damage, for that time. */
 export function killEffectMatches(mechanics, benefit) {
@@ -24,6 +26,31 @@ export function compileKillEffect(plan, adapted) {
     const outcomes = plan.resolution?.outcomes ?? {};
     // Each row's "value increases by N".
     for (const outcome of Object.values(outcomes)) {
+        // ("… is Drained 1 or increases its drained value by 1 if it was already drained.": that clause.)
+        const clause = /is @UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{[A-Z][a-z]+ \d\} or increases its [a-z]+ value by \d if it was already [a-z]+/.exec(String(outcome?.rawText ?? ""));
+        const orIncrease = clause ? OR_INCREASE.exec(clause[0]) : null;
+        if (orIncrease && orIncrease[1].toLowerCase() === orIncrease[3]) {
+            const slug = orIncrease[3];
+            const effects = outcome.effects ?? [];
+            if (effects.length === 1 && effects[0].slug === slug && effects[0].value === Number(orIncrease[2]) && effects[0].duration == null) {
+                outcome.effects = [];
+                outcome.conditionIncreases = [{ slug, amount: Number(orIncrease[2]), sourceText: clause[0] }];
+                outcome.manualInstructions = (outcome.manualInstructions ?? []).filter(instruction => instruction.kind !== "conditional-effect");
+                // (The clause is the increase's: its coverage, already analysed, updated.)
+                for (const entry of outcome.semanticCoverage?.clauses ?? []) if (entry.text.includes(clause[0]) && entry.status !== "compiled" && !entry.unexplainedSignals?.length)
+                    Object.assign(entry, { status: "compiled", compiledClaims: [...new Set([...(entry.compiledClaims ?? []), "condition-increase"])], guidedClaims: [] });
+                if (outcome.semanticCoverage?.clauses) {
+                    const clauses = outcome.semanticCoverage.clauses;
+                    Object.assign(outcome.semanticCoverage, { compiledClauseCount: clauses.filter(entry => entry.status === "compiled").length, guidedClauseCount: clauses.filter(entry => entry.status === "guided").length,
+                        residualClauseCount: clauses.filter(entry => entry.status === "residual").length });
+                    outcome.semanticCoverage.complete = outcome.semanticCoverage.residualClauseCount === 0;
+                    outcome.semanticCoverage.fullyCompiled = clauses.every(entry => entry.status === "compiled");
+                }
+                if (!Object.values(outcomes).some(other => (other?.manualInstructions ?? []).some(instruction => instruction.kind === "conditional-effect")))
+                    plan.automation.pendingCapabilities = plan.automation.pendingCapabilities.filter(capability => capability !== "manual:conditional-effect");
+            }
+            continue;
+        }
         const increase = VALUE_INCREASE.exec(htmlToPlainText(outcome?.rawText ?? "").trim());
         if (!increase) continue;
         const slug = increase[1].toLowerCase();

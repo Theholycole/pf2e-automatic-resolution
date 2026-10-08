@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-10-03T21:22:34.808Z",
+  "generatedAt": "2026-10-05T09:18:58.823Z",
   "baseline": "2026-09-25T00:05:45.374Z",
   "scope": "All source-derived members of 3 overlapping families; excludes rituals and the deferred Phase 9 review list. Every member was recompiled under a detached name/ID. Route assessment is not live execution.",
   "uniqueMembers": 47,
-  "executableSharedSaves": 547,
+  "executableSharedSaves": 579,
   "newlySupported": [
     {
       "id": "gISYsBFby1TiXfBt",
@@ -592,6 +592,10 @@
     {
       "id": "Yrek2Yd4k3DPC2zV",
       "name": "Zenith Star"
+    },
+    {
+      "id": "6s0UW4bujggma9TC",
+      "name": "Fabricated Truth"
     },
     {
       "id": "f8hRqLJaxBVhF1u0",
@@ -1710,16 +1714,40 @@
       "name": "Claim Undead"
     },
     {
+      "id": "c3XygMbzrZMgV1y3",
+      "name": "Collective Transposition"
+    },
+    {
       "id": "ExQk8AwDphmckEmZ",
       "name": "Crimson Breath"
+    },
+    {
+      "id": "dN8QBNuTiaBHCKUe",
+      "name": "Cursed Metamorphosis"
     },
     {
       "id": "OsOhx3TGIZ7AhD0P",
       "name": "Dominate"
     },
     {
+      "id": "XULNb8ItUsfupxqH",
+      "name": "Dread Secret"
+    },
+    {
+      "id": "XOs8C2eZJAO3go0N",
+      "name": "Earth and Sky"
+    },
+    {
       "id": "ZvB9sV7NLdpDeoTw",
       "name": "Explosive Barrage"
+    },
+    {
+      "id": "ZZTLWMXijRDgE66m",
+      "name": "Expunge Blood"
+    },
+    {
+      "id": "ReUoodsqUYSTwSgE",
+      "name": "Fateful Condemnation"
     },
     {
       "id": "R5r4vtmlvOA8hDiF",
@@ -1766,6 +1794,10 @@
       "name": "Purple Worm Sting"
     },
     {
+      "id": "DOBs5ALM1titPYxe",
+      "name": "Seize Identity"
+    },
+    {
       "id": "8Umt1AzYfFbC4fui",
       "name": "Spellwrack"
     },
@@ -1774,16 +1806,36 @@
       "name": "Suffocate"
     },
     {
+      "id": "BokwLLK7OjK6ggHs",
+      "name": "Tanglecurse"
+    },
+    {
+      "id": "OOMQ8Z6EIrGt5NJ6",
+      "name": "Unexpected Transposition"
+    },
+    {
       "id": "fd31tAHSSGXyOxW6",
       "name": "Vampiric Exsanguination"
+    },
+    {
+      "id": "g2V4ID0pl1ZGAxZj",
+      "name": "Vitrifying Blast"
     },
     {
       "id": "B4p4cD9Q71mHTpOP",
       "name": "Attacked from Within"
     },
     {
+      "id": "dKWc83KKiXoIJkhp",
+      "name": "Beheading Buzz Saw"
+    },
+    {
       "id": "EgkypvUZIZkx1UlQ",
       "name": "Blightburn Blast"
+    },
+    {
+      "id": "hvV6IruyW4MAr0Ub",
+      "name": "Chrysopoetic Curse"
     },
     {
       "id": "1VOjUKd1pacI67RZ",
@@ -1798,6 +1850,10 @@
       "name": "Divine Decree"
     },
     {
+      "id": "73rToy0v5Ra9NvL6",
+      "name": "Duplicate Foe"
+    },
+    {
       "id": "0jadeyQIItIuRgeH",
       "name": "Eclipse Burst"
     },
@@ -1810,6 +1866,10 @@
       "name": "Frigid Flurry"
     },
     {
+      "id": "yWySiasyPZcRoe4d",
+      "name": "Heaving Earth"
+    },
+    {
       "id": "gMbrNFKz9NP3TR4s",
       "name": "Inexhaustible Cynicism"
     },
@@ -1818,8 +1878,28 @@
       "name": "Leng Sting"
     },
     {
+      "id": "qOeBQyC1z7OScHvP",
+      "name": "Maze of Locked Doors"
+    },
+    {
       "id": "Shiuhdb2nO6Qgk3k",
       "name": "Moonburst"
+    },
+    {
+      "id": "qO4xOJ0kAvhVGDpX",
+      "name": "Orb of Twisting Fate"
+    },
+    {
+      "id": "wU6hNzK8Yfqdmc8m",
+      "name": "Possession"
+    },
+    {
+      "id": "mBYqtWpvOT4oBm4Q",
+      "name": "Puppet Strings"
+    },
+    {
+      "id": "VTb0yI6P1bLkzuRr",
+      "name": "Shadow Raid"
     },
     {
       "id": "a3aQxCpoj1q1NQxC",
@@ -1834,6 +1914,10 @@
       "name": "Warp Mind"
     },
     {
+      "id": "XB65dUQipPCTNNIY",
+      "name": "Amalgamizing Leap"
+    },
+    {
       "id": "C2GYCH3TtUFqPfdX",
       "name": "Arctic Rift"
     },
@@ -1844,6 +1928,10 @@
     {
       "id": "qlxM7Ik3uUeUIOcv",
       "name": "Canticle of Everlasting Grief"
+    },
+    {
+      "id": "8fEfjvC01gNclDKJ",
+      "name": "Deluge"
     },
     {
       "id": "M0jQlpQYUr0pp2Sv",
@@ -1858,8 +1946,16 @@
       "name": "Divine Armageddon"
     },
     {
+      "id": "vm9O7ne48NM72yrJ",
+      "name": "Falling Sky"
+    },
+    {
       "id": "TvZiwZRianfTSbEg",
       "name": "Hypnopompic Terrors"
+    },
+    {
+      "id": "wTYxxYJWN348oV15",
+      "name": "Medusa's Wrath"
     },
     {
       "id": "BKIet436snMNcnez",
@@ -1878,8 +1974,20 @@
       "name": "Sudden Transposition"
     },
     {
+      "id": "yZpWaJzm7kUjKvlQ",
+      "name": "Temporary Possession"
+    },
+    {
       "id": "Jvyy6oVIQsD34MHB",
       "name": "Uncontrollable Dance"
+    },
+    {
+      "id": "YiIOsc8T6E2iDxgh",
+      "name": "Undermine Reality"
+    },
+    {
+      "id": "KY2xyMavZHAoG69D",
+      "name": "Arcane Explosion"
     },
     {
       "id": "MFPvs0ARxtThYPFq",
@@ -1890,12 +1998,32 @@
       "name": "Linnorm Sting"
     },
     {
+      "id": "AsRd1gNRSkHDq2Jx",
+      "name": "Magnetic Dominion"
+    },
+    {
+      "id": "10VcmSYNBrvBphu1",
+      "name": "Massacre"
+    },
+    {
+      "id": "fkDeKktdmbeplYRY",
+      "name": "Overwhelming Presence"
+    },
+    {
       "id": "MJx7DmjsWYzDZ3a4",
       "name": "Phantasmagoria"
     },
     {
+      "id": "m815cJACTzePdZAG",
+      "name": "Remake Physiology"
+    },
+    {
       "id": "ItZgGznUBhgWBwFG",
       "name": "Telepathic Demand"
+    },
+    {
+      "id": "z39jFoNJrobyn3MQ",
+      "name": "Undertaker"
     },
     {
       "id": "XjNROFtWnwovhCsq",
@@ -2036,16 +2164,13 @@
           "families": [
             "death-at-zero"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
+          "route": "effect",
+          "enabledRoute": true,
           "sharedSave": false,
           "previousSharedSave": false,
           "detail": [],
           "blockers": [
-            "manual:conditional-effect",
-            "residual-prose",
-            "unaccounted-prose",
-            "manual-mechanic"
+            "primary-save"
           ]
         },
         {
@@ -2056,19 +2181,14 @@
           "families": [
             "death-at-zero"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
           "previousSharedSave": false,
           "detail": [
             "dies at 0 HP"
           ],
-          "blockers": [
-            "residual-prose",
-            "preamble:damage",
-            "unused-shared-damage",
-            "unaccounted-prose"
-          ]
+          "blockers": []
         },
         {
           "id": "m3lcOFm400lQCUps",
@@ -2110,14 +2230,12 @@
           "families": [
             "death-at-zero"
           ],
-          "route": "effect-note",
-          "enabledRoute": false,
+          "route": "effect",
+          "enabledRoute": true,
           "sharedSave": false,
           "previousSharedSave": false,
           "detail": [],
           "blockers": [
-            "effect-note:unproven-text",
-            "native-spell-effect-scope",
             "primary-save"
           ]
         },
@@ -2161,18 +2279,13 @@
           "families": [
             "death-at-zero"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
+          "route": "note",
+          "enabledRoute": true,
           "sharedSave": false,
           "previousSharedSave": false,
           "detail": [],
           "blockers": [
-            "manual:terrain",
-            "manual:conditional-effect",
-            "residual-prose",
-            "target-eligibility",
-            "unaccounted-prose",
-            "manual-mechanic"
+            "primary-save"
           ]
         },
         {
@@ -2183,21 +2296,13 @@
           "families": [
             "death-at-zero"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
+          "route": "ongoing",
+          "enabledRoute": true,
           "sharedSave": false,
           "previousSharedSave": false,
           "detail": [],
           "blockers": [
-            "manual:temporary-immunity",
-            "manual:conditional-effect",
-            "manual:attitude-or-hostility",
-            "condition-duration-scope",
-            "residual-prose",
-            "sustain-effect",
-            "preamble:ongoing-trigger",
-            "unaccounted-prose",
-            "manual-mechanic"
+            "lingering-area"
           ]
         },
         {
@@ -2283,18 +2388,12 @@
           "families": [
             "caster-benefit"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
-          "sharedSave": false,
+          "route": "save",
+          "enabledRoute": true,
+          "sharedSave": true,
           "previousSharedSave": false,
           "detail": [],
-          "blockers": [
-            "manual:conditional-effect",
-            "residual-prose",
-            "lifecycle",
-            "unaccounted-prose",
-            "manual-mechanic"
-          ]
+          "blockers": []
         },
         {
           "id": "ES6FkwXXqYr4ujQH",
@@ -2373,14 +2472,12 @@
           "families": [
             "caster-benefit"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
+          "route": "effect",
+          "enabledRoute": true,
           "sharedSave": false,
           "previousSharedSave": false,
           "detail": [],
           "blockers": [
-            "no-primary-save",
-            "description-semantics",
             "primary-save"
           ]
         },
@@ -2428,14 +2525,13 @@
           "families": [
             "caster-benefit"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
+          "route": "effect",
+          "enabledRoute": true,
           "sharedSave": false,
           "previousSharedSave": false,
           "detail": [],
           "blockers": [
-            "preamble:ongoing-trigger",
-            "preamble:additional-condition"
+            "primary-save"
           ]
         },
         {
@@ -2584,14 +2680,12 @@
           "families": [
             "caster-benefit"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
+          "route": "effect",
+          "enabledRoute": true,
           "sharedSave": false,
           "previousSharedSave": false,
           "detail": [],
           "blockers": [
-            "no-primary-save",
-            "description-semantics",
             "primary-save"
           ]
         },
@@ -2758,17 +2852,13 @@
             "caster-benefit",
             "area-living"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
+          "route": "effect",
+          "enabledRoute": true,
           "sharedSave": false,
           "previousSharedSave": false,
           "detail": [],
           "blockers": [
-            "description-effects",
-            "description-target-predicates",
-            "description-lifecycle",
-            "basic-save-composition",
-            "unaccounted-prose"
+            "primary-save"
           ]
         },
         {
@@ -2854,17 +2944,13 @@
             "caster-benefit",
             "area-living"
           ],
-          "route": "disabled",
-          "enabledRoute": false,
+          "route": "effect",
+          "enabledRoute": true,
           "sharedSave": false,
           "previousSharedSave": false,
           "detail": [],
           "blockers": [
-            "description-effects",
-            "description-target-predicates",
-            "description-lifecycle",
-            "basic-save-composition",
-            "unaccounted-prose"
+            "primary-save"
           ]
         }
       ]
@@ -2873,47 +2959,11 @@
   "blockerCounts": [
     [
       "primary-save",
-      22
-    ],
-    [
-      "unaccounted-prose",
-      6
-    ],
-    [
-      "residual-prose",
-      5
-    ],
-    [
-      "manual:conditional-effect",
-      4
-    ],
-    [
-      "manual-mechanic",
-      4
-    ],
-    [
-      "no-primary-save",
-      2
-    ],
-    [
-      "description-semantics",
-      2
-    ],
-    [
-      "preamble:ongoing-trigger",
-      2
+      26
     ],
     [
       "lingering-area",
-      2
-    ],
-    [
-      "lifecycle",
-      1
-    ],
-    [
-      "preamble:additional-condition",
-      1
+      3
     ],
     [
       "choice-variant:description-damage",
@@ -2932,63 +2982,7 @@
       1
     ],
     [
-      "preamble:damage",
-      1
-    ],
-    [
-      "unused-shared-damage",
-      1
-    ],
-    [
-      "effect-note:unproven-text",
-      1
-    ],
-    [
-      "native-spell-effect-scope",
-      1
-    ],
-    [
       "stored-trigger",
-      1
-    ],
-    [
-      "manual:terrain",
-      1
-    ],
-    [
-      "target-eligibility",
-      1
-    ],
-    [
-      "manual:temporary-immunity",
-      1
-    ],
-    [
-      "manual:attitude-or-hostility",
-      1
-    ],
-    [
-      "condition-duration-scope",
-      1
-    ],
-    [
-      "sustain-effect",
-      1
-    ],
-    [
-      "description-effects",
-      1
-    ],
-    [
-      "description-target-predicates",
-      1
-    ],
-    [
-      "description-lifecycle",
-      1
-    ],
-    [
-      "basic-save-composition",
       1
     ]
   ]

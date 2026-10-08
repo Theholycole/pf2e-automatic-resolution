@@ -1,0 +1,31 @@
+{
+  "generatedAt": "2026-10-05T11:21:56.363Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "spellshapeBatch7",
+      "passed": true,
+      "at": "2026-10-05T11:21:10.590Z",
+      "details": {
+        "spellshape7": {
+          "bloodline": {
+            "shapes": "Bloodline Conduit:true:ok",
+            "expended": false
+          },
+          "mystery": {
+            "slots3": 5,
+            "slots6": 0,
+            "unmet": "Mystery Conduit:true:it's above rank 5"
+          },
+          "table": [
+            "Conceal Spell:true:ok",
+            "Quickened Casting:true:ok,Elaborate Flourish:true:ok"
+          ],
+          "noGmNote": true,
+          "through": "Through Spell:true:it has no spell attack roll"
+        }
+      }
+    }
+  ]
+}

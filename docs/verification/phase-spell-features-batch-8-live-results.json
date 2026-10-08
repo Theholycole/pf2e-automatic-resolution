@@ -1,0 +1,59 @@
+{
+  "generatedAt": "2026-10-06T10:38:40.313Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "spellFeaturesBatch8",
+      "passed": true,
+      "at": "2026-10-06T10:37:51.418Z",
+      "details": {
+        "features8": {
+          "spellstrike": {
+            "card": true,
+            "delivered": "Spellstrike",
+            "strike": "success",
+            "degree": "success"
+          },
+          "spellstrikeSave": {
+            "strike": "criticalFailure",
+            "lost": "disrupted (Spellstrike's Strike critically failed)",
+            "consistent": true
+          },
+          "intercession": {
+            "card": true,
+            "spent": 1,
+            "after": 2
+          },
+          "dueling": {
+            "offered": [
+              "Dueling Counter"
+            ]
+          },
+          "aegis": {
+            "card": true,
+            "degree": "success",
+            "countered": true,
+            "shield": 0,
+            "expected": 0
+          },
+          "ringBell": {
+            "card": true,
+            "degree": "criticalFailure",
+            "stupefied": 2,
+            "expected": 2
+          },
+          "onlyYouAndI": {
+            "save": "criticalFailure",
+            "lost": "disrupted (Only You and I: PFTEST P23 Affliction sf8 exemplar's Will save failed)",
+            "consistent": true
+          },
+          "drawFromPages": {
+            "castRank": 7,
+            "mythic": true
+          }
+        }
+      }
+    }
+  ]
+}

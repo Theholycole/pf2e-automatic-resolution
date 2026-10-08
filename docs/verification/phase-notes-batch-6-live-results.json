@@ -1,0 +1,21 @@
+{
+  "generatedAt": "2026-10-05T23:27:22.818Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "notesBatch6",
+      "passed": true,
+      "at": "2026-10-05T23:27:20.733Z",
+      "details": {
+        "notes6": {
+          "split": {
+            "notes": 2,
+            "gm": "The shrubs give standard cover to a creature behind them. GM: The GM judges the line of the attack. Objects in the area take the damage too. GM: Objects in the area take the damage too — yours to resolve.",
+            "player": "The shrubs give standard cover to a creature behind them. Objects in the area take the damage too."
+          }
+        }
+      }
+    }
+  ]
+}

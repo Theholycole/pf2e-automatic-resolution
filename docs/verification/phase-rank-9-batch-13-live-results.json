@@ -1,0 +1,23 @@
+{
+  "label": "rank9Batch13",
+  "passed": true,
+  "at": "2026-10-05T09:21:47.603Z",
+  "details": {
+    "batch13": {
+      "cataclysm": {
+        "plain": 96,
+        "resists": 96,
+        "lowered": 15
+      },
+      "bound": {
+        "caster": 10,
+        "foe": 15
+      },
+      "monster": {
+        "shroud": "3d6",
+        "rake": "5d8+10",
+        "lost": 32
+      }
+    }
+  }
+}

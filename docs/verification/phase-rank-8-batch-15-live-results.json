@@ -1,0 +1,42 @@
+{
+  "label": "rank8Batch15",
+  "passed": true,
+  "at": "2026-10-05T03:11:10.971Z",
+  "details": {
+    "batch15": {
+      "quasi": {
+        "note": true,
+        "rule": "[[\"AdjustDegreeOfSuccess\",\"skill-check\",{\"criticalSuccess\":\"to-success\"}]]",
+        "recurring": "will",
+        "strike": 10,
+        "spell": 20,
+        "savesBetter": "applies"
+      },
+      "truth": {
+        "believes": true,
+        "days": 7,
+        "unit": "days",
+        "whispered": true
+      },
+      "morph": {
+        "sickened": 1,
+        "form": true,
+        "endSave": "will",
+        "rounds": 10
+      },
+      "remake": {
+        "body": true,
+        "speed": -20,
+        "conditions": [
+          "clumsy",
+          "drained",
+          "enfeebled",
+          "stupefied",
+          "dazzled"
+        ],
+        "rounds": 10,
+        "slowed": 1
+      }
+    }
+  }
+}

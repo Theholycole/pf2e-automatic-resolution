@@ -52,6 +52,16 @@ function handlerAfflictions(actor) {
     });
 }
 
+/** One of the creature's afflictions (the handler's Effects) with the traits, its stage lowered (not below the floor): Bounty of the Sky's gift. */
+export async function lowerAfflictionStage(actor, traits, { id = null, by = 1, floor = 1 } = {}) {
+    const eligible = handlerAfflictions(actor).filter(affliction => traits.some(trait => affliction.traits.includes(trait)));
+    const affliction = eligible.find(entry => entry.id === id) ?? eligible[0];
+    if (!affliction) return null;
+    const badge = nextAfflictionBadge(affliction, -by, floor);
+    if (badge != null && badge !== affliction.badge) await affliction.effect.update({ "system.badge.value": badge });
+    return { name: affliction.name, from: affliction.stage, to: badge == null ? affliction.stage : afflictionStage(badge, affliction.onset) };
+}
+
 function persistentPoison(actor) {
     return actor.itemTypes.condition.filter(condition => condition.slug === "persistent-damage" && condition.system.persistent?.damageType === "poison");
 }

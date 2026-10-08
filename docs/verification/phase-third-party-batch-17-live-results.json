@@ -1,0 +1,21 @@
+{
+ "label": "thirdPartyBatch17",
+ "passed": true,
+ "at": "2026-10-07T01:04:04.941Z",
+ "details": {
+  "thirdParty17": {
+   "hit": {
+    "asked": "pending",
+    "adjust": 13,
+    "total": 6,
+    "lost": 6,
+    "grabbed": true,
+    "repeat": null
+   },
+   "miss": {
+    "immune": true,
+    "grabbed": false
+   }
+  }
+ }
+}

@@ -1,0 +1,32 @@
+{
+ "label": "thirdPartyBatch37",
+ "passed": true,
+ "at": "2026-10-07T03:35:22.835Z",
+ "details": {
+  "thirdParty37": {
+   "cast": {
+    "status": "applied",
+    "formula": "(1+(2 - 1)*1)d6",
+    "type": "fire",
+    "inside": 5,
+    "outside": 0,
+    "pulses": [
+     10,
+     5
+    ]
+   },
+   "firstSustain": 8,
+   "secondSustain": 0,
+   "pulses": [
+    [
+     10,
+     5
+    ],
+    [
+     8,
+     8
+    ]
+   ]
+  }
+ }
+}

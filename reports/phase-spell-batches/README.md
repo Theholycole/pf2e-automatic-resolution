@@ -6,14 +6,14 @@ Each spell has one proposed primary worklist, explicit cross-phase signals, its 
 
 | Phase | Worklist | Primary entries | Enabled route | Not enabled | Including dependency signals |
 | --- | --- | --- | --- | --- | --- |
-| 2 | Outcome-specific Effects and conditions | 595 | 571 | 24 | 1329 |
-| 3 | Ongoing rules and recurring saves | 611 | 559 | 52 | 1511 |
-| 4 | Immediate resolution and choices | 240 | 229 | 11 | 981 |
-| 5 | Transformations | 63 | 54 | 9 | 63 |
-| 6 | Summons and created creatures | 56 | 35 | 21 | 56 |
-| 7 | Spatial effects and movement | 212 | 180 | 32 | 230 |
+| 2 | Outcome-specific Effects and conditions | 595 | 595 | 0 | 1330 |
+| 3 | Ongoing rules and recurring saves | 611 | 611 | 0 | 1511 |
+| 4 | Immediate resolution and choices | 240 | 240 | 0 | 981 |
+| 5 | Transformations | 63 | 63 | 0 | 63 |
+| 6 | Summons and created creatures | 56 | 56 | 0 | 56 |
+| 7 | Spatial effects and movement | 212 | 212 | 0 | 230 |
 | 8 | Rituals | 43 | 43 | 0 | 43 |
-| 9 | Catalog completion and unresolved classification | 50 | 49 | 1 | 50 |
+| 9 | Catalog completion and unresolved classification | 50 | 50 | 0 | 50 |
 
 The 51 primary Phase 9 entries are the unresolved assignment queue. **Leave these 51 review entries until last; current implementation proceeds through Phase 2 rule families.** See [the rider-family checkpoint](../../docs/verification/phase-2-rider-family.md) for the first completed expansion. **Phase 9 acceptance still covers all 1,870 entries**, as does the Phase 1 authority/correction framework wherever applicable.
 

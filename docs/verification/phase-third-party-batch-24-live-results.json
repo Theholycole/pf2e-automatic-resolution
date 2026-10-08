@@ -1,0 +1,56 @@
+{
+ "label": "thirdPartyBatch24",
+ "passed": true,
+ "at": "2026-10-07T02:24:50.693Z",
+ "details": {
+  "thirdParty24": {
+   "target": {
+    "formula": "2d12 electricity",
+    "total": 17,
+    "lost": 17
+   },
+   "card": true,
+   "savers": [
+    "tp24 arc mid",
+    "tp24 arc near"
+   ],
+   "spread": {
+    "formula": "2d6 electricity",
+    "total": 8,
+    "lost": [
+     8,
+     4,
+     0
+    ]
+   },
+   "noCardOnSuccess": true,
+   "lonely": {
+    "status": "none-within"
+   },
+   "visage": {
+    "enfeebled": 1,
+    "record": true,
+    "allySpec": true
+   },
+   "visageDebug": {
+    "distance": 10,
+    "after": {
+     "sustainedRound": 2,
+     "cards": [
+      "dnKWwP0vYJ5BBBGq"
+     ],
+     "status": "active",
+     "review": null
+    }
+   },
+   "allySavers": [
+    "tp24 visage ally"
+   ],
+   "ally": {
+    "frightened": 1,
+    "immune": true
+   },
+   "endedEnfeebled": 0
+  }
+ }
+}

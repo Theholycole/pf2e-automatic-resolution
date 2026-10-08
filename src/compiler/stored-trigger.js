@@ -106,6 +106,11 @@ export function extractStoredTrigger(adapted) {
 //   mental damage (with a basic Will save). The target is then temporarily immune for 1 minute." (once, on its next turn)
 // The caster's choice (the named creature, the locked action) is a note on the marker, which goes on the target.
 const HELD_REPEAT = /^The target takes (\d+d\d+|\d+) ([a-z]+) damage any time it (.+?), with a basic (Fortitude|Reflex|Will) save\.$/;
+// (Witches+'s Needle of Vengeance+: the damage as an inline roll — "@Damage[2[mental]] damage" — and a critical failure's condition: "On a critical failure,
+// the target also becomes Enfeebled 1 the first time it uses a hostile action against the named creature for the duration of the spell." — the save
+// that critically fails is that use's; the condition then lasts the spell.)
+const INLINE_DAMAGE = /@Damage\[(\d+d\d+|\d+)\[([a-z]+)\]\](?:\{[^}]*\})? damage/g;
+const HELD_CRITICAL = /^On a critical failure, the target also becomes (@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{[A-Za-z]+ \d\}) the first time it (.+?) for the duration of the spell\.$/;
 const HELD_NEXT_TURN = /^If the (?:creature|target) (.+?) on its next turn, (?:it must [a-z ]+ to do so, )?causing it to take (\d+d\d+|\d+) ([a-z]+) damage \(with a basic (Fortitude|Reflex|Will) save\)\.$/;
 const HELD_CHOICES = [
     /^Name yourself or one of your allies\.$/,
@@ -122,8 +127,9 @@ export function extractHeldTrigger(adapted) {
     const html = String(adapted.descriptionHTML ?? "");
     const body = html.split(/<strong\b[^>]*>\s*Heightened\b/i)[0];
     if (/<strong\b[^>]*>\s*(?:Critical Success|Success|Failure|Critical Failure)\s*<\/strong>/i.test(body)) return null;
-    const sentences = htmlToPlainText(body.replace(/<hr\b[^>]*>/gi, "")).replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s+(?=[A-Z"])/).filter(Boolean);
-    let trigger = null, repeats = null, immunity = null, narrated = 0;
+    const sentences = htmlToPlainText(body.replace(/<hr\b[^>]*>/gi, "")).replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s+(?=[A-Z"])/).filter(Boolean)
+        .map(sentence => sentence.replace(INLINE_DAMAGE, "$1 $2 damage"));
+    let trigger = null, repeats = null, immunity = null, narrated = 0, critical = null;
     const notes = [], narration = [];
     for (const sentence of sentences) {
         let match;
@@ -136,6 +142,7 @@ export function extractHeldTrigger(adapted) {
             trigger = `The target ${match[1]} on its next turn.`; repeats = false; continue;
         }
         if (HELD_CHOICES.some(pattern => pattern.test(sentence))) { notes.push(`The caster chooses: ${sentence}`); continue; }
+        if ((match = HELD_CRITICAL.exec(sentence)) && trigger && repeats && !critical && trigger === `The target ${match[2]}.`) { critical = match[1]; continue; }
         if ((match = HELD_IMMUNITY.exec(sentence)) && trigger && !immunity) { immunity = { value: Number(match[1]), unit: `${match[2]}s`, sourceText: sentence }; continue; }
         narration.push(sentence);
     }
@@ -150,11 +157,12 @@ export function extractHeldTrigger(adapted) {
     if (repeats ? !(sustained && durationSeconds) : (sustained || String(adapted.lifecycle?.duration ?? "").trim())) return null;
     const statistic = adapted.defense.statistic[0].toUpperCase() + adapted.defense.statistic.slice(1);
     return {
-        html: `<p>The target takes ${component.formula} ${String(component.type).toLowerCase()} damage with a basic ${statistic} save.</p>`,
+        // (The critical failure's condition for the spell's maximum; the card attaches it to the held spell's record, so it ends with the spell.)
+        html: `<p>The target takes ${component.formula} ${String(component.type).toLowerCase()} damage with a basic ${statistic} save.${critical ? ` If the target critically fails the save, it is also ${critical} for ${durationSeconds / 60} minute${durationSeconds === 60 ? "" : "s"}.` : ""}</p>`,
         target: String(adapted.targeting.target).trim(),
         storedTrigger: { held: true, trigger, endsOnTrigger: !repeats, notes, rowNotes: [], supersedes: false, sustained,
             durationSeconds, markerDuration: repeats ? null : { value: 1, unit: "rounds", expiry: "turn-end", anchor: "target-turn", offset: 1 },
-            immunity, castTarget: String(adapted.targeting.target).trim(), sourceText: trigger }
+            immunity, castTarget: String(adapted.targeting.target).trim(), sourceText: trigger, ...(critical ? { attachConditions: true } : {}) }
     };
 }
 
@@ -353,7 +361,10 @@ export function extractPactTrigger(adapted) {
         html: `<p>The target must attempt a ${statistic} save.</p><hr />${rows}`,
         target: "1 creature",
         storedTrigger: { held: true, trigger: "The target takes a hostile action against you or an ally.", endsOnTrigger: false, sustained: true, durationSeconds, markerDuration: null,
-            notes: [`If the target accepted and stays peaceful, the caster takes a –${PACT_PEACE.exec(preamble[peace])[1]} status penalty to Deception checks to Lie to it.`],
+            notes: [`If the target accepted and stays peaceful, the caster takes a –${PACT_PEACE.exec(preamble[peace])[1]} status penalty to Deception checks to Lie to it (the caster's Effect: switch on “The target accepted the pact”).`],
+            // (The caster's penalty, by the module: an Effect for the spell's time whose toggle the caster switches on once the target accepts.)
+            casterRules: { toggle: { option: "pact-accepted", label: "The target accepted the pact (a Lie to it)" },
+                rules: [{ key: "FlatModifier", selector: "deception", type: "status", value: -Number(PACT_PEACE.exec(preamble[peace])[1]), predicate: ["pact-accepted", "action:lie"] }] },
             rowNotes: [], supersedes: false, immunity: { value: Number(immune[1]), unit: `${immune[2]}s`, sourceText: preamble[peace + 3] },
             castTarget: String(adapted.targeting.target).trim(), sourceText: preamble[peace + 1] },
         heldDuration: { value: durationSeconds % 60 === 0 ? durationSeconds / 60 : durationSeconds / 6, unit: durationSeconds % 60 === 0 ? "minutes" : "rounds" },
@@ -585,5 +596,48 @@ export function extractMirrorTrigger(adapted) {
                 `An attack that fails (not critically) destroys a ${noun}; if the attacker was within ${save.range} feet, it saves.`, `A damaging effect on everything in your space destroys all the ${noun}s.`],
             rowNotes: [], supersedes: false, sustained: true, durationSeconds, markerDuration: null,
             images: { noun, start: grow.start, max, perSustain: 1, odds, range: save.range }, castTarget: null, saveTarget: "attacker", sourceText: save.sourceText }
+    };
+}
+
+// A rune that waits for a creature, then makes every creature near it save (Oracles+'s Unknowable Icon): "Domain glyph (apocryphal)" / "You place a rune on a
+// 5-foot square of a flat surface within your reach which remains dormant until a living creature other than you comes within 10 feet of it." / "After a
+// creature comes within 10 feet, the rune becomes active after 1 round has passed and all creatures in a 10-foot emanation of the rune must attempt a basic
+// Will Save or take 1d12 mental and 1d4 spirit damage." / "On a critical failure, the creature is also Frightened 2." / "Heightened (+1) The damage increases
+// by 1d12 mental and 1d4 spirit." Casting sets the marker; its Trigger control (the GM's, when the rune activates) opens one basic save card for every creature
+// the GM targets near the rune. The item's save isn't marked basic; the text's is (the text wins).
+const RUNE_PLACE = /^You place a rune on a 5-foot square of a flat surface within your reach which remains dormant until a living creature other than you comes within (\d+) feet of it\.$/;
+const RUNE_ACTIVE = /^After a creature comes within (\d+) feet, the rune becomes active after (\d+) round has passed and all creatures in a (\d+)-foot emanation of the rune must attempt a basic (Fortitude|Reflex|Will) Save or take (\d+d\d+) ([a-z]+) and (\d+d\d+) ([a-z]+) damage\.$/i;
+const RUNE_CRITICAL = /^On a critical failure, the creature is also (@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{[A-Za-z]+ \d\})\.$/;
+const RUNE_STEP = /^Heightened \(\+(\d+)\) The damage increases by (\d+d\d+) ([a-z]+) and (\d+d\d+) ([a-z]+)\.$/;
+export function extractRuneTrigger(adapted) {
+    if (adapted.defense?.kind !== "save" || adapted.targeting?.area?.type !== "emanation" || !/^1 flat surface$/i.test(String(adapted.targeting?.target ?? "").trim())) return null;
+    const durationSeconds = seconds(adapted.lifecycle?.duration);
+    const components = adapted.damageComponents ?? [];
+    const parts = String(adapted.descriptionHTML ?? "").split(/<hr\b[^>]*>/i);
+    const domain = /^\s*<p>\s*<strong>\s*Domain\s*<\/strong>[^<]*<\/p>\s*$/i.test(parts[0] ?? "") ? parts.shift() : null;
+    const [body, heightened, ...rest] = parts;
+    if (!durationSeconds || rest.length || components.length !== 2 || components.some(component => component.category)) return null;
+    const links = [];
+    const sentences = htmlToPlainText(String(body ?? "").replace(/@UUID\[[^\]]+\]\{[^}]+\}/g, link => `@@${links.push(link) - 1}@@`)).replace(/\s+/g, " ").trim()
+        .split(/(?<=[.!?])\s+(?=[A-Z@])/).filter(Boolean).map(sentence => sentence.replace(/@@(\d+)@@/g, (_, index) => links[Number(index)]));
+    const narrated = sentences.length === 4 && !RULE_WORDS.test(sentences[0]) ? sentences.slice(1) : sentences;
+    const place = RUNE_PLACE.exec(narrated[0] ?? ""), active = RUNE_ACTIVE.exec(narrated[1] ?? ""), critical = RUNE_CRITICAL.exec(narrated[2] ?? "");
+    if (narrated.length !== 3 || !place || !active || !critical || active[4].toLowerCase() !== adapted.defense.statistic || Number(active[3]) !== Number(adapted.targeting.area.value)) return null;
+    const dealt = [[active[5], active[6]], [active[7], active[8]]];
+    const byDealt = dealt.map(([formula, type]) => components.find(component => String(component.formula).replace(/\s+/g, "") === formula && String(component.type).toLowerCase() === type));
+    if (byDealt.some(component => !component) || byDealt[0] === byDealt[1]) return null;
+    const step = RUNE_STEP.exec(htmlToPlainText(heightened ?? "").replace(/\s+/g, " ").trim());
+    if (heightened != null && (!step || adapted.heightening?.type !== "interval" || Number(adapted.heightening.interval) !== Number(step[1])
+        || [[step[2], step[3]], [step[4], step[5]]].some(([dice, type], index) => dealt[index][1] !== type || String(adapted.heightening.damage?.[byDealt[index].id] ?? "").replace(/\s+/g, "") !== dice))) return null;
+    const statistic = active[4][0].toUpperCase() + active[4].slice(1).toLowerCase();
+    return {
+        html: `<p>The target takes ${dealt.map(([formula, type]) => `${formula} ${type} damage`).join(" and ")} with a basic ${statistic} save. If the target critically fails the save, it is also ${critical[1]}.</p>`,
+        target: "1 creature",
+        defense: { ...adapted.defense, basic: true },
+        storedTrigger: { trigger: `The rune activates: 1 round after a living creature other than you comes within ${place[1]} feet of it.`, endsOnTrigger: true, area: true,
+            notes: [`Place the rune on a 5-foot square of a flat surface within your reach. When it activates, use “Trigger” in Ongoing spells with every creature within ${active[3]} feet of the rune targeted: each attempts the basic ${statistic} save.`,
+                "The item's save isn't marked basic; the text's is, so it's rolled as a basic save."],
+            rowNotes: [], supersedes: false, durationSeconds, markerDuration: null, castTarget: "1 flat surface", sourceText: narrated[1] },
+        claimed: [...(domain ? [htmlToPlainText(domain).trim()] : []), ...sentences, ...(step ? [step[0]] : [])]
     };
 }

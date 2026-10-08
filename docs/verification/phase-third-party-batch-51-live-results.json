@@ -1,0 +1,40 @@
+{
+ "label": "thirdPartyBatch51",
+ "passed": true,
+ "at": "2026-10-07T05:32:46.983Z",
+ "details": {
+  "thirdParty51": {
+   "failure": {
+    "formula": "6d10",
+    "sustained": true,
+    "minutes": "minutes",
+    "bleed": [
+     "6d10 bleed"
+    ],
+    "status": "applied",
+    "protected": {
+     "status": "immune",
+     "bleed": []
+    }
+   },
+   "critical": {
+    "formula": "(6d10)*2",
+    "bleed": [
+     "(6d10 * 2) bleed"
+    ]
+   },
+   "success": {
+    "formula": "floor((6d10)/2)",
+    "bleed": [
+     "floor((6d10)/2) bleed"
+    ],
+    "rounds": "1 rounds",
+    "sustained": false
+   },
+   "critSuccess": {
+    "share": null,
+    "effect": null
+   }
+  }
+ }
+}

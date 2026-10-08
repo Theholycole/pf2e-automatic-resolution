@@ -120,6 +120,8 @@ export function analyzeResidualProse(outcome, {degree, inlinePersistentProof, ge
         if (/\b(?:unaffected|no effect|nothing happens)\b/i.test(text)
             || harmlessImpression(text, outcome)) compiled.push("no-effect");
         if (/\bso afraid\b[^.!?]*\bmight (?:instantly )?die\b/i.test(text)) compiled.push("narrative-context");
+        // (A row's narration a reader named — Planar Court's "Not only are your claims refuted, …" — with no rule in it.)
+        if ((outcome?.narration ?? []).includes(text) && !signals.length) compiled.push("narrative-context");
         // "You can Dismiss the spell." inside a row: the cast's Dismiss (compileSaveDismissal reads the one sentence).
         if (/^You can Dismiss (?:the|this) spell\.$/.test(text)) { compiled.push("cast-dismissal"); guided = []; }
         // "After the spell ends, the target doesn't necessarily realize it was charmed unless …" / "If it doesn't realize you
@@ -216,6 +218,11 @@ export function analyzeResidualProse(outcome, {degree, inlinePersistentProof, ge
         // A condition chosen by a roll ("either clumsy 1, enfeebled 1, or stupefied 1 …, depending on the result of the d4").
         const rolledChoiceClaimed = (outcome?.conditionRollClaims ?? []).includes(text);
         if (rolledChoiceClaimed) compiled.push("rolled-condition-choice");
+        // ("… is Drained 1 or increases its drained value by 1 if it was already drained.": the row's condition increase.)
+        if ((outcome?.conditionIncreases ?? []).some(increase => text.includes(increase.sourceText))) { compiled.push("condition-increase"); guided = guided.filter(kind => kind !== "conditional-effect"); }
+        // (Realityflicker's critical failure: "If they would get the same condition twice, you can treat the second result as if they had rolled a 4." is the second
+        // roll's own rule — a repeat becomes the caster's choice.)
+        if (rolledChoiceClaimed && /^If they would get the same condition twice, you can treat the second result as if they had rolled a \d\.$/.test(text)) guided = [];
         // The caster's choice between two conditions the row grants (asked on the card).
         const casterConditionClaimed = (outcome?.conditionChoiceClaims ?? []).includes(text);
         if (casterConditionClaimed) compiled.push("caster-condition-choice");
@@ -288,6 +295,13 @@ export function analyzeResidualProse(outcome, {degree, inlinePersistentProof, ge
             if (/^The (?:target|creature) is unaffected and realized you attempted to influence its reaction with magic\.$/.test(text) && signal === "action") return false;
             // ("If it has actions left, it can act normally." after the row's note: normal play.)
             if (compiled.includes("restatement") && signal === "action") return false;
+            // (A third-party row's flat check on the creature's actions — "it must succeed at a DC 5 flat check or it is lost" — its note's castFlatCheck.)
+            // (Or the GM's flat check a note tells: Bewilder's on each hostile action.)
+            if (signal === "save" && /\bflat\|dc:\d+/.test(text) && (outcome?.noteEffects ?? []).some(note => note.claimsRow === true && (note.castFlatCheck || (note.gmPlays && /\bflat check\b/.test(note.text ?? "")))
+                && String(note.sourceText ?? "").includes(text))) return false;
+            // (A third-party row's generated Effect whose rules state a weakness or the next save rolled twice: third-party-rows.js.)
+            if (["damage", "save"].includes(signal) && (outcome?.damage?.mode ?? "none") === "none" && (outcome?.noteEffects ?? []).some(note => note.claimsRow === true && note.statedRules === true
+                && String(note.sourceText ?? "").includes(text) && (signal === "damage" ? note.rules.some(rule => rule.key === "Weakness") : note.rules.some(rule => rule.key === "RollTwice" && [rule.selector].flat().includes("saving-throw"))))) return false;
             if ((outcome?.noteEffects ?? []).some(note => note.claimsRow === true && String(note.sourceText ?? "").includes(text))
                 && (!["damage", "save"].includes(signal) || (signal === "damage" && (outcome?.noteEffects ?? []).some(note => (note.otherSpellsDamage || note.triggeredDamage) && note.sourceText.includes(text))
                     && (outcome?.damage?.mode ?? "none") === "none"))) return false;
@@ -342,6 +356,19 @@ export function analyzeResidualProse(outcome, {degree, inlinePersistentProof, ge
             // A whole-row note carrying a flat check the creature rolls when it acts ("must succeed at a @Check[flat|dc:11] to Cast a Spell …").
             if (noteClaimed && ["save", "modifier"].includes(signal) && /\bmust succeed at a @Check\[flat\|dc:\d+\] (?:to|when)\b/.test(text)
                 && (outcome?.noteEffects ?? []).some(note => note.flatCheckOnAct === true && String(note.sourceText ?? "").includes(text))) return false;
+            // A note with the creature's own save control (Drown's "can Interact to … attempt a new Fortitude save to end the effect"; Kinetic Tow's "a new
+            // Fortitude save against the effect by spending an Interact action", "can choose to use its modifier in Athletics for its Fortitude save"): its endSave.
+            if (noteClaimed && signal === "save" && /\b(?:attempt a new (?:Fortitude|Reflex|Will) save (?:to end|against) the effect|for its (?:Fortitude|Reflex|Will) save)\b/.test(text)
+                && (outcome?.noteEffects ?? []).some(note => note.endSave && note.claimsRow === true && String(note.sourceText ?? "").includes(text))) return false;
+            // A save the GM rolls when the row's circumstance arises (Eternal Slumber's "does not automatically wake up … unless they succeed at a Will save"):
+            // its GM-played note says the GM rolls it.
+            // (Or Sudden Outbreak's saves against its diseases — PF2e's afflictions, the GM's.)
+            if (noteClaimed && signal === "save" && /\b(?:unless (?:they|it) succeeds? at an? (?:Fortitude|Reflex|Will) save|save (?:against the DC of one of its diseases )?to progress|(?:critical success at|critically succeeds at) its save to progress|must attempt an additional (?:Fortitude|Reflex|Will) save at the beginning of each of its turns)\b/.test(text)
+                && (outcome?.noteEffects ?? []).some(note => note.gmPlays === true && note.claimsRow === true && /\(the GM rolls it\)/.test(note.text ?? "") && String(note.sourceText ?? "").includes(text))) return false;
+            // A penalty to saves the note's modifier carries (Summon Jury's "status penalty to its next saving throw", "… and to its save against the Depart effect").
+            if (noteClaimed && signal === "save" && /\bstatus penalty to (?:its next saving throw|saving throws|attack rolls for \d+ rounds? and to its save against)\b/.test(text)
+                && (outcome?.noteEffects ?? []).some(note => note.claimsRow === true && String(note.sourceText ?? "").includes(text)
+                    && (note.rules ?? []).some(rule => rule.key === "FlatModifier" && [rule.selector].flat().includes("saving-throw")))) return false;
             // A note whose end-of-turn save shortens it ("… attempt a new Will save to reduce the remaining duration by 1 round …").
             if (noteClaimed && ["save", "duration", "timing"].includes(signal) && (outcome?.noteEffects ?? []).some(note => note.recurringSave && String(note.sourceText ?? "").includes(text))) return false;
             // A behaviour note tied to the row's condition ("can't end a move action within 10 feet of …"): a restriction, not forced movement.

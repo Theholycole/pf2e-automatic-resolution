@@ -6478,6 +6478,411 @@
         "MLYTWHfewOpI3Cz7"
       ],
       "verification": "../../docs/verification/phase-rank-6-batch-20.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 7 batch 12: lasting notes, table persistent save, bleed-rising condition",
+      "spellIds": [
+        "qO4xOJ0kAvhVGDpX",
+        "dKWc83KKiXoIJkhp",
+        "ZZTLWMXijRDgE66m"
+      ],
+      "verification": "../../docs/verification/phase-rank-7-batch-12.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 8 batch 8: trapped notes, strike escalation",
+      "spellIds": [
+        "qOeBQyC1z7OScHvP",
+        "wTYxxYJWN348oV15"
+      ],
+      "verification": "../../docs/verification/phase-rank-8-batch-8.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 9 batch 6: level-limited death line with backlash",
+      "spellIds": [
+        "10VcmSYNBrvBphu1"
+      ],
+      "verification": "../../docs/verification/phase-rank-9-batch-6.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 8 batch 9: flyers slammed down, everyone saves",
+      "spellIds": [
+        "vm9O7ne48NM72yrJ"
+      ],
+      "verification": "../../docs/verification/phase-rank-8-batch-9.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 7 batch 13: draining darkness field with spared allies",
+      "spellIds": [
+        "sFwoKj0TsacsmoWj"
+      ],
+      "verification": "../../docs/verification/phase-rank-7-batch-13.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 8 batch 10: GM-handled ruling with GM options",
+      "spellIds": [
+        "x7SPrsRxGb2Vy2nu",
+        "xxhS66k68u5iIOHC",
+        "ljo9CEmnCMZXqfOQ",
+        "A7NXFVgENRVtYoe3",
+        "rillrYLb7V2mRyU7",
+        "7zJxrjhK1LasSjSw",
+        "VbP3EPkHDvDKX3eM",
+        "BI4iwu3nApyIG0zY",
+        "9dyWP9RGCFwunGEo",
+        "5uWwusDkfmOOlZjK",
+        "r784cIz17eWujtQj",
+        "y2cQYLr5mljDSu1G",
+        "oKC36WjFD1jgqUN5",
+        "3KiM09e8DN9AdTPA",
+        "kLxJx7BECVgHh2vb",
+        "VUMtDHr8CRwwr3Mj"
+      ],
+      "verification": "../../docs/verification/phase-rank-8-batch-10.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 8 batch 11: incarnates by parts (group 1)",
+      "spellIds": [
+        "ion3VOiLan6ga3QC",
+        "jQgX7zChqjFrU7Q1",
+        "WRP8TDf36hqHyGv1",
+        "JEMSVySuS4jvTepQ",
+        "Ywe64VHwcBOAWBtq",
+        "u8ve6wRt7VlHKP64",
+        "bIz6QnUIxu5Z7vEH",
+        "fH7LQX5yaRf9zBOm",
+        "BINaRykHRLGn4Qfm",
+        "JAaETUBg0xlttpCH",
+        "kIRWUBxocERjIBni",
+        "kVNo3ga0lwLKPrem",
+        "4ONjK2hoMBmuAAyk",
+        "l2YoqVPoFE7jpTLe",
+        "HEuvZAjD1q0J8Y5i",
+        "wZ1rsLrWfYtMZfgv",
+        "i6GUJCWdNu2278oA",
+        "2EIUqc8TCTQimggQ",
+        "tgJTm276cikEL8vU"
+      ],
+      "verification": "../../docs/verification/phase-rank-8-batch-11.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 7 batch 14: control (group 2a)",
+      "spellIds": [
+        "mBYqtWpvOT4oBm4Q",
+        "wU6hNzK8Yfqdmc8m",
+        "yZpWaJzm7kUjKvlQ",
+        "IGXGs9PlqUCvODcH"
+      ],
+      "verification": "../../docs/verification/phase-rank-7-batch-14.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 7 batch 15: conjured tokens and copies (group 2b)",
+      "spellIds": [
+        "eAOClJ1KRSPik8SX",
+        "73rToy0v5Ra9NvL6",
+        "jtvMJEkiads8a4zj",
+        "HES5jvGiNZZnJycK",
+        "Cpj05laa7ogqGwS3"
+      ],
+      "verification": "../../docs/verification/phase-rank-7-batch-15.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 6 batch 21: group 2 rest (summons, forms, triggered strikes)",
+      "spellIds": [
+        "rTvNWcKNpOnGklGF",
+        "Z82DvtSXafPmh4KV",
+        "EOWh6VVcSjB3WPjX",
+        "kwlKUxEuT8T15YW6",
+        "x1YwD1E9LW8upBj6",
+        "ZqmP9gijBmK7y8Xy",
+        "jj5d830iUi2ZlQfs"
+      ],
+      "verification": "../../docs/verification/phase-rank-6-batch-21.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 7 batch 16: group 3 part 1 \u2014 save-once auras with degree rows; Indolent Haze's lingering rows",
+      "spellIds": [
+        "29tJyuEfFP43lMcM",
+        "yrZA4k2VAqEP8xx7",
+        "xh6hPMDx2n4OaBU7"
+      ],
+      "verification": "../../docs/verification/phase-rank-7-batch-16.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 8 batch 14: group 3 part 2 \u2014 lingering areas that move creatures; living-only terrain, draining center, GM mark",
+      "spellIds": [
+        "0fjz8qc9NfkmWmJZ",
+        "8hKW4mWQyLnkHVta",
+        "AoRVRNaLpHZyhoSt",
+        "o4ew3prcQTQ8suoa"
+      ],
+      "verification": "../../docs/verification/phase-rank-8-batch-14.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 10 batch 2: group 3 part 3 \u2014 save-once aura rows outside the area, placed greater terrain, lingering condition choice, note-held degree adjustment",
+      "spellIds": [
+        "Um0aaJotqMKGmAlR",
+        "jtACJQc6n9ZaG9kA",
+        "hvKtmoHwekDZ5iOH",
+        "kk7JKox6MdGAWmCH"
+      ],
+      "verification": "../../docs/verification/phase-rank-10-batch-2.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 7 batch 17: group 3 part 4 \u2014 a lingering region following the caster, sustained caster Effects, the shadows' area",
+      "spellIds": [
+        "YtJXpiu4ijkB6nP2",
+        "VTb0yI6P1bLkzuRr"
+      ],
+      "verification": "../../docs/verification/phase-rank-7-batch-17.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 9 batch 7: group 3 part 5 \u2014 note Effects ended by damage, turn-start attacks; Blessed Boundary's spaced formula",
+      "spellIds": [
+        "O7ZEqWjwdKyo2CUv",
+        "Tc5NLaMu71vrGTJQ",
+        "jj5d830iUi2ZlQfs"
+      ],
+      "verification": "../../docs/verification/phase-rank-9-batch-7.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 9 batch 8: end of group 3 \u2014 hazard parts, rolled tables by degree, exposure damage, lingering afflictions",
+      "spellIds": [
+        "kWDt0JcKPgX6MvdD",
+        "FmNDwqMEjeTEGPrY",
+        "Q6cvsLytYffpeN3g"
+      ],
+      "verification": "../../docs/verification/phase-rank-9-batch-8.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 8 batch 15: group 4 part 1 \u2014 lasting states as row notes; half Strikes, saves better against the caster, turn-start flat checks",
+      "spellIds": [
+        "YiIOsc8T6E2iDxgh",
+        "6s0UW4bujggma9TC",
+        "dN8QBNuTiaBHCKUe",
+        "m815cJACTzePdZAG"
+      ],
+      "verification": "../../docs/verification/phase-rank-8-batch-15.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 6 batch 22: group 4 part 2 \u2014 keyed GM questions, condition-linked weakness notes",
+      "spellIds": [
+        "L13n9NKvfGLApse1",
+        "g2V4ID0pl1ZGAxZj",
+        "hvV6IruyW4MAr0Ub",
+        "XULNb8ItUsfupxqH"
+      ],
+      "verification": "../../docs/verification/phase-rank-6-batch-22.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 9 batch 9: group 4 lasting curses",
+      "spellIds": [
+        "ReUoodsqUYSTwSgE",
+        "DOBs5ALM1titPYxe",
+        "BokwLLK7OjK6ggHs",
+        "fkDeKktdmbeplYRY",
+        "z39jFoNJrobyn3MQ"
+      ],
+      "verification": "../../docs/verification/phase-rank-9-batch-9.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 8 batch 16: group 5 battle forms",
+      "spellIds": [
+        "8AMvNVOUEtxBCDvJ",
+        "ZXwxs5tRjEGrjAJT",
+        "YDMOqndvYFu3OjA6"
+      ],
+      "verification": "../../docs/verification/phase-rank-8-batch-16.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 7 batch 18: group 5 battle forms",
+      "spellIds": [
+        "9aFg4EuOBVz0i3Lb",
+        "TbYqDhlNRiWHe146"
+      ],
+      "verification": "../../docs/verification/phase-rank-7-batch-18.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 9 batch 10: group 5 battle forms",
+      "spellIds": [
+        "KY2xyMavZHAoG69D"
+      ],
+      "verification": "../../docs/verification/phase-rank-9-batch-10.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 6 batch 23: group 5 battle forms",
+      "spellIds": [
+        "m34WOIGZCEg1h76G",
+        "vF52ktg0wUIAlf57"
+      ],
+      "verification": "../../docs/verification/phase-rank-6-batch-23.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 10 batch 3: group 5 battle forms",
+      "spellIds": [
+        "ckUOoqOM7Kg7VqxB",
+        "pswdik31kuHEvdno"
+      ],
+      "verification": "../../docs/verification/phase-rank-10-batch-3.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 6 batch 24: group 7 teleports",
+      "spellIds": [
+        "OOMQ8Z6EIrGt5NJ6",
+        "c3XygMbzrZMgV1y3",
+        "AsRd1gNRSkHDq2Jx",
+        "gtWxTfMbIN5RHQw6",
+        "KESXD0D8XNDGzHBM"
+      ],
+      "verification": "../../docs/verification/phase-rank-6-batch-24.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 8 batch 17: group 7 teleports",
+      "spellIds": [
+        "yWySiasyPZcRoe4d",
+        "XOs8C2eZJAO3go0N",
+        "8fEfjvC01gNclDKJ",
+        "XB65dUQipPCTNNIY"
+      ],
+      "verification": "../../docs/verification/phase-rank-8-batch-17.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 9 batch 11: group 8 mode cards",
+      "spellIds": [
+        "XYhU3Wi94n1RKxTa",
+        "yLJROsQtyrPIKcDx",
+        "r4HLQcYwB62bTayl",
+        "3ZxaIw1FOOocJboH",
+        "smiVuoFMSgY2FTOO",
+        "oGV6YdpZLIG4G4gH"
+      ],
+      "verification": "../../docs/verification/phase-rank-9-batch-11.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 7 batch 19: group 8 mode cards",
+      "spellIds": [
+        "oahqARSgOGDRybBQ",
+        "tPtTKe0X1dDwoDmQ"
+      ],
+      "verification": "../../docs/verification/phase-rank-7-batch-19.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 10 batch 4: group 9 blast cards",
+      "spellIds": [
+        "jrBa9deU2ULFWvSl",
+        "A125k5hYixepbzNb",
+        "wLIvH0AT1u7oa64N",
+        "sbhjhvWaqyXJKvpH",
+        "moTWtlU84IScjnCh"
+      ],
+      "verification": "../../docs/verification/phase-rank-10-batch-4.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 8 batch 18: group 9 prismatic cards",
+      "spellIds": [
+        "d6o52BnjViNz7Gub",
+        "0AZOIMRvZtePuGOw",
+        "iL6TujgTCtRRa0Y0"
+      ],
+      "verification": "../../docs/verification/phase-rank-8-batch-18.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 7 batch 20: group 10 attack shapes",
+      "spellIds": [
+        "nPxYYID5JARKouSV",
+        "x9RIFhquazom4p02",
+        "TAbIOB0jhyKptemK",
+        "qYoukjLwXdEbPQaW",
+        "g1dDUKsIrdlpdqy9",
+        "LmGCKwk2yYhrDVjE",
+        "axYqY70kYu2lN20R"
+      ],
+      "verification": "../../docs/verification/phase-rank-7-batch-20.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 8 batch 19: group 11 triggers",
+      "spellIds": [
+        "B0Ng2VlhEJMuUXUH",
+        "flKde7BHrZnRheMl",
+        "NhGXgmI3AjkkwnPk",
+        "T5Mt4jXFuh14uREv",
+        "2a8wiTxvBhcMbMU5",
+        "Ovvflf5aFbmBxqq8",
+        "KADeCawMG6WAzYHa"
+      ],
+      "verification": "../../docs/verification/phase-rank-8-batch-19.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 10 batch 5: group 13 revival",
+      "spellIds": [
+        "IkGYwHRLhkuoGReG",
+        "HpIJTVqgXorH9X0L",
+        "M5dp7ILSCKID9fDK",
+        "4MOew29Z1oCX8O28"
+      ],
+      "verification": "../../docs/verification/phase-rank-10-batch-5.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 6 batch 25: group 14 pickup items",
+      "spellIds": [
+        "kuoYff1csM5eAcAP",
+        "u5FAOOXuqK7fLqKW",
+        "txxm6Rj6jNxcFSQ9"
+      ],
+      "verification": "../../docs/verification/phase-rank-6-batch-25.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 9 batch 12: groups 15-16",
+      "spellIds": [
+        "JbAcSLu62TU1OgNF",
+        "AlbpWWN87yGegoAF",
+        "fusrsBS7pb2KxYi4",
+        "ugysbQQWGvVq7iu8"
+      ],
+      "verification": "../../docs/verification/phase-rank-9-batch-12.md"
+    },
+    {
+      "date": "2026-09-30",
+      "family": "Rank 9 batch 13: user answers 2026-10-05",
+      "spellIds": [
+        "wLIvH0AT1u7oa64N",
+        "8AMvNVOUEtxBCDvJ"
+      ],
+      "verification": "../../docs/verification/phase-rank-9-batch-13.md"
     }
   ]
 }

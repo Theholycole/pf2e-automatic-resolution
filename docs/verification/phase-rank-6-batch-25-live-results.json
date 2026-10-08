@@ -1,0 +1,43 @@
+{
+  "label": "rank6Batch25",
+  "passed": true,
+  "at": "2026-10-05T07:24:46.133Z",
+  "details": {
+    "batch25": {
+      "seeds": {
+        "start": 4,
+        "left": 2,
+        "first": 15,
+        "second": 15,
+        "caught": [
+          2,
+          1
+        ],
+        "shapes": 2,
+        "sameFlames": true,
+        "noFlamesYet": true,
+        "walker": {
+          "first": 7,
+          "again": 0
+        }
+      },
+      "tree": {
+        "lost": 28,
+        "type": true,
+        "again": true
+      },
+      "bounty": {
+        "healed": 16,
+        "rolled": 16,
+        "clumsy": 0,
+        "enfeebled": 0,
+        "stupefied": 0,
+        "ash": true,
+        "affliction": {
+          "from": 3,
+          "to": 2
+        }
+      }
+    }
+  }
+}

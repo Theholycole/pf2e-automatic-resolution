@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-10-06T00:22:14.265Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "spellFeaturesBatch1",
+      "passed": true,
+      "at": "2026-10-06T00:22:03.548Z",
+      "details": {
+        "features1": {
+          "perspective": {
+            "formula": "{(2d10 + 5)[mental]}",
+            "lost": 18
+          },
+          "cry": {
+            "formula": "1d6 + 5 sonic",
+            "total": 11,
+            "lost": 11
+          }
+        }
+      }
+    }
+  ]
+}

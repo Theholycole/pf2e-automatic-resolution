@@ -1,0 +1,29 @@
+{
+ "label": "thirdPartyBatch49",
+ "passed": true,
+ "at": "2026-10-07T05:22:41.863Z",
+ "details": {
+  "thirdParty49": {
+   "crit": {
+    "degree": "criticalSuccess",
+    "value": 1,
+    "anatomy": false,
+    "athletics": 1,
+    "effect": "Instant Surgery: Strength +1, Wisdom +1"
+   },
+   "hit": {
+    "degree": "success",
+    "value": 2,
+    "fortitude": -2,
+    "effect": "Instant Surgery: Dexterity +2, Constitution –2"
+   },
+   "refused": true,
+   "anatomy": {
+    "anatomy": true,
+    "degree": "failure",
+    "effect": null,
+    "circumstance": true
+   }
+  }
+ }
+}

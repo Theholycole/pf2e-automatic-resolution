@@ -1,0 +1,63 @@
+{
+  "generatedAt": "2026-10-05T11:05:22.701Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "spellshapeBatch5",
+      "passed": true,
+      "at": "2026-10-05T11:02:35.087Z",
+      "details": {
+        "spellshape5": {
+          "widen": {
+            "area": {
+              "type": "burst",
+              "from": 20,
+              "to": 25
+            },
+            "at20": 25,
+            "at25": 25,
+            "off": true
+          },
+          "growth": {
+            "area": {
+              "type": "line",
+              "from": 120,
+              "to": 135
+            },
+            "placed": 135
+          },
+          "spiritual": {
+            "type": "burst",
+            "from": 20,
+            "to": 25
+          },
+          "wandToggle": true,
+          "wand": {
+            "area": {
+              "type": "cone",
+              "from": 15,
+              "to": 20
+            },
+            "placed": 20,
+            "read": "wand",
+            "off": true
+          },
+          "reaching": [
+            "wand:ok",
+            "wand:it isn't cast at rank 1"
+          ],
+          "Reach Spell": "true,",
+          "Familiar Conduit": "true,",
+          "Seneschal Spell": "true,",
+          "noGmNote": true,
+          "reachDead": true,
+          "touch": [
+            true,
+            false
+          ]
+        }
+      }
+    }
+  ]
+}

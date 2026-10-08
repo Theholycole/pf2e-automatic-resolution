@@ -1,6 +1,6 @@
 # Condition and ongoing coverage ledger
 
-1128 structural candidates from 1994 installed spell/ritual documents. This is a discovery ledger, not a support count. A runtime-ready plan still needs outcome/lifetime evidence. Later-phase mechanics and rituals remain separately scoped. Ongoing-profile rows use a separate adapter; their listed compiler gates describe the generic compiler, not that adapter.
+1112 structural candidates from 1994 installed spell/ritual documents. This is a discovery ledger, not a support count. A runtime-ready plan still needs outcome/lifetime evidence. Later-phase mechanics and rituals remain separately scoped. Ongoing-profile rows use a separate adapter; their listed compiler gates describe the generic compiler, not that adapter.
 
 | Spell | Family | Runtime route | Current expansion evidence | Remaining compiler gates |
 | --- | --- | --- | --- | --- |
@@ -347,18 +347,16 @@
 | Wooden Fists | native-effects | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Word of Truth | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Zenith Star | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Cataclysm | save-outcomes | not-executable-save | not verified in this expansion | description-effects, description-target-predicates, description-lifecycle |
-| Dragon Turret | sustained | not-executable-save | not verified in this expansion | description-effects, description-target-predicates, description-lifecycle, area-paragraph |
-| Fabricated Truth | save-outcomes | not-executable-save | not verified in this expansion | residual-prose, preamble:counteract, preamble:restriction, item-duration-grammar |
+| Dragon Turret | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Fabricated Truth | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Gate | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Pied Piping | save-outcomes | not-executable-save | not verified in this expansion | residual-prose, preamble:temporary-immunity, preamble:conditional-eligibility, preamble:ongoing-trigger, preamble:modifier |
-| Planar Collision | save-outcomes | not-executable-save | not verified in this expansion | description-effects, description-target-predicates, description-lifecycle |
+| Nature Incarnate | native-effects | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Primal Herd | native-effects | not-executable-save | not verified in this expansion | target-eligibility |
-| Revival | sustained | not-executable-save | not verified in this expansion | no-primary-save, description-semantics, target-eligibility |
-| Shadow Army | save-outcomes | not-executable-save | not verified in this expansion | residual-prose, preamble:additional-condition |
-| Song of the Fallen | sustained | not-executable-save | not verified in this expansion | basic-save-without-structured-damage, description-semantics, target-eligibility |
-| Tear the Veil | sustained | not-executable-save | not verified in this expansion | manual:forced-movement, manual:conditional-effect, residual-prose, preamble:terrain, preamble:recipient-qualifier |
-| Veil of Broken Reality | save-outcomes | not-executable-save | not verified in this expansion | residual-prose, preamble:temporary-immunity, preamble:conditional-eligibility, preamble:ongoing-trigger, area-paragraph |
+| Revival | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Shadow Army | save-outcomes | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Song of the Fallen | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Tear the Veil | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Veil of Broken Reality | native-effects | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Acid Arrow | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Acid Grip | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Advanced Scurvy | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
@@ -934,41 +932,36 @@
 | Ancestral Form | sustained | not-executable-save | not verified in this expansion | direct-effect:referenced-action, direct-effect:condition-interaction |
 | Arrow Salvo | save-outcomes | compiled-save | critical damage and native Prone | Runtime/lifecycle audit required |
 | Ash Form | native-effects | not-executable-save | not verified in this expansion | direct-effect:inline-damage |
-| Aura of the Unremarkable | sustained | not-executable-save | not verified in this expansion | residual-prose, preamble:recipient-qualifier |
+| Aura of the Unremarkable | sustained | not-executable-save | not verified in this expansion | preamble:recipient-qualifier |
 | Awaken Entropy | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Blade Barrier | save-outcomes | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Blanket of Stars | save-outcomes | not-executable-save | not verified in this expansion | preamble:ongoing-trigger, preamble:modifier, preamble:additional-condition |
-| Blessed Boundary | save-outcomes | not-executable-save | not verified in this expansion | description-effects, description-target-predicates, description-lifecycle, manual:forced-movement, manual:gm-choice |
-| Blinding Fury | save-outcomes | not-executable-save | not verified in this expansion | manual:conditional-effect, condition-duration-scope, residual-prose, item-duration-grammar |
-| Bound in Death | sustained | not-executable-save | not verified in this expansion | residual-prose, sustain-effect, preamble:ongoing-trigger, preamble:ends-early, preamble:damage |
+| Bound in Death | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Cast into Time | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Catch Your Name | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Chain Lightning | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Claim Undead | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Collective Transposition | save-outcomes | not-executable-save | not verified in this expansion | manual:forced-movement, manual:conditional-effect, residual-prose |
+| Collective Transposition | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Crimson Breath | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Cursed Metamorphosis | save-outcomes | not-executable-save | not verified in this expansion | manual:conditional-effect, manual:transformation-or-form, residual-prose |
+| Cursed Metamorphosis | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Daemon Form | native-effects | not-executable-save | not verified in this expansion | direct-effect:prerequisite-or-placement |
 | Demon Form | native-effects | not-executable-save | not verified in this expansion | direct-effect:description-damage, direct-effect:prerequisite-or-placement |
 | Devil Form | native-effects | not-executable-save | not verified in this expansion | direct-effect:description-damage, direct-effect:prerequisite-or-placement |
 | Disintegrate | save-outcomes | not-executable-save | not verified in this expansion | description-effects, description-target-predicates, description-lifecycle, target-eligibility |
 | Dominate | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Dread Secret | save-outcomes | not-executable-save | not verified in this expansion | manual:conditional-effect, residual-prose, preamble:modifier |
-| Earth and Sky | save-outcomes | not-executable-save | not verified in this expansion | residual-prose, preamble:ends-early, preamble:recipient-qualifier |
-| Elemental Confluence | sustained | not-executable-save | not verified in this expansion | no-primary-save, description-semantics |
+| Dread Secret | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Earth and Sky | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Elemental Confluence | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Entreat the Many | save-outcomes | compiled-save | general condition rider; all degrees, native heightened damage and Prone; see general-rules-phase-2-3 verification | Runtime/lifecycle audit required |
 | Explosive Barrage | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Expunge Blood | save-outcomes | not-executable-save | not verified in this expansion | preamble:ongoing-trigger, preamble:modifier |
-| Fateful Condemnation | save-outcomes | not-executable-save | not verified in this expansion | condition-duration-scope, residual-prose |
+| Expunge Blood | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Fateful Condemnation | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Field of Life | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Fire Seeds | save-outcomes | not-executable-save | not verified in this expansion | description-effects, description-target-predicates, description-lifecycle |
 | Flame Vortex | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Flaming Fusillade | native-effects | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | For Love, For Lightning | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Frost Pillar | sustained | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Frozen Fog | save-outcomes | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Gray Shadow | sustained | not-executable-save | not verified in this expansion | no-primary-save, description-semantics, native-spell-effect-scope |
-| Heartbolt | save-outcomes | not-executable-save | not verified in this expansion | description-effects, description-target-predicates, description-lifecycle, target-eligibility |
+| Gray Shadow | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Heinous Future | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Life-Giving Form | native-effects | not-executable-save | not verified in this expansion | direct-effect:inline-damage, direct-effect:description-damage, direct-effect:temporary-immunity |
 | Lignify | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
@@ -980,50 +973,48 @@
 | Necrotize | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Never Mind | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Pain of Ages | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Patron's Protector | sustained | not-executable-save | not verified in this expansion | description-effects, description-target-predicates, description-lifecycle |
+| Patron's Protector | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Petrify | save-outcomes | ongoing-profile | not verified in this expansion | Runtime/lifecycle audit required |
 | Phantasmal Calamity | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Phantom Orchestra | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Poltergeist's Fury | sustained | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Purple Worm Sting | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Repulsion | save-outcomes | not-executable-save | not verified in this expansion | manual:terrain, residual-prose, preamble:ongoing-trigger |
 | Revel in Retribution | native-effects | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Rose's Thorns | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Sacred Form | native-effects | not-executable-save | not verified in this expansion | direct-effect:description-damage |
 | Scintillating Safeguard | native-effects | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Scrying | sustained | not-executable-save | not verified in this expansion | manual:temporary-immunity, manual:conditional-effect, residual-prose |
-| Seize Identity | sustained | not-executable-save | not verified in this expansion | residual-prose, sustain-effect, preamble:restriction, target-eligibility |
-| Shadow Illusion | sustained | not-executable-save | not verified in this expansion | no-primary-save, description-semantics |
+| Scrying | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Seize Identity | sustained | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Shadow Illusion | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Speaking Sky | native-effects | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Spellwrack | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Spirit Blast | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Suffocate | sustained | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Suspended Retribution | save-outcomes | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Tanglecurse | save-outcomes | not-executable-save | not verified in this expansion | manual:terrain, manual:conditional-effect, residual-prose |
+| Tanglecurse | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Tempest Form | sustained | not-executable-save | not verified in this expansion | direct-effect:inline-damage, direct-effect:granted-or-follow-up-action |
-| Temporal Ward | save-outcomes | not-executable-save | not verified in this expansion | dismissal, target-eligibility |
+| Temporal Ward | native-effects | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Unexpected Transposition | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Utter Destruction | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Vampiric Exsanguination | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Vibrant Pattern | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Vitrifying Blast | save-outcomes | not-executable-save | not verified in this expansion | residual-prose, item-duration-grammar |
+| Vitrifying Blast | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Zero Gravity | sustained | not-executable-save | not verified in this expansion | area-paragraph |
 | Angel Form | native-effects | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Attacked from Within | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Beheading Buzz Saw | save-outcomes | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Beheading Buzz Saw | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Blightburn Blast | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Call of the Quenching | save-outcomes | not-executable-save | not verified in this expansion | description-effects, description-target-predicates, description-lifecycle, area-paragraph |
-| Chrysopoetic Curse | save-outcomes | not-executable-save | not verified in this expansion | manual:conditional-effect, manual:terrain, residual-prose |
-| Control Sand | sustained | not-executable-save | not verified in this expansion | no-primary-save, description-semantics |
-| Corrosive Body | native-effects | not-executable-save | not verified in this expansion | no-primary-save, description-semantics |
+| Chrysopoetic Curse | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Control Sand | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Corrosive Body | native-effects | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Cosmic Form | native-effects | not-executable-save | not verified in this expansion | direct-effect:prerequisite-or-placement |
 | Curse of the Spirit Orchestra | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Dancing Fountain | sustained | not-executable-save | not verified in this expansion | description-effects, description-target-predicates, description-lifecycle, area-paragraph |
-| Darklight | save-outcomes | not-executable-save | not verified in this expansion | description-effects, description-target-predicates, description-lifecycle |
+| Dancing Fountain | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Darklight | save-outcomes | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Defy the Gods | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Deity's Strike | save-outcomes | not-executable-save | not verified in this expansion | description-effects, description-target-predicates, description-lifecycle, target-eligibility |
 | Devouring Void | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Divine Decree | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Duplicate Foe | sustained | not-executable-save | not verified in this expansion | residual-prose, sustain-effect, preamble:conditional-eligibility, preamble:ongoing-trigger, preamble:modifier, target-eligibility |
+| Duplicate Foe | sustained | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Eclipse Burst | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Energy Aegis | native-effects | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Entrancing Eyes | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
@@ -1032,103 +1023,96 @@
 | Fiendish Rift | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Fiery Body | native-effects | not-executable-save | not verified in this expansion | direct-effect:inline-damage, direct-effect:description-damage |
 | Frigid Flurry | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Heaving Earth | save-outcomes | not-executable-save | not verified in this expansion | description-effects, description-target-predicates, description-lifecycle, target-eligibility |
+| Heaving Earth | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Hungry Depths | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Indolent Haze | save-outcomes | not-executable-save | not verified in this expansion | manual:conditional-effect, residual-prose |
+| Indolent Haze | save-outcomes | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Inexhaustible Cynicism | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Infinitesimal Collapse Field | sustained | not-executable-save | not verified in this expansion | residual-prose, preamble:ongoing-trigger |
+| Infinitesimal Collapse Field | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Leng Sting | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Lifewood Cage | sustained | not-executable-save | not verified in this expansion | non-basic-save, description-semantics |
-| Love's Sacrifice | save-outcomes | not-executable-save | not verified in this expansion | manual:conditional-effect, residual-prose |
+| Lifewood Cage | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Mask of Terror | native-effects | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Maze of Locked Doors | sustained | not-executable-save | not verified in this expansion | preamble:counteract |
+| Maze of Locked Doors | sustained | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Moonburst | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Orb of Twisting Fate | save-outcomes | not-executable-save | not verified in this expansion | residual-prose |
+| Orb of Twisting Fate | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Pollen Pods | save-outcomes | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Possession | save-outcomes | not-executable-save | not verified in this expansion | manual:conditional-effect, residual-prose, preamble:ongoing-trigger, preamble:ends-early, preamble:additional-condition, preamble:restriction, preamble:degree-adjustment |
+| Possession | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Prismatic Armor | native-effects | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Project Image | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Puppet Strings | sustained | not-executable-save | not verified in this expansion | manual:action-restriction, manual:conditional-effect, residual-prose, sustain-effect |
-| Ray of Corruption | save-outcomes | not-executable-save | not verified in this expansion | description-effects, description-target-predicates, description-lifecycle |
+| Puppet Strings | sustained | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Retrocognition | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Shadow Raid | save-outcomes | not-executable-save | not verified in this expansion | description-effects, description-target-predicates, description-lifecycle |
+| Shadow Raid | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Shadow's Web | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Sunburst | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Telekinetic Bombardment | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Unbreaking Wave Barrier | sustained | not-executable-save | not verified in this expansion | manual:terrain, manual:forced-movement, native-spell-effect-scope, sustain-effect, preamble:ongoing-trigger, preamble:modifier, preamble:collision |
+| Unbreaking Wave Barrier | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Untwisting Iron Augmentation | native-effects | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Vacuum | sustained | not-executable-save | not verified in this expansion | residual-prose, sustain-effect, preamble:conditional-eligibility, preamble:ongoing-trigger, preamble:modifier, preamble:degree-adjustment |
-| Vibrant Vibrato | sustained | not-executable-save | not verified in this expansion | manual:conditional-effect, residual-prose, sustain-effect, preamble:ongoing-trigger, preamble:restriction |
+| Vacuum | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Vibrant Vibrato | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Visions of Danger | save-outcomes | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Volcanic Eruption | save-outcomes | not-executable-save | not verified in this expansion | native-spell-effect-scope, native-spell-effect-recipient, preamble:ends-early, preamble:terrain, preamble:modifier, preamble:additional-condition, area-paragraph |
 | Warp Mind | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Amalgamizing Leap | save-outcomes | not-executable-save | not verified in this expansion | manual:conditional-effect, residual-prose |
+| Amalgamizing Leap | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Antimagic Field | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Arctic Rift | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Boil Blood | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Burning Blossoms | save-outcomes | not-executable-save | not verified in this expansion | manual:conditional-effect, manual:attitude-or-hostility, residual-prose, preamble:ongoing-trigger, preamble:additional-condition, area-paragraph |
 | Canticle of Everlasting Grief | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Clone Companion | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Confusing Colors | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Deluge | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Desiccate | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Devour Life | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Divine Armageddon | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Divine Aura | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Earthbreaker Stride | native-effects | not-executable-save | not verified in this expansion | direct-effect:dismissal-consequence |
-| Earthquake | save-outcomes | not-executable-save | not verified in this expansion | description-effects, description-target-predicates, description-lifecycle, native-spell-effect-scope, native-spell-effect-recipient |
-| Falling Sky | save-outcomes | not-executable-save | not verified in this expansion | manual:conditional-effect, residual-prose, preamble:damage, area-paragraph, preamble:recipient-qualifier |
+| Falling Sky | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Ferrous Form | native-effects | not-executable-save | not verified in this expansion | direct-effect:description-damage |
 | Hidden Mind | native-effects | not-executable-save | not verified in this expansion | direct-effect:counteract |
 | Hypnopompic Terrors | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Impaling Briars | sustained | not-executable-save | not verified in this expansion | non-basic-save, description-semantics |
-| Metallic Meteorite Glyph | save-outcomes | not-executable-save | not verified in this expansion | description-effects, description-target-predicates, description-lifecycle |
-| Monstrosity Form | native-effects | not-executable-save | not verified in this expansion | no-primary-save, description-semantics |
-| Musical Shift | sustained | not-executable-save | not verified in this expansion | no-primary-save, description-semantics, native-spell-effect-scope |
+| Impaling Briars | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Medusa's Wrath | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Monstrosity Form | native-effects | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Musical Shift | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Polar Ray | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Punishing Winds | sustained | not-executable-save | not verified in this expansion | area-paragraph |
 | Quandary | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Shipwreck | save-outcomes | not-executable-save | not verified in this expansion | manual:terrain, manual:conditional-effect, residual-prose, target-eligibility |
+| Shipwreck | native-effects | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Spirit Song | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Spiritual Epidemic | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Stars of Another Sky | sustained | not-executable-save | not verified in this expansion | manual:temporary-immunity, manual:conditional-effect, manual:attitude-or-hostility, condition-duration-scope, residual-prose, sustain-effect, preamble:ongoing-trigger |
+| Stars of Another Sky | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Stop Heart | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Sudden Transposition | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Temporary Possession | save-outcomes | not-executable-save | not verified in this expansion | manual:gm-choice, manual:conditional-effect, residual-prose, target-eligibility |
-| Touch of Death | save-outcomes | not-executable-save | not verified in this expansion | manual:temporary-immunity, condition-duration-scope, residual-prose |
+| Temporary Possession | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Uncontrollable Dance | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Undermine Reality | save-outcomes | not-executable-save | not verified in this expansion | residual-prose, preamble:ongoing-trigger, preamble:restriction, preamble:degree-adjustment, item-duration-grammar |
-| Whirlpool | sustained | not-executable-save | not verified in this expansion | residual-prose, sustain-effect, preamble:ongoing-trigger, preamble:terrain, area-paragraph |
-| Whirlwind | sustained | not-executable-save | not verified in this expansion | manual:conditional-effect, residual-prose, sustain-effect, preamble:ongoing-trigger, preamble:terrain, area-paragraph |
-| Arcane Explosion | save-outcomes | not-executable-save | not verified in this expansion | description-effects, description-target-predicates, description-lifecycle, native-spell-effect-scope, dismissal |
-| Astral Labyrinth | save-outcomes | not-executable-save | not verified in this expansion | residual-prose, preamble:counteract, preamble:restriction |
-| Calcification | save-outcomes | not-executable-save | not verified in this expansion | manual:secondary-save, manual:conditional-effect, residual-prose, preamble:conditional-eligibility, preamble:modifier, item-duration-grammar, target-eligibility |
+| Undermine Reality | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Whirlpool | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Whirlwind | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Arcane Explosion | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Astral Labyrinth | native-effects | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Dimensional Excision | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Divinity Leech | sustained | not-executable-save | not verified in this expansion | preamble:ongoing-trigger, preamble:additional-condition |
-| Dread Mosquito Storm | save-outcomes | not-executable-save | not verified in this expansion | affliction-handoff:lifecycle, residual-prose, preamble:ongoing-trigger |
+| Divinity Leech | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Dread Mosquito Storm | save-outcomes | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Embrace Nothingness | native-effects | not-executable-save | not verified in this expansion | direct-effect:condition-interaction |
-| Falling Stars | save-outcomes | not-executable-save | not verified in this expansion | description-effects, description-target-predicates, description-lifecycle, area-paragraph |
 | Foresight | native-effects | not-executable-save | not verified in this expansion | direct-effect:choice-resolution |
 | Implosion | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Linnorm Sting | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Magnetic Dominion | sustained | not-executable-save | not verified in this expansion | non-basic-save, description-semantics, target-eligibility |
-| Massacre | save-outcomes | not-executable-save | not verified in this expansion | residual-prose, preamble:damage |
-| Overwhelming Presence | save-outcomes | not-executable-save | not verified in this expansion | manual:attitude-or-hostility, manual:conditional-effect, residual-prose, item-duration-grammar |
+| Magnetic Dominion | sustained | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Massacre | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
+| One with the Land | native-effects | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Overwhelming Presence | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Phantasmagoria | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Prismatic Shield | native-effects | not-executable-save | not verified in this expansion | direct-effect:counteract, direct-effect:choice-resolution |
-| Qi Form | native-effects | not-executable-save | not verified in this expansion | no-primary-save, description-semantics |
-| Remake Physiology | save-outcomes | not-executable-save | not verified in this expansion | residual-prose, preamble:ongoing-trigger, preamble:modifier, preamble:additional-condition, item-duration-grammar |
-| Storm Lord | sustained | not-executable-save | not verified in this expansion | description-effects, description-target-predicates, description-lifecycle |
-| Storm of Vengeance | sustained | not-executable-save | not verified in this expansion | no-primary-save, description-semantics |
+| Qi Form | native-effects | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Remake Physiology | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Storm Lord | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Storm of Vengeance | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Telepathic Demand | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Trim the Blight | save-outcomes | not-executable-save | not verified in this expansion | condition-duration-scope, residual-prose, preamble:terrain, preamble:gm-adjudication, preamble:recipient-qualifier |
-| Unbreaking Wave Containment | sustained | not-executable-save | not verified in this expansion | description-effects, description-target-predicates, description-lifecycle |
-| Undertaker | save-outcomes | not-executable-save | not verified in this expansion | manual:terrain, manual:conditional-effect, residual-prose, preamble:modifier, preamble:degree-adjustment |
-| Unfathomable Song | sustained | not-executable-save | not verified in this expansion | manual:temporary-immunity, residual-prose, sustain-effect, preamble:ongoing-trigger |
+| Trim the Blight | native-effects | not-executable-save | not verified in this expansion | preamble:recipient-qualifier |
+| Unbreaking Wave Containment | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Undertaker | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
+| Unfathomable Song | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Unfolding Wind Crash | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Unspeakable Shadow | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Untwisting Iron Pillar | native-effects | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Vampiric Revelry | save-outcomes | not-executable-save | not verified in this expansion | description-effects, description-target-predicates, description-lifecycle |
 | Voracious Gestalt | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Wails of the Damned | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
 | Weird | save-outcomes | compiled-save | not verified in this expansion | Runtime/lifecycle audit required |
-| Wrathful Storm | sustained | not-executable-save | not verified in this expansion | no-primary-save, description-semantics, native-spell-effect-scope, native-spell-effect-recipient |
+| Wrathful Storm | sustained | not-executable-save | not verified in this expansion | Runtime/lifecycle audit required |

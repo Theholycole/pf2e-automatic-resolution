@@ -65,9 +65,61 @@ export function compileIllusoryCreature(adapted) {
     };
 }
 
+// Famed Figure (Witches+), the same image with a witch's twist: "You create an illusion of a creature from one of your stories. You create an illusory image of a
+// Medium or smaller creature. … If you and the image are ever farther than 30 feet apart or you Cast this spell again, the spell ends." / "In combat, the illusion gains
+// 2 actions per turn, which it uses when you Cast the spell or the first time you Sustain the spell on subsequent turns." / "If the illusory creature hits with a
+// Strike, the target takes (1+rank)d4 mental damage if it was a melee spell attack roll or (rank)d4 mental damage if it was a ranged spell attack roll." / "The
+// illusion's Strikes are nonlethal, its ranged attacks have a range of 30 feet, and if it makes more than one attack per turn, it takes a multiple attack penalty as
+// if it were a creature." / "When a creature disbelieves the illusion or if the spell ends while the illusion is observed, it recovers from half the damage …" with
+// "Heightened (+1) The damage of the image's melee and ranged Strikes increases by 1d4, and the maximum size …": the same token and card — its melee and ranged
+// Strikes (the ranged one within 30 feet), the multiple attack penalty asked, the earlier image ended when it's cast again; the observers' recovery at the spell's
+// end a note.
+const FAMED = [
+    /^You create an illusory image of an? (Tiny|Small|Medium|Large|Huge) or smaller creature\.$/,
+    RULES[1],
+    /^If you and the image are ever farther than (\d+) feet apart or you Cast this spell again, the spell ends\.$/,
+    RULES[3], RULES[4], RULES[5],
+    /^In combat, the illusion gains (\d) actions per turn, which it uses when you Cast the spell or the first time you Sustain the spell on subsequent turns\.$/,
+    RULES[7], RULES[8], RULES[9], RULES[10], RULES[11],
+    /^If the illusory creature hits with a Strike, the target takes @Damage\[\(1\+@item\.rank\)d(\d+)\[([a-z]+)\]\] damage if it was a melee spell attack roll or @Damage\[\(@item\.rank\)d\1\[\2\]\] damage if it was a ranged spell attack roll\.$/,
+    /^The illusion's Strikes are nonlethal, its ranged attacks have a range of (\d+) feet, and if it makes more than one attack per turn, it takes a multiple attack penalty as if it were a creature\.$/,
+    /^If the damage doesn't correspond to the image of the monster[—–-]for example, if an illusory dragon deals only 5 damage[—–-]the GM might allow the target to attempt an immediate Perception check to disbelieve the spell\.$/,
+    RULES[15], RULES[16], RULES[17], RULES[18], RULES[19],
+    /^When a creature disbelieves the illusion or if the spell ends while the illusion is observed, it recovers from half the damage it had taken from it \(if any\) and doesn't take any further damage from it\.$/
+];
+const FAMED_STEP = /^<p>\s*<strong>\s*Heightened \(\+(\d)\)\s*<\/strong>\s*The damage of the image's melee and ranged Strikes increases by (\d+)d(\d+), and the maximum size of the creature you can create increases by one \(to a maximum of (Gargantuan|Huge)\)\.\s*<\/p>$/;
+const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until|terrain)\b/i;
+
+/** Famed Figure: {illusoryCreature, claimed} or null. */
+export function compileFamedFigure(adapted) {
+    if (adapted.defense?.kind !== "none" || adapted.lifecycle?.sustained !== true || String(adapted.targeting?.target ?? "").trim() || adapted.targeting?.area) return null;
+    if (!(adapted.activation?.traits ?? []).includes("illusion")) return null;
+    const [body, ...rest] = String(adapted.descriptionHTML ?? "").split(/<hr\s*\/?>/i).map(section => section.trim());
+    if (rest.length !== 1) return null;
+    const sentences = htmlToPlainText(body).replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s+(?=[A-Z@])/).map(sentence => sentence.trim()).filter(Boolean);
+    if (sentences.length !== FAMED.length + 1 || NARRATION_RULES.test(sentences[0])) return null;
+    const found = FAMED.map((pattern, index) => pattern.exec(sentences[index + 1]));
+    if (found.some(match => !match)) return null;
+    const step = FAMED_STEP.exec(rest[0]);
+    if (!step || step[3] !== found[12][1] || Number(step[2]) !== 1 || Number(step[1]) !== 1) return null;
+    const rank = Number(adapted.rank) || 1;
+    return {
+        illusoryCreature: {
+            maxSize: NAMES[found[0][1]], sizeStep: { interval: Number(step[1]), cap: NAMES[step[4]] }, rangeFeet: Number(found[2][1]), actions: Number(found[6][1]), saveOffset: Number(found[8][1]),
+            strike: { dice: 1 + rank, faces: Number(found[12][1]), type: found[12][2], step: { interval: 1, dice: 1 }, nonlethal: true, ranged: { dice: rank, rangeFeet: Number(found[13][1]) } },
+            map: true, endsOnRecast: true,
+            disbelieve: { statistic: "perception", healHalf: true, immune: true },
+            notes: [sentences[4], `${sentences[5]} ${sentences[6]}`, sentences[7], sentences[10], sentences[15], `${sentences[16]} ${sentences[17]} ${sentences[18]}`, sentences[20], sentences[21]]
+        },
+        claimed: [...sentences, htmlToPlainText(rest[0]).trim()]
+    };
+}
+
 /** The image's maximum size and its Strike's dice at a cast rank. */
 export function illusoryAt(data, castRank, baseRank) {
     const steps = Math.max(0, Math.floor((Number(castRank) - Number(baseRank)) / data.strike.step.interval));
     const size = SIZES[Math.min(SIZES.indexOf(data.maxSize) + Math.floor((Number(castRank) - Number(baseRank)) / data.sizeStep.interval), SIZES.indexOf(data.sizeStep.cap))];
-    return { maxSize: size, formula: `${data.strike.dice + steps * data.strike.step.dice}d${data.strike.faces}` };
+    return { maxSize: size, formula: `${data.strike.dice + steps * data.strike.step.dice}d${data.strike.faces}`,
+        // (Famed Figure's ranged Strike: its own dice, grown alike.)
+        ...(data.strike.ranged ? { rangedFormula: `${data.strike.ranged.dice + steps * data.strike.step.dice}d${data.strike.faces}` } : {}) };
 }

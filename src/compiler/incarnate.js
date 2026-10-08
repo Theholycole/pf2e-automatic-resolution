@@ -8,8 +8,12 @@
 import { htmlToPlainText } from "./description-parser.js";
 
 const ROW = /^<strong>\s*(Critical Success|Success|Failure|Critical Failure)\s*<\/strong>/i;
-const PHASE = /^<strong>\s*(Arrive|Depart)\s*<\/strong>\s*(?:\(([a-z, ]+)\)\s*)?<em>([^<]+)<\/em>\s*([\s\S]+)$/i;
-const SPACE = /^(?:The [a-z' ]+|It) occup(?:y|ies) the space of an? (Small|Medium|Large|Huge|Gargantuan) creature(?:,)? (?:and (?:has|have) an? (?:(?:fly|swim|burrow|climb) )?(?:Speed|speed) of (\d+) feet(?: and [^.]+)?|but (?:has|have) no Speed)?\.$|^Your [a-z]+ occupies the space of a creature of your size and has Speeds equal to yours(?: \([^)]*\))?\.$/;
+// (A third-party title in bold — Wizards+'s Summon Jury: "<strong>Arrive</strong> (emotion, mental) <strong>Call to Order</strong> …" — reads the same.)
+const PHASE = /^<strong>\s*(Arrive|Depart)\s*<\/strong>\s*(?:\(([a-z, ]+)\)\s*)?(?:<em>([^<]+)<\/em>|<strong>([^<]+)<\/strong>)\s*([\s\S]+)$/i;
+// "Heightened (5th) The status penalties increase to 2.": a heightening of the phases' penalties (no damage), kept with each phase for its rows.
+const PENALTY_HEIGHTENED = /^\s*(?:<p>\s*<strong>\s*Heightened \((?:\d+)(?:st|nd|rd|th)\)\s*<\/strong>\s*The status penalties increase to \d+\.\s*<\/p>\s*)+$/;
+// (Or no Speed stated: Summon Jury's "The jury occupies the space of a Huge creature.")
+const SPACE = /^(?:The [a-z' ]+|It) occup(?:y|ies) the space of an? (Small|Medium|Large|Huge|Gargantuan) creature(?:,? (?:and (?:has|have) an? (?:(?:fly|swim|burrow|climb) )?(?:Speed|speed) of (\d+) feet(?: and [^.]+)?|but (?:has|have) no Speed))?\.$|^Your [a-z]+ occupies the space of a creature of your size and has Speeds equal to yours(?: \([^)]*\))?\.$/;
 // (An opening sentence that is only narration: no number, link or rule word — "until" and "each" are common in openings.)
 const OPENING_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must)\b/i;
 const NARRATION_RULES = /\d|@|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|until)\b/i;
@@ -60,7 +64,7 @@ export function extractIncarnate(adapted) {
     const phases = [], intro = [];
     for (const paragraph of paragraphs) {
         const phase = PHASE.exec(paragraph);
-        if (phase) { phases.push({ key: phase[1].toLowerCase(), traits: phase[2] ? phase[2].split(/,\s*/) : [], title: phase[3].trim(), lead: phase[4].trim(), rows: [] }); continue; }
+        if (phase) { phases.push({ key: phase[1].toLowerCase(), traits: phase[2] ? phase[2].split(/,\s*/) : [], title: (phase[3] ?? phase[4]).trim(), lead: phase[5].trim(), rows: [] }); continue; }
         if (ROW.test(paragraph) && phases.length) { phases.at(-1).rows.push(paragraph); continue; }
         if (phases.length) return fail(3);
         intro.push(paragraph);
@@ -73,12 +77,15 @@ export function extractIncarnate(adapted) {
     const speed = sentences.find(sentence => /^It has an? (?:(?:fly|swim|burrow|climb) )?Speed of \d+ feet\.$/.test(sentence));
     if (!space || sentences.some(sentence => sentence !== space && sentence !== speed && OPENING_RULES.test(sentence))) return fail(5);
     const heightened = rest[0] ?? "";
+    const penaltyHeightened = heightened && PENALTY_HEIGHTENED.test(heightened);
     for (const phase of phases) {
         // (A basic save with a rider for some results — "On a critical failure, a creature also take(s) @Damage[2d8[persistent,bleed]] damage." / "… is also
         // {Frightened 1} for 1 round." / "On a failed save, … also …" — becomes the save's table: the damage halved, full and doubled by the rows, the rider on its rows.)
         // ("All your enemies within …" is "Each enemy within …"; "Fleeing for 1 round or until it's no longer frightened, whichever comes first" is its
         // round — the Frightened 3 beside it outlasts that round: Incarnate Tempest of Shades.)
         phase.lead = phase.lead.replace(/(^|\. )All your enemies within /, "$1Each enemy creature within ")
+            // ("must attempt a will save": the save's name.)
+            .replace(/\bmust attempt an? (fortitude|reflex|will) save\b/, (all, statistic) => `must attempt a ${statistic[0].toUpperCase()}${statistic.slice(1)} save`)
             // ("must attempt @Check[will|…|traits:…] saves": a Will save — the phase's traits are its heading's.)
             .replace(/\bmust attempt @Check\[(fortitude|reflex|will)(?:\|(?!basic)[^\]|]*)*\] saves\b/i, (all, statistic) => `must attempt a ${statistic[0].toUpperCase()}${statistic.slice(1).toLowerCase()} save`);
         phase.rows = phase.rows.map(row => row.replace(/ for 1 round or until it's no longer frightened, whichever comes first\./, " for 1 round."));
@@ -131,9 +138,10 @@ export function extractIncarnate(adapted) {
             phase.reminder = `Target up to ${upTo[1]} different creatures within ${upTo[2]} feet of the manifestation.`;
             lead = `Each target takes ${upTo[3]} ${upTo[4]} damage (basic ${upTo[5]} save).`;
         }
-        phase.html = `<p>${lead}</p>${phase.rows.map(row => `<p>${row}</p>`).join("")}${phase.damage && heightened ? `<hr />${phase.heightened ?? heightened}` : ""}`;
+        phase.html = `<p>${lead}</p>${phase.rows.map(row => `<p>${row}</p>`).join("")}${(phase.damage || penaltyHeightened) && heightened ? `<hr />${phase.heightened ?? heightened}` : ""}`;
     }
     // A Heightened entry belongs to the phase with damage (the item's own heightening).
-    if (heightened && phases.filter(phase => phase.damage).length !== 1) return fail(10);
+    if (heightened && !penaltyHeightened && phases.filter(phase => phase.damage).length !== 1) return fail(10);
+    if (penaltyHeightened && phases.some(phase => phase.damage)) return fail(11);
     return { notes: [space], phases: phases.map(({ lead, rows, ...phase }) => phase) };
 }

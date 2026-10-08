@@ -29,7 +29,9 @@ const supported = plan => inspectSavePlan(plan).supported;
 // Rank 6, batch 5 (2026-10-03): Spellsurge, Planar Palace, Ethereal Jaunt, Proliferating Eyes, Mislead.
 
 test("Notes whose conditions are only mentions", async () => {
-    for (const path of ["rank-6/spellsurge", "rank-7/planar-palace", "rank-7/ethereal-jaunt", "rank-9/proliferating-eyes"]) {
+    // (Spellsurge: a stated Effect since notes batch 2, its Interference an aura.)
+    assert.equal(compile(await spell("rank-6/spellsurge")).resolution.kind, "stated-effect");
+    for (const path of ["rank-7/planar-palace", "rank-7/ethereal-jaunt", "rank-9/proliferating-eyes"]) {
         const plan = compile(await spell(path));
         assert.equal(plan.resolution.kind, "spell-note", path);
         assert.deepEqual(plan.automation.pendingCapabilities, [], path);

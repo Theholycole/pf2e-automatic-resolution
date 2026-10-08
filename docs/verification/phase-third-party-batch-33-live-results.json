@@ -1,0 +1,28 @@
+{
+ "label": "thirdPartyBatch33",
+ "passed": true,
+ "at": "2026-10-07T03:14:37.678Z",
+ "details": {
+  "thirdParty33": {
+   "seekBefore": 0,
+   "secrets": {
+    "status": "applied",
+    "sustained": true
+   },
+   "seekAfter": 1,
+   "plainAfter": 0,
+   "twoAtOne": "Discern Secrets+: at most 1 target at rank 1.",
+   "concealed": {
+    "removed": [
+     "PFTEST P23 Affliction tp33 plain"
+    ],
+    "kept": [
+     "PFTEST P23 Affliction tp33 held's PFTEST blur"
+    ],
+    "plain": false,
+    "held": true,
+    "button": true
+   }
+  }
+ }
+}

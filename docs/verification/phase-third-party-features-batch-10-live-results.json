@@ -1,0 +1,37 @@
+{
+ "label": "thirdPartyFeaturesBatch10",
+ "passed": true,
+ "at": "2026-10-07T20:45:14.963Z",
+ "details": {
+  "thirdPartyFeatures10": {
+   "rudimentary": {
+    "fireball": "10d6 + 4 fire",
+    "arc": "6d4 + 4 electricity",
+    "bolt": "3d4 + 7 force",
+    "rules": [
+     "[\"item:spell-slot\"]",
+     "[{\"not\":\"item:spell-slot\"}]"
+    ],
+    "saved": [
+     "[{\"not\":\"cantrip\"}]",
+     "[\"cantrip\"]"
+    ]
+   },
+   "blood": {
+    "shapes": [
+     [
+      "Power of Blood",
+      "passive"
+     ]
+    ],
+    "bleed": [
+     "3 bleed"
+    ]
+   },
+   "wayward": {
+    "temp": 3,
+    "effect": true
+   }
+  }
+ }
+}

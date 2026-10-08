@@ -1,0 +1,43 @@
+{
+ "label": "thirdPartyFeaturesBatch42",
+ "passed": true,
+ "at": "2026-10-08T09:00:24.974Z",
+ "details": {
+  "thirdPartyFeatures42": {
+   "firestarter": {
+    "shapes": [
+     [
+      "Firestarter Pellets",
+      null
+     ]
+    ],
+    "one": [
+     "1d6 fire"
+    ],
+    "two": [
+     "2d6 fire"
+    ]
+   },
+   "dragonEye": {
+    "effect": "Effect: Dragon Eye",
+    "frightened": 1
+   },
+   "thunderbird": {
+    "nimbus": 10,
+    "attackerLost": 5
+   },
+   "woodRotted": {
+    "effect": true,
+    "card": {
+     "dc": 15,
+     "statistic": "fortitude",
+     "targets": [
+      "Ice Guardian: ice guardian",
+      "PFTEST P23 Affliction tpf42 foe one"
+     ]
+    }
+   },
+   "note": true
+  }
+ }
+}

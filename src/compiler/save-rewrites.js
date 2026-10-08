@@ -145,7 +145,9 @@ function rewritePillar(adapted) {
     return { html: `<p>${sentences.slice(0, at).join(" ")} The target must attempt a ${statistic} save.</p><hr /><p><strong>Critical Success</strong> The creature is unaffected.</p><p><strong>Success</strong> The creature is unaffected.</p>`
             + `<p><strong>Failure</strong> The creature is ${restrained}.</p><p><strong>Critical Failure</strong> The creature is ${restrained}.</p>`,
         sentences: plain.slice(at),
-        reminders: [{ kind: "object-hold", text: `On a success (or critical success) the creature moves to an adjacent space of its choice (move its token). On a failure it's frozen in the ${stats[1]}: an object with AC ${stats[2]}, Hardness ${stats[3]}, ${stats[4]} Hit Points, immune to critical hits, ${stats[5]} and precision damage, weakness ${stats[6]} to ${stats[7]}. Destroying it frees the creature and ends the spell (end the Effect).`, sourceText: plain[at + 1] }] };
+        // (A success's "adjacent space of its choice": the module moves it to the nearest free adjacent space; the GM moves it elsewhere if it chooses.)
+        areaExit: { who: "success", adjacent: true },
+        reminders: [{ kind: "object-hold", text: `On a success (or critical success) the creature moves to an adjacent space of its choice (the module moves it to the nearest free one). On a failure it's frozen in the ${stats[1]}: an object with AC ${stats[2]}, Hardness ${stats[3]}, ${stats[4]} Hit Points, immune to critical hits, ${stats[5]} and precision damage, weakness ${stats[6]} to ${stats[7]}. Destroying it frees the creature and ends the spell (end the Effect).`, sourceText: plain[at + 1] }] };
 }
 
 // A spell whose lead states the condition and whose rows give only its duration and a compulsion (Uncontrollable Dance): "For the duration of the spell, the target

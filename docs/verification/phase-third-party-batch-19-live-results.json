@@ -1,0 +1,40 @@
+{
+ "label": "thirdPartyBatch19",
+ "passed": true,
+ "at": "2026-10-07T01:23:47.247Z",
+ "details": {
+  "thirdParty19": {
+   "hardness": true,
+   "blast": {
+    "total": 7,
+    "lost": [
+     7,
+     14
+    ],
+    "persistent": [
+     [],
+     [
+      "acid"
+     ]
+    ]
+   },
+   "splash": {
+    "status": "applied",
+    "lost": [
+     2,
+     2
+    ]
+   },
+   "range": {
+    "status": "applied",
+    "rule": 10,
+    "duration": "0 rounds turn-end"
+   },
+   "hit": {
+    "total": 10,
+    "lost": 10,
+    "formula": "2d6 piercing"
+   }
+  }
+ }
+}

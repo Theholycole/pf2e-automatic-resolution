@@ -1,0 +1,112 @@
+{
+ "thirdPartyFeaturesBatch38": {
+  "label": "thirdPartyFeaturesBatch38",
+  "passed": true,
+  "at": "2026-10-08T02:08:16.494Z",
+  "details": {
+   "thirdPartyFeatures38": {
+    "stigmata": {
+     "bleed": [
+      "2d4 bleed"
+     ],
+     "bonus": true,
+     "harm": [
+      "2d4 bleed"
+     ],
+     "healEnded": true
+    },
+    "archmemory": {
+     "before": 3,
+     "spent": 2,
+     "after": 3
+    },
+    "eating": {
+     "slot2": 0,
+     "healed": 11
+    },
+    "blackBook": {
+     "taken": 4
+    },
+    "outsider": {
+     "card": true,
+     "burst": {
+      "statistic": "reflex",
+      "damage": [
+       "2 spirit"
+      ],
+      "targets": [
+       "PFTEST P23 Affliction tpf38 cleric",
+       "PFTEST P23 Affliction tpf38 foe"
+      ]
+     }
+    }
+   }
+  }
+ },
+ "thirdPartyFeaturesBatch25": {
+  "label": "thirdPartyFeaturesBatch25",
+  "passed": true,
+  "at": "2026-10-08T02:08:47.247Z",
+  "details": {
+   "thirdPartyFeatures25": {
+    "plusAfterIgnition": "fire",
+    "officialAfterFear": "force",
+    "promptsSoFar": 0,
+    "reservoir": {
+     "stance": "Stance: Arcane Cascade+ (Force)",
+     "type": "force",
+     "reservoir": "Effect: Reservoir of Power (Abjuration)",
+     "school": "abjuration"
+    },
+    "puppet": {
+     "tethered": "Effect: Tethered (Puppet String) (Mental)",
+     "trait": "mental",
+     "spec": 1,
+     "self": true,
+     "weaknessRule": true
+    },
+    "havok": {
+     "taken": 10,
+     "lost": false
+    },
+    "havokResisted": {
+     "taken": 0,
+     "lost": true
+    }
+   }
+  }
+ },
+ "thirdPartyFeaturesBatch26": {
+  "label": "thirdPartyFeaturesBatch26",
+  "passed": true,
+  "at": "2026-10-08T02:09:06.265Z",
+  "details": {
+   "thirdPartyFeatures26": {
+    "visage": {
+     "effect": "Effect: Arcane Cascade: Don Visage (Fire) (Fearsome)",
+     "rounds": 4,
+     "type": "fire"
+    },
+    "slideBeforeMove": false,
+    "slide": {
+     "count": 1,
+     "rounds": 2,
+     "reflex": "status"
+    },
+    "slideAgain": 1,
+    "invigorate": {
+     "hp": 0,
+     "offered": true,
+     "result": {
+      "invigorated": [
+       "PFTEST P23 Affliction tpf26 magus",
+       "PFTEST P23 Affliction tpf26 black blade"
+      ]
+     },
+     "magus": true,
+     "familiar": true
+    }
+   }
+  }
+ }
+}

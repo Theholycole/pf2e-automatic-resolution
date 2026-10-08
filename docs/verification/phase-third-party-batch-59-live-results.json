@@ -1,0 +1,142 @@
+{
+ "label": "thirdPartyBatch59",
+ "passed": true,
+ "at": "2026-10-07T06:13:36.328Z",
+ "details": {
+  "thirdParty59": {
+   "cast": {
+    "subjects": [
+     "PFTEST P23 Affliction tp59 star"
+    ],
+    "results": [
+     [
+      "Copy B",
+      "success",
+      false
+     ],
+     [
+      "Copy A",
+      "criticalSuccess",
+      false
+     ],
+     [
+      "PFTEST Corrections Linked",
+      "failure",
+      true
+     ],
+     [
+      "PFTEST Corrections Noise success token",
+      "success",
+      false
+     ],
+     [
+      "PFTEST Corrections Noise failure token",
+      "success",
+      false
+     ],
+     [
+      "PFTEST Corrections Noise critical token",
+      "failure",
+      true
+     ],
+     [
+      "PFTEST Corrections Secondary token",
+      "criticalSuccess",
+      false
+     ],
+     [
+      "PFTEST Corrections Living override token",
+      "failure",
+      true
+     ],
+     [
+      "PFTEST Corrections Undead token",
+      "success",
+      false
+     ],
+     [
+      "PFTEST Corrections Living blocked token",
+      "criticalFailure",
+      true
+     ],
+     [
+      "PFTEST Corrections High-level secondary",
+      "criticalSuccess",
+      false
+     ],
+     [
+      "PFTEST Ongoing Aura recipient",
+      "criticalSuccess",
+      false
+     ],
+     [
+      "PFTEST Ongoing Aura recipient",
+      "failure",
+      true
+     ],
+     [
+      "PFTEST Ongoing Aura recipient",
+      "failure",
+      true
+     ],
+     [
+      "tp29 inventor",
+      "failure",
+      true
+     ],
+     [
+      "tp40 expert",
+      "criticalFailure",
+      true
+     ],
+     [
+      "tp40 legend",
+      "criticalFailure",
+      true
+     ],
+     [
+      "tp59 fail",
+      "failure",
+      true
+     ],
+     [
+      "tp59 saved",
+      "success",
+      false
+     ]
+    ],
+    "starStealth": -1,
+    "starRules": [
+     "performance 1",
+     "stealth -1"
+    ],
+    "fail": [
+     true,
+     true
+    ],
+    "saved": false
+   },
+   "perform": {
+    "fascinated": [
+     "Copy B",
+     "Copy A",
+     "PFTEST Corrections Noise success token",
+     "PFTEST Corrections Noise failure token",
+     "PFTEST Corrections Secondary token",
+     "PFTEST Corrections Undead token",
+     "PFTEST Corrections High-level secondary",
+     "PFTEST Ongoing Aura recipient",
+     "tp59 saved"
+    ],
+    "saved": true,
+    "ally": false,
+    "far": false
+   },
+   "ended": {
+    "fail": false,
+    "saved": false,
+    "star": false
+   }
+  }
+ }
+}

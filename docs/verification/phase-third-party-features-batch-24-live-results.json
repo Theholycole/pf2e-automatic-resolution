@@ -1,0 +1,50 @@
+{
+ "batch24": {
+  "label": "thirdPartyFeaturesBatch24",
+  "passed": true,
+  "at": "2026-10-07T23:38:55.308Z",
+  "details": {
+   "thirdPartyFeatures24": {
+    "whirling": {
+     "delivered": "spellstrike",
+     "results": [
+      "Whirling Wand Strike: delivered by a Spellstrike"
+     ]
+    },
+    "whirlingPlain": "it isn't cast from a wand",
+    "eatThis": {
+     "on": true,
+     "note": true,
+     "offAfter": true
+    },
+    "dealer": {
+     "degree": "criticalSuccess",
+     "card": "<strong>Dealer of Death</strong>: Keys (fire) — +5 fire damage",
+     "effect": {
+      "key": "FlatModifier",
+      "selector": [
+       "strike-damage"
+      ],
+      "damageType": "fire",
+      "value": 5,
+      "removeAfterRoll": "if-enabled",
+      "slug": null,
+      "priority": 100,
+      "ignored": false,
+      "predicate": [],
+      "requiresEquipped": null,
+      "requiresInvestment": null,
+      "type": "untyped",
+      "force": false,
+      "hideIfDisabled": false,
+      "fromEquipment": true,
+      "critical": null,
+      "battleForm": false
+     },
+     "featuresDone": true
+    },
+    "slideSlice": true
+   }
+  }
+ }
+}

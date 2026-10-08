@@ -1,0 +1,26 @@
+{
+ "label": "thirdPartyFeaturesBatch40",
+ "passed": true,
+ "at": "2026-10-08T02:21:06.501Z",
+ "details": {
+  "thirdPartyFeatures40": {
+   "consume": {
+    "expended": false,
+    "charm": false
+   },
+   "pululation": {
+    "rank": 5,
+    "targets": [
+     "Forceful Hand: hand",
+     "Ice Guardian: ice guardian",
+     "PFTEST P23 Affliction tpf40 ally"
+    ],
+    "slots6": 3
+   },
+   "surge": [
+    "Spell Effect: Evolution Surge (Low-light vision and darkvision)",
+    "Spell Effect: Ancient Surge (Tremorsense)"
+   ]
+  }
+ }
+}

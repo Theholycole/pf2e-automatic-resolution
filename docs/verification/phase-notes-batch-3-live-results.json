@@ -1,0 +1,63 @@
+{
+  "generatedAt": "2026-10-05T22:45:50.526Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "notesBatch3",
+      "passed": true,
+      "at": "2026-10-05T22:42:45.599Z",
+      "details": {
+        "notes3": {
+          "garden": {
+            "at": [
+              5,
+              12
+            ],
+            "out": true,
+            "note": true
+          },
+          "frost": {
+            "at": [
+              10,
+              12
+            ],
+            "adjacent": true
+          },
+          "blade": {
+            "at": [
+              13,
+              12
+            ],
+            "out": true
+          },
+          "gale": {
+            "at": [
+              14,
+              5
+            ],
+            "pulled": true
+          },
+          "arcane": {
+            "at": [
+              21,
+              12
+            ],
+            "prone": true,
+            "stopped": "wall"
+          },
+          "planar": {
+            "at": [
+              7,
+              14
+            ],
+            "stopped": "wall",
+            "feetLeft": 20,
+            "collision": 20,
+            "lost": 87
+          }
+        }
+      }
+    }
+  ]
+}

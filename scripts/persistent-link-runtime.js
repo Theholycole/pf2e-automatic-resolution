@@ -74,7 +74,9 @@ export async function endLinkedEffects(deleted) {
     const actors = new Set([...game.actors, ...(game.scenes?.contents ?? []).flatMap(scene => scene.tokens.contents.map(token => token.actor))].filter(Boolean));
     const ended = [];
     for (const actor of actors) {
-        const linked = [...(actor.itemTypes?.effect ?? [])].filter(effect => effect.flags?.[MODULE_ID]?.runtime?.endsWithEffectUuid === deleted.uuid);
+        // (And persistent damage held by the Effect: Ravaging End's.)
+        const linked = [...(actor.itemTypes?.effect ?? []), ...(actor.itemTypes?.condition ?? [])].filter(item => item.flags?.[MODULE_ID]?.runtime?.endsWithEffectUuid === deleted.uuid
+            || (item.type === "condition" && item.flags?.[MODULE_ID]?.endsWithEffectUuid === deleted.uuid));
         if (!linked.length) continue;
         await actor.deleteEmbeddedDocuments("Item", linked.map(effect => effect.id), { [MODULE_ID]: { reason: "linked-effect-ended" } }).catch(() => null);
         ended.push(...linked.map(effect => effect.name));

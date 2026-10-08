@@ -1,0 +1,75 @@
+{
+ "thirdPartyFeaturesBatch33": {
+  "label": "thirdPartyFeaturesBatch33",
+  "passed": true,
+  "at": "2026-10-08T01:30:08.177Z",
+  "details": {
+   "thirdPartyFeatures33": {
+    "overdrive": {
+     "base": 0,
+     "boost": "fire"
+    },
+    "failure": [
+     "Transmogrification Boost: 1d6 fire (Offensive Boost) — 2 taken",
+     "Arcane Generator: 2 void (Overdrive) — 2 taken"
+    ],
+    "criticalFailure": [
+     "Transmogrification Boost: (1d6)*2 fire (Offensive Boost) — 6 taken",
+     "Arcane Generator: (2)*2 void (Overdrive) — 4 taken"
+    ],
+    "essenceStrike": {
+     "armed": [
+      "RollTwice spell-attack-roll higher"
+     ],
+     "immune": true,
+     "spent": true,
+     "refused": true
+    },
+    "mystic": {
+     "taken": 14,
+     "effect": true
+    },
+    "guidance": {
+     "cast": true,
+     "light": [
+      "TokenLight 10/20"
+     ],
+     "rounds": 10
+    }
+   }
+  }
+ },
+ "thirdPartyFeaturesBatch25": {
+  "label": "thirdPartyFeaturesBatch25",
+  "passed": true,
+  "at": "2026-10-08T01:30:41.224Z",
+  "details": {
+   "thirdPartyFeatures25": {
+    "plusAfterIgnition": "fire",
+    "officialAfterFear": "force",
+    "promptsSoFar": 0,
+    "reservoir": {
+     "stance": "Stance: Arcane Cascade+ (Force)",
+     "type": "force",
+     "reservoir": "Effect: Reservoir of Power (Abjuration)",
+     "school": "abjuration"
+    },
+    "puppet": {
+     "tethered": "Effect: Tethered (Puppet String) (Mental)",
+     "trait": "mental",
+     "spec": 1,
+     "self": true,
+     "weaknessRule": true
+    },
+    "havok": {
+     "taken": 10,
+     "lost": false
+    },
+    "havokResisted": {
+     "taken": 0,
+     "lost": true
+    }
+   }
+  }
+ }
+}

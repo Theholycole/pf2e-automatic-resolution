@@ -1,0 +1,48 @@
+{
+ "label": "thirdPartyBatch63",
+ "passed": true,
+ "at": "2026-10-07T06:31:12.256Z",
+ "details": {
+  "thirdParty63": {
+   "now": {
+    "exploded": true,
+    "dice": "5d6",
+    "type": "fire",
+    "targets": [
+     "Copy B",
+     "PFTEST P23 Affliction tp63 foe"
+    ]
+   },
+   "waiting": true,
+   "aids": [
+    [
+     "success",
+     1
+    ],
+    [
+     "criticalSuccess",
+     2
+    ],
+    [
+     "success",
+     1
+    ],
+    [
+     "failure",
+     0
+    ]
+   ],
+   "radius": 10,
+   "boom": {
+    "exploded": true,
+    "dice": "9d6",
+    "targets": [
+     "Forceful Hand: hand",
+     "ice guardian",
+     "PFTEST P23 Affliction tp63 other"
+    ],
+    "gone": true
+   }
+  }
+ }
+}

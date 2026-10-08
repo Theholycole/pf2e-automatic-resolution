@@ -1,0 +1,52 @@
+{
+  "label": "rank8Batch14",
+  "passed": true,
+  "at": "2026-10-05T02:12:18.814Z",
+  "details": {
+    "batch14": {
+      "pool": {
+        "lostA": 28,
+        "lostB": 66,
+        "pull10": true,
+        "toCenter": true,
+        "terrain": true
+      },
+      "wind": {
+        "lost": 31,
+        "rise": true,
+        "fly": true,
+        "passedExposed": true
+      },
+      "veilExposed": [
+        "veil centre",
+        "veil doomed",
+        "veil living"
+      ],
+      "veilTerrain": 2,
+      "veilLiving": {
+        "lost": 83,
+        "pulled": true
+      },
+      "veilChild": true,
+      "centreDrained": 1,
+      "doomed": {
+        "hp": 0,
+        "dead": true
+      },
+      "stars": {
+        "fascinated": true,
+        "rise": true,
+        "rapt": true,
+        "marked": true,
+        "top": {
+          "hp": 0,
+          "dead": true
+        },
+        "afterEnd": {
+          "fascinated": false,
+          "marked": false
+        }
+      }
+    }
+  }
+}

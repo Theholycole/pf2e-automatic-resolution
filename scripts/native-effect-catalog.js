@@ -35,6 +35,19 @@ export class NativeEffectCatalog {
             this.#catalog.set(entry.name, profile);
             this.#catalog.set(entry._id, profile);
         }
+        // (The active modules' Effects — third-party spells link their own: indexed after PF2e's, which keep their names.)
+        for (const modulePack of game.packs.filter(candidate => candidate.metadata?.packageType === "module" && candidate.documentName === "Item")) {
+            let moduleIndex;
+            try { moduleIndex = await modulePack.getIndex({ fields: ["name", "type", "system.rules", "system.duration", "system.start", "system.badge"] }); } catch (_) { continue; }
+            for (const entry of moduleIndex) {
+                if (entry.type !== "effect" || this.#catalog.has(entry._id)) continue;
+                const profile = { id: entry._id, name: entry.name, type: entry.type, sourceFile: modulePack.collection, automation: automationProfile(entry),
+                    mechanics: { rules: structuredClone(entry.system?.rules ?? []), duration: structuredClone(entry.system?.duration ?? null), start: structuredClone(entry.system?.start ?? null) },
+                    ...(entry.system?.badge ? { badge: structuredClone(entry.system.badge) } : {}) };
+                if (!this.#catalog.has(entry.name)) this.#catalog.set(entry.name, profile);
+                this.#catalog.set(entry._id, profile);
+            }
+        }
         return this.#catalog;
     }
 

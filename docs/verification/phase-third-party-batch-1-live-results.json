@@ -1,0 +1,63 @@
+{
+  "generatedAt": "2026-10-06T21:34:56.521Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "modules": [
+    "clerics-remaster@1.0.0",
+    "foundry-summons@2.6.0",
+    "fvtt-pf2e-incapacitation-variants@1.4.1",
+    "lib-wrapper@1.13.5.1",
+    "magus@2.0",
+    "pf2e-animal-companions@7.7.2",
+    "pf2e-automatic-resolution@0.8.2",
+    "pf2e-brewrata@1.1.0",
+    "pf2e-summoners-plus@1.2.2",
+    "pf2e-team-plus-alchemists@1.0.1",
+    "pf2e-team-plus-barbarians@1.1.3",
+    "pf2e-team-plus-feats@2.0.0",
+    "pf2e-team-plus-inventors@2.0.3",
+    "pf2e-team-plus-magic@1.3.5",
+    "pf2e-team-plus-oracles-remastered@1.0",
+    "pf2e-team-plus-tian-xia@1.0.0",
+    "pf2e-team-plus-wizards@1.1.3",
+    "pseudo-afflictions@0.5.1",
+    "sequencer@4.2.3",
+    "socketlib@v1.1.4",
+    "tcal@1.2.0",
+    "witches-remaster@1.1.1"
+  ],
+  "cases": [
+    {
+      "label": "thirdPartyBatch1",
+      "passed": true,
+      "at": "2026-10-06T21:34:22.444Z",
+      "details": {
+        "thirdParty1": {
+          "blizzard": {
+            "kind": "sustained-save-damage",
+            "formula": "2d6 cold + (1d6 + 2) persistent cold",
+            "persistent": "(1d6 + 2)",
+            "concealed": true
+          },
+          "fountain": {
+            "kind": "save",
+            "frightened": 2
+          },
+          "sharpNote": {
+            "formula": "1d8 sonic",
+            "lost": 4,
+            "deafened": true
+          },
+          "mantle": {
+            "kind": "effect",
+            "effect": "Effect: Mantle of Nobility"
+          },
+          "haste": {
+            "kind": "effect",
+            "effect": "Spell Effect: Haste"
+          }
+        }
+      }
+    }
+  ]
+}

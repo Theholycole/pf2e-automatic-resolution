@@ -1,0 +1,55 @@
+{
+ "label": "thirdPartyBatch11",
+ "passed": true,
+ "at": "2026-10-07T00:12:10.443Z",
+ "details": {
+  "thirdParty11": {
+   "slumber": [
+    {
+     "degree": "failure",
+     "unconscious": true,
+     "note": "Eternal Slumber: Eternal slumber",
+     "unlimited": false,
+     "flat": null,
+     "seek": null
+    },
+    {
+     "degree": "criticalFailure",
+     "unconscious": true,
+     "note": "Eternal Slumber: Eternal slumber",
+     "unlimited": true,
+     "flat": null,
+     "seek": null
+    },
+    {
+     "degree": "success",
+     "unconscious": false,
+     "note": "Eternal Slumber: Drowsy",
+     "unlimited": false,
+     "flat": {
+      "dc": 5,
+      "trait": "concentrate"
+     },
+     "seek": [
+      "action:seek"
+     ]
+    }
+   ],
+   "jury": {
+    "called": [
+     "FlatModifier:attack-roll:-2",
+     "RollOption:summon-jury-verdict:false",
+     "FlatModifier:saving-throw:-2"
+    ],
+    "verdict": [
+     "saving-throw:-2"
+    ]
+   },
+   "outbreak": {
+    "pending": "pending",
+    "note": "Sudden Outbreak: Sudden outbreak",
+    "duration": "1 minutes"
+   }
+  }
+ }
+}

@@ -1,0 +1,55 @@
+{
+  "generatedAt": "2026-10-06T10:45:22.984Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "spellFeaturesBatch9",
+      "passed": true,
+      "at": "2026-10-06T10:44:26.632Z",
+      "details": {
+        "features9": {
+          "sacrilegious": {
+            "rolled": true,
+            "flavor": "Sacrilegious Aura: counteract Heal (DC 21, rank 5 against 1)",
+            "total": 25,
+            "lost": "counteracted by PFTEST P23 Affliction sf9 graveknight's Sacrilegious Aura"
+          },
+          "blasphemous": {
+            "save": "criticalFailure",
+            "effect": true,
+            "regained": 10,
+            "spent": true
+          },
+          "fulu": {
+            "immune": true
+          },
+          "lightningRod": {
+            "card": true,
+            "countered": false,
+            "consistent": true
+          },
+          "intercept": {
+            "card": true,
+            "countered": true,
+            "consistent": true
+          },
+          "attraction": {
+            "save": "criticalFailure",
+            "effect": "Eldritch Attraction: Stride toward PFTEST P23 Affliction sf9 mutant"
+          },
+          "channel": {
+            "card": true
+          },
+          "metamagic": {
+            "area": {
+              "type": "burst",
+              "from": 20,
+              "to": 25
+            }
+          }
+        }
+      }
+    }
+  ]
+}

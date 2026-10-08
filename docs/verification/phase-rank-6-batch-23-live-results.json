@@ -1,0 +1,39 @@
+{
+  "label": "rank6Batch23",
+  "passed": true,
+  "at": "2026-10-05T04:23:33.368Z",
+  "details": {
+    "batch23": {
+      "blanket": {
+        "effect": true,
+        "aura": true,
+        "stealth": true,
+        "still": {
+          "invisible": true,
+          "concealed": false
+        },
+        "moving": {
+          "invisible": false,
+          "concealed": true
+        },
+        "off": {
+          "invisible": false,
+          "concealed": false
+        },
+        "gaze": {
+          "confused": true,
+          "dazzled": true
+        }
+      },
+      "mantle": {
+        "effect": true,
+        "ac": 2,
+        "arsenal": true,
+        "swapped": {
+          "arsenal": false,
+          "fastHealing": true
+        }
+      }
+    }
+  }
+}

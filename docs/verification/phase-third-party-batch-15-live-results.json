@@ -1,0 +1,28 @@
+{
+ "label": "thirdPartyBatch15",
+ "passed": true,
+ "at": "2026-10-07T00:36:36.078Z",
+ "details": {
+  "thirdParty15": {
+   "cold": {
+    "total": 4,
+    "lost": [
+     4,
+     4
+    ],
+    "reminders": true
+   },
+   "surge": {
+    "targets": 2,
+    "caster": {
+     "degree": "failure",
+     "rolledDegree": "criticalFailure",
+     "adjustment": "applies"
+    },
+    "total": 2,
+    "foeLost": 2,
+    "casterLost": 2
+   }
+  }
+ }
+}

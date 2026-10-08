@@ -1,0 +1,38 @@
+{
+  "generatedAt": "2026-10-05T11:12:52.626Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "spellshapeBatch6",
+      "passed": true,
+      "at": "2026-10-05T11:11:31.911Z",
+      "details": {
+        "spellshape6": {
+          "vampiric": {
+            "most": 12,
+            "temp": 6,
+            "timed": 1
+          },
+          "ablation": 3,
+          "elemental": 6,
+          "current": "air",
+          "dualistic": {
+            "arcane": [
+              1
+            ],
+            "primal": 1
+          },
+          "safeguard": [
+            "PFTEST P23 Affliction ss6 one"
+          ],
+          "resolve": [
+            2
+          ],
+          "skeletal": 10,
+          "gusting": "true:ok"
+        }
+      }
+    }
+  ]
+}

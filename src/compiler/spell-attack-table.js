@@ -15,11 +15,11 @@ const HEADING = /<strong\b[^>]*>\s*(Critical Success|Success|Failure|Critical Fa
 const LINK = /@UUID\[[^\]]+\]\{[^}]+\}/g;
 // "Make a (ranged|melee) spell attack (roll) (against the/a target's AC / against the target)." A reaction names its
 // target by the trigger: "Make a ranged spell attack against the triggering creature's AC."
-const ATTACK = String.raw`(?:Make|Attempt) an? (?:ranged |melee )?spell attack(?: roll)?(?: against (?:(?:the|a|each|your) target(?:'s AC)?|each creature|a single creature|a target within range|the triggering creature's AC|a creature within \d+ feet))?`;
+const ATTACK = String.raw`(?:Make|Attempt) an? (?:ranged |melee )?spell attack(?: roll)?(?: against (?:(?:the|a|each|your) target(?:'s AC)?|each creature|a single creature|a target within range|the triggering creature's AC|a creature within \d+ feet|the AC of a target within \d+ feet))?`;
 // A reaction's one target: "the triggering creature", "the creature that took damage".
 const TRIGGERING_TARGET = /^the (?:triggering creature|creature that took damage)$/i;
 // Several targets: "1 or 2 creatures", "up to 3 creatures", "2 creatures".
-const TARGETS = /^(?:(?:1|one) (?:living )?creature(?: or (?:unattended )?object)?|the triggering creature|the creature that took damage|(?:1|one) or (?:2|two) creatures|(?:1|2|one|two) or more creatures|up to (?:2|3|two|three) creatures|(?:2|3|two|three) creatures(?: no more than \d+ feet from each other)?)$/i;
+const TARGETS = /^(?:(?:1|one) (?:living )?creature(?: or (?:unattended )?object)?|the triggering creature|the creature that took damage|(?:1|one) or (?:2|two) creatures|(?:1|2|one|two) or more creatures|up to (?:[2-9]|two|three|four) creatures|(?:2|3|two|three) creatures(?: no more than \d+ feet from each other)?)$/i;
 // "If you're attacking two creatures, this counts as two attacks for your multiple attack penalty, but the penalty doesn't increase until after both attacks."
 const SHARED_MAP = /^(?:(?:If you're attacking (?:two|several|multiple) creatures, )?(?:this|each attack) counts (?:as (?:two|\d+) attacks )?(?:toward|for) your multiple attack penalty, but (?:the|your) penalty doesn't increase until (?:after )?(?:you've made )?(?:both|all your) attacks|These attacks each increase your multiple attack penalty, but you don't increase your multiple attack penalty until after you make (?:both|all the) spell attack rolls for [a-z' ]+)\.$/i;
 // Sentences about the number of actions spent. The player targets accordingly; the chosen PF2e variant carries the data.
@@ -91,9 +91,11 @@ const COUNTERACT_RAY = /^If the (ray|light|beam) passes through an area of magic
 // Forced movement the GM carries out (the module doesn't move tokens):
 // "you can push it up to 10 feet", "can choose to detonate your weapon to push the target 10 feet away from you",
 // "the target is pulled up to 10 feet toward you", "is knocked back 10 feet", "is pushed 10 feet away from you".
-const MOVE = String.raw`(?:you can push it up to (\d+) feet|can choose to [a-z ]{3,40}? to push the target (\d+) feet away from you|the target is pulled up to (\d+) feet toward you|is knocked back (\d+) feet|is pushed (\d+) feet away from you)`;
+const MOVE = String.raw`(?:you can push it up to (\d+) feet|can choose to [a-z ]{3,40}? to push the target (\d+) feet away from you|the target is pulled up to (\d+) feet toward you|is knocked back (\d+) feet|is pushed (\d+) feet away from you|can choose to push the target up to (\d+) feet away from you)`;
+// (Staff Striker, Wizards+: "can choose to push the target up to 5 feet away from you" — up to, away, the caster's choice.)
 function movement(match, offset = 0) {
-    const [pushUpTo, detonate, pullUpTo, knocked, pushed] = match.slice(offset, offset + 5);
+    const [pushUpTo, detonate, pullUpTo, knocked, pushed, awayUpTo] = match.slice(offset, offset + 6);
+    if (awayUpTo) return { kind: "push", distance: Number(awayUpTo), upTo: true, optional: true, direction: "away" };
     if (pushUpTo) return { kind: "push", distance: Number(pushUpTo), upTo: true, optional: true, direction: "any" };
     if (detonate) return { kind: "push", distance: Number(detonate), upTo: false, optional: true, direction: "away" };
     if (pullUpTo) return { kind: "pull", distance: Number(pullUpTo), upTo: true, optional: false, direction: "toward" };
@@ -165,6 +167,9 @@ const HIT_CRIT_ALSO = new RegExp(String.raw`^${ATTACK}\. (?:If you hit|On a hit|
 // "If you hit, you deal 4d6 bludgeoning damage plus 1d6 bludgeoning splash damage. On a critical hit, double the initial
 // damage, but not the splash damage, and the target you hit must succeed at a Fortitude saving throw or fall Prone."
 // The critical row's save is the ordinary follow-up save; splash damage is never doubled.
+// "On a hit, the target takes 2d4 spirit damage (double damage on a critical hit). If you critically hit, the target is Dazzled until the end of your
+// next turn." (Magic+'s Dynamic Divine Lance, three actions): the critical row's condition for that time.
+const HIT_PAREN_CRIT_CONDITION = new RegExp(String.raw`^${ATTACK}\. On a hit, the target takes ${DICE} \(double damage on a critical hit\)\. If you critically hit, the target is (${CONDITION}) (until the (?:start|end) of your next turn)\.$`);
 const HIT_CRIT_SPLASH_SAVE = new RegExp(String.raw`^${ATTACK}\. (?:If you hit|On a hit), you deal ${DICE}\. On a critical hit, double the initial damage, but not the splash damage(?:, and the target you hit (must succeed at an? (?:Fortitude|Reflex|Will) (?:save|saving throw) or [^.]+))?\.$`);
 // Blasts repeated during the turn: "For the remainder of your turn, you can blast targets within 30 feet with this fire
 // by spending a single action which has the attack and concentrate traits. When you do so, attempt a ranged spell
@@ -780,8 +785,8 @@ export function expandSpellAttackTable(adapted) {
     if (hitThenCrit) {
         if (linkedCondition) return nope(748); // only the plain forms carry a persistent-linked condition
         if (!matchesDamage(adapted, hitThenCrit[1], hitThenCrit[2])) return nope(749);
-        const forcedMovement = { criticalSuccess: movement(hitThenCrit, 8) };
-        if (hitThenCrit.slice(3, 8).some(Boolean)) forcedMovement.success = movement(hitThenCrit, 3);
+        const forcedMovement = { criticalSuccess: movement(hitThenCrit, 9) };
+        if (hitThenCrit.slice(3, 9).some(Boolean)) forcedMovement.success = movement(hitThenCrit, 3);
         // (The obstacle's condition only with a push on both rows.)
         if (pushedInto && !forcedMovement.success) return nope(753);
         return withAdjustment({ html: `${lead}${table(`The target takes double damage.${pushedInto ?? ""}`, `The target takes full damage.${pushedInto ?? ""}`)}${rest.join("")}`, sourceText: combined, forcedMovement,
@@ -794,6 +799,12 @@ export function expandSpellAttackTable(adapted) {
         if (critAlso[3] && [...critAlso[3].replace(/^@Damage\[/, "").matchAll(/@([a-z0-9_.]+)/gi)].some(match => !["item.rank", "item.level"].includes(match[1].toLowerCase()))) return nope(761);
         const critical = critAlso[3] ? `The target takes double damage and ${critAlso[3]} damage.` : `The target takes double damage and is ${unmask(critAlso[4] ?? critAlso[5] ?? critAlso[6])}.`;
         return withAdjustment({ html: `${lead}${table(critical, "The target takes full damage.")}${rest.join("")}`, sourceText: unmask(combined),
+            ...(multiple ? { multipleTargets: true, sharedMultipleAttackPenalty: sharedMap } : {}) });
+    }
+    const parenCrit = HIT_PAREN_CRIT_CONDITION.exec(combined);
+    if (parenCrit) {
+        if (linkedCondition || !damageFor(parenCrit[1], parenCrit[2])) return nope(801);
+        return withAdjustment({ html: `${lead}${table(`The target takes double damage and is ${unmask(parenCrit[3])} ${parenCrit[4]}.`, "The target takes full damage.")}${rest.join("")}`, sourceText: unmask(combined),
             ...(multiple ? { multipleTargets: true, sharedMultipleAttackPenalty: sharedMap } : {}) });
     }
     const causing = HIT_CAUSING_CRIT_PERSISTENT.exec(combined);

@@ -1,0 +1,37 @@
+{
+ "label": "thirdPartyBatch67",
+ "passed": true,
+ "at": "2026-10-07T06:52:24.370Z",
+ "details": {
+  "thirdParty67": {
+   "first": {
+    "type": "familiar",
+    "master": true,
+    "items": [
+     "Construct",
+     "Darkvision",
+     "Fast Movement (Land)"
+    ],
+    "weakness": [
+     "fire 5"
+    ],
+    "hp": 25
+   },
+   "recast": {
+    "firstToken": false,
+    "firstEffect": false,
+    "second": true
+   },
+   "disperse": {
+    "dice": "4d4",
+    "type": "bludgeoning",
+    "targets": [
+     "tp67 foe"
+    ],
+    "card": true,
+    "effect": false,
+    "token": false
+   }
+  }
+ }
+}

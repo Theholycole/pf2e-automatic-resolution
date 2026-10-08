@@ -199,10 +199,37 @@ export function compileBasicPushRider(adapted) {
 const AREA_DEALS = /^The [a-z ]+ deals (\d+d\d+) ([a-z]+) damage\.$/;
 const SAVE_OBJECTS = /^Each creature in the area must attempt a basic (Fortitude|Reflex|Will) save; unattended objects automatically fail\.$/;
 const KNOCKBACK = /^Creatures and objects that fail are also knocked back (\d+) feet \((\d+) feet on a critical failure\)\.$/;
+// A push from the caster on a failed basic save, with objects and a fall (Arcane Explosion, once its caster's form is set apart):
+//   "All creatures and objects in the emanation take 16d6 force damage (basic Fortitude saving throw)." / "Creatures that fail are also pushed 10 feet
+//   directly away from you; creatures that can't complete this forced movement are knocked Prone (but creatures who reduce this movement, such as with
+//   an ability or feat, don't fall prone)."
+const ALL_TAKE = /^All creatures and objects in the (?:emanation|area) take (\d+d\d+) ([a-z]+) damage \(basic (Fortitude|Reflex|Will) saving throw\)\.$/;
+const PUSH_PRONE = /^Creatures that fail are also pushed (\d+) feet directly away from you; creatures that can't complete this forced movement are knocked @UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{Prone\} \(but creatures who reduce this movement, such as with an ability or feat, don't fall prone\)\.$/;
+function explosionPush(adapted, all) {
+    const at = all.findIndex(sentence => ALL_TAKE.test(sentence));
+    if (at < 0 || all.length !== at + 2 || !PUSH_PRONE.test(all[at + 1])) return null;
+    const damage = ALL_TAKE.exec(all[at]), push = PUSH_PRONE.exec(all[at + 1]);
+    const components = adapted.damageComponents ?? [];
+    if (components.length !== 1 || components[0].category || String(components[0].formula).replace(/\s+/g, "") !== damage[1] || String(components[0].type).toLowerCase() !== damage[2]
+        || damage[3].toLowerCase() !== adapted.defense.statistic) return null;
+    const narration = all.slice(0, at);
+    if (narration.length > 1 || narration.some(sentence => /\d|@|\b(?:damage|save|bonus|penalty|condition|immune|can't|must|until|takes?|deals?)\b/i.test(sentence))) return null;
+    // (A creature stopped short by a wall or the scene's edge is knocked Prone by the module; a reduction from an ability is the GM's.)
+    const move = { kind: "push", distance: Number(push[1]), upTo: false, optional: false, direction: "away", stopped: { prone: true } };
+    return {
+        remainder: [`You deal ${damage[1]} ${damage[2]} damage to each creature in the area (basic ${damage[3]} save).`],
+        forcedMovement: { failure: move, criticalFailure: move },
+        objects: { sourceText: all[at + 1], text: `Objects in the area take the damage too (the GM's). The module knocks Prone a creature a wall stops short of the ${push[1]}-foot push; a creature whose ability or feat reduced the movement stays standing (the GM removes it).` },
+        sentences: [...narration, ...all.slice(at)]
+    };
+}
+
 export function compileBasicKnockbackRider(adapted) {
     const area = adapted.targeting?.area;
     if (adapted.defense?.kind !== "save" || adapted.defense.basic !== true || !["line", "cone", "emanation"].includes(area?.type)) return null;
     const all = sentences(htmlToPlainText(stripHeighteningHTML(adapted.descriptionHTML)).replace(/\s+/g, " ").trim());
+    const explosion = explosionPush(adapted, all);
+    if (explosion) return explosion;
     const at = all.findIndex(sentence => AREA_DEALS.test(sentence));
     if (at < 0 || all.length !== at + 3 || !SAVE_OBJECTS.test(all[at + 1]) || !KNOCKBACK.test(all[at + 2])) return null;
     const damage = AREA_DEALS.exec(all[at]), save = SAVE_OBJECTS.exec(all[at + 1]), back = KNOCKBACK.exec(all[at + 2]);

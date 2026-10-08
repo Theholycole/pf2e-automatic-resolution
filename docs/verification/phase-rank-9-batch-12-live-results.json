@@ -1,0 +1,39 @@
+{
+  "label": "rank9Batch12",
+  "passed": true,
+  "at": "2026-10-05T07:33:05.405Z",
+  "details": {
+    "batch12": {
+      "creepers": {
+        "slowed": true,
+        "outside": false,
+        "immobilized": true
+      },
+      "sight": {
+        "both": true,
+        "marked": true,
+        "consume": "target:mark:true-target",
+        "used": true
+      },
+      "pact": {
+        "hp": 1,
+        "temp": 50,
+        "wounded": 1,
+        "dying": false,
+        "gone": true,
+        "immune": true,
+        "casterBound": true,
+        "refused": true
+      },
+      "bolt": {
+        "patient": 30,
+        "neighbour": 15,
+        "ghoul": 15,
+        "harmed": [
+          "PFTEST P23 Affliction hb ghoul"
+        ],
+        "zombie": 35
+      }
+    }
+  }
+}

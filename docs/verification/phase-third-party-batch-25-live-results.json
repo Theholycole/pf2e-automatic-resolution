@@ -1,0 +1,61 @@
+{
+ "label": "thirdPartyBatch25",
+ "passed": true,
+ "at": "2026-10-07T02:30:47.361Z",
+ "details": {
+  "thirdParty25": {
+   "positions": [
+    [
+     13,
+     5
+    ],
+    [
+     15,
+     5
+    ]
+   ],
+   "foe": {
+    "formula": "2d4 fire",
+    "total": 5,
+    "lost": 10,
+    "fascinated": true
+   },
+   "castSeen": [
+    "tp25 foe"
+   ],
+   "sustainSeen": [
+    "tp25 ally"
+   ],
+   "ally": {
+    "lost": 0,
+    "rules": [
+     {
+      "key": "FlatModifier",
+      "selector": [
+       "skill-check"
+      ],
+      "type": "status",
+      "value": 2,
+      "predicate": [
+       "action:recall-knowledge"
+      ],
+      "label": "Cosmic Glow",
+      "slug": null,
+      "priority": 100,
+      "ignored": false,
+      "requiresEquipped": null,
+      "requiresInvestment": null,
+      "force": false,
+      "hideIfDisabled": false,
+      "fromEquipment": true,
+      "critical": null,
+      "removeAfterRoll": false,
+      "battleForm": false
+     }
+    ]
+   },
+   "foeBonus": false,
+   "ended": true
+  }
+ }
+}

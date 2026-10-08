@@ -1,0 +1,35 @@
+{
+ "batch25": {
+  "label": "thirdPartyFeaturesBatch25",
+  "passed": true,
+  "at": "2026-10-07T23:55:04.808Z",
+  "details": {
+   "thirdPartyFeatures25": {
+    "plusAfterIgnition": "fire",
+    "officialAfterFear": "force",
+    "promptsSoFar": 0,
+    "reservoir": {
+     "stance": "Stance: Arcane Cascade+ (Force)",
+     "type": "force",
+     "reservoir": "Effect: Reservoir of Power (Abjuration)",
+     "school": "abjuration"
+    },
+    "puppet": {
+     "tethered": "Effect: Tethered (Puppet String) (Mental)",
+     "trait": "mental",
+     "spec": 1,
+     "self": true,
+     "weaknessRule": true
+    },
+    "havok": {
+     "taken": 10,
+     "lost": false
+    },
+    "havokResisted": {
+     "taken": 0,
+     "lost": true
+    }
+   }
+  }
+ }
+}

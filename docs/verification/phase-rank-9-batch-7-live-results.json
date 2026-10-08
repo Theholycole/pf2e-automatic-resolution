@@ -1,0 +1,35 @@
+{
+  "label": "rank9Batch7",
+  "passed": true,
+  "at": "2026-10-05T02:50:41.163Z",
+  "details": {
+    "batch7": {
+      "lava": {
+        "encasedLost": 46,
+        "singedLost": 23,
+        "rock": true,
+        "clumsy": 1,
+        "speedPenalty": -10,
+        "singedRock": false,
+        "after30": true,
+        "after55": {
+          "rock": false,
+          "clumsy": false
+        },
+        "heat": {
+          "formula": "3d6 fire",
+          "lost": 8
+        }
+      },
+      "enmity": {
+        "effect": true,
+        "speed": -10,
+        "dc": 24,
+        "attack": {
+          "lost": 30,
+          "offGuard": true
+        }
+      }
+    }
+  }
+}

@@ -1,4 +1,14 @@
 import { minionControlOnEnd } from "./minion-control-runtime.js";
+import { installD20Clamp } from "./d20-clamp.js";
+import { installTextRules, waywardSustain, textRulesOnCreate, focusRegainOnCard, actionCastOnCard, triplicateOnCast } from "./text-rules.js";
+import { noteEndAfter, hpShareOnLoss, summonEndsAtZero, zeroToOneOnLoss, dyingLinkCheck, damageLimitOnLoss, withConditionSync } from "./note-end-runtime.js";
+import { turnStartNoteDamage, turnEndHpLoss, halvedCopyDamage, turnEndRecovery, formTempHpExpiry, turnEndSaves } from "./incarnate-parts-runtime.js";
+import { formEnded, syncToggleGrants } from "./form-aura-runtime.js";
+import { markedAtZero } from "./attack-shapes-runtime.js";
+import { linkOnDamage, furyOnDamage, leechOnCast } from "./trigger-runtime.js";
+import { revivalEnded, holdNoHealing } from "./revival-runtime.js";
+import { holdCovenant, covenantKept } from "./support-runtime.js";
+import { recordShaping, noteWandUse, armSpellshape, widenCastTemplate, shapeTieEnded, syncShapeFollow, shapeOnApplied, shapeTerrainFromTemplate, shapeTerrainMove, shapeTerrainTurnEnd, expireShapeTerrain, bindTerrainButtons, growGarland, runShapeCard, detonateShapeCircle, detonateOnTurn, bindShapeCardButtons, turnStartShapeHeal, shapeWatchMessage, shapeRollSpent, shapeAreaFromTemplate, shapeTurnStart, stillInFlames, shapeScaleOnCreate, energyRuneOnCard } from "./spellshape-runtime.js";
 import { installFormGuards } from './form-native-guards.js';
 import { registerPersistentLinks } from "./persistent-link-runtime.js";
 import { registerSetAside } from "./set-aside-runtime.js";
@@ -11,6 +21,9 @@ import { OngoingFamilies } from "./ongoing-families.js";
 import { EffectRuntime, MODULE_ID, removeSpellMarkWeakness, immunityOnEffectUsed, armorUpOnUse, dismantleOnEnd, hyphaeOnMove, outlineOnCondition, outlineOnInvisible, repulsionShapes } from "./effect-runtime.js";
 import { registerTemporaryShields } from "./temporary-shield-runtime.js";
 import { lethologicOnDamage } from "./impossible-runtime.js";
+import { markWardOnAttack } from "./mark-ward-runtime.js";
+import { aidModifier } from "../src/compiler/aid-prepare.js";
+import { triggerAuraOnCondition, triggerAuraOnSave } from "./trigger-aura-runtime.js";
 import { autoToggleNewRound, autoToggleOnDamage, climbAidOnCheck, cloudActionOnCondition, consumeUsedEffects, runeWardOnDamage, endAfterMovement, endMarksWithoutPersistent, expireTurnBound, lockToFirstItem, oncePerSourceOnCast, oncePerSourceOnHealing, retroBonusOnRoll, syncNearTokens, recordDamage, delayedDamageOnEnd, consumeOnDamageTaken, spellshapeOnEffect, sharedLoreOnEnd, attackWardOnAttack, lastDamageOf, summonOnEnd, conjuredOnEnd, hiddenTurnEnd, coverSquareSync, coverSquareOnEnd, sceneWallsOnEnd } from "./climb-aid-runtime.js";
 import { isStrikeDamage } from "../src/compiler/ward-families.js";
 import { BasicSaveRuntime } from "./basic-save-runtime.js";
@@ -19,9 +32,29 @@ import { AfflictionCareRuntime } from "./affliction-care-runtime.js";
 import { MessageRuntime } from "./message-runtime.js";
 import { StoredTriggerRuntime } from "./stored-trigger-runtime.js";
 import { inspectSavePlan } from "./basic-save-core.js";
-import { claimNativeSpellSaveButton, refreshSaveButtonAuthority } from "./chat-card-controls.js";
+import { claimNativeSpellSaveButton, refreshSaveButtonAuthority, saveButtonRole } from "./chat-card-controls.js";
 import { debugCast, debugEnabled, debugLatestCast, registerDebugSetting } from "./debug.js";
-import { rememberCastSpell, rememberedCastSpell, spellFromSource } from './cast-spell.js';
+import { rememberCastSpell, rememberedCastSpell, spellFromSource, castSpellFromUuid } from './cast-spell.js';
+import { loadNativeEffectTemplate, prepareNativeEffectSource, createNativeEffect } from './native-outcome-effects.js';
+import { whisperGmNotes, hideGmNotes, markEffectGmNotes, markEffectGmNotesUpdate, markExistingGmNotes } from "./gm-notes.js";
+import { noteWatchMessage, noteWatchEndTurn } from "./note-watchers.js";
+import { bloodMagicOnCast, runBloodMagic, spiteStrikes, spiteTurnStart, bindBloodMagicButtons } from "./blood-magic-runtime.js";
+import { castingRulesOnCast, runCastingRule, bindCastingRuleButtons } from "./casting-rules-runtime.js";
+import { armItemSpellshape, runItemShapeCard, bindItemShapeButtons, itemShapeTurnStart, itemShapeWatchMessage, starChartOnCast, catalystSporesOnDamage, installDamageTypeMemory, attachDamageSource } from "./item-spellshape-runtime.js";
+import { readItemSpellshape } from "../src/compiler/item-spellshape.js";
+import { offerItemCasts, castFromItem, itemCastOnCard, bindItemCastButtons, reservoirOnCast, reservoirOnStrike, runReservoirButton } from "./item-cast-runtime.js";
+import { readItemCasts } from "../src/compiler/item-casts.js";
+import { spellTriggerItemsOnCast, runTriggerItem, bindTriggerItemButtons } from "./spell-trigger-items-runtime.js";
+import { spellActionsOnCast, runSpellAction, bindSpellActionButtons, deliveryOnStrike, slidecastNow, invigorateOnDamage } from "./spell-actions-runtime.js";
+import { backfireAmmoOnCard, backfireAmmoOnStrike, backfireAmmoOnCast } from "./plus-ammo-runtime.js";
+import { refocusMoreOnCard, freeFocusOnCard, freeFocusOnCast, freeFocusEnded, bargainOnCreate, bunOnCard, bindFocusButtons } from "./plus-focus-runtime.js";
+import { counteractFeatureOnCard, bindCounteractButtons } from "./plus-counteract-runtime.js";
+import { stigmataOnHealing, summonBurstOnCast, bindCastAfterButtons, surgeAddonOnCreate } from "./plus-cast-riders-runtime.js";
+import { hexFamiliarOnCast } from "./plus-hex-familiar-runtime.js";
+import { exploitOnCard, channelSmiteOnStrike, exploitAuraTurnStart, bindExploitButtons } from "./plus-exploit-runtime.js";
+import { catalystOnDamage, catalystOnDecoy, catalystOnFlatCheck, catalystOnCast, catalystAfterResolve, catalystTurnStart, catalystOnMove, catalystOnEffectEnded, catalystShieldBlocked, bindCatalystButtons } from "./catalyst-runtime.js";
+import { essenceOnCast, essenceOnCombatStart, essenceOnCombatEnd, lifeReservoirRank, lifeReservoirOnHealing, lifeReservoirOnRefocus, essenceConduitOnCard, essenceActivationOnCard, incantationsOnRefocus, unstableDrawOnCard } from "./essence-runtime.js";
+import { creatureAbilitiesOnCast, runCreatureAbility, bindCreatureAbilityButtons, readCreatureSpellAbility } from "./creature-spell-abilities-runtime.js";
 
 const immediate = new ImmediateRuntime();
 const runtime = new EffectRuntime();
@@ -140,8 +173,42 @@ function spellCardContext(message) {
         actor,
         item: spell,
         baseSource: embeddedSource ?? unheightenedSource(item, actor.items.get(itemId)),
-        castRank: Number.isFinite(castRank) ? castRank : null
+        castRank: Number.isFinite(castRank) ? castRank : null,
+        embedded: Boolean(message.flags?.pf2e?.casting?.embeddedSpell)
     };
+}
+
+const printings = new Map();
+/**
+ * A wand or scroll's stored copy of its spell is the printing current when the item was made. When the module can't resolve that copy and can
+ * resolve the compendium's current printing of the same spell (Wand of Tormented Slumber's Sleep, Wand of Clinging Rime's Frigid Flurry), the card
+ * uses the current printing at the stored rank.
+ */
+async function currentPrinting(context, message) {
+    if (!context?.embedded || context.baseSource?.type !== "spell") return context;
+    if (!printings.has(message.id)) printings.set(message.id, (async () => {
+        const stored = context.baseSource;
+        const uuid = stored._stats?.compendiumSource ?? stored.flags?.core?.sourceId ?? null;
+        if (!String(uuid ?? "").startsWith("Compendium.")) return null;
+        const current = await fromUuid(uuid).catch(() => null);
+        if (current?.type !== "spell" || current.system?.description?.value === stored.system?.description?.value) return null;
+        const api = game.modules.get(MODULE_ID).api;
+        const storedItem = spellFromSource(foundry.utils.deepClone(stored), context.actor);
+        if ((await api.diagnose(storedItem).catch(() => ({ route: "none" }))).route !== "none") return null;
+        const source = current.toObject();
+        source._id = stored._id;
+        source.system.location = foundry.utils.deepClone(stored.system.location);
+        source._stats = { ...(source._stats ?? {}), compendiumSource: uuid };
+        const currentItem = spellFromSource(foundry.utils.deepClone(source), context.actor);
+        if ((await api.diagnose(currentItem).catch(() => ({ route: "none" }))).route === "none") return null;
+        return source;
+    })());
+    const source = await printings.get(message.id);
+    if (!source) return context;
+    context.baseSource = source;
+    context.item = spellFromSource(foundry.utils.deepClone(source), context.actor);
+    rememberCastSpell(context.item);
+    return context;
 }
 
 /**
@@ -226,7 +293,11 @@ function bindSaveButtons(root) {
     }
     for (const button of root.querySelectorAll(".pf2e-auto-save-button")) {
         const card = game.messages.get(button.dataset.messageId);
-        refreshSaveButtonAuthority(button, !!card && basicSaves.canCoordinate(card));
+        // (Who sees it: the GM every button; the caster the cast's own buttons; a target's owner its save.)
+        const role = saveButtonRole(button, card, game.user);
+        button.hidden = role === "hidden";
+        if (role === "caster") { button.dataset.saveStateDisabled ??= String(button.disabled); button.disabled = button.dataset.saveStateDisabled === "true" || button.dataset.runtimeBusy === "true"; }
+        else refreshSaveButtonAuthority(button, !!card && basicSaves.canCoordinate(card));
         if (button.dataset.runtimeBound) continue;
         button.dataset.runtimeBound = "true";
         button.addEventListener("click", async event => {
@@ -247,7 +318,7 @@ function bindSaveButtons(root) {
                 notifyError("Save-resolution control failed", error);
             } finally {
                 delete button.dataset.runtimeBusy;
-                refreshSaveButtonAuthority(button, basicSaves.canCoordinate(card));
+                if (saveButtonRole(button, card, game.user) !== "caster") refreshSaveButtonAuthority(button, basicSaves.canCoordinate(card));
             }
         });
     }
@@ -255,6 +326,97 @@ function bindSaveButtons(root) {
 
 // Conjured food: the eater is the user's one targeted token, else their one controlled token, else their character.
 /** A note card's heightened counteract button (Putrefy Food and Drink at 2nd rank). */
+/** A GM-handled spell's options (user request 2026-10-04): GM only; each applies to the creatures the GM targets. */
+function bindGmOptionButtons(message, root) {
+    const data = message.getFlag(MODULE_ID, "gmOptions");
+    for (const button of root.querySelectorAll(".pf2e-auto-gm-option")) {
+        if (button.dataset.runtimeBound || !data) continue;
+        button.dataset.runtimeBound = "true";
+        if (!game.user.isGM) { button.hidden = true; continue; }
+        button.addEventListener("click", async event => {
+            event.preventDefault(); event.stopPropagation();
+            try { await runGmOption(message, button.dataset.option); } catch (error) { notifyError("GM option", error); }
+        });
+    }
+}
+
+async function runGmOption(message, key, { targets = null } = {}) {
+    const data = message.getFlag(MODULE_ID, "gmOptions");
+    const option = data?.options?.find(entry => entry.key === key);
+    if (!game.user.isGM || !option) throw Error("Only the GM uses this spell's options.");
+    const caster = await fromUuid(data.sourceActorUuid);
+    if (!caster) throw Error(`${data.spellName}: the caster is unavailable.`);
+    // (An option on the caster itself — Channel Imperial Dragon's Sustain.)
+    const tokens = option.self ? (caster.getActiveTokens?.(true, true) ?? []).slice(0, 1) : [...(targets ?? game.user.targets)].map(token => token.document ?? token).filter(token => token?.actor);
+    if (!tokens.length) throw Error(`${data.spellName}: ${option.self ? `${caster.name} needs a token on the scene` : "target the creatures first"}.`);
+    const spell = await castSpellFromUuid({ sourceItemUuid: data.sourceItemUuid, sourceActorUuid: data.sourceActorUuid, spellSource: data.spellSource });
+    if (option.kind === "save") {
+        const source = spell?.toObject?.() ?? foundry.utils.deepClone(data.spellSource);
+        if (option.patch) source.system = { ...source.system, ...foundry.utils.deepClone(option.patch) };
+        const sub = spellFromSource(source, caster);
+        const dc = Number(data.dc ?? sub.spellcasting?.statistic?.dc?.value ?? NaN);
+        const started = await basicSaves.start(sub, { plan: foundry.utils.deepClone(option.plan), sourceActor: caster, targets: tokens.map(token => token.object ?? token), castRank: data.castRank,
+            ...(Number.isFinite(dc) ? { dc } : {}), skipConfirmation: true });
+        // ("… after which the spell immediately ends": the cast's marks removed — Hyper-Arcane Pressure Point Strike.)
+        if (option.endsCast) {
+            const castId = message.getFlag(MODULE_ID, "castInstanceId");
+            for (const actor of new Set(canvas.scene?.tokens?.map(token => token.actor).filter(Boolean) ?? [])) {
+                const marks = (actor.itemTypes?.effect ?? []).filter(effect => castId && effect.flags?.[MODULE_ID]?.runtime?.castInstanceId === castId).map(effect => effect.id);
+                if (marks.length) await actor.deleteEmbeddedDocuments("Item", marks);
+            }
+        }
+        return started;
+    }
+    // (Secret of the Forebearers: the forebearers' Aid — the chosen skill against the Aid DC, once a turn; a failure a success, legendary a critical success;
+    // the bonus on the caster's next attack roll or skill check.)
+    if (option.kind === "aid-roll") {
+        const actor = tokens[0].actor;
+        const turnKey = game.combat?.started ? `${game.combat.id}:${game.combat.round}:${game.combat.turn}` : `t${Math.floor(game.time.worldTime / 6)}`;
+        if (data.lastAid === turnKey) throw Error(`${data.spellName}: the forebearers already Aided this turn.`);
+        await message.setFlag(MODULE_ID, "gmOptions", { ...data, lastAid: turnKey });
+        const statistic = actor.skills?.[option.skill];
+        if (!statistic) throw Error(`${data.spellName}: ${actor.name} has no ${option.skill} modifier.`);
+        const rank = Number(statistic.rank ?? 0);
+        let degree, total = null;
+        if (option.legendaryCritical && rank >= 4) degree = "criticalSuccess";
+        else {
+            const roll = await statistic.check.roll({ dc: { value: option.dc }, extraRollOptions: ["action:aid"], skipDialog: true, label: `${data.spellName}: the forebearers Aid` });
+            degree = ["criticalFailure", "failure", "success", "criticalSuccess"][Number(roll?.degreeOfSuccess ?? -1)] ?? "failure";
+            total = roll?.total ?? null;
+            if (option.failureToSuccess && degree === "failure") degree = "success";
+        }
+        const value = aidModifier(degree, rank);
+        let effect = null;
+        if (value) [effect] = await actor.createEmbeddedDocuments("Item", [{ name: `${data.spellName}: the forebearers' Aid`, type: "effect", img: data.spellSource?.img ?? "icons/svg/aura.svg",
+            flags: { [MODULE_ID]: { gmOption: { spell: data.spellName, key: option.key } } },
+            system: { level: { value: data.castRank }, duration: { value: 1, unit: "rounds", expiry: "turn-end", sustained: false }, start: { value: game.time.worldTime, initiative: game.combat?.combatant?.initiative ?? null },
+                description: { value: `<p>${value > 0 ? "+" : ""}${value} circumstance to your next attack roll or skill check (the forebearers' Aid).</p>` },
+                rules: [{ key: "FlatModifier", selector: ["attack-roll", "skill-check"], type: "circumstance", value, label: `${data.spellName} (Aid)`, removeAfterRoll: true }] } }]);
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content: `<p><strong>${foundry.utils.escapeHTML(data.spellName)}</strong>: the forebearers Aid ${foundry.utils.escapeHTML(actor.name)} — ${total ?? "automatic"} (${foundry.utils.escapeHTML(degree)}): ${value > 0 ? "+" : ""}${value} circumstance.</p>` }); } catch (_) {}
+        return { status: "applied", degree, value, created: effect ? [effect.uuid] : [] };
+    }
+    const created = [];
+    for (const token of tokens) {
+        if (option.kind === "native-effect") {
+            const template = await loadNativeEffectTemplate(option.uuid);
+            if (!template) throw Error(`${data.spellName}: PF2e's ${option.label} Effect is unavailable.`);
+            const source = prepareNativeEffectSource(template, { castInstanceId: message.getFlag(MODULE_ID, "castInstanceId") ?? foundry.utils.randomID(), castRank: data.castRank,
+                sourceActorUuid: caster.uuid, sourceItemUuid: data.sourceItemUuid, sourceItemName: data.spellName, resolutionKind: "gm-option", targetActorUuid: token.actor.uuid });
+            created.push(await createNativeEffect(token.actor, source));
+        } else if (option.kind === "effect") {
+            const [effect] = await token.actor.createEmbeddedDocuments("Item", [{ name: `${data.spellName}: ${option.label.split(":")[0]}`, type: "effect", img: data.spellSource?.img ?? "icons/svg/aura.svg",
+                flags: { [MODULE_ID]: { gmOption: { spell: data.spellName, key: option.key, ...(option.watch ? { watch: foundry.utils.deepClone(option.watch), casterUuid: caster.uuid } : {}) } } },
+                system: { level: { value: data.castRank }, duration: { value: option.duration?.value ?? 1, unit: option.duration?.unit ?? "minutes", expiry: option.duration?.expiry ?? "turn-start", sustained: false },
+                    start: { value: game.time.worldTime, initiative: game.combat?.combatant?.initiative ?? null },
+                    description: { value: `<p>${foundry.utils.escapeHTML(option.label)}.</p>${option.note ? `<p>${foundry.utils.escapeHTML(option.note)}</p>` : ""}` }, rules: foundry.utils.deepClone(option.rules ?? []) } }]);
+            created.push(effect);
+        }
+    }
+    try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: caster }), whisper: ChatMessage.getWhisperRecipients("GM").map(user => user.id),
+        content: `<p><strong>${foundry.utils.escapeHTML(data.spellName)}</strong> — ${foundry.utils.escapeHTML(option.label)}: ${tokens.map(token => foundry.utils.escapeHTML(token.name)).join(", ")}.</p>` }); } catch (_) {}
+    return { status: "applied", created: created.map(effect => effect?.uuid) };
+}
+
 function bindNoteCounteractButtons(message, root) {
     const button = root.querySelector(".pf2e-auto-note-counteract");
     if (!button || button.dataset.runtimeBound || !message.getFlag(MODULE_ID, "noteCounteract")) return;
@@ -283,7 +445,9 @@ function patchSelectiveTerrain() {
         // (Or by size: "Medium and larger creatures treat these spaces as difficult terrain" — Steel Fortifications.)
         const order = ["tiny", "sm", "med", "lg", "huge", "grg"];
         const bySize = selective.bySize && actor?.isOfType?.("creature") && order.indexOf(actor.size) >= order.indexOf(selective.bySize.min) ? Number(selective.bySize.difficulty) : null;
-        const difficulty = Number((selective.creatures ?? []).find(entry => entry.actorUuid === actorUuid)?.difficulty ?? bySize ?? selective.default ?? 1);
+        // (Or only for the living: "The area is difficult terrain to all living creatures" — Tear the Veil.)
+        const byLiving = selective.living && actor?.isOfType?.("creature") && (actor.modeOfBeing ?? "living") === "living" ? Number(selective.living.difficulty) : null;
+        const difficulty = Number((selective.creatures ?? []).find(entry => entry.actorUuid === actorUuid)?.difficulty ?? bySize ?? byLiving ?? selective.default ?? 1);
         return difficulty > 1 ? [{ name: "difficulty", difficulty }] : [];
     };
     type.prototype._pf2eAutoSelective = true;
@@ -292,10 +456,96 @@ Hooks.once("setup", patchSelectiveTerrain);
 Hooks.once("ready", patchSelectiveTerrain);
 
 /** A conjured structure brought to its Broken Threshold (Steel Fortifications): it crumbles (the active GM). */
+// A note that lasts with a condition (Calcification, Vitrifying Blast): its condition changed — kept in step, or ended.
+const conditionChanged = item => { if (item?.type === "condition" && item.actor && item.actor.itemTypes?.effect?.some(effect => effect.flags?.[MODULE_ID]?.runtime?.withCondition?.slug === item.slug))
+    void withConditionSync(item.actor).catch(error => notifyError("Condition-linked note failed", error)); };
+Hooks.on("createItem", conditionChanged);
+Hooks.on("createItem", item => { if (item.type === "condition") void triggerAuraOnCondition(item).catch(error => notifyError("Aura damage failed", error)); });
+Hooks.on("updateItem", conditionChanged);
+Hooks.on("deleteItem", conditionChanged);
+// (A form's temporary Hit Points that end with it: Corrosive Body; its auras, and Arcane Explosion's return at maximum Hit Points.)
+Hooks.on("deleteItem", item => { void formTempHpExpiry(item).catch(error => notifyError("Temporary Hit Point expiry failed", error)); });
+Hooks.on("deleteItem", item => { void formEnded(item, ongoing).catch(error => notifyError("A form's end failed", error)); });
+// (A form's toggle granting a condition: Blanket of Stars' night sky.)
+Hooks.on("updateItem", item => { void syncToggleGrants(item).catch(error => notifyError("A form's toggle failed", error)); });
+// A dying creature's summon (Gray Shadow) ends when it dies or regains consciousness: its Dying condition gone, or Dead.
+Hooks.on("deleteItem", item => { if (item.type === "condition" && item.slug === "dying" && item.actor) void dyingLinkCheck(item.actor).catch(error => notifyError("Dying link failed", error)); });
+Hooks.on("updateActor", actor => { if (actor?.statuses?.has?.("dead")) void dyingLinkCheck(actor).catch(error => notifyError("Dying link failed", error)); });
+// (Unleash True Power: its end — the caster's Effect gone — the final shock's save card.)
+Hooks.on("deleteItem", (item, options) => {
+    if (item?.type !== "effect" || !item.flags?.[MODULE_ID]?.truePower || options?.[MODULE_ID]?.ongoingCleanup || !game.user?.isGM || game.users.activeGM?.id !== game.user.id) return;
+    void runtime.truePowerEnd(item).catch(error => notifyError("Unleash True Power's end failed", error));
+});
+// (Honorable Death: its target reduced to 0 Hit Points while the spell lasts is instantly killed.)
+Hooks.on("updateActor", (actor, changes) => {
+    if (foundry.utils.getProperty(changes, "system.attributes.hp.value") === undefined || Number(actor.hitPoints?.value ?? 1) > 0) return;
+    if (!game.user?.isGM || game.users.activeGM?.id !== game.user.id || !(actor.itemTypes?.effect ?? []).some(effect => effect.flags?.[MODULE_ID]?.honorDuel)) return;
+    void runtime.honorDeath(actor).catch(error => notifyError("Honorable Death failed", error));
+});
+// A creature lost Hit Points: the caster's share for its notes that share them (Temporary Possession).
+Hooks.on("updateActor", (actor, _changes, options) => {
+    if (Number(options?.damageTaken) > 0) void hpShareOnLoss(actor, Number(options.damageTaken)).catch(error => notifyError("Hit Point share failed", error));
+    // (A note ended by the total damage taken: Volcanic Eruption's encasing rock.)
+    if (Number(options?.damageTaken) > 0) void damageLimitOnLoss(actor, Number(options.damageTaken)).catch(error => notifyError("Damage-limited note failed", error));
+    // (A conjured creature whose death ends its spell: Dragon Turret's dragon.)
+    if (actor?.flags?.[MODULE_ID]?.summoned?.endsAtZero) void summonEndsAtZero(actor).catch(error => notifyError("Conjured creature ending failed", error));
+    // (A form ending at 0 HP with 1 left: Patron's Protector.)
+    if (actor?.itemTypes?.effect?.some(effect => effect.flags?.[MODULE_ID]?.runtime?.zeroToOne)) void zeroToOneOnLoss(actor).catch(error => notifyError("Form ending failed", error));
+});
 Hooks.on("updateActor", (actor, changes) => {
     if (!actor.flags?.[MODULE_ID]?.fortification || foundry.utils.getProperty(changes, "system.attributes.hp.value") === undefined) return;
     if (!game.user?.isGM || game.users.activeGM?.id !== game.user.id) return;
     void runtime.crumbleFortification(actor).catch(error => notifyError("The structure's crumbling failed", error));
+});
+
+/** Damage a creature took: a life link moves part of it (Bound in Death); a fury's curse blinds its attacker to it (Blinding Fury). */
+Hooks.on("updateActor", (actor, _changes, options) => {
+    if (!(Number(options?.damageTaken) > 0)) return;
+    void linkOnDamage({ ongoing, actor, amount: Number(options.damageTaken) }).catch(error => notifyError("The life link failed", error));
+    void furyOnDamage(actor).catch(error => notifyError("The fury's curse failed", error));
+});
+/** Revival's raised creatures: no other healing or temporary Hit Points; the spell's end kills them. */
+Hooks.on("preUpdateActor", (actor, changes, options) => { holdNoHealing(actor, changes, options); });
+Hooks.on("deleteItem", item => { void revivalEnded(item).catch(error => notifyError("Revival's end failed", error)); });
+/** A spell cast: its spellshape feats and wand read onto its message, and PF2e's Spellshape selector switched off (spellshape-runtime.js). */
+Hooks.on("createChatMessage", message => {
+    void recordShaping(message).catch(error => notifyError("Spellshape", error));
+    void armSpellshape(message).catch(error => notifyError("Spellshape", error));
+});
+Hooks.on("updateItem", (item, changes) => noteWandUse(item, changes));
+Hooks.on("preCreateRegion", (region, data) => { try { widenCastTemplate(region, data); } catch (error) { console.warn(`${MODULE_ID} | The template couldn't be widened.`, error); } });
+// (Spellshape riders tied to the spell's own Effects, and a condition following another the spell grants.)
+Hooks.on("deleteItem", item => { void shapeTieEnded(item).catch(error => notifyError("A spellshape rider's end failed", error)); });
+Hooks.on("createItem", item => { if (item.type === "condition" && item.actor) void syncShapeFollow(item.actor); });
+Hooks.on("createChatMessage", message => { if (message.flags?.pf2e?.appliedDamage) void shapeOnApplied(message).catch(error => notifyError("A spellshape's healing rider failed", error)); });
+// (A spellshape's terrain: the cast's area copied, its hazard on a creature's turn end, removed when its time is up; its card's buttons.)
+Hooks.on("createRegion", region => { void shapeTerrainFromTemplate(region).catch(error => notifyError("A spellshape's terrain failed", error)); });
+// The wands that watch: their area at the template, PF2e's checks, the turns' echoes and shards, Continuation's longer Effects (spellshape-runtime.js).
+Hooks.on("createRegion", region => { void shapeAreaFromTemplate(region).catch(error => notifyError("A wand's area failed", error)); });
+Hooks.on("createChatMessage", message => { if (message.flags?.pf2e?.context?.type) void shapeWatchMessage(message).catch(error => notifyError("A wand's watch failed", error)); });
+// (A rule kept for one cast's roll — Sacrificial Spell's d12s — gone with that roll.)
+Hooks.on("createChatMessage", message => { if (message.flags?.pf2e?.context?.type === "damage-roll") void shapeRollSpent(message).catch(error => notifyError("A spellshape's roll rule failed", error)); });
+Hooks.on("updateCombat", (combat, changes) => { if ("turn" in changes || "round" in changes) { void stillInFlames(combat).catch(error => notifyError("A wand's flames failed", error)); void shapeTurnStart(combat).catch(error => notifyError("A wand's turn failed", error)); } });
+Hooks.on("createItem", item => { if (item.type === "effect") void shapeScaleOnCreate(item).catch(error => notifyError("A wand's duration failed", error)); });
+Hooks.on("updateCombat", (combat, changes) => { if ("turn" in changes || "round" in changes) { void shapeTerrainTurnEnd(combat).catch(error => notifyError("A spellshape's terrain damage failed", error)); void expireShapeTerrain().catch(() => null); } });
+Hooks.on("updateWorldTime", () => { void expireShapeTerrain().catch(() => null); });
+Hooks.on("renderChatMessageHTML", (message, html) => { if (message.flags?.[MODULE_ID]?.kind === "spellshape-terrain" || message.flags?.[MODULE_ID]?.kind === "spellshape-garland") bindTerrainButtons(message, html); });
+Hooks.on("renderChatMessageHTML", (message, html) => { if (message.flags?.[MODULE_ID]?.kind === "spellshape-card") bindShapeCardButtons(message, html); });
+Hooks.on("updateCombat", (combat, changes) => { if ("turn" in changes || "round" in changes) { void detonateOnTurn(combat).catch(error => notifyError("A spellshape's circle failed", error)); void turnStartShapeHeal(combat).catch(error => notifyError("A wand's healing failed", error)); } });
+Hooks.on("updateItem", item => { if (item.type === "condition" && item.actor) void syncShapeFollow(item.actor); });
+/** Sacred Covenant: a pact-holder taken to 0 Hit Points stays at 1, then its temporary Hit Points, Wounded and immunity. */
+Hooks.on("preUpdateActor", (actor, changes, options) => { holdCovenant(actor, changes, options); });
+Hooks.on("updateActor", (actor, _changes, options) => { void covenantKept(actor, options).catch(error => notifyError("Sacred Covenant failed", error)); });
+/** A spell cast: a leech on its caster reacts (Divinity Leech). */
+Hooks.on("createChatMessage", message => {
+    void leechOnCast({ ongoing, incarnatePhase: (card, key, options) => runtime.incarnatePhase(card, key, options) }, message).catch(error => notifyError("The leech failed", error));
+});
+
+/** A marked creature reduced to 0 Hit Points (Doom Mark): the other creatures the card marked get the stated conditions, by the active GM. */
+Hooks.on("updateActor", (actor, changes) => {
+    if (foundry.utils.getProperty(changes, "system.attributes.hp.value") === undefined || Number(actor.hitPoints?.value ?? 1) > 0) return;
+    if (!game.user?.isGM || game.users.activeGM?.id !== game.user.id) return;
+    void markedAtZero(ongoing, actor).catch(error => notifyError("The marks' payoff failed", error));
 });
 
 /** A challenge ends when the caster or the challenged enemy is defeated (Dutiful Challenge): both Effects go, by the active GM. */
@@ -372,6 +622,8 @@ function wrapApplyDamage() {
     if (!owner || owner._pf2eAutoWrapped) return;
     const original = owner.applyDamage;
     owner.applyDamage = async function (params = {}) {
+        // (A copy that deals half damage with its Strikes — Duplicate Foe's on a success: the roll halved by PF2e's own multiplier.)
+        try { params = halvedCopyDamage(params); } catch (error) { console.warn(`${MODULE_ID} | The copy's half damage failed.`, error); }
         const before = Number(this.hitPoints?.value ?? this.system?.attributes?.hp?.value ?? NaN);
         const beforeTemp = Number(this.system?.attributes?.hp?.temp ?? 0);
         const result = await original.call(this, params);
@@ -396,6 +648,18 @@ function wrapApplyDamage() {
     owner._pf2eAutoWrapped = true;
 }
 Hooks.once("ready", wrapApplyDamage);
+// A module Effect's d20 limit ("… get a 10 instead"): set on PF2e's check roll before it's graded.
+Hooks.once("ready", () => { if (!installD20Clamp()) console.warn(`${MODULE_ID} | PF2e's check roll couldn't be wrapped: d20 limits won't apply.`); });
+// The "+" modules' passive features as their text says (text-rules.js): wrapped as PF2e's classes exist, before the world's actors are prepared; if that
+// was too early, at ready with the actors prepared again.
+Hooks.once("setup", () => { installTextRules(); });
+Hooks.once("ready", () => { if (installTextRules()) for (const actor of game.actors) actor.reset(); });
+Hooks.on("createChatMessage", message => { if (message.item?.slug === "sustain") void waywardSustain(message).catch(error => notifyError("Wayward Gifts failed", error)); });
+Hooks.on("createItem", item => { if (item.type === "effect") void textRulesOnCreate(item).catch(error => notifyError("An Effect's value from its text failed", error)); });
+// (A "+" feature regaining a Focus Point, its card posted.)
+Hooks.on("createChatMessage", message => { if (["feat", "action"].includes(message.flags?.pf2e?.origin?.type)) void focusRegainOnCard(message).catch(error => notifyError("A Focus Point regained failed", error)); });
+// (A "+" action spending residual energy to cast — Become Elemental, Create Elemental —, its card posted.)
+Hooks.on("createChatMessage", message => { if (["feat", "action"].includes(message.flags?.pf2e?.origin?.type)) void actionCastOnCard(message).catch(error => notifyError("A feature's casting failed", error)); });
 
 /** Radiant Field's turn-start save card. */
 function bindRadiantSaveButtons(message, root) {
@@ -439,6 +703,8 @@ Hooks.on("preUpdateActor", (actor, changes, options) => {
     const kept = Math.floor((after - before) / 2);
     if (flat) changes[key] = before + kept; else foundry.utils.setProperty(changes, key, before + kept);
     options.damageTaken = -kept;
+    // (A one-use halving — a path maiden's Blasphemous Aura on one healing spell: spent.)
+    if (holder.flags[MODULE_ID].halfHealing?.once) void holder.delete().catch(() => null);
     // (This hook runs only on the client making the update.)
     void ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }),
         content: `<p><strong>${foundry.utils.escapeHTML(holder.name)}</strong>: ${foundry.utils.escapeHTML(actor.name)} regains ${kept} instead of ${after - before} Hit Points (half the healing).</p>` }).catch(() => null);
@@ -871,6 +1137,8 @@ async function addResolutionButton(message, root) {
     if (root.querySelector(".pf2e-auto-runtime-resolve")) return;
     const context = spellCardContext(message);
     if (!context) return;
+    await currentPrinting(context, message);
+    if (root.querySelector(".pf2e-auto-runtime-resolve")) return;
     const canPrepare = game.user.isGM || context.actor.canUserModify?.(game.user, "update");
 
     if (forms.supports(context.item)) {
@@ -1000,8 +1268,11 @@ async function addResolutionButton(message, root) {
                     buttons: modes.map(mode => ({ action: mode.key, label: mode.label })), close: () => null, rejectClose: false }) : null;
                 if (modes && !key) { button.disabled = false; return; }
                 const chosen = modes ? modes.find(mode => mode.key === key).plan : plan;
-                const result = await ongoingFamilies.startLingering(context.item, chosen, { sourceMessageId: message.id, castRank: context.castRank, targets: [...game.user.targets] });
+                const targeted = [...game.user.targets];
+                const result = await ongoingFamilies.startLingering(context.item, chosen, { sourceMessageId: message.id, castRank: context.castRank, targets: targeted });
                 if (result.status === "cancelled") button.disabled = false;
+                // (Pyrotechnics: a creature as the fire source takes the stated damage.)
+                else await sourceCreatureDamage(plan, context.item, targeted);
             } catch (error) { button.disabled = false; notifyError("Lingering area failed", error); }
         });
         return;
@@ -1077,8 +1348,9 @@ async function addResolutionButton(message, root) {
     const gateState = () => message.getFlag(MODULE_ID, "repeatGate") ?? null;
     const recharging = () => { const until = message.getFlag(MODULE_ID, "repeatWindow")?.rechargeUntil; return until != null && game.time.worldTime < until ? until : null; };
     const attacksMade = () => message.getFlag(MODULE_ID, "repeatWindow")?.attacks?.length ?? 0;
+    // (A save repeated on each Sustain ends when a result row ends the spell: Lurking Doom's critical success — the card sets "ended".)
     const attacksLeft = () => { const opened = message.getFlag(MODULE_ID, "repeatWindow");
-        return !opened || ((anyTime || attacksMade() < repeatable.attacks) && (opened.endsAt == null || game.time.worldTime <= opened.endsAt)); };
+        return !opened || (!opened.ended && (anyTime || attacksMade() < repeatable.attacks) && (opened.endsAt == null || game.time.worldTime <= opened.endsAt)); };
     const windowOpen = () => {
         const opened = message.getFlag(MODULE_ID, "repeatWindow");
         if (laterTurns) {
@@ -1095,6 +1367,8 @@ async function addResolutionButton(message, root) {
     // Later-turn attacks stay available until they're used up; a click off the caster's turn explains why it can't attack yet.
     const again = () => repeatable && (laterTurns ? attacksLeft() : windowOpen());
     button.disabled = (!!resolved && !again()) || (savePlan && !canPrepare);
+    // (Only the GM and the caster prepare the cast: hidden from everyone else — targets roll on the save card.)
+    if (savePlan && !canPrepare) button.hidden = true;
     button.innerHTML = repeatable && resolved && again() ? againLabel()
         : laterTurns && resolved ? '<i class="fa-solid fa-check"></i> Attacks Used'
         : resolved
@@ -1169,7 +1443,8 @@ async function addResolutionButton(message, root) {
                 // Each attack is recorded with its turn; the first sets when the spell's duration runs out.
                 const opened = message.getFlag(MODULE_ID, "repeatWindow");
                 const spec = plan.lifecycle?.durationSpec;
-                const seconds = spec?.mode === "fixed" ? Number(spec.value) * ({ rounds: 6, minutes: 60, hours: 3600 }[spec.unit] ?? 0) : null;
+                const span = spec?.mode === "fixed" ? spec : spec?.mode === "sustained" && spec.maximum?.mode === "fixed" ? spec.maximum : null;
+                const seconds = span ? Number(span.value) * ({ rounds: 6, minutes: 60, hours: 3600 }[span.unit] ?? 0) : null;
                 // ("Once activated, you can't use the breath weapon again for 1d4 rounds.": rolled now.)
                 let rechargeUntil = null;
                 if (repeatable.recharge) {
@@ -1214,6 +1489,12 @@ registerStrikeEffects();
 
 Hooks.once("init", () => {
     registerDebugSetting();
+    // Ended Ongoing-spell records (their journal entries) are deleted once nothing still needs them, unless the GM keeps them.
+    game.settings.register(MODULE_ID, "keepEndedOngoing", {
+        name: "Keep ended Ongoing-spell journals",
+        hint: "Ongoing spells are tracked in journal entries. By default an entry is deleted once its spell has ended and nothing it created (Effects, conditions, areas, save cards) still needs it. Turn this on to keep them as a history.",
+        scope: "world", config: true, type: Boolean, default: false
+    });
     const module = game.modules.get(MODULE_ID);
     if (module) {
         const saveApi = {
@@ -1253,7 +1534,23 @@ Hooks.once("init", () => {
         };
         module.api = {
             compile: (item, options) => runtime.compile(item, options),
+            gmOption: (message, key, options) => runGmOption(message, key, options),
+            sourceCreatureDamage: (plan, item, targets) => sourceCreatureDamage(plan, item, targets),
+            castingRules: { onCast: message => castingRulesOnCast(message), run: (message, button) => runCastingRule(message, button) },
+            triggerItems: { onCast: message => spellTriggerItemsOnCast(message), run: (message, button) => runTriggerItem(message, button) },
+            castActions: { onCast: message => spellActionsOnCast(message), run: (message, button) => runSpellAction(message, button) },
+            creatureAbilities: { read: source => readCreatureSpellAbility(source), onCast: message => creatureAbilitiesOnCast(message), run: message => runCreatureAbility(message) },
+            itemCasts: { read: source => readItemCasts(source), offer: item => offerItemCasts(item), cast: (item, index, options) => castFromItem(item, index, options), reservoir: (message, action) => runReservoirButton(message, action) },
+            itemShapes: { read: source => readItemSpellshape(source), arm: (message, item) => armItemSpellshape(message, item), run: (message, button) => runItemShapeCard(message, button), turnStart: combat => itemShapeTurnStart(combat), watch: message => itemShapeWatchMessage(message) },
+            bloodMagic: { onCast: message => bloodMagicOnCast(message), run: (message, choice, options) => runBloodMagic(message, choice, options), spite: (uuid, token) => spiteStrikes(uuid, token) },
             // Authoring aid: which route a spell takes and what blocks it.
+            // (The spell a cast's card resolves: a wand or scroll's stored copy, or its current printing — for scripted runs.)
+            cardSpell: async message => { const context = spellCardContext(message); return context ? currentPrinting(context, message) : null; },
+            // (A spellshape's terrain, for scripted runs: a creature moved through it; Garland Spell's burst grown at a token.)
+            spellshapeTerrainMove: (regionUuid, tokenUuid, squares) => shapeTerrainMove(regionUuid, tokenUuid, squares),
+            spellshapeGrowGarland: (message, options) => growGarland(message, options),
+            spellshapeCard: (message, options) => runShapeCard(message, options),
+            spellshapeDetonate: region => detonateShapeCircle(region),
             diagnose: async item => {
                 const plan = await runtime.compile(item);
                 const save = inspectSavePlan(plan);
@@ -1285,6 +1582,35 @@ Hooks.once("init", () => {
             colorArmorAttacker: (effect, options) => runtime.colorArmorAttacker(effect, options),
             protagonistAct: (effect, options) => runtime.protagonistAct(effect, options),
             challengeExempt: (effect, options) => runtime.challengeExempt(effect, options),
+            // (Gruesome Marionettist's card controls, for scripted runs: "prohibited" or "directed".)
+            marionetteAct: (effect, option) => runtime.marionetteAct(effect, option),
+            // (Lucky Decision's reactions, for scripted runs: "good" or "bad" — the enemy targeted, `degree` to set its save's result.)
+            fateAct: (effect, which, options) => runtime.fateAct(effect, which, options),
+            // (Wooden Engulfment's grab, for scripted runs.)
+            treeGrab: (effect, options) => runtime.treeGrab(effect, options),
+            // (Coiling Grasp's Grapple again on a Sustain, for scripted runs.)
+            weaponGrapple: (effect, options) => runtime.weaponGrapple(effect, options),
+            // (Honorable Death's end-of-turn control, for scripted runs: "peace" (no hostile action) or "hostile".)
+            honorAct: (effect, which, options) => runtime.honorAct(effect, which, options),
+            // (Shine Spotlight's Perform control, for scripted runs.)
+            spotlightPerform: (effect, options) => runtime.spotlightPerform(effect, options),
+            // (Coiling Creepers' controls, for scripted runs: "maneuver" or "clear".)
+            creepersAct: (effect, which, options) => runtime.creepersAct(effect, which, options),
+            // (Long Live the Revolution, for scripted runs: the saves (the Sustain's newcomers) and a rebel's controls.)
+            rallySaves: (effect, options) => runtime.rallySaves(effect, options),
+            rallyAct: (effect, which, options) => runtime.rallyAct(effect, which, options),
+            // (Unleash True Power's spell cast through the patron, for scripted runs.)
+            truePowerCast: (effect, options) => runtime.truePowerCast(effect, options),
+            // (Mystic Bomb's controls, for scripted runs: "explode", "grow" or "aid".)
+            bombAct: (effect, which, options) => runtime.bombAct(effect, which, options),
+            // (Seeds of Divinity's controls, for scripted runs: "sprout", "grow" or "eat".)
+            seedsAct: (effect, which, options) => runtime.seedsAct(effect, which, options),
+            // (Prism of Power's controls, for scripted runs: "scatter" or "diffract".)
+            prismAct: (effect, which, options) => runtime.prismAct(effect, which, options),
+            // (Animated Spark's disperse, for scripted runs.)
+            sparkDisperse: (effect, options) => runtime.sparkDisperse(effect, options),
+            // (Patron's Apocalypse's Sustain move, for scripted runs.)
+            apocalypseMove: (effect, options) => runtime.apocalypseMove(effect, options),
             spellStealAttempt: (effect, options) => runtime.spellStealAttempt(effect, options),
             spellStealTransfer: (effect, options) => runtime.spellStealTransfer(effect, options),
             flashCloakAttacker: (effect, options) => runtime.flashCloakAttacker(effect, options),
@@ -1353,6 +1679,10 @@ Hooks.once("init", () => {
                 startAura: (item, declaration) => ongoingFamilies.startAura(item, declaration),
                 reconcile: options => ongoing.reconcile(options),
                 request: (action, data) => ongoing.request(action, data),
+                // (A cast's journal and its record saved in the queue; a cloud over a Region — the catalysts' riders on what a spell made: catalyst-runtime.js.)
+                journalFor: castId => ongoing.find(castId) ?? null,
+                saveRecord: (journal, record) => ongoing.enqueue(() => ongoing.save(journal, record)),
+                startCloud: args => ongoing.startCloud(args),
                 records: () => ongoing.records().filter(journal => game.user.isGM || journal.testUserPermission(game.user, "OBSERVER")).map(journal => ({ journalId: journal.id, ...journal.getFlag(MODULE_ID, "ongoingCast") }))
             },
             forms: { start: (item, options) => forms.start(item, options), request: (action, data) => ongoing.request(action, data) },
@@ -1427,6 +1757,7 @@ Hooks.on("renderChatMessageHTML", (message, html) => {
     escapes.bind(message, root);
     bindFoodButtons(message, root);
     bindNoteCounteractButtons(message, root);
+    bindGmOptionButtons(message, root);
     bindEscapePromptButtons(message, root);
     bindNoteShieldBlockButtons(message, root);
     bindIncarnateButtons(message, root);
@@ -1489,8 +1820,13 @@ Hooks.on("createChatMessage", message => {
         if (striker && tokenUuid) void ongoing.wardHit(striker.uuid, tokenUuid).catch(error => notifyError("Ward hit failed", error));
     }
     void attackWardOnAttack(message).catch(error => notifyError("Attack ward failed", error));
+    void markWardOnAttack(message, (spell, options) => basicSaves.start(spell, options)).catch(error => notifyError("Mark ward failed", error));
+    void triggerAuraOnSave(message).catch(error => notifyError("Aura damage failed", error));
     if (message?.flags?.pf2e?.appliedDamage && game.user?.isGM && game.users.activeGM?.id === game.user.id)
         void ongoing.absorberOnDamage(message, { isStrike: isStrikeDamage, lastDamage: lastDamageOf }).catch(error => notifyError("Absorber failed", error));
+    // (Spirit Boundary: damage whose origin is across the shield's edge, reduced.)
+    if (message?.flags?.pf2e?.appliedDamage && game.user?.isGM && game.users.activeGM?.id === game.user.id)
+        void runtime.boundaryOnDamage(message, { lastDamage: lastDamageOf }).catch(error => notifyError("Spirit shield failed", error));
     void oncePerSourceOnHealing(message).catch(error => notifyError("Once-per-spell bonus failed", error));
     void oncePerSourceOnCast(message).catch(error => notifyError("Once-per-spell bonus failed", error));
     void ongoing.memberCriticalSave(message)
@@ -1500,6 +1836,14 @@ Hooks.on("createChatMessage", message => {
 // Turn-bound Effects end when PF2e's duration expires them (a turn or round change, or world time passing).
 Hooks.on("updateCombat", (_combat, changes) => {
     if ("turn" in changes || "round" in changes) void expireTurnBound().catch(error => notifyError("Turn-bound Effect expiry failed", error));
+    // (A note's damage as its creature's turn starts: Garden of the Green Man's squeezing vines.)
+    if ("turn" in changes || "round" in changes) void turnStartNoteDamage(_combat).catch(error => notifyError("Turn-start damage failed", error));
+    // (A copy's Hit Points lost after its turn: Duplicate Foe, Reanimate Foe.)
+    if ("turn" in changes || "round" in changes) void turnEndHpLoss(_combat).catch(error => notifyError("Turn-end Hit Point loss failed", error));
+    // (A form's recovery as its creature's turn ends: Monstrosity Form's Inexorable.)
+    if ("turn" in changes || "round" in changes) void turnEndRecovery(_combat).catch(error => notifyError("Turn-end recovery failed", error));
+    // (A glyph's smaller meteor as its creature's turn ends: Metallic Meteorite Glyph.)
+    if ("turn" in changes || "round" in changes) void turnEndSaves(_combat).catch(error => notifyError("Turn-end save failed", error));
     if ("round" in changes) void autoToggleNewRound().catch(error => notifyError("First-Strike toggle failed", error));
 });
 Hooks.on("deleteCombat", () => { void expireTurnBound().catch(error => notifyError("Turn-bound Effect expiry failed", error)); });
@@ -1552,11 +1896,17 @@ Hooks.on("deleteItem", (item, options) => {
     void endMarksWithoutPersistent(item).catch(error => notifyError("Caster mark ending failed", error));
     void delayedDamageOnEnd(item).catch(error => notifyError("Delayed damage failed", error));
     void sharedLoreOnEnd(item).catch(error => notifyError("Shared Lore ending failed", error));
-    void summonOnEnd(item).then(summon => {
-        // (The summons' Ongoing areas — Tree of Life and Death's emanations — end with them.)
-        for (const castId of summon?.ongoingCastIds ?? []) void ongoing.request("end", { castId }).catch(() => null);
-    }).catch(error => notifyError("Summon ending failed", error));
+    // (The summons' Ongoing areas — Tree of Life and Death's emanations, Colossal Summon's Megalophobia — end with them: first, while the creature they come from is
+    // still there (an area whose source is gone waits for review instead of ending).)
+    const summonEnding = item?.flags?.[MODULE_ID]?.summon;
+    const ownAreas = summonEnding && item.type === "effect" && game.user?.isGM && game.users.activeGM?.id === game.user.id ? summonEnding.ongoingCastIds ?? [] : [];
+    void (async () => {
+        for (const castId of ownAreas) await ongoing.request("end", { castId }).catch(() => null);
+        await summonOnEnd(item);
+    })().catch(error => notifyError("Summon ending failed", error));
     void minionControlOnEnd(item).catch(error => notifyError("Minion control ending failed", error));
+    // (A note's condition after it, and its creature's death when the spell ends: note-end-runtime.js.)
+    void noteEndAfter(item, options).catch(error => notifyError("Note ending failed", error));
     void dismantleOnEnd(item).catch(error => notifyError("Dismantle ending failed", error));
     void outlineOnInvisible(item, { deleted: true }).catch(error => notifyError("Faerie Fire's outline failed", error));
     void conjuredOnEnd(item).catch(error => notifyError("Conjured item ending failed", error));
@@ -1615,13 +1965,76 @@ Hooks.on("userConnected", () => { void ongoing.reconcile({ recover: true }).catc
 Hooks.on("updateUser", () => { void ongoing.reconcile({ recover: true }).catch(error => notifyError("Ongoing authority refresh failed", error)); });
 
 Hooks.on("updateToken", () => { void ongoing.reconcile().catch(error => notifyError("Ongoing target review failed", error)); });
+// (Promised Renewal: the growth around a creature its save killed.)
+Hooks.on(`${MODULE_ID}.saveApplied`, ({ card, state }) => {
+    if (!state?.renewalGrowth || !game.user?.isGM || game.users.activeGM?.id !== game.user.id) return;
+    void runtime.renewalOnKill(state).catch(error => notifyError("Promised Renewal's growth failed", error));
+});
 
 Hooks.on("updateActor", () => { void ongoing.reconcile().catch(error => notifyError("Ongoing source review failed", error)); });
 Hooks.on("deleteActor", () => { void ongoing.reconcile().catch(error => notifyError("Ongoing source review failed", error)); });
 Hooks.on("deleteRegion", () => { void ongoing.reconcile().catch(error => notifyError("Ongoing area review failed", error)); });
+/** "If the fire source is a creature, the creature takes 1d6 points of cold damage" (Pyrotechnics): the targeted creature, as the area starts. */
+async function sourceCreatureDamage(plan, item, targets) {
+    const data = plan.resolution?.sourceCreatureDamage;
+    const token = targets.length === 1 ? (targets[0].document ?? targets[0]) : null;
+    if (!data || !token?.actor) return null;
+    const DamageRoll = CONFIG.Dice.rolls.find(roll => roll.name === "DamageRoll");
+    const roll = await new DamageRoll(`${data.formula}[${data.type}]`).evaluate();
+    await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: item?.actor }), flavor: `<strong>${foundry.utils.escapeHTML(item?.name ?? "")}</strong>: the fire source ${foundry.utils.escapeHTML(token.name)} is a creature` }).catch(() => null);
+    await token.actor.applyDamage({ damage: roll, token, item, rollOptions: new Set() });
+    return roll.total;
+}
+
 Hooks.on("renderChatMessageHTML", (_message, html) => {
     html.querySelector?.("[data-pf2e-ongoing-open]")?.addEventListener("click", () => void ongoing.open());
 });
+
+// GM notes only for the GM (the user, 2026-10-05): a message of GM notes alone is whispered to the GMs; a shared card's GM notes are removed on players' screens.
+// Casting rules (casting-rules-runtime.js): the stupefied flat check, Steady Spellcasting, Counterspell and Communal Healing as a spell is cast.
+Hooks.on("createChatMessage", message => { if (message.flags?.pf2e?.casting || message.flags?.pf2e?.context?.type === "spell-cast") void castingRulesOnCast(message).catch(error => notifyError("A casting rule failed", error)); });
+Hooks.on("renderChatMessageHTML", (message, html) => { if (message.flags?.[MODULE_ID]?.kind === "casting-rule") bindCastingRuleButtons(message, html); });
+// (Items whose activation is a spellshape — spell features batch F4: their cards, the areas' turn-start saves, the charged caster's retaliation, the star chart's stars.)
+Hooks.on("renderChatMessageHTML", (message, html) => { if (message.flags?.[MODULE_ID]?.kind === "item-shape-card") bindItemShapeButtons(message, html); });
+// (Creature abilities that act on spells — spell features batch G3: aura and reaction counteracts, aura saves, compulsions, item-spell immunity.)
+Hooks.on("renderChatMessageHTML", (message, html) => { if (message.flags?.[MODULE_ID]?.kind === "creature-spell-ability") bindCreatureAbilityButtons(message, html); });
+Hooks.on("createChatMessage", message => { if (message.flags?.pf2e?.casting || message.flags?.pf2e?.context?.type === "spell-cast") void creatureAbilitiesOnCast(message).catch(error => notifyError("A creature's ability failed", error)); });
+// (Actions that change a spell's casting or resolution — spell features batch G2: Spellstrike and the shots, Intercession Spell, Absorb into the Aegis,
+// Ring Bell, Only You and I; Dueling Counter in casting-rules-runtime.js; Draw From the Pages in spellshape-runtime.js.)
+Hooks.on("renderChatMessageHTML", (message, html) => { if (message.flags?.[MODULE_ID]?.kind === "spell-action") bindSpellActionButtons(message, html); });
+Hooks.on("createChatMessage", message => {
+    if (message.flags?.pf2e?.casting || message.flags?.pf2e?.context?.type === "spell-cast") void spellActionsOnCast(message).catch(error => notifyError("A spell action failed", error));
+    if (message.flags?.pf2e?.context?.type === "attack-roll") void deliveryOnStrike(message).catch(error => notifyError("Spellstrike failed", error));
+    if (message.flags?.pf2e?.context?.type === "damage-taken") void invigorateOnDamage(message).catch(error => notifyError("Invigorate failed", error));
+});
+// (Items that act on a spell cast — spell features batch F6: Rune of Sin, Book of Warding Prayers, Reflecting Shield, Spell Duelist's Siphon.)
+Hooks.on("renderChatMessageHTML", (message, html) => { if (message.flags?.[MODULE_ID]?.kind === "spell-trigger-item") bindTriggerItemButtons(message, html); });
+Hooks.on("createChatMessage", message => { if (message.flags?.pf2e?.casting || message.flags?.pf2e?.context?.type === "spell-cast") void spellTriggerItemsOnCast(message).catch(error => notifyError("An item's trigger failed", error)); });
+// (Items that cast a spell with numbers of their own — spell features batch F5: the spellhearts, weapons and charms; the Spell Reservoir rune.)
+Hooks.on("renderChatMessageHTML", (message, html) => { if (message.flags?.[MODULE_ID]?.kind === "item-cast-card") bindItemCastButtons(message, html); });
+Hooks.on("createChatMessage", message => {
+    if (message.flags?.pf2e?.origin && !message.flags.pf2e.context && !message.flags.pf2e.casting) void itemCastOnCard(message).catch(error => notifyError("An item's spells failed", error));
+    if (message.flags?.pf2e?.casting || message.flags?.pf2e?.context?.type === "spell-cast") void reservoirOnCast(message).catch(error => notifyError("The Spell Reservoir failed", error));
+    if (message.flags?.pf2e?.context?.type === "attack-roll") void reservoirOnStrike(message).catch(error => notifyError("The Spell Reservoir failed", error));
+});
+Hooks.on("updateCombat", (combat, changes) => { if ("turn" in changes || "round" in changes) void itemShapeTurnStart(combat).catch(error => notifyError("An item's area failed", error)); });
+Hooks.on("createChatMessage", message => {
+    if (message.flags?.pf2e?.context?.type || message.flags?.pf2e?.casting) void itemShapeWatchMessage(message).catch(error => notifyError("An item's watch failed", error));
+    if (message.flags?.pf2e?.casting || message.flags?.pf2e?.context?.type === "spell-cast") void starChartOnCast(message).catch(error => notifyError("The star chart failed", error));
+});
+// Sorcerer blood magic (blood-magic-runtime.js): its card as a blood magic spell is cast (or Blood Rising used); an unspent spite's temporary Hit Points.
+Hooks.on("createChatMessage", message => { if (message.flags?.pf2e?.casting || message.flags?.pf2e?.origin?.type === "feat") void bloodMagicOnCast(message).catch(error => notifyError("Blood magic failed", error)); });
+Hooks.on("renderChatMessageHTML", (message, html) => { if (["blood-magic", "blood-spite"].includes(message.flags?.[MODULE_ID]?.kind)) bindBloodMagicButtons(message, html); });
+Hooks.on("updateCombat", (combat, changes) => { if ("turn" in changes || "round" in changes) void spiteTurnStart(combat).catch(error => notifyError("Blood magic's spite failed", error)); });
+// Notes carried out by watching PF2e's messages: Theogeny's critical punishment, Musical Shift's flat and sharp (note-watchers.js).
+Hooks.on("createChatMessage", message => { if (message.flags?.pf2e?.context?.type) void noteWatchMessage(message).catch(error => notifyError("A watched note failed", error)); });
+Hooks.on("pf2e.endTurn", combatant => { void noteWatchEndTurn(combatant).catch(error => notifyError("A watched note failed", error)); });
+Hooks.on("preCreateChatMessage", message => { try { whisperGmNotes(message); } catch (error) { console.warn(`${MODULE_ID} | GM note whisper failed.`, error); } });
+// (Effects: their descriptions' GM notes carry PF2e's data-visibility="gm", hidden from players by PF2e.)
+Hooks.on("preCreateItem", item => { try { markEffectGmNotes(item); } catch (error) { console.warn(`${MODULE_ID} | GM note marking failed.`, error); } });
+Hooks.on("preUpdateItem", (item, changes) => { try { markEffectGmNotesUpdate(item, changes); } catch (error) { console.warn(`${MODULE_ID} | GM note marking failed.`, error); } });
+Hooks.once("ready", () => { void markExistingGmNotes().catch(error => console.warn(`${MODULE_ID} | GM note marking failed.`, error)); });
+Hooks.on("renderChatMessageHTML", (message, html) => { try { hideGmNotes(message, html); } catch (error) { console.warn(`${MODULE_ID} | GM note hiding failed.`, error); } });
 
 Hooks.on("deleteToken", () => { void ongoing.reconcile().catch(error => notifyError("Ongoing target review failed", error)); });
 
@@ -1629,3 +2042,73 @@ Hooks.on("userConnected", () => { immediate.bind(document); void immediate.recov
 Hooks.on("updateUser", () => { immediate.bind(document); void immediate.recover().catch(error => notifyError("Immediate recovery failed", error)); });
 
 Hooks.on('renderActorSheet', (app, html) => forms.bindSheet(app, html));
+
+// (Magus+'s Slidecasting: a Step or Stride in a turn the magus also casts — spell-actions-runtime.js slidecastNow.)
+Hooks.on("updateToken", (token, changes) => {
+    if (("x" in changes || "y" in changes) && token.actor) void slidecastNow(token.actor, "move").catch(error => notifyError("Slidecasting failed", error));
+});
+
+// (Magic+'s essence casting around its own pool: cycles and termini, the redraw gate, the encounter's start and end — essence-runtime.js.)
+Hooks.on("createChatMessage", message => { if (message.flags?.pf2e?.casting) void essenceOnCast(message).catch(error => notifyError("Essence casting failed", error)); });
+Hooks.on("createChatMessage", message => { if (message.flags?.pf2e?.casting) void triplicateOnCast(message).catch(error => notifyError("Triplicate Casting failed", error)); });
+// (The "+" features that give or spare Focus Points: plus-focus-runtime.js.)
+Hooks.on("createChatMessage", message => {
+    void refocusMoreOnCard(message).catch(error => notifyError("Golden Core's Refocus failed", error));
+    void freeFocusOnCard(message).catch(error => notifyError("I Am Omnipotent! failed", error));
+    void freeFocusOnCast(message).catch(error => notifyError("I Am Omnipotent!'s focus spell failed", error));
+    void bunOnCard(message).catch(error => notifyError("Revitalizing Bun failed", error));
+});
+Hooks.on("createItem", item => { void bargainOnCreate(item).catch(error => notifyError("Bargain Soul failed", error)); });
+Hooks.on("deleteItem", item => { void freeFocusEnded(item).catch(error => notifyError("I Am Omnipotent!'s immunity failed", error)); });
+Hooks.on("renderChatMessageHTML", (message, html) => { if (message.flags?.[MODULE_ID]?.kind === "focus-card") bindFocusButtons(message, html); });
+// (The "+" features that counteract: plus-counteract-runtime.js.)
+Hooks.on("createChatMessage", message => { void counteractFeatureOnCard(message).catch(error => notifyError("A counteract feature failed", error)); });
+Hooks.on("renderChatMessageHTML", (message, html) => { if (message.flags?.[MODULE_ID]?.kind === "counteract-card") bindCounteractButtons(message, html); });
+// (Stigmata's Heal, Outsider Caller's burst: plus-cast-riders-runtime.js.)
+Hooks.on("createChatMessage", message => {
+    void stigmataOnHealing(message).catch(error => notifyError("Stigmata's Heal failed", error));
+    void summonBurstOnCast(message).catch(error => notifyError("Outsider Caller failed", error));
+    void hexFamiliarOnCast(message).catch(error => notifyError("A hex familiar ability failed", error));
+});
+Hooks.on("renderChatMessageHTML", (message, html) => { if (message.flags?.[MODULE_ID]?.kind === "cast-after-card") bindCastAfterButtons(message, html); });
+Hooks.on("createItem", item => { void surgeAddonOnCreate(item).catch(error => notifyError("An Evolution Surge add-on failed", error)); });
+// (Wizards+'s exploits and Channel Smite+: plus-exploit-runtime.js.)
+Hooks.on("createChatMessage", message => {
+    void exploitOnCard(message).catch(error => notifyError("An exploit's card failed", error));
+    void channelSmiteOnStrike(message).catch(error => notifyError("Channel Smite+ failed", error));
+});
+Hooks.on("renderChatMessageHTML", (message, html) => { if (message.flags?.[MODULE_ID]?.kind === "exploit-card") bindExploitButtons(message, html); });
+Hooks.on("updateCombat", (combat, changes) => { if ("turn" in changes || "round" in changes) void exploitAuraTurnStart(combat).catch(error => notifyError("An exploit's aura failed", error)); });
+Hooks.on("createChatMessage", message => { void catalystSporesOnDamage(message).catch(error => notifyError("A catalyst's spores failed", error)); });
+Hooks.once("ready", () => installDamageTypeMemory());
+Hooks.on("preCreateChatMessage", (document, data) => { try { attachDamageSource(document, data); } catch (_) {} });
+// (PF2e's catalysts beyond the save card: catalyst-runtime.js.)
+Hooks.on("createChatMessage", message => {
+    void catalystOnDamage(message).catch(error => notifyError("A catalyst's damage rider failed", error));
+    void catalystOnDecoy(message).catch(error => notifyError("A catalyst's image rider failed", error));
+    void catalystOnFlatCheck(message).catch(error => notifyError("A catalyst's flat-check rider failed", error));
+    void catalystOnCast(message).catch(error => notifyError("A catalyst's battle-form speech failed", error));
+});
+// (A cast resolved — or its lingering area started from the card: "ongoingCastId".)
+Hooks.on("updateChatMessage", (message, changes) => { if (foundry.utils.getProperty(changes, `flags.${MODULE_ID}.resolvedCast`) || foundry.utils.getProperty(changes, `flags.${MODULE_ID}.ongoingCastId`)) void catalystAfterResolve(message).catch(error => notifyError("A catalyst's rider after the spell failed", error)); });
+Hooks.on("updateCombat", (combat, changes) => { if ("turn" in changes || "round" in changes) void catalystTurnStart(combat).catch(error => notifyError("A catalyst's turn rider failed", error)); });
+Hooks.on("updateToken", (token, changes) => { void catalystOnMove(token, changes).catch(error => notifyError("A catalyst's movement rider failed", error)); });
+Hooks.on("deleteItem", item => { void catalystOnEffectEnded(item).catch(error => notifyError("A catalyst's rider as an Effect ended failed", error)); });
+Hooks.on("updateItem", (item, changes) => { if (foundry.utils.getProperty(changes, `flags.${MODULE_ID}.shieldShards.blockedAt`)) void catalystShieldBlocked(item).catch(error => notifyError("A catalyst's shield shards failed", error)); });
+Hooks.on("renderChatMessageHTML", (message, html) => { if (message.flags?.[MODULE_ID]?.kind === "catalyst-card") bindCatalystButtons(message, html); });
+Hooks.on("combatStart", combat => { void essenceOnCombatStart(combat).catch(error => notifyError("Essence casting's encounter start failed", error)); });
+Hooks.on("deleteCombat", combat => { void essenceOnCombatEnd(combat, game.modules.get(MODULE_ID)?.api?.ongoing ?? null).catch(error => notifyError("Essence casting's encounter end failed", error)); });
+Hooks.on("createChatMessage", message => {
+    if (message.flags?.pf2e?.context?.type === "damage-taken") void lifeReservoirOnHealing(message).catch(error => notifyError("Life Essence Reservoir failed", error));
+    if (message.item?.slug === "refocus") void lifeReservoirOnRefocus(message).catch(error => notifyError("Life Essence Reservoir's Refocus failed", error));
+    if (["action", "feat"].includes(message.flags?.pf2e?.origin?.type)) void essenceConduitOnCard(message).catch(error => notifyError("Essence Conduit failed", error));
+    if (["action", "feat", "equipment"].includes(message.flags?.pf2e?.origin?.type)) void essenceActivationOnCard(message).catch(error => notifyError("An essence activation failed", error));
+    if (message.flags?.pf2e?.origin?.type === "equipment") void energyRuneOnCard(message).catch(error => notifyError("The Energy rune's card failed", error));
+    void backfireAmmoOnCard(message).catch(error => notifyError("Gray Dust Ammunition's card failed", error));
+    void backfireAmmoOnStrike(message).catch(error => notifyError("Gray Dust Ammunition's Strike failed", error));
+    void backfireAmmoOnCast(message).catch(error => notifyError("Gray Dust Ammunition's backfire failed", error));
+    if (message.item?.slug === "refocus") void incantationsOnRefocus(message).catch(error => notifyError("Incantations' Refocus failed", error));
+    if (message.flags?.pf2e?.origin?.type === "feat") void unstableDrawOnCard(message).catch(error => notifyError("Unstable Draw failed", error));
+});
+// (Life Essence Reservoir's size: the actor's highest healing spell, kept as its spells change.)
+for (const event of ["createItem", "updateItem", "deleteItem"]) Hooks.on(event, item => { if (item.actor && ["spell", "spellcastingEntry", "feat"].includes(item.type)) void lifeReservoirRank(item.actor).catch(() => null); });

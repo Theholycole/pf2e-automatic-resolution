@@ -1,0 +1,24 @@
+{
+ "label": "thirdPartyBatch29",
+ "passed": true,
+ "at": "2026-10-07T02:53:38.803Z",
+ "details": {
+  "thirdParty29": {
+   "npc": {
+    "formula": "1d4 acid",
+    "total": 1,
+    "lost": 2,
+    "persistent": [
+     "1 acid"
+    ]
+   },
+   "craftingRank": 3,
+   "master": {
+    "formula": "1d6 fire",
+    "total": 4,
+    "lost": 4,
+    "persistent": []
+   }
+  }
+ }
+}

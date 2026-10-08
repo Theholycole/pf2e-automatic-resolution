@@ -1,0 +1,33 @@
+{
+ "label": "thirdPartyBatch58",
+ "passed": true,
+ "at": "2026-10-07T06:09:27.738Z",
+ "details": {
+  "thirdParty58": {
+   "failure": {
+    "amount": 8,
+    "duration": "4 rounds",
+    "turn1": {
+     "lost": 8,
+     "rounds": 3,
+     "ended": false
+    },
+    "turn2": {
+     "lost": 8,
+     "ended": true,
+     "gone": true
+    }
+   },
+   "success": {
+    "lost": 4,
+    "ended": true,
+    "recovery": null
+   },
+   "critical": {
+    "duration": "1 minutes",
+    "dead": true,
+    "dying": false
+   }
+  }
+ }
+}

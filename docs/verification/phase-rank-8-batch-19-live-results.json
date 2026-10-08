@@ -1,0 +1,64 @@
+{
+  "label": "rank8Batch19",
+  "passed": true,
+  "at": "2026-10-05T06:54:21.769Z",
+  "details": {
+    "batch19": {
+      "bound": {
+        "caster": 10,
+        "foe": 10,
+        "selfFoe": 20,
+        "ended": true
+      },
+      "love": {
+        "share": 15,
+        "casterHp": 1,
+        "dying": false,
+        "friendLost": 15,
+        "beside": true,
+        "loved": {
+          "degree": "failure",
+          "casterHp": 40,
+          "dead": true
+        }
+      },
+      "fury": {
+        "first": true,
+        "any": {
+          "victim": true,
+          "other": false
+        },
+        "caster": true
+      },
+      "leech": {
+        "fatigued": true,
+        "healed": 24,
+        "stunned": true
+      },
+      "mimic": {
+        "gained": true,
+        "name": "Fear",
+        "rank": 8,
+        "uses": 1,
+        "lost": true
+      },
+      "touch": {
+        "failure": 80,
+        "stunned": 3,
+        "immune": {
+          "degree": "failure",
+          "alive": true
+        },
+        "replaced": true,
+        "died": true
+      },
+      "emblem": {
+        "ac": 1,
+        "caster": 1,
+        "friend": 1,
+        "guard": true,
+        "replaced": true
+      }
+    }
+  }
+}

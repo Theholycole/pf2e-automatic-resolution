@@ -1,0 +1,27 @@
+{
+ "label": "thirdPartyBatch66",
+ "passed": true,
+ "at": "2026-10-07T06:45:07.913Z",
+ "details": {
+  "thirdParty66": {
+   "scatter": [
+    [
+     15,
+     "criticalSuccess"
+    ],
+    [
+     25,
+     "success"
+    ]
+   ],
+   "far": "Prism of Power: PFTEST P23 Affliction tp66 far isn't within 5 feet of the prism.",
+   "three": "Prism of Power: target 1 to 2 creatures.",
+   "ended": {
+    "region": false,
+    "effect": false
+   },
+   "diffract": 20,
+   "refract": "Prism of Power: refract is the GM's measuring from the prism."
+  }
+ }
+}

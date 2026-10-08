@@ -1,0 +1,38 @@
+{
+  "generatedAt": "2026-10-05T12:34:20.770Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "spellshapeBatch13",
+      "passed": true,
+      "at": "2026-10-05T12:33:06.558Z",
+      "details": {
+        "spellshape13": {
+          "dousing": {
+            "left": false,
+            "dc": null
+          },
+          "shadow": [
+            "perception-2"
+          ],
+          "sharedSight": [
+            "spiritsense"
+          ],
+          "shroud": [
+            true,
+            true,
+            true
+          ],
+          "vigorous": [
+            true,
+            true
+          ],
+          "coven": true,
+          "reflection": true,
+          "read": "true:ok,true:ok,true:ok"
+        }
+      }
+    }
+  ]
+}

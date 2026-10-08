@@ -1,0 +1,37 @@
+{
+ "label": "thirdPartyBatch21",
+ "passed": true,
+ "at": "2026-10-07T01:44:57.172Z",
+ "details": {
+  "thirdParty21": {
+   "claw": {
+    "status": "applied",
+    "strike": true,
+    "immune": true,
+    "refused": true
+   },
+   "attack": {
+    "formula": "2d6 piercing",
+    "total": 10,
+    "lost": 20,
+    "bleed": [
+     "1"
+    ]
+   },
+   "three": {
+    "status": "applied",
+    "parts": [
+     "applied",
+     "applied",
+     "started"
+    ],
+    "reach": true,
+    "formula": "2d6 slashing",
+    "lost": 4,
+    "bleed": [
+     "2"
+    ]
+   }
+  }
+ }
+}

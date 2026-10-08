@@ -1,0 +1,50 @@
+{
+  "label": "rank10Batch5",
+  "passed": true,
+  "at": "2026-10-05T07:12:46.109Z",
+  "details": {
+    "batch5": {
+      "raise": {
+        "hp": 1,
+        "alive": true,
+        "clumsy": 2,
+        "drained": 2,
+        "enfeebled": 2,
+        "giant": true,
+        "refused": true
+      },
+      "revival": {
+        "total": 87,
+        "living": 87,
+        "deadHp": 0,
+        "temp": 87,
+        "alive": true,
+        "held": true,
+        "died": true
+      },
+      "shock": {
+        "revived": true,
+        "alive": true,
+        "hp": 41,
+        "healed": 41,
+        "wounded": 2,
+        "quickened": true,
+        "innate": 5,
+        "thunder": true,
+        "before": true,
+        "hidden": true
+      },
+      "renew": {
+        "healed": 2,
+        "fatigued": false,
+        "drained": 1,
+        "short": false,
+        "long": true,
+        "ended": [
+          "PFTEST short poison"
+        ],
+        "immune": true
+      }
+    }
+  }
+}

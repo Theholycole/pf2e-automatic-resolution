@@ -1,0 +1,488 @@
+{
+  "label": "thirdPartyFeaturesBatch43",
+  "passed": true,
+  "at": "2026-10-08T10:55:40.400Z",
+  "cases": [
+    {
+      "label": "thirdPartyFeaturesBatch43a",
+      "passed": true,
+      "at": "2026-10-08T10:33:13.611Z",
+      "details": {
+        "thirdPartyFeatures43a": {
+          "alicorn": {
+            "shapes": [
+              [
+                "Alicorn Hair",
+                null
+              ]
+            ],
+            "status": "applied",
+            "dying": [
+              false,
+              false
+            ],
+            "wounded": [
+              1,
+              1
+            ]
+          },
+          "alicornPlain": true,
+          "knot": {
+            "shapes": [
+              [
+                "Dimensional Knot",
+                null
+              ]
+            ],
+            "stunned": 1
+          },
+          "cryptex": "10 rounds",
+          "alecost": {
+            "card": true,
+            "temp": [
+              2,
+              2
+            ],
+            "eaten": 2
+          },
+          "mint": {
+            "text": true,
+            "duration": "0 rounds turn-end"
+          },
+          "theater": "7 days",
+          "deathless": {
+            "shapes": [
+              [
+                "Deathless Light",
+                null
+              ]
+            ],
+            "reminder": "Deathless Light: Light counts as rank 7 against darkness"
+          }
+        }
+      }
+    },
+    {
+      "label": "thirdPartyFeaturesBatch43b",
+      "passed": true,
+      "at": "2026-10-08T10:34:08.912Z",
+      "details": {
+        "thirdPartyFeatures43b": {
+          "swirl": {
+            "shapes": [
+              [
+                "Swirling Sand",
+                null
+              ]
+            ],
+            "effect": "3 rounds"
+          },
+          "kushtaka": {
+            "effect": "10 rounds",
+            "text": true
+          },
+          "leaden": {
+            "pulled": true,
+            "pulledProne": true,
+            "centreProne": false,
+            "watching": true,
+            "afterMove": true,
+            "watchGone": true
+          },
+          "necrotic": {
+            "enfeebled": 1,
+            "sickened": 1,
+            "held": true,
+            "persistent": [
+              "void"
+            ]
+          },
+          "rosary": {
+            "dazzled": true
+          },
+          "prism": {
+            "successDazzled": "2 rounds",
+            "blindFlag": true,
+            "after": "10 rounds"
+          },
+          "spade": {
+            "effect": true
+          },
+          "spider": {
+            "venom": "Affliction Effect: Spider Sting",
+            "stages": [
+              "clumsy",
+              "clumsy"
+            ],
+            "clumsy": true,
+            "enfeebled": false
+          },
+          "thorn": {
+            "shapes": [
+              [
+                "Broken Ram's Thorn",
+                null
+              ]
+            ],
+            "ring": 4,
+            "lost": 5,
+            "spent": true,
+            "moved": {
+              "lost": 5,
+              "squares": 1
+            }
+          },
+          "kirin": {
+            "x": 12,
+            "y": 14
+          },
+          "loop": {
+            "flagged": "Charm: Attitude",
+            "card": "will",
+            "stunned": 2
+          }
+        }
+      }
+    },
+    {
+      "label": "thirdPartyFeaturesBatch43c",
+      "passed": true,
+      "at": "2026-10-08T10:36:12.115Z",
+      "details": {
+        "thirdPartyFeatures43c": {
+          "consecrated": {
+            "results": [
+              "applied: Consecrated Shield: Spell Effect: Heroism (Consecrated Shield)'s bonus to AC, not attack rolls"
+            ],
+            "selectors": [
+              "ac",
+              "saving-throw",
+              "skill-check",
+              "perception"
+            ]
+          },
+          "nevercold": {
+            "results": [
+              "applied: Nevercold: Spell Effect: Fire Shield lasts 5 minutes",
+              "applied: Nevercold: Spell Note: Fire Shield lasts 5 minutes",
+              "applied: Nevercold: cold resistance for 1 hour"
+            ],
+            "shield": "5 minutes",
+            "linger": "1 hours",
+            "lingerType": [
+              "cold"
+            ],
+            "immunity": "8 hours"
+          },
+          "witchwarg": {
+            "results": [
+              "applied: Witchwarg Fur: Spell Effect: Fire Shield (Witchwarg Fur) inverted (fire resistance, cold damage)",
+              "applied: Witchwarg Fur: Spell Note: Fire Shield (Witchwarg Fur) inverted (fire resistance, cold damage)"
+            ],
+            "name": "Spell Effect: Fire Shield (Witchwarg Fur)",
+            "type": "fire",
+            "resistances": [
+              "fire"
+            ]
+          },
+          "scute": {
+            "results": [
+              "applied: Dragon Scute (Lesser): Spell Effect: Mountain Resilience (Dragon Scute (Lesser): occult) gives the occult dragon's resistance instead"
+            ],
+            "rules": [
+              "Resistance mental 10"
+            ]
+          },
+          "falcon": {
+            "results": [
+              "applied: Chaos Falcon Feather: Spell Effect: Resist Energy (Fire) marked"
+            ],
+            "card": true,
+            "flagged": true,
+            "before": "10 minutes",
+            "moved": {
+              "ally": false,
+              "caster": "90 rounds",
+              "energy": "acid"
+            }
+          },
+          "tiles": {
+            "flagged": true,
+            "spent": true,
+            "card": {
+              "dc": 16,
+              "statistic": "reflex",
+              "targets": [
+                "Ice Guardian: ice guardian",
+                "PFTEST P23 Affliction tpf43c foe 1",
+                "PFTEST P23 Affliction tpf43c ally"
+              ]
+            },
+            "bleed": [
+              "1d4 bleed"
+            ]
+          },
+          "linguist": {
+            "form": "Spell Effect: Animal Form (Ape)",
+            "said": [
+              "Feral Linguist (Greater) : Daze cast in the battle form (its one spell this duration).",
+              "Feral Linguist (Greater) : PFTEST P23 Affliction tpf43c caster can speak in the battle form but can't cast Fear (its one spell is used)."
+            ]
+          },
+          "unsullied": {
+            "dealt": 21,
+            "healed": 10,
+            "temp": 0
+          },
+          "lemur": {
+            "status": "applied",
+            "mode": "fierce-debate",
+            "blinded": true,
+            "effect": "Mad Monkeys: Fierce Debate"
+          }
+        }
+      }
+    },
+    {
+      "label": "thirdPartyFeaturesBatch43d",
+      "passed": true,
+      "at": "2026-10-08T10:37:45.146Z",
+      "details": {
+        "thirdPartyFeatures43d": {
+          "force": {
+            "results": [
+              "applied: Force Tiles: the wall's 2d6 force"
+            ],
+            "walls": 1,
+            "hazard": {
+              "formula": "2d6",
+              "damageType": "force",
+              "per": "entry"
+            },
+            "lost": 6
+          },
+          "incense": {
+            "results": [
+              "applied: Noxious Incense: smoke around the wall"
+            ],
+            "smoke": [
+              16,
+              2,
+              3,
+              8
+            ],
+            "cloud": true,
+            "concealed": true
+          },
+          "gravemist": {
+            "results": [
+              "applied: Gravemist Taper: flat checks against the mist DC 7"
+            ],
+            "watch": true,
+            "flat": {
+              "total": 4,
+              "target": "Scene.pCgysuwHQ8wg9vST.Token.Vk27zIv69OQl6s2e"
+            },
+            "frightened": 1,
+            "mistwalker": 10
+          },
+          "seedpod": {
+            "results": [
+              "applied: Irritating Seedpod (Major): pollen for 10 rounds (2 inside now)"
+            ],
+            "card": {
+              "dc": 29,
+              "statistic": "fortitude",
+              "targets": 2
+            },
+            "slowed": [
+              "slowed 2 1",
+              "slowed 1 4"
+            ],
+            "slowedValue": 2,
+            "immune": true,
+            "turnCards": [
+              "PFTEST P23 Affliction tpf43d foe 1"
+            ]
+          },
+          "odious": {
+            "results": [
+              "applied: Odious Token: the aura centred on PFTEST P23 Affliction tpf43d ally; PFTEST P23 Affliction tpf43d caster immune"
+            ],
+            "centre": true,
+            "excluded": 2,
+            "members": [
+              "ice guardian",
+              "PFTEST P23 Affliction tpf43d foe 1"
+            ]
+          },
+          "skyfisher": {
+            "results": [
+              "applied: Skyfisher Vapors: the cloud invisible, no concealment"
+            ],
+            "visibility": 0,
+            "concealment": false,
+            "concealed": false
+          }
+        }
+      }
+    },
+    {
+      "label": "thirdPartyFeaturesBatch43e",
+      "passed": true,
+      "at": "2026-10-08T10:39:06.142Z",
+      "details": {
+        "thirdPartyFeatures43e": {
+          "blackAsh": {
+            "watch": true,
+            "lost": 8,
+            "persistent": [
+              "1d6 poison"
+            ]
+          },
+          "fearcracker": {
+            "watch": true,
+            "images": 2,
+            "frightened": 1,
+            "other": 0
+          },
+          "ghostcracker": {
+            "watch": true,
+            "image": true,
+            "frightened": 1
+          },
+          "shadow": {
+            "undead": "Compendium.pf2e.abomination-vaults-bestiary.Actor.ro9oVsu1cuCP8OQH",
+            "shapes": [
+              [
+                "Shadow Ash",
+                null
+              ]
+            ],
+            "shroud": true,
+            "first": {
+              "lost": 18,
+              "drained": 1,
+              "again": 0
+            },
+            "rising": 4,
+            "risen": {
+              "hp": 2,
+              "max": 4
+            }
+          }
+        }
+      }
+    }
+  ],
+  "regressions": [
+    {
+      "name": "thirdPartyFeaturesBatch42",
+      "passed": true
+    },
+    {
+      "name": "thirdPartyFeaturesBatch41",
+      "passed": true
+    },
+    {
+      "name": "spellFeaturesBatch4a",
+      "passed": true
+    },
+    {
+      "name": "thirdPartyFeaturesBatch7",
+      "passed": true
+    },
+    {
+      "name": "thirdPartyFeaturesBatch32",
+      "passed": true
+    },
+    {
+      "name": "thirdPartyFeaturesBatch38",
+      "passed": true
+    },
+    {
+      "name": "thirdPartyFeaturesBatch3",
+      "passed": true
+    },
+    {
+      "name": "thirdPartyFeaturesBatch2",
+      "passed": true
+    },
+    {
+      "name": "spellshapeBatch4",
+      "passed": true
+    },
+    {
+      "name": "spellshapeBatch9",
+      "passed": true
+    },
+    {
+      "name": "thirdPartyBatch1",
+      "passed": true
+    },
+    {
+      "name": "spellshapeBatch14",
+      "passed": true
+    },
+    {
+      "name": "spellshapeBatch18",
+      "passed": true
+    },
+    {
+      "name": "rank5Batch13",
+      "passed": false,
+      "rerun": true,
+      "cause": "a started combat left on the PFTEST scene by an earlier case; passed when rerun after it was removed"
+    },
+    {
+      "name": "rank3Batch21",
+      "passed": true
+    },
+    {
+      "name": "rank8Batch2",
+      "passed": false,
+      "rerun": true,
+      "cause": "a started combat left on the PFTEST scene by an earlier case; passed when rerun after it was removed"
+    },
+    {
+      "name": "rank6Batch10",
+      "passed": true
+    },
+    {
+      "name": "rank2Batch38",
+      "passed": true
+    },
+    {
+      "name": "cr1Batch22",
+      "passed": true
+    },
+    {
+      "name": "rank3Batch100",
+      "passed": true
+    },
+    {
+      "name": "rank7Batch16",
+      "passed": false,
+      "rerun": true,
+      "cause": "a started combat left on the PFTEST scene by an earlier case; passed when rerun after it was removed"
+    },
+    {
+      "name": "thirdPartyBatch23",
+      "passed": false,
+      "rerun": true,
+      "cause": "a started combat left on the PFTEST scene by an earlier case; passed when rerun after it was removed"
+    },
+    {
+      "name": "longTailBatch2",
+      "passed": false,
+      "rerun": true,
+      "cause": "a started combat left on the PFTEST scene by an earlier case; passed when rerun after it was removed"
+    },
+    {
+      "name": "rank2Batch78",
+      "passed": false,
+      "rerun": true,
+      "cause": "a started combat left on the PFTEST scene by an earlier case; passed when rerun after it was removed"
+    }
+  ]
+}

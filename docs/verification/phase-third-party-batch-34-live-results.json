@@ -1,0 +1,27 @@
+{
+ "label": "thirdPartyBatch34",
+ "passed": true,
+ "at": "2026-10-07T03:21:01.549Z",
+ "details": {
+  "thirdParty34": {
+   "inside": {
+    "failPenalty": -2,
+    "fascinated": true,
+    "savePenalty": -1,
+    "saveFascinated": false,
+    "critImmune": true,
+    "critNote": false
+   },
+   "left": {
+    "exists": true,
+    "duration": [
+     1,
+     "rounds"
+    ],
+    "stillInArea": false,
+    "fascinated": true,
+    "x": 14
+   }
+  }
+ }
+}

@@ -1,0 +1,35 @@
+{
+ "label": "thirdPartyBatch65",
+ "passed": true,
+ "at": "2026-10-07T06:41:13.709Z",
+ "details": {
+  "thirdParty65": {
+   "sprout": {
+    "count": 2,
+    "left": 2,
+    "hp": 30,
+    "ac": 16
+   },
+   "early": "Seeds of Divinity: a bush grows only after a round has passed since it sprouted.",
+   "hazard": {
+    "grown": "hazardous",
+    "region": true,
+    "lost": 12
+   },
+   "fruit": {
+    "grown": "bountiful",
+    "tempHP": 8,
+    "rules": [
+     "TempHP 8",
+     "FlatModifier 2"
+    ]
+   },
+   "secondFruit": "Seeds of Divinity: no bountiful bush has a fruit.",
+   "more": 0,
+   "none": "Seeds of Divinity: only 0 seeds left.",
+   "ended": {
+    "left": 0
+   }
+  }
+ }
+}

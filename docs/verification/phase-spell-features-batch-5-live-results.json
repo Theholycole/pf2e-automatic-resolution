@@ -1,0 +1,67 @@
+{
+  "generatedAt": "2026-10-06T01:12:36.456Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "spellFeaturesBatch5",
+      "passed": true,
+      "at": "2026-10-06T01:12:00.983Z",
+      "details": {
+        "features5": {
+          "crystal": {
+            "card": 3,
+            "rank": 7,
+            "dc": 30,
+            "attack": 20,
+            "cantripRank": 7,
+            "coldEffectAfterCantrip": true,
+            "iceStorm": {
+              "rank": 4,
+              "dc": 30,
+              "effect": true,
+              "weapon": "68hwVbKxtqeMDBih",
+              "longsword": "68hwVbKxtqeMDBih",
+              "dice": [
+                "undefinedundefined",
+                "undefinedundefined",
+                "undefinedundefined"
+              ]
+            }
+          },
+          "chalice": {
+            "cast": true,
+            "concealed": true,
+            "benefits": [
+              "Thirsty Chalice: concealed for 1 round"
+            ]
+          },
+          "charm": {
+            "rank": 5,
+            "attack": 13
+          },
+          "blade": {
+            "rank": 7,
+            "attack": 2,
+            "strike": 2
+          },
+          "trident": {
+            "rank": 5,
+            "dc": 29
+          },
+          "reservoir": {
+            "card": true,
+            "stored": "Fear",
+            "lost": "cast into PFTEST rime longsword's Spell Reservoir",
+            "release": {
+              "card": true,
+              "cast": true,
+              "dc": 30,
+              "empty": true
+            }
+          }
+        }
+      }
+    }
+  ]
+}

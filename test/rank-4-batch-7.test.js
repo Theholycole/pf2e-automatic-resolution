@@ -28,9 +28,10 @@ const withText = (source, replace) => { const copy = structuredClone(source); co
 // Rank 4, batch 7 (2026-10-02): Movanic Glimmer, Forgotten Lines, Wordsmith (and Impart Empathy's "1 animal" target).
 
 test('Movanic Glimmer: +2 status to Perception and Will on the note (the Command clause is situational); the target must be an animal', async () => {
+    // (Since notes batch 1, 2026-10-05: a stated Effect on each animal, the Command bonus included.)
     const plan = compile(await spell('rank-4/movanic-glimmer'));
-    assert.deepEqual([plan.resolution.kind, plan.automation.pendingCapabilities], ['spell-note', []]);
-    assert.deepEqual(plan.targeting.actorConstraints.predicates, [{kind: 'trait', slug: 'animal', present: true}]);
+    assert.deepEqual([plan.resolution.kind, plan.automation.pendingCapabilities], ['stated-effect', []]);
+    assert.equal(plan.resolution.statedEffect.requiresTrait, 'animal');
 });
 
 test('Forgotten Lines: "varies" with nothing timed is instantaneous; Wordsmith: until the caster Refocuses (no fixed end); text targets are things', async () => {

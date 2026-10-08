@@ -1,0 +1,31 @@
+{
+ "label": "thirdPartyFeaturesBatch39",
+ "passed": true,
+ "at": "2026-10-08T02:16:47.715Z",
+ "details": {
+  "thirdPartyFeatures39": {
+   "lines": [
+    "Familiar of Churning Saltwater: Effect: Familiar of Churning Saltwater on PFTEST P23 Affliction tpf39 foe (within 10 feet of the familiar)",
+    "Familiar of Sunlit Dawn: PFTEST P23 Affliction tpf39 foe dazzled until the start of PFTEST P23 Affliction tpf39 witch's next turn",
+    "Familiar of Stumbling Steps: PFTEST P23 Affliction tpf39 foe moved 5 feet",
+    "Familiar of Murky Worlds: Effect: Familiar of Murky Worlds on PFTEST P23 Affliction tpf39 foe",
+    "Familiar of Ticking Parts (GM): your familiar fills one of its adjacent squares with steam creating concealment, though creatures in the square can't use this concealment to Hide or Sneak. The steam remains for 1 round.",
+    "Familiar of Keen Senses+: Effect: Familiar of Keen senses on PFTEST P23 Affliction tpf39 familiar",
+    "Familiar of Reprising Melody: PFTEST P23 Affliction tpf39 foe's frightened reduced"
+   ],
+   "foe": {
+    "effects": [
+     "Effect: Familiar of Churning Saltwater",
+     "Familiar of Sunlit Dawn: dazzled",
+     "Effect: Familiar of Murky Worlds"
+    ],
+    "dazzled": true,
+    "frightened": 1,
+    "moved": 5
+   },
+   "familiar": [
+    "Effect: Familiar of Keen Senses (Scent)"
+   ]
+  }
+ }
+}

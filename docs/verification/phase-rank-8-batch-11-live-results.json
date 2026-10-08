@@ -1,0 +1,167 @@
+{
+  "batch": "phase-rank-8-batch-11",
+  "world": "pftest",
+  "foundry": "14.367",
+  "pf2e": "8.5.0",
+  "module": "0.8.2",
+  "results": [
+    {
+      "label": "rank8Batch11",
+      "passed": true,
+      "at": "2026-10-05T00:41:14.675Z",
+      "details": {
+        "batch11": {
+          "garden": {
+            "grabbed": true,
+            "squeeze": {
+              "formula": "4d6",
+              "type": "bludgeoning",
+              "castRank": 10
+            },
+            "squeezed": 15
+          },
+          "archmage": {
+            "formula": "3d4 + 3",
+            "total": 11,
+            "lost": [
+              11,
+              11
+            ],
+            "stupefied": 2
+          },
+          "irii": {
+            "allyRolls": [
+              10,
+              10,
+              17,
+              10,
+              18,
+              16
+            ],
+            "foeRolls": [
+              7,
+              5,
+              10,
+              10,
+              1,
+              10
+            ],
+            "fortune": "2d20kh"
+          },
+          "host": {
+            "smoke": true,
+            "concealed": true,
+            "enfeebled": 2,
+            "healed": 32,
+            "healFormula": "4d10 + 16"
+          }
+        }
+      }
+    },
+    {
+      "label": "rank8Batch12",
+      "passed": true,
+      "at": "2026-10-05T00:41:45.678Z",
+      "details": {
+        "batch12": {
+          "herald": {
+            "heal": 33,
+            "healRank": 5,
+            "wrath": {
+              "lost": 30,
+              "reminder": 0,
+              "countered": true
+            },
+            "quickened": true
+          },
+          "warden": {
+            "fly": "Spell Effect: Fly",
+            "flyDuration": "3 rounds",
+            "immune": "Summon Warden of the Wild: PFTEST P23 Affliction warden foe critically succeeded and is immune for 1 round.",
+            "again": 11
+          },
+          "legion": {
+            "formula": "10d8 force",
+            "choice": "force",
+            "lost": 52
+          },
+          "army": {
+            "bleed": true,
+            "speed": [
+              [
+                [
+                  "all-speeds"
+                ],
+                -10
+              ]
+            ],
+            "smoke": {
+              "status": "prepared",
+              "members": 69,
+              "seconds": 60,
+              "concealed": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "label": "rank8Batch13",
+      "passed": true,
+      "at": "2026-10-05T00:43:31.256Z",
+      "details": {
+        "batch13": {
+          "flux": {
+            "shunt": true,
+            "rounds": 1,
+            "recurring": {
+              "timing": "turn-end",
+              "mode": "end",
+              "statistic": "will"
+            }
+          },
+          "rose": {
+            "formula": "3d12 piercing",
+            "lost": 10,
+            "grabbed": true,
+            "pollen": "2d6 persistent poison",
+            "poison": "2d6"
+          },
+          "kaiju": {
+            "sickened": 2,
+            "mist": {
+              "seconds": 60,
+              "concealed": true,
+              "events": [
+                "turn-end"
+              ]
+            }
+          },
+          "thorn": {
+            "dazzled": true,
+            "offGuard": true,
+            "attack": {
+              "statistic": "spell-attack",
+              "lost": 40
+            }
+          },
+          "specter": {
+            "prone": true,
+            "dazzled": true,
+            "cantStand": true
+          },
+          "soldiers": {
+            "frightened": 1,
+            "clumsy": 0,
+            "effect": true
+          },
+          "beseech": {
+            "tooMany": "Beseech Arcanotheign: Flash of Brilliance reaches at most 1 creature.",
+            "healed": 24,
+            "formula": "5d12"
+          }
+        }
+      }
+    }
+  ]
+}

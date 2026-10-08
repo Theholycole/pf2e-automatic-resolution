@@ -1,0 +1,40 @@
+{
+ "label": "thirdPartyBatch46",
+ "passed": true,
+ "at": "2026-10-07T04:25:10.652Z",
+ "details": {
+  "thirdParty46": {
+   "untamed": {
+    "status": "applied",
+    "spell": "Pest Shift",
+    "rank": 1,
+    "pest": true,
+    "toggle": [
+     "RollOption",
+     "FlatModifier"
+    ]
+   },
+   "coalesce": {
+    "status": "applied",
+    "spell": "Pest Form",
+    "rank": 1,
+    "inner": "applied",
+    "effects": [
+     "Spell Effect: Pest Form"
+    ]
+   },
+   "evilEye": {
+    "spell": "Evil Eye",
+    "actions": 1,
+    "slowed": 0,
+    "inner": "prepared"
+   },
+   "shadow": {
+    "spell": "Malicious Shadow",
+    "actions": 2,
+    "slowed": 1,
+    "inner": "started"
+   }
+  }
+ }
+}

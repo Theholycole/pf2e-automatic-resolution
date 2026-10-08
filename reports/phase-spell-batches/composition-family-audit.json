@@ -1,6 +1,6 @@
 {
-  "compilerGeneratedAt": "2026-10-03T21:22:34.808Z",
-  "routeGeneratedAt": "2026-10-03T21:23:42.710Z",
+  "compilerGeneratedAt": "2026-10-05T09:18:58.823Z",
+  "routeGeneratedAt": "2026-10-05T09:24:05.962Z",
   "families": [
     {
       "id": "direct-persistent",
@@ -23,23 +23,12 @@
           "id": "dKWc83KKiXoIJkhp",
           "name": "Beheading Buzz Saw",
           "sourceFile": "spells/spells/rank-7/beheading-buzz-saw.json",
-          "enabledRoute": false,
-          "route": "disabled",
+          "enabledRoute": true,
+          "route": "save",
           "assessment": {
-            "supported": false,
+            "supported": true,
             "route": "degree-save",
-            "blockers": [
-              {
-                "code": "shared-damage",
-                "path": "resolution.sharedDamage",
-                "message": "Shared damage contains an unsupported roll mode or category."
-              },
-              {
-                "code": "unaccounted-prose",
-                "path": "resolution.outcomes.criticalFailure.semanticCoverage",
-                "message": "Some rules in this outcome remain unaccounted for."
-              }
-            ]
+            "blockers": []
           },
           "compilerPending": []
         },
@@ -568,44 +557,6 @@
           "compilerPending": []
         },
         {
-          "id": "nPxYYID5JARKouSV",
-          "name": "Ray of Corruption",
-          "sourceFile": "spells/spells/rank-7/ray-of-corruption.json",
-          "enabledRoute": false,
-          "route": "disabled",
-          "assessment": {
-            "supported": false,
-            "route": "degree-save",
-            "blockers": [
-              {
-                "code": "basic-save-composition",
-                "path": "resolution.check.basic",
-                "message": "Basic-save riders have not been completely compiled."
-              },
-              {
-                "code": "compiler-gap",
-                "path": "automation.pendingCapabilities",
-                "message": "description-effects"
-              },
-              {
-                "code": "compiler-gap",
-                "path": "automation.pendingCapabilities",
-                "message": "description-target-predicates"
-              },
-              {
-                "code": "compiler-gap",
-                "path": "automation.pendingCapabilities",
-                "message": "description-lifecycle"
-              }
-            ]
-          },
-          "compilerPending": [
-            "description-effects",
-            "description-target-predicates",
-            "description-lifecycle"
-          ]
-        },
-        {
           "id": "xn0V2HDrmDWNzPEt",
           "name": "Savor the Sting",
           "sourceFile": "spells/spells/rank-1/savor-the-sting.json",
@@ -720,76 +671,6 @@
             ]
           },
           "compilerPending": []
-        },
-        {
-          "id": "tPtTKe0X1dDwoDmQ",
-          "name": "Vibrant Vibrato",
-          "sourceFile": "spells/spells/rank-7/vibrant-vibrato.json",
-          "enabledRoute": false,
-          "route": "disabled",
-          "assessment": {
-            "supported": false,
-            "route": "degree-save",
-            "blockers": [
-              {
-                "code": "compiler-gap",
-                "path": "automation.pendingCapabilities",
-                "message": "manual:conditional-effect"
-              },
-              {
-                "code": "compiler-gap",
-                "path": "automation.pendingCapabilities",
-                "message": "residual-prose"
-              },
-              {
-                "code": "compiler-gap",
-                "path": "automation.pendingCapabilities",
-                "message": "sustain-effect"
-              },
-              {
-                "code": "compiler-gap",
-                "path": "automation.pendingCapabilities",
-                "message": "preamble:ongoing-trigger"
-              },
-              {
-                "code": "compiler-gap",
-                "path": "automation.pendingCapabilities",
-                "message": "preamble:restriction"
-              },
-              {
-                "code": "unused-shared-damage",
-                "path": "resolution.sharedDamage",
-                "message": "The spell's structured damage is not applied by any outcome."
-              },
-              {
-                "code": "unaccounted-prose",
-                "path": "resolution.outcomes.success.semanticCoverage",
-                "message": "Some rules in this outcome remain unaccounted for."
-              },
-              {
-                "code": "unaccounted-prose",
-                "path": "resolution.outcomes.failure.semanticCoverage",
-                "message": "Some rules in this outcome remain unaccounted for."
-              },
-              {
-                "code": "manual-mechanic",
-                "path": "resolution.outcomes.failure.manualInstructions",
-                "message": "This outcome contains mechanics requiring manual handling."
-              },
-              {
-                "code": "manual-mechanic",
-                "path": "resolution.outcomes.criticalFailure.manualInstructions",
-                "message": "This outcome contains mechanics requiring manual handling."
-              }
-            ]
-          },
-          "compilerPending": [
-            "manual:conditional-effect",
-            "residual-prose",
-            "sustain-effect",
-            "preamble:ongoing-trigger",
-            "preamble:restriction"
-          ]
         },
         {
           "id": "3SzuMGusGKg8nw5A",
@@ -938,108 +819,6 @@
             "blockers": []
           },
           "compilerPending": []
-        },
-        {
-          "id": "L13n9NKvfGLApse1",
-          "name": "Calcification",
-          "sourceFile": "spells/spells/rank-9/calcification.json",
-          "enabledRoute": false,
-          "route": "disabled",
-          "assessment": {
-            "supported": false,
-            "route": "degree-save",
-            "blockers": [
-              {
-                "code": "target-eligibility",
-                "path": "targeting.actorConstraints",
-                "message": "Actor targeting has unsupported or incomplete eligibility rules."
-              },
-              {
-                "code": "compiler-gap",
-                "path": "automation.pendingCapabilities",
-                "message": "manual:secondary-save"
-              },
-              {
-                "code": "compiler-gap",
-                "path": "automation.pendingCapabilities",
-                "message": "manual:conditional-effect"
-              },
-              {
-                "code": "compiler-gap",
-                "path": "automation.pendingCapabilities",
-                "message": "residual-prose"
-              },
-              {
-                "code": "compiler-gap",
-                "path": "automation.pendingCapabilities",
-                "message": "preamble:conditional-eligibility"
-              },
-              {
-                "code": "compiler-gap",
-                "path": "automation.pendingCapabilities",
-                "message": "preamble:modifier"
-              },
-              {
-                "code": "compiler-gap",
-                "path": "automation.pendingCapabilities",
-                "message": "item-duration-grammar"
-              },
-              {
-                "code": "compiler-gap",
-                "path": "automation.pendingCapabilities",
-                "message": "target-eligibility"
-              },
-              {
-                "code": "lifecycle",
-                "path": "lifecycle",
-                "message": "The save route cannot manage this lifecycle or controller."
-              },
-              {
-                "code": "unaccounted-prose",
-                "path": "resolution.outcomes.success.semanticCoverage",
-                "message": "Some rules in this outcome remain unaccounted for."
-              },
-              {
-                "code": "native-effect-composition",
-                "path": "resolution.outcomes.success.nativeEffects.0",
-                "message": "degree selection proof is missing"
-              },
-              {
-                "code": "unaccounted-prose",
-                "path": "resolution.outcomes.failure.semanticCoverage",
-                "message": "Some rules in this outcome remain unaccounted for."
-              },
-              {
-                "code": "native-effect-composition",
-                "path": "resolution.outcomes.failure.nativeEffects.0",
-                "message": "degree selection proof is missing"
-              },
-              {
-                "code": "manual-mechanic",
-                "path": "resolution.outcomes.failure.manualInstructions",
-                "message": "This outcome contains mechanics requiring manual handling."
-              },
-              {
-                "code": "native-effect-composition",
-                "path": "resolution.outcomes.criticalFailure.nativeEffects.0",
-                "message": "degree selection proof is missing"
-              },
-              {
-                "code": "manual-mechanic",
-                "path": "resolution.outcomes.criticalFailure.manualInstructions",
-                "message": "This outcome contains mechanics requiring manual handling."
-              }
-            ]
-          },
-          "compilerPending": [
-            "manual:secondary-save",
-            "manual:conditional-effect",
-            "residual-prose",
-            "preamble:conditional-eligibility",
-            "preamble:modifier",
-            "item-duration-grammar",
-            "target-eligibility"
-          ]
         },
         {
           "id": "qlxM7Ik3uUeUIOcv",
@@ -1637,63 +1416,6 @@
             ]
           },
           "compilerPending": []
-        },
-        {
-          "id": "g2V4ID0pl1ZGAxZj",
-          "name": "Vitrifying Blast",
-          "sourceFile": "spells/spells/rank-6/vitrifying-blast.json",
-          "enabledRoute": false,
-          "route": "disabled",
-          "assessment": {
-            "supported": false,
-            "route": "degree-save",
-            "blockers": [
-              {
-                "code": "compiler-gap",
-                "path": "automation.pendingCapabilities",
-                "message": "residual-prose"
-              },
-              {
-                "code": "compiler-gap",
-                "path": "automation.pendingCapabilities",
-                "message": "item-duration-grammar"
-              },
-              {
-                "code": "lifecycle",
-                "path": "lifecycle",
-                "message": "The save route cannot manage this lifecycle or controller."
-              },
-              {
-                "code": "unaccounted-prose",
-                "path": "resolution.outcomes.success.semanticCoverage",
-                "message": "Some rules in this outcome remain unaccounted for."
-              },
-              {
-                "code": "unaccounted-prose",
-                "path": "resolution.outcomes.failure.semanticCoverage",
-                "message": "Some rules in this outcome remain unaccounted for."
-              },
-              {
-                "code": "follow-up-composition",
-                "path": "resolution.outcomes.failure.followUps",
-                "message": "Only one fully supported immediate secondary save is executable."
-              },
-              {
-                "code": "native-effect-composition",
-                "path": "resolution.outcomes.criticalFailure.nativeEffects.0",
-                "message": "degree selection proof is missing"
-              },
-              {
-                "code": "follow-up-composition",
-                "path": "resolution.outcomes.criticalFailure.followUps",
-                "message": "Only one fully supported immediate secondary save is executable."
-              }
-            ]
-          },
-          "compilerPending": [
-            "residual-prose",
-            "item-duration-grammar"
-          ]
         },
         {
           "id": "eyKkLp8V55ydA64J",

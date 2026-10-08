@@ -1,0 +1,26 @@
+{
+ "label": "thirdPartyBatch31",
+ "passed": true,
+ "at": "2026-10-07T03:04:18.217Z",
+ "details": {
+  "thirdParty31": {
+   "collided": {
+    "question": true,
+    "push": true,
+    "secondary": true,
+    "prone": true
+   },
+   "clear": {
+    "question": true,
+    "push": true,
+    "secondary": false,
+    "prone": false
+   },
+   "saved": {
+    "question": false,
+    "push": false,
+    "prone": false
+   }
+  }
+ }
+}

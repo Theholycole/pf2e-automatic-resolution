@@ -1,0 +1,26 @@
+{
+  "generatedAt": "2026-10-05T23:19:21.998Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "notesBatch5",
+      "passed": true,
+      "at": "2026-10-05T23:19:19.657Z",
+      "details": {
+        "notes5": {
+          "created": {
+            "gm": true,
+            "caster": true
+          },
+          "updated": true,
+          "view": {
+            "gmSees": true,
+            "playerSees": false,
+            "playerCaster": true
+          }
+        }
+      }
+    }
+  ]
+}

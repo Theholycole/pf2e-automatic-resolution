@@ -1,0 +1,24 @@
+{
+ "label": "thirdPartyBatch53",
+ "passed": true,
+ "at": "2026-10-07T05:46:57.557Z",
+ "details": {
+  "thirdParty53": {
+   "good": {
+    "kept": 17,
+    "mainGone": true,
+    "armed": true,
+    "total": 17,
+    "expected": 17,
+    "usedUp": true
+   },
+   "bad": {
+    "degree": "failure",
+    "total": 11,
+    "expected": 11,
+    "mainGone": true,
+    "usedUp": true
+   }
+  }
+ }
+}

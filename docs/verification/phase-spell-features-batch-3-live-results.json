@@ -1,0 +1,38 @@
+{
+  "generatedAt": "2026-10-06T00:35:39.459Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "spellFeaturesBatch3",
+      "passed": true,
+      "at": "2026-10-06T00:35:15.243Z",
+      "details": {
+        "features3": {
+          "stupefied": {
+            "lost": "disrupted (Stupefied 20: flat check DC 25 failed)",
+            "refused": "The spell was lost (disrupted (Stupefied 20: flat check DC 25 failed)); it has no effect."
+          },
+          "steady": {
+            "card": true,
+            "kept": false,
+            "lostMatches": true
+          },
+          "communal": {
+            "card": true,
+            "healed": 2,
+            "amount": 2
+          },
+          "counter": {
+            "offer": true,
+            "choices": "Counterspell",
+            "expended": true,
+            "degree": 0,
+            "countered": false,
+            "lostMatches": true
+          }
+        }
+      }
+    }
+  ]
+}

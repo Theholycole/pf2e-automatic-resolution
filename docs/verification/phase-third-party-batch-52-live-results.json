@@ -1,0 +1,25 @@
+{
+ "label": "thirdPartyBatch52",
+ "passed": true,
+ "at": "2026-10-07T05:40:33.845Z",
+ "details": {
+  "thirdParty52": {
+   "inside": {
+    "crit": 2,
+    "fail": 1
+   },
+   "left": {
+    "crit": 1,
+    "duration": "1 rounds",
+    "fail": 1
+   },
+   "object": {
+    "penalty": 1,
+    "rules": [
+     "RollOption",
+     "FlatModifier"
+    ]
+   }
+  }
+ }
+}

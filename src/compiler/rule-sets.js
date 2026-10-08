@@ -265,13 +265,46 @@ function gravity(adapted) {
 }
 
 /** Returns {ruleSet, claimed} or null. */
+// Armor that reshapes (Magus+'s Metamorphic Armor): "Make a melee Strike against a creature and then choose an effect from the list below. For the duration, when you
+// make a Strike against an enemy you can change the effect you chose to another choice." with the list "Gain a resistance to bludgeoning, piercing or slashing damage
+// equal to half your level (minimum 1)." / "Gain a resistance to acid, cold, electricity, or fire equal to half your level plus 2 or increase one of these resistances by
+// half your level." / "Gain a +1 circumstance bonus to AC." / "Gain a +1 status bonus to your reflex saves against area of effect spells.": the caster's Effect for the
+// duration — each listed effect (each resistance type its own) an option the Effect's control switches when it Strikes; the Strike itself the caster's.
+const METAMORPHIC_LEAD = /^Make a melee Strike against a creature and then (?:@UUID\[[^\]]+\]\{)?choose an effect\}? from the list below\. (For the duration, when you make a Strike against an enemy you can change the effect you chose to another choice\.)$/;
+const METAMORPHIC = [/^Gain a resistance to ([a-z]+), ([a-z]+) or ([a-z]+) damage equal to half your level \(minimum 1\)\.$/,
+    /^Gain a resistance to ([a-z]+), ([a-z]+), ([a-z]+), or ([a-z]+) equal to half your level plus (\d) or (increase one of these resistances by half your level)\.$/,
+    /^Gain a \+(\d) circumstance bonus to AC\.$/,
+    /^Gain a \+(\d) status bonus to your reflex saves against area of effect spells\.$/];
+function metamorphic(adapted) {
+    if (String(adapted.targeting?.target ?? "").trim() || adapted.targeting?.area || adapted.lifecycle?.sustained) return null;
+    const seconds = secondsOf(adapted.lifecycle?.duration);
+    const html = String(adapted.descriptionHTML ?? "");
+    const intro = /^\s*<p>([\s\S]*?)<\/p>\s*<ul>([\s\S]*?)<\/ul>\s*(?:<p[^>]*><em>[\s\S]*?<\/em><\/p>\s*)?$/.exec(html);
+    if (!seconds || !intro) return null;
+    const lead = split(plain(intro[1]));
+    const items = [...intro[2].matchAll(/<li>([\s\S]*?)<\/li>/g)].map(match => plain(match[1]).trim());
+    const head = METAMORPHIC_LEAD.exec(lead.slice(1).join(" "));
+    const found = METAMORPHIC.map((re, index) => re.exec(items[index] ?? ""));
+    if (lead.length !== 3 || /\d|\b(?:damage|bonus|resistance|Strike)\b/i.test(lead[0]) || !head || items.length !== 4 || found.some(match => !match)) return null;
+    const [physical, energy, ac, reflex] = found;
+    const half = "max(1,floor(@actor.level/2))";
+    const options = [
+        ...[physical[1], physical[2], physical[3]].map(type => ({ key: `resist-${type}`, label: `Resistance to ${type} (half your level)`, rules: [{ key: "Resistance", type, value: half }], notes: [] })),
+        ...[energy[1], energy[2], energy[3], energy[4]].map(type => ({ key: `resist-${type}`, label: `Resistance to ${type} (half your level + ${energy[5]})`, rules: [{ key: "Resistance", type, value: `floor(@actor.level/2)+${energy[5]}` }],
+            notes: [`Or ${energy[6]}: raise your own resistance to ${type} by half your level instead (the GM's).`] })),
+        { key: "ac", label: `+${ac[1]} circumstance bonus to AC`, rules: [{ key: "FlatModifier", selector: "ac", type: "circumstance", value: Number(ac[1]) }], notes: [] },
+        { key: "reflex", label: `+${reflex[1]} status bonus to Reflex saves against area spells`, rules: [{ key: "FlatModifier", selector: "reflex", type: "status", value: Number(reflex[1]), predicate: ["area-effect", "item:type:spell"] }], notes: [] }];
+    return { ruleSet: { recipient: "self", seconds, rules: [], choice: { label: "The armor's effect", switchable: "Change the effect (when you Strike an enemy)", options },
+        notes: ["Make a melee Strike against a creature, then choose the effect."] }, claimed: [...lead.slice(1), ...items] };
+}
+
 export function compileRuleSet(adapted) {
     // (Primal Chorus's Will save is the GM's for distant creatures, not the spell's targets.)
     const choir = (adapted.damageComponents ?? []).length ? null : chorus(adapted);
     if (choir) return choir;
     if (adapted.defense?.kind !== "none" && adapted.defense?.kind !== undefined) return null;
     if ((adapted.damageComponents ?? []).length) return null;
-    for (const compile of [unfetter, plaster, timeSense, glamor, panoply, scarves, attunement, gravity]) {
+    for (const compile of [unfetter, plaster, timeSense, glamor, panoply, scarves, attunement, gravity, metamorphic]) {
         const result = compile(adapted);
         if (result) return result;
     }

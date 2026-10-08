@@ -1,3 +1,5 @@
+import { assertSpellNotLost } from "./casting-rules-runtime.js";
+import { forcedMove, nearestRegionPoint } from "./forced-movement.js";
 import { MODULE_ID } from "./effect-runtime.js";
 import { ONGOING_FLAG, turnAdvance, boundaryKey, addObligation, dueWorldTime, petrifyProgress } from "./ongoing-core.js";
 import { clone, randomID, escapeHTML, confirmAction, spellAtCastRank, terrainDifficulties } from "./runtime-utils.js";
@@ -10,12 +12,16 @@ import { tokenDistance } from './token-distance.js';
 import { applyDamageWithReceipt } from './native-damage-receipt.js';
 import { isDying, recoverFromDying } from './dying-recovery.js';
 import { loadNativeEffectTemplate, prepareNativeEffectSource, createNativeEffect } from './native-outcome-effects.js';
+import { violentLightEffectMatches } from '../src/compiler/violent-light.js';
+import { blessingMatches } from '../src/compiler/divine-eclipse.js';
 import { ensureSpellShield } from './effect-runtime.js';
 import { inspectCasterBenefitClaim } from './effect-modifier-proof.js';
 import { heightenedComponentFormula } from '../src/compiler/retaliation.js';
 import { hasPersistentDamage } from './persistent-link-runtime.js';
 import { tentacleAttempt } from './tentacle-grab.js';
 import { castSpellFromUuid } from './cast-spell.js';
+import { spellAttack } from './attack-shapes-runtime.js';
+import { grantMinionControl } from './minion-control-runtime.js';
 
 // The lantern's light: bright in the area, dim to its multiple.
 const lanternLightRule = (radius, light) => ({ key: "TokenLight", value: { bright: Number(radius) * light.brightTimes, dim: Number(radius) * light.dimTimes } });
@@ -175,11 +181,15 @@ export class OngoingFamilies {
             const region = await fromUuid(uuid);
             if (!region) throw Error("The area's region is missing.");
             if (region.shapes.length !== 1 || !["circle", "emanation"].includes(region.shapes[0].type)) throw Error("Grow the area's region yourself: it isn't one circle.");
-            await region.update({ shapes: [{ ...region.shapes[0].toObject?.() ?? region.shapes[0], radius: Number(region.shapes[0].radius) + pixels }] });
+            await region.update({ shapes: [{ ...region.shapes[0].toObject?.() ?? region.shapes[0], radius: Number(region.shapes[0].radius) + pixels }],
+                // (A region following a token keeps its new radius when the token moves.)
+                ...(region.flags?.[MODULE_ID]?.followRadius ? { [`flags.${MODULE_ID}.followRadius`]: Number(region.flags[MODULE_ID].followRadius) + pixels } : {}) });
         }
         record.declaration.area.value = Number(record.declaration.area.value) + Number(feet);
     }
     async startLingering(item, plan, options = {}) {
+        // (A spell lost to a disruption or a counterspell has no effect: casting-rules-runtime.js.)
+        assertSpellNotLost(options?.sourceMessageId ?? null);
         this.ongoing.assertCoordinator();
         if (!game.user.isGM) throw Error("The GM places and runs lingering damage areas.");
         if (!isExecutableLingeringPlan(plan)) throw Error(`${item.name} is not an executable lingering damage area.`);
@@ -258,7 +268,16 @@ export class OngoingFamilies {
             const placing = variant.system?.area && !declaration.areaStep ? variant : variant.clone({ "system.area": { type: declaration.area.type, value: declaration.area.value } });
             // (A shape the GM draws — Bridge of Vines' 10-foot-wide bridge — selected as a region.)
             if (declaration.drawnArea && !options.region && !canvas.regions?.controlled?.[0]) throw Error(`${item.name}: draw ${declaration.drawnArea} as a region and select it first.`);
-            region = options.region ?? (declaration.drawnArea ? canvas.regions.controlled[0].document : await placing.placeTemplate(game.messages.get(options.sourceMessageId)));
+            // (The caster's emanation as a region that follows its token: Unbreaking Wave Barrier.)
+            const casterToken = declaration.areaOnCaster ? item.actor.getActiveTokens?.(true, true)?.[0] ?? null : null;
+            if (declaration.areaOnCaster && !casterToken) throw Error(`${item.name}: ${item.actor.name} needs a token on the scene.`);
+            if (casterToken) {
+                const size = canvas.scene.grid.size, pixels = (Number(declaration.area.value) / canvas.scene.grid.distance + casterToken.width / 2) * size;
+                const centre = { x: casterToken.x + casterToken.width * size / 2, y: casterToken.y + casterToken.height * size / 2 };
+                [region] = await canvas.scene.createEmbeddedDocuments("Region", [{ name: `${item.name}: around ${casterToken.name}`, color: "#3388cc",
+                    shapes: [{ type: "circle", x: centre.x, y: centre.y, radius: pixels }], flags: { [MODULE_ID]: { followToken: casterToken.uuid, followShape: "emanation", followRadius: pixels } } }]);
+            }
+            else region = options.region ?? (declaration.drawnArea ? canvas.regions.controlled[0].document : await placing.placeTemplate(game.messages.get(options.sourceMessageId)));
             if (!region) return { status: "cancelled" };
             regions = [region];
             // (Cast through "1 of your thralls" that it destroys — Zombie Horde: the targeted module thrall token removed.)
@@ -280,11 +299,24 @@ export class OngoingFamilies {
             }
             if (!tokens.length) throw Error(`${item.name}: target the creature before starting the spell.`);
             if (tokens.length > most) throw Error(`${item.name} targets ${most === 1 ? "1 creature" : `up to ${most}`}.`);
+            // (A willing ally's aura — Aura of Violent Light: an ally of the caster, not the caster.)
+            if (declaration.anchorAlly && tokens.some(token => token.actor === item.actor || !(item.actor.isAllyOf?.(token.actor) ?? token.actor.alliance === item.actor.alliance)))
+                throw Error(`${item.name} targets 1 willing ally.`);
             declaration.targetTokenUuids = tokens.map(token => token.uuid);
         } else if ((item.actor.getActiveTokens?.() ?? []).length !== 1) throw Error(`${item.actor.name} needs exactly one token on the scene for the emanation.`);
+        // (Divine Eclipse: the creatures the caster blesses — the cast's targets in the area, up to the number.)
+        if (declaration.blessed) {
+            const casterToken = item.actor.getActiveTokens?.()?.[0]?.document;
+            const blessed = [...(options.targets ?? game.user.targets)].map(target => target?.document ?? target).filter(token => token?.documentName === "Token" && token.actor);
+            if (blessed.length > declaration.blessed.max) throw Error(`${item.name} blesses up to ${declaration.blessed.max} creatures.`);
+            if (blessed.some(token => casterToken && token.id !== casterToken.id && tokenDistance(casterToken, token) > Number(declaration.area.value))) throw Error(`${item.name}: bless creatures in the area.`);
+            declaration.blessed.tokenUuids = blessed.map(token => token.uuid);
+        }
         // (Fallow Field's saves are rolled by the module when healing is held: the caster's spell DC when the cast didn't give one.)
         if (declaration.healingSave && !Number.isFinite(Number(options.dc))) options = { ...options, dc: variant.spellcasting?.statistic?.dc?.value ?? item.spellcasting?.statistic?.dc?.value ?? null };
         const record = { castId: randomID(), name: item.name, kind: "lingering", sourceActorUuid: item.actor.uuid, sourceItemUuid: item.uuid, rank,
+            // (The cast's message: its spellshapes and catalysts ride on the area's initial save.)
+            sourceMessageId: options.sourceMessageId ?? null,
             // (The rows at the cast rank: a heightened variant's, Mushroom Patch at 9th.)
             dc: options.dc ?? null, recipientUuids: [], recipients: [], exposure: [], members: [], declaration, exposurePlan: lingeringExposurePlan(heightenedPlanAt(plan, rank)),
             ...(declaration.sustainDamage || declaration.sustainDrops || declaration.sustainBasic ? { sustainExposurePlan: lingeringExposurePlan(heightenedPlanAt(plan, rank), { event: "sustain" }) } : {}),
@@ -317,6 +349,20 @@ export class OngoingFamilies {
             data.childCastIds = [...(data.childCastIds ?? []), child.castId];
             data.entries.push({ uuid: adjacent.uuid, actorUuid: item.actor.uuid, status: "active", permanent: false });
         }
+        // "There's an additional 5-foot burst in the center of the area …" (Tear the Veil): a child area at the region's centre that drains each living creature
+        // starting its turn in it, and gives the death save to one already at the maximum.
+        if (declaration.drainCenter && region) {
+            const g = canvas.grid.size, bounds = region.object?.bounds ?? null;
+            const centre = bounds ? { x: bounds.x + bounds.width / 2, y: bounds.y + bounds.height / 2 } : { x: Number(region.shapes?.[0]?.x ?? 0), y: Number(region.shapes?.[0]?.y ?? 0) };
+            const drain = declaration.drainCenter;
+            const [burst] = await canvas.scene.createEmbeddedDocuments("Region", [{ name: `${item.name}: the centre`, color: "#331144",
+                shapes: [{ type: "circle", x: centre.x, y: centre.y, radius: drain.radius * g / canvas.grid.distance, hole: false }], visibility: CONST.REGION_VISIBILITY.ALWAYS }]);
+            const child = await this.startRegionArea({ spellName: `${item.name} (the centre)`, sourceActorUuid: item.actor.uuid, sourceItemUuid: item.uuid, castRank: rank, region: burst,
+                durationSeconds: declaration.durationSeconds, events: ["turn-start"], turnEffect: { drain: { ...drain } }, dc: options.dc ?? item.spellcasting?.statistic?.dc?.value ?? null,
+                parentCastId: record.castId, seedMembers: true });
+            data.childCastIds = [...(data.childCastIds ?? []), child.castId];
+            data.entries.push({ uuid: burst.uuid, actorUuid: item.actor.uuid, status: "active", permanent: false });
+        }
         // "You glow with bright light in a 30-foot radius and dim light to the next 30 feet.": the caster's light, ending with the area.
         if (declaration.casterLight) {
             const [light] = await item.actor.createEmbeddedDocuments("Item", [{ name: `${item.name} (light)`, type: "effect", img: "icons/svg/light.svg",
@@ -328,7 +374,27 @@ export class OngoingFamilies {
         for (const placed of regions) data.entries.push({ uuid: placed.uuid, actorUuid: item.actor.uuid, status: "active", permanent: false });
         // Difficult terrain: PF2e's movement cost on each area, removed with it.
         if (declaration.terrain) for (const placed of regions) await placed.createEmbeddedDocuments("RegionBehavior", [{ name: `${item.name}: difficult terrain`,
-            type: "modifyMovementCost", system: { difficulties: terrainDifficulties(declaration.terrain.movement, declaration.terrain.difficulty) } }]);
+            type: "modifyMovementCost", system: { difficulties: terrainDifficulties(declaration.terrain.movement, declaration.terrain.difficulty) },
+            // (Only for living creatures: the module's per-creature terrain.)
+            ...(declaration.terrain.living ? { flags: { [MODULE_ID]: { selectiveTerrain: { actions: ["walk", "travel"], default: 1, living: { difficulty: declaration.terrain.difficulty } } } } } : {}) }]);
+        // Darklight: the region fully dark (Foundry's darkness level override), removed with it.
+        if (declaration.darkness) for (const placed of regions) await placed.createEmbeddedDocuments("RegionBehavior", [{ name: `${item.name}: darkness`,
+            type: "adjustDarknessLevel", system: { mode: declaration.darkness.mode, modifier: declaration.darkness.modifier } }]);
+        // "choose up to four allies in the area to spare from darklight's effects": the caster's targeted allies (up to the count) hold the area's immunity
+        // for its duration, so its exposures skip them.
+        if (declaration.spared) {
+            const allies = [...(options.targets ?? [])].map(token => token.document ?? token).filter(token => token?.actor && token.actor !== item.actor && item.actor.isAllyOf?.(token.actor));
+            if (allies.length > declaration.spared.count) throw Error(`${item.name} spares at most ${declaration.spared.count} allies: target fewer.`);
+            data.declaration.immunityKey = `spared:${record.castId}`;
+            for (const token of allies) {
+                const [marker] = await token.actor.createEmbeddedDocuments("Item", [{ name: `${item.name}: spared`, type: "effect", img: "icons/svg/eye.svg",
+                    flags: { [MODULE_ID]: { spellImmunity: { key: data.declaration.immunityKey } } },
+                    system: { description: { value: `<p>Spared by the caster: immune to this ${escapeHTML(item.name)}'s damage, and sees through its darkness as though with greater darkvision.</p>` },
+                        level: { value: rank }, duration: { value: -1, unit: "unlimited", expiry: null, sustained: false }, rules: [] } }]);
+                data.entries.push({ uuid: marker.uuid, actorUuid: token.actor.uuid, status: "active", permanent: false });
+            }
+            data.spared = allies.map(token => token.actor.uuid);
+        }
         // Notes the GM acts on ("A creature can Interact to clear a square of this scree.").
         if (declaration.notes?.length) await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: item.actor }), whisper: game.users.filter(user => user.isGM).map(user => user.id),
             content: `<p><strong>${escapeHTML(item.name)}</strong></p>${declaration.notes.map(note => `<p class="pf2e-auto-gm-reminder">${escapeHTML(note)}${/clear a square/.test(note) ? " (edit the area's region to remove that square)" : /^Only squares|move the area's region|^Creatures in the area can't|^Unattended objects in the area|melts on any object|^When a creature in the spell's area would be healed|can Interact to pick up/.test(note) ? "" : " End the spell in Ongoing spells when it does."}</p>`).join("")}` });
@@ -337,11 +403,24 @@ export class OngoingFamilies {
         if (declaration.casterEffect) {
             const template = await loadNativeEffectTemplate(declaration.casterEffect.uuid);
             const live = { mechanics: { rules: template.system?.rules, duration: template.system?.duration } };
-            if (!inspectCasterBenefitClaim(live, declaration.casterEffect.claimText, { rank }).supported) throw Error(`${item.name}: PF2e's Effect no longer gives the stated benefit.`);
+            if (!inspectCasterBenefitClaim(live, declaration.casterEffect.claimText, { rank, spellDuration: declaration.sustained ? "sustained" : null }).supported) throw Error(`${item.name}: PF2e's Effect no longer gives the stated benefit.`);
             const source = prepareNativeEffectSource(template, { castInstanceId: record.castId, castRank: rank, sourceActorUuid: item.actor.uuid, sourceItemUuid: item.uuid,
                 sourceItemName: item.name, resolutionKind: "lingering-caster" });
             const effect = await createNativeEffect(item.actor, source);
             data.entries.push({ uuid: effect.uuid, actorUuid: item.actor.uuid, status: "active", permanent: false });
+        }
+        // (Aura of Violent Light: the module's Effect on the ally, proved again from the live template — its Aura of 5 × its badge, the badge the text's radii.)
+        if (declaration.anchorEffect) {
+            const template = await loadNativeEffectTemplate(declaration.anchorEffect.uuid);
+            if (!violentLightEffectMatches(template, { feet: declaration.aura.feet, step: declaration.auraGrowth.feet, maximum: declaration.auraGrowth.maximum }))
+                throw Error(`${item.name}: the module's Effect no longer matches the text's aura.`);
+            const source = prepareNativeEffectSource(template, { castInstanceId: record.castId, castRank: rank, sourceActorUuid: item.actor.uuid, sourceItemUuid: item.uuid,
+                sourceItemName: item.name, resolutionKind: "lingering-anchor" });
+            for (const uuid of declaration.targetTokenUuids ?? []) {
+                const token = await fromUuid(uuid);
+                const effect = await createNativeEffect(token.actor, clone(source));
+                data.entries.push({ uuid: effect.uuid, actorUuid: token.actor.uuid, status: "active", permanent: false, anchorEffect: true });
+            }
         }
         // (Shroud of Flame: the caster's retaliation marker for the area's lifetime; the Retaliate control in Ongoing spells deals its damage.)
         if (declaration.retaliation) {
@@ -359,6 +438,7 @@ export class OngoingFamilies {
         await this.syncLingeringConcealment(data, members);
         await this.syncHealingWatch(data, members);
         await this.syncLingeringMembers(data, members);
+        await this.syncBlessed(data);
         await this.syncMemberCondition(data, members);
         await this.syncMemberEffect(data, members);
         if (declaration.initial) for (const member of members.filter(entry => !this.heldBySpell(data, entry.actorUuid))) addObligation(data, { key: `lingering:initial:${member.actorUuid}`, kind: "membership",
@@ -580,21 +660,41 @@ export class OngoingFamilies {
         return { status: "transferred" };
     }
     async startRegionArea({ spellName, sourceActorUuid, sourceItemUuid, castRank, region, durationSeconds, behaviors = [], notes = [], gmHazard = null, casterTurnEnd = null, followToken = null,
-        events = [], hazardDamage = null, sustained = false, excludeCaster = false, parentCastId = null, hazardOncePerTurn = false, hazardOncePerRound = false, seedMembers = false, regionGrowth = null }) {
+        events = [], hazardDamage = null, sustained = false, excludeCaster = false, parentCastId = null, hazardOncePerTurn = false, hazardOncePerRound = false, seedMembers = false, regionGrowth = null,
+        turnEffect = null, dc = null, disbelief = null, memberEffect = null, memberEffects = null, endsAtTurnEndOf = null, sustainPulse = false,
+        memberRules = null, memberAllies = false, memberCaster = false, memberCasterOnly = false, excludeTokenUuids = null, extraEntryUuids = [], enemiesOnly = false, concealment = false }) {
         this.ongoing.assertCoordinator();
         const clock = this.ongoing.clock();
         // (A region around the caster's token that moves with it: Magnetic Repulsion's adjacent squares.)
         // (Damage the area deals by itself on an event: Wall of Fire's "occupying the wall's area at the start of its turn".)
-        const declaration = { centre: "placed", events: [...events], ...(hazardDamage ? { hazardDamage } : {}), ...(hazardOncePerTurn ? { hazardOncePerTurn: true } : {}), ...(hazardOncePerRound ? { hazardOncePerRound: true } : {}), oncePerRound: false, excludeCaster: excludeCaster === true, enemiesOnly: false, initial: false, concealment: false,
+        const declaration = { centre: "placed", events: [...events], ...(hazardDamage ? { hazardDamage } : {}), ...(hazardOncePerTurn ? { hazardOncePerTurn: true } : {}), ...(hazardOncePerRound ? { hazardOncePerRound: true } : {}), oncePerRound: false, excludeCaster: excludeCaster === true, enemiesOnly: enemiesOnly === true, initial: false, concealment: concealment === true,
             sustained: sustained === true, durationSeconds, notes, sourceText: [], ...(gmHazard ? { gmHazard } : {}), ...(casterTurnEnd ? { casterTurnEnd } : {}), ...(followToken ? { followToken } : {}),
+            // (A turn-start effect of the area itself: Tear the Veil's draining centre.)
+            ...(turnEffect ? { turnEffect } : {}),
+            // (Shadow Puppetry: the area's damage to everyone in it when cast and on the first Sustain each turn — areaPulse.)
+            ...(sustainPulse ? { sustainPulse: true } : {}),
+            // (Ice Guardian's cover: its rules on the caster and its allies inside, not on the guardian itself.)
+            ...(memberRules?.length ? { memberRules, ...(memberAllies ? { memberAllies: true } : {}), ...(memberCaster ? { memberCaster: true } : {}), ...(memberCasterOnly ? { memberCasterOnly: true } : {}) } : {}),
+            ...(excludeTokenUuids?.length ? { excludeTokenUuids: [...excludeTokenUuids] } : {}),
+            // (Fateful Condemnation: a generated Effect on the creatures inside — the aura's own creature and its allies.)
+            ...(memberEffect ? { memberEffect } : {}),
+            // ("until the end of the target's next turn": Shock to the System's cloud.)
+            ...(endsAtTurnEndOf ? { endsAt: "target-turn-end", targetActorUuid: endsAtTurnEndOf, skipTurn: clock.started && clock.actorUuid === endsAtTurnEndOf } : {}),
+            // (A mode card's area: several member Effects in their own slots — Musical Shift's enemies and allies.)
+            ...(memberEffects?.length ? { memberEffects } : {}),
+            // (Shadow Raid: the GM's disbelief control; a success halves the area's damage.)
+            ...(disbelief ? { disbelief: { ...disbelief, key: `disbelieved:${spellName.toLowerCase().replace(/[^a-z0-9]+/g, "-")}:${randomID()}` } } : {}),
             // (Field of Razors: the burst the caster's reaction grows, a stated number of times.)
             ...(regionGrowth ? { regionGrowth: { feet: regionGrowth.feet, times: regionGrowth.times, maximum: regionGrowth.maximum, types: regionGrowth.types }, area: { type: "burst", value: Number(regionGrowth.radius) } } : {}) };
-        const record = { castId: randomID(), name: spellName, kind: "lingering", sourceActorUuid, sourceItemUuid, rank: castRank, dc: null,
+        const record = { castId: randomID(), name: spellName, kind: "lingering", sourceActorUuid, sourceItemUuid, rank: castRank, dc: dc ?? null,
             recipientUuids: [], recipients: [], exposure: [], members: [], declaration, exposurePlan: null, regionUuid: region.uuid,
-            maximumAt: game.time.worldTime + durationSeconds, castRound: clock.round, ...(parentCastId ? { parentCastId } : {}) };
+            // (No duration — Garden of Crystals' crystals: until the GM ends it.)
+            maximumAt: durationSeconds == null ? null : game.time.worldTime + durationSeconds, castRound: clock.round, ...(parentCastId ? { parentCastId } : {}) };
         const journal = await this.ongoing.begin(record);
         const data = clone(state(journal));
         data.entries.push({ uuid: region.uuid, actorUuid: sourceActorUuid, status: "active", permanent: false });
+        // (What else the cast made that ends with the area: Garden of Crystals' terrain region, walls and the caster's reminder.)
+        for (const uuid of extraEntryUuids) data.entries.push({ uuid, actorUuid: sourceActorUuid, status: "active", permanent: false });
         // (Creatures already inside when it's made didn't "enter" it — Flammable Fumes: they take it as their turn starts.)
         if (seedMembers) data.members = ((await this.lingeringMembership(data)) ?? []).map(member => member.tokenUuid);
         if (behaviors.length) await region.createEmbeddedDocuments("RegionBehavior", clone(behaviors));
@@ -1172,9 +1272,25 @@ export class OngoingFamilies {
         }
         const statistic = sun.sunlight.statistic[0].toUpperCase() + sun.sunlight.statistic.slice(1);
         try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: caster }), flags: { [MODULE_ID]: { sunSunlight: { castId, round: game.combat?.round ?? null } } },
-            content: `<section class="pf2e-auto-runtime-card"><header><strong>${escapeHTML(record.name)}</strong></header><p>${harmed.length ? `${harmed.map(name => escapeHTML(name)).join(", ")} (void healing) took ${sun.voidHealing.damage} ${sun.voidHealing.type} damage.` : "No creature with void healing is in the aura."}</p><p><strong>GM:</strong> target the creatures in the aura with a particular vulnerability to sunlight (PF2e can't tell), then: a ${statistic} save or ${escapeHTML(sun.sunlight.condition)} ${sun.sunlight.value} for ${sun.sunlight.rounds} round.</p><button type="button" class="pf2e-auto-sun-sunlight"><i class="fa-solid fa-sun"></i> Sunlight save for the targeted creatures</button></section>` }); }
+            content: `<section class="pf2e-auto-runtime-card"><header><strong>${escapeHTML(record.name)}</strong></header><p>${harmed.length ? `${harmed.map(name => escapeHTML(name)).join(", ")} (void healing) took ${sun.voidHealing.damage} ${sun.voidHealing.type} damage.` : "No creature with void healing is in the aura."}</p><p class="pf2e-auto-gm-reminder"><strong>GM:</strong> target the creatures in the aura with a particular vulnerability to sunlight (PF2e can't tell), then: a ${statistic} save or ${escapeHTML(sun.sunlight.condition)} ${sun.sunlight.value} for ${sun.sunlight.rounds} round.</p><button type="button" class="pf2e-auto-sun-sunlight"><i class="fa-solid fa-sun"></i> Sunlight save for the targeted creatures</button></section>` }); }
         catch (error) { console.warn(`${MODULE_ID} | The pulse card could not be posted.`, error); }
         return { harmed };
+    }
+    /** A placed area's damage to every creature in it at once (Shadow Puppetry: when cast and on the first Sustain each turn). */
+    async areaPulse(castId) {
+        const journal = this.ongoing.find(castId);
+        const record = journal ? clone(state(journal)) : null;
+        if (!record?.declaration?.hazardDamage || record.status !== "active") return null;
+        const members = await this.lingeringMembership(record) ?? [];
+        const results = [];
+        for (const member of members) {
+            const result = await this.applyHazardDamage(record, member, "pulse");
+            record.exposure.push({ key: `pulse:${randomID()}:${member.actorUuid}`, event: "pulse", actorUuid: member.actorUuid, total: result.total });
+            results.push({ name: member.name, total: result.total });
+        }
+        record.pulses = [...(record.pulses ?? []), { at: game.time.worldTime, round: game.combat?.round ?? null, results }];
+        await this.ongoing.save(journal, record);
+        return { results };
     }
     /** The sunlight save for the creatures the GM targeted (inside the aura): the compiled save card at the spell's DC. */
     async sunSunlight({ castId, tokenUuids = [] }, user = game.user) {
@@ -1221,18 +1337,23 @@ export class OngoingFamilies {
         this.ongoing.assertCoordinator();
         const clock = this.ongoing.clock();
         const declaration = { centre: "caster", events: [], oncePerRound: false, excludeCaster: true, enemiesOnly: false, initial: false, concealment: false,
-            area: { type: "emanation", value: Number(radius) }, sustained: false, optionalSustain: true, growth: { feet: lantern.growth.feet }, durationSeconds, sourceText: [],
-            lantern: { statistic: lantern.statistic, failed: lantern.failed, light: lantern.light } };
+            area: { type: "emanation", value: Number(radius) }, sustained: lantern.sustained === true, ...(lantern.growth ? { optionalSustain: true, growth: { feet: lantern.growth.feet } } : {}), durationSeconds, sourceText: [],
+            // (Or the degree table's rows, each an Effect held while inside — Infinitesimal Collapse Field, Repulsion; enemies only when the text says so.)
+            lantern: { statistic: lantern.statistic, ...(lantern.rows ? { rows: lantern.rows, enemiesOnly: lantern.enemiesOnly === true } : { failed: lantern.failed }), light: lantern.light ?? null,
+                // (Pied Piping: the rows' Effects last for the spell wherever the creature goes; a save makes it immune for a while.)
+                ...(lantern.heldOutside ? { heldOutside: true } : {}), ...(lantern.immunity ? { immunity: { ...lantern.immunity, key: `${spellName.toLowerCase().replace(/[^a-z0-9]+/g, "-")}:saved` } } : {}) } };
         const record = { castId: randomID(), name: spellName, kind: "lingering", sourceActorUuid, sourceItemUuid, rank: castRank, dc,
             recipientUuids: [], recipients: [], exposure: [], members: [], declaration, exposurePlan: null, maximumAt: game.time.worldTime + durationSeconds, castRound: clock.round,
-            lanternOutcomes: [], lanternAsked: [] };
+            lanternOutcomes: [], lanternAsked: [], ...(lantern.dismissible ? { dismissal: { authority: "source-actor", scope: "cast", action: "Dismiss" } } : {}) };
         const journal = await this.ongoing.begin(record);
         const data = clone(state(journal));
         const caster = await fromUuid(sourceActorUuid);
-        const [light] = await caster.createEmbeddedDocuments("Item", [{ name: `${spellName} (light)`, type: "effect", img: "icons/svg/light.svg",
-            flags: { [MODULE_ID]: { lanternLight: { castId: record.castId } } },
-            system: { duration: { value: -1, unit: "unlimited", expiry: null, sustained: false }, tokenIcon: { show: false }, rules: [lanternLightRule(radius, lantern.light)] } }]);
-        data.entries.push({ uuid: light.uuid, actorUuid: sourceActorUuid, status: "active", permanent: false });
+        if (lantern.light) {
+            const [light] = await caster.createEmbeddedDocuments("Item", [{ name: `${spellName} (light)`, type: "effect", img: "icons/svg/light.svg",
+                flags: { [MODULE_ID]: { lanternLight: { castId: record.castId } } },
+                system: { duration: { value: -1, unit: "unlimited", expiry: null, sustained: false }, tokenIcon: { show: false }, rules: [lanternLightRule(radius, lantern.light)] } }]);
+            data.entries.push({ uuid: light.uuid, actorUuid: sourceActorUuid, status: "active", permanent: false });
+        }
         const members = await this.lingeringMembership(data) ?? [];
         data.members = members.map(member => member.tokenUuid);
         await this.syncLantern(data, members);
@@ -1249,11 +1370,13 @@ export class OngoingFamilies {
         const caster = await fromUuid(record.sourceActorUuid);
         for (const member of members) {
             const actor = await fromUuid(member.actorUuid);
-            const mode = lanternMode(actor);
+            const mode = lantern.rows ? (actor && actor !== caster && !(lantern.enemiesOnly && caster?.isAllyOf?.(actor)) ? "rows" : null) : lanternMode(actor);
             if (!mode) continue;
             const outcome = record.lanternOutcomes.find(entry => entry.actorUuid === member.actorUuid);
             if (!outcome) {
                 if (record.lanternAsked.includes(member.actorUuid)) continue;
+                // (Immune after an earlier save against this spell: not asked.)
+                if (lantern.immunity && (actor.itemTypes?.effect ?? []).some(effect => !effect.isExpired && effect.flags?.[MODULE_ID]?.spellImmunity?.key === lantern.immunity.key)) continue;
                 record.lanternAsked.push(member.actorUuid);
                 const statistic = lantern.statistic[0].toUpperCase() + lantern.statistic.slice(1);
                 try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: caster }), flags: { [MODULE_ID]: { lanternSave: { castId: record.castId, actorUuid: member.actorUuid } } },
@@ -1261,10 +1384,22 @@ export class OngoingFamilies {
                 catch (error) { console.warn(`${MODULE_ID} | The save card could not be posted.`, error); }
                 continue;
             }
-            if (!["failure", "criticalFailure"].includes(outcome.degree)) continue;
+            const row = mode === "rows" ? lantern.rows[outcome.degree] : null;
+            if (mode === "rows" ? !row : !["failure", "criticalFailure"].includes(outcome.degree)) continue;
             if ((actor.itemTypes?.effect ?? []).some(effect => effect.flags?.[MODULE_ID]?.leaveArea?.castId === record.castId)) continue;
-            const failed = lantern.failed[mode];
-            const source = mode === "living"
+            // (Kept outside the area: given once, never again after it ends — a hostile action, the GM.)
+            record.lanternApplied = Array.isArray(record.lanternApplied) ? record.lanternApplied : [];
+            if (lantern.heldOutside && record.lanternApplied.includes(member.actorUuid)) continue;
+            const failed = mode === "rows" ? null : lantern.failed[mode];
+            const named = condition => `${condition.slug[0].toUpperCase()}${condition.slug.slice(1)}${condition.value ? ` ${condition.value}` : ""}`;
+            const source = mode === "rows"
+                ? { name: `${record.name}: ${row.conditions.length ? row.conditions.map(named).join(", ") : row.label}`, type: "effect", img: row.conditions.length ? "icons/svg/downgrade.svg" : "icons/svg/book.svg",
+                    flags: { [MODULE_ID]: lantern.heldOutside ? { areaLifetime: { castId: record.castId } } : { leaveArea: { castId: record.castId } } },
+                    system: { duration: { value: -1, unit: "unlimited", expiry: null, sustained: false }, tokenIcon: { show: true },
+                        rules: row.conditions.map(condition => ({ key: "GrantItem", uuid: condition.uuid, flag: `lantern${condition.slug.replace(/-([a-z])/g, (_, c) => c.toUpperCase()).replace(/^./, c => c.toUpperCase())}`,
+                            allowDuplicate: true, onDeleteActions: { granter: "cascade", grantee: "cascade" }, ...(condition.value ? { alterations: [{ mode: "override", property: "badge-value", value: condition.value }] } : {}) })),
+                        description: { value: `<p>${escapeHTML(row.label)} against ${escapeHTML(record.name)}${lantern.heldOutside ? " (for the spell's duration)" : ", while within its area"}${row.conditions.length ? `: ${escapeHTML(row.conditions.map(named).join(", "))}` : ""}.</p>${row.notes.map(note => `<p>${escapeHTML(note)}</p>`).join("")}` } } }
+                : mode === "living"
                 ? { name: `${record.name}: half healing`, type: "effect", img: "icons/svg/degen.svg", flags: { [MODULE_ID]: { leaveArea: { castId: record.castId }, halfHealing: { castId: record.castId } } },
                     system: { duration: { value: -1, unit: "unlimited", expiry: null, sustained: false }, tokenIcon: { show: true }, rules: [],
                         description: { value: `<p>While within ${escapeHTML(record.name)}, this creature gains only half the normal benefit from healing effects (the module halves it).</p>` } } }
@@ -1276,6 +1411,9 @@ export class OngoingFamilies {
             const [effect] = await actor.createEmbeddedDocuments("Item", [source]);
             record.entries.push({ uuid: effect.uuid, actorUuid: member.actorUuid, status: "active", permanent: false });
             record.recipientUuids = [...new Set([...(record.recipientUuids ?? []), member.actorUuid])];
+            if (lantern.heldOutside) record.lanternApplied.push(member.actorUuid);
+            // ("The target gains the minion trait and is controlled by you": the caster's players own it while the Effect lasts.)
+            if (row?.minion) await grantMinionControl(effect, actor, record.sourceActorUuid);
         }
     }
     /** A creature's save against the lantern (the card): rolled against the spell DC, kept for the cast, its Effect if inside. */
@@ -1294,6 +1432,15 @@ export class OngoingFamilies {
         const degree = ["criticalFailure", "failure", "success", "criticalSuccess"][roll?.degreeOfSuccess ?? -1];
         if (!degree) throw Error(`${actor.name}'s save wasn't rolled.`);
         record.lanternOutcomes = [...(record.lanternOutcomes ?? []), { actorUuid, degree }];
+        // ("after which they become temporarily immune for 1 day")
+        const immunity = record.declaration.lantern.immunity;
+        if (immunity) {
+            const [marker] = await actor.createEmbeddedDocuments("Item", [{ name: `${record.name}: immune`, type: "effect", img: "icons/svg/aura.svg",
+                flags: { [MODULE_ID]: { spellImmunity: { key: immunity.key } } },
+                system: { description: { value: `<p>Temporarily immune to ${escapeHTML(record.name)}.</p>` }, level: { value: record.rank }, tokenIcon: { show: false },
+                    duration: { value: immunity.value, unit: immunity.unit, expiry: null, sustained: false }, start: { value: game.time.worldTime, initiative: game.combat?.combatant?.initiative ?? null }, rules: [] } }]);
+            record.immunityMarkers = [...(record.immunityMarkers ?? []), marker.uuid];
+        }
         const members = await this.lingeringMembership(record) ?? [];
         await this.syncLantern(record, members);
         await this.ongoing.save(journal, record);
@@ -1382,6 +1529,7 @@ export class OngoingFamilies {
     /** One creature beginning its turn inside: PF2e's Spell Effect with the tradition, if the tradition names it (replacing this cast's earlier one). */
     async applyTurnEffect(record, member) {
         const turnEffect = record.declaration.turnEffect;
+        if (turnEffect.drain) return this.applyDrainTurn(record, member);
         // A damaging aura (Unblinking Flame Ignition): the stated damage, no save, to each other creature starting its turn inside.
         if (turnEffect.damage) {
             const actor = await fromUuid(member.actorUuid);
@@ -1397,6 +1545,8 @@ export class OngoingFamilies {
         if (turnEffect.condition) {
             const actor = await fromUuid(member.actorUuid);
             if (!actor) return { status: "missing" };
+            // (Only that creature's allies, not itself: Fateful Condemnation's mist.)
+            if (turnEffect.alliesOf) { const anchor = await fromUuid(turnEffect.alliesOf); if (!anchor || actor === anchor || !anchor.isAllyOf?.(actor)) return { status: "not-affected", reason: "not an ally" }; }
             const earlier = actor.itemTypes.effect.filter(effect => effect.flags?.[MODULE_ID]?.turnEffectCast === record.castId).map(effect => effect.id);
             if (earlier.length) await actor.deleteEmbeddedDocuments("Item", earlier);
             const condition = turnEffect.condition;
@@ -1546,6 +1696,80 @@ export class OngoingFamilies {
         }
         return results;
     }
+    /**
+     * A living creature starting its turn in the draining centre (Tear the Veil): Drained 1, or one more (to the maximum); one already at the maximum
+     * attempts the death save (incapacitation: a degree better above twice the rank) — on a failure it's at 0 Hit Points and dead (the GM places what it
+     * becomes, its gear in its space).
+     */
+    async applyDrainTurn(record, member) {
+        const drain = record.declaration.turnEffect.drain;
+        const actor = await fromUuid(member.actorUuid);
+        if (!actor) return { status: "missing" };
+        if ((actor.modeOfBeing ?? "living") !== "living") return { status: "not-affected", reason: "not living" };
+        const caster = await fromUuid(record.sourceActorUuid);
+        const drained = Number(actor.getCondition?.("drained")?.value ?? 0);
+        if (drained < drain.max) {
+            if (drained > 0) await actor.increaseCondition("drained");
+            else await actor.increaseCondition("drained", { value: 1 });
+            try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: caster }), content: `<p><strong>${escapeHTML(record.name)}</strong>: ${escapeHTML(actor.name)} starts its turn in the centre: Drained ${drained + 1}.</p>` }); } catch (_) {}
+            return { status: "drained", value: drained + 1 };
+        }
+        const statistic = actor.saves?.[drain.statistic];
+        if (!statistic || !Number.isFinite(Number(record.dc))) throw Error(`${record.name}: ${actor.name}'s ${drain.statistic} save or the spell DC is unavailable.`);
+        const spell = await castSpellFromUuid(record);
+        const roll = await statistic.roll({ dc: { value: Number(record.dc) }, skipDialog: true, extraRollOptions: ["death", "incapacitation"], ...(spell ? { item: spell, origin: caster } : {}) });
+        let degree = Number(roll?.degreeOfSuccess ?? -1);
+        if (degree < 0) throw Error(`${actor.name}'s save wasn't rolled.`);
+        // (Incapacitation: a creature of more than twice the spell's rank uses the next better result.)
+        const incapacitated = Number(actor.level ?? 0) > 2 * Number(record.rank);
+        if (incapacitated) degree = Math.min(3, degree + 1);
+        const failed = degree <= 1;
+        if (failed) {
+            await actor.update({ "system.attributes.hp.temp": 0, "system.attributes.hp.value": 0 });
+            if (!actor.statuses?.has?.("dead")) await actor.toggleStatusEffect?.("dead", { overlay: true, active: true });
+        }
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: caster }),
+            content: `<p><strong>${escapeHTML(record.name)}</strong>: ${escapeHTML(actor.name)} is drained ${drain.max} in the centre: ${escapeHTML(drain.statistic)} save ${["critically fails", "fails", "succeeds", "critically succeeds"][degree]}${incapacitated ? " (incapacitation: one degree better)" : ""}.${failed ? ` It's reduced to 0 Hit Points, crumbles into ash and becomes a ${escapeHTML(drain.becomes)}.` : ""}</p>${failed ? `<p class="pf2e-auto-gm-reminder"><strong>GM:</strong> place the ${escapeHTML(drain.becomes)}; its gear falls in its space.</p>` : ""}` }); } catch (_) {}
+        return { status: failed ? "destroyed" : "saved", degree: ["criticalFailure", "failure", "success", "criticalSuccess"][degree], incapacitated };
+    }
+    /** Each exposed creature takes the area's stated damage (no save). */
+    async applyExposureDamage(record, targets) {
+        const DamageRoll = (CONFIG.Dice?.rolls ?? []).find(candidate => candidate?.name === "DamageRoll");
+        if (!DamageRoll) throw Error("PF2e's damage roll is unavailable.");
+        const exposure = record.declaration.exposureDamage, spell = await castSpellFromUuid(record), caster = await fromUuid(record.sourceActorUuid);
+        const results = [];
+        for (const target of targets) {
+            const actor = actorOf(target);
+            if (!actor) continue;
+            const roll = await new DamageRoll(`${exposure.formula}[${exposure.type}]`).evaluate();
+            try { await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: caster }), flavor: `<strong>${escapeHTML(record.name)}</strong>: ${escapeHTML(actor.name)} is exposed (no save)`,
+                flags: { [MODULE_ID]: { kind: "exposure-damage", castId: record.castId, actorUuid: actor.uuid } } }); } catch (_) {}
+            const receipt = await applyDamageWithReceipt(actor, { damage: roll, token: target.documentName === "Token" ? target : null, item: spell ?? undefined, rollOptions: new Set(), skipIWR: false }, randomID());
+            results.push({ actorUuid: actor.uuid, total: roll.total, healthLost: receipt?.hpLost ?? null });
+        }
+        return results;
+    }
+    /** The exposed creatures that are unconscious take the sleepers' damage (at the cast rank); it doesn't wake them. */
+    async applySleeperDamage(record, targets) {
+        const DamageRoll = (CONFIG.Dice?.rolls ?? []).find(candidate => candidate?.name === "DamageRoll");
+        if (!DamageRoll) throw Error("PF2e's damage roll is unavailable.");
+        const sleeper = record.declaration.sleeperDamage, spell = await castSpellFromUuid(record), caster = await fromUuid(record.sourceActorUuid);
+        const steps = sleeper.step ? Math.max(0, Math.floor((Number(record.rank) - Number(sleeper.baseRank)) / sleeper.step.interval)) : 0;
+        const results = [];
+        for (const target of targets) {
+            const actor = actorOf(target);
+            if (!actor?.hasCondition?.(sleeper.slug)) continue;
+            const roll = await new DamageRoll(`${sleeper.dice + steps * (sleeper.step?.dice ?? 0)}d${sleeper.faces}[${sleeper.type}]`).evaluate();
+            try { await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: caster }), flavor: `<strong>${escapeHTML(record.name)}</strong>: ${escapeHTML(actor.name)} is unconscious in the area (this doesn't wake it)`,
+                flags: { [MODULE_ID]: { kind: "sleeper-damage", castId: record.castId, actorUuid: actor.uuid } } }); } catch (_) {}
+            const token = target.documentName === "Token" ? target : null;
+            const receipt = await applyDamageWithReceipt(actor, { damage: roll, token, item: spell ?? undefined, rollOptions: new Set(), skipIWR: false }, randomID());
+            // (PF2e wakes a creature that takes damage: this damage doesn't.)
+            if (!actor.hasCondition?.(sleeper.slug) && Number(actor.system?.attributes?.hp?.value ?? 0) > 0) await actor.increaseCondition?.(sleeper.slug);
+            results.push({ actorUuid: actor.uuid, formula: roll.formula, total: roll.total, healthLost: receipt?.hpLost ?? null });
+        }
+        return results;
+    }
     async applyHazardDamage(record, member, event) {
         const actor = await fromUuid(member.actorUuid);
         const token = await fromUuid(member.tokenUuid);
@@ -1561,15 +1785,110 @@ export class OngoingFamilies {
             else return { total: 0, skipped: true };
         }
         if (hazard.transfer) return this.transferHitPoints(record, actor);
+        // (Vibrant Vibrato: one save per creature for the casting, kept; its row's damage at the end of each of its turns inside.)
+        if (hazard.remembered) {
+            // (A list, not a map: actor UUIDs hold dots, which flag keys would expand.)
+            record.remembered = Array.isArray(record.remembered) ? record.remembered : [];
+            const caster = await fromUuid(record.sourceActorUuid);
+            if (!caster || actor === caster) return { total: 0, skipped: true };
+            let degree = record.remembered.find(entry => entry.actorUuid === actor.uuid)?.degree ?? null;
+            if (!degree) {
+                const roll = await actor.saves?.[hazard.remembered.statistic]?.roll({ dc: { value: Number(hazard.remembered.dc) }, item: spell ?? undefined, skipDialog: true });
+                const index = Number(roll?.degreeOfSuccess ?? -1);
+                if (index < 0) throw Error(`${actor.name}'s save wasn't rolled.`);
+                degree = SAVE_DEGREES[3 - index];
+                record.remembered.push({ actorUuid: actor.uuid, degree });
+                if (event !== "turn-end") return { total: 0, status: degree };
+            }
+            const row = hazard.remembered.rows[degree];
+            if (event !== "turn-end" || !row?.turnEnd) return { total: 0, status: degree };
+            const rolled = await new DamageRoll(`{${row.turnEnd.formula}[${row.turnEnd.type}]}`).evaluate();
+            try { await rolled.toMessage({ speaker: ChatMessage.getSpeaker({ actor: caster }), flavor: `<strong>${escapeHTML(record.name)}</strong>: ${escapeHTML(actor.name)} ends its turn in the area` }); } catch (_) {}
+            const receipt = await applyDamageWithReceipt(actor, { damage: rolled, token: token ?? undefined, item: spell ?? undefined, rollOptions: new Set(), skipIWR: false }, randomID());
+            return { total: receipt.damage, status: degree };
+        }
+        // (A form's saving aura — Nature Incarnate's Green Caress: each enemy without the excepted trait saves; its row's condition for the stated rounds.)
+        if (hazard.conditionSave) {
+            const save = hazard.conditionSave, caster = await fromUuid(record.sourceActorUuid);
+            if (!caster || actor === caster || (save.enemiesOnly && (!caster.isAllyOf || caster.isAllyOf(actor)))) return { total: 0, skipped: true };
+            const traits = actor.traits ?? new Set(actor.system?.traits?.value ?? []);
+            if (save.exceptTrait && traits.has?.(save.exceptTrait)) return { total: 0, skipped: true };
+            // ("this is a mental, visual effect": a creature immune to one of them is unaffected.)
+            if ((save.traits ?? []).some(trait => (actor.attributes?.immunities ?? []).some(immunity => immunity.type === trait))) return { total: 0, skipped: true, immune: true };
+            // ("it is then temporarily immune to this dazzling effect for 10 minutes": not again while the marker lasts.)
+            if (save.immunity && (actor.itemTypes?.effect ?? []).some(effect => !effect.isExpired && effect.flags?.[MODULE_ID]?.spellImmunity?.key === save.immunity.key)) return { total: 0, skipped: true, immune: true };
+            const roll = await actor.saves?.[save.statistic]?.roll({ dc: { value: Number(save.dc) }, item: spell ?? undefined, skipDialog: true, ...(save.traits?.length ? { traits: [...save.traits] } : {}) });
+            const degree = Number(roll?.degreeOfSuccess ?? -1);
+            if (degree < 0) throw Error(`${actor.name}'s save wasn't rolled.`);
+            const row = degree === 0 ? save.rows.criticalFailure : degree === 1 ? save.rows.failure : null;
+            // (A row's conditions: one — Green Caress's Clumsy — or several — Blanket of Stars' Confused and Dazzled — for its rounds.)
+            const conditions = row ? row.conditions ?? [{ uuid: row.uuid, slug: row.slug, value: row.value }] : [];
+            if (save.immunity) await actor.createEmbeddedDocuments("Item", [{ name: `${record.name}: Temporary immunity`, type: "effect", img: "icons/svg/shield.svg",
+                flags: { [MODULE_ID]: { spellImmunity: { key: save.immunity.key } } },
+                system: { duration: { value: Math.round(Number(save.immunity.seconds) / 60), unit: "minutes", expiry: "turn-start", sustained: false }, rules: [],
+                    start: { value: game.time.worldTime, initiative: game.combat?.combatant?.initiative ?? null }, description: { value: `<p>Temporarily immune to ${escapeHTML(record.name)}'s save.</p>` } } }]);
+            if (row?.direct) {
+                // (Conditions as such — Colossal Summon's Megalophobia: "frightened 2 (frightened 3 and fleeing …)" — frightened decaying as PF2e does; one "while" another
+                // lasts as an Effect that goes with it.)
+                for (const entry of conditions) {
+                    if (entry.whileCondition) {
+                        await actor.createEmbeddedDocuments("Item", [{ name: `${record.name}: ${entry.slug} while ${entry.whileCondition}`, type: "effect", img: "icons/svg/downgrade.svg",
+                            flags: { [MODULE_ID]: { spellshapeWhileCondition: entry.whileCondition, runtime: { schema: 1, kind: "aura-condition", castInstanceId: record.castId, sourceActorUuid: record.sourceActorUuid, sourceItemName: record.name } } },
+                            system: { duration: { value: -1, unit: "unlimited", expiry: null, sustained: false }, tokenIcon: { show: true }, description: { value: `<p>${escapeHTML(entry.slug)} while ${escapeHTML(entry.whileCondition)}, from <strong>${escapeHTML(record.name)}</strong>.</p>` },
+                                rules: [{ key: "GrantItem", uuid: entry.uuid, allowDuplicate: true, onDeleteActions: { grantee: "cascade" } }] } }]);
+                    } else if (entry.value) {
+                        // (PF2e adds the value to an existing condition: raised to the row's value, never lowered.)
+                        const current = Number(actor.getCondition?.(entry.slug)?.value ?? 0);
+                        if (current < Number(entry.value)) await actor.increaseCondition(entry.slug, { value: Number(entry.value) - current });
+                    } else if (!actor.hasCondition?.(entry.slug)) await actor.increaseCondition(entry.slug);
+                }
+                return { total: 0, status: conditions.map(entry => `${entry.slug} ${entry.value ?? ""}`.trim()).join(", ") };
+            }
+            if (row && row.expiry === "leave-area") {
+                // ("… for as long as it remains in the area": an Effect the area removes when the creature leaves it.)
+                const name = conditions.map(entry => `${entry.slug[0].toUpperCase()}${entry.slug.slice(1)}${entry.value ? ` ${entry.value}` : ""}`).join(" and ");
+                await actor.createEmbeddedDocuments("Item", [{ name: `${record.name}: ${name}`, type: "effect", img: "icons/svg/downgrade.svg",
+                    flags: { [MODULE_ID]: { leaveArea: { castId: record.castId, slot: 99 }, runtime: { schema: 1, kind: "aura-condition", castInstanceId: record.castId, sourceActorUuid: record.sourceActorUuid, sourceItemName: record.name } } },
+                    system: { duration: { value: -1, unit: "unlimited", expiry: null, sustained: false }, tokenIcon: { show: true }, description: { value: `<p>${escapeHTML(name)} while in <strong>${escapeHTML(record.name)}</strong>.</p>` },
+                        rules: conditions.map((entry, index) => ({ key: "GrantItem", uuid: entry.uuid, flag: `auraCondition${index}`, allowDuplicate: true, onDeleteActions: { grantee: "cascade" } })) } }]);
+                record.recipientUuids = [...new Set([...(record.recipientUuids ?? []), actor.uuid])];
+                return { total: 0, status: name };
+            }
+            if (row) {
+                const name = conditions.map(entry => `${entry.slug[0].toUpperCase()}${entry.slug.slice(1)}${entry.value ? ` ${entry.value}` : ""}`).join(" and ");
+                await actor.createEmbeddedDocuments("Item", [{ name: `${record.name}: ${name}`, type: "effect", img: "icons/svg/downgrade.svg",
+                    flags: { [MODULE_ID]: { runtime: { schema: 1, kind: "aura-condition", castInstanceId: record.castId, sourceActorUuid: record.sourceActorUuid, sourceItemName: record.name } } },
+                    system: { duration: { value: Number(row.rounds), unit: "rounds", expiry: row.expiry === "turn-end" ? "turn-end" : "turn-start", sustained: false },
+                        start: { value: game.time.worldTime, initiative: game.combat?.combatant?.initiative ?? null },
+                        tokenIcon: { show: true }, description: { value: `<p>${escapeHTML(name)} from <strong>${escapeHTML(record.name)}</strong>.</p>` },
+                        rules: conditions.map((entry, index) => ({ key: "GrantItem", uuid: entry.uuid, flag: `auraCondition${index}`, allowDuplicate: true, onDeleteActions: { grantee: "cascade" },
+                            ...(entry.value ? { alterations: [{ mode: "override", property: "badge-value", value: entry.value }] } : {}) })) } }]);
+            }
+            return { total: 0, status: row ? conditions.map(entry => `${entry.slug} ${entry.value ?? ""}`.trim()).join(", ") : "unaffected" };
+        }
+        // (Shadow Raid: only the caster's enemies.)
+        if (hazard.enemiesOnly) { const caster = await fromUuid(record.sourceActorUuid); if (!caster || actor === caster || caster.isAllyOf?.(actor)) return { total: 0, skipped: true }; }
+        // (… and half for a creature that disbelieved it.)
+        const disbelieved = hazard.halvedOnDisbelief && record.declaration?.disbelief?.key && (actor.itemTypes?.effect ?? []).some(effect => !effect.isExpired && effect.flags?.[MODULE_ID]?.spellImmunity?.key === record.declaration.disbelief.key);
         // ("A living creature …": Tree of Life and Death's emanations.)
         if (hazard.living && !livingMode(actor)) return { total: 0, skipped: true };
+        // (Rainbow Fumarole's "All": the caster chooses the color for each affected creature — its damage and added effect.)
+        if (hazard.colors) {
+            const entries = Object.values(hazard.colors);
+            const picked = await foundry.applications.api.DialogV2.wait({ window: { title: `${record.name}: ${actor.name}` }, rejectClose: false,
+                content: `<p>Choose the color for ${escapeHTML(actor.name)}.</p>`,
+                buttons: entries.map((entry, index) => ({ action: `color-${index}`, label: entry.name, default: index === 0, callback: () => index })) });
+            const color = entries[Number.isInteger(picked) ? picked : 0];
+            hazard = { ...hazard, colors: null, formula: color.formula, failureEffect: color.effect ?? null, label: `${color.name}` };
+        }
         // (A basic save against the area's damage: the creature's save first, PF2e's multiplier for its result.)
-        let basicMultiplier = 1;
+        let basicMultiplier = disbelieved ? 0.5 : 1, basicDegree = null;
         if (hazard.basic) {
             const roll = await actor.saves?.[hazard.basic.statistic]?.roll({ dc: { value: Number(hazard.basic.dc) }, item: spell ?? undefined, extraRollOptions: ["damaging-effect"], skipDialog: true });
             const degree = Number(roll?.degreeOfSuccess ?? -1);
             if (degree < 0) throw Error(`${actor.name}'s save wasn't rolled.`);
             basicMultiplier = [2, 1, 0.5, 0][degree];
+            basicDegree = degree;
             if (!basicMultiplier) return { total: 0, saved: true };
         }
         // Blossoming Gore: a bleeding creature ending its turn in the field — its save; Drained by the result; the thralls created the GM's.
@@ -1581,7 +1900,9 @@ export class OngoingFamilies {
             const degree = Number(roll?.degreeOfSuccess ?? -1);
             if (degree < 0) throw Error(`${actor.name}'s save wasn't rolled.`);
             const row = degree === 0 ? gore.rows.criticalFailure : degree === 1 ? gore.rows.failure : degree === 2 ? gore.rows.success : null;
-            if (row?.value && (actor.getCondition?.("drained")?.value ?? 0) < row.value) await actor.increaseCondition("drained", { value: row.value });
+            // (PF2e adds the value to an existing condition: raise it by the difference.)
+            const drainedNow = Number(actor.getCondition?.("drained")?.value ?? 0);
+            if (row?.value && drainedNow < row.value) await actor.increaseCondition("drained", { value: row.value - drainedNow });
             // (The thralls created: tokens by the thrall rules in the free squares adjacent to the field, outside it.)
             let made = null;
             if (row?.thralls) {
@@ -1624,6 +1945,8 @@ export class OngoingFamilies {
                     description: { value: `<p>${escapeHTML(result.name)} by the wall for ${result.rounds} round or until it Escapes (DC ${escapeHTML(arms.dc)}).</p>` }, rules: [{ key: "GrantItem", uuid: result.uuid, onDeleteActions: { grantee: "restrict" } }] } }]);
             return { total: 0, status: result ? result.name.toLowerCase() : "unaffected" };
         }
+        // Ravenous Darkness: a creature ending its turn inside — the teeth's damage if attached, else their attack.
+        if (hazard.teeth) return this.teethBite(record, actor, token, spell);
         // Black Tentacles: a creature ending its turn inside — the held damage if the tentacles hold it, else their attempt to grab it.
         if (hazard.tentacles) {
             if (!spell) throw Error(`${record.name}: the spell is unavailable.`);
@@ -1655,8 +1978,10 @@ export class OngoingFamilies {
                 const roll = await actor.saves?.[hazard.bloom.statistic]?.roll({ dc: { value: Number(hazard.bloom.dc) }, item: spell ?? undefined, skipDialog: true });
                 const degree = Number(roll?.degreeOfSuccess ?? -1);
                 if (degree < 0) throw Error(`${actor.name}'s save wasn't rolled.`);
-                if (degree <= 1 && Number(actor.getCondition?.(hazard.bloom.condition)?.value ?? 0) < hazard.bloom.value)
-                    await actor.increaseCondition(hazard.bloom.condition, { value: hazard.bloom.value });
+                // (PF2e adds the value to an existing condition: raise it by the difference.)
+                const bloomNow = Number(actor.getCondition?.(hazard.bloom.condition)?.value ?? 0);
+                if (degree <= 1 && bloomNow < hazard.bloom.value)
+                    await actor.increaseCondition(hazard.bloom.condition, { value: hazard.bloom.value - bloomNow });
                 return { total: 0, saved: degree >= 2 };
             }
             // ("standing on the ground": not flying above it.)
@@ -1691,13 +2016,94 @@ export class OngoingFamilies {
         const doubled = hazard.doubleTrait && (actor.traits?.has?.(hazard.doubleTrait) ?? (actor.system?.traits?.value ?? []).includes(hazard.doubleTrait));
         const roll = doubled ? rolled.alter(2, 0) : rolled;
 
-        const why = event === "enter" ? "entered" : event === "turn-start" ? "started its turn in" : event === "source-turn-end" ? "was in" : "ended its turn in";
+        const why = event === "enter" ? "entered" : event === "turn-start" ? "started its turn in" : ["source-turn-end", "pulse"].includes(event) ? "was in" : "ended its turn in";
         try { await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: await fromUuid(record.sourceActorUuid) }),
-            flavor: `<strong>${escapeHTML(record.name)}</strong>: ${escapeHTML(actor.name)} ${why} the area (${escapeHTML(hazard.label)}${doubled ? `, doubled: ${escapeHTML(hazard.doubleTrait)} trait` : ""}), no save`,
+            flavor: `<strong>${escapeHTML(record.name)}</strong>: ${escapeHTML(actor.name)} ${why} the area (${escapeHTML(hazard.label)}${doubled ? `, doubled: ${escapeHTML(hazard.doubleTrait)} trait` : ""}), ${hazard.basic ? `basic ${escapeHTML(hazard.basic.statistic)} save (${["critical failure", "failure", "success"][basicDegree] ?? ""})` : "no save"}${disbelieved ? " (disbelieved: half)" : ""}`,
             flags: { [MODULE_ID]: { kind: "ground-hazard", castId: record.castId, actorUuid: actor.uuid } } }); }
         catch (error) { console.warn(`${MODULE_ID} | The hazard damage message could not be posted.`, error); }
         const receipt = await applyDamageWithReceipt(actor, { damage: basicMultiplier === 1 ? roll : roll.alter(basicMultiplier, 0), token: token ?? undefined, item: spell ?? undefined, rollOptions: new Set(), skipIWR: false }, randomID());
-        return { total: roll.total, formula: roll.formula, receipt };
+        // ("on a failure, takes any added effect listed": the color's conditions — for the stated rounds through an Effect — or its push for the GM.)
+        const added = hazard.failureEffect && basicDegree !== null && basicDegree <= 1 ? await this.hazardFailureEffect(record, actor, hazard.failureEffect, spell) : null;
+        // (What the area does to every creature it damages, whatever the save — Patron's Apocalypse's bleed or slowing frost.)
+        const always = hazard.alwaysEffect ? await this.hazardFailureEffect(record, actor, hazard.alwaysEffect, spell) : null;
+        return { total: roll.total, formula: roll.formula, receipt, ...(basicDegree !== null ? { degree: basicDegree } : {}), ...(added ? { added } : {}), ...(always ? { always } : {}) };
+    }
+    /** The teeth on a creature in the area: attached, they deal their smaller damage; else the caster's spell attack against its save DC — on a success,
+     *  the bite's damage and the teeth attached (an Effect: the Speed penalty, no Step) until it leaves the area or the spell ends. */
+    async teethBite(record, actor, token, spell, { degree = null } = {}) {
+        const teeth = record.declaration.hazardDamage.teeth;
+        const DamageRoll = (CONFIG.Dice?.rolls ?? []).find(candidate => candidate?.name === "DamageRoll");
+        if (!spell || !DamageRoll) throw Error(`${record.name}: the spell or PF2e's damage roll is unavailable.`);
+        const attached = (actor.itemTypes?.effect ?? []).some(effect => effect.flags?.[MODULE_ID]?.leaveArea?.castId === record.castId && effect.flags[MODULE_ID].teeth);
+        const speaker = ChatMessage.getSpeaker({ actor: await fromUuid(record.sourceActorUuid) });
+        if (attached) {
+            const rolled = await new DamageRoll(`${teeth.gnaw}[${teeth.gnawType}]`).evaluate();
+            try { await rolled.toMessage({ speaker, flavor: `<strong>${escapeHTML(record.name)}</strong>: the teeth gnaw ${escapeHTML(actor.name)}` }); } catch (_) {}
+            const receipt = await applyDamageWithReceipt(actor, { damage: rolled, token: token ?? undefined, item: spell, rollOptions: new Set(), skipIWR: false }, randomID());
+            return { total: receipt.damage, status: "gnawed" };
+        }
+        const attack = await spellAttack(spell, actor, { against: teeth.statistic, degree, label: "the teeth" });
+        if (!["success", "criticalSuccess"].includes(attack.degree)) return { total: 0, status: "missed" };
+        const rolled = await new DamageRoll(`${teeth.formula}[${teeth.type}]`).evaluate();
+        try { await rolled.toMessage({ speaker, flavor: `<strong>${escapeHTML(record.name)}</strong>: the teeth attach to ${escapeHTML(actor.name)}` }); } catch (_) {}
+        const receipt = await applyDamageWithReceipt(actor, { damage: rolled, token: token ?? undefined, item: spell, rollOptions: new Set(), skipIWR: false }, randomID());
+        await actor.createEmbeddedDocuments("Item", [{ name: `${record.name}: teeth attached`, type: "effect", img: spell.img ?? "icons/svg/teeth.svg",
+            flags: { [MODULE_ID]: { leaveArea: { castId: record.castId }, teeth: true } },
+            system: { duration: { value: -1, unit: "unlimited", expiry: null, sustained: false }, start: { value: game.time.worldTime, initiative: game.combat?.combatant?.initiative ?? null }, tokenIcon: { show: true },
+                rules: [{ key: "FlatModifier", selector: "all-speeds", type: "circumstance", value: -teeth.speedPenalty, label: `${record.name}: teeth` }],
+                description: { value: `<p>The teeth are attached: a –${teeth.speedPenalty}-foot circumstance penalty to its Speeds, and it can't Step. They let go when it leaves the area.</p>` } } }]);
+        return { total: receipt.damage, status: "attached" };
+    }
+    async teethAttemptFor(castId, token, { degree = null } = {}) {
+        const journal = this.ongoing.find(castId);
+        if (!journal) throw Error("The spell's area has ended.");
+        const record = clone(state(journal));
+        const doc = token.document ?? token;
+        return this.teethBite(record, doc.actor, doc, await castSpellFromUuid(record), { degree });
+    }
+    async hazardFailureEffect(record, actor, effect, spell) {
+        const added = [];
+        if (effect.rounds && effect.conditions?.length) {
+            const [made] = await actor.createEmbeddedDocuments("Item", [{ name: `${record.name}: ${effect.conditions.map(entry => entry.slug + (entry.value ? ` ${entry.value}` : "")).join(", ")}`, type: "effect", img: spell?.img ?? "icons/svg/aura.svg",
+                flags: { [MODULE_ID]: { runtime: { schema: 1, kind: "lingering", castInstanceId: record.castId, sourceActorUuid: record.sourceActorUuid, sourceItemUuid: record.sourceItemUuid, sourceItemName: record.name } } },
+                system: { duration: { value: effect.rounds, unit: "rounds", expiry: "turn-start", sustained: false }, start: { value: game.time.worldTime, initiative: game.combat?.combatant?.initiative ?? null },
+                    rules: effect.conditions.map(entry => ({ key: "GrantItem", uuid: entry.uuid, onDeleteActions: { grantee: "restrict" },
+                        ...(entry.value ? { alterations: [{ mode: "override", property: "badge-value", value: entry.value }] } : {}) })) } }]);
+            added.push(made?.uuid ?? null);
+        } else for (const entry of effect.conditions ?? []) {
+            const current = Number(actor.getCondition?.(entry.slug)?.value ?? 0);
+            // (PF2e adds the value to an existing condition: the difference raises it to the stated value.)
+            if (!actor.hasCondition?.(entry.slug) || (entry.value && current < entry.value)) await actor.increaseCondition(entry.slug, entry.value ? { value: entry.value - current } : {});
+            added.push(entry.slug);
+        }
+        // (A rule for some rounds — "a –10 foot status penalty to their speeds for 1 round".)
+        if (effect.rules?.length) {
+            const [made] = await actor.createEmbeddedDocuments("Item", [{ name: `${record.name}: ${effect.label ?? "the area"}`, type: "effect", img: spell?.img ?? "icons/svg/aura.svg",
+                flags: { [MODULE_ID]: { runtime: { schema: 1, kind: "lingering", castInstanceId: record.castId, sourceActorUuid: record.sourceActorUuid, sourceItemUuid: record.sourceItemUuid, sourceItemName: record.name } } },
+                system: { duration: { value: Number(effect.rounds ?? 1), unit: "rounds", expiry: "turn-start", sustained: false }, start: { value: game.time.worldTime, initiative: game.combat?.combatant?.initiative ?? null },
+                    rules: clone(effect.rules) } }]);
+            added.push(made?.uuid ?? null);
+        }
+        // (Persistent damage — "10 persistent bleed damage".)
+        if (effect.persistent) {
+            const DamageRoll = (CONFIG.Dice?.rolls ?? []).find(candidate => candidate?.name === "DamageRoll");
+            const roll = await new DamageRoll(`(${effect.persistent.formula})[persistent,${effect.persistent.type}]`).evaluate();
+            const token = actor.getActiveTokens?.(true, true)?.[0] ?? null;
+            await applyDamageWithReceipt(actor, { damage: roll, token: token ?? undefined, item: spell ?? undefined, rollOptions: new Set(), skipIWR: false }, randomID());
+            added.push(`${effect.persistent.formula} persistent ${effect.persistent.type}`);
+        }
+        if (effect.push) {
+            // (Pushed away from the area — the nearest point of its wall or shape — by the module; never ending in another creature's space.)
+            const token = actor.getActiveTokens?.(true, true)?.[0] ?? null;
+            const region = record.regionUuid ? await fromUuid(record.regionUuid).catch(() => null) : null;
+            const here = token ? { x: token.x + Number(token.width ?? 1) * canvas.grid.size / 2, y: token.y + Number(token.height ?? 1) * canvas.grid.size / 2 } : null;
+            const point = region && here ? nearestRegionPoint(region, here) : null;
+            const moved = point && token ? await forcedMove(token, { point, direction: "away", feet: Number(effect.push), reason: record.name }).catch(() => null) : null;
+            if (!moved?.moved) try { await ChatMessage.create({ whisper: game.users.filter(user => user.isGM).map(user => user.id),
+                content: `<p class="pf2e-auto-gm-reminder"><strong>${escapeHTML(record.name)}:</strong> ${escapeHTML(actor.name)} is pushed ${effect.push} feet (move its token).</p>` }); } catch (_) {}
+            added.push(`push ${effect.push}${moved?.moved ? " (moved)" : ""}`);
+        }
+        return added;
     }
     /**
      * "All creatures within the area become concealed, and creatures outside are
@@ -1730,7 +2136,27 @@ export class OngoingFamilies {
                 // (The grasping hands hold "until it Escapes" — or until the spell ends.)
                 || (inside === null && record.declaration?.heldDamage && effect.flags?.[MODULE_ID]?.outcomeEffect?.sourceItemUuid === record.sourceItemUuid
                     && (effect.flags[MODULE_ID].outcomeEffect.conditions ?? []).some(condition => record.declaration.heldDamage.entries.some(entry => entry.slug === condition.slug)))).map(effect => effect.id);
-            if (stale.length) await actor.deleteEmbeddedDocuments("Item", stale, { [MODULE_ID]: { ongoingCleanup: true, reason: "left-area" } });
+            // ("… until they leave the area and for 1 round after": on leaving, the note runs that many rounds more instead.)
+            const lingering = inside === null ? [] : (actor.itemTypes?.effect ?? []).filter(effect => stale.includes(effect.id) && Number(effect.flags?.[MODULE_ID]?.leaveArea?.afterRounds) > 0);
+            const replaced = [];
+            for (const effect of lingering) {
+                const duration = { value: Number(effect.flags[MODULE_ID].leaveArea.afterRounds), unit: "rounds", expiry: "turn-end", sustained: false };
+                const start = { value: game.time.worldTime, initiative: game.combat?.combatant?.initiative ?? null };
+                // (Other rules for those rounds — "stupefied 1 for 1 round after": a fresh Effect holding them, the old one and what it granted removed.)
+                const afterRules = effect.flags[MODULE_ID].leaveArea.afterRules;
+                if (Array.isArray(afterRules) && afterRules.length) {
+                    const source = effect.toObject();
+                    delete source._id;
+                    delete source.flags[MODULE_ID].leaveArea;
+                    delete source.flags.pf2e?.itemGrants;
+                    await actor.createEmbeddedDocuments("Item", [{ ...source, system: { ...source.system, duration, start, rules: clone(afterRules) } }]);
+                    replaced.push(effect.id);
+                    continue;
+                }
+                await effect.update({ "system.duration": duration, "system.start": start, [`flags.${MODULE_ID}.-=leaveArea`]: null });
+            }
+            const gone = stale.filter(id => replaced.includes(id) || !lingering.some(effect => effect.id === id));
+            if (gone.length) await actor.deleteEmbeddedDocuments("Item", gone, { [MODULE_ID]: { ongoingCleanup: true, reason: "left-area" } });
         }
     }
     async syncLingeringConcealment(record, members) {
@@ -1776,8 +2202,10 @@ export class OngoingFamilies {
         if (!record.declaration?.memberRules?.length || record.declaration.concealment) return;
         // (Divine Aura: the caster's allies inside, not the caster or its enemies.)
         const caster = record.declaration.memberAllies ? await fromUuid(record.sourceActorUuid) : null;
-        const allied = async member => { const actor = await fromUuid(member.actorUuid); return !!actor && actor !== caster && !!caster?.isAllyOf?.(actor); };
-        const kept = record.declaration.memberAllies ? (await Promise.all(members.map(async member => (await allied(member)) ? member : null))).filter(Boolean) : members;
+        // (Cosmic Glow: the caster too. Manifest Wicket Dominion: the caster alone.)
+        const allied = async member => { const actor = await fromUuid(member.actorUuid); return !!actor && (actor === caster ? record.declaration.memberCaster === true : !record.declaration.memberCasterOnly && !!caster?.isAllyOf?.(actor)); };
+        const kept = (record.declaration.memberAllies ? (await Promise.all(members.map(async member => (await allied(member)) ? member : null))).filter(Boolean) : members)
+            .filter(member => !(record.declaration.excludeTokenUuids ?? []).includes(member.tokenUuid));
         const inside = new Set(kept.map(member => member.actorUuid));
         record.memberEffects = Array.isArray(record.memberEffects) ? record.memberEffects : [];
         for (const { actorUuid, effectUuid } of record.memberEffects.filter(held => !inside.has(held.actorUuid))) {
@@ -1798,6 +2226,33 @@ export class OngoingFamilies {
                     rules: clone(record.declaration.memberRules).map(rule => ({ ...rule, ...(rule.key === "FlatModifier" ? { label: record.name } : {}) })) } }]);
             record.memberEffects.push({ actorUuid, effectUuid: effect.uuid });
             record.entries.push({ uuid: effect.uuid, actorUuid, status: "active", permanent: false });
+        }
+    }
+    /** Divine Eclipse: each blessed creature holds the module's Effect (its light and fast healing) while it's inside the caster's emanation. */
+    async syncBlessed(record) {
+        const blessed = record.declaration?.blessed;
+        if (!blessed?.tokenUuids?.length) return;
+        const casterToken = (await fromUuid(record.sourceActorUuid))?.getActiveTokens?.()?.[0]?.document;
+        record.blessedEffects = Array.isArray(record.blessedEffects) ? record.blessedEffects : [];
+        for (const uuid of blessed.tokenUuids) {
+            const token = await fromUuid(uuid);
+            if (!token?.actor) continue;
+            const inside = !!casterToken && (token.id === casterToken.id || tokenDistance(casterToken, token) <= Number(record.declaration.area.value));
+            const held = record.blessedEffects.find(entry => entry.actorUuid === token.actor.uuid);
+            if (!inside && held) {
+                const effect = await fromUuid(held.effectUuid);
+                if (effect) await effect.delete({ [MODULE_ID]: { ongoingCleanup: true, reason: "left-area" } });
+                record.blessedEffects = record.blessedEffects.filter(entry => entry !== held);
+                const entry = record.entries.find(candidate => candidate.uuid === held.effectUuid);
+                if (entry) { entry.status = "ended"; entry.reason = "left-area"; }
+            } else if (inside && !held) {
+                const template = await loadNativeEffectTemplate(blessed.effect.uuid);
+                if (!template || !blessingMatches(template, { bright: blessed.bright, dim: blessed.dim, healing: Number(record.rank), step: 1, rank: Number(record.rank) })) throw Error(`${record.name}: the module's Effect no longer gives the blessing's light and fast healing.`);
+                const effect = await createNativeEffect(token.actor, prepareNativeEffectSource(template, { castInstanceId: record.castId, castRank: record.rank, sourceActorUuid: record.sourceActorUuid,
+                    sourceItemUuid: record.sourceItemUuid, sourceItemName: record.name, resolutionKind: "lingering-blessing", targetActorUuid: token.actor.uuid }));
+                record.blessedEffects.push({ actorUuid: token.actor.uuid, effectUuid: effect.uuid });
+                record.entries.push({ uuid: effect.uuid, actorUuid: token.actor.uuid, status: "active", permanent: false });
+            }
         }
     }
     async syncHealingWatch(record, members) {
@@ -1893,27 +2348,34 @@ export class OngoingFamilies {
         record.rowTerrainHolders = (record.rowTerrainHolders ?? []).filter(entry => entry !== actorUuid);
     }
     async syncMemberEffect(record, members) {
-        const member = record.declaration?.memberEffect;
-        if (!member) return;
+        // (One Effect for the area's members, or several in their own slots — Musical Shift's key for enemies, time for allies.)
+        const entries = [record.declaration?.memberEffect, ...(record.declaration?.memberEffects ?? [])];
+        for (const [slot, member] of entries.entries()) if (member) await this.syncOneMemberEffect(record, members, member, slot);
+    }
+    async syncOneMemberEffect(record, members, member, slot) {
         let template = null;
+        const sourceCaster = member.enemies ? await fromUuid(record.sourceActorUuid) : null;
         // "You and your allies … while in the area": the caster (at the emanation's centre) and its allies inside.
-        const caster = member.allies ? await fromUuid(record.sourceActorUuid) : null;
+        // (Or another creature's — Fateful Condemnation's condemned target and its allies: `alliesOf`.)
+        const anchorUuid = member.alliesOf ?? record.sourceActorUuid;
+        const caster = member.allies ? await fromUuid(anchorUuid) : null;
         // (In a placed area the caster too only while inside: Personal Runewell.)
-        const casterIn = record.declaration.centre === "caster" || members.some(entry => entry.actorUuid === record.sourceActorUuid);
-        const candidates = member.allies ? [...(member.excludeCaster || !casterIn ? [] : [{ actorUuid: record.sourceActorUuid }]), ...members.filter(entry => entry.actorUuid !== record.sourceActorUuid)] : members;
+        const casterIn = record.declaration.centre === "caster" || members.some(entry => entry.actorUuid === anchorUuid);
+        const candidates = member.allies ? [...(member.excludeCaster || !casterIn ? [] : [{ actorUuid: anchorUuid }]), ...members.filter(entry => entry.actorUuid !== anchorUuid)] : members;
         for (const { actorUuid } of candidates) {
             const actor = await fromUuid(actorUuid);
-            if (member.all ? !actor : member.allies ? !(actor && (actor === caster || caster?.isAllyOf?.(actor))) : !actor?.traits?.has?.(member.trait)) continue;
+            if (member.all ? !actor : member.allies ? !(actor && (actor === caster || caster?.isAllyOf?.(actor)))
+                : member.enemies ? !(actor && sourceCaster && actor !== sourceCaster && !sourceCaster.isAllyOf?.(actor)) : !actor?.traits?.has?.(member.trait)) continue;
             // (Radiant Heart of Devotion: only the creatures on the "good" side.)
             if (member.sides && (await this.radiantSide(record, actor)) !== "good") continue;
-            if ((actor.itemTypes?.effect ?? []).some(effect => effect.flags?.[MODULE_ID]?.leaveArea?.castId === record.castId)) continue;
+            if ((actor.itemTypes?.effect ?? []).some(effect => effect.flags?.[MODULE_ID]?.leaveArea?.castId === record.castId && (effect.flags[MODULE_ID].leaveArea.slot ?? 0) === slot)) continue;
             // (Only a creature ending its turn inside — the turn that just ended; not one that used the resistance in the last 10 minutes.)
             if (member.turnEnd && record.turnEndedActor !== actorUuid) continue;
             if (member.shieldUse && (actor.itemTypes?.effect ?? []).some(effect => effect.flags?.[MODULE_ID]?.spellImmunity?.key === member.shieldUse.immunityKey && !effect.isExpired)) continue;
             // (A generated Effect — Rallying Banner's bonuses — instead of PF2e's.)
             if (member.generated) {
                 const [effect] = await actor.createEmbeddedDocuments("Item", [{ name: `${record.name}: ${member.generated.name}`, type: "effect", img: "icons/svg/banner.svg",
-                    flags: { [MODULE_ID]: { leaveArea: { castId: record.castId }, runtime: { schema: 1, kind: "lingering", castInstanceId: record.castId, sourceActorUuid: record.sourceActorUuid, sourceItemUuid: record.sourceItemUuid, sourceItemName: record.name } } },
+                    flags: { [MODULE_ID]: { leaveArea: { castId: record.castId, slot }, runtime: { schema: 1, kind: "lingering", castInstanceId: record.castId, sourceActorUuid: record.sourceActorUuid, sourceItemUuid: record.sourceItemUuid, sourceItemName: record.name } } },
                     system: { level: { value: record.rank }, duration: { value: -1, unit: "unlimited", expiry: null, sustained: false }, start: { value: game.time.worldTime, initiative: game.combat?.combatant?.initiative ?? null },
                         description: { value: `<p>${escapeHTML(member.generated.text)}</p>` }, rules: clone(member.generated.rules) } }]);
                 record.entries.push({ uuid: effect.uuid, actorUuid, status: "active", permanent: false });
@@ -1926,7 +2388,7 @@ export class OngoingFamilies {
             const source = prepareNativeEffectSource(template, { castInstanceId: record.castId, castRank: record.rank, sourceActorUuid: record.sourceActorUuid,
                 sourceItemUuid: record.sourceItemUuid, sourceItemName: record.name, resolutionKind: "lingering", ...(member.ruleOverrides || ownSpell ? { ruleOverrides: [...(member.ruleOverrides ?? []), ...(ownSpell ?? [])] } : {}),
                 ...(member.ruleAdditions ? { ruleAdditions: member.ruleAdditions } : {}) });
-            source.flags[MODULE_ID].leaveArea = { castId: record.castId };
+            source.flags[MODULE_ID].leaveArea = { castId: record.castId, slot };
             if (member.shieldUse) source.flags[MODULE_ID].shieldUse = clone(member.shieldUse);
             source.system.duration = { value: -1, unit: "unlimited", expiry: null, sustained: false };
             // The caster's pick for the area (a ChoiceSet's value), preset so PF2e doesn't prompt.
@@ -1941,6 +2403,98 @@ export class OngoingFamilies {
             record.entries.push({ uuid: effect.uuid, actorUuid, status: "active", permanent: false });
             record.recipientUuids = [...new Set([...(record.recipientUuids ?? []), actorUuid])];
         }
+    }
+    /**
+     * A mode card's area changing state (Storm Lord's rain, Musical Shift's keys): the members' Effects from the old state removed, the new member
+     * Effects (or none) and the region's terrain set, then applied to the creatures inside now.
+     */
+    async setAreaMode({ castId, memberEffect = null, memberEffects = [], terrain = null, slot = null, member = null }) {
+        this.ongoing.assertCoordinator();
+        const journal = this.ongoing.find(castId);
+        if (!journal) throw Error("The spell's area has ended.");
+        const record = clone(state(journal));
+        if (record.status !== "active") throw Error(`${record.name}: its area isn't active.`);
+        // (One slot only — Musical Shift's key or time: that slot's Effects replaced, the rest kept.)
+        if (Number.isInteger(slot) && slot > 0) {
+            for (const token of canvas.scene?.tokens ?? []) {
+                const stale = (token.actor?.itemTypes?.effect ?? []).filter(effect => effect.flags?.[MODULE_ID]?.leaveArea?.castId === record.castId && effect.flags[MODULE_ID].leaveArea.slot === slot).map(effect => effect.id);
+                if (stale.length) await token.actor.deleteEmbeddedDocuments("Item", stale, { [MODULE_ID]: { ongoingCleanup: true, reason: "mode-changed" } });
+            }
+            const slots = clone(record.declaration.memberEffects ?? []);
+            while (slots.length < slot) slots.push(null);
+            slots[slot - 1] = member ? clone(member) : null;
+            record.declaration.memberEffects = slots;
+            const members = (await this.lingeringMembership(record)) ?? [];
+            await this.syncMemberEffect(record, members);
+            await this.ongoing.save(journal, record);
+            return { members: members.length };
+        }
+        // (The old mode's member Effects; a save's "while in the area" condition — Control Sand's dazzle — stays.)
+        for (const token of canvas.scene?.tokens ?? []) {
+            const stale = (token.actor?.itemTypes?.effect ?? []).filter(effect => effect.flags?.[MODULE_ID]?.leaveArea?.castId === record.castId && (effect.flags[MODULE_ID].leaveArea.slot ?? 0) < 99).map(effect => effect.id);
+            if (stale.length) await token.actor.deleteEmbeddedDocuments("Item", stale, { [MODULE_ID]: { ongoingCleanup: true, reason: "mode-changed" } });
+        }
+        record.declaration.memberEffect = memberEffect ? clone(memberEffect) : undefined;
+        record.declaration.memberEffects = clone(memberEffects ?? []);
+        const region = record.regionUuid ? await fromUuid(record.regionUuid) : null;
+        if (region) {
+            const old = region.behaviors.filter(behavior => behavior.getFlag?.(MODULE_ID, "areaMode")).map(behavior => behavior.id);
+            if (old.length) await region.deleteEmbeddedDocuments("RegionBehavior", old);
+            if (terrain) await region.createEmbeddedDocuments("RegionBehavior", [{ name: `${record.name}: ${terrain.difficulty === 3 ? "greater " : ""}difficult terrain`, type: "modifyMovementCost",
+                system: { difficulties: terrainDifficulties(terrain.movement ?? ["walk"], terrain.difficulty) }, flags: { [MODULE_ID]: { areaMode: true } } }]);
+        }
+        const members = (await this.lingeringMembership(record)) ?? [];
+        await this.syncMemberEffect(record, members);
+        await this.ongoing.save(journal, record);
+        return { members: members.length };
+    }
+    /**
+     * Vibrant Vibrato's shattering sound: each creature whose kept result has a leaving row and that was inside but no longer is (it left, or the caster
+     * moved away) takes the row's damage (more at higher ranks, doubled on a critical failure) and its Stunned value, then is Deafened for the rest of the
+     * spell (an Effect ending with the area); once each.
+     */
+    async rememberedLeave(record, members) {
+        const hazard = record.declaration.hazardDamage.remembered;
+        const inside = new Set(members.map(member => member.tokenUuid));
+        record.shattered = Array.isArray(record.shattered) ? record.shattered : [];
+        const DamageRoll = (CONFIG.Dice?.rolls ?? []).find(candidate => candidate?.name === "DamageRoll");
+        const spell = await castSpellFromUuid(record);
+        const caster = await fromUuid(record.sourceActorUuid);
+        for (const tokenUuid of record.members ?? []) {
+            if (inside.has(tokenUuid)) continue;
+            const token = await fromUuid(tokenUuid), actor = token?.actor;
+            const degree = actor ? (record.remembered ?? []).find(entry => entry.actorUuid === actor.uuid)?.degree ?? null : null;
+            const row = degree ? hazard.rows[degree] : null;
+            if (!row?.leave || record.shattered.includes(actor.uuid)) continue;
+            record.shattered.push(actor.uuid);
+            const dice = Number(hazard.leaveDice.base) + Math.max(0, Number(record.rank) - Number(hazard.leaveDice.baseRank)) * Number(hazard.leaveDice.step);
+            const formula = `${dice}d${hazard.leaveDice.die}`;
+            const rolled = await new DamageRoll(row.leave.multiplier === 2 ? `{(2*${formula})[${hazard.leaveDice.type}]}` : `{${formula}[${hazard.leaveDice.type}]}`).evaluate();
+            try { await rolled.toMessage({ speaker: ChatMessage.getSpeaker({ actor: caster }), flavor: `<strong>${escapeHTML(record.name)}</strong>: ${escapeHTML(actor.name)} hears a shattering sound${row.leave.multiplier === 2 ? " (double)" : ""}` }); } catch (_) {}
+            await applyDamageWithReceipt(actor, { damage: rolled, token: token ?? undefined, item: spell ?? undefined, rollOptions: new Set(), skipIWR: false }, randomID());
+            const stunned = Number(actor.getCondition?.("stunned")?.value ?? 0);
+            if (stunned < row.leave.stunned) await actor.increaseCondition?.("stunned", { value: row.leave.stunned });
+            if (hazard.deafened) await actor.createEmbeddedDocuments("Item", [{ name: `${record.name}: Deafened`, type: "effect", img: "icons/svg/deaf.svg",
+                flags: { [MODULE_ID]: { areaLifetime: { castId: record.castId } } },
+                system: { duration: { value: -1, unit: "unlimited", expiry: null, sustained: false }, tokenIcon: { show: true }, description: { value: `<p>Deafened for the rest of <strong>${escapeHTML(record.name)}</strong>.</p>` },
+                    rules: [{ key: "GrantItem", uuid: hazard.deafened, flag: "vibratoDeafened", allowDuplicate: true, onDeleteActions: { grantee: "cascade" } }] } }]);
+            record.recipientUuids = [...new Set([...(record.recipientUuids ?? []), actor.uuid])];
+        }
+    }
+    /** A mode area's size changed (Control Sand's sandstorm: 5 → 30 feet): the region's circle around its centre (the following radius too). */
+    async resizeArea({ castId, feet }) {
+        this.ongoing.assertCoordinator();
+        const journal = this.ongoing.find(castId);
+        const record = journal ? state(journal) : null;
+        const region = record?.regionUuid ? await fromUuid(record.regionUuid) : null;
+        const shape = region?.shapes?.[0];
+        if (!shape) throw Error("The spell's area has no region to resize.");
+        const followed = region.flags?.[MODULE_ID]?.followToken ? await fromUuid(region.flags[MODULE_ID].followToken) : null;
+        const size = canvas.scene.grid.size, pixels = (Number(feet) / canvas.scene.grid.distance + (followed ? Number(followed.width ?? 1) / 2 : 0)) * size;
+        const shapes = foundry.utils.deepClone(region.shapes.map(entry => entry.toObject?.() ?? entry));
+        shapes[0].radius = pixels;
+        await region.update({ shapes, ...(followed ? { [`flags.${MODULE_ID}.followRadius`]: pixels } : {}) });
+        return { feet: Number(feet) };
     }
     async syncMemberCondition(record, members) {
         const held = record.declaration?.memberCondition;
@@ -1999,10 +2553,20 @@ export class OngoingFamilies {
                 return token.actor && regions.some(region => region.testPoint({ x: centre.x, y: centre.y, elevation: token.document.elevation ?? 0 }));
             });
         } else {
-            if (casterTokens.length !== 1) return null;
-            inside = canvas.tokens.placeables.filter(token => token.actor && token.id !== casterTokens[0].id && tokenDistance(casterTokens[0], token) <= record.declaration.area.value);
+            // (Odious Token: "The spell then treats the ally as you" — the emanation around the ally the token was hurled to.)
+            const centreActor = record.declaration.centreActorUuid ? await fromUuid(record.declaration.centreActorUuid).catch(() => null) : null;
+            const centreTokens = centreActor ? centreActor.getActiveTokens?.() ?? [] : casterTokens;
+            if (centreTokens.length !== 1) return null;
+            inside = canvas.tokens.placeables.filter(token => token.actor && token.id !== centreTokens[0].id && tokenDistance(centreTokens[0], token) <= record.declaration.area.value);
         }
         if (record.declaration.excludeCaster) inside = inside.filter(token => token.actor?.uuid !== record.sourceActorUuid);
+        // ("Additionally, you're immune to the spell": the caster and the ally holding it.)
+        if (record.declaration.excludeActorUuids?.length) inside = inside.filter(token => !record.declaration.excludeActorUuids.includes(token.actor?.uuid));
+        // (Divine Eclipse: the blessed, and creatures in a blessed one's bright light, aren't in the dark.)
+        if (record.declaration.blessed?.tokenUuids?.length) {
+            const lit = canvas.tokens.placeables.filter(token => record.declaration.blessed.tokenUuids.includes(token.document.uuid));
+            inside = inside.filter(token => !lit.includes(token) && !lit.some(light => tokenDistance(light.document, token.document) <= record.declaration.blessed.bright));
+        }
         // "Each enemy that …": the caster and its allies are never exposed; neutral creatures
         // are, and their save card asks the GM whether they're enemies.
         if (record.declaration.enemiesOnly) inside = inside.filter(token => token.actor?.uuid !== record.sourceActorUuid && !caster?.isAllyOf?.(token.actor));
@@ -2043,6 +2607,12 @@ export class OngoingFamilies {
         const exposureKey = target => record.declaration?.oncePerTurn ? `${clock.combatId}:${clock.round}:${clock.turn ?? 0}:${actorOf(target).uuid}` : `${clock.combatId}:${clock.round}:${actorOf(target).uuid}`;
         const eligible = targets.filter(target => record.kind === "petrify" || !record.exposure.some(e => e.key === exposureKey(target)));
         if (!eligible.length) return null;
+        // (Indolent Haze: a creature already unconscious at this exposure takes the sleepers' damage, whatever its save.)
+        if (record.kind === "lingering" && record.declaration?.sleeperDamage?.events?.includes(event ?? "initial"))
+            record.sleeperResults = [...(record.sleeperResults ?? []), ...await this.applySleeperDamage(record, eligible)];
+        // (Dread Mosquito Storm: the bites' damage at this exposure, before the save.)
+        if (record.kind === "lingering" && record.declaration?.exposureDamage?.events?.includes(event ?? "initial"))
+            record.exposureResults = [...(record.exposureResults ?? []), ...await this.applyExposureDamage(record, eligible)];
         record.recipientUuids = [...new Set([...(record.recipientUuids ?? []), ...eligible.map(target => actorOf(target).uuid)])];
         const ownership = {};
         for (const user of game.users) if (!user.isGM && eligible.some(target => actorOf(target).testUserPermission(user, "OWNER"))) ownership[`ownership.${user.id}`] = 2;
@@ -2050,7 +2620,11 @@ export class OngoingFamilies {
         const { card } = await this.saves.start(spell, { plan: record.kind === "lingering" ? clone(event === "sustain" && record.sustainExposurePlan ? record.sustainExposurePlan : event === "enter" && record.enterExposurePlan ? record.enterExposurePlan
             : ["turn-start", "turn-end"].includes(event) && record.turnExposurePlan ? record.turnExposurePlan : record.exposurePlan) : this.plan(spell, record.kind, recurring), sourceActor: spell.actor,
             targets: eligible, castRank: record.rank, dc: record.dc, skipConfirmation: true, ...(record.casterChoice ? { casterChoice: record.casterChoice } : {}),
-            ...(record.kind === "lingering" ? { lingeringCastId: record.castId } : {}) });
+            ...(record.kind === "lingering" ? { lingeringCastId: record.castId } : {}),
+            // (The cast's spellshapes and catalysts — Broken Ram's Thorn — on the cast's own save, not the later exposures.)
+            ...(record.kind === "lingering" && (event ?? "initial") === "initial" && record.sourceMessageId ? { shapeMessageId: record.sourceMessageId } : {}),
+            // (Blade Barrier: a creature that succeeds as the wall is created moves out of it — the area's shapes, on the cast's own saves only.)
+            ...(record.kind === "lingering" && (event ?? "initial") === "initial" && record.regionUuid ? { exitArea: ((await fromUuid(record.regionUuid).catch(() => null))?.shapes ?? []).map(shape => shape.toObject?.() ?? shape) } : {}) });
         await card.setFlag(MODULE_ID, "ongoingCastId", record.castId);
         record.dc ??= card.getFlag(MODULE_ID, "basicSaveState").dc;
         if (existing) { existing.cardId = card.id; existing.status = "collecting"; }
@@ -2319,6 +2893,11 @@ export class OngoingFamilies {
                 if (record.declaration.skipTurn) record.declaration.skipTurn = false;
                 else { record.members = members.map(member => member.tokenUuid); record.clock = clock; await this.ongoing.save(journal, record); return this.ongoing.end(journal, { reason: "duration" }); }
             }
+            // (Vibrant Vibrato: a creature that failed and is no longer inside hears the shattering sound.)
+            if (record.declaration.hazardDamage?.remembered) {
+                try { await this.rememberedLeave(record, members); }
+                catch (error) { return this.ongoing.review(journal, `${record.name}: the shattering sound failed (${error.message}). Apply it yourself.`, { resumable: true }); }
+            }
             // "until it leaves the area": a creature no longer inside loses this area's penalties.
             await this.clearLeaveArea(record, [...members.map(member => member.actorUuid), ...(record.declaration.memberEffect?.allies && record.declaration.centre === "caster" ? [record.sourceActorUuid] : [])]);
             record.members = members.map(member => member.tokenUuid);
@@ -2327,6 +2906,7 @@ export class OngoingFamilies {
             await this.syncLingeringConcealment(record, members);
             await this.syncHealingWatch(record, members);
             await this.syncLingeringMembers(record, members);
+            await this.syncBlessed(record);
             await this.syncMemberCondition(record, members);
             // ("until the start of its next turn": the creature whose turn starts loses its row terrain.)
             if (record.declaration?.rowTerrain?.until === "next-turn-start" && advance === "next" && (record.rowTerrainHolders ?? []).includes(clock.actorUuid)) await this.clearRowTerrain(record, clock.actorUuid);
@@ -2563,7 +3143,7 @@ export class OngoingFamilies {
                 const success = Number(roll?.degreeOfSuccess ?? 0) >= 2;
                 if (success) await actor.createEmbeddedDocuments("Item", [{ name: `${record.name}: disbelieved`, type: "effect", img: "icons/svg/eye.svg",
                     flags: { [MODULE_ID]: { spellImmunity: { key: disbelief.key }, runtime: { castInstanceId: record.castId, sourceActorUuid: record.sourceActorUuid, sourceItemName: record.name } } },
-                    system: { description: { value: `<p>Disbelieved ${escapeHTML(record.name)}: it takes no damage from the illusion.</p>` }, level: { value: record.rank },
+                    system: { description: { value: disbelief.halves ? `<p>Disbelieved ${escapeHTML(record.name)}: it takes half the damage from the shadows, and they no longer impede its vision.</p>` : `<p>Disbelieved ${escapeHTML(record.name)}: it takes no damage from the illusion.</p>` }, level: { value: record.rank },
                         duration: { value: Math.max(1, Math.ceil((Number(record.maximumAt ?? game.time.worldTime) - game.time.worldTime) / 6)), unit: "rounds", expiry: "turn-start", sustained: false },
                         start: { value: game.time.worldTime, initiative: game.combat?.combatant?.initiative ?? null }, rules: [] } }]);
                 results.push({ actorUuid: actor.uuid, status: success ? "disbelieved" : "fooled", roll: roll?.total ?? null });
@@ -2572,6 +3152,29 @@ export class OngoingFamilies {
             return { status: "resolved", results };
         }
         // A creature used an action on the area the module can't see (Hypnotize's Seek or Interact on the cloud): its exposure.
+        // The GM's mark on a creature (Stars of Another Sky's top of the cylinder): an Effect dealing the stated damage as each of its turns starts, until the area ends.
+        if (action === "gm-mark") {
+            const mark = record.declaration?.gmMark;
+            if (!user.isGM || !mark) throw Error("Only the GM marks a creature for this spell.");
+            const tokens = (await Promise.all((data.tokenUuids ?? []).map(uuid => fromUuid(uuid)))).filter(token => token?.actor);
+            if (!tokens.length) throw Error(`${record.name}: target the creature(s) first.`);
+            const marked = [];
+            for (const token of tokens) {
+                const actor = token.actor;
+                if ((actor.itemTypes?.effect ?? []).some(effect => effect.flags?.[MODULE_ID]?.gmMark === record.castId)) continue;
+                const formula = data.soulless ? `(${mark.dice}*${mark.soulless})` : mark.dice;
+                const [effect] = await actor.createEmbeddedDocuments("Item", [{ name: `${record.name}: ${mark.label.replace(/^reached /, "at ")}`, type: "effect", img: "icons/svg/sun.svg",
+                    flags: { [MODULE_ID]: { gmMark: record.castId, areaLifetime: { castId: record.castId }, runtime: { schema: 1, kind: "gm-mark", castInstanceId: record.castId, sourceActorUuid: record.sourceActorUuid,
+                        sourceItemUuid: record.sourceItemUuid, sourceItemName: record.name, turnStartDamage: { formula, type: mark.type, ...(mark.diesAtZero ? { diesAtZero: true } : {}) } } } },
+                    system: { level: { value: record.rank }, duration: { value: -1, unit: "unlimited", expiry: null, sustained: false }, tokenIcon: { show: true }, rules: [],
+                        description: { value: `<p>At the top of the cylinder: it takes ${escapeHTML(formula)} ${escapeHTML(mark.type)} damage as each of its turns starts${data.soulless ? " (no soul: double)" : ""}${mark.diesAtZero ? "; if this drops it to 0 Hit Points, it dies" : ""}. Remove this when it comes down.</p>` } } }]);
+                record.entries.push({ uuid: effect.uuid, actorUuid: actor.uuid, status: "active", permanent: false });
+                record.recipientUuids = [...new Set([...(record.recipientUuids ?? []), actor.uuid])];
+                marked.push(actor.uuid);
+            }
+            await this.ongoing.save(journal, record);
+            return { status: marked.length ? "marked" : "none", marked };
+        }
         if (action === "gm-action") {
             const trigger = record.declaration?.gmAction;
             if (!user.isGM || !trigger) throw Error("Only the GM says a creature used that action.");
@@ -2683,6 +3286,27 @@ export class OngoingFamilies {
                         record.sustainStrikeCards = [...(record.sustainStrikeCards ?? []), card.id];
                     }
                 }
+                // "The first time you Sustain the spell each turn, one of the target creature's allies within 30 feet of the target must attempt a … save"
+                // (Warped Visage): the ally the caster names (or the only one there) gets the save card; with none in reach, nothing.
+                if (record.sustainAllySave?.centreTokenUuids?.length && record.sustainedRound !== clock.round) {
+                    const spec = record.sustainAllySave;
+                    const centres = (await Promise.all(spec.centreTokenUuids.map(uuid => fromUuid(uuid)))).filter(token => token?.actor);
+                    const eligible = canvas.scene.tokens.filter(token => token.actor && !centres.includes(token) && centres.some(centre =>
+                        (centre.actor.isAllyOf?.(token.actor) ?? centre.actor.alliance === token.actor.alliance) && tokenDistance(centre, token) <= spec.radius));
+                    const named = [...(data.allyTokenUuids ?? []), ...[...game.user.targets].map(target => target.document?.uuid)].filter(Boolean);
+                    let ally = eligible.find(token => named.includes(token.uuid)) ?? (eligible.length === 1 ? eligible[0] : null);
+                    if (!ally && eligible.length > 1) {
+                        const picked = await foundry.applications.api.DialogV2.wait({ window: { title: `${record.name}: Sustain` }, rejectClose: false,
+                            content: `<p>Which of the target's allies within ${spec.radius} feet must save?</p><select name="ally">${eligible.map(token => `<option value="${token.uuid}">${escapeHTML(token.name)}</option>`).join("")}</select>`,
+                            buttons: [{ action: "ok", label: "Save", default: true, callback: (event, button) => button.form.elements.ally.value }] });
+                        ally = eligible.find(token => token.uuid === picked) ?? null;
+                    }
+                    const spell = ally ? await castSpellFromUuid(record) : null;
+                    if (spell && ally) {
+                        const { card } = await this.saves.start(spell, { plan: clone(spec.plan), sourceActor: spell.actor, targets: [ally.object ?? ally], castRank: record.rank, dc: record.dc, skipConfirmation: true });
+                        record.sustainAllyCards = [...(record.sustainAllyCards ?? []), card.id];
+                    }
+                }
                 // "On subsequent turns, if the target is still immobilized by the lasso, you can Sustain the spell to deal … damage and keep the target
                 // immobilized until the end of your next turn.": the flat damage to each creature this cast still holds, and its hold renewed.
                 if (record.sustainHold?.targetActorUuids?.length && record.sustainedRound !== clock.round) {
@@ -2726,6 +3350,8 @@ export class OngoingFamilies {
             } else if (record.kind === "lingering" && (record.declaration?.sustained || record.declaration?.optionalSustain)) {
                 // Sustaining keeps the area. "The first time you Sustain it each round" also
                 // exposes every creature inside (after any move the spell allows), once per round.
+                // (Shadow Puppetry: the first Sustain each turn deals the area's damage again.)
+                if (record.declaration.sustainPulse && record.sustainedRound !== clock.round) Promise.resolve().then(() => this.ongoing.areaPulse(record.castId)).catch(error => console.warn(`${MODULE_ID} | The pulse failed.`, error));
                 // An aura growing on an optional Sustain: once per round, the radius grows, then the enemies inside not yet affected
                 // (without this cast's penalty Effect) save.
                 if (record.declaration.growth) {
@@ -2735,6 +3361,18 @@ export class OngoingFamilies {
                     if (record.declaration.lantern) for (const entry of record.entries.filter(entry => entry.status === "active")) {
                         const light = await fromUuid(entry.uuid);
                         if (light?.flags?.[MODULE_ID]?.lanternLight) await light.update({ "system.rules": [lanternLightRule(record.declaration.area.value, record.declaration.lantern.light)] });
+                    }
+                }
+                // "On subsequent turns, the first time each round you Sustain the spell, you increase the emanation by 5 feet up to a maximum of 15 feet.":
+                // the ally's aura grows (once a round, to its maximum), and the module's Effect badge with it.
+                if (record.declaration.auraGrowth && record.sustainedRound !== clock.round) {
+                    const grown = Math.min(Number(record.declaration.aura.feet) + Number(record.declaration.auraGrowth.feet), Number(record.declaration.auraGrowth.maximum));
+                    if (grown !== record.declaration.aura.feet) {
+                        record.declaration.aura.feet = grown;
+                        for (const entry of record.entries.filter(entry => entry.anchorEffect && entry.status === "active")) {
+                            const effect = await fromUuid(entry.uuid);
+                            if (effect) await effect.update({ "system.badge.value": grown / Number(record.declaration.auraGrowth.feet) });
+                        }
                     }
                 }
                 // "Each time you sustain this spell, the radius of the burst increases by 5 feet.": the placed region grows. (An optional growth —
@@ -2847,6 +3485,13 @@ export class OngoingFamilies {
                 const tokens = [...game.user.targets];
                 if (!tokens.length) return ui.notifications.warn("Target the creature(s) first.");
                 return this.ongoing.request("area-disbelieve", { castId: record.castId, revision: record.revision, tokenUuids: tokens.map(token => token.document.uuid) });
+            } });
+        // (Stars of Another Sky: a creature at the top of the cylinder, with or without a soul.)
+        if (game.user.isGM && record.status === "active" && record.declaration?.gmMark) for (const soulless of [false, true]) controls.push({ action: `gm-mark-${soulless ? "soulless-" : ""}${journal.id}`,
+            label: `${record.name}: a creature ${record.declaration.gmMark.label}${soulless ? " (no soul: double damage)" : ""} (target it)`, callback: async () => {
+                const tokens = [...game.user.targets];
+                if (!tokens.length) return ui.notifications.warn("Target the creature(s) first.");
+                return this.ongoing.request("gm-mark", { castId: record.castId, revision: record.revision, tokenUuids: tokens.map(token => token.document.uuid), soulless });
             } });
         if (game.user.isGM && record.status === "active" && record.declaration?.gmAction) controls.push({ action: `gm-action-${journal.id}`,
             label: `${record.name}: a creature ${record.declaration.gmAction.label ?? `used ${record.declaration.gmAction.actions.join(" or ")} on the area`} (target it)`, callback: async () => {

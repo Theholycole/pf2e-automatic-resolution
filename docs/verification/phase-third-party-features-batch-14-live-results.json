@@ -1,0 +1,21 @@
+{
+ "label": "thirdPartyFeaturesBatch14",
+ "passed": true,
+ "at": "2026-10-07T21:32:24.632Z",
+ "details": {
+  "thirdPartyFeatures14": {
+   "embodiment": {
+    "shapes": [
+     [
+      "Embodiment",
+      "passive"
+     ]
+    ],
+    "rules": [
+     "strike-attack-roll status 2"
+    ],
+    "duration": "10 rounds"
+   }
+  }
+ }
+}

@@ -1,0 +1,73 @@
+{
+  "label": "rank7Batch20",
+  "passed": true,
+  "at": "2026-10-05T06:33:45.929Z",
+  "details": {
+    "batch20": {
+      "ray": {
+        "degree": "success",
+        "raw": "criticalSuccess",
+        "lost": 43,
+        "miss": {
+          "card": null,
+          "lost": 0
+        }
+      },
+      "deity": {
+        "strike": 45,
+        "wave": 14,
+        "struck": 59
+      },
+      "sky": {
+        "one": 63,
+        "two": 63,
+        "deafened": true,
+        "shapes": 2,
+        "walker": 12
+      },
+      "doom": {
+        "marked": true,
+        "lost": 21,
+        "payoff": true
+      },
+      "raven": {
+        "first": [
+          {
+            "name": "PFTEST P23 Affliction rd prey",
+            "total": 13,
+            "status": "attached"
+          }
+        ],
+        "lost": 13,
+        "attached": true,
+        "darkness": true,
+        "gnaw": 2,
+        "released": true
+      },
+      "comet": {
+        "higher": true,
+        "adjacent": true,
+        "elevation": 0,
+        "bonus": 2,
+        "lost": 50,
+        "dazzled": true,
+        "rust": {
+          "metal": true,
+          "formula": "\"\""
+        }
+      },
+      "wave": {
+        "h1": [
+          true,
+          true
+        ],
+        "h2": [
+          true,
+          false
+        ],
+        "crush": 44,
+        "ended": true
+      }
+    }
+  }
+}

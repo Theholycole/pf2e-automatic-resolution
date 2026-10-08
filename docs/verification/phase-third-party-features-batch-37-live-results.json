@@ -1,0 +1,38 @@
+{
+ "label": "thirdPartyFeaturesBatch37",
+ "passed": true,
+ "at": "2026-10-08T01:58:30.054Z",
+ "details": {
+  "thirdPartyFeatures37": {
+   "dismiss": {
+    "card": true,
+    "said": "Dismiss Paltry Magic : Spell Effect: PFTEST ward on PFTEST P23 Affliction tpf37 subject: critical success — counteracted.",
+    "gone": true
+   },
+   "eyes": {
+    "card": true,
+    "said": "Oracle's Eyes : Spell Effect: PFTEST veil on PFTEST P23 Affliction tpf37 subject: critical success — counteracted.",
+    "gone": true,
+    "invisible": false
+   },
+   "snuff": {
+    "card": {
+     "statistic": "fortitude",
+     "formula": "6d6 void"
+    },
+    "immune": true
+   },
+   "pyrophore": {
+    "said": "Spell Pyrophore (Minor) : Spell Effect: PFTEST charm on PFTEST P23 Affliction tpf37 subject: critical success — counteracted.",
+    "gone": true,
+    "burn": {
+     "statistic": "fortitude",
+     "dc": 19,
+     "riders": [
+      "extra-damage 1d4 spirit"
+     ]
+    }
+   }
+  }
+ }
+}

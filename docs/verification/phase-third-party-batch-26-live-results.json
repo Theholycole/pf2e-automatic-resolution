@@ -1,0 +1,74 @@
+{
+ "label": "thirdPartyBatch26",
+ "passed": true,
+ "at": "2026-10-07T02:38:36.526Z",
+ "details": {
+  "thirdParty26": {
+   "effect": {
+    "rules": [
+     [
+      [
+       "strike-damage"
+      ],
+      2,
+      "precision",
+      "target:signature:084afd0c-37b6-5351-bfc9-66bfee38f576"
+     ],
+     [
+      [
+       "spell-damage"
+      ],
+      2,
+      "precision",
+      "target:signature:084afd0c-37b6-5351-bfc9-66bfee38f576,item:trait:attack"
+     ]
+    ],
+    "duration": 1
+   },
+   "signature": "084afd0c-37b6-5351-bfc9-66bfee38f576",
+   "reveal": {
+    "result": {
+     "weakestSave": [
+      "fortitude",
+      "reflex",
+      "will"
+     ],
+     "resistances": [
+      "fire 5"
+     ],
+     "weaknesses": [
+      "cold 3"
+     ],
+     "immunities": []
+    },
+    "whisper": 1,
+    "gmOnly": true
+   },
+   "casterVsFoe": "1d6 + 2 slashing",
+   "casterVsOther": "1d6 slashing",
+   "option": {
+    "status": "applied",
+    "created": [
+     "Actor.y9NDlMGwkhuOMiqJ.Item.1ZJwkNmuMj8EoaA4"
+    ]
+   },
+   "aid": {
+    "rules": [
+     [
+      [
+       "strike-damage"
+      ],
+      2,
+      "target:signature:084afd0c-37b6-5351-bfc9-66bfee38f576"
+     ]
+    ],
+    "duration": [
+     1,
+     "rounds"
+    ]
+   },
+   "allyVsFoe": "1d6 + 2 slashing",
+   "allyVsOther": "1d6 slashing"
+  }
+ }
+}

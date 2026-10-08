@@ -1,0 +1,27 @@
+{
+ "batch18": {
+  "label": "thirdPartyFeaturesBatch18",
+  "passed": true,
+  "at": "2026-10-07T22:31:00.624Z",
+  "details": {
+   "thirdPartyFeatures18": {
+    "calm": "6d6 fire",
+    "raging": "6d6 + 4 fire",
+    "infusion": [
+     "fire"
+    ],
+    "doubledEffect": {
+     "name": "Explosive Blood: rage damage doubled",
+     "duration": {
+      "value": 1,
+      "unit": "rounds",
+      "expiry": "turn-end",
+      "sustained": false
+     }
+    },
+    "exploded": "6d6 + 8 fire",
+    "infusions": 1
+   }
+  }
+ }
+}

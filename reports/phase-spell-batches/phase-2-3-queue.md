@@ -24,67 +24,51 @@ The **primary worklist** assigns one place to organize implementation; cross-pha
 
 ## Current route counts
 
-Route snapshot: 2026-10-03T21:23:42.710Z.
+Route snapshot: 2026-10-05T09:24:05.962Z.
 
 Counts are regenerated from the current module route census after each implementation batch. **Enabled means an available route, including partial native Effect routes; it is not full spell verification.** The 51 unresolved review spells remain deferred until last.
 
 | Primary worklist | Spells | Enabled | Not enabled |
 | --- | --- | --- | --- |
-| Phase 2 | 595 | 571 | 24 |
-| Phase 3 | 611 | 559 | 52 |
+| Phase 2 | 595 | 595 | 0 |
+| Phase 3 | 611 | 611 | 0 |
 
 | Phase | Rule family | Spells | Enabled | Not enabled | Wording cohorts |
 | --- | --- | --- | --- | --- | --- |
 | 2 | Delegated affliction | 24 | 24 | 0 | 8 |
-| 2 | Basic-save damage | 58 | 55 | 3 | 32 |
-| 2 | Native condition | 162 | 152 | 10 | 70 |
+| 2 | Basic-save damage | 58 | 58 | 0 | 32 |
+| 2 | Native condition | 162 | 162 | 0 | 70 |
 | 2 | Save-result condition rider | 32 | 32 | 0 | 15 |
-| 2 | degree-outcome | 68 | 63 | 5 | 49 |
-| 2 | native-effect | 159 | 157 | 2 | 76 |
-| 2 | Persistent damage | 53 | 50 | 3 | 19 |
-| 2 | Temporary immunity | 39 | 38 | 1 | 12 |
-| 3 | Aura membership | 90 | 84 | 6 | 70 |
-| 3 | Area exposure | 84 | 72 | 12 | 59 |
-| 3 | Condition-dependent lifetime | 19 | 18 | 1 | 11 |
-| 3 | Recurring saving throw | 35 | 27 | 8 | 13 |
-| 3 | Ending or dismissal | 116 | 112 | 4 | 77 |
-| 3 | Sustain | 153 | 134 | 19 | 99 |
-| 3 | timed-other | 114 | 112 | 2 | 101 |
-| 4 | Attack and dependent result | 96 | 92 | 4 | 44 |
-| 4 | Choice / casting variant | 20 | 18 | 2 | 19 |
+| 2 | degree-outcome | 68 | 68 | 0 | 49 |
+| 2 | native-effect | 159 | 159 | 0 | 76 |
+| 2 | Persistent damage | 53 | 53 | 0 | 19 |
+| 2 | Temporary immunity | 39 | 39 | 0 | 12 |
+| 3 | Aura membership | 90 | 90 | 0 | 70 |
+| 3 | Area exposure | 84 | 84 | 0 | 59 |
+| 3 | Condition-dependent lifetime | 19 | 19 | 0 | 11 |
+| 3 | Recurring saving throw | 35 | 35 | 0 | 13 |
+| 3 | Ending or dismissal | 116 | 116 | 0 | 77 |
+| 3 | Sustain | 153 | 153 | 0 | 99 |
+| 3 | timed-other | 114 | 114 | 0 | 101 |
+| 4 | Attack and dependent result | 96 | 96 | 0 | 44 |
+| 4 | Choice / casting variant | 20 | 20 | 0 | 19 |
 | 4 | Counteract | 22 | 22 | 0 | 12 |
 | 4 | Information / adjudication | 32 | 32 | 0 | 27 |
-| 4 | Healing / recipient mode | 60 | 55 | 5 | 30 |
+| 4 | Healing / recipient mode | 60 | 60 | 0 | 30 |
 | 4 | immediate-other | 7 | 7 | 0 | 7 |
 | 4 | Granted movement speed | 3 | 3 | 0 | 3 |
-| 5 | Creature transformation | 63 | 54 | 9 | 33 |
-| 6 | Created entities | 12 | 10 | 2 | 10 |
-| 6 | Incarnate arrival/departure | 28 | 9 | 19 | 22 |
+| 5 | Creature transformation | 63 | 63 | 0 | 33 |
+| 6 | Created entities | 12 | 12 | 0 | 10 |
+| 6 | Incarnate arrival/departure | 28 | 28 | 0 | 22 |
 | 6 | Creature creation | 16 | 16 | 0 | 3 |
-| 7 | Forced movement | 36 | 33 | 3 | 11 |
-| 7 | Movement action | 29 | 27 | 2 | 24 |
-| 7 | Object / structure creation | 6 | 5 | 1 | 5 |
-| 7 | Teleportation | 48 | 43 | 5 | 33 |
-| 7 | Terrain | 76 | 56 | 20 | 41 |
-| 7 | Wall / barrier | 17 | 16 | 1 | 8 |
+| 7 | Forced movement | 36 | 36 | 0 | 11 |
+| 7 | Movement action | 29 | 29 | 0 | 24 |
+| 7 | Object / structure creation | 6 | 6 | 0 | 5 |
+| 7 | Teleportation | 48 | 48 | 0 | 33 |
+| 7 | Terrain | 76 | 76 | 0 | 41 |
+| 7 | Wall / barrier | 17 | 17 | 0 | 8 |
 | 8 | ritual | 43 | 43 | 0 | 39 |
-| 9 | review | 50 | 49 | 1 | 42 |
-
-
-## Phase 2 execution blockers
-
-These counts come from the same capability assessment used to permit save execution. One spell can have several blockers; resolving one blocker does not imply that all listed spells become enabled. Non-save workflows still require their own route. Detailed outcome paths are stored in `catalog.json` under `saveExecution.blockers`. See the [composition family audit](composition-family-audit.md) for every direct-plus-persistent save and save-linked native Effect, including remaining blockers. The [Speed, conditions and lifetime audit](speed-cross-family-audit.md) covers the full overlapping groups used by the latest shared modifier expansion.
-
-| Shared execution gap | Blocked spells |
-| --- | --- |
-| unaccounted-prose | 14 |
-| manual-mechanic | 6 |
-| lifecycle | 5 |
-| basic-save-composition | 3 |
-| target-eligibility | 2 |
-| shared-damage | 1 |
-| unused-shared-damage | 1 |
-
+| 9 | review | 50 | 50 | 0 | 42 |
 
 ## Implemented batch checkpoints
 
@@ -828,138 +812,48 @@ These records retain completed batches when the suggested next cohort changes. C
 | 2026-09-30 | Rank 9 batch 5: soul-fed growing aura | Voracious Gestalt | 1 | 0 | [Evidence](../../docs/verification/phase-rank-9-batch-5.md) |
 | 2026-09-30 | Rank 8 batch 7: growing ally ward aura | Divine Aura | 1 | 0 | [Evidence](../../docs/verification/phase-rank-8-batch-7.md) |
 | 2026-09-30 | Rank 6 batch 20: growing hazard thicket | Field of Razors | 1 | 0 | [Evidence](../../docs/verification/phase-rank-6-batch-20.md) |
+| 2026-09-30 | Rank 7 batch 12: lasting notes, table persistent save, bleed-rising condition | Orb of Twisting Fate, Beheading Buzz Saw, Expunge Blood | 3 | 0 | [Evidence](../../docs/verification/phase-rank-7-batch-12.md) |
+| 2026-09-30 | Rank 8 batch 8: trapped notes, strike escalation | Maze of Locked Doors, Medusa's Wrath | 2 | 0 | [Evidence](../../docs/verification/phase-rank-8-batch-8.md) |
+| 2026-09-30 | Rank 9 batch 6: level-limited death line with backlash | Massacre | 1 | 0 | [Evidence](../../docs/verification/phase-rank-9-batch-6.md) |
+| 2026-09-30 | Rank 8 batch 9: flyers slammed down, everyone saves | Falling Sky | 1 | 0 | [Evidence](../../docs/verification/phase-rank-8-batch-9.md) |
+| 2026-09-30 | Rank 7 batch 13: draining darkness field with spared allies | Darklight | 1 | 0 | [Evidence](../../docs/verification/phase-rank-7-batch-13.md) |
+| 2026-09-30 | Rank 8 batch 10: GM-handled ruling with GM options | Earthquake, Upheaval, Restore Ground, Trim the Blight, Call of the Quenching, Under Sunless Skies, Veil of Broken Reality, Astral Labyrinth, Theogeny, Shipwreck, Scrying, Unrelenting Observation, Forest of Gates, Hag's Fruit, Temporal Ward, Aura of the Unremarkable | 16 | 0 | [Evidence](../../docs/verification/phase-rank-8-batch-10.md) |
+| 2026-09-30 | Rank 8 batch 11: incarnates by parts (group 1) | Conquering Soldiers, Garden of the Green Man's Growth, Incarnate Kaiju, Jassim's Allegiance, Summon Oliphaunt of Jandelay, Incarnate Wild Rose, Final Fate of the Locust Host, Incarnate Ancient Specter, Holy Host, Incarnate Archmage, Incarnate Deific Herald, Summon Elemental Herald, Summon Irii, Summon Warden of the Wild, Unholy Army, Beseech Arcanotheign, Call Fluxwraith, Incarnate Draconic Legion, Summon Ancient Fleshforged | 19 | 0 | [Evidence](../../docs/verification/phase-rank-8-batch-11.md) |
+| 2026-09-30 | Rank 7 batch 14: control (group 2a) | Puppet Strings, Possession, Temporary Possession, Song of the Fallen | 4 | 0 | [Evidence](../../docs/verification/phase-rank-7-batch-14.md) |
+| 2026-09-30 | Rank 7 batch 15: conjured tokens and copies (group 2b) | Dragon Turret, Duplicate Foe, Reanimate Foe, Lifewood Cage, Elemental Confluence | 5 | 0 | [Evidence](../../docs/verification/phase-rank-7-batch-15.md) |
+| 2026-09-30 | Rank 6 batch 21: group 2 rest (summons, forms, triggered strikes) | Gray Shadow, Shambling Horror, Shadow Illusion, Primal Summons, Patron's Protector, Weapon of Judgment, Blessed Boundary | 7 | 0 | [Evidence](../../docs/verification/phase-rank-6-batch-21.md) |
+| 2026-09-30 | Rank 7 batch 16: group 3 part 1 — save-once auras with degree rows; Indolent Haze's lingering rows | Infinitesimal Collapse Field, Repulsion, Indolent Haze | 3 | 0 | [Evidence](../../docs/verification/phase-rank-7-batch-16.md) |
+| 2026-09-30 | Rank 8 batch 14: group 3 part 2 — lingering areas that move creatures; living-only terrain, draining center, GM mark | Whirlpool, Whirlwind, Tear the Veil, Stars of Another Sky | 4 | 0 | [Evidence](../../docs/verification/phase-rank-8-batch-14.md) |
+| 2026-09-30 | Rank 10 batch 2: group 3 part 3 — save-once aura rows outside the area, placed greater terrain, lingering condition choice, note-held degree adjustment | Pied Piping, Flesh Tsunami, Shadow Army, Vacuum | 4 | 0 | [Evidence](../../docs/verification/phase-rank-10-batch-2.md) |
+| 2026-09-30 | Rank 7 batch 17: group 3 part 4 — a lingering region following the caster, sustained caster Effects, the shadows' area | Unbreaking Wave Barrier, Shadow Raid | 2 | 0 | [Evidence](../../docs/verification/phase-rank-7-batch-17.md) |
+| 2026-09-30 | Rank 9 batch 7: group 3 part 5 — note Effects ended by damage, turn-start attacks; Blessed Boundary's spaced formula | Volcanic Eruption, Nature's Enmity, Blessed Boundary | 3 | 0 | [Evidence](../../docs/verification/phase-rank-9-batch-7.md) |
+| 2026-09-30 | Rank 9 batch 8: end of group 3 — hazard parts, rolled tables by degree, exposure damage, lingering afflictions | Burning Blossoms, Unfathomable Song, Dread Mosquito Storm | 3 | 0 | [Evidence](../../docs/verification/phase-rank-9-batch-8.md) |
+| 2026-09-30 | Rank 8 batch 15: group 4 part 1 — lasting states as row notes; half Strikes, saves better against the caster, turn-start flat checks | Undermine Reality, Fabricated Truth, Cursed Metamorphosis, Remake Physiology | 4 | 0 | [Evidence](../../docs/verification/phase-rank-8-batch-15.md) |
+| 2026-09-30 | Rank 6 batch 22: group 4 part 2 — keyed GM questions, condition-linked weakness notes | Calcification, Vitrifying Blast, Chrysopoetic Curse, Dread Secret | 4 | 0 | [Evidence](../../docs/verification/phase-rank-6-batch-22.md) |
+| 2026-09-30 | Rank 9 batch 9: group 4 lasting curses | Fateful Condemnation, Seize Identity, Tanglecurse, Overwhelming Presence, Undertaker | 5 | 0 | [Evidence](../../docs/verification/phase-rank-9-batch-9.md) |
+| 2026-09-30 | Rank 8 batch 16: group 5 battle forms | Monstrosity Form, Nature Incarnate, Qi Form | 3 | 0 | [Evidence](../../docs/verification/phase-rank-8-batch-16.md) |
+| 2026-09-30 | Rank 7 batch 18: group 5 battle forms | Corrosive Body, One with the Land | 2 | 0 | [Evidence](../../docs/verification/phase-rank-7-batch-18.md) |
+| 2026-09-30 | Rank 9 batch 10: group 5 battle forms | Arcane Explosion | 1 | 0 | [Evidence](../../docs/verification/phase-rank-9-batch-10.md) |
+| 2026-09-30 | Rank 6 batch 23: group 5 battle forms | Blanket of Stars, Mantle of Heaven's Slopes | 2 | 0 | [Evidence](../../docs/verification/phase-rank-6-batch-23.md) |
+| 2026-09-30 | Rank 10 batch 3: group 5 battle forms | Avatar, Metamorphosis | 2 | 0 | [Evidence](../../docs/verification/phase-rank-10-batch-3.md) |
+| 2026-09-30 | Rank 6 batch 24: group 7 teleports | Unexpected Transposition, Collective Transposition, Magnetic Dominion, All is One, One is All, Proximal Shift | 5 | 0 | [Evidence](../../docs/verification/phase-rank-6-batch-24.md) |
+| 2026-09-30 | Rank 8 batch 17: group 7 teleports | Heaving Earth, Earth and Sky, Deluge, Amalgamizing Leap | 4 | 0 | [Evidence](../../docs/verification/phase-rank-8-batch-17.md) |
+| 2026-09-30 | Rank 9 batch 11: group 8 mode cards | Storm Lord, Wrathful Storm, Storm of Vengeance, Musical Shift, Dancing Fountain, Impaling Briars | 6 | 0 | [Evidence](../../docs/verification/phase-rank-9-batch-11.md) |
+| 2026-09-30 | Rank 7 batch 19: group 8 mode cards | Control Sand, Vibrant Vibrato | 2 | 0 | [Evidence](../../docs/verification/phase-rank-7-batch-19.md) |
+| 2026-09-30 | Rank 10 batch 4: group 9 blast cards | Falling Stars, Planar Collision, Cataclysm, Vampiric Revelry, Metallic Meteorite Glyph | 5 | 0 | [Evidence](../../docs/verification/phase-rank-10-batch-4.md) |
+| 2026-09-30 | Rank 8 batch 18: group 9 prismatic cards | Prismatic Spray, Rainbow Fumarole, Prismatic Wall | 3 | 0 | [Evidence](../../docs/verification/phase-rank-8-batch-18.md) |
+| 2026-09-30 | Rank 7 batch 20: group 10 attack shapes | Ray of Corruption, Deity's Strike, Pierce the Sky, Doom Mark, Ravenous Darkness, Comet Charge, Unbreaking Wave Containment | 7 | 0 | [Evidence](../../docs/verification/phase-rank-7-batch-20.md) |
+| 2026-09-30 | Rank 8 batch 19: group 11 triggers | Bound in Death, Love's Sacrifice, Blinding Fury, Divinity Leech, Mimic Spell, Touch of Death, Unblinking Flame Emblem | 7 | 0 | [Evidence](../../docs/verification/phase-rank-8-batch-19.md) |
+| 2026-09-30 | Rank 10 batch 5: group 13 revival | Raise Dead, Revival, Shock to the System, Moment of Renewal | 4 | 0 | [Evidence](../../docs/verification/phase-rank-10-batch-5.md) |
+| 2026-09-30 | Rank 6 batch 25: group 14 pickup items | Fire Seeds, Tree of Seasons, Bounty of the Sky | 3 | 0 | [Evidence](../../docs/verification/phase-rank-6-batch-25.md) |
+| 2026-09-30 | Rank 9 batch 12: groups 15-16 | Tangling Creepers, True Target, Sacred Covenant, Heartbolt | 4 | 0 | [Evidence](../../docs/verification/phase-rank-9-batch-12.md) |
+| 2026-09-30 | Rank 9 batch 13: user answers 2026-10-05 | Cataclysm, Monstrosity Form | 2 | 0 | [Evidence](../../docs/verification/phase-rank-9-batch-13.md) |
 
 
 ## Suggested first review batches
 
 Prioritize Phase 2–3 groups with unenabled members and an already enabled route as a regression starting point, followed by additional ongoing primitives. These are candidate priorities, not estimates of implementation effort. The enabled example is not automatically a verified live test anchor. Read all pending mechanics before reusing evidence.
 
-
-### [P2-041 — Native condition](phase-2.md)
-
-**Spells:** Magical Fetters, Envenom Companion, Albatross Curse, Synesthesia, Vision of Beauty, Chroma Leach, Heinous Future, Debilitating Terror, Charming Push, Mercurial Stride, Remake Physiology, Ghoulish Cravings.
-
-**Status:** 11 enabled / 1 not enabled.
-
-**Enabled:** Magical Fetters, Envenom Companion, Albatross Curse, Synesthesia, Vision of Beauty, Chroma Leach, Heinous Future, Debilitating Terror, Charming Push, Mercurial Stride, Ghoulish Cravings.
-
-**Not enabled:** Remake Physiology.
-
-**Common remaining gates:** residual-prose (1), preamble:ongoing-trigger (1), preamble:modifier (1), preamble:additional-condition (1), item-duration-grammar (1).
-
-**Shared test contract:** All degrees; value and duration; overlap; native immunity; per-cast ownership; correction/recovery; selective cleanup.
-
-### [P3-130 — Condition-dependent lifetime](phase-3.md)
-
-**Spells:** Calcification.
-
-**Status:** 0 enabled / 1 not enabled.
-
-**Enabled:** None in this wording cohort.
-
-**Not enabled:** Calcification.
-
-**Common remaining gates:** manual:secondary-save (1), manual:conditional-effect (1), residual-prose (1), preamble:conditional-eligibility (1), preamble:modifier (1).
-
-**Shared test contract:** Exact root grant; partial/full recovery; duplicate casts; unrelated stronger condition; immunity; removal; reload and detachment.
-
-### [P2-251 — Persistent damage](phase-2.md)
-
-**Spells:** Cutting Insult, Grim Tendrils, Ulcerous Canker, Glass Sand, Bursting Bloom, Weight of the World, Beheading Buzz Saw, Calcium Rain, Ignite Fireworks, Bone Spray, Divine Immolation, Teeth to Terror.
-
-**Status:** 11 enabled / 1 not enabled.
-
-**Enabled:** Cutting Insult, Grim Tendrils, Ulcerous Canker, Glass Sand, Bursting Bloom, Weight of the World, Calcium Rain, Ignite Fireworks, Bone Spray, Divine Immolation, Teeth to Terror.
-
-**Not enabled:** Beheading Buzz Saw.
-
-**Common remaining gates:** Consult runtime/profile gates and source text..
-
-**Shared test contract:** Initial damage versus later ticks; recovery DC; type/stacking; no future ticks in immediate damage totals.
-
-### [P2-009 — Basic-save damage](phase-2.md)
-
-**Spells:** Vampiric Exsanguination, Vampiric Revelry, Breathe Fire, All-Encompassing Hunger, Shatter Mind, Life-Draining Roots, Telekinetic Rend, Drain Life, Pulverizing Cascade, Necrotic Bomb, Force Rain, Chain Lightning.
-
-**Status:** 11 enabled / 1 not enabled.
-
-**Enabled:** Vampiric Exsanguination, Breathe Fire, All-Encompassing Hunger, Shatter Mind, Life-Draining Roots, Telekinetic Rend, Drain Life, Pulverizing Cascade, Necrotic Bomb, Force Rain, Chain Lightning.
-
-**Not enabled:** Vampiric Revelry.
-
-**Common remaining gates:** description-effects (1), description-target-predicates (1), description-lifecycle (1).
-
-**Shared test contract:** All four multipliers; damage components/types; legal ranks; native IWR; persistent damage; extra mechanics remain gated.
-
-### [P3-141 — Recurring saving throw](phase-3.md)
-
-**Spells:** Glacial Heart, Lignify, Medusa's Wrath, Vitrifying Blast, Petrify, Manifold Lives, Darkened Eyes, Paralyze, Charitable Urge, Pressure Zone, Stasis, Confusion.
-
-**Status:** 10 enabled / 2 not enabled.
-
-**Enabled:** Glacial Heart, Lignify, Petrify, Manifold Lives, Darkened Eyes, Paralyze, Charitable Urge, Pressure Zone, Stasis, Confusion.
-
-**Not enabled:** Medusa's Wrath, Vitrifying Blast.
-
-**Common remaining gates:** non-basic-save (1), description-semantics (1), residual-prose (1), item-duration-grammar (1).
-
-**Shared test contract:** Initial versus repeated outcomes; timing and DC; incapacitation; success transitions; skipped turns; reload; no replay after uncertainty.
-
-### [P2-270 — Temporary immunity](phase-2.md)
-
-**Spells:** Overwhelming Presence.
-
-**Status:** 0 enabled / 1 not enabled.
-
-**Enabled:** None in this wording cohort.
-
-**Not enabled:** Overwhelming Presence.
-
-**Common remaining gates:** manual:attitude-or-hostility (1), manual:conditional-effect (1), residual-prose (1), item-duration-grammar (1).
-
-**Shared test contract:** Who is immune to what; degree trigger; duration; repeated casts; expiry and source identity.
-
-### [P3-231 — Sustain](phase-3.md)
-
-**Spells:** Ancestral Winds, Invoke Spirits, Freezing Rain, Steal Shadow, Living Terrain, Distortion Lens, Animus Mine, Breath of Drought, Cinder Swarm, Consuming Darkness, Vibrant Vibrato, Quench.
-
-**Status:** 11 enabled / 1 not enabled.
-
-**Enabled:** Ancestral Winds, Invoke Spirits, Freezing Rain, Steal Shadow, Living Terrain, Distortion Lens, Animus Mine, Breath of Drought, Cinder Swarm, Consuming Darkness, Quench.
-
-**Not enabled:** Vibrant Vibrato.
-
-**Common remaining gates:** manual:conditional-effect (1), residual-prose (1), sustain-effect (1), preamble:ongoing-trigger (1), preamble:restriction (1).
-
-**Shared test contract:** First versus later Sustain; action/exposure limits; missed deadline; source loss; dismissal; selective cleanup.
-
-### [P3-001 — Aura membership](phase-3.md)
-
-**Spells:** Lifewood Cage, Frost Pillar.
-
-**Status:** 1 enabled / 1 not enabled.
-
-**Enabled:** Frost Pillar.
-
-**Not enabled:** Lifewood Cage.
-
-**Common remaining gates:** non-basic-save (1), description-semantics (1).
-
-**Shared test contract:** Membership entry/exit; radius changes; exposure frequency; native modifiers; uncertain placement; owner/GM controls.
-
-### [P3-154 — Ending or dismissal](phase-3.md)
-
-**Spells:** Aura of the Unremarkable.
-
-**Status:** 0 enabled / 1 not enabled.
-
-**Enabled:** None in this wording cohort.
-
-**Not enabled:** Aura of the Unremarkable.
-
-**Common remaining gates:** residual-prose (1), preamble:recipient-qualifier (1).
-
-**Shared test contract:** Expiry versus dismissal versus action-use; successors; permanent consequences; removal ON/OFF; interrupted cleanup.
 
 ## Per-spell differences that must remain in tests
 

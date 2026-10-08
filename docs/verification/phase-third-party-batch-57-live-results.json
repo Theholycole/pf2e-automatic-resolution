@@ -1,0 +1,38 @@
+{
+ "label": "thirdPartyBatch57",
+ "passed": true,
+ "at": "2026-10-07T06:05:15.962Z",
+ "details": {
+  "thirdParty57": {
+   "results": {
+    "social": [
+     1,
+     true
+    ],
+    "static": [
+     2,
+     "4 rounds"
+    ],
+    "crit": [
+     [
+      3,
+      4
+     ],
+     3,
+     true
+    ],
+    "warp": [
+     4,
+     "sonic",
+     "cold"
+    ],
+    "saved": "success",
+    "willing": [
+     "failure",
+     1
+    ]
+   },
+   "fly": 25
+  }
+ }
+}

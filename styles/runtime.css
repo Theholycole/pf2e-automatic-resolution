@@ -62,16 +62,23 @@
     font-weight: 500;
 }
 
+/* A target's heading stacks in rows (the chat column is narrow): its name, its save result, then any GM note. */
 .pf2e-auto-result-heading {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
-    gap: 0.4rem;
+    gap: 0.25rem 0.4rem;
 }
 
 .pf2e-auto-result-heading > strong,
 .pf2e-auto-secondary-result > strong {
     min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.pf2e-auto-result-heading > strong,
+.pf2e-auto-result-heading > .pf2e-auto-correction-note {
+    flex: 1 1 100%;
 }
 
 .pf2e-auto-damage-results {
@@ -122,9 +129,10 @@
 
 .pf2e-auto-secondary-result {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 0.35rem;
+    gap: 0.25rem 0.35rem;
 }
 
 .pf2e-auto-outcome-damage {

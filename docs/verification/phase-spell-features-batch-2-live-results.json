@@ -1,0 +1,44 @@
+{
+  "generatedAt": "2026-10-06T00:28:57.775Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "spellFeaturesBatch2",
+      "passed": true,
+      "at": "2026-10-06T00:28:35.139Z",
+      "details": {
+        "features2": {
+          "angelic": {
+            "card": true,
+            "buttons": 2,
+            "tenaciousBox": true,
+            "applied": {
+              "longer": true,
+              "duration": "1 minutes"
+            }
+          },
+          "undead": {
+            "damage": 3,
+            "type": "void",
+            "lost": 3
+          },
+          "imperial": {
+            "selection": "ac",
+            "acMod": [
+              "{item|flags.system.rulesSelections.defense}"
+            ]
+          },
+          "shadow": {
+            "perception": -1
+          },
+          "hag": {
+            "spite": true,
+            "temp": 3,
+            "spent": true
+          }
+        }
+      }
+    }
+  ]
+}

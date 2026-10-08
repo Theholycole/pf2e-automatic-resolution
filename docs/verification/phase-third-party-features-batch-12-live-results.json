@@ -1,0 +1,117 @@
+{
+ "batch12": {
+  "label": "thirdPartyFeaturesBatch12",
+  "passed": true,
+  "at": "2026-10-07T21:11:46.265Z",
+  "details": {
+   "thirdPartyFeatures12": {
+    "dominion": {
+     "flag": true
+    },
+    "luminor": {
+     "riders": [
+      "table",
+      "persistent",
+      "conditions"
+     ],
+     "fire": [
+      [
+       "3 fire"
+      ],
+      [
+       "3 fire"
+      ]
+     ],
+     "blinded": [
+      false,
+      true
+     ],
+     "second": [
+      "conditions"
+     ]
+    },
+    "propulsor": {
+     "riders": [
+      "push"
+     ],
+     "moved": 10,
+     "save": {
+      "riders": [
+       "push",
+       "table",
+       "damaged-save"
+      ],
+      "card": "fortitude"
+     }
+    },
+    "erosior": {
+     "riders": [
+      "terrain"
+     ],
+     "hazard": {
+      "formula": "1",
+      "damageType": "acid",
+      "per": "pass"
+     },
+     "tied": true,
+     "difficult": true,
+     "speed": [
+      -5
+     ],
+     "afterDominion": 0
+    },
+    "verdor": {
+     "riders": [
+      "table",
+      "conditions",
+      "table"
+     ],
+     "immobilized": true
+    }
+   }
+  }
+ },
+ "dominionRecheck": {
+  "label": "thirdPartyBatch47",
+  "passed": true,
+  "at": "2026-10-07T21:12:25.478Z",
+  "details": {
+   "thirdParty47": {
+    "cast": {
+     "status": "applied",
+     "spell": "Frostbite",
+     "rank": 9,
+     "shaper": true
+    },
+    "first": {
+     "regions": 2,
+     "a": [
+      -5
+     ],
+     "b": [
+      -15
+     ],
+     "lostA": 27,
+     "lostB": 54
+    },
+    "second": {
+     "shaped": [
+      "Fractal Frosting"
+     ],
+     "regions": 1,
+     "a": [
+      -15
+     ]
+    },
+    "dominion": {
+     "status": "applied",
+     "inside": true,
+     "fireball": "6d6 + 3 fire",
+     "bolt": "4d12 electricity",
+     "outside": true,
+     "fireballOutside": "6d6 fire"
+    }
+   }
+  }
+ }
+}

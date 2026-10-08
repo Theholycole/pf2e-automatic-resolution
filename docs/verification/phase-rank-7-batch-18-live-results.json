@@ -1,0 +1,29 @@
+{
+  "label": "rank7Batch18",
+  "passed": true,
+  "at": "2026-10-05T04:07:55.700Z",
+  "details": {
+    "batch18": {
+      "body": {
+        "effect": true,
+        "immune": true,
+        "touch": true,
+        "digest": true,
+        "lost": 12,
+        "temp": 8,
+        "touchTemp": 8,
+        "sameRound": "already this round",
+        "nextRound": 10,
+        "afterEnd": 0
+      },
+      "land": {
+        "tremor": true,
+        "strike": true,
+        "strikeStat": "spell-attack",
+        "lost": 34,
+        "terrain": true,
+        "expelled": 29
+      }
+    }
+  }
+}

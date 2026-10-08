@@ -1,0 +1,38 @@
+{
+  "generatedAt": "2026-10-05T11:45:56.001Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "spellshapeBatch9",
+      "passed": true,
+      "at": "2026-10-05T11:44:07.053Z",
+      "details": {
+        "spellshape9": {
+          "recovery": [
+            1,
+            1
+          ],
+          "infusion": [
+            "2d6vitality"
+          ],
+          "martyr": {
+            "lost": 6,
+            "extra": 6
+          },
+          "cleansing": 5,
+          "purifying": {
+            "venom": true,
+            "card": true,
+            "failed": false
+          },
+          "castDown": {
+            "prone": true,
+            "effect": 1
+          },
+          "transformation": 1
+        }
+      }
+    }
+  ]
+}

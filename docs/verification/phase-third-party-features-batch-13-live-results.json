@@ -1,0 +1,138 @@
+{
+ "batch13": {
+  "label": "thirdPartyFeaturesBatch13",
+  "passed": true,
+  "at": "2026-10-07T21:25:13.549Z",
+  "details": {
+   "thirdPartyFeatures13": {
+    "mortisor": {
+     "riders": [
+      "targeted-condition",
+      "on-kill-rules"
+     ],
+     "frightened": 2,
+     "immune": true,
+     "mental": [
+      2
+     ]
+    },
+    "savior": {
+     "grace": [
+      "damage 2",
+      "attack-roll 1"
+     ],
+     "immune": {
+      "value": 1,
+      "unit": "minutes",
+      "expiry": "turn-start",
+      "sustained": false
+     }
+    },
+    "atmosphor": {
+     "fly": 25,
+     "effect": true
+    },
+    "fabricator": {
+     "effect": [
+      "perception/will -2"
+     ],
+     "afterDominion": 0
+    },
+    "magnetor": {
+     "moved": true,
+     "weakness": [
+      "electricity 1"
+     ]
+    },
+    "ardor": {
+     "riders": [
+      "twin-target",
+      "table"
+     ],
+     "bonus": 2,
+     "halved": 2
+    },
+    "desolator": true,
+    "infusion": {
+     "riders": [
+      "self-rules",
+      "table"
+     ],
+     "fly": 25
+    }
+   }
+  }
+ },
+ "batch12Recheck": {
+  "label": "thirdPartyFeaturesBatch12",
+  "passed": true,
+  "at": "2026-10-07T21:26:33.634Z",
+  "details": {
+   "thirdPartyFeatures12": {
+    "dominion": {
+     "flag": true
+    },
+    "luminor": {
+     "riders": [
+      "table",
+      "persistent",
+      "conditions"
+     ],
+     "fire": [
+      [
+       "3 fire"
+      ],
+      [
+       "3 fire"
+      ]
+     ],
+     "blinded": [
+      false,
+      true
+     ],
+     "second": [
+      "conditions"
+     ]
+    },
+    "propulsor": {
+     "riders": [
+      "push"
+     ],
+     "moved": 10,
+     "save": {
+      "riders": [
+       "push",
+       "table",
+       "damaged-save"
+      ],
+      "card": "fortitude"
+     }
+    },
+    "erosior": {
+     "riders": [
+      "terrain"
+     ],
+     "hazard": {
+      "formula": "1",
+      "damageType": "acid",
+      "per": "pass"
+     },
+     "tied": true,
+     "difficult": true,
+     "speed": [
+      -5
+     ],
+     "afterDominion": 0
+    },
+    "verdor": {
+     "riders": [
+      "table",
+      "conditions",
+      "table"
+     ],
+     "immobilized": true
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,32 @@
+{
+ "label": "rank8Batch9",
+ "passed": true,
+ "at": "2026-10-04T23:19:43.409Z",
+ "details": {
+  "batch9": {
+   "sky": {
+    "supported": true,
+    "lost": [
+     40,
+     0,
+     60
+    ],
+    "elevation": [
+     0,
+     0
+    ],
+    "prone": [
+     false,
+     true,
+     true
+    ],
+    "stunned": [
+     2,
+     true
+    ],
+    "stunTimer": "1 rounds",
+    "reminder": true
+   }
+  }
+ }
+}

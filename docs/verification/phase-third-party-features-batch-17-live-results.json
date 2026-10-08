@@ -1,0 +1,39 @@
+{
+ "batch17": {
+  "label": "thirdPartyFeaturesBatch17",
+  "passed": true,
+  "at": "2026-10-07T22:14:00.105Z",
+  "details": {
+   "thirdPartyFeatures17": {
+    "become": {
+     "form": true,
+     "selection": "fire",
+     "strike": [
+      "31/14"
+     ],
+     "speed": true,
+     "spent": true,
+     "forms": 1
+    },
+    "create": {
+     "summoned": [
+      [
+       "Jann",
+       true
+      ]
+     ],
+     "spent": true
+    },
+    "spark": {
+     "replaced": {
+      "name": "Summon Construct",
+      "rank": 7
+     },
+     "construct": [
+      "Soulbound Doll (Calm)"
+     ]
+    }
+   }
+  }
+ }
+}

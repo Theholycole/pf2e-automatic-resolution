@@ -8,6 +8,7 @@ import {MODULE_ID} from './effect-runtime.js';
 import {clone} from './runtime-utils.js';
 import {addObligation, boundaryKey, turnAdvance} from './ongoing-core.js';
 import {emptyConditionSavePlan} from './condition-spell-core.js';
+import {grantMinionControl} from './minion-control-runtime.js';
 
 const state = journal => journal.getFlag(MODULE_ID, 'ongoingCast');
 
@@ -149,7 +150,8 @@ export async function finalizeRecurringSave(family, journal, card, saveState) {
     // Quickened — petrifies it and ends the spell.)
     const atActions = mode === 'escalate' ? entry.metadata.recurringSave.atActions : null;
     const actionCount = atActions ? 3 + (effect.actor?.hasCondition?.('quickened') ? 1 : 0) : null;
-    const result = mode === 'turn-condition' ? {end: false, grant: ['failure', 'criticalFailure'].includes(target.degree)}
+    // (Possession: a critical success forces the caster out — the note ends.)
+    const result = mode === 'turn-condition' ? (target.degree === 'criticalSuccess' && entry.metadata.recurringSave.endOnCriticalSuccess ? {end: true} : {end: false, grant: ['failure', 'criticalFailure'].includes(target.degree)})
         : atActions && escalated >= actionCount ? {end: true, petrify: atActions}
         : mode === 'escalate' ? (escalated <= 0 ? {end: true} : {end: false, value: escalated}) : recurringSaveResult(mode, target.degree, mode === 'reduce' ? rounds : null);
     record.status = 'applying'; obligation.status = 'applying'; await family.ongoing.save(journal, record);
@@ -164,15 +166,17 @@ export async function finalizeRecurringSave(family, journal, card, saveState) {
         } else if (result.value != null) {
             await granted.update({'system.value.value': result.value});
         } else if (result.grant) {
-            const name = `${turnCondition.slug[0].toUpperCase()}${turnCondition.slug.slice(1)} ${turnCondition.value}`;
-            await effect.actor.createEmbeddedDocuments('Item', [{name: `${record.name}: ${name} (this turn)`, type: 'effect', img: 'icons/svg/downgrade.svg',
+            const name = `${turnCondition.slug[0].toUpperCase()}${turnCondition.slug.slice(1)}${turnCondition.value ? ` ${turnCondition.value}` : ""}`;
+            const [turnEffect] = await effect.actor.createEmbeddedDocuments('Item', [{name: `${record.name}: ${name} (this turn)`, type: 'effect', img: 'icons/svg/downgrade.svg',
                 flags: {[MODULE_ID]: {turnCondition: {castId: record.castId}}},
                 system: {duration: {value: 0, unit: 'rounds', expiry: 'turn-end', sustained: false}, start: {value: game.time.worldTime, initiative: game.combat?.combatant?.initiative ?? null},
                     description: {value: `<p>${name} for this turn, from a failed save against <strong>${record.name}</strong>.</p>`},
-                    rules: [{key: 'GrantItem', uuid: turnCondition.uuid, onDeleteActions: {grantee: 'restrict'}, alterations: [{mode: 'override', property: 'badge-value', value: turnCondition.value}]}]}}]);
+                    rules: [{key: 'GrantItem', uuid: turnCondition.uuid, onDeleteActions: {grantee: 'restrict'}, ...(turnCondition.value ? {alterations: [{mode: 'override', property: 'badge-value', value: turnCondition.value}]} : {})}]}}]);
+            // (Controlled by the caster that turn: the caster's players own its token until the turn's Effect ends — Possession's partial control.)
+            if (turnCondition.slug === 'controlled' && turnEffect) await grantMinionControl(turnEffect, effect.actor, record.sourceActorUuid);
         }
         target.conditionResults = [{label: result.petrify ? `${effect.actor.name} is ${result.petrify.slug} permanently; ${effect.name} ended` : result.end ? `${effect.name} ended` : result.rounds ? `${effect.name}: ${result.rounds} rounds remain` : result.value != null ? `${effect.name}: ${entry.metadata.recurringSave.slug} ${result.value}`
-            : result.grant ? `${turnCondition.slug} ${turnCondition.value} this turn` : `${effect.name} continues`,
+            : result.grant ? `${turnCondition.slug}${turnCondition.value ? ` ${turnCondition.value}` : ""} this turn` : `${effect.name} continues`,
             status: 'applied', effectUuid: effect.uuid}];
         obligation.status = 'completed'; obligation.degree = target.degree;
         record.status = record.entries.every(e => e.status === 'ended' || e.detached) ? 'ended' : 'active';

@@ -1,0 +1,31 @@
+{
+ "label": "thirdPartyFeaturesBatch35",
+ "passed": true,
+ "at": "2026-10-08T01:42:20.912Z",
+ "details": {
+  "thirdPartyFeatures35": {
+   "armed": 3,
+   "afterFirst": [
+    3,
+    2,
+    3
+   ],
+   "afterSecond": [
+    3,
+    2,
+    3
+   ],
+   "afterThird": [
+    3,
+    3,
+    2
+   ],
+   "done": true,
+   "afterFourth": [
+    2,
+    3,
+    2
+   ]
+  }
+ }
+}

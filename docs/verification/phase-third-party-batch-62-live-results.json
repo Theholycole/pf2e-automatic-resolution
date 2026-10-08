@@ -1,0 +1,36 @@
+{
+ "label": "thirdPartyBatch62",
+ "passed": true,
+ "at": "2026-10-07T06:26:16.212Z",
+ "details": {
+  "thirdParty62": {
+   "patron": {
+    "spell": "Fireball",
+    "rank": 4,
+    "formula": "4d6",
+    "damage": 14,
+    "lost": 14
+   },
+   "shaped": {
+    "rank": 4,
+    "shapes": [
+     "Unleash True Power"
+    ]
+   },
+   "end": {
+    "targets": [
+     "Copy B",
+     "Copy A",
+     "PFTEST Ongoing Aura recipient",
+     "PFTEST Ongoing Aura recipient",
+     "PFTEST Ongoing Aura recipient",
+     "tp29 inventor",
+     "tp40 expert",
+     "tp40 legend",
+     "tp62 witch",
+     "tp62 near"
+    ]
+   }
+  }
+ }
+}

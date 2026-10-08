@@ -1,0 +1,28 @@
+{
+ "label": "thirdPartyBatch30",
+ "passed": true,
+ "at": "2026-10-07T02:58:48.462Z",
+ "details": {
+  "thirdParty30": {
+   "cast": {
+    "status": "applied",
+    "tradition": "primal",
+    "wards": [
+     true,
+     true
+    ]
+   },
+   "afterStrike": 1,
+   "penalty": true,
+   "saver": "tp30 beast",
+   "beast": {
+    "frightened": 1,
+    "immune": true
+   },
+   "afterSecondStrike": 0,
+   "afterSpell": 1,
+   "mageSaver": "tp30 mage",
+   "magePenalty": false
+  }
+ }
+}

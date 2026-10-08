@@ -33,10 +33,32 @@ function lifecycle(adapted) {
     return { rangeFeet: Number(range[1]), durationSeconds: minutes ? Number(minutes[1]) * 60 : 600, sustained: true };
 }
 
+// Magic+'s aspect summons: "You call upon an animal to do your bidding. You summon an @UUID[…]{animal aspect} that can be up to Medium in size (or a different size,
+// as determined by your choice of aspect)." with the aspect creature, its "Spell Effect: … Aspect Statistics" and the module's macro linked after it — that creature, at
+// a level of the cast rank, with the statistics Effect from the caster (as the macro does: its AspectForm reads the caster's spell DC); its choices the caster's.
+const ASPECT = /^<p>((?:(?!<\/p>).)*?)You summon an? @UUID\[[^\]]+\]\{([a-z]+ aspect)\} that can be up to ([A-Z][a-z]+) in size(?: \(or a different size, as determined by your choice of aspect\))?\.(?:\s*<br\s*\/?>\s*<em>See @UUID\[[^\]]+\]\{Aspect Summoning\} for more\.<\/em>)?<\/p>\s*<p>@UUID\[(Compendium\.[^\]]+?\.actors)\.(?:Actor\.|Item\.)?([A-Za-z0-9]+)\](?:\{([^}]+)\})?\s*@UUID\[(Compendium\.[^\]]+?\.(?:misc|spell-effects)\.(?:Item\.)?[A-Za-z0-9]+)\]\{(Spell Effect: [^}]+)\}<\/p>\s*<p>@UUID\[Compendium\.[^\]]+?\.macros\.[^\]]+\](?:\{[^}]+\})?<\/p>$/;
+const docUuid = (uuid, type) => uuid.replace(new RegExp(`^(Compendium\\.[^.]+\\.[^.]+)\\.(?!${type}\\.)`), `$1.${type}.`);
+
+function compileAspectSummon(adapted) {
+    const html = String(adapted.descriptionHTML ?? "").replace(/\s+/g, " ").trim();
+    const match = ASPECT.exec(html);
+    if (!match || /\d|@/.test(match[1])) return null;
+    const raw = String(adapted.lifecycle?.duration ?? "").trim();
+    const minutes = /^(?:sustained up to )?(\d+) minutes?$/i.exec(raw);
+    if (!minutes || adapted.lifecycle?.sustained !== true) return null;
+    const range = /^(\d+) feet$/i.exec(String(adapted.targeting?.range ?? "").trim());
+    return { summon: { rangeFeet: range ? Number(range[1]) : 30, durationSeconds: Number(minutes[1]) * 60, sustained: true, actorUuid: `${match[4]}.Actor.${match[5]}`, actorName: match[6] ?? match[2].replace(/\b[a-z]/g, letter => letter.toUpperCase()),
+        // (The module's statistics Effect: the compiler reads it as PF2e's spell Effects are; the loader finds it in the module's pack.)
+        aspect: { kind: match[2], maxSize: match[3].toLowerCase(), statistics: { uuid: docUuid(match[7], "Item"), name: match[8] } }, notes: [] },
+        claimed: [plain(html)] };
+}
+
 /** Returns {summon, claimed} or null. */
 export function compileSummon(adapted) {
     if (adapted.defense?.kind !== "none" && adapted.defense?.kind !== undefined) return null;
     if (String(adapted.targeting?.target ?? "").trim() || (adapted.damageComponents ?? []).length) return null;
+    const aspect = compileAspectSummon(adapted);
+    if (aspect) return aspect;
     const life = lifecycle(adapted);
     if (!life) return null;
     const [body, ...rest] = String(adapted.descriptionHTML ?? "").split(/<hr\s*\/?>/i);
@@ -97,6 +119,7 @@ export function summonEligible(data, entry, { castRank, tradition = null, allowR
     if (!Number.isFinite(creatureLevel) || max === null) return false;
     if (!allowRarity && data.rarity && (entry.system?.traits?.rarity ?? "common") !== data.rarity) return false;
     if (data.traditionMatch && tradition && traits.some(trait => TRADITIONS.includes(trait) && trait !== tradition)) return false;
+    if ((data.requireTraits ?? []).some(trait => !traits.includes(trait))) return false;
     if (data.traits.some(trait => traits.includes(trait))) return creatureLevel <= max;
     // Summon Lesser Servitor's animal option.
     return Boolean(data.animal) && traits.includes("animal") && creatureLevel <= max;

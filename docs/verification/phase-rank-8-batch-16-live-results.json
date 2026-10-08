@@ -1,0 +1,54 @@
+{
+  "label": "rank8Batch16",
+  "passed": true,
+  "at": "2026-10-05T03:56:39.660Z",
+  "details": {
+    "batch16": {
+      "phoenix": {
+        "form": true,
+        "region": true,
+        "atStart": 0,
+        "lost": 5,
+        "card": {
+          "shroud": true,
+          "rake": false
+        },
+        "off": true,
+        "on": true
+      },
+      "worm": {
+        "before": {
+          "slowed": true,
+          "paralyzed": true
+        },
+        "after": {
+          "slowed": false,
+          "paralyzed": false
+        },
+        "stunnedBefore": true,
+        "stunnedAfter": false
+      },
+      "serpent": {
+        "rake": true,
+        "shroud": false,
+        "region": 1,
+        "lost": 21
+      },
+      "green": {
+        "foe": 2,
+        "plant": false,
+        "pal": false,
+        "region": true
+      },
+      "kaiju": {
+        "lost": 36,
+        "form": true
+      },
+      "qi": {
+        "lost": 8,
+        "before": 150,
+        "after": 650
+      }
+    }
+  }
+}

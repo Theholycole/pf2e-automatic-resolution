@@ -1,0 +1,146 @@
+{
+ "batch22": {
+  "label": "thirdPartyFeaturesBatch22",
+  "passed": true,
+  "at": "2026-10-07T23:14:24.700Z",
+  "details": {
+   "thirdPartyFeatures22": {
+    "imposing": {
+     "delivered": true,
+     "degree": "criticalSuccess",
+     "results": [
+      {
+       "label": "Imposing Spellstrike: PFTEST P23 Affliction tpf22 imposed -2 will, -3 all (fear)",
+       "status": "applied",
+       "effectUuid": "Actor.QeBblSyWyZaM9hJg.Item.T75vl02WHXCIDJwG"
+      }
+     ],
+     "shaping": [
+      {
+       "name": "Imposing Spellstrike",
+       "unmet": null,
+       "chosen": null
+      }
+     ],
+     "effect": [
+      [
+       -2,
+       -3
+      ]
+     ]
+    },
+    "pummeling": {
+     "delivered": true,
+     "degree": "criticalSuccess",
+     "results": [
+      {
+       "label": "Pummeling Spellstrike: PFTEST P23 Affliction tpf22 pummeled pushed 10 of 10 feet",
+       "status": "applied"
+      }
+     ],
+     "shaping": [
+      {
+       "name": "Pummeling Spellstrike",
+       "unmet": null,
+       "chosen": null
+      }
+     ],
+     "movedSquares": 2
+    },
+    "flaying": {
+     "delivered": true,
+     "degree": "criticalSuccess",
+     "results": [
+      {
+       "label": "Flaying Spellstrike: PFTEST P23 Affliction tpf22 flayed weakness 6 to fire",
+       "status": "applied",
+       "effectUuid": "Actor.ma9WHei6czZ8RVsu.Item.K5wdI7QSIDTHjLij",
+       "checkDC": 13
+      }
+     ],
+     "shaping": [
+      {
+       "name": "Flaying Spellstrike",
+       "unmet": null,
+       "chosen": null
+      }
+     ],
+     "weakness": [
+      "fire 6"
+     ]
+    },
+    "banishing": {
+     "delivered": true,
+     "degree": "criticalSuccess",
+     "results": [
+      {
+       "label": "Banishing Spellstrike: PFTEST P23 Affliction tpf22 banished failure",
+       "status": "applied",
+       "degree": "failure",
+       "banished": true
+      }
+     ],
+     "shaping": [
+      {
+       "name": "Banishing Spellstrike",
+       "unmet": null,
+       "chosen": null
+      }
+     ],
+     "gmTold": true
+    },
+    "grimoire": {
+     "delivered": true,
+     "degree": "criticalSuccess",
+     "results": [
+      {
+       "label": "Living Grimoire: PFTEST P23 Affliction tpf22 grimoired dazzled for 10 rounds",
+       "status": "applied",
+       "effectUuid": "Actor.oRa2Y73s51xHhoBw.Item.oUzRxwScxLV9ImM7"
+      }
+     ],
+     "shaping": [
+      {
+       "name": "Living Grimoire",
+       "unmet": null,
+       "chosen": null
+      }
+     ],
+     "dazzled": true,
+     "penalty": true
+    },
+    "inverted": {
+     "delivered": true,
+     "degree": "criticalSuccess",
+     "results": [],
+     "shaping": [
+      {
+       "name": "Inverted Energy Spellstrike",
+       "unmet": null,
+       "chosen": {
+        "essence": "fire",
+        "to": "cold",
+        "from": [
+         "fire"
+        ],
+        "onlyWeakTo": null
+       }
+      }
+     ]
+    },
+    "unarmored": {
+     "delivered": false,
+     "degree": "criticalSuccess",
+     "results": null,
+     "shaping": [
+      {
+       "name": "Imposing Spellstrike",
+       "unmet": "you aren't wearing heavy armor",
+       "chosen": null
+      }
+     ]
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,19 @@
+{
+ "label": "thirdPartyBatch28",
+ "passed": true,
+ "at": "2026-10-07T02:48:57.623Z",
+ "details": {
+  "thirdParty28": {
+   "plain": {
+    "formula": "2d4 fire",
+    "total": 2,
+    "lost": 4
+   },
+   "expended": {
+    "formula": "4d4 slashing",
+    "total": 12,
+    "lost": 12
+   }
+  }
+ }
+}

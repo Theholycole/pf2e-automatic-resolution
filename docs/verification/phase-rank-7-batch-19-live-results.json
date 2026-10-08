@@ -1,0 +1,37 @@
+{
+  "label": "rank7Batch19",
+  "passed": true,
+  "at": "2026-10-05T05:34:30.827Z",
+  "details": {
+    "batch19": {
+      "sand": {
+        "shield": true,
+        "dazzled": true,
+        "immune": true,
+        "blast": 52,
+        "shieldGone": true,
+        "radius": 650,
+        "storm": 30,
+        "left": {
+          "dazzled": false
+        }
+      },
+      "vib": {
+        "radius": 450,
+        "remembered": [
+          "criticalFailure",
+          "criticalSuccess"
+        ],
+        "turn": {
+          "shaken": 32,
+          "steady": 0
+        },
+        "left": {
+          "lost": 72,
+          "stunned": 3,
+          "deafened": true
+        }
+      }
+    }
+  }
+}

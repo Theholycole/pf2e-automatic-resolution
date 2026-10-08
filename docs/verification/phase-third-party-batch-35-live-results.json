@@ -1,0 +1,27 @@
+{
+ "label": "thirdPartyBatch35",
+ "passed": true,
+ "at": "2026-10-07T03:25:43.429Z",
+ "details": {
+  "thirdParty35": {
+   "cast": {
+    "status": "applied",
+    "radius": 15
+   },
+   "held": [
+    true,
+    true,
+    false
+   ],
+   "persistent": {
+    "saver": [
+     "3d4 mental"
+    ],
+    "scared": [
+     "3d4 mental"
+    ],
+    "far": []
+   }
+  }
+ }
+}

@@ -1,0 +1,29 @@
+{
+ "label": "thirdPartyBatch48",
+ "passed": true,
+ "at": "2026-10-07T05:18:31.307Z",
+ "details": {
+  "thirdParty48": {
+   "corpse": {
+    "status": "applied",
+    "corpse": true,
+    "radius": 20,
+    "fastHealing": 5,
+    "region": true,
+    "difficult": true,
+    "minionFast": [
+     5
+    ],
+    "minionTraits": true
+   },
+   "before": 2,
+   "dying": {
+    "status": "started",
+    "dead": true,
+    "killed": true,
+    "region": true,
+    "radius": 15
+   }
+  }
+ }
+}

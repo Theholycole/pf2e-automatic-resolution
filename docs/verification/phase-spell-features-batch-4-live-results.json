@@ -1,0 +1,127 @@
+{
+  "generatedAt": "2026-10-06T00:59:10.406Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "spellFeaturesBatch4a",
+      "passed": true,
+      "at": "2026-10-06T00:56:26.393Z",
+      "details": {
+        "features4a": {
+          "signet": {
+            "armed": true,
+            "chosen": "fortitude",
+            "degree": "criticalSuccess"
+          },
+          "codex": {
+            "formula": "6d6r1 fire",
+            "total": 21,
+            "lost": 21
+          },
+          "renewal": {
+            "effect": "Codex of Destruction and Renewal: regeneration 20",
+            "rule": {
+              "key": "FastHealing",
+              "type": "regeneration",
+              "value": 20,
+              "slug": null,
+              "priority": 100,
+              "ignored": false,
+              "predicate": [],
+              "requiresEquipped": null,
+              "requiresInvestment": null,
+              "details": null
+            },
+            "rounds": 4
+          },
+          "blood": {
+            "bleed": "1d6",
+            "area": true
+          },
+          "radiant": {
+            "area": true,
+            "light": 15
+          },
+          "turnStart": {
+            "prone": true,
+            "blinded": true,
+            "dazzledEffect": true,
+            "saves": [
+              "Radiant Tome: blinded",
+              "Radiant Tome: dazzled"
+            ]
+          },
+          "sparking": {
+            "casterDice": true,
+            "allyDice": true,
+            "watch": true,
+            "retaliation": true,
+            "strikeOptions": null
+          },
+          "moth": {
+            "self": 2,
+            "spell": 25,
+            "lost": 27,
+            "extra": "[\"id\",\"actorUuid\",\"tokenUuid\",\"name\",\"level\",\"excluded\",\"revision\",\"originalEligibility\",\"eligibilityOverride\",\"eligible\",\"eligibilityReason\",\"confirmation\",\"degreeAdjustment\",\"degree\",\"saveMessageId\",\"saveTimestamp\",\"rollRevision\",\"reroll\",\"saveTotal\",\"saveNatural\",\"saveModifier\",\"lastSubmissionId\",\"secondary\",\"supportsHeroPoints\",\"applicationStatus\",\"hpBefore\",\"hpAfter\",\"damageResults\",\"effectUuids\",\"conditionResults\",\"terminalResult\",\"terminalApplied\",\"reviewRequired\",\"conditionOverrides\",\"rolledDegree\",\"degreeOverride\",\"lastCorrection\"]"
+          }
+        }
+      }
+    },
+    {
+      "label": "spellFeaturesBatch4b",
+      "passed": true,
+      "at": "2026-10-06T00:58:16.898Z",
+      "details": {
+        "features4b": {
+          "juubun": {
+            "effect": true,
+            "temp": 10
+          },
+          "lexicon": {
+            "trait": true,
+            "lie": true,
+            "foeFooled": true
+          },
+          "walls": {
+            "card": true,
+            "first": "PFTEST P23 Affliction sf4b foe: criticalFailure — Book of Endless Walls: PFTEST P23 Affliction sf4b foe treats all other creatures as hidden (1 round); Book of Endless Walls: PFTEST P23 Affliction sf4b foe treats all other creatures as concealed (10 rounds)",
+            "second": "PFTEST P23 Affliction sf4b foe is immune",
+            "effects": [
+              "Book of Endless Walls: treats all other creatures as hidden",
+              "Book of Endless Walls: treats all other creatures as concealed",
+              "Book of Endless Walls: immune"
+            ]
+          },
+          "popup": {
+            "card": true,
+            "lost": 1
+          },
+          "handscroll": {
+            "card": true,
+            "temp": 10,
+            "again": "Summoning Handscroll has already been given."
+          },
+          "architect": {
+            "card": true,
+            "effect": true
+          },
+          "djezet": {
+            "area": {
+              "type": "burst",
+              "from": 20,
+              "to": 25
+            }
+          },
+          "starChart": {
+            "before": 3,
+            "after": 2
+          },
+          "sleeves": {
+            "shadow": true
+          }
+        }
+      }
+    }
+  ]
+}

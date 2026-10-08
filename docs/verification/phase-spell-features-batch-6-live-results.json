@@ -1,0 +1,42 @@
+{
+  "generatedAt": "2026-10-06T01:18:18.476Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "spellFeaturesBatch6",
+      "passed": true,
+      "at": "2026-10-06T01:17:31.774Z",
+      "details": {
+        "features6": {
+          "rune": {
+            "effect": true,
+            "divine": 20,
+            "arcane": 30
+          },
+          "warding": {
+            "card": true,
+            "given": 7,
+            "priest": 10,
+            "ally": 10
+          },
+          "reflect": {
+            "raised": true,
+            "card": true,
+            "countered": true,
+            "total": 37,
+            "dc": 24,
+            "lost": "reflected by PFTEST P23 Affliction sf6 guard's Reflecting Shield"
+          },
+          "siphon": {
+            "tradition": "arcane",
+            "card": true,
+            "countered": true,
+            "holds": true,
+            "lost": true
+          }
+        }
+      }
+    }
+  ]
+}

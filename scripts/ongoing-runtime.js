@@ -28,6 +28,8 @@ export function payoffFormula(formula, rank) {
 export class OngoingRuntime {
     forms = null;
     #queue = Promise.resolve();
+    // (A plain reconcile queued and not yet started: later plain calls share it — it reads the state as it starts. Every token update asks for one.)
+    #pendingReconcile = null;
     #dialog = null;
     #requests = new Map();
     #runtime;
@@ -51,12 +53,16 @@ export class OngoingRuntime {
     absorberOnDamage(message, helpers) { return this.enqueue(() => this.#family.absorberOnDamage(message, helpers)); }
     startTerrainArea(args) { return this.enqueue(() => this.#family.startTerrainArea(args)); }
     startRegionArea(args) { return this.enqueue(() => this.#family.startRegionArea(args)); }
+    setAreaMode(args) { return this.enqueue(() => this.#family.setAreaMode(args)); }
+    resizeArea(args) { return this.enqueue(() => this.#family.resizeArea(args)); }
+    teethAttempt(castId, token, options) { return this.enqueue(() => this.#family.teethAttemptFor(castId, token, options)); }
     startTargetAura(args) { return this.enqueue(() => this.#family.startTargetAura(args)); }
     startAllyAura(args) { return this.enqueue(() => this.#family.startAllyAura(args)); }
     startAreaBoon(args) { return this.enqueue(() => this.#family.startAreaBoon(args)); }
     escapePrompt(message, options) { return this.#family.escapePrompt(message, options); }
     startLanternAura(args) { return this.enqueue(() => this.#family.startLanternAura(args)); }
     sunPulse(castId) { return this.enqueue(() => this.#family.sunPulse(castId)); }
+    areaPulse(castId) { return this.enqueue(() => this.#family.areaPulse(castId)); }
     startRadiantField(args) { return this.enqueue(() => this.#family.startRadiantField(args)); }
     startWeb(args) { return this.enqueue(() => this.#family.startWeb(args)); }
     startAreaRules(args) { return this.enqueue(() => this.#family.startAreaRules(args)); }
@@ -162,7 +168,10 @@ export class OngoingRuntime {
 
     async reconcile({ recover = false, clockEvent = false } = {}) {
         if (!this.isCoordinator()) return;
-        return this.enqueue(async () => {
+        const plain = !recover && !clockEvent;
+        if (plain && this.#pendingReconcile) return this.#pendingReconcile;
+        const run = this.enqueue(async () => {
+            if (this.#pendingReconcile === run) this.#pendingReconcile = null;
             // Read PF2e's prepared expiry after a native reset. Do not force clock
             // expiry in combat: PF2e intentionally uses encounter processing there.
             if (!game.combat?.started || clockEvent) {
@@ -178,9 +187,45 @@ export class OngoingRuntime {
                 }
                 await this.#reconcileRecord(journal, { clockEvent, recover });
             }
+            await this.#pruneEnded();
             await this.remind();
             this.refreshView();
         });
+        if (plain) this.#pendingReconcile = run;
+        return run;
+    }
+
+    /**
+     * Deletes the journal entries of ended casts nothing still needs: no obligation open (a save card still collecting), no entry whose
+     * document still exists (an Effect, condition or region the cast made — a reconcile would otherwise re-adopt it into a new record), no
+     * module Effect anywhere naming the cast, and no child area still running. The world setting keeps them instead.
+     */
+    async #pruneEnded() {
+        let keep = false;
+        try { keep = game.settings.get(MODULE_ID, "keepEndedOngoing") === true; } catch (_) { keep = false; }
+        if (keep) return;
+        const named = new Set();
+        for (const actor of allActors()) for (const item of actor.items) { const metadata = flag(item); if (metadata) named.add(metadata.castInstanceId ?? metadata.castId); }
+        const records = this.records();
+        for (const journal of records) {
+            const record = value(journal);
+            // (An older record may have no cast id: nothing can name it, so only its own documents and cards keep it.)
+            if (record?.status !== "ended" || (record.castId && named.has(record.castId))) continue;
+            // (A save card of the cast still open: its finalize reports back to the record.)
+            if ((record.obligations ?? []).some(obligation => {
+                const state = obligation.cardId ? game.messages.get(obligation.cardId)?.getFlag(MODULE_ID, "basicSaveState") : null;
+                return state != null && !["completed", "cancelled"].includes(state.status);
+            })) continue;
+            if (record.castId && records.some(other => value(other)?.parentCastId === record.castId && value(other).status !== "ended")) continue;
+            let lives = false;
+            for (const entry of record.entries ?? []) {
+                let document = null;
+                try { document = entry.uuid ? await fromUuid(entry.uuid) : null; } catch (_) { document = null; }
+                if (document) { lives = true; break; }
+            }
+            if (lives) continue;
+            try { await journal.delete(); } catch (error) { console.warn(`PF2e Automatic Resolution | Couldn't delete the ended record ${journal.name}:`, error); }
+        }
     }
 
     async #reconcileRecord(journal, { clockEvent = false, recover = false } = {}) {
@@ -794,10 +839,15 @@ export class OngoingRuntime {
                 }
                 // Held on the cast's target: that creature saves; nothing to target.
                 const held = entry.metadata.storedTrigger.held === true;
-                controls.push({ action: `stored-trigger-${journal.id}-${controls.length}`, label: held ? `Trigger ${record.name} (${entry.metadata.targetName ?? "its target"})` : `Trigger ${record.name} (targeted creature)`,
+                controls.push({ action: `stored-trigger-${journal.id}-${controls.length}`, label: held ? `Trigger ${record.name} (${entry.metadata.targetName ?? "its target"})` : `Trigger ${record.name} (targeted creature${entry.metadata.storedTrigger.area ? "s" : ""})`,
                     callback: async () => {
                         if (held) return this.storedTriggers.trigger({ castId: record.castId, uuid: entry.uuid, targetUuid: entry.metadata.targetTokenUuid });
                         const targets = [...game.user.targets];
+                        // (A rune's area: every creature near it.)
+                        if (entry.metadata.storedTrigger.area) {
+                            if (!targets.length) return ui.notifications.warn(`Target every creature in ${record.name}'s area.`);
+                            return this.storedTriggers.trigger({ castId: record.castId, uuid: entry.uuid, targetUuids: targets.map(target => target.document.uuid) });
+                        }
                         if (targets.length !== 1) return ui.notifications.warn(`Target the one creature that triggered ${record.name}.`);
                         return this.storedTriggers.trigger({ castId: record.castId, uuid: entry.uuid, targetUuid: targets[0].document.uuid });
                     } });
@@ -829,7 +879,7 @@ export class OngoingRuntime {
                 const who = entry.metadata.triggeredDamage.targetName ?? (await fromUuid(entry.actorUuid))?.name ?? "the target";
                 // (Or "didn't Stride, Fly or Swim this turn": Agitate's damage at the end of its turn.)
                 const what = { "no-move": "didn't Stride, Fly or Swim this turn", "no-escape": "didn't Escape before the spell ended",
-                    explosion: "— the lodged projectile explodes (target the adjacent creatures it also hits)", "spell-affected": "became affected by a spell with a duration", "no-seek": "ended its turn without Seeking or otherwise trying to disbelieve its surroundings", "auditory-or-cast": "performed an auditory action or Cast a Spell", "spell-cast": "Cast a Spell",
+                    explosion: "— the lodged projectile explodes (target the adjacent creatures it also hits)", "spell-affected": "became affected by a spell with a duration", "no-seek": "ended its turn without Seeking or otherwise trying to disbelieve its surroundings", "auditory-or-cast": "performed an auditory action or Cast a Spell", "spell-cast": "Cast a Spell", "move-action": "took an action with the move trait",
                     daily: "— a day has passed (its daily damage)", hourly: "— an hour has passed (its hourly damage)", auditory: "used an action with the auditory trait", "attack-against-caster": "attacked the caster (discharge the rune)", "cage-broken": "Escaped, or the cage was destroyed or Dismissed (the shards)", "weapon-hit": "was hit by the target weapon", noncompliance: "didn't comply with the demand by the end of its next turn (if it complied, end the spell instead)", "strike-wound": `took at least ${entry.metadata.triggeredDamage.threshold} piercing or slashing damage from a single Strike`,
                     "attack-result": `'s attack was a ${(entry.metadata.triggeredDamage.results ?? []).map(result => result === "criticalFailure" ? "critical failure" : "failure").join(" or ")}` }[entry.metadata.triggeredDamage.trigger] ?? "took a hostile action";
                 // (Warrior's Regret: the GM gives how many different creatures it damaged this turn.)
@@ -858,6 +908,19 @@ export class OngoingRuntime {
                     for (const [index, variant] of (entry.metadata.triggeredDamage.variants ?? []).entries()) controls.push({ action: `hostile-ability-${index}-${journal.id}-${controls.length}`,
                         label: `${record.name}: ${who} used ${variant.label} (once a round: ${variant.dice}d${variant.die}${variant.heightening ? "+" : ""} ${entry.metadata.triggeredDamage.type})`,
                         callback: () => this.request("hostile-damage", { castId: record.castId, uuid: entry.uuid, variant: index }) });
+                }
+                // (Old-Mage's Echo: the GM gives the rank of the spell it cast; the general one is replaced.)
+                if (entry.metadata.triggeredDamage.trigger === "spell-cast-rank") {
+                    controls.pop();
+                    const td = entry.metadata.triggeredDamage;
+                    controls.push({ action: `hostile-cast-${journal.id}-${controls.length}`, label: `${record.name}: ${who} Cast a Spell (${td.perRank} × its rank ${td.type} damage${td.frequency === "once" ? ", once" : ""})`,
+                        callback: async () => {
+                            const rank = await foundry.applications.api.DialogV2.prompt({ window: { title: `${record.name} — the spell's rank` },
+                                content: `<p>What rank was the spell ${escapeHTML(who)} cast?</p><input type="number" name="rank" min="0" max="10" value="1">`,
+                                ok: { label: "Deal the damage", callback: (_event, button) => Number(button.form.elements.rank.value) }, rejectClose: false });
+                            if (!Number.isInteger(rank)) return;
+                            return this.request("hostile-damage", { castId: record.castId, uuid: entry.uuid, amount: rank });
+                        } });
                 }
                 // (Achaekek's Clutch: the GM gives the persistent damage's amount; the general one is replaced.)
                 if (entry.metadata.triggeredDamage.trigger === "bleed-gained") {
@@ -985,6 +1048,8 @@ export class OngoingRuntime {
             // What raises the creature's condition, reported by the GM (Censure Falsehoods).
             if (record.status === "active" && game.user.isGM) for (const entry of record.entries.filter(e => e.status === "active" && !e.detached && e.metadata?.triggeredIncrease)) {
                 const actor = await fromUuid(entry.actorUuid);
+                // (A once-only increase that has happened: no control.)
+                if (entry.metadata.triggeredIncrease.once && (await fromUuid(entry.uuid))?.getFlag?.(MODULE_ID, "increaseUsed")) continue;
                 controls.push({ action: `triggered-increase-${journal.id}-${controls.length}`, label: `${record.name}: ${actor?.name ?? "the creature"} ${entry.metadata.triggeredIncrease.trigger} (${entry.metadata.triggeredIncrease.slug} +1)`,
                     callback: () => this.request("triggered-increase", { castId: record.castId, uuid: entry.uuid }) });
             }

@@ -1,0 +1,230 @@
+{
+ "thirdPartyFeaturesBatch34": {
+  "label": "thirdPartyFeaturesBatch34",
+  "passed": true,
+  "at": "2026-10-08T01:37:05.186Z",
+  "details": {
+   "thirdPartyFeatures34": {
+    "ignition": {
+     "region": true,
+     "hazard": {
+      "per": "turn-end-save",
+      "statistic": "fortitude",
+      "dc": 22,
+      "damage": {
+       "formula": "1",
+       "type": "force"
+      },
+      "exceptCaster": true
+     },
+     "lasts": 12,
+     "card": {
+      "target": "PFTEST P23 Affliction tpf34 burnt",
+      "statistic": "fortitude",
+      "dc": 22,
+      "formula": "1 force",
+      "lost": 1
+     }
+    },
+    "cone": {
+     "delivered": true,
+     "results": [
+      "Cone of Figments: 2d4 bludgeoning (basic reflex) to PFTEST P23 Affliction tpf34 behind one, PFTEST P23 Affliction tpf34 behind two"
+     ],
+     "caught": [
+      "PFTEST P23 Affliction tpf34 behind one",
+      "PFTEST P23 Affliction tpf34 behind two"
+     ],
+     "card": {
+      "statistic": "reflex",
+      "targets": [
+       "PFTEST P23 Affliction tpf34 behind one",
+       "PFTEST P23 Affliction tpf34 behind two"
+      ]
+     },
+     "formula": "2d4 bludgeoning",
+     "lost": [
+      6,
+      6
+     ],
+     "besideLost": 0
+    }
+   }
+  }
+ },
+ "thirdPartyFeaturesBatch22": {
+  "label": "thirdPartyFeaturesBatch22",
+  "passed": true,
+  "at": "2026-10-08T01:37:35.344Z",
+  "details": {
+   "thirdPartyFeatures22": {
+    "imposing": {
+     "delivered": true,
+     "degree": "criticalSuccess",
+     "results": [
+      {
+       "label": "Imposing Spellstrike: PFTEST P23 Affliction tpf22 imposed -2 will, -3 all (fear)",
+       "status": "applied",
+       "effectUuid": "Actor.hjAPRGzFspfoCCtS.Item.DX9VAyi2izjKUcun"
+      }
+     ],
+     "shaping": [
+      {
+       "name": "Imposing Spellstrike",
+       "unmet": null,
+       "chosen": null
+      }
+     ],
+     "effect": [
+      [
+       -2,
+       -3
+      ]
+     ]
+    },
+    "pummeling": {
+     "delivered": true,
+     "degree": "criticalSuccess",
+     "results": [
+      {
+       "label": "Pummeling Spellstrike: PFTEST P23 Affliction tpf22 pummeled pushed 10 of 10 feet",
+       "status": "applied"
+      }
+     ],
+     "shaping": [
+      {
+       "name": "Pummeling Spellstrike",
+       "unmet": null,
+       "chosen": null
+      }
+     ],
+     "movedSquares": 2
+    },
+    "flaying": {
+     "delivered": true,
+     "degree": "criticalSuccess",
+     "results": [
+      {
+       "label": "Flaying Spellstrike: PFTEST P23 Affliction tpf22 flayed weakness 6 to fire",
+       "status": "applied",
+       "effectUuid": "Actor.u1c0Ap9XrHd0bcIq.Item.q5uJz7xbwqLsJATV",
+       "checkDC": 13
+      }
+     ],
+     "shaping": [
+      {
+       "name": "Flaying Spellstrike",
+       "unmet": null,
+       "chosen": null
+      }
+     ],
+     "weakness": [
+      "fire 6"
+     ]
+    },
+    "banishing": {
+     "delivered": true,
+     "degree": "criticalSuccess",
+     "results": [
+      {
+       "label": "Banishing Spellstrike: PFTEST P23 Affliction tpf22 banished criticalFailure",
+       "status": "applied",
+       "degree": "criticalFailure",
+       "banished": true
+      }
+     ],
+     "shaping": [
+      {
+       "name": "Banishing Spellstrike",
+       "unmet": null,
+       "chosen": null
+      }
+     ],
+     "gmTold": true
+    },
+    "grimoire": {
+     "delivered": true,
+     "degree": "criticalSuccess",
+     "results": [
+      {
+       "label": "Living Grimoire: PFTEST P23 Affliction tpf22 grimoired dazzled for 10 rounds",
+       "status": "applied",
+       "effectUuid": "Actor.qbXqLZTp10HogNa1.Item.8ORwH5p68o8AkH4N"
+      }
+     ],
+     "shaping": [
+      {
+       "name": "Living Grimoire",
+       "unmet": null,
+       "chosen": null
+      }
+     ],
+     "dazzled": true,
+     "penalty": true
+    },
+    "inverted": {
+     "delivered": false,
+     "degree": "criticalSuccess",
+     "results": null,
+     "shaping": [
+      {
+       "name": "Inverted Energy Spellstrike",
+       "unmet": null,
+       "chosen": {
+        "essence": "fire",
+        "to": "cold",
+        "from": [
+         "fire"
+        ],
+        "onlyWeakTo": null
+       }
+      }
+     ]
+    },
+    "unarmored": {
+     "delivered": false,
+     "degree": "criticalSuccess",
+     "results": null,
+     "shaping": [
+      {
+       "name": "Imposing Spellstrike",
+       "unmet": "you aren't wearing heavy armor",
+       "chosen": null
+      }
+     ]
+    }
+   }
+  }
+ },
+ "spellshapeBatch14": {
+  "label": "spellshapeBatch14",
+  "passed": true,
+  "at": "2026-10-08T01:38:27.913Z",
+  "details": {
+   "spellshape14": {
+    "snowfields": {
+     "made": true,
+     "difficult": true,
+     "minutes": 1
+    },
+    "hopeless": {
+     "card": true,
+     "frightened": 1
+    },
+    "crushing": {
+     "offGuard": true,
+     "terrain": true
+    },
+    "slaughter": {
+     "foeHp": 0,
+     "allyLost": 14
+    },
+    "purificationDialog": true,
+    "purification": true,
+    "purificationRank": "2",
+    "overflowing": 21,
+    "shattering": true
+   }
+  }
+ }
+}

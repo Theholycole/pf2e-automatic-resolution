@@ -1,0 +1,34 @@
+{
+ "batch30": {
+  "label": "thirdPartyFeaturesBatch30",
+  "passed": true,
+  "at": "2026-10-08T00:38:45.697Z",
+  "details": {
+   "thirdPartyFeatures30": {
+    "unstable": {
+     "essence": 3,
+     "pending": {
+      "outcome": "success",
+      "essence": 3
+     },
+     "aura": true
+    },
+    "unstableLeak": {
+     "essence": 0,
+     "leaks": 1,
+     "aura": false
+    },
+    "lifeTemp": 8,
+    "summoner": {
+     "before": 2,
+     "bonus": "Essence Summoner: +1"
+    },
+    "immunityFirst": {
+     "misses": [],
+     "immune": true
+    },
+    "immunitySecond": true
+   }
+  }
+ }
+}

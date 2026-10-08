@@ -1,0 +1,33 @@
+{
+ "label": "thirdPartyBatch68",
+ "passed": true,
+ "at": "2026-10-07T08:55:22.136Z",
+ "details": {
+  "thirdParty68": {
+   "breathe": {
+    "kind": "proxy-cast",
+    "status": "applied",
+    "spell": "Dynamic Breathe Fire",
+    "card": true
+   },
+   "overlap": "Patron's Apocalypse: the bursts can't overlap.",
+   "cast": {
+    "kind": "nature",
+    "bursts": 2,
+    "kept": "nature"
+   },
+   "turn": {
+    "lost": 120,
+    "bleed": [
+     "10 bleed"
+    ]
+   },
+   "far": "Patron's Apocalypse: a burst moves up to 30 feet.",
+   "move": {
+    "feet": 30,
+    "terrain": true,
+    "hazard": "10"
+   }
+  }
+ }
+}

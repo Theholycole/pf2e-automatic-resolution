@@ -23,15 +23,17 @@ function hasUnmatchedTypedDamage(text, components) {
 // save, the target becomes temporarily immune for 24 hours.", "No matter the result, it's then temporarily immune for
 // 24 hours.", "After the effects are resolved, the target is temporarily immune for 1 day.", "The target must attempt a
 // Will save and is then temporarily immune for 24 hours." The immunity must be to this spell (or unnamed).
-const IMMUNE_LEAD = String.raw`(?:(?:Regardless of (?:the (?:result|outcome|effects?)(?: of (?:its|the|that|their) (?:save|saving throw))?)|No matter the result|After attempting its save|After the effects? (?:is|are) resolved),\s+)`;
-const IMMUNE_SUBJECT = String.raw`(?:(the target|the creature|each target)\s+(?:is|becomes)|(it)(?:'s|’s|\s+is|\s+becomes))`;
+const IMMUNE_LEAD = String.raw`(?:(?:Regardless of (?:(?:their|its) result|the (?:result|outcome|effects?)(?: of (?:its|the|that|their) (?:save|saving throw))?)|No matter the result|After attempting its save|After the effects? (?:is|are) resolved),\s+)`;
+// ("a creature is then temporarily immune": The End is Nigh, Oracles+.)
+// ("creatures are temporarily immune to this spell": Ruler of Everything, Clerics+.)
+const IMMUNE_SUBJECT = String.raw`(?:(the target|the creature|each target|a creature|creatures)\s+(?:is|becomes|are)|(it|they)(?:'s|’s|\s+is|\s+becomes|\s+become|\s+are))`;
 // ("… is immune to lose the path for 1 hour." without "temporarily" is the same timed immunity.)
 const IMMUNE_TAIL = String.raw`(?:\s+then)?\s+(?:temporarily )?immune(?: to ([a-z' ]+?))? for (\d+|one) (minute|hour|day)s?\.$`;
 const IMMUNE_SENTENCE = new RegExp(String.raw`^${IMMUNE_LEAD}?${IMMUNE_SUBJECT}${IMMUNE_TAIL}`, "i");
 const SAVE_AND_IMMUNE = new RegExp(String.raw`^The (?:target|creature) must attempt an? (Fortitude|Reflex|Will) save and is then temporarily immune for (\d+|one) (minute|hour|day)s?\.$`, "i");
 // The sentence before a pronoun must have the target itself save with the item's statistic ("Any creature that ends its turn in the aura must
 // attempt a Will saving throw with the following effects." names the saving creature too).
-const TARGET_SAVES = /^(?:(?:[^.]*?\b)?(?:the target|the creature|each target|it) (?:must attempt|attempts?) an? (Fortitude|Reflex|Will) (?:save|saving throw)\b[^.]*|The (?:target|creature) takes [^.]+?,? depending on its (Fortitude|Reflex|Will) save|(?:Any|Each) creature that [^.]+? must attempt an? (Fortitude|Reflex|Will) (?:save|saving throw)(?: with the following effects)?)\.$/i;
+const TARGET_SAVES = /^(?:(?:[^.]*?\b)?(?:the target|the creature|each target|it) (?:must attempt|attempts?) an? (Fortitude|Reflex|Will) (?:save|saving throw)\b[^.]*|The (?:target|creature) takes [^.]+?,? depending on its (Fortitude|Reflex|Will) save|(?:Any|Each) creature that [^.]+? must attempt an? (Fortitude|Reflex|Will) (?:save|saving throw)(?: with the following effects)?|(?:All|Each) (?:enemies|creatures|enemy creatures)\b[^.]*? must attempt an? (Fortitude|Reflex|Will) (?:save|saving throw))\.$/i;
 
 /** Degree tables do not account for rules placed before them. */
 export function compileSaveImmunity(html, saveStatistic = null, spellName = null) {
@@ -71,7 +73,7 @@ export function compileSaveImmunity(html, saveStatistic = null, spellName = null
         if (!match) continue;
         // "it" refers to the creature only right after the sentence that has it save.
         const previous = TARGET_SAVES.exec(sentences[index - 1] ?? '');
-        if (match[2] && !(previous && (previous[1] ?? previous[2] ?? previous[3]).toLowerCase() === String(saveStatistic ?? '').toLowerCase())) return null;
+        if (match[2] && !(previous && (previous[1] ?? previous[2] ?? previous[3] ?? previous[4]).toLowerCase() === String(saveStatistic ?? '').toLowerCase())) return null;
         // Immune to this spell only: its own name, or one plain name of a single spell (the text naming itself; the item's name isn't needed,
         // so a renamed copy reads the same). A family ("all curses of death"), "your …", or a plural isn't this cast's immunity.
         const named = match[3]?.trim().toLowerCase();
@@ -104,7 +106,7 @@ export function compileStateImmunity(html, { effectIsSpell = false } = {}) {
         if (match) { found.push({sentence,question:`Does the creature's body contain significant ${match[1].toLowerCase()}? Creatures whose bodies contain none are immune.`}); continue; }
         // "Each creature in the area that can hear must attempt a Will save." (Confusing Cry): only creatures that can hear; the GM confirms
         // each target.
-        match=/^Each creature in the (?:area|emanation|burst|cone|line) that can hear(?: you)? must attempt an? (?:Fortitude|Reflex|Will) save\.$/i.exec(sentence);
+        match=/^(?:Each creature|All (?:enemies|creatures|enemy creatures)) in the (?:area|emanation|burst|cone|line) that can hear(?: you| your [a-z]+)? must attempt an? (?:Fortitude|Reflex|Will) save\.$/i.exec(sentence);
         if (match) { found.push({sentence,question:'Can the creature hear? Only creatures that can hear are affected.'}); continue; }
         // "The target of this spell must be able to see, hear, or otherwise understand you." (Roaring Applause)
         match=/^The target of this spell must be able to see, hear, or otherwise understand you\.$/i.exec(sentence);
@@ -253,6 +255,9 @@ export function compileSaveAdjustment(html, saveStatistic) {
     const shapes = [
         [new RegExp(String.raw`^If (.+?), (?:it|the target|that creature|the creature) (?:gains|gets) a \+([1-4]) ${TYPE} bonus ${TO}`), 1],
         [new RegExp(String.raw`^If (.+?), (?:it|the target|that creature|the creature) takes a ${DASH}([1-4]) ${TYPE} penalty ${TO}`), -1],
+        // (Without the comma, plural: "If the target has broken the laws of the area you are currently in within the last week they take a –2
+        // circumstance penalty to their save." — Hand of Judgement.)
+        [new RegExp(String.raw`^If (the target .+?) they take a ${DASH}([1-4]) ${TYPE} penalty ${TO}`), -1],
         [new RegExp(String.raw`^(?:It|The target) (?:gains|gets) a \+([1-4]) ${TYPE} bonus to (?:its|the|this) (?:(Fortitude|Reflex|Will) )?save if (.+?)\.$`), 1, 'trailing'],
         [new RegExp(String.raw`^(An? (?:target|creature) .+?|[A-Z][a-z]+ creatures or those .+?|Creatures with the [a-z]+ trait) takes? a ${DASH}([1-4]) ${TYPE} penalty ${TO}`), -1],
         // "It must attempt a Will save, with a +4 circumstance bonus if you or your allies recently threatened it or used hostile
@@ -260,7 +265,10 @@ export function compileSaveAdjustment(html, saveStatistic) {
         [new RegExp(String.raw`^(?:It|The target) must attempt an? (Fortitude|Reflex|Will) save, with a \+([1-4]) ${TYPE} bonus if (.+?)\.$`), 1, 'must'],
         // "You can spend an extra action while Casting this Spell and add a cost to the spell to give the creature a –2 circumstance penalty to
         // its save.": the caster's option, asked on the card.
-        [new RegExp(String.raw`^You can (spend an extra action while Casting this Spell(?: and add a cost to the spell)?) to give (?:the creature|the target|it) a ${DASH}([1-4]) ${TYPE} penalty ${TO}`), -1, 'option']
+        [new RegExp(String.raw`^You can (spend an extra action while Casting this Spell(?: and add a cost to the spell)?) to give (?:the creature|the target|it) a ${DASH}([1-4]) ${TYPE} penalty ${TO}`), -1, 'option'],
+        // "Creatures that are of nobility themselves or that serve nobility directly, such as a royal guard, receive a +2 circumstance bonus to their saves."
+        // (Ruler of Everything, Clerics+): the GM's answer for each creature.
+        [new RegExp(String.raw`^(Creatures that .+?),? receive a \+([1-4]) ${TYPE} bonus to their saves\.$`), 1, 'subject']
     ];
     const found = [];
     for (const sentence of sentences) {
@@ -276,7 +284,7 @@ export function compileSaveAdjustment(html, saveStatistic) {
             // The fact must be about the target or the caster, never a roll result or another rule ("taking persistent
             // damage" is the creature's state).
             if (/\b(?:sav(?:e|ing)|damage|succe|fail|critical|degree|bonus|penalt|roll)/i.test(fact.replace(/\btaking persistent (?:[a-z]+ )?damage\b/gi, ''))) continue;
-            found.push({ sentence, fact, value: sign * Number(value), modifierType: type, subject: pattern === shapes[3][0], option: order === 'option' });
+            found.push({ sentence, fact, value: sign * Number(value), modifierType: type, subject: pattern === shapes[4][0] || order === 'subject', option: order === 'option' });
             break;
         }
     }

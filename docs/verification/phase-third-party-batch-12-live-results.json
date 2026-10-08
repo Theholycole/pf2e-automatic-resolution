@@ -1,0 +1,25 @@
+{
+ "label": "thirdPartyBatch12",
+ "passed": true,
+ "at": "2026-10-07T00:19:47.205Z",
+ "details": {
+  "thirdParty12": {
+   "ruler": {
+    "modifier": 2,
+    "prone": true,
+    "stand": true,
+    "immune": true
+   },
+   "web": {
+    "speed": -10,
+    "strands": true,
+    "immobilized": true
+   },
+   "adjudication": {
+    "total": 6,
+    "lost": 6,
+    "note": true
+   }
+  }
+ }
+}

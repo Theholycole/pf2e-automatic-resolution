@@ -1,0 +1,35 @@
+{
+ "label": "thirdPartyBatch61",
+ "passed": true,
+ "at": "2026-10-07T06:21:59.613Z",
+ "details": {
+  "thirdParty61": {
+   "cast": {
+    "crit": "criticalSuccess",
+    "saved": true,
+    "fail": true,
+    "willing": [
+     "failure",
+     true
+    ],
+    "zealot": true,
+    "cheers": 1
+   },
+   "sustain": {
+    "guard": 4,
+    "newcomer": 1,
+    "saved": "immune"
+   },
+   "doubt": {
+    "ended": true,
+    "fascinated": false,
+    "immune": true
+   },
+   "zealot": "Long Live the Revolution: on a critical failure, Diplomacy and Intimidation don't end it.",
+   "persuaded": {
+    "ended": true,
+    "fascinated": false
+   }
+  }
+ }
+}

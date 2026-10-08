@@ -1,0 +1,48 @@
+{
+  "generatedAt": "2026-10-05T21:44:54.716Z",
+  "foundry": "14.367",
+  "system": "8.5.0",
+  "cases": [
+    {
+      "label": "spellshapeBatch17",
+      "passed": true,
+      "at": "2026-10-05T21:43:57.782Z",
+      "details": {
+        "spellshape17": {
+          "ash": {
+            "powder": true,
+            "zombie": "Sulfur Zombie",
+            "traits": "minion,summoned",
+            "hidden": true,
+            "at": [
+              6,
+              4
+            ],
+            "rounds": 10,
+            "removed": true
+          },
+          "frailty": {
+            "enfeebled": 2,
+            "spread": "Forceful Hand: hand,PFTEST Corrections Linked,PFTEST Corrections Living blocked token,PFTEST Corrections Noise critical token,PFTEST P23 Affliction ss17 caster,PFTEST P23 Affliction ss17 other"
+          },
+          "mist": true,
+          "fey": {
+            "card": true,
+            "effect": "Effect: Wand of Fey Flames"
+          },
+          "caustic": {
+            "ground": true,
+            "lost": 6
+          },
+          "bladesWatch": true,
+          "blades": {
+            "damaged": 25,
+            "venom": true,
+            "targets": "PFTEST P23 Affliction ss17 other",
+            "dc": 32
+          }
+        }
+      }
+    }
+  ]
+}

@@ -20,6 +20,17 @@ function sameMechanics(left, right) {
     return JSON.stringify(canonical(left)) === JSON.stringify(canonical(right));
 }
 
+/** An Effect item in an active module's Item pack, by id or name (third-party spells' own Effects). */
+export async function findModuleEffect(reference) {
+    for (const pack of game.packs) {
+        if (pack.metadata?.packageType !== 'module' || pack.documentName !== 'Item') continue;
+        const index = await pack.getIndex({fields: ['name', 'type']});
+        const entry = index.get?.(reference) ?? index.find(candidate => candidate.type === 'effect' && candidate.name === reference);
+        if (entry && entry.type === 'effect') return pack.getDocument(entry._id);
+    }
+    return null;
+}
+
 export async function loadNativeEffectTemplate(uuid) {
     let template = null;
     try { template = await fromUuid(uuid); } catch (_) {}
@@ -40,6 +51,8 @@ export async function loadNativeEffectTemplate(uuid) {
             }
         }
     }
+    // (A third-party spell's own Effect, its link read in PF2e's spell-effects form by the compiler: found in the active modules' packs by id or name.)
+    if (!template && /^Compendium\.pf2e\.spell-effects\.Item\./i.test(uuid)) template = await findModuleEffect(uuid.replace(/^Compendium\.pf2e\.spell-effects\.Item\./i, ''));
     if (!template || !(template.type === 'effect' || template.isOfType?.('effect'))) {
         throw new Error(`Could not resolve native PF2e Effect ${uuid}.`);
     }
@@ -384,11 +397,16 @@ export function prepareNativeEffectSource(template, runtime) {
     source._stats.compendiumSource ??= template._stats?.compendiumSource ?? template.uuid;
     source._stats.duplicateSource = template.uuid;
     if (source.system?.level && Number.isFinite(runtime.castRank)) source.system.level.value = runtime.castRank;
+    // (A module's Effect written for an older PF2e reads its choices at "flags.pf2e.rulesSelections"; PF2e now keeps them at "flags.system.rulesSelections".)
+    if (Array.isArray(source.system?.rules) && JSON.stringify(source.system.rules).includes("flags.pf2e.rulesSelections"))
+        source.system.rules = JSON.parse(JSON.stringify(source.system.rules).replaceAll("flags.pf2e.rulesSelections", "flags.system.rulesSelections"));
     // The spell's heightened duration at this rank, where the Effect template carries only the base one.
     if (runtime.heightenedDuration) source.system.duration = {
         ...(source.system.duration ?? {}),
         value: runtime.heightenedDuration.value,
-        unit: runtime.heightenedDuration.unit
+        unit: runtime.heightenedDuration.unit,
+        // (The text's own time over an Effect with none: Liberator's Ferocity's round.)
+        ...(runtime.heightenedDuration.expiry !== undefined ? { expiry: runtime.heightenedDuration.expiry } : {})
     };
     if (runtime.sourceActorUuid) source.system.context = {
         ...(source.system.context ?? {}),
