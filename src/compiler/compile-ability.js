@@ -1,4 +1,5 @@
 import { compileKillEffect } from "./kill-effect.js";
+import { nativeNumbers } from "./native-numbers.js";
 import { applyActionVersion } from "./action-versions.js";
 import { fitActionAreas, fitCausticVersion, fitColdEmbrace, fitEnergyExertion, fitTechnomancyRay, fitNudge, fitShadowWield, fitClawVersion, fitFeastVersion, fitFlyVersion, fitIgnitionVersion, fitGripVariant, fitProjectileVersion, fitSaveDCAttack, fitSelfInArea, fitTargetStrikeAttack, fitTextSave, selectGlyphVersion } from "./glyph-versions.js";
 import {compileBasicConditionRider} from './basic-condition-rider.js';
@@ -493,6 +494,18 @@ function emptyOutcome() {
         terminal: null,
         rawText: ""
     };
+}
+
+/** The rows PF2e's own card applies for a check: an attack's double damage on a critical hit and full on a hit; a basic save's 0 / ½ / 1 / 2. A
+ * non-basic save has no default rows (null). */
+function nativeOutcomes(check, componentIds) {
+    if (check.statistic !== "spell-attack") return check.basic ? basicSaveOutcomes(componentIds) : null;
+    return Object.fromEntries(DEGREES.map(degree => {
+        const outcome = emptyOutcome();
+        const multiplier = { criticalSuccess: 2, success: 1 }[degree] ?? 0;
+        if (multiplier) outcome.damage = { mode: "shared", multiplier, sourceComponentIds: [...componentIds] };
+        return [degree, outcome];
+    }));
 }
 
 function basicSaveOutcomes(componentIds) {
@@ -11910,7 +11923,21 @@ function writtenTwin(item, referencedSpells) {
         && other._pack && (!pack || other._pack === pack)) ?? null;
 }
 
+/**
+ * A compiled plan. A spell's resolution also carries, in `native`, the numbers PF2e's own card rolls (native-numbers.js: healing, action-count
+ * variants, missiles) for the core's families and the simulator. Its own key: live play reads resolution.healing to heal (effect-runtime.js), so
+ * these never land beside the live fields.
+ */
 export function compileAbility(item, options = {}) {
+    const plan = compileAbilityPlan(item, options);
+    if (item?.type === "spell" && plan?.resolution && typeof plan.resolution === "object") {
+        const native = nativeNumbers(item, plan.resolution, { outcomesFor: nativeOutcomes, plan });
+        if (Object.keys(native).length) plan.resolution.native = native;
+    }
+    return plan;
+}
+
+function compileAbilityPlan(item, options = {}) {
     try {
         // (An empty entry: its written twin cast in its place — the twin's own card, its variant asked.)
         const twin = writtenTwin(item, options.referencedSpells);

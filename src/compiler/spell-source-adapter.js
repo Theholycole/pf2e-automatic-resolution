@@ -1,6 +1,6 @@
 import { cloneJSON, nonEmptyString, normalizeSlug } from "./normalize.js";
 
-function normalizeDamageComponents(damage) {
+export function normalizeDamageComponents(damage) {
     return Object.entries(damage ?? {}).map(([id, component]) => ({
         id,
         formula: nonEmptyString(component?.formula),
