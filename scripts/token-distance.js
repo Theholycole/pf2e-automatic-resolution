@@ -10,8 +10,11 @@ export function footprintSquares(a, b, gridSize) {
         const gap = Math.max(to - (from + size), from - (to + otherSize));
         return gap >= 0 ? gap + 1 : 0;
     };
-    const dx = axis(a.x, Number(a.width) || 1, b.x, Number(b.width) || 1);
-    const dy = axis(a.y, Number(a.height) || 1, b.y, Number(b.height) || 1);
+    // (A Tiny creature's half-square token is measured from the square it's in, as PF2e measures it — not as half a square: a familiar's
+    // 10-foot emanation reaches the creature two squares away.)
+    const squares = size => Math.max(1, Math.round(Number(size) || 1));
+    const dx = axis(a.x, squares(a.width), b.x, squares(b.width));
+    const dy = axis(a.y, squares(a.height), b.y, squares(b.height));
     return Math.max(dx, dy) + Math.floor(Math.min(dx, dy) / 2);
 }
 

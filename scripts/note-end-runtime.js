@@ -57,6 +57,8 @@ export async function hpShareOnLoss(actor, lost) {
 export async function summonEndsAtZero(actor) {
     const summoned = actor?.flags?.[MODULE_ID]?.summoned;
     if (!leadGM() || !summoned?.endsAtZero || Number(actor.system?.attributes?.hp?.value ?? 1) > 0) return null;
+    // (A ritual's hive ends its ritual later, not at once — Mosquito Blight's hour: main.js's updateActor hook shortens it.)
+    if (summoned.endsAfter) return null;
     const caster = summoned.casterUuid ? await fromUuid(summoned.casterUuid) : null;
     const effect = caster?.itemTypes?.effect?.find(entry => entry.flags?.[MODULE_ID]?.summon?.actorUuid === actor.uuid);
     if (!effect) return null;

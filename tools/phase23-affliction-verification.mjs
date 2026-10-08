@@ -525,31 +525,34 @@ export const cases = {
         const rec = () => ctx.api.ongoing.records().find(r => r.castId === started.castId);
         assert(started.members.map(m => m.actorUuid).join() === inside.uuid, 'Only the creature inside is a member at cast');
         const combat = await Combat.create({scene: canvas.scene.id, active: true});
-        await combat.createEmbeddedDocuments('Combatant', [casterToken, tIn, tOut].map((t, i) => ({tokenId: t.id, sceneId: canvas.scene.id, actorId: t.actorId, initiative: 30 - i * 10})));
-        await combat.startCombat(); await wait(1200);
-        await combat.nextTurn(); await wait(1800);
-        const afterTurn = rec().obligations.filter(o => o.kind === 'membership').map(o => o.label);
-        assert(afterTurn.length === 1 && afterTurn[0].includes('started its turn'), `Turn-start exposure: ${afterTurn}`);
-        await move(tOut, 1100, 600); await wait(1800);
-        await move(tIn, 2300, 500); await wait(1500); await move(tIn, 1000, 500); await wait(1800);
-        const labels = rec().obligations.filter(o => o.kind === 'membership').map(o => o.label);
-        assert(labels.length === 2 && labels.some(l => l.includes('outside') && l.includes('entered')), `Enter exposure once per round: ${labels}`);
-        // GM confirms the entering creature, declines the other.
-        const pending = rec().obligations.filter(o => o.kind === 'membership' && o.status === 'pending');
-        for (const o of pending) await ctx.api.ongoing.request('review-targets', {castId: started.castId, revision: rec().revision, key: o.key, affected: o.actorUuid === outside.uuid});
-        await wait(1200);
-        const save = rec().obligations.find(o => o.kind === 'save');
-        assert(save?.cardId, 'A save card was prepared for the confirmed exposure');
-        const card = game.messages.get(save.cardId);
-        const target = ctx.state(card).targets[0];
-        await ctx.api.saves.rollSave(card, target.id, {skipDialog: true});
-        await ctx.api.saves.correctTarget(card, target.id, {action: 'degree', degree: 'failure'});
-        await ctx.api.saves.finalize(card); await wait(1200);
-        const hpLost = 500 - outside.hitPoints.value;
-        assert(hpLost > 0 && inside.hitPoints.value === 500, `Damage only to the confirmed creature: ${hpLost}`);
-        await region.delete(); await wait(1500); await ctx.api.ongoing.reconcile({}); await wait(800);
-        const ended = rec().status;
-        await combat.delete();
+        // (The combat goes even when a check fails: a started one left behind confuses later cases' turn timing.)
+        let afterTurn, labels, hpLost, ended;
+        try {
+            await combat.createEmbeddedDocuments('Combatant', [casterToken, tIn, tOut].map((t, i) => ({tokenId: t.id, sceneId: canvas.scene.id, actorId: t.actorId, initiative: 30 - i * 10})));
+            await combat.startCombat(); await wait(1200);
+            await combat.nextTurn(); await wait(1800);
+            afterTurn = rec().obligations.filter(o => o.kind === 'membership').map(o => o.label);
+            assert(afterTurn.length === 1 && afterTurn[0].includes('started its turn'), `Turn-start exposure: ${afterTurn}`);
+            await move(tOut, 1100, 600); await wait(1800);
+            await move(tIn, 2300, 500); await wait(1500); await move(tIn, 1000, 500); await wait(1800);
+            labels = rec().obligations.filter(o => o.kind === 'membership').map(o => o.label);
+            assert(labels.length === 2 && labels.some(l => l.includes('outside') && l.includes('entered')), `Enter exposure once per round: ${labels}`);
+            // GM confirms the entering creature, declines the other.
+            const pending = rec().obligations.filter(o => o.kind === 'membership' && o.status === 'pending');
+            for (const o of pending) await ctx.api.ongoing.request('review-targets', {castId: started.castId, revision: rec().revision, key: o.key, affected: o.actorUuid === outside.uuid});
+            await wait(1200);
+            const save = rec().obligations.find(o => o.kind === 'save');
+            assert(save?.cardId, 'A save card was prepared for the confirmed exposure');
+            const card = game.messages.get(save.cardId);
+            const target = ctx.state(card).targets[0];
+            await ctx.api.saves.rollSave(card, target.id, {skipDialog: true});
+            await ctx.api.saves.correctTarget(card, target.id, {action: 'degree', degree: 'failure'});
+            await ctx.api.saves.finalize(card); await wait(1200);
+            hpLost = 500 - outside.hitPoints.value;
+            assert(hpLost > 0 && inside.hitPoints.value === 500, `Damage only to the confirmed creature: ${hpLost}`);
+            await region.delete(); await wait(1500); await ctx.api.ongoing.reconcile({}); await wait(800);
+            ended = rec().status;
+        } finally { await combat.delete().catch(() => null); }
         assert(ended === 'ended', `Removing the area ends the spell: ${ended}`);
         return {turnStart: afterTurn, exposures: labels, damage: hpLost, ended};
     },
@@ -2887,14 +2890,17 @@ export const cases = {
         };
         const castResult = await resolve(rec().obligations.find(o => o.kind === 'membership' && o.status === 'pending'), 'failure');
         const combat = await Combat.create({scene: canvas.scene.id, active: true});
-        await combat.createEmbeddedDocuments('Combatant', [casterToken, tVictim].map((t, i) => ({tokenId: t.id, sceneId: canvas.scene.id, actorId: t.actorId, initiative: 30 - i * 10})));
-        await combat.startCombat(); await wait(600); await ctx.api.ongoing.reconcile({clockEvent: true});
-        await ctx.api.ongoing.request('sustain', {castId: started.castId, revision: rec().revision}); await wait(600);
-        const sustainObligation = rec().obligations.find(o => o.kind === 'membership' && o.status === 'pending' && o.event === 'sustain');
-        const sustainResult = sustainObligation ? await resolve(sustainObligation, 'success') : null;
-        await ctx.api.ongoing.request('end', {castId: started.castId}); await wait(900);
-        const ended = rec().status, fatiguedAfter = victim.hasCondition('fatigued');
-        await combat.delete();
+        // (The combat goes even when a step throws: a started one left behind confuses later cases' turn timing.)
+        let sustainResult, ended, fatiguedAfter;
+        try {
+            await combat.createEmbeddedDocuments('Combatant', [casterToken, tVictim].map((t, i) => ({tokenId: t.id, sceneId: canvas.scene.id, actorId: t.actorId, initiative: 30 - i * 10})));
+            await combat.startCombat(); await wait(600); await ctx.api.ongoing.reconcile({clockEvent: true});
+            await ctx.api.ongoing.request('sustain', {castId: started.castId, revision: rec().revision}); await wait(600);
+            const sustainObligation = rec().obligations.find(o => o.kind === 'membership' && o.status === 'pending' && o.event === 'sustain');
+            sustainResult = sustainObligation ? await resolve(sustainObligation, 'success') : null;
+            await ctx.api.ongoing.request('end', {castId: started.castId}); await wait(900);
+            ended = rec().status; fatiguedAfter = victim.hasCondition('fatigued');
+        } finally { await combat.delete().catch(() => null); }
         out.interstellarVoid = {fatiguedAtCast, castResult, sustainResult, ended, fatiguedAfter};
         const iv = out.interstellarVoid;
         assert(iv.fatiguedAtCast && /3d6/.test(castResult.formula) && castResult.lost === castResult.total && sustainResult && sustainResult.lost === Math.floor(sustainResult.total / 2)
@@ -14334,11 +14340,13 @@ export const cases = {
         };
         const effects = (actor, pattern) => actor.itemTypes.effect.filter(e => pattern.test(e.name));
         // (An Effect tied to another goes with it: each deleted only while it's still there.)
-        const reset = async () => { for (const c of game.combats.contents) await c.delete(); for (const f of foes) { await f.update({'system.attributes.hp.value': 500});
+        // (Only the combats this case made: game.combats is the whole world's, the user's scenes included.)
+        const madeCombats = [];
+        const reset = async () => { for (const c of madeCombats.splice(0)) await c.delete().catch(() => null); for (const f of foes) { await f.update({'system.attributes.hp.value': 500});
             for (const e of [...f.itemTypes.effect, ...f.itemTypes.condition]) if (f.items.get(e.id)) await e.delete().catch(() => null); await wait(300); } await wait(400); };
         // (A combat whose next turn is the foe's: the end of the caster's, then the start of the foe's.)
         const toFoeTurn = async (foeToken, foeFirst = false) => {
-            const [combat] = await Combat.createDocuments([{scene: canvas.scene.id}]);
+            const [combat] = await Combat.createDocuments([{scene: canvas.scene.id}]); madeCombats.push(combat);
             const casterToken = canvas.scene.tokens.find(t => t.actorId === caster.id);
             await combat.createEmbeddedDocuments('Combatant', [casterToken, foeToken].map((tt, i) => ({tokenId: tt.id, sceneId: canvas.scene.id, actorId: tt.actorId, initiative: (foeFirst ? i === 1 : i === 0) ? 30 : 10})));
             await combat.startCombat(); await wait(800);
@@ -14396,6 +14404,8 @@ export const cases = {
             await toFoeTurn(tokens[0]);
             out.shock.damage = 500 - foes[0].hitPoints.value;
         } catch (error) { out.error = error.stack ?? error.message; }
+        // (The last combat — the case ends on the foe's turn — goes too: a started one left behind confuses later turn timing.)
+        for (const c of madeCombats.splice(0)) await c.delete().catch(() => null);
         assert(!out.error && out.dazzling.hit.join() === 'blinded=1,dazzled=3' && out.dazzling.crit.join() === 'blinded=1,blinded=3+save,dazzled=3' && out.dazzling.saveEnded === true
             && out.doom.frightened === 3 && out.doom.stupefied === 4 && out.doom.watched === 1 && out.doom.stupefied2 === 0
             && out.slumber[0] === 'mental' && out.slumber[1] === '' && out.pernicious.length === 1 && out.pernicious[0].virulent
@@ -16327,7 +16337,8 @@ export const cases = {
             combat = await Combat.create({scene: canvas.scene.id, active: true});
             await combat.createEmbeddedDocuments('Combatant', [waveToken, tPushed].map((t, i) => ({tokenId: t.id, sceneId: canvas.scene.id, actorId: t.actorId, initiative: 30 - i * 10})));
             await combat.startCombat(); await wait(600); await ctx.api.ongoing.reconcile({clockEvent: true});
-            const started = await ctx.api.ongoing.startLingering(wave.spell, await ctx.api.compile(wave.spell), {castRank: 7, dc: 30}); await wait(1000);
+            const wavePlan = await ctx.api.compile(wave.spell);
+            const started = await ctx.api.ongoing.startLingering(wave.spell, wavePlan, {castRank: 7, dc: 30}); await wait(1000);
             const rec = () => ctx.api.ongoing.records().find(r => r.castId === started.castId);
             const regionId = String(rec().regionUuid).split('.').pop();
             const region = () => canvas.scene.regions.get(regionId);
@@ -16341,7 +16352,10 @@ export const cases = {
             await ctx.api.saves.rollSave(card, t.id, {skipDialog: true}); await ctx.api.saves.correctTarget(card, t.id, {action: 'degree', degree: 'failure'});
             await ctx.api.saves.finalize(card); await wait(1200);
             const content = game.messages.get(card.id).content;
-            out.push = /pushed 10 feet away from the caster/.test(content); out.collision = /solid barrier/.test(content);
+            // (The push is the module's forced movement now: the card says the token was moved; the collision rule rides with it, shown
+            // when a push is stopped short.)
+            out.push = /pushed 10 feet\. The module moved the token/.test(content.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ')) && (canvas.scene.tokens.get(tPushed.id)?.x ?? 0) > 7 * g;
+            out.collision = /solid barrier/.test(JSON.stringify(wavePlan.resolution?.outcomes?.failure ?? {}) + JSON.stringify(wavePlan.resolution ?? {}));
             const terrain = region()?.behaviors.find(b => b.flags?.[NS]?.rowTerrain);
             out.rowTerrain = (terrain?.flags?.[NS]?.selectiveTerrain?.creatures ?? []).filter(c => c.actorUuid === pushed.uuid).map(c => c.difficulty);
             // (The caster's next turn: its Sustain, then the optional expansion.)
@@ -16547,7 +16561,7 @@ export const cases = {
             const windCards = await review(windStart.castId, {[lifted.uuid]: 'failure'});
             const windRec = () => ctx.api.ongoing.records().find(r => r.castId === windStart.castId);
             await ctx.api.ongoing.request('gm-action', {castId: windStart.castId, revision: windRec().revision, tokenUuids: [tPassed.uuid]}); await wait(600);
-            out.wind = {lost: 500 - lifted.hitPoints.value, rise: windCards.some(c => /rises 10 feet into the air/.test(c)), fly: lifted.itemTypes.effect.some(e => /Lifted by the whirlwind/.test(e.name)),
+            out.wind = {lost: 500 - lifted.hitPoints.value, rise: windCards.some(c => /rises 10 feet into the air|rose 10 feet\. The module moved the token/.test(c.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' '))), fly: lifted.itemTypes.effect.some(e => /Lifted by the whirlwind/.test(e.name)),
                 passedExposed: windRec().obligations.some(o => o.event === 'gm-action' && o.actorUuid === passed.uuid)};
             await ctx.api.ongoing.request('end', {castId: windStart.castId}); await wait(600);
             // Tear the Veil.
@@ -16588,7 +16602,7 @@ export const cases = {
             await combat.startCombat(); await wait(600); await ctx.api.ongoing.reconcile({clockEvent: true}); await wait(400);
             const starsStart = await ctx.api.ongoing.startLingering(stars.spell, await ctx.api.compile(stars.spell), {castRank: 8, region: starsRegion, dc: 30}); await wait(800);
             const starsCards = await review(starsStart.castId, {[gazer.uuid]: 'failure'});
-            out.stars = {fascinated: gazer.hasCondition('fascinated'), rise: starsCards.some(c => /rises 50 feet into the air/.test(c)), rapt: gazer.itemTypes.effect.some(e => /Rapt/.test(e.name))};
+            out.stars = {fascinated: gazer.hasCondition('fascinated'), rise: starsCards.some(c => /rises 50 feet into the air|rose 50 feet\. The module moved the token/.test(c.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' '))), rapt: gazer.itemTypes.effect.some(e => /Rapt/.test(e.name))};
             const starsRec = () => ctx.api.ongoing.records().find(r => r.castId === starsStart.castId);
             await ctx.api.ongoing.request('gm-mark', {castId: starsStart.castId, revision: starsRec().revision, tokenUuids: [tGazer.uuid], soulless: false}); await wait(600);
             out.stars.marked = gazer.itemTypes.effect.some(e => e.flags?.[NS]?.gmMark === starsStart.castId);
@@ -16902,7 +16916,7 @@ export const cases = {
         if (combat) await combat.delete().catch(() => {});
         for (const r of canvas.scene.regions.filter(r => /Elemental Confluence|Dragon Turret|Lifewood/.test(r.name))) await r.delete().catch(() => {});
         // (The copies and conjured tokens this case made: their tokens and actors.)
-        for (const actor of game.actors.filter(a => a.flags?.[NSX]?.summoned && /^PFTEST|\((?:Duplicate Foe|Reanimate Foe)\)$|^(?:Dragon Turret|Lifewood Cage|Elemental Confluence):/.test(a.name))) {
+        for (const actor of game.actors.filter(a => a.flags?.[NSX]?.summoned && /^PFTEST (?!SIM |KIN )|\((?:Duplicate Foe|Reanimate Foe)\)$|^(?:Dragon Turret|Lifewood Cage|Elemental Confluence):/.test(a.name) && !/^PFTEST (?:SIM|KIN) /.test(a.name))) {
             for (const token of canvas.scene.tokens.filter(token => token.actorId === actor.id)) await token.delete().catch(() => {});
             await actor.delete().catch(() => {});
         }
@@ -41517,8 +41531,8 @@ export const cases = {
         // Hazard regions (burning ground) left by a fixture's cast.
         let regionsRemoved = 0;
         for (const scene of game.scenes) {
-            // Also the areas cases place by hand ("PFTEST … area") once no active cast uses them.
-            const stale = scene.regions.filter(region => (region.flags?.[NS]?.groundHazard || /^PFTEST /.test(region.name ?? ''))
+            // Also the areas cases place by hand ("PFTEST … area") once no active cast uses them — not the other sessions' ("PFTEST SIM …", "PFTEST KIN …").
+            const stale = scene.regions.filter(region => (region.flags?.[NS]?.groundHazard || /^PFTEST (?!SIM |KIN )/.test(region.name ?? ''))
                 && !ctx.api.ongoing.records().some(r => r.status === 'active' && (r.regionUuid === region.uuid || (r.regionUuids ?? []).includes(region.uuid)))).map(region => region.id);
             if (stale.length) { await scene.deleteEmbeddedDocuments('Region', stale); regionsRemoved += stale.length; }
         }

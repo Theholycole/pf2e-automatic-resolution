@@ -67,6 +67,9 @@ test('emanation distances come from token documents (PF2e 5-10-5 diagonals, near
     assert.equal(tokenDocumentDistance(at(0, 0), at(4, 0), grid), 20);
     assert.equal(footprintSquares(at(0, 0, 2), at(4, 0), 100), 3, 'a large token measures from its nearest square');
     assert.equal(footprintSquares(at(0, 0), at(0, 0), 100), 0);
+    // (A Tiny token — half a square — measures from its square: 5 feet adjacent, 10 feet two squares away.)
+    assert.equal(tokenDocumentDistance(at(12, 8, 0.5), at(13, 8), grid), 5, 'tiny, adjacent');
+    assert.equal(tokenDocumentDistance(at(12, 8, 0.5), at(14, 8), grid), 10, 'tiny, two squares');
     assert.equal(tokenDocumentDistance(at(3, 3), at(17, 3), grid), 70);
 });
 
