@@ -9,7 +9,7 @@
 // - on events: damage (Black Ash, Ghostcracker, Demon Bone Tiles, Shadow Ash), Mirror Image's destroyed images, flat checks, turns, moves, Effects ending, casts in a battle form.
 import { shapeEffect, riderChoice, startShapeCard, tokensWithin, timedConditions, timedTempHp, castTargetActors, castGrants, shapeSpellFacts, shapeTerrain, postTerrainCard, tokenInRegion } from "./spellshape-runtime.js";
 import { forcedMove } from "./forced-movement.js";
-import { MODULE_ID, activeGM, escapeHTML, say } from "./runtime-utils.js";
+import { MODULE_ID, activeGM, core, escapeHTML, say } from "./runtime-utils.js";
 
 const gmWhisper = text => ChatMessage.create({ whisper: game.users.filter(user => user.isGM).map(user => user.id), content: `<p class="pf2e-auto-gm-reminder">${text}</p>` }).catch(() => null);
 const PLAIN = "The creature is unaffected.";
@@ -436,8 +436,8 @@ export async function catalystOnDamage(message) {
     if (!applied || applied.isHealing) return [];
     const victim = message.actor;
     const lost = Number((applied.updates ?? []).find(update => update.path === "system.attributes.hp.value")?.value ?? 0);
-    // (The damage's item and its actor: the module's record of it — PF2e's damage-taken message carries no origin.)
-    const origin = message.flags?.[MODULE_ID]?.damageSource ?? message.flags.pf2e.origin ?? {};
+    // (The damage's item and its actor: pf2e-resolution-core's record of it — PF2e's damage-taken message carries no origin.)
+    const origin = core()?.patches.damage.sourceOf(message) ?? message.flags.pf2e.origin ?? {};
     const attacker = origin.actor ? await fromUuid(origin.actor).catch(() => null) : null;
     const done = [];
     // (Black Ash: "A creature damaged by this wall's thorns takes an additional 1d6 persistent poison damage" — damage from the watched spell.)

@@ -1,6 +1,6 @@
 import { minionControlOnEnd } from "./minion-control-runtime.js";
-import { installD20Clamp } from "./d20-clamp.js";
-import { installTextRules, waywardSustain, textRulesOnCreate, focusRegainOnCard, actionCastOnCard, triplicateOnCast } from "./text-rules.js";
+import { d20LimitsFor } from "./d20-clamp.js";
+import { rulesFromText, cascadeTypeAhead, waywardSustain, textRulesOnCreate, focusRegainOnCard, actionCastOnCard, triplicateOnCast } from "./text-rules.js";
 import { noteEndAfter, hpShareOnLoss, summonEndsAtZero, zeroToOneOnLoss, dyingLinkCheck, damageLimitOnLoss, withConditionSync } from "./note-end-runtime.js";
 import { turnStartNoteDamage, turnEndHpLoss, halvedCopyDamage, turnEndRecovery, formTempHpExpiry, turnEndSaves } from "./incarnate-parts-runtime.js";
 import { formEnded, syncToggleGrants } from "./form-aura-runtime.js";
@@ -40,7 +40,7 @@ import { whisperGmNotes, hideGmNotes, markEffectGmNotes, markEffectGmNotesUpdate
 import { noteWatchMessage, noteWatchEndTurn } from "./note-watchers.js";
 import { bloodMagicOnCast, runBloodMagic, spiteStrikes, spiteTurnStart, bindBloodMagicButtons } from "./blood-magic-runtime.js";
 import { castingRulesOnCast, runCastingRule, bindCastingRuleButtons } from "./casting-rules-runtime.js";
-import { armItemSpellshape, runItemShapeCard, bindItemShapeButtons, itemShapeTurnStart, itemShapeWatchMessage, starChartOnCast, catalystSporesOnDamage, installDamageTypeMemory, attachDamageSource } from "./item-spellshape-runtime.js";
+import { armItemSpellshape, runItemShapeCard, bindItemShapeButtons, itemShapeTurnStart, itemShapeWatchMessage, starChartOnCast, catalystSporesOnDamage, shieldShardsBlock } from "./item-spellshape-runtime.js";
 import { readItemSpellshape } from "../src/compiler/item-spellshape.js";
 import { offerItemCasts, castFromItem, itemCastOnCard, bindItemCastButtons, reservoirOnCast, reservoirOnStrike, runReservoirButton } from "./item-cast-runtime.js";
 import { readItemCasts } from "../src/compiler/item-casts.js";
@@ -428,34 +428,6 @@ function bindNoteCounteractButtons(message, root) {
     });
 }
 
-/**
- * Terrain only for some creatures (Magnetic Repulsion): a movement-cost behavior flagged `selectiveTerrain` gives its difficulty per creature
- * (by actor) instead of to everyone; any other behavior is Foundry's own.
- */
-function patchSelectiveTerrain() {
-    const type = CONFIG.RegionBehavior?.dataModels?.modifyMovementCost;
-    if (!type?.prototype?._getTerrainEffects || type.prototype._pf2eAutoSelective) return;
-    const original = type.prototype._getTerrainEffects;
-    type.prototype._getTerrainEffects = function (token, segment, options) {
-        const selective = this.behavior?.flags?.[MODULE_ID]?.selectiveTerrain ?? this.parent?.flags?.[MODULE_ID]?.selectiveTerrain;
-        if (!selective) return original.call(this, token, segment, options);
-        if (!(selective.actions ?? ["walk"]).includes(segment?.action)) return [];
-        const actor = token?.actor ?? token?.document?.actor;
-        const actorUuid = actor?.uuid;
-        // (Or by size: "Medium and larger creatures treat these spaces as difficult terrain" — Steel Fortifications.)
-        const order = ["tiny", "sm", "med", "lg", "huge", "grg"];
-        const bySize = selective.bySize && actor?.isOfType?.("creature") && order.indexOf(actor.size) >= order.indexOf(selective.bySize.min) ? Number(selective.bySize.difficulty) : null;
-        // (Or only for the living: "The area is difficult terrain to all living creatures" — Tear the Veil.)
-        const byLiving = selective.living && actor?.isOfType?.("creature") && (actor.modeOfBeing ?? "living") === "living" ? Number(selective.living.difficulty) : null;
-        const difficulty = Number((selective.creatures ?? []).find(entry => entry.actorUuid === actorUuid)?.difficulty ?? bySize ?? byLiving ?? selective.default ?? 1);
-        return difficulty > 1 ? [{ name: "difficulty", difficulty }] : [];
-    };
-    type.prototype._pf2eAutoSelective = true;
-}
-Hooks.once("setup", patchSelectiveTerrain);
-Hooks.once("ready", patchSelectiveTerrain);
-
-/** A conjured structure brought to its Broken Threshold (Steel Fortifications): it crumbles (the active GM). */
 // A note that lasts with a condition (Calcification, Vitrifying Blast): its condition changed — kept in step, or ended.
 const conditionChanged = item => { if (item?.type === "condition" && item.actor && item.actor.itemTypes?.effect?.some(effect => effect.flags?.[MODULE_ID]?.runtime?.withCondition?.slug === item.slug))
     void withConditionSync(item.actor).catch(error => notifyError("Condition-linked note failed", error)); };
@@ -492,6 +464,7 @@ Hooks.on("updateActor", (actor, _changes, options) => {
     // (A form ending at 0 HP with 1 left: Patron's Protector.)
     if (actor?.itemTypes?.effect?.some(effect => effect.flags?.[MODULE_ID]?.runtime?.zeroToOne)) void zeroToOneOnLoss(actor).catch(error => notifyError("Form ending failed", error));
 });
+// A conjured structure brought to its Broken Threshold (Steel Fortifications): it crumbles (the active GM).
 Hooks.on("updateActor", (actor, changes) => {
     if (!actor.flags?.[MODULE_ID]?.fortification || foundry.utils.getProperty(changes, "system.attributes.hp.value") === undefined) return;
     if (!game.user?.isGM || game.users.activeGM?.id !== game.user.id) return;
@@ -613,47 +586,60 @@ function bindSunSunlightButtons(message, root) {
 }
 
 /**
- * Damage with a type in it that took Hit Points (Palm-Held Sun's fire): PF2e's applyDamage, wrapped once, tells the module the roll's damage
- * types and the Hit Points lost; fire on a creature is reported to the GM's record.
+ * PF2e's applyDamage, through pf2e-resolution-core's damage patch (registered at init, below): a copy's halved Strikes before the damage; after it, awaited in
+ * order before the caller's await resolves, what the module's Effects do with the Hit Points lost. Damage with a type in it that took Hit Points (Palm-Held
+ * Sun's fire) is reported to the GM's record.
  */
-function wrapApplyDamage() {
-    let owner = CONFIG.PF2E?.Actor?.documentClasses?.npc?.prototype ?? CONFIG.Actor?.documentClass?.prototype;
-    while (owner && !Object.prototype.hasOwnProperty.call(owner, "applyDamage")) owner = Object.getPrototypeOf(owner);
-    if (!owner || owner._pf2eAutoWrapped) return;
-    const original = owner.applyDamage;
-    owner.applyDamage = async function (params = {}) {
-        // (A copy that deals half damage with its Strikes — Duplicate Foe's on a success: the roll halved by PF2e's own multiplier.)
-        try { params = halvedCopyDamage(params); } catch (error) { console.warn(`${MODULE_ID} | The copy's half damage failed.`, error); }
-        const before = Number(this.hitPoints?.value ?? this.system?.attributes?.hp?.value ?? NaN);
-        const beforeTemp = Number(this.system?.attributes?.hp?.temp ?? 0);
-        const result = await original.call(this, params);
+function damageFollowUps(actor, params) {
+    // (A copy that deals half damage with its Strikes — Duplicate Foe's on a success: the roll halved by PF2e's own multiplier.)
+    try { params = halvedCopyDamage(params); } catch (error) { console.warn(`${MODULE_ID} | The copy's half damage failed.`, error); }
+    const before = Number(actor.hitPoints?.value ?? actor.system?.attributes?.hp?.value ?? NaN);
+    const beforeTemp = Number(actor.system?.attributes?.hp?.temp ?? 0);
+    return { params, after: async () => {
         // (Spiritual Guardian: a protected creature's damage beside the guardian, up to its amount, comes off the guardian instead.)
-        try { if (this.itemTypes?.effect?.some(effect => effect.flags?.[MODULE_ID]?.guardianProtect) && Number.isFinite(before)) await runtime.guardianAbsorb(this, before, beforeTemp); } catch (error) { console.warn(`${MODULE_ID} | The guardian's protection failed.`, error); }
+        try { if (actor.itemTypes?.effect?.some(effect => effect.flags?.[MODULE_ID]?.guardianProtect) && Number.isFinite(before)) await runtime.guardianAbsorb(actor, before, beforeTemp); } catch (error) { console.warn(`${MODULE_ID} | The guardian's protection failed.`, error); }
         // (Soulshelter Vessel: a creature that would drop to 0 HP regains the rescue from the stone instead.)
-        try { if (this.itemTypes?.effect?.some(effect => effect.flags?.[MODULE_ID]?.soulVessel) && Number.isFinite(before)) await runtime.soulRescue(this, before); } catch (error) { console.warn(`${MODULE_ID} | The vessel's rescue failed.`, error); }
+        try { if (actor.itemTypes?.effect?.some(effect => effect.flags?.[MODULE_ID]?.soulVessel) && Number.isFinite(before)) await runtime.soulRescue(actor, before); } catch (error) { console.warn(`${MODULE_ID} | The vessel's rescue failed.`, error); }
         // (Reflective Scales: what the scales' resistance prevented, counted.)
-        try { if (this.itemTypes?.effect?.some(effect => effect.flags?.[MODULE_ID]?.storedBurst)) await runtime.storedBurstPrevented(this, params?.damage); } catch (error) { console.warn(`${MODULE_ID} | The stored burst count failed.`, error); }
+        try { if (actor.itemTypes?.effect?.some(effect => effect.flags?.[MODULE_ID]?.storedBurst)) await runtime.storedBurstPrevented(actor, params?.damage); } catch (error) { console.warn(`${MODULE_ID} | The stored burst count failed.`, error); }
         // (Phoenix Ward: damage of its type that dropped the caster to 0 leaves 1 Hit Point and heals.)
-        try { if (this.itemTypes?.effect?.some(effect => effect.flags?.[MODULE_ID]?.deathWard)) await runtime.deathWardTrigger(this, before, params?.damage); } catch (error) { console.warn(`${MODULE_ID} | The ward failed.`, error); }
+        try { if (actor.itemTypes?.effect?.some(effect => effect.flags?.[MODULE_ID]?.deathWard)) await runtime.deathWardTrigger(actor, before, params?.damage); } catch (error) { console.warn(`${MODULE_ID} | The ward failed.`, error); }
         // (Shielding Formation: a holder that switched on the resistance for this damage loses the bonus and is immune.)
-        try { if (this.itemTypes?.effect?.some(effect => effect.flags?.[MODULE_ID]?.shieldUse)) await runtime.shieldUsed(this); } catch (error) { console.warn(`${MODULE_ID} | The shield's use failed.`, error); }
+        try { if (actor.itemTypes?.effect?.some(effect => effect.flags?.[MODULE_ID]?.shieldUse)) await runtime.shieldUsed(actor); } catch (error) { console.warn(`${MODULE_ID} | The shield's use failed.`, error); }
         try {
-            const after = Number(this.hitPoints?.value ?? this.system?.attributes?.hp?.value ?? NaN);
+            const after = Number(actor.hitPoints?.value ?? actor.system?.attributes?.hp?.value ?? NaN);
             const types = [...new Set((params?.damage?.instances ?? []).map(instance => instance.type))];
-            if (Number.isFinite(before) && after < before && types.includes("fire") && this.isOfType?.("creature"))
-                void ongoing.request("sun-fire", { actorUuid: this.uuid }).catch(() => null);
+            if (Number.isFinite(before) && after < before && types.includes("fire") && actor.isOfType?.("creature"))
+                void ongoing.request("sun-fire", { actorUuid: actor.uuid }).catch(() => null);
         } catch (error) { console.warn(`${MODULE_ID} | The damage report failed.`, error); }
-        return result;
-    };
-    owner._pf2eAutoWrapped = true;
+    } };
 }
-Hooks.once("ready", wrapApplyDamage);
-// A module Effect's d20 limit ("… get a 10 instead"): set on PF2e's check roll before it's graded.
-Hooks.once("ready", () => { if (!installD20Clamp()) console.warn(`${MODULE_ID} | PF2e's check roll couldn't be wrapped: d20 limits won't apply.`); });
-// The "+" modules' passive features as their text says (text-rules.js): wrapped as PF2e's classes exist, before the world's actors are prepared; if that
-// was too early, at ready with the actors prepared again.
-Hooks.once("setup", () => { installTextRules(); });
-Hooks.once("ready", () => { if (installTextRules()) for (const actor of game.actors) actor.reset(); });
+
+// PF2e's shared functions are wrapped once, by pf2e-resolution-core; this module's parts plug into its patches as the core's API appears (its
+// pf2eResolutionCoreReady, during init: every module's script has loaded by then, whichever loaded first).
+let pluggedIntoCore = false;
+Hooks.once("pf2eResolutionCoreReady", api => {
+    const patches = api.patches;
+    pluggedIntoCore = true;
+    // A module Effect's d20 limit ("… get a 10 instead"): set on PF2e's check roll before it's graded.
+    patches.d20.registerLimitProvider({ module: MODULE_ID, name: "effect-d20-limits", limits: d20LimitsFor });
+    // The "+" modules' passive features as their text says (text-rules.js), and an Arcane Cascade stance's damage type answered from the last spell
+    // before PF2e asks (its items' creation runs the choice prompts: cascadeTypeAhead).
+    patches.rules.registerRewriter({ module: MODULE_ID, name: "text-rules", rewrite: rulesFromText });
+    patches.rules.registerCreateTransformer({ module: MODULE_ID, name: "arcane-cascade", transform: cascadeTypeAhead });
+    // Terrain only for some creatures (Magnetic Repulsion): a movement-cost behavior flagged `selectiveTerrain` gives its difficulty per creature
+    // (by actor, by size, to the living) instead of to everyone; any other behavior is Foundry's own.
+    patches.terrain.registerProvider({ module: MODULE_ID, name: "selective-terrain",
+        selective: behavior => behavior.behavior?.flags?.[MODULE_ID]?.selectiveTerrain ?? behavior.parent?.flags?.[MODULE_ID]?.selectiveTerrain ?? null });
+    // Damage: a copy's halved Strikes, and what the module's Effects do with the Hit Points lost (damageFollowUps); then Demon Bone Tiles' shield,
+    // marked after a Shield Block with it.
+    patches.damage.onApply({ module: MODULE_ID, name: "damage-follow-ups", before: damageFollowUps });
+    patches.damage.onApply({ module: MODULE_ID, name: "shield-shards", before: shieldShardsBlock });
+    // This module's spell plans for the core's registry (the simulator's planner): the plans live play uses — compiling awaits the spells the text
+    // names, so the core's preparePlan(s) fills its cache before planFor reads it.
+    api.registry.registerCompiler({ module: MODULE_ID, name: "spells", handles: item => item?.type === "spell", compile: (item, options) => runtime.compile(item, options) });
+});
+Hooks.once("setup", () => { if (!pluggedIntoCore) console.error(`${MODULE_ID} | pf2e-resolution-core isn't active: d20 limits, text rules, selective terrain and what follows damage won't apply.`); });
 Hooks.on("createChatMessage", message => { if (message.item?.slug === "sustain") void waywardSustain(message).catch(error => notifyError("Wayward Gifts failed", error)); });
 Hooks.on("createItem", item => { if (item.type === "effect") void textRulesOnCreate(item).catch(error => notifyError("An Effect's value from its text failed", error)); });
 // (A "+" feature regaining a Focus Point, its card posted.)
@@ -2084,8 +2070,6 @@ Hooks.on("createChatMessage", message => {
 Hooks.on("renderChatMessageHTML", (message, html) => { if (message.flags?.[MODULE_ID]?.kind === "exploit-card") bindExploitButtons(message, html); });
 Hooks.on("updateCombat", (combat, changes) => { if ("turn" in changes || "round" in changes) void exploitAuraTurnStart(combat).catch(error => notifyError("An exploit's aura failed", error)); });
 Hooks.on("createChatMessage", message => { void catalystSporesOnDamage(message).catch(error => notifyError("A catalyst's spores failed", error)); });
-Hooks.once("ready", () => installDamageTypeMemory());
-Hooks.on("preCreateChatMessage", (document, data) => { try { attachDamageSource(document, data); } catch (_) {} });
 // (PF2e's catalysts beyond the save card: catalyst-runtime.js.)
 Hooks.on("createChatMessage", message => {
     void catalystOnDamage(message).catch(error => notifyError("A catalyst's damage rider failed", error));

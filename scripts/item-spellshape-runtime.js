@@ -11,7 +11,7 @@ import { riderChoice, timedConditions, shapeEffect, timedTempHp, castTargetActor
 import { applyDamageWithReceipt } from "./native-damage-receipt.js";
 import { loadNativeEffectTemplate, prepareNativeEffectSource, createNativeEffect } from "./native-outcome-effects.js";
 import { tokenDistance, tokenDocumentDistance } from "./token-distance.js";
-import { DEGREES, MODULE_ID, activeGM, allied, escapeHTML, gmIds } from "./runtime-utils.js";
+import { DEGREES, MODULE_ID, activeGM, allied, core, escapeHTML, gmIds } from "./runtime-utils.js";
 
 const damageRollClass = () => CONFIG.Dice.rolls.find(roll => roll.name === "DamageRoll");
 const capital = text => `${text[0].toUpperCase()}${text.slice(1)}`;
@@ -369,8 +369,8 @@ export async function catalystSporesOnDamage(message) {
     const holder = message.actor;
     const effect = (holder?.itemTypes?.effect ?? []).find(entry => entry.flags?.[MODULE_ID]?.catalystSpores);
     if (!effect) return null;
-    // (PF2e's damage message names no types: the ones its applyDamage was last given for this creature — installDamageTypeMemory.)
-    const types = lastDamageTypes.get(holder.uuid)?.types ?? [];
+    // (PF2e's damage message names no types: the ones its applyDamage was last given for this creature, which pf2e-resolution-core remembers.)
+    const types = core()?.patches.damage.lastTypes(holder.uuid) ?? [];
     const physical = ["bludgeoning", "piercing", "slashing"].some(type => types.includes(type));
     // (The Hit Points lost: PF2e's update records the change.)
     const lost = Number((message.flags.pf2e.appliedDamage.updates ?? []).find(update => update.path === "system.attributes.hp.value")?.value ?? 0);
@@ -386,43 +386,13 @@ export async function catalystSporesOnDamage(message) {
     return { caught: caught.map(token => token.name) };
 }
 
-/** The damage types each creature was last given by PF2e's applyDamage (its damage message names none). */
-const lastDamageTypes = new Map();
-// (The damage's source — its item and that item's actor, a ranged weapon or not — remembered as it's applied, and written on PF2e's damage-taken message, which carries none.)
-const lastDamageSource = new Map();
-export function attachDamageSource(document, data) {
-    if (data?.flags?.pf2e?.context?.type !== "damage-taken") return;
-    const actorUuid = document.speaker?.actor ? game.actors.get(document.speaker.actor)?.uuid : null;
-    const token = document.speaker?.token && document.speaker?.scene ? game.scenes.get(document.speaker.scene)?.tokens.get(document.speaker.token) : null;
-    const key = token?.actor?.uuid ?? actorUuid;
-    const source = key ? lastDamageSource.get(key) : null;
-    if (!source || Date.now() - source.at > 10000) return;
-    document.updateSource({ [`flags.${MODULE_ID}.damageSource`]: { uuid: source.uuid, actor: source.actor, type: source.type, ranged: source.ranged } });
-}
-export function installDamageTypeMemory() {
-    const Actor = CONFIG.Actor.documentClass;
-    if (Actor.prototype.__pf2eAutoDamageTypes) return;
-    const original = Actor.prototype.applyDamage;
-    Actor.prototype.applyDamage = function (params = {}, ...rest) {
-        try {
-            const instances = params?.damage?.instances ?? [];
-            const types = instances.map(instance => instance.type).filter(Boolean);
-            if (types.length) lastDamageTypes.set(this.uuid, { types, at: Date.now() });
-            const item = params?.item ?? null;
-            const options = [...(params?.rollOptions ?? [])];
-            lastDamageSource.set(this.uuid, { uuid: item?.uuid ?? null, actor: item?.actor?.uuid ?? null, type: item?.type ?? null,
-                ranged: Boolean(item?.isRanged ?? options.includes("item:ranged")), at: Date.now() });
-        } catch (_) {}
-        // (Demon Bone Tiles: a Shield Block with the spell's shield leaves no trace in PF2e's message — the shield's Effect marked here, the GM's client bursts it: catalyst-runtime.js.)
-        let shards = null;
-        try {
-            const shieldId = this.attributes?.shield?.raised ? this.attributes.shield.itemId : null;
-            shards = params?.shieldBlockRequest && shieldId ? (this.itemTypes?.effect ?? []).find(effect => effect.id === shieldId && effect.flags?.[MODULE_ID]?.shieldShards && !effect.flags[MODULE_ID].shieldShards.spent) ?? null : null;
-        } catch (_) {}
-        const result = original.call(this, params, ...rest);
-        if (shards) Promise.resolve(result).then(() => shards.setFlag(MODULE_ID, "shieldShards", { ...shards.flags[MODULE_ID].shieldShards, blockedAt: Date.now() })).catch(() => null);
-        return result;
-    };
-    Actor.prototype.__pf2eAutoDamageTypes = true;
+/**
+ * Demon Bone Tiles: a Shield Block with the spell's shield leaves no trace in PF2e's message — the shield's Effect is marked once the damage is applied,
+ * and the GM's client bursts it (catalyst-runtime.js). pf2e-resolution-core's damage patch asks this before applying damage; returns what to do after, or null.
+ */
+export function shieldShardsBlock(actor, params) {
+    const shieldId = actor.attributes?.shield?.raised ? actor.attributes.shield.itemId : null;
+    const shards = params?.shieldBlockRequest && shieldId ? (actor.itemTypes?.effect ?? []).find(effect => effect.id === shieldId && effect.flags?.[MODULE_ID]?.shieldShards && !effect.flags[MODULE_ID].shieldShards.spent) ?? null : null;
+    return shards ? () => shards.setFlag(MODULE_ID, "shieldShards", { ...shards.flags[MODULE_ID].shieldShards, blockedAt: Date.now() }).catch(() => null) : null;
 }
 

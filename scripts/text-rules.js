@@ -1,6 +1,6 @@
-// The "+" modules' passive features run as their text says (src/compiler/plus-feature-rules.js): PF2e's ItemPF2e#prepareRuleElements is wrapped so an item
-// whose text a form reads gets, in memory only, the module's rules the text contradicts dropped and the text's added — nothing is saved to the item.
-// Official PF2e items are left as PF2e made them.
+// The "+" modules' passive features run as their text says (src/compiler/plus-feature-rules.js): pf2e-resolution-core's rules patch runs this module's
+// rewriter (main.js) as PF2e prepares an item's rule elements, so an item whose text a form reads gets, in memory only, the module's rules the text
+// contradicts dropped and the text's added — nothing is saved to the item. Official PF2e items are left as PF2e made them.
 import { readTextRules, rulesWithText, readFocusRegain, readActionCast } from "../src/compiler/plus-feature-rules.js";
 import { loadNativeEffectTemplate, prepareNativeEffectSource, createNativeEffect } from "./native-outcome-effects.js";
 import { levelDC } from "../src/compiler/check-helpers.js";
@@ -25,25 +25,10 @@ export function textRulesFor(item) {
     return cache.get(key);
 }
 
-/** Wraps PF2e's ItemPF2e#prepareRuleElements. Once, as the system's classes exist. */
-export function installTextRules() {
-    const featClass = CONFIG.PF2E?.Item?.documentClasses?.feat;
-    const ItemPF2e = featClass ? Object.getPrototypeOf(featClass.prototype)?.constructor : null;
-    if (!ItemPF2e?.prototype?.prepareRuleElements || ItemPF2e.prototype.prepareRuleElements[MODULE_ID]) return false;
-    const prepare = ItemPF2e.prototype.prepareRuleElements;
-    ItemPF2e.prototype.prepareRuleElements = function (...args) {
-        const read = textRulesFor(this);
-        if (read?.add || read?.drop) this.system.rules = rulesWithText(this.system.rules, read);
-        return prepare.apply(this, args);
-    };
-    ItemPF2e.prototype.prepareRuleElements[MODULE_ID] = true;
-    // (An Arcane Cascade stance's damage type answered from the last spell, before PF2e asks — its items' creation runs the choice prompts: cascadeTypeAhead.)
-    const create = ItemPF2e.createDocuments;
-    ItemPF2e.createDocuments = async function (data = [], options = {}) {
-        try { if (options?.parent) data = data.map(entry => cascadeTypeAhead(entry, options.parent)); } catch (error) { console.warn(`${MODULE_ID} | The cascade's damage type wasn't read.`, error); }
-        return create.call(this, data, options);
-    };
-    return true;
+/** The rules PF2e prepares for an item, its text's dropped and added (the core's rules patch asks for every item), or null to leave them as they are. */
+export function rulesFromText(item, rules) {
+    const read = textRulesFor(item);
+    return read?.add || read?.drop ? rulesWithText(rules, read) : null;
 }
 
 /**

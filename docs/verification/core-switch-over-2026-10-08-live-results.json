@@ -1,0 +1,935 @@
+{
+ "label": "coreSwitchOver",
+ "date": "2026-10-08",
+ "status": {
+  "before": "spell-module x4 (core enabled, spell module unchanged)",
+  "after": "core x4"
+ },
+ "textRulesAfterReload": {
+  "before": {
+   "world": true,
+   "unlinkedToken": true
+  },
+  "after": {
+   "world": true,
+   "unlinkedToken": true
+  },
+  "firstReloadWithoutLoadOrderFix": {
+   "world": false,
+   "unlinkedToken": false
+  }
+ },
+ "registry": {
+  "preparePlanEqualsReadPlanOfApiCompile": [
+   "Prismatic Wall",
+   "Fireball",
+   "Heal",
+   "Force Barrage",
+   "Blazing Bolt",
+   "Lay on Hands",
+   "Soothe"
+  ]
+ },
+ "part1": {
+  "of": 119,
+  "ran": 84,
+  "stoppedFor": "a leaked started combat (spellshapeBatch4) cascading failures",
+  "results": [
+   {
+    "name": "notesBatch1",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "notesBatch2",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "notesBatch3",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "notesBatch4",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "notesBatch5",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "notesBatch6",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "notesBatch7",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "notesBatch9",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "notesBatch10",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "notesBatch11",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "spellFeaturesBatch1",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "spellFeaturesBatch2",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "spellFeaturesBatch3",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "spellFeaturesBatch4a",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "spellFeaturesBatch4b",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "spellFeaturesBatch5",
+    "passed": false,
+    "error": "Spell features batch 5: {\"crystal\":{\"card\":3,\"rank\":7,\"dc\":30,\"attack\":20,\"cantripRank\":7,\"coldEffectAfterCantrip\":true,\"iceStorm\":{\"rank\":4,\"dc\":30,\"effect\":true,\"weapon\":\"ZKMQ8glSPdiu82KM\",\"longsword\":\"ZKMQ8glSPdiu82KM\",\"dice\":[\"undefinedundefined\",\"undefinedundefined\",\"undefinedundefined\"]}},\"cha"
+   },
+   {
+    "name": "spellFeaturesBatch6",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "spellFeaturesBatch7",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "spellFeaturesBatch8",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "spellFeaturesBatch9",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "spellFeaturesBatch10",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch1",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch2",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch3",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch4",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch5",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch6",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch7",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch8",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch9",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch10",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch11",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch12",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch13",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch14",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch15",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch16",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch17",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch18",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch19",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch20",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch21",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch22",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch23",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch24",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch25",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch26",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch27",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch28",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch29",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch30",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch31",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch32",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch33",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch34",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch35",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch36",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch37",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch38",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch39",
+    "passed": false,
+    "error": "Third-party features batch 39: {\"lines\":[\"Familiar of Stumbling Steps: PFTEST P23 Affliction tpf39 foe moved 5 feet\",\"Familiar of Murky Worlds: Effect: Familiar of Murky Worlds on PFTEST P23 Affliction tpf39 foe\",\"Familiar of Sunlit Dawn: PFTEST P23 Affliction tpf39 foe dazzled until the start of PF"
+   },
+   {
+    "name": "thirdPartyFeaturesBatch40",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch41",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch42",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch43a",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch43b",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch43c",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch43d",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyFeaturesBatch43e",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "spellshapeBatch4",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "spellshapeBatch9",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "thirdPartyBatch1",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "spellshapeBatch14",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "spellshapeBatch18",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "rank5Batch13",
+    "passed": false,
+    "error": "Rank 5 batch 13: {\"toxic\":{\"concealed\":true,\"notes\":2,\"event\":null},\"fog\":{\"concealed\":true,\"exposed\":\"exposed\",\"formula\":\"10d6 fire\",\"lost\":31,\"status\":\"ended\",\"concealedAfter\":false}}"
+   },
+   {
+    "name": "rank3Batch21",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "rank8Batch2",
+    "passed": false,
+    "error": "Rank 8 batch 2: {\"rift\":{\"immobilized\":true,\"slowed\":1,\"reminder\":true,\"escape\":null},\"error\":\"Error: The condition turn anchor is ambiguous. Review the combatant before applying.\\n    at nativeConditionTiming (http://localhost:30000/modules/pf2e-automatic-resolution/scripts/condition-timing.js:14:3"
+   },
+   {
+    "name": "rank6Batch10",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "rank2Batch38",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "cr1Batch22",
+    "passed": true,
+    "error": null
+   },
+   {
+    "name": "rank3Batch100",
+    "passed": false,
+    "error": "Rank 3 batch 100: {\"din\":{\"dc\":24,\"results\":[{\"actorUuid\":\"Actor.buOOLK0aXe83xC5G\",\"degree\":0},{\"actorUuid\":\"Actor.263Tdhw8UGxCa6vw\",\"degree\":2}],\"deafened\":true,\"duration\":\"1 minutes\",\"immune\":false},\"dinAgain\":[{\"actorUuid\":\"Actor.263Tdhw8UGxCa6vw\",\"degree\":3}],\"gym\":{\"results\":[{\"actorUuid\":\"Acto"
+   },
+   {
+    "name": "rank7Batch16",
+    "passed": false,
+    "error": "Rank 7 batch 16: {\"fieldAsked\":[\"field foe\"],\"fieldDegree\":\"criticalFailure\",\"fieldHeld\":{\"encumbered\":true,\"slowed\":1,\"note\":true},\"fieldLeft\":{\"encumbered\":false,\"slowed\":null,\"note\":false},\"fieldBack\":{\"encumbered\":true,\"slowed\":1,\"note\":true,\"newCards\":0},\"fieldEnded\":{\"encumbered\":false,\"slowed"
+   },
+   {
+    "name": "thirdPartyBatch23",
+    "passed": false,
+    "error": "Third-party batch 23: {\"shrugSetup\":{\"resist\":[\"cold\"],\"senses\":[]},\"shrug\":null,\"plain\":null,\"enemyCentre\":\"Aura of Violent Light targets 1 willing ally.\",\"badgeStart\":1,\"near\":null,\"farFirst\":false,\"error\":\"Error: Use Sustain on the caster's subsequent turn; outside combat requires GM timing revie"
+   },
+   {
+    "name": "longTailBatch2",
+    "passed": false,
+    "error": "Use Sustain on the caster's subsequent turn; outside combat requires GM timing review."
+   },
+   {
+    "name": "rank2Batch78",
+    "passed": true,
+    "error": null
+   }
+  ]
+ },
+ "part2": {
+  "ran": 44,
+  "results": [
+   {
+    "name": "spellshapeBatch4",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "spellFeaturesBatch5",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "thirdPartyFeaturesBatch39",
+    "passed": false,
+    "error": "Third-party features batch 39: {\"lines\":[\"Familiar of Reprising Melody: PFTEST P23 Affliction tpf39 foe's frightened reduced\",\"Familiar of Sunlit Dawn: PFTEST P23 Affliction tpf39 foe dazzled until the start of PFTEST P23 Affliction tpf39 witch's next turn\",\"Familiar of Murky Worlds: Effect: Familia",
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank5Batch13",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank8Batch2",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank3Batch100",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank7Batch16",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "thirdPartyBatch23",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "longTailBatch2",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank10Batch4",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "messaging",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "care",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank5Batch94",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "longTailBatch3",
+    "passed": false,
+    "error": "Leaden Steps: the degree Effect gives Encumbered and weakness; success ends at your next turn's end; a missed Sustain ends it: {\"failure\":{\"effect\":\"Spell Effect: Leaden Steps (Failure)\",\"selection\":\"failure\",\"weakness\":2,\"encumbered\":true,\"moduleEncumbered\":0},\"success\":{\"effect\":\"Spell Effect: Lea",
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank3Batch3",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank6Batch25",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "attackConditionRiders",
+    "passed": false,
+    "error": "Blinding Foam incapacitation: one degree worse only against the level-12 creature: {\"high\":{\"degree\":\"success\",\"total\":24,\"natural\":10,\"expected\":\"failure\"},\"low\":{\"degree\":\"criticalSuccess\",\"total\":33,\"natural\":19,\"expected\":\"criticalSuccess\"}}",
+    "combatsLeft": 0
+   },
+   {
+    "name": "lingering",
+    "passed": false,
+    "error": "Cannot read properties of undefined (reading 'status')",
+    "combatsLeft": 1
+   },
+   {
+    "name": "thirdPartyBatch30",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 1
+   },
+   {
+    "name": "cr1Batch162",
+    "passed": false,
+    "error": "Action families: {\"friendfetch\":{\"moved\":[{\"name\":\"PFTEST P23 Affliction fetched friend\",\"to\":{\"x\":2300,\"y\":1000}}],\"at\":[2300,1000]},\"liberating\":{\"refused\":\"Liberating Command: PFTEST P23 Affliction loose ally isn't grabbed, immobilized, restrained.\",\"held\":[\"immobilized\"],\"escapeRolled\":true},\"bo",
+    "combatsLeft": 1
+   },
+   {
+    "name": "rank5Batch74",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 1
+   },
+   {
+    "name": "thirdPartyBatch65",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "healingRiders",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank7Batch6",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank8Batch11",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank8Batch12",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank2Batch64",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank2Batch65",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank2Batch66",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank7Batch17",
+    "passed": false,
+    "error": "Rank 7 batch 17: {\"casterAC\":true,\"radius\":150,\"exposed\":true,\"push\":false,\"collision\":false,\"rowTerrain\":[2],\"grown\":{\"radius\":250,\"follow\":250,\"area\":10},\"followed\":true,\"ended\":{\"region\":false,\"ac\":false},\"raid\":{\"lost\":20,\"type\":\"piercing\",\"noTerrain\":true,\"disbelief\":[\"disbelieved\"],\"turnEnd\":{",
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank8Batch14",
+    "passed": false,
+    "error": "Rank 8 batch 14: {\"pool\":{\"lostA\":41,\"lostB\":80,\"pull10\":true,\"toCenter\":true,\"terrain\":true},\"wind\":{\"lost\":16,\"rise\":false,\"fly\":true,\"passedExposed\":true},\"veilExposed\":[\"veil centre\",\"veil doomed\",\"veil living\"],\"veilTerrain\":2,\"veilLiving\":{\"lost\":77,\"pulled\":true},\"veilChild\":true,\"centreDrain",
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank5Batch77",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank5Batch83",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank5Batch84",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank4Batch105",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank4Batch115",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank4Batch119",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank4Batch120",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank4Batch122",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank4Batch123",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank2Batch67",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank2Batch68",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank6Batch21",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank7Batch15",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   }
+  ]
+ },
+ "part3": {
+  "ran": 29,
+  "note": "reloaded code: Tiny-token distance fix, compiler registration, native numbers, harness fixes",
+  "results": [
+   {
+    "name": "thirdPartyFeaturesBatch39",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "cr1Batch162",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank7Batch17",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank8Batch14",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "cr1Batch170",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "notesBatch1",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank3Batch123",
+    "passed": false,
+    "error": "Rank 3 batch 123: {\"shot\":{\"hours\":1,\"results\":[\"afflicted\",\"resisted\"],\"strongDegree\":\"criticalSuccess\",\"weak\":{\"stages\":6,\"onset\":true,\"dc\":24,\"startStage\":3,\"virulent\":true,\"badge\":1}},\"again\":\"already\",\"stageOne\":2,\"backfire\":{\"status\":\"afflicted\",\"degree\":\"criticalFailure\",\"startStage\":4},\"hive",
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank3Batch38",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "spellshapeBatch12",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "thirdPartyFeaturesBatch11",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "thirdPartyFeaturesBatch26",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "thirdPartyFeaturesBatch41",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank8Batch11",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "thirdPartyFeaturesBatch10",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "thirdPartyFeaturesBatch25",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank2Batch64",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "thirdPartyFeaturesBatch42",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "thirdPartyFeaturesBatch43c",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank5Batch77",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank5Batch83",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank4Batch122",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank7Batch15",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "spellshapeBatch4",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "longTailBatch2",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "lingering",
+    "passed": false,
+    "error": "Cannot read properties of undefined (reading 'status')",
+    "combatsLeft": 0
+   },
+   {
+    "name": "longTailBatch3",
+    "passed": false,
+    "error": "Leaden Steps: the degree Effect gives Encumbered and weakness; success ends at your next turn's end; a missed Sustain ends it: {\"failure\":{\"effect\":\"Spell Effect: Leaden Steps (Failure)\",\"selection\":\"failure\",\"weakness\":2,\"encumbered\":true,\"moduleEncumbered\":0},\"success\":{\"effect\":\"Spell Effect: Lea",
+    "combatsLeft": 0
+   },
+   {
+    "name": "attackConditionRiders",
+    "passed": false,
+    "error": "Blinding Foam incapacitation: one degree worse only against the level-12 creature: {\"high\":{\"degree\":\"success\",\"total\":24,\"natural\":10,\"expected\":\"failure\"},\"low\":{\"degree\":\"success\",\"total\":21,\"natural\":7,\"expected\":\"success\"}}",
+    "combatsLeft": 0
+   },
+   {
+    "name": "spellFeaturesBatch5",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   },
+   {
+    "name": "rank2Batch67",
+    "passed": true,
+    "error": null,
+    "combatsLeft": 0
+   }
+  ]
+ },
+ "final": [
+  {
+   "name": "rank3Batch123",
+   "passed": true,
+   "note": "after the ritual-hive fix (summonEndsAtZero leaves endsAfter hives)"
+  },
+  {
+   "name": "rank7Batch15",
+   "passed": true,
+   "note": "alone; an overlapping duplicate run had failed it"
+  },
+  {
+   "name": "rank6Batch21",
+   "passed": true
+  }
+ ],
+ "knownPreexistingFailures": [
+  "lingering",
+  "longTailBatch3",
+  "attackConditionRiders"
+ ],
+ "notes": [
+  "spellFeaturesBatch5 failed once on a missed Strike (natural 4 vs DC 5); passed on re-run",
+  "rank7Batch17 and rank8Batch14 checked card wording from before forced movement/elevation was automated; updated",
+  "thirdPartyFeaturesBatch39 exposed the Tiny-token distance bug (familiar aura); fixed in scripts/token-distance.js"
+ ]
+}
