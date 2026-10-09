@@ -56,9 +56,23 @@ async function context() {
         try { if (ui.sidebar?.expanded === false) ui.sidebar.expand(); ui.sidebar?.changeTab?.('chat', 'primary'); } catch (_) {}
         // (The combats a case starts go with it, passed or failed — on the test scenes only: a started one left behind confuses later cases' turn timing.)
         const before = new Set(game.combats.map(combat => combat.id));
+        // (A dialog nobody answers waits for ever and stops a whole run: open over a minute, it's answered with its default and the case failed with its
+        // title — a case that meets a newer question needs updating. Cases answering their own dialogs do so within seconds.)
+        const answered = [];
+        const watchdog = setInterval(() => {
+            for (const app of foundry.applications.instances.values()) {
+                if (!app.rendered || app.constructor.name !== 'DialogV2') continue;
+                app.__pftestSeen ??= Date.now();
+                if (Date.now() - app.__pftestSeen < 60000) continue;
+                const button = app.element?.querySelector('button[data-action="ok"]') ?? app.element?.querySelector('button[autofocus]') ?? app.element?.querySelector('footer button, button');
+                if (button) { answered.push(app.title ?? app.options?.window?.title ?? 'a dialog'); button.click(); }
+            }
+        }, 5000);
         let result;
         try { result = {label, passed: true, at: new Date().toISOString(), details: await fn()}; }
         catch (error) { result = {label, passed: false, error: error.message, stack: error.stack}; }
+        finally { clearInterval(watchdog); }
+        if (answered.length) result = {...result, passed: false, error: `Dialogs left open, answered with their defaults: ${[...new Set(answered)].join('; ')}${result.error ? ` — then: ${result.error}` : ''}`};
         for (const combat of game.combats.filter(combat => !before.has(combat.id) && /^PFTEST /.test(combat.scene?.name ?? ''))) await combat.delete().catch(() => null);
         saved.results.push(result); await persist(); return result;
     };
@@ -15083,7 +15097,8 @@ export const cases = {
         const startCombat = async tokens => { combat = await Combat.create({scene: canvas.scene.id, active: true});
             await combat.createEmbeddedDocuments('Combatant', tokens.map((t, i) => ({tokenId: t.id, sceneId: canvas.scene.id, actorId: t.actorId, initiative: 30 - i * 10})));
             await combat.startCombat(); await wait(800); };
-        const hurt = async (actor, amount, origin = null) => { const t = actor.getActiveTokens(true, true)[0]; await actor.applyDamage({damage: amount, token: t, skipIWR: true, rollOptions: new Set(origin ? [`origin:signature:${origin.signature}`] : [])}); await wait(2500); };
+        // (The damage typed, as a rolled PF2e damage is: untyped, the GM asks which type — the user's choice of 2026-10-05 — and the case would wait.)
+        const hurt = async (actor, amount, origin = null) => { const t = actor.getActiveTokens(true, true)[0]; await actor.applyDamage({damage: amount, token: t, skipIWR: true, rollOptions: new Set(['item:damage:type:bludgeoning', ...(origin ? [`origin:signature:${origin.signature}`] : [])])}); await wait(2500); };
         const giveSpell = async (actor, name, tradition) => {
             const pack = game.packs.get('pf2e.spells-srd'), row = (await pack.getIndex()).find(item => item.name === name);
             const source = (await pack.getDocument(row._id)).toObject(); delete source._id;
@@ -15101,8 +15116,12 @@ export const cases = {
             await ctx.api.incarnatePhase(card('Bound in Death'), 'link', {targets: [tFoe]}); await wait(800);
             await hurt(bound.caster, 20);
             out.bound = {caster: 500 - bound.caster.hitPoints.value, foe: 500 - foe.hitPoints.value};
+            const linkOf = () => { const e = bound.caster.itemTypes.effect.find(x => x.flags?.[NS]?.boundLink); return e ? JSON.parse(JSON.stringify(e.flags[NS].boundLink)) : null; };
+            out.bound.linkAfterHit = linkOf();
             await ctx.api.incarnatePhase(card('Bound in Death'), 'self'); await wait(3000);
-            out.bound.selfFoe = 500 - foe.hitPoints.value;
+            out.bound.selfFoe = 500 - foe.hitPoints.value; out.bound.linkAfterSelf = linkOf();
+            // (A natural 20 on the Sustain's save is a plain failure, and the link immune for a round: cleared, so the last hit tests the end at 0 Hit Points.)
+            { const link = bound.caster.itemTypes.effect.find(x => x.flags?.[NS]?.boundLink); if (link?.flags[NS].boundLink.immuneUntil != null) await link.setFlag(NS, 'boundLink', {...link.flags[NS].boundLink, immuneUntil: null}); }
             await foe.update({'system.attributes.hp.value': 5}); await hurt(bound.caster, 20);
             out.bound.ended = !bound.caster.itemTypes.effect.some(e => e.flags?.[NS]?.boundLink);
             await combat.delete(); combat = null;
@@ -15130,8 +15149,11 @@ export const cases = {
             await ctx.api.incarnatePhase(card('Blinding Fury'), 'fury', {targets: [tBrute], degree: 'criticalFailure'}); await wait(800);
             const blind = actor => actor.itemTypes.effect.filter(e => e.flags?.[NS]?.furyBlind).map(e => e.flags[NS].furyBlind.observedUuid);
             out.fury = {first: blind(brute).includes(fury.caster.uuid)};
+            const curseOf = actor => actor.itemTypes.effect.find(e => e.flags?.[NS]?.furyCurse)?.flags[NS].furyCurse ?? null;
+            out.fury.curseBefore = (({mode, lastRound}) => ({mode, lastRound}))(curseOf(brute) ?? {}); out.fury.combat = game.combat?.started ? `${game.combat.round}:${game.combat.turn}` : null;
             await hurt(victim, 5, brute); await hurt(other, 5, brute);
             out.fury.any = {victim: blind(brute).includes(victim.uuid), other: blind(brute).includes(other.uuid)};
+            out.fury.curseAfter = (({mode, lastRound}) => ({mode, lastRound}))(curseOf(brute) ?? {});
             await cast(fury, 6, 14 * g, 4 * g);
             await ctx.api.incarnatePhase(card('Blinding Fury'), 'fury', {targets: [tSly], degree: 'failure'}); await wait(800);
             for (const e of sly.itemTypes.effect.filter(e => e.flags?.[NS]?.furyBlind)) await e.delete();
