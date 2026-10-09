@@ -36471,7 +36471,7 @@ export const cases = {
         return out;
     },
     // Cantrip / rank 1 batch 89: Putrefy Food and Drink — an instantaneous note on the card (food or water is a thing); from 2nd rank
-    // its heightened counteract check isn't automated, so the cast refuses.
+    // the card rolls its heightened counteract (since rank 2 batch 16; rank2Batch16 rolls it at 3rd).
     async cr1Batch89(ctx) {
         const wait = ms => new Promise(r => setTimeout(r, ms));
         const fixture = await ctx.setup('Putrefy Food and Drink');
@@ -36479,11 +36479,14 @@ export const cases = {
         const plan = await ctx.api.compile(fixture.spell);
         await ctx.api.execute(fixture.spell, {sourceActor: fixture.caster, plan, targets: [], castRank: 1, skipConfirmation: true}); await wait(800);
         const card = game.messages.contents.filter(m => m.flags?.['pf2e-automatic-resolution']?.kind === 'spell-note').at(-1)?.content?.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim() ?? '';
-        let refused = null;
-        try { await ctx.api.execute(fixture.spell, {sourceActor: fixture.caster, plan, targets: [], castRank: 2, skipConfirmation: true}); } catch (error) { refused = error.message; }
+        const before = new Set(game.messages.contents.map(m => m.id));
+        let error = null;
+        try { await ctx.api.execute(fixture.spell, {sourceActor: fixture.caster, plan, targets: [], castRank: 2, skipConfirmation: true}); await wait(800); } catch (e) { error = e.message; }
+        const heightened = game.messages.contents.find(m => !before.has(m.id) && m.getFlag('pf2e-automatic-resolution', 'noteCounteract'));
+        // (2nd rank: an alchemical elixir; 3rd adds potions.)
         const out = {card: /rot and spoil instantly/.test(card) && !/counteract/.test(card), effects: fixture.caster.itemTypes.effect.filter(e => e.name.includes('Putrefy')).length,
-            refused: /at rank 2 and above/.test(refused ?? '') ? refused.slice(0, 120) : refused};
-        assert(out.card && out.effects === 0 && /at rank 2 and above/.test(out.refused ?? ''), `Putrefy Food and Drink: the note, and 2nd rank refused: ${JSON.stringify(out)}`);
+            error, counteract: /Counteract an alchemical elixir/.test(heightened?.content ?? '')};
+        assert(out.card && out.effects === 0 && !out.error && out.counteract, `Putrefy Food and Drink: the note, and 2nd rank's counteract: ${JSON.stringify(out)}`);
         return out;
     },
     // Cantrip / rank 1 batch 90: Scrounger's Glee — Frightened 1/2 on a failed save, floored at 1 while the spell lasts; Dismissing it
@@ -36718,7 +36721,8 @@ export const cases = {
         const g = canvas.grid.size;
         const fixture = await ctx.setup('Gust of Wind');
         const casterToken = canvas.scene.tokens.find(t => t.actorId === fixture.caster.id); await move(casterToken, 9 * g, 16 * g);
-        const [walker, flyer, giant, late] = await Promise.all(['gust walker', 'gust flyer', 'gust giant', 'gust late'].map(name => ctx.actor(name)));
+        // (The flyer's own roll — failure or worse at −20 — so the flying answer adjusts it; a GM override wouldn't.)
+        const [walker, flyer, giant, late] = await Promise.all(['gust walker', 'gust flyer', 'gust giant', 'gust late'].map(name => ctx.actor(name, name === 'gust flyer' ? {save: -20} : {})));
         await giant.update({'system.traits.size.value': 'huge'});
         const tWalker = await place(walker, 11 * g, 16 * g), tFlyer = await place(flyer, 13 * g, 16 * g), tGiant = await place(giant, 15 * g, 15 * g), tLate = await place(late, 12 * g, 19 * g);
         await wait(800);
@@ -36738,7 +36742,8 @@ export const cases = {
                 let target = ctx.state(card).targets[0];
                 if (target.eligible === false) { results[ours[o.actorUuid]] = {eligible: false, reason: target.eligibilityReason}; await ctx.api.saves.finalize(card).catch(() => {}); continue; }
                 await ctx.api.saves.rollSave(card, target.id, {skipDialog: true});
-                await ctx.api.saves.correctTarget(card, target.id, {action: 'degree', degree: 'failure'}); await wait(400);
+                if (!flying[o.actorUuid]) await ctx.api.saves.correctTarget(card, target.id, {action: 'degree', degree: 'failure'});
+                await wait(400);
                 target = ctx.state(card).targets[0];
                 if (target.degreeAdjustment?.status === 'pending') await ctx.api.saves.correctTarget(card, target.id, {action: flying[o.actorUuid] ? 'adjustment-applies' : 'adjustment-not-applicable', expectedRevision: target.revision});
                 const before = (await fromUuid(o.actorUuid)).hitPoints.value;
@@ -37024,7 +37029,8 @@ export const cases = {
         const move = (token, x, y) => token.update({x, y}, {teleport: true, animate: false});
         const g = canvas.grid.size;
         const fixture = await ctx.setup('Turbulent Tide');
-        const casterToken = canvas.scene.tokens.find(t => t.actorId === fixture.caster.id); await move(casterToken, 6 * g, 12 * g);
+        // (Inside the scene, which starts 5 squares in: room on both sides for the pushes the module carries out.)
+        const casterToken = canvas.scene.tokens.find(t => t.actorId === fixture.caster.id); await move(casterToken, 10 * g, 12 * g);
         const plan = await ctx.api.compile(fixture.spell);
         const run = async (names, spots, degrees, answer) => {
             const actors = await Promise.all(names.map(name => ctx.actor(name)));
@@ -37040,14 +37046,16 @@ export const cases = {
             await ctx.api.saves.answerCastGate(card, answer);
             await ctx.api.saves.finalize(card); await wait(1500);
             const text = (game.messages.get(card.id)?.content ?? '').replace(/<[^>]+>/g, ' ');
-            // (Forced movement is the GM's: the card says who is pushed how far.)
-            const result = {refusedBeforeAnswer: /weapon break/.test(refused ?? ''), pushes: names.map(name => (new RegExp(`${name} is pushed (\\d+) feet away`).exec(text) ?? [])[1] ?? null),
+            // (The card says who is pushed how far: the module's forced movement now — "was pushed N feet" —, or the GM's reminder.)
+            const flat = text.replace(/\s+/g, ' ');
+            const pushes = names.map(name => { const m = new RegExp(`${name} (?:is pushed (\\d+) feet away|was pushed (\\d+) feet)`).exec(flat); return m ? (m[1] ?? m[2]) : null; });
+            const result = {refusedBeforeAnswer: /weapon break/.test(refused ?? ''), pushes,
                 strike: /improvised weapon/.test(text), follow: /Stride after the target/.test(text), broken: /mark it broken/.test(text)};
             for (const t of tokens) await t.delete().catch(() => null);
             return result;
         };
-        const out = {yes: await run(['tide fail', 'tide crit', 'tide save'], [[7, 12], [5, 12], [6, 13]], ['failure', 'criticalFailure', 'success'], 'yes')};
-        out.no = await run(['tide unbroken'], [[7, 12]], ['failure'], 'no');
+        const out = {yes: await run(['tide fail', 'tide crit', 'tide save'], [[11, 12], [9, 12], [10, 13]], ['failure', 'criticalFailure', 'success'], 'yes')};
+        out.no = await run(['tide unbroken'], [[11, 12]], ['failure'], 'no');
         const y = out.yes;
         assert(y.refusedBeforeAnswer && JSON.stringify(y.pushes) === '["5","10",null]' && y.strike && y.follow && y.broken && JSON.stringify(out.no.pushes) === '[null]',
             `Turbulent Tide: ${JSON.stringify(out)}`);
