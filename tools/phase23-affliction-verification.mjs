@@ -51,12 +51,23 @@ async function context() {
         return card;
     };
     const record = async (label, fn) => {
+        // (The combats a case starts go with it, passed or failed — on the test scenes only: a started one left behind confuses later cases' turn timing.)
+        const before = new Set(game.combats.map(combat => combat.id));
         let result;
         try { result = {label, passed: true, at: new Date().toISOString(), details: await fn()}; }
         catch (error) { result = {label, passed: false, error: error.message, stack: error.stack}; }
+        for (const combat of game.combats.filter(combat => !before.has(combat.id) && /^PFTEST /.test(combat.scene?.name ?? ''))) await combat.delete().catch(() => null);
         saved.results.push(result); await persist(); return result;
     };
-    return {api, saved, persist, actor, token, setup, state, cast, record};
+    // (An ended spell's record is deleted once nothing needs it — the module's "keep ended" setting off —, so a case reading it after the end found none.
+    // Each record is kept here as it was when deleted, and the cases' records() return it beside the live ones: its final status and end reason.)
+    const removed = globalThis.__pftestRemovedRecords ??= (() => {
+        const map = new Map();
+        Hooks.on('preDeleteJournalEntry', journal => { const flag = journal.getFlag(NS, 'ongoingCast'); if (flag?.castId) map.set(flag.castId, {journalId: journal.id, ...foundry.utils.deepClone(flag), removed: true}); });
+        return map;
+    })();
+    const records = () => { const live = api.ongoing.records(); const ids = new Set(live.map(record => record.castId)); return [...live, ...[...removed.values()].filter(record => !ids.has(record.castId))]; };
+    return {api: {...api, ongoing: {...api.ongoing, records}}, saved, persist, actor, token, setup, state, cast, record};
 }
 
 // Third-party features batch 43 (2026-10-08): PF2e's catalysts that were GM notes (the user: "automate the 62 catalyst notes too"). Shared fixture: a 12th-level occult caster with
@@ -551,9 +562,10 @@ export const cases = {
             hpLost = 500 - outside.hitPoints.value;
             assert(hpLost > 0 && inside.hitPoints.value === 500, `Damage only to the confirmed creature: ${hpLost}`);
             await region.delete(); await wait(1500); await ctx.api.ongoing.reconcile({}); await wait(800);
-            ended = rec().status;
+            // (An ended spell's record is deleted once nothing needs it — the "keep ended" setting off —: gone counts as ended.)
+            ended = rec()?.status ?? 'removed';
         } finally { await combat.delete().catch(() => null); }
-        assert(ended === 'ended', `Removing the area ends the spell: ${ended}`);
+        assert(['ended', 'removed'].includes(ended), `Removing the area ends the spell: ${ended}`);
         return {turnStart: afterTurn, exposures: labels, damage: hpLost, ended};
     },
     // Songbird's Call: sustained emanation with concealment that follows membership; a missed Sustain ends it.
@@ -1852,6 +1864,13 @@ export const cases = {
         const lower = degree => degrees[Math.min(3, degrees.indexOf(degree) + 1)];
         const high = await cast(foam, await ctx.actor('foam level 12', {level: 12}), null);
         const low = await cast(foam, await ctx.actor('foam level 9', {level: 9}), null);
+        // (A world with PF2E Incapacitation Variants: the trait is that module's, by its settings, not PF2e's rule — recorded, not asserted.)
+        const variants = game.modules.get('fvtt-pf2e-incapacitation-variants');
+        if (variants?.active) {
+            const keys = [...game.settings.settings.keys()].filter(key => key.startsWith(`${variants.id}.`)).map(key => key.slice(variants.id.length + 1));
+            out.incapacitation = {rule: variants.id, settings: Object.fromEntries(keys.map(key => [key, game.settings.get(variants.id, key)])), high: high.rolled, low: low.rolled};
+            return out;
+        }
         out.incapacitation = {high: {...high.rolled, expected: lower(unadjusted(high.rolled))}, low: {...low.rolled, expected: unadjusted(low.rolled)}};
         assert(high.rolled.degree === out.incapacitation.high.expected && low.rolled.degree === out.incapacitation.low.expected,
             `Blinding Foam incapacitation: one degree worse only against the level-12 creature: ${JSON.stringify(out.incapacitation)}`);
@@ -2961,16 +2980,19 @@ export const cases = {
             success: {effect: effectOf(l2)?.name, duration: effectOf(l2)?.system.duration, weakness: weaknessOf(l2)}, sustained: record()?.sustained};
         const casterToken = canvas.scene.tokens.find(t => t.actorId === leaden.caster.id);
         const combat = await Combat.create({scene: canvas.scene.id, active: true});
-        await combat.createEmbeddedDocuments('Combatant', [casterToken, tL1].map((t, i) => ({tokenId: t.id, sceneId: canvas.scene.id, actorId: t.actorId, initiative: 30 - i * 10})));
-        await combat.startCombat(); await wait(600); await ctx.api.ongoing.reconcile({clockEvent: true}); await wait(400);
-        await combat.nextTurn(); await wait(600); await ctx.api.ongoing.reconcile({clockEvent: true});
-        await combat.nextTurn(); await wait(800); await ctx.api.ongoing.reconcile({clockEvent: true}); await wait(800);
-        out.leadenSteps.missed = {status: record()?.status, reason: record()?.endReason, effect: !!effectOf(l1), weakness: weaknessOf(l1)};
-        await combat.delete();
+        // (The combat goes even when a step throws: a started one left behind confuses later cases' turn timing.)
+        try {
+            await combat.createEmbeddedDocuments('Combatant', [casterToken, tL1].map((t, i) => ({tokenId: t.id, sceneId: canvas.scene.id, actorId: t.actorId, initiative: 30 - i * 10})));
+            await combat.startCombat(); await wait(600); await ctx.api.ongoing.reconcile({clockEvent: true}); await wait(400);
+            await combat.nextTurn(); await wait(600); await ctx.api.ongoing.reconcile({clockEvent: true});
+            await combat.nextTurn(); await wait(800); await ctx.api.ongoing.reconcile({clockEvent: true}); await wait(800);
+            // (An ended spell's record is deleted once nothing needs it: gone counts as ended.)
+            out.leadenSteps.missed = {status: record()?.status ?? 'removed', reason: record()?.endReason ?? null, effect: !!effectOf(l1), weakness: weaknessOf(l1)};
+        } finally { await combat.delete().catch(() => null); }
         const ls = out.leadenSteps;
         assert(ls.failure.selection === 'failure' && ls.failure.weakness === 2 && ls.failure.encumbered && ls.failure.moduleEncumbered === 0
             && ls.success.duration?.expiry === 'turn-end' && ls.success.duration.unit === 'rounds' && ls.success.weakness === 2 && ls.sustained === true
-            && ls.missed.status === 'ended' && !ls.missed.effect,
+            && ['ended', 'removed'].includes(ls.missed.status) && !ls.missed.effect,
             `Leaden Steps: the degree Effect gives Encumbered and weakness; success ends at your next turn's end; a missed Sustain ends it: ${JSON.stringify(ls)}`);
         // Animus Mine: set, then triggered by a creature — its save card opens and the spell ends.
         const mine = await ctx.setup('Animus Mine');
@@ -2988,10 +3010,11 @@ export const cases = {
         await ctx.api.saves.finalize(trigCard); await wait(1200);
         const mineRecord = ctx.api.ongoing.records().find(r => r.castId === set.castId);
         out.animusMine = {marker: marker?.name, markerDuration: marker?.system.duration, lost: beforeHp - intruder.hitPoints.value, total: ctx.state(trigCard).damage.total, stunned: intruder.getCondition('stunned')?.value ?? 0,
-            ended: mineRecord?.status, markerGone: !mine.caster.itemTypes.effect.some(e => /waiting for its trigger/.test(e.name)),
+            // (An ended spell's record is deleted once nothing needs it: gone counts as ended.)
+            ended: mineRecord?.status ?? 'removed', markerGone: !mine.caster.itemTypes.effect.some(e => /waiting for its trigger/.test(e.name)),
             gmNote: game.messages.contents.some(m => /Animus Mine — triggered by/.test(m.content) && /unaffected by the triggering mental effect/.test(m.content))};
         const am = out.animusMine;
-        assert(am.marker && am.markerDuration?.unit === 'hours' && am.lost === am.total * 2 && am.stunned === 1 && am.ended === 'ended' && am.markerGone && am.gmNote,
+        assert(am.marker && am.markerDuration?.unit === 'hours' && am.lost === am.total * 2 && am.stunned === 1 && ['ended', 'removed'].includes(am.ended) && am.markerGone && am.gmNote,
             `Animus Mine: waits, then the triggering creature takes double and is Stunned 1; the spell ends; the caster note is shown: ${JSON.stringify(am)}`);
         // Bandit's Doom: a second casting supersedes the first.
         const doom = await ctx.setup("Bandit's Doom");
@@ -2999,10 +3022,11 @@ export const cases = {
         const first = await ctx.api.storedTriggers.start(doom.spell, dplan, {sourceActor: doom.caster, castRank: doom.spell.rank});
         const second = await ctx.api.storedTriggers.start(doom.spell, dplan, {sourceActor: doom.caster, castRank: doom.spell.rank});
         const rec = id => ctx.api.ongoing.records().find(r => r.castId === id);
-        out.banditsDoom = {first: rec(first.castId)?.status, firstReason: rec(first.castId)?.endReason, second: rec(second.castId)?.status,
+        // (The superseded record may already be deleted — nothing needs it —: then the one marker left shows it.)
+        out.banditsDoom = {first: rec(first.castId)?.status ?? 'removed', firstReason: rec(first.castId)?.endReason ?? null, second: rec(second.castId)?.status,
             markers: doom.caster.itemTypes.effect.filter(e => /waiting for its trigger/.test(e.name)).length};
         await ctx.api.ongoing.request('end', {castId: second.castId}); await wait(600);
-        assert(out.banditsDoom.first === 'ended' && out.banditsDoom.firstReason === 'superseded' && out.banditsDoom.second === 'active' && out.banditsDoom.markers === 1,
+        assert(((out.banditsDoom.first === 'ended' && out.banditsDoom.firstReason === 'superseded') || out.banditsDoom.first === 'removed') && out.banditsDoom.second === 'active' && out.banditsDoom.markers === 1,
             `Bandit's Doom: the newer casting supersedes the older: ${JSON.stringify(out.banditsDoom)}`);
         // Fear (its dedicated route): Frightened 3 isn't timed by Fleeing's 1 round.
         const fear = await ctx.setup('Fear');
@@ -41556,6 +41580,8 @@ export const cases = {
         return out;
     },
     async cleanup(ctx) {
+        // (The deleted records kept for the last case's reads: gone with it.)
+        globalThis.__pftestRemovedRecords?.clear();
         // Sweep by fixture flag: the saved id list can lose entries to concurrent flag writes.
         const actors = game.actors.filter(a => a.getFlag(NS, FIXTURE));
         const ids = new Set(actors.map(a => a.id)), uuids = new Set(actors.map(a => a.uuid));
