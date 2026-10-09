@@ -3837,8 +3837,10 @@ export const cases = {
         const out = {};
         const card = async (fixture, plan, actor, degree, rank) => {
             const {card} = await ctx.api.saves.start(fixture.spell, {sourceActor: fixture.caster, plan, targets: [await ctx.token(actor)], castRank: rank, skipConfirmation: true});
-            const t = ctx.state(card).targets[0];
+            let t = ctx.state(card).targets[0];
             if (t.eligible === false) return {eligible: false, reason: t.eligibilityReason};
+            // (A creature the GM confirms — Confusing Cry's "Can the creature hear?" —: affected.)
+            if (t.confirmation?.status === 'pending') { await ctx.api.saves.correctTarget(card, t.id, {action: 'affected', expectedRevision: t.revision}); t = ctx.state(card).targets[0]; }
             await ctx.api.saves.rollSave(card, t.id, {skipDialog: true}); await ctx.api.saves.correctTarget(card, t.id, {action: 'degree', degree});
             await ctx.api.saves.finalize(card); await wait(1000);
             return {state: ctx.state(card), content: game.messages.get(card.id).content};
