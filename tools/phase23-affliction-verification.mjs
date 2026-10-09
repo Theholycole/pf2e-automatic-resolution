@@ -55,7 +55,7 @@ async function context() {
         // collapsed sidebar's pop-up copy of a card isn't the chat log's.)
         try { if (ui.sidebar?.expanded === false) ui.sidebar.expand(); ui.sidebar?.changeTab?.('chat', 'primary'); } catch (_) {}
         // (The combats a case starts go with it, passed or failed — on the test scenes only: a started one left behind confuses later cases' turn timing.)
-        const before = new Set(game.combats.map(combat => combat.id));
+        const before = new Set(game.combats.map(combat => combat.id)), since = Date.now();
         // (A dialog nobody answers waits for ever and stops a whole run: open over a minute, it's answered with its default and the case failed with its
         // title — a case that meets a newer question needs updating. Cases answering their own dialogs do so within seconds.)
         const answered = [];
@@ -74,6 +74,16 @@ async function context() {
         finally { clearInterval(watchdog); }
         if (answered.length) result = {...result, passed: false, error: `Dialogs left open, answered with their defaults: ${[...new Set(answered)].join('; ')}${result.error ? ` — then: ${result.error}` : ''}`};
         for (const combat of game.combats.filter(combat => !before.has(combat.id) && /^PFTEST /.test(combat.scene?.name ?? ''))) await combat.delete().catch(() => null);
+        // (A passed case's chat cards go with it — the ones its own test creatures spoke (not the simulator's or the kineticist's): left behind they
+        // piled up to tens of thousands over the sweeps and filled Foundry's memory. A failed case's cards stay, to read.)
+        if (result.passed) {
+            const ids = game.messages.filter(message => {
+                if (Number(message.timestamp ?? 0) < since) return false;
+                const name = (message.speaker?.actor ? game.actors.get(message.speaker.actor)?.name : null) ?? message.speaker?.alias ?? '';
+                return /^PFTEST /.test(name) && !/^PFTEST (SIM|KIN)\b/.test(name);
+            }).map(message => message.id);
+            for (let index = 0; index < ids.length; index += 200) await ChatMessage.deleteDocuments(ids.slice(index, index + 200)).catch(() => null);
+        }
         saved.results.push(result); await persist(); return result;
     };
     // (An ended spell's record is deleted once nothing needs it — the module's "keep ended" setting off —, so a case reading it after the end found none.
