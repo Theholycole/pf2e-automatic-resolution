@@ -4807,7 +4807,10 @@ export class EffectRuntime {
             if (count <= 0) continue;
             (this.#intervalBusy ??= new Set()).add(effect.uuid);
             try {
-                if (actor.items.get(effect.id)) await effect.setFlag(MODULE_ID, "intervalHeal.lastAt", data.lastAt + count * data.everySeconds);
+                // (PF2e removes the expired Effect on the same time change; when it's gone mid-update, its remaining healing still happens here, once —
+                // the deleteItem pass saw it busy and left it.)
+                if (actor.items.get(effect.id)) try { await effect.setFlag(MODULE_ID, "intervalHeal.lastAt", data.lastAt + count * data.everySeconds); }
+                catch (error) { if (actor.items.get(effect.id)) throw error; }
                 for (let index = 0; index < count; index++) results.push(await this.#intervalHealRoll(actor, data.formula, `<strong>${escapeHTML(data.spell)}</strong>: ${escapeHTML(actor.name)} regains Hit Points`));
             } finally { this.#intervalBusy.delete(effect.uuid); }
         }
