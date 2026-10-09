@@ -16,7 +16,10 @@ export async function applyDamageWithReceipt(actor, options, applicationId) {
         if (context?.type === "damage-taken" && context.options?.includes(marker)) receipts.push(message);
     });
     try {
-        await actor.applyDamage({ ...options, rollOptions: new Set([...(options.rollOptions ?? []), marker]) });
+        // (The roll's damage types among its options, as PF2e's own rolled damage carries them: what reads the damage-taken message — a life link
+        // moving it on, a fury's curse — knows its type without asking the GM.)
+        const types = [...new Set((options.damage?.instances ?? []).map(instance => instance.type).filter(Boolean))].map(type => `item:damage:type:${type}`);
+        await actor.applyDamage({ ...options, rollOptions: new Set([...(options.rollOptions ?? []), ...types, marker]) });
         const message = receipts.length === 1 ? receipts[0] : null;
         const native = message?.flags?.pf2e?.appliedDamage;
         const healthChanges = native?.updates?.filter(update => /^system\.attributes\.hp\./.test(update.path)) ?? [];

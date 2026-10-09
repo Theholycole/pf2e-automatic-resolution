@@ -43,6 +43,20 @@ export function recentDamage(actor, withinMs = 8000) {
     return { message, types, signature };
 }
 
+/**
+ * The damage-taken message PF2e posts for damage just taken. A hook on the creature's update runs before PF2e posts it, and how long that takes
+ * varies (other modules' hooks run in between), so it's waited for — up to 3 seconds — instead of read after a fixed pause, which could find no
+ * message yet: no attacker, no damage type, and the GM asked for one.
+ */
+export async function damageMessageSince(actor, since, withinMs = 8000) {
+    for (let i = 0; i < 20; i++) {
+        const found = recentDamage(actor, withinMs);
+        if (found.message && Number(found.message.timestamp ?? 0) >= since - 1000) return found;
+        await new Promise(resolve => setTimeout(resolve, 150));
+    }
+    return recentDamage(actor, withinMs);
+}
+
 /** The triggering damage's type: PF2e's record of it, else the GM's pick (user decision 2026-10-05), or a given one. */
 async function damageType(types, label, given = null) {
     if (given) return given;
@@ -89,6 +103,7 @@ export async function startLink({ ongoing, data, caster, spell, phase, token }) 
 /** The caster took damage: the linked foe's save and the damage moved. */
 export async function linkOnDamage({ ongoing, actor, amount }) {
     if (!activeGM() || !(amount > 0)) return null;
+    const since = Date.now();
     const effect = (actor.itemTypes?.effect ?? []).find(entry => entry.flags?.[MODULE_ID]?.boundLink);
     if (!effect) return null;
     const link = effect.flags[MODULE_ID].boundLink;
@@ -100,8 +115,7 @@ export async function linkOnDamage({ ongoing, actor, amount }) {
     const casterToken = tokenOf(actor), targetToken = tokenOf(target);
     if (casterToken && targetToken && tokenDistance(casterToken, targetToken) > link.range) { await say(actor, `<p><strong>${escapeHTML(link.spell)}</strong> ends: ${escapeHTML(target.name)} is more than ${link.range} feet away.</p>`); return end("out-of-range"); }
     if (link.immuneUntil != null && game.time.worldTime < link.immuneUntil) return { immune: true };
-    await new Promise(resolve => setTimeout(resolve, 300));
-    const { types } = recentDamage(actor);
+    const { types } = await damageMessageSince(actor, since);
     const spell = await fromUuid(link.sourceItemUuid);
     const result = await rollSave(target, link.statistic, link.dc, spell);
     const out = { degree: result, moved: 0 };
@@ -191,8 +205,7 @@ export async function furyPart({ caster, spell, data, phase, token, options }) {
 /** A creature took damage: an attacker under the fury's curse can't observe it (the caster each time, or anyone the first time each round). */
 export async function furyOnDamage(actor) {
     if (!activeGM()) return null;
-    await new Promise(resolve => setTimeout(resolve, 300));
-    const { signature } = recentDamage(actor);
+    const { signature } = await damageMessageSince(actor, Date.now());
     if (!signature) return null;
     const attacker = canvas.scene?.tokens.find(token => token.actor?.signature === signature)?.actor ?? game.actors.find(entry => entry.signature === signature);
     const curse = (attacker?.itemTypes?.effect ?? []).find(effect => effect.flags?.[MODULE_ID]?.furyCurse);
