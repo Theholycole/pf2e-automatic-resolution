@@ -12449,7 +12449,7 @@ export class EffectRuntime {
         // Pushed back away from the caster (forced-movement.js: the nearest of the 8 directions, walls and the scene's edge stop it, never ending in
         // another creature's space).
         const casterPoint = { x: casterToken.x + Number(casterToken.width ?? 1) * canvas.grid.size / 2, y: casterToken.y + Number(casterToken.height ?? 1) * canvas.grid.size / 2 };
-        await forcedMove(target, { point: casterPoint, direction: "away", feet: Number(at.back), reason: plan.source.name });
+        const pushed = await forcedMove(target, { point: casterPoint, direction: "away", feet: Number(at.back), reason: plan.source.name });
         // The fall from the launch height: half the distance in bludgeoning damage, and Prone if it took any.
         let fallen = 0;
         if (at.fall > 0) {
@@ -12460,8 +12460,8 @@ export class EffectRuntime {
             fallen = before - Number(victim.hitPoints?.value ?? 0);
             if (fallen > 0 && data.falling.prone && !victim.hasCondition?.("prone")) await victim.increaseCondition("prone");
         }
-        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), content: `<h3>${escapeHTML(plan.source.name)}</h3><p>${escapeHTML(victim.name)} is launched ${at.up} feet up and pushed back ${at.back} feet${dx || dy ? "" : " (the GM moves it: it was in the caster's space)"}, then falls (${at.fall} bludgeoning${fallen > 0 ? ", Prone" : ""}). Walls and obstacles in its path are the GM's.</p>` }); } catch (_) {}
-        return { status: "applied", plan, ...result, touch: touch.total, fallen, moved: { x, y } };
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), content: `<h3>${escapeHTML(plan.source.name)}</h3><p>${escapeHTML(victim.name)} is launched ${at.up} feet up and pushed back ${at.back} feet${pushed.stoppedBy === "no direction" ? " (the GM moves it: it was in the caster's space)" : ""}, then falls (${at.fall} bludgeoning${fallen > 0 ? ", Prone" : ""}). Walls and obstacles in its path are the GM's.</p>` }); } catch (_) {}
+        return { status: "applied", plan, ...result, touch: touch.total, fallen, moved: pushed.to ?? null };
     }
 
     /**
