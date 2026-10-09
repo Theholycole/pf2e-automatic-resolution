@@ -13,7 +13,7 @@
 // - Fascinated ("can't use concentrate actions unless … related to the subject of your fascination, as determined by the GM") and Confused: the GM told.
 // - A concealed or hidden target: "must succeed at a DC 5 [DC 11] flat check when targeting you with an attack, spell, or other effect" — rolled for each
 //   targeted creature; one that's missed is left out of the spell's cards (`targetMisses`, `dropMissedTargets`).
-import { refundSlot, timedConditions, highestCastableRank, readCasterWicketTraits } from "./spellshape-runtime.js";
+import { refundSlot, timedConditions, highestCastableRank, readCasterWicketTraits, recordShaping, spellLikeSource } from "./spellshape-runtime.js";
 import { readCastReaction } from "../src/compiler/plus-feature-rules.js";
 import { loadNativeEffectTemplate, prepareNativeEffectSource, createNativeEffect } from "./native-outcome-effects.js";
 import { tokenDistance } from "./token-distance.js";
@@ -24,7 +24,8 @@ const hasAbility = (actor, slug) => [...(actor?.itemTypes?.action ?? []), ...(ac
 /** A cast message's spell lost (disrupted, countered): the reason. */
 export async function loseSpell(message, reason) {
     await message.setFlag(MODULE_ID, "spellLost", { reason, at: game.time.worldTime });
-    try { await ChatMessage.create({ speaker: message.speaker, content: `<p><strong>${escapeHTML(message.item?.name ?? "The spell")}</strong> is lost: ${escapeHTML(reason)}.</p>` }); } catch (_) {}
+    const name = message.getFlag(MODULE_ID, "spellLike")?.name ?? message.item?.name ?? "The spell";
+    try { await ChatMessage.create({ speaker: message.speaker, content: `<p><strong>${escapeHTML(name)}</strong> is lost: ${escapeHTML(reason)}.</p>` }); } catch (_) {}
 }
 
 /** The spell's targets less those its concealed or hidden flat check missed (the creatures' tokens, or the user's targets when none are given). */
@@ -48,43 +49,46 @@ async function flatCheck(actor, dc, label) {
 }
 
 /** As a spell is cast: the stupefied flat check; the Steady Spellcasting, Counterspell and Communal Healing cards. */
-export async function castingRulesOnCast(message) {
-    if (!activeGM() || !isCastMessage(message) || message.getFlag(MODULE_ID, "castingRules")) return null;
-    const actor = message.actor, spell = message.item;
+export async function castingRulesOnCast(message, { spellLike = null } = {}) {
+    if (!activeGM() || !(spellLike || isCastMessage(message)) || message.getFlag(MODULE_ID, "castingRules")) return null;
+    // (A card that counts as a spell — spellLikeCast —: its description in place of the spell; the casting conditions only when its module asks.)
+    const actor = spellLike?.actor ?? message.actor, spell = spellLike ? { ...spellLikeSource(spellLike), slug: spellLike.slug ?? null } : message.item;
     if (!actor || !spell) return null;
     await message.setFlag(MODULE_ID, "castingRules", true).catch(() => null);
     const done = {};
-    // Stupefied.
+    const conditions = !spellLike || spellLike.castConditions === true;
+    // Stupefied. (Not a spell-like card's: its module rolls that one.)
     const stupefied = Number(actor.getCondition?.("stupefied")?.value ?? 0);
-    if (stupefied > 0) {
+    if (stupefied > 0 && !spellLike) {
         const dc = 5 + stupefied;
         done.stupefied = await flatCheck(actor, dc, `${spell.name}: Stupefied ${stupefied}`);
         if (!done.stupefied) { await loseSpell(message, `disrupted (Stupefied ${stupefied}: flat check DC ${dc} failed)`); return done; }
     }
     // The caster's conditions: restrained, grabbed (a manipulate spell), deafened (an auditory spell).
     const traits = spell.system?.traits?.value ?? [];
-    if (traits.includes("manipulate") && actor.hasCondition?.("restrained")) {
+    if (conditions && traits.includes("manipulate") && actor.hasCondition?.("restrained")) {
         done.restrained = false;
         await loseSpell(message, "a restrained creature can't use manipulate actions");
         return done;
     }
-    for (const [slug, trait] of [["grabbed", "manipulate"], ["deafened", "auditory"]]) {
+    for (const [slug, trait] of conditions ? [["grabbed", "manipulate"], ["deafened", "auditory"]] : []) {
         // (Restrained creatures are also grabbed in effect; the grabbed check is for the grabbed alone.)
         if (!traits.includes(trait) || !actor.hasCondition?.(slug)) continue;
         done[slug] = await flatCheck(actor, 5, `${spell.name}: ${slug[0].toUpperCase()}${slug.slice(1)} (${trait})`);
         if (!done[slug]) { await loseSpell(message, `lost (${slug}: flat check DC 5 failed)`); return done; }
     }
-    for (const slug of ["fascinated", "confused"]) if (actor.hasCondition?.(slug)) {
+    for (const slug of conditions ? ["fascinated", "confused"] : []) if (actor.hasCondition?.(slug)) {
         const note = slug === "fascinated" ? (traits.includes("concentrate") ? "a fascinated creature can use a concentrate action only if it relates to the subject of its fascination" : null)
             : "a confused creature treats no one as an ally and can't Delay or use reactions; if it can't attack or cast, it babbles";
         if (note) try { await ChatMessage.create({ whisper: gmIds(), content: `<p class="pf2e-auto-gm-reminder"><strong>${escapeHTML(spell.name)}</strong> (GM): ${escapeHTML(actor.name)} is ${slug} — ${escapeHTML(note)}.</p>` }); } catch (_) {}
         done[slug] = "told";
     }
     // Concealed and hidden targets: each one's flat check (a spell that targets, not an area).
-    if (String(spell.system?.target?.value ?? "").trim()) {
+    if (conditions && String(spell.system?.target?.value ?? "").trim()) {
         const user = message.author ?? game.user;
         const misses = [];
-        for (const token of [...(user?.targets ?? [])]) {
+        // (A spell-like card's targets: its module's, as token UUIDs.)
+        for (const token of spellLike ? (spellLike.targets ?? []).map(uuid => fromUuidSync(uuid)).filter(Boolean) : [...(user?.targets ?? [])]) {
             const target = token.actor;
             if (!target || target === actor) continue;
             const dc = target.hasCondition?.("hidden") ? 11 : target.hasCondition?.("concealed") ? 5 : null;
@@ -99,7 +103,7 @@ export async function castingRulesOnCast(message) {
         }
     }
     // A note Effect forbidding spells with a trait (Sensory Deprivation: "cannot take actions with the manipulate trait").
-    for (const note of actor.itemTypes?.effect ?? []) {
+    for (const note of conditions ? actor.itemTypes?.effect ?? [] : []) {
         const forbid = note.flags?.[MODULE_ID]?.runtime?.castForbid;
         if (!forbid || !traits.includes(forbid.trait)) continue;
         done.forbidden = forbid.trait;
@@ -107,7 +111,7 @@ export async function castingRulesOnCast(message) {
         return done;
     }
     // A note Effect's flat check on every cast (Silence of the Archmage's critical failure: "on a failure, the action fails").
-    for (const note of actor.itemTypes?.effect ?? []) {
+    for (const note of conditions ? actor.itemTypes?.effect ?? [] : []) {
         const check = note.flags?.[MODULE_ID]?.runtime?.castFlatCheck;
         if (!check || !Number.isInteger(check.dc) || (check.trait && !traits.includes(check.trait))) continue;
         done.noteCheck = await flatCheck(actor, check.dc, `${spell.name}: ${note.name}`);
@@ -115,20 +119,20 @@ export async function castingRulesOnCast(message) {
     }
     // A curse's flat check on every cast — Nethys's Moderate Curse: "Whenever you cast a spell, attempt a DC 11 flat check. On a failure, if your spell was
     // harmful, you instead cast a beneficial spell of the same rank … You still lose the spell slot."
-    for (const curse of actor.itemTypes?.feat ?? []) {
+    for (const curse of conditions ? actor.itemTypes?.feat ?? [] : []) {
         const text = String(curse.system?.description?.value ?? "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
         const m = /Whenever you cast a spell, attempt a @Check\[flat\|dc:(\d+)\]\. On a failure, if your spell was harmful, you instead cast a beneficial spell of the same rank/.exec(text);
         if (!m) continue;
         done.curse = await flatCheck(actor, Number(m[1]), `${spell.name}: ${curse.name}`);
         if (!done.curse) {
             await loseSpell(message, `${curse.name}: the opposite spell of the same rank is cast instead`);
-            try { await ChatMessage.create({ whisper: gmIds(), content: `<p class="pf2e-auto-gm-reminder"><strong>${escapeHTML(curse.name)}</strong> (GM): instead of ${escapeHTML(spell.name)}, ${escapeHTML(actor.name)} casts a rank-${castRankOf(message)} spell of the opposite kind (harmful ↔ beneficial) on the same targets; the slot is still spent.</p>` }); } catch (_) {}
+            try { await ChatMessage.create({ whisper: gmIds(), content: `<p class="pf2e-auto-gm-reminder"><strong>${escapeHTML(curse.name)}</strong> (GM): instead of ${escapeHTML(spell.name)}, ${escapeHTML(actor.name)} casts a rank-${(spellLike ? Number(spellLike.rank ?? 1) : castRankOf(message))} spell of the opposite kind (harmful ↔ beneficial) on the same targets; the slot is still spent.</p>` }); } catch (_) {}
             return done;
         }
     }
     // Steady Spellcasting: its button. (Its DC from the feat's text — Magus+'s Steady Spellcasting+ "attempt a DC 10 flat check" —, and that version's "if you cast a
     // non-cantrip spell that was disrupted by a reaction, you do not expend the focus point or spell slot".)
-    const steady = (actor.itemTypes?.feat ?? []).find(item => ["steady-spellcasting", "steady-spellcasting-magus"].includes(item.slug));
+    const steady = conditions ? (actor.itemTypes?.feat ?? []).find(item => ["steady-spellcasting", "steady-spellcasting-magus"].includes(item.slug)) : null;
     if (steady) {
         const text = String(steady.system?.description?.value ?? "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
         const dc = Number(/If a reaction would disrupt your spellcasting action, attempt a (?:@Check\[(?:type:)?flat\|dc:(\d+)\]|DC (\d+) flat check)/.exec(text)?.slice(1).find(Boolean) ?? 15);
@@ -141,16 +145,34 @@ export async function castingRulesOnCast(message) {
     // Communal Healing: Heal on a single creature (1 or 2 actions).
     // (Heal's card reads "1 to 3" until its variant is picked: the card unless the cast is the 3-action burst.)
     const actions = Number(spell.system?.time?.value);
-    if (hasFeat(actor, "communal-healing") && spell.slug === "heal" && actions !== 3) {
+    if (!spellLike && hasFeat(actor, "communal-healing") && spell.slug === "heal" && actions !== 3) {
         try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), flags: { [MODULE_ID]: { kind: "casting-rule", castingRule: { rule: "communal", castId: message.id, rank: castRankOf(message) } } },
             content: `<section class="pf2e-auto-runtime-card"><p><strong>Communal Healing</strong>: another willing living creature within range of the heal regains ${castRankOf(message)} Hit Points.</p><button type="button" data-pf2e-auto-casting-rule="communal">Heal the targeted creature (${castRankOf(message)} Hit Points)</button></section>` }); } catch (_) {}
         done.communal = true;
     }
     // Counterspell: each eligible foe's offer.
-    done.counters = await offerCounterspells(message);
+    done.counters = await offerCounterspells(message, actor, spell);
     // (The "+" reactions: Haughty Correction from a creature within 30 feet; the caster's own Residual Energy Capture.)
-    done.reactions = await offerCastReactions(message);
+    done.reactions = await offerCastReactions(message, actor, spell);
     return done;
+}
+
+/**
+ * A card that counts as a spell without being one — a kineticist's 2-action impulse, by its module's option (api.castingRules.onSpellLike): offered to
+ * Counterspell and shaped by the caster's armed spellshapes as a cast is, and, with `castConditions`, its casting conditions checked (not Stupefied: its
+ * module's). `like`: { actor, name, slug, traits, elements, rank, level, actions, damageTypes, area, range, target, targets (token UUIDs), saveStatistic,
+ * attack, dc, cantrip, itemUuid, sourceTokenUuid, castConditions }. The message then carries what a cast's does — spellLost, targetMisses, shaping —
+ * and the description (spellLike) the counterspell reads. Returns { rules, shapes, lost, targetMisses }. The active GM's.
+ */
+export async function spellLikeCast(message, like) {
+    if (!activeGM()) return null;
+    if (!message || !like?.actor) throw new Error("onSpellLike needs the card's message and { actor, … }.");
+    const source = spellLikeSource(like);
+    await message.setFlag(MODULE_ID, "spellLike", { name: like.name ?? null, slug: like.slug ?? null, rank: source.rank, dc: Number.isFinite(Number(like.dc)) ? Number(like.dc) : null,
+        traits: source.system.traits.value, actorUuid: like.actor.uuid, itemUuid: like.itemUuid ?? null });
+    const rules = await castingRulesOnCast(message, { spellLike: like });
+    const shapes = await recordShaping(message, { spellLike: like });
+    return { rules, shapes: shapes ?? [], lost: message.getFlag(MODULE_ID, "spellLost") ?? null, targetMisses: message.getFlag(MODULE_ID, "targetMisses") ?? [] };
 }
 
 /** The spells a creature could counter the cast with: [{ entry, spell, rank, kind, penalty, mythic }] (the first eligible feat's). */
@@ -219,9 +241,8 @@ export function counterOptions(actor, castSpell, castRank) {
     return options;
 }
 
-async function offerCounterspells(message) {
-    const caster = message.actor, spell = message.item;
-    const rank = castRankOf(message);
+async function offerCounterspells(message, caster, spell) {
+    const rank = message.getFlag(MODULE_ID, "spellLike")?.rank ?? castRankOf(message);
     const offers = [];
     const seen = new Set();
     for (const token of canvas.scene?.tokens ?? []) {
@@ -244,8 +265,7 @@ async function offerCounterspells(message) {
 }
 
 /** Haughty Correction (a creature near the caster) and Residual Energy Capture (the caster): their cards. */
-async function offerCastReactions(message) {
-    const caster = message.actor, spell = message.item;
+async function offerCastReactions(message, caster, spell) {
     const casterToken = caster?.getActiveTokens?.(true, true)?.[0] ?? null;
     const offers = [];
     const card = async (actor, rule, label, text, extra = {}) => {
@@ -362,15 +382,17 @@ export async function runCastingRule(message, button) {
         } else if (entry.system?.prepared?.value === "prepared" && choice.slotIndex != null) await entry.setSlotExpendedState(choice.rank, choice.slotIndex, true);
         else if (entry.system?.prepared?.value === "spontaneous") await entry.update({ [`system.slots.slot${choice.rank}.value`]: Math.max(0, Number(entry.system.slots[`slot${choice.rank}`].value) - 1) });
         // (The counteract check: the entry's spell attack modifier against the foe's spell DC; Master's Counterspell –2.)
+        // (A spell-like card: the DC and rank its module gave.)
+        const like = cast.getFlag(MODULE_ID, "spellLike");
         const casterEntry = cast.item?.spellcasting;
-        const dc = Number(casterEntry?.statistic?.dc?.value ?? cast.actor?.attributes?.spellDC?.value ?? 15);
+        const dc = Number(like?.dc ?? casterEntry?.statistic?.dc?.value ?? cast.actor?.attributes?.spellDC?.value ?? 15);
         const check = entry.statistic?.check;
         const modifier = (choice.noSlot ? Number(choice.modifier ?? 0) : Number(check?.mod ?? 0)) + Number(choice.penalty ?? 0);
         const roll = await new Roll(`1d20 + ${modifier}`).evaluate();
         const natural = roll.dice[0]?.total ?? 10;
         let degree = roll.total >= dc + 10 ? 3 : roll.total >= dc ? 2 : roll.total > dc - 10 ? 1 : 0;
         if (natural === 20) degree = Math.min(3, degree + 1); else if (natural === 1) degree = Math.max(0, degree - 1);
-        const targetRank = castRankOf(cast);
+        const targetRank = like?.rank ?? castRankOf(cast);
         const countered = counters(degree, choice.rank, targetRank);
         await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor }), flavor: `<strong>${escapeHTML(choice.kind)}</strong>: counteract check against DC ${dc} (rank ${choice.rank} vs ${targetRank}) — ${["critical failure", "failure", "success", "critical success"][degree]}${countered ? ", countered" : ", not countered"}` }).catch(() => null);
         if (countered) await loseSpell(cast, `countered by ${actor.name}'s ${choice.kind}`);

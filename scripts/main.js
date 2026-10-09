@@ -8,7 +8,7 @@ import { markedAtZero } from "./attack-shapes-runtime.js";
 import { linkOnDamage, furyOnDamage, leechOnCast } from "./trigger-runtime.js";
 import { revivalEnded, holdNoHealing } from "./revival-runtime.js";
 import { holdCovenant, covenantKept } from "./support-runtime.js";
-import { recordShaping, noteWandUse, armSpellshape, widenCastTemplate, shapeTieEnded, syncShapeFollow, shapeOnApplied, shapeTerrainFromTemplate, shapeTerrainMove, shapeTerrainTurnEnd, expireShapeTerrain, bindTerrainButtons, growGarland, runShapeCard, detonateShapeCircle, detonateOnTurn, bindShapeCardButtons, turnStartShapeHeal, shapeWatchMessage, shapeRollSpent, shapeAreaFromTemplate, shapeTurnStart, stillInFlames, shapeScaleOnCreate, energyRuneOnCard } from "./spellshape-runtime.js";
+import { recordShaping, shapeRidersFor, shapeTypeSwapFor, noteWandUse, armSpellshape, widenCastTemplate, shapeTieEnded, syncShapeFollow, shapeOnApplied, shapeTerrainFromTemplate, shapeTerrainMove, shapeTerrainTurnEnd, expireShapeTerrain, bindTerrainButtons, growGarland, runShapeCard, detonateShapeCircle, detonateOnTurn, bindShapeCardButtons, turnStartShapeHeal, shapeWatchMessage, shapeRollSpent, shapeAreaFromTemplate, shapeTurnStart, stillInFlames, shapeScaleOnCreate, energyRuneOnCard } from "./spellshape-runtime.js";
 import { installFormGuards } from './form-native-guards.js';
 import { registerPersistentLinks } from "./persistent-link-runtime.js";
 import { registerSetAside } from "./set-aside-runtime.js";
@@ -39,7 +39,7 @@ import { loadNativeEffectTemplate, prepareNativeEffectSource, createNativeEffect
 import { whisperGmNotes, hideGmNotes, markEffectGmNotes, markEffectGmNotesUpdate, markExistingGmNotes } from "./gm-notes.js";
 import { noteWatchMessage, noteWatchEndTurn } from "./note-watchers.js";
 import { bloodMagicOnCast, runBloodMagic, spiteStrikes, spiteTurnStart, bindBloodMagicButtons } from "./blood-magic-runtime.js";
-import { castingRulesOnCast, runCastingRule, bindCastingRuleButtons } from "./casting-rules-runtime.js";
+import { castingRulesOnCast, runCastingRule, bindCastingRuleButtons, spellLikeCast } from "./casting-rules-runtime.js";
 import { armItemSpellshape, runItemShapeCard, bindItemShapeButtons, itemShapeTurnStart, itemShapeWatchMessage, starChartOnCast, catalystSporesOnDamage, shieldShardsBlock } from "./item-spellshape-runtime.js";
 import { readItemSpellshape } from "../src/compiler/item-spellshape.js";
 import { offerItemCasts, castFromItem, itemCastOnCard, bindItemCastButtons, reservoirOnCast, reservoirOnStrike, runReservoirButton } from "./item-cast-runtime.js";
@@ -1522,7 +1522,12 @@ Hooks.once("init", () => {
             compile: (item, options) => runtime.compile(item, options),
             gmOption: (message, key, options) => runGmOption(message, key, options),
             sourceCreatureDamage: (plan, item, targets) => sourceCreatureDamage(plan, item, targets),
-            castingRules: { onCast: message => castingRulesOnCast(message), run: (message, button) => runCastingRule(message, button) },
+            castingRules: { onCast: message => castingRulesOnCast(message), run: (message, button) => runCastingRule(message, button),
+                // (A card that counts as a spell — a kineticist's 2-action impulse —: Counterspell, the spellshapes and, if asked, the casting conditions.)
+                onSpellLike: (message, like) => spellLikeCast(message, like) },
+            // (A cast's spellshape riders for a module resolving its own card — a spell-like card's, or a spell's: the riders, the damage type swap, the area.)
+            spellshapes: { riders: messageId => shapeRidersFor(messageId), typeSwap: messageId => shapeTypeSwapFor(messageId),
+                area: messageId => game.messages.get(messageId)?.getFlag(MODULE_ID, "shaping")?.area ?? null },
             triggerItems: { onCast: message => spellTriggerItemsOnCast(message), run: (message, button) => runTriggerItem(message, button) },
             castActions: { onCast: message => spellActionsOnCast(message), run: (message, button) => runSpellAction(message, button) },
             creatureAbilities: { read: source => readCreatureSpellAbility(source), onCast: message => creatureAbilitiesOnCast(message), run: message => runCreatureAbility(message) },

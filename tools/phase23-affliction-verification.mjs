@@ -12394,6 +12394,59 @@ export const cases = {
             && out.moth.self >= 1 && out.moth.lost === out.moth.spell + out.moth.self, `Spell features batch 4a: ${JSON.stringify(out)}`);
         return {features4a: out};
     },
+    // A card that counts as a spell (2026-10-08, for the Kineticist module's 2-action impulses: api.castingRules.onSpellLike): an armed Reach Spell used up
+    // and recorded on the card; a foe wizard's Master's Counterspell offered, its counteract check against the card's own DC and rank; with the casting
+    // conditions asked for, a restrained caster's manipulate card lost — and Stupefied left to the card's module.
+    async spellLikeImpulse(ctx) {
+        const wait = ms => new Promise(r => setTimeout(r, ms));
+        const NSX = 'pf2e-automatic-resolution';
+        const out = {};
+        const until = async (fn, ms = 6000) => { for (let i = 0; i < ms / 200; i++) { const v = fn(); if (v) return v; await wait(200); } return fn(); };
+        const from = async (pack, name) => { const doc = (await game.packs.get(pack).getDocuments()).find(d => d.name === name); const o = doc.toObject(); delete o._id; return o; };
+        const ruleCard = (mark, rule) => game.messages.contents.slice(mark).find(m => m.flags?.[NSX]?.castingRule?.rule === rule);
+        const card = async (actor, text) => ChatMessage.create({speaker: ChatMessage.getSpeaker({actor}), content: `<p>${text}</p>`, flags: {[NSX]: {testImpulse: true}}});
+        try {
+            const kin = await Actor.create({name: 'PFTEST P23 Affliction sl kineticist', type: 'character', flags: {[NSX]: {phase23AfflictionFixture: true}}});
+            await kin.update({'system.details.alliance': 'party', 'system.details.level.value': 5});
+            const [reach] = await kin.createEmbeddedDocuments('Item', [await from('pf2e.feats-srd', 'Reach Spell')]);
+            const tKin = await ctx.token(kin);
+            const foe = await ctx.actor('sl foe', {level: 1}); const tFoe = await ctx.token(foe);
+            // (The foe side's wizard: Master's Counterspell, a prepared rank-3 slot.)
+            const wizard = await Actor.create({name: 'PFTEST P23 Affliction sl wizard', type: 'character', flags: {[NSX]: {phase23AfflictionFixture: true}}});
+            await wizard.update({'system.details.alliance': 'opposition', 'system.details.level.value': 7});
+            const [entry] = await wizard.createEmbeddedDocuments('Item', [{name: 'arcane prepared', type: 'spellcastingEntry', system: {tradition: {value: 'arcane'}, prepared: {value: 'prepared'}, spelldc: {dc: 24, value: 14}}}]);
+            const fb = await from('pf2e.spells-srd', 'Fireball'); fb.system.location = {value: entry.id};
+            const [prepared] = await wizard.createEmbeddedDocuments('Item', [fb, await from('pf2e.feats-srd', "Master's Counterspell")]);
+            await entry.update({'system.slots.slot3': {max: 1, value: 1, prepared: [{id: prepared.id, expended: false}]}});
+            await ctx.token(wizard); await wait(500);
+            const like = {actor: kin, name: 'Elemental Blast', slug: 'elemental-blast', traits: ['impulse', 'kineticist', 'primal', 'attack'], elements: ['fire'], rank: 3, level: 5, actions: 2,
+                damageTypes: ['fire'], area: null, range: '30 feet', target: '1 creature', targets: [tFoe.uuid], saveStatistic: null, attack: true, dc: 22, cantrip: false, sourceTokenUuid: tKin.uuid};
+            // Card A: Reach Spell armed, then the card; the counter offered and run.
+            await reach.toMessage(); await wait(1200);
+            out.armed = kin.itemTypes.effect.some(e => e.flags?.[NSX]?.pendingSpellshape);
+            const mark = game.messages.size;
+            const a = await card(kin, 'PFTEST impulse A');
+            const result = await ctx.api.castingRules.onSpellLike(a, like);
+            const shaping = a.getFlag(NSX, 'shaping');
+            out.shape = {names: (shaping?.shapes ?? []).map(s => s.name), riders: (ctx.api.spellshapes.riders(a.id) ?? []).flatMap(s => s.riders.map(r => r.type)), used: !kin.itemTypes.effect.some(e => e.flags?.[NSX]?.pendingSpellshape),
+                spellLike: shaping?.spellLike ?? null, returned: (result?.shapes ?? []).map(s => s.name)};
+            const offer = await until(() => ruleCard(mark, 'counterspell'));
+            const ran = offer ? await ctx.api.castingRules.run(offer, {dataset: {choice: '0'}}) : null;
+            await wait(800);
+            const roll = game.messages.contents.slice(mark).reverse().find(m => /counteract check against DC/.test(m.flavor ?? ''));
+            out.counter = {offer: !!offer, kinds: offer?.flags?.[NSX]?.castingRule?.choices?.map(c => c.kind).join() ?? null, dc: /against DC (\d+)/.exec(roll?.flavor ?? '')?.[1] ?? null,
+                vsRank: /vs (\d+)/.exec(roll?.flavor ?? '')?.[1] ?? null, countered: ran?.countered ?? null, lostMatches: !!a.getFlag(NSX, 'spellLost') === !!ran?.countered};
+            // Card B: the casting conditions asked for — restrained, a manipulate card: lost; Stupefied left to its module.
+            await kin.increaseCondition('restrained'); await kin.increaseCondition('stupefied', {value: 20}); await wait(400);
+            const b = await card(kin, 'PFTEST impulse B');
+            await ctx.api.castingRules.onSpellLike(b, {...like, traits: [...like.traits, 'manipulate'], castConditions: true});
+            out.conditions = {lost: b.getFlag(NSX, 'spellLost')?.reason ?? null};
+        } catch (error) { out.error = error.stack ?? error.message; }
+        assert(!out.error && out.armed && out.shape.names.includes('Reach Spell') && out.shape.used && out.shape.returned.includes('Reach Spell') && out.shape.spellLike?.rank === 3
+            && JSON.stringify(out.shape.spellLike?.damageTypes) === '["fire"]' && out.counter.offer && /Master's Counterspell/.test(out.counter.kinds ?? '') && out.counter.dc === '22' && out.counter.vsRank === '3'
+            && out.counter.lostMatches && /restrained/.test(out.conditions.lost ?? '') && !/Stupefied/.test(out.conditions.lost ?? ''), `Spell-like impulse: ${JSON.stringify(out)}`);
+        return {spellLike: out};
+    },
     // Spell features batch 3 (2026-10-05): casting rules — Stupefied (a flat check it can't pass: the spell lost, its save card refused), Steady Spellcasting
     // (its card; the flat check, a failure losing the spell), Communal Healing (Heal: 1 Hit Point per rank to a second creature), Counterspell (a foe's Fireball:
     // the prepared Fireball's offer; the slot expended and the counteract check rolled, a counter losing the foe's spell).

@@ -547,25 +547,41 @@ export function grownArea(area, grow, { hasDuration = false } = {}) {
     return rule ? { ...area, value: area.value + rule.add } : area;
 }
 
-/** A spell cast: its spellshapes and wand read and kept on the message; the Spellshape selector switched off. */
-export async function recordShaping(message) {
+/**
+ * A spell-like card's stand-in spell source, for spellFacts — a card that counts as a spell without being one (a kineticist's 2-action impulse:
+ * api.castingRules.onSpellLike). `like`: { actor, name, traits, elements, rank, actions, damageTypes, area, range, target, saveStatistic, attack, cantrip }.
+ */
+export function spellLikeSource(like) {
+    const traits = [...new Set([...(like.traits ?? []), ...(like.elements ?? []), ...(like.cantrip ? ["cantrip"] : [])])];
+    return { name: like.name ?? null, rank: Number(like.rank ?? 1), actor: like.actor ?? null, spellcasting: null,
+        system: { traits: { value: traits }, damage: Object.fromEntries((like.damageTypes ?? []).map((type, index) => [String(index), { type, kinds: ["damage"] }])),
+            target: { value: like.target ?? "" }, range: { value: like.range ?? "" }, area: like.area?.value ? { type: like.area.type, value: Number(like.area.value) } : null,
+            duration: { value: "" }, time: { value: String(like.actions ?? "") },
+            defense: { save: like.saveStatistic ? { statistic: like.saveStatistic } : null, passive: like.attack ? { statistic: "ac" } : null } } };
+}
+
+/**
+ * A spell cast: its spellshapes and wand read and kept on the message; the Spellshape selector switched off. With `spellLike` (a card that counts
+ * as a spell: spellLikeSource's description), the same for that card — its facts from the description, no spell item, wand or slot.
+ */
+export async function recordShaping(message, { spellLike = null } = {}) {
     // (A cast: PF2e's "spell-cast" card, or — for a spell with no save, attack or damage, such as Pest Form — the card with its casting and no roll.)
     const pf2e = message?.flags?.pf2e;
-    const isCast = pf2e?.context?.type === "spell-cast" || (!pf2e?.context?.type && pf2e?.origin?.type === "spell" && pf2e?.casting);
+    const isCast = spellLike || pf2e?.context?.type === "spell-cast" || (!pf2e?.context?.type && pf2e?.origin?.type === "spell" && pf2e?.casting);
     if (!activeGM() || !isCast || message.getFlag(MODULE_ID, "shaping")) return null;
-    const actor = message.actor;
+    const actor = spellLike?.actor ?? message.actor;
     if (!actor) return null;
     // (Let PF2e's own wand bookkeeping land first.)
     await new Promise(resolve => setTimeout(resolve, 250));
-    const options = message.flags.pf2e.context?.options ?? [];
+    const options = spellLike ? [] : message.flags.pf2e.context?.options ?? [];
     // (Without the card's options, the selector as it stands — still on until this cast switches it off.)
     const selector = actor.synthetics?.toggles?.all?.spellshape;
-    const selected = !message.flags.pf2e.context && selector?.checked ? selector.suboptions?.find(entry => entry.selected)?.value ?? null : null;
+    const selected = (spellLike || !message.flags.pf2e.context) && selector?.checked ? selector.suboptions?.find(entry => entry.selected)?.value ?? null : null;
     const slugs = [...new Set([...options.map(option => /^spellshape:(.+)$/.exec(option)?.[1]), selected].filter(Boolean))];
-    const spell = message.item ?? null;
-    const facts = spellFacts(spell);
+    const spell = spellLike ? null : message.item ?? null;
+    const facts = spellFacts(spellLike ? spellLikeSource(spellLike) : spell);
     // (Cast from a wand — Whirling Wand Strike's "a spell from a wand".)
-    facts.fromWand = Boolean(castWand(actor, message));
+    facts.fromWand = !spellLike && Boolean(castWand(actor, message));
     const shapes = [];
     // (Echoing Spell's second casting: the slot given back, the echo spent.)
     const echo = (actor.itemTypes?.effect ?? []).find(effect => effect.flags?.[MODULE_ID]?.spellshapeEcho?.spellId && effect.flags[MODULE_ID].spellshapeEcho.spellId === spell?.id);
@@ -672,7 +688,7 @@ export async function recordShaping(message) {
             choice: effect.flags[MODULE_ID].pendingSpellshape.choice ?? null });
     }
     // (A wand PF2e gives a toggle — Wand of Widening's "wand-of-widening" —: on for this cast, then off.)
-    for (const wandItem of actor.itemTypes?.equipment ?? []) {
+    for (const wandItem of spellLike ? [] : actor.itemTypes?.equipment ?? []) {
         if (!(wandItem.system?.traits?.value ?? []).includes("wand") || shapes.some(shape => shape.uuid === wandItem.uuid)) continue;
         const toggle = (wandItem.system.rules ?? []).find(rule => rule.key === "RollOption" && rule.toggleable && (options.includes(rule.option) || (!message.flags.pf2e.context && actor.rollOptions?.all?.[rule.option])));
         if (!toggle) continue;
@@ -682,7 +698,7 @@ export async function recordShaping(message) {
         await actor.toggleRollOption("all", toggle.option, wandItem.id, false).catch(() => null);
     }
     if (armed.length) await actor.deleteEmbeddedDocuments("Item", armed.map(effect => effect.id), { [MODULE_ID]: { reason: "spellshape-used" } }).catch(() => null);
-    const wand = castWand(actor, message);
+    const wand = spellLike ? null : castWand(actor, message);
     if (wand) {
         const read = readWand(wand.toObject());
         if (read) shapes.push({ name: wand.name, kind: "wand", uuid: wand.uuid, read: true, riders: read.riders, unmet: null });
@@ -706,8 +722,8 @@ export async function recordShaping(message) {
     // (Widen, Growth Spell, a Wand of Widening: the area the cast's template must have — grown from the spell's own, so the same whether or not PF2e
     // enlarged it already.)
     let area = null;
-    const castRank = Number(message.flags?.pf2e?.origin?.castRank ?? spell?.rank ?? 0);
-    const base = baseArea(spell, castRank);
+    const castRank = spellLike ? Number(spellLike.rank ?? 1) : Number(message.flags?.pf2e?.origin?.castRank ?? spell?.rank ?? 0);
+    const base = spellLike ? spellLikeSource(spellLike).system.area : baseArea(spell, castRank);
     for (const shape of shapes) for (const rider of shape.riders ?? []) if (rider.type === "area" && rider.grow?.length) {
         const grown = grownArea(area ?? base, rider.grow, { hasDuration: facts.hasDuration });
         if (grown && base && grown.value > (area ?? base).value) area = grown;
@@ -799,7 +815,9 @@ export async function recordShaping(message) {
         if (rider.rounds === "cursebound") rider.rounds = Math.max(1, Number(actor.getCondition?.("cursebound")?.value ?? 0));
         if (rider.hazard?.damageTypes && !rider.hazard.damageType) rider.hazard.damageType = await riderChoice(shape, "the terrain's damage type", rider.hazard.damageTypes.map(type => ({ value: type, label: type })));
     }
-    await message.setFlag(MODULE_ID, "shaping", { shapes, ...(area ? { area: { type: area.type, from: base.value, to: area.value } } : {}), ...(shapedRank && shapedRank !== castRank ? { castRank: shapedRank } : {}) });
+    await message.setFlag(MODULE_ID, "shaping", { shapes, ...(area ? { area: { type: area.type, from: base.value, to: area.value } } : {}), ...(shapedRank && shapedRank !== castRank ? { castRank: shapedRank } : {}),
+        // (A spell-like card's own facts, for the readers that would read the spell: its damage types.)
+        ...(spellLike ? { spellLike: { name: spellLike.name ?? null, rank: castRank, damageTypes: [...facts.damageTypes], traits: [...facts.traits] } } : {}) });
     // (Family E: the caster's — or a chosen ally's — benefits, as the spell is cast.)
     const castResults = await applyCastRiders(actor, message, shapes, facts, spell, castRank).catch(error => [{ label: `Spellshape: ${error.message}`, status: "failed" }]);
     // (With the cast's choices — a metal, nonlethal or not — kept on the riders.)
@@ -821,11 +839,12 @@ export function shapeRidersFor(messageId) {
 export function shapeTypeSwapFor(messageId) {
     const message = messageId ? game.messages.get(messageId) : null;
     const shaping = message?.getFlag(MODULE_ID, "shaping") ?? null;
+    // (The types the cast deals: the spell's, or a spell-like card's own.)
+    const castTypes = () => { if (shaping?.spellLike) return shaping.spellLike.damageTypes ?? []; try { return spellFacts(message.item).damageTypes; } catch (_) { return []; } };
     // (Spiritual Secret: "it deals spirit damage instead of its normal type" — every type the spell deals.)
     // (River's Reflection: "All void damage becomes vitality damage and vice versa.")
     for (const shape of shaping?.shapes ?? []) for (const rider of shape.riders ?? []) if (rider.type === "damage-type-swap") {
-        let types = [];
-        try { types = spellFacts(message.item).damageTypes; } catch (_) {}
+        const types = castTypes();
         const [a, b] = rider.pair;
         if (types.includes(a)) return { from: [a], to: b, label: shape.name };
         if (types.includes(b)) return { from: [b], to: a, label: shape.name };
@@ -834,8 +853,7 @@ export function shapeTypeSwapFor(messageId) {
     for (const shape of shaping?.shapes ?? []) for (const rider of shape.riders ?? []) if (rider.type === "transmute" && rider.chosen?.from?.length)
         return { from: rider.chosen.from.filter(type => type !== rider.chosen.to), to: rider.chosen.to, label: shape.name };
     for (const shape of shaping?.shapes ?? []) for (const rider of shape.riders ?? []) if (rider.type === "damage-type") {
-        let types = [];
-        try { types = spellFacts(message.item).damageTypes; } catch (_) {}
+        const types = castTypes();
         // (Only the named type — a wicket's "spirit damage instead of fire damage".)
         return { from: rider.from ? types.filter(type => type === rider.from) : types.filter(type => type !== rider.to), to: rider.to, label: shape.name };
     }
