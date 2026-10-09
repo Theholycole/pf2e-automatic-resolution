@@ -30,6 +30,8 @@ export class OngoingRuntime {
     #queue = Promise.resolve();
     // (A plain reconcile queued and not yet started: later plain calls share it — it reads the state as it starts. Every token update asks for one.)
     #pendingReconcile = null;
+    // (The casts whose ended records this session deleted: an Effect deletion queued behind that end mustn't start a new record for the cast.)
+    #pruned = new Set();
     #dialog = null;
     #requests = new Map();
     #runtime;
@@ -147,6 +149,10 @@ export class OngoingRuntime {
             });
         }
         return this.enqueue(async () => {
+            // (Its cast ended and its record was deleted while this waited — Impending Doom's last round, where PF2e expires a Frightened as the
+            // cast ends: nothing left to end; adopting it would start a second record for the cast.)
+            const metadata = flag(effect);
+            if (this.#pruned.has(metadata.castInstanceId ?? metadata.castId) && !this.find(metadata.castInstanceId ?? metadata.castId)) return;
             const journal = await this.adopt(effect);
             if (!journal) return;
             const record = clone(value(journal));
@@ -224,7 +230,8 @@ export class OngoingRuntime {
                 if (document) { lives = true; break; }
             }
             if (lives) continue;
-            try { await journal.delete(); } catch (error) { console.warn(`PF2e Automatic Resolution | Couldn't delete the ended record ${journal.name}:`, error); }
+            try { await journal.delete(); if (record.castId) this.#pruned.add(record.castId); }
+            catch (error) { console.warn(`PF2e Automatic Resolution | Couldn't delete the ended record ${journal.name}:`, error); }
         }
     }
 
