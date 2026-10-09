@@ -15878,6 +15878,8 @@ export const cases = {
             const aura = () => canvas.scene.regions.find(r => /Arcane Explosion: Unfiltered magic/.test(r.name));
             out.blast = {near: 500 - near.hitPoints.value, far: 500 - far.hitPoints.value, effect: !!effect(), aura: !!aura(), push: game.messages.get(card.id).content.includes('10 feet'),
                 incorporeal: blast.caster.system.traits.value.includes('incorporeal')};
+            // (The failure's push is the module's forced movement now: the pushed creature is set back beside the caster for the aura.)
+            await tNear.update({x: 6 * g, y: 9 * g}, {teleport: true, animate: false}); await wait(600);
             combat = await Combat.create({scene: canvas.scene.id, active: true});
             await combat.createEmbeddedDocuments('Combatant', [tCaster, tNear].map((t, i) => ({tokenId: t.id, sceneId: canvas.scene.id, actorId: t.actorId, initiative: 30 - i * 10})));
             await combat.startCombat(); await wait(800); await ctx.api.ongoing.reconcile({clockEvent: true}); await wait(800);
@@ -18903,7 +18905,9 @@ export const cases = {
                 const casterToken = canvas.scene.tokens.find(t => t.actorId === f.caster.id);
                 await ctx.api.execute(f.spell, {sourceActor: f.caster, plan, targets: targets ?? [casterToken.object], skipConfirmation: true}); await wait(400);
                 return {f, plan}; };
-            for (const name of ['Spellsurge', 'Planar Palace', 'Ethereal Jaunt']) {
+            // (Spellsurge is a stated effect now, its ability chosen as it's cast — notesBatch2 and notesBatch5 run it: here only its kind.)
+            const surge = await ctx.setup('Spellsurge'); out.Spellsurge = {kind: (await ctx.api.compile(surge.spell)).resolution.kind};
+            for (const name of ['Planar Palace', 'Ethereal Jaunt']) {
                 const {f, plan} = await run(name);
                 out[name] = {kind: plan.resolution.kind, note: f.caster.itemTypes.effect.some(e => /Spell Note/.test(e.name)), conditions: f.caster.itemTypes.condition.map(c => c.slug)};
             }
@@ -18914,7 +18918,7 @@ export const cases = {
             const {f: m, plan: mp} = await run('Mislead');
             out.mislead = {kind: mp.resolution.kind, invisible: m.caster.hasCondition('invisible'), sustained: m.caster.itemTypes.effect.some(e => e.system.duration?.sustained === true || /Mislead/.test(e.name))};
         } catch (error) { out.error = error.stack ?? error.message; }
-        assert(!out.error && ['Spellsurge', 'Planar Palace', 'Ethereal Jaunt'].every(n => out[n]?.kind === 'spell-note' && out[n].note && !out[n].conditions.length)
+        assert(!out.error && out.Spellsurge?.kind === 'stated-effect' && ['Planar Palace', 'Ethereal Jaunt'].every(n => out[n]?.kind === 'spell-note' && out[n].note && !out[n].conditions.length)
             && out.eyes?.note && !out.eyes.invisible && out.mislead?.kind === 'condition-note' && out.mislead.invisible, `Rank 6 batch 5: ${JSON.stringify(out)}`);
         return {batch5: out};
     },
