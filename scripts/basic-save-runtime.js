@@ -854,6 +854,8 @@ async function carryOutForcedMovement(state, target, move, token) {
     // ("to the nearest empty space adjacent to the caster"; "to the center of the area": as far as it takes.)
     const feet = move.toAdjacent || move.toCenter ? 10000 : Number(move.distance);
     const done = await forcedMove(doc, { point, direction: toward ? "toward" : "away", feet, stopAt: toward ? point.token : null, reason: state.spellName });
+    // (On the caster's own square no way is "away" or "toward": the GM's to move.)
+    if (done.stoppedBy === "no direction") return { skipped: "no direction from the caster" };
     // (Stopped short by a firm surface: "creatures that can't complete this forced movement are knocked Prone" (Arcane Explosion); "takes bludgeoning
     // damage equal to the remaining number of feet it would've moved" (Planar Collision).)
     if (move.stopped && done.feetLeft > 0 && actor) {
@@ -877,7 +879,10 @@ function movementNote(state, target) {
         const verb = move.kind === "rise" ? `rose ${move.distance} feet` : move.kind === "fall" ? "fell safely" : move.kind === "pull" ? "was pulled" : "was pushed";
         const stop = (done.stoppedBy === "wall" ? " (a wall stopped it)" : done.stoppedBy === "occupied" ? " (ending beside the creature in its way)" : done.stoppedBy === "edge" ? " (the scene's edge stopped it)" : "")
             + (done.prone ? "; knocked Prone" : "") + (done.collision != null ? `; ${done.collision} damage from the collision` : "");
-        return `<div class="pf2e-auto-gm-reminder"><strong>Moved:</strong> ${escapeHTML(target.name)} ${done.moved ? `${verb}${done.squares != null && move.kind !== "rise" && move.kind !== "fall" ? ` ${done.squares * 5} feet` : ""}${stop}` : `couldn't move${stop}`}. The module moved the token.</div>`;
+        // (Stopped by a wall or a creature: the spell's rule for that — "If the push would move it into a solid barrier or another creature, it stops
+        // there and takes 3d6 damage" — for the GM.)
+        const collided = done.stoppedBy === "wall" || done.stoppedBy === "occupied" ? (state.forcedMovementNotes ?? []).map(note => ` ${escapeHTML(note)}`).join("") : "";
+        return `<div class="pf2e-auto-gm-reminder"><strong>Moved:</strong> ${escapeHTML(target.name)} ${done.moved ? `${verb}${done.squares != null && move.kind !== "rise" && move.kind !== "fall" ? ` ${done.squares * 5} feet` : ""}${stop}. The module moved the token.` : `couldn't move${stop}. The token stays where it is.`}${collided}</div>`;
     }
     // A push only for creatures with a trait ("undead creatures are also knocked back").
     if (move.trait) {

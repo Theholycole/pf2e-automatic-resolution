@@ -25513,7 +25513,9 @@ export const cases = {
                 escapeHigh: gradeEscapeCandidates(a.items, {total: 99, natural: 10}).filter(x => x.escaped).length,
                 escapeLow: gradeEscapeCandidates(a.items, {total: 1, natural: 2}).filter(x => x.escaped).length,
                 escapeDc: gradeEscapeCandidates(a.items, {total: 1, natural: 2}).map(x => x.escape.dc)[0] ?? null}));
-            out.pull = /pulled 10 feet toward the caster/.test(game.messages.get(card.id)?.content ?? '');
+            // (The pull is the module's forced movement now: the card says the token was pulled, where the GM's reminder was.)
+            out.pull = /pulled 10 feet toward the caster|destination critical failure was pulled( \d+ feet)?[^.]*\. The module moved the token/
+                .test((game.messages.get(card.id)?.content ?? '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' '));
         } catch (error) { out.error = error.stack ?? error.message; }
         const [cs, s, f, c] = out.foes ?? [];
         assert(!out.error && cs?.notes.length === 0 && JSON.stringify(s?.notes) === '["Hampered footsteps:1 rounds turn-end"]' && JSON.stringify(s.speedRule) === '["circumstance:-10"]' && s.land === cs.land - 10
@@ -27660,8 +27662,27 @@ export const cases = {
             out.collision = /solid barrier or another creature, it stops there and takes 5d6 damage/.test(text);
             out.lost = 200 - target.system.attributes.hp.value;
             out.status = ctx.state(card).status;
+            // Inside the scene (the fixtures' square lies past its edge): a creature a square east of the caster, another where the 20-foot push
+            // would end — the module pushes it and stops it beside that creature, and the card gives the GM the collision rule (on the caster's own
+            // square, above, the push is the GM's).
+            const g = canvas.grid.size, rect = canvas.dimensions.sceneRect, casterToken = canvas.scene.tokens.find(t => t.actorId === fixture.caster.id);
+            const pushed = await ctx.actor('wave pushed', {level: 1}), blocker = await ctx.actor('wave blocker', {level: 1});
+            const tPushed = await ctx.token(pushed), tBlocker = await ctx.token(blocker);
+            const x0 = rect.x + 3 * g, y0 = rect.y + 3 * g;
+            await casterToken.update({x: x0, y: y0}, {teleport: true, animate: false});
+            await tPushed.update({x: x0 + g, y: y0}, {teleport: true, animate: false});
+            await tBlocker.update({x: x0 + 5 * g, y: y0}, {teleport: true, animate: false}); await wait(500);
+            const second = (await ctx.api.saves.start(fixture.spell, {sourceActor: fixture.caster, plan, targets: [tPushed], castRank: 5, dc: 25, skipConfirmation: true})).card;
+            const t2 = ctx.state(second).targets[0];
+            await ctx.api.saves.rollSave(second, t2.id, {skipDialog: true}); await ctx.api.saves.correctTarget(second, t2.id, {action: 'degree', degree: 'criticalFailure'});
+            await ctx.api.saves.finalize(second); await wait(1200);
+            const text2 = (() => { const div = document.createElement('div'); div.innerHTML = game.messages.get(second.id).content; return div.textContent.replace(/\s+/g, ' '); })();
+            const at = canvas.scene.tokens.get(tPushed.id);
+            out.blocked = {moved: (at?.x ?? 0) > x0 + g, beside: /wave pushed was pushed \d+ feet \(ending beside the creature in its way\)\. The module moved the token\./.test(text2),
+                collision: /The module moved the token\. If the push would move it into a solid barrier or another creature, it stops there and takes 5d6 damage/.test(text2)};
         } catch (error) { out.error = error.stack ?? error.message; }
-        assert(!out.error && out.statistic === 'fortitude' && out.push && out.collision && out.lost === 0 && out.status === 'completed', `Rank 3 batch 44: ${JSON.stringify(out)}`);
+        assert(!out.error && out.statistic === 'fortitude' && out.push && out.collision && out.lost === 0 && out.status === 'completed'
+            && out.blocked?.moved && out.blocked.beside && out.blocked.collision, `Rank 3 batch 44: ${JSON.stringify(out)}`);
         return {batch44: out};
     },
     // Rank 3 batch 43: Warning Stripes — on the caster at 3rd: Retaliate deals 2d8 poison to the creature that hit it; on the targeted animal
