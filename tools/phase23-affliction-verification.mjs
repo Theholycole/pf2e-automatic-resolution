@@ -51,6 +51,9 @@ async function context() {
         return card;
     };
     const record = async (label, fn) => {
+        // (Cases press their cards' buttons in the chat log: the sidebar open on the chat tab — Foundry folds it away in a small window, and a
+        // collapsed sidebar's pop-up copy of a card isn't the chat log's.)
+        try { if (ui.sidebar?.expanded === false) ui.sidebar.expand(); ui.sidebar?.changeTab?.('chat', 'primary'); } catch (_) {}
         // (The combats a case starts go with it, passed or failed — on the test scenes only: a started one left behind confuses later cases' turn timing.)
         const before = new Set(game.combats.map(combat => combat.id));
         let result;
@@ -41594,6 +41597,16 @@ export const cases = {
             if (tokens.length) await scene.deleteEmbeddedDocuments('Token', tokens);
         }
         if (ids.size) await Actor.deleteDocuments([...ids], {[NS]: {ongoingCleanup: true}});
+        // (A conjured creature left standing by a case — its caster a deleted fixture —: its tokens and actor, when it stands on PFTEST scenes only. Left
+        // there, a 2×2 ice guardian takes the squares a later case's push lands in.)
+        let summonsRemoved = 0;
+        for (const summon of game.actors.filter(a => a.flags?.[NS]?.summoned?.casterUuid)) {
+            if (await fromUuid(summon.flags[NS].summoned.casterUuid).catch(() => null)) continue;
+            const where = game.scenes.filter(scene => scene.tokens.some(t => t.actorId === summon.id));
+            if (!where.length || where.some(scene => !/^PFTEST /.test(scene.name ?? ''))) continue;
+            for (const scene of where) await scene.deleteEmbeddedDocuments('Token', scene.tokens.filter(t => t.actorId === summon.id).map(t => t.id));
+            await summon.delete().catch(() => null); summonsRemoved++;
+        }
         // Lingering concealment Effects on bystanders whose cast journal is gone.
         const live = new Set(ctx.api.ongoing.records().filter(r => r.status !== 'ended' && !uuids.has(r.sourceActorUuid)).map(r => r.castId));
         for (const scene of game.scenes) for (const token of scene.tokens) {
@@ -41618,7 +41631,7 @@ export const cases = {
             if (stale.length) { await scene.deleteEmbeddedDocuments('Region', stale); regionsRemoved += stale.length; }
         }
         ctx.saved.actors = []; await ctx.persist();
-        return {actorsRemoved: ids.size, journalsRemoved: records.length, orphansRemoved, regionsRemoved, remainingFixtureActors: game.actors.filter(a => a.getFlag(NS, FIXTURE)).length};
+        return {actorsRemoved: ids.size, journalsRemoved: records.length, orphansRemoved, regionsRemoved, summonsRemoved, remainingFixtureActors: game.actors.filter(a => a.getFlag(NS, FIXTURE)).length};
     }
 };
 
