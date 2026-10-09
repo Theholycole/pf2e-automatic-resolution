@@ -114,11 +114,14 @@ Hooks.on('createChatMessage', message => {
 });
 // A ritual's locked condition ("can't reduce the condition for 12 hours"): no reduction below the lock's value while its granter lasts.
 // (An obligation's strain — Geas's Sickened: held at its value until the creature complies, the card's control.)
-function conditionLock(item) {
+// (`releasing`: the ids of locks being deleted in the same operation — the curse and the condition it granted, PF2e's cascade.)
+function conditionLock(item, releasing = []) {
     if (item.type !== 'condition' || !item.actor) return null;
-    const lock = item.actor.items.get(item.flags?.pf2e?.grantedBy?.id)?.flags?.[MODULE_ID]?.ritualLock;
+    const granterId = item.flags?.pf2e?.grantedBy?.id;
+    const lock = releasing.includes(granterId) ? null : item.actor.items.get(granterId)?.flags?.[MODULE_ID]?.ritualLock;
     if (lock) return Number(lock.value);
-    const strained = (item.actor.itemTypes?.effect ?? []).map(effect => effect.flags?.[MODULE_ID]?.ritualStrain).filter(strain => strain?.lock && strain.name.toLowerCase() === item.slug);
+    const strained = (item.actor.itemTypes?.effect ?? []).filter(effect => !releasing.includes(effect.id)).map(effect => effect.flags?.[MODULE_ID]?.ritualStrain)
+        .filter(strain => strain?.lock && strain.name.toLowerCase() === item.slug);
     return strained.length ? Math.max(...strained.map(strain => Number(strain.lock))) : null;
 }
 Hooks.on('preUpdateItem', (item, changes) => {
@@ -128,9 +131,12 @@ Hooks.on('preUpdateItem', (item, changes) => {
     ui.notifications.warn(`${item.name} can't be reduced below ${lock} yet.`);
     return false;
 });
-// (A locked condition at 1 is removed rather than reduced: refused the same way.)
-Hooks.on('preDeleteItem', item => {
-    const lock = conditionLock(item);
+// (A locked condition at 1 is removed rather than reduced: refused the same way — unless its lock goes in the same deletion. PF2e deletes a
+// granter and the conditions it cascades to in one operation, the granter first, and every item's pre-delete gets that operation's one options
+// object: the lock marks itself there for the condition's.)
+Hooks.on('preDeleteItem', (item, options) => {
+    if (item.flags?.[MODULE_ID]?.ritualLock || item.flags?.[MODULE_ID]?.ritualStrain) (options.pf2eAutoReleasingLocks ??= []).push(item.id);
+    const lock = conditionLock(item, options?.pf2eAutoReleasingLocks ?? []);
     if (lock == null || lock < 1) return;
     ui.notifications.warn(`${item.name} can't be removed yet.`);
     return false;
