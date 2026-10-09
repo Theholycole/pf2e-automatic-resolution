@@ -4,7 +4,7 @@
 
 Continue the existing module, beginning with GM correction controls on the save-resolution card. This session read the prior conversation, inspected the project, and conducted a design interview. No project files were changed and no tests were run.
 
-The inspected repository was clean at commit `92b4fd4` (`feat: add PF2e automatic resolution runtime`), module version 0.8.2. Recheck current state before editing.
+The inspected repository was clean at commit `dd223d5` (`feat: add PF2e automatic resolution runtime`), module version 0.8.2. Recheck current state before editing.
 
 Project root: use the active workspace named `PF2e AUTOMATIC SPELL RESOLUTION`. Absolute home-directory paths and personal identifiers are intentionally omitted here.
 

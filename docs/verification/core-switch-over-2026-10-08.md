@@ -61,6 +61,6 @@ In pftest, after the user's Foundry restart. [Results](core-switch-over-2026-10-
   - Everything passes except the three known older failures (`lingering`, `longTailBatch3`, `attackConditionRiders`).
 - **Found and fixed along the way:**
   - **Tiny tokens:** they were measured from a half-square footprint (`token-distance.js`), so a familiar's 10-foot aura missed a creature two squares away.
-  - **Mosquito Blight's hive:** destroying it ended the ritual at once instead of an hour later. `summonEndsAtZero` (added in 3f519de) deleted the ritual's Effect. It now leaves `endsAfter` hives to the hook that shortens them.
+  - **Mosquito Blight's hive:** destroying it ended the ritual at once instead of an hour later. `summonEndsAtZero` (added in 64eea68) deleted the ritual's Effect. It now leaves `endsAfter` hives to the hook that shortens them.
   - **Stale wording:** `rank7Batch17` and `rank8Batch14` checked for card wording from before forced movement and elevation were automated.
 - **The core's registry:** `preparePlan(spell).plan` equals `readPlan(await api.compile(spell))`, as described in [native-numbers-2026-10-08.md](native-numbers-2026-10-08.md).

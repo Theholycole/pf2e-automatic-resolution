@@ -43,7 +43,7 @@ Resolved with the user on 2026-09-19 through explicit acceptance of all ten reco
 
 Players may resolve healing and other no-roll spells when they own the caster and every affected actor. The GM resolves casts affecting actors they do not own. Spell attacks use GM finalization, matching the agreed save workflow. GM-dependent casts wait when no GM is connected.
 
-This is the intended permission contract, not a claim about current enforcement. Read-only inspection found that existing no-save Effect controls require caster ownership or GM status, and execution requires update permission on every recipient or GM status. The current save coordinator can fall back to a non-GM when no GM is active; implementation must reconcile that fallback with the accepted GM-dependent behavior. Relevant code: `scripts/main.js`, `scripts/effect-runtime.js`, and `scripts/basic-save-runtime.js` at the inspected baseline `92b4fd4`.
+This is the intended permission contract, not a claim about current enforcement. Read-only inspection found that existing no-save Effect controls require caster ownership or GM status, and execution requires update permission on every recipient or GM status. The current save coordinator can fall back to a non-GM when no GM is active; implementation must reconcile that fallback with the accepted GM-dependent behavior. Relevant code: `scripts/main.js`, `scripts/effect-runtime.js`, and `scripts/basic-save-runtime.js` at the inspected baseline `dd223d5`.
 
 ### Target-bound rolls
 
