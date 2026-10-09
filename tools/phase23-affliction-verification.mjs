@@ -29150,7 +29150,9 @@ export const cases = {
             out.bind = {kind: bplan.resolution.kind, level: bplan.automation.level, effect: bind.caster.itemTypes.effect.some(e => e.name === 'Spell Effect: Bind Heroic Spirit'),
                 fortitude: bind.caster.saves.fortitude.mod - before, note: !!note};
             const bard = await character('Fortissimo bard', 2000), ally = await character('Fortissimo ally', 2100);
-            const [fortissimo, anthem] = await learn(bard, ['Fortissimo Composition', 'Courageous Anthem']);
+            // (By name: the created items needn't come back in the order given.)
+            const learned = await learn(bard, ['Fortissimo Composition', 'Courageous Anthem']);
+            const fortissimo = learned.find(i => i.name === 'Fortissimo Composition'), anthem = learned.find(i => i.name === 'Courageous Anthem');
             const fplan = await ctx.api.compile(fortissimo), aplan = await ctx.api.compile(anthem);
             const allyToken = ally.getActiveTokens(true, true)[0];
             const first = await ctx.api.execute(fortissimo, {sourceActor: bard, plan: fplan, targets: [allyToken], degree: 'criticalSuccess', skipDialog: true, skipConfirmation: true}); await wait(700);
@@ -29401,7 +29403,11 @@ export const cases = {
             const plan = await ctx.api.compile(fixture.spell);
             const actors = []; for (const d of degrees) actors.push(await ctx.actor(`${name} ${d}`, {level: 1}));
             const {card} = await ctx.api.saves.start(fixture.spell, {sourceActor: fixture.caster, plan, targets: await Promise.all(actors.map(a => ctx.token(a))), castRank: rank, dc: 25, skipConfirmation: true});
-            for (const [i, t] of ctx.state(card).targets.entries()) { await ctx.api.saves.rollSave(card, t.id, {skipDialog: true}); await ctx.api.saves.correctTarget(card, t.id, {action: 'degree', degree: degrees[i]}); }
+            for (const [i, t] of ctx.state(card).targets.entries()) {
+                // (Roaring Applause's "Can the creature see, hear, or otherwise understand the caster?": the GM confirms it's affected.)
+                if (t.confirmation?.status === 'pending') await ctx.api.saves.correctTarget(card, t.id, {action: 'affected', expectedRevision: t.revision});
+                await ctx.api.saves.rollSave(card, t.id, {skipDialog: true}); await ctx.api.saves.correctTarget(card, t.id, {action: 'degree', degree: degrees[i]});
+            }
             await ctx.api.saves.finalize(card); await wait(1500);
             return {supported: ctx.api.saves.supports(plan), actors};
         };
@@ -29544,7 +29550,7 @@ export const cases = {
     },
     // Rank 3 batch 30: Conjured Conveyance (the caster's note for 1 hour), Disruptive Transfer (the teleport reminder; a failure Dazzled for
     // 1 minute), Caster's Imposition at 5th (the failure note for 1 day). Rank 4 batch 15: Mystic Beacon on an ally (its note until the
-    // caster's next turn), Magnetize on an ally (1 minute), Elemental Sense (10 minutes). Rank 5 batch 9: Plasma Whirl's 3-action variant
+    // caster's next turn), Magnetize on an ally (1 minute), Elemental Sense (a stated Effect now). Rank 5 batch 9: Plasma Whirl's 3-action variant
     // (a failure Sickened 1, a critical failure Sickened 2) and 1-action variant (no condition).
     async rank3Batch30(ctx) {
         const wait = ms => new Promise(r => setTimeout(r, ms));
@@ -29583,8 +29589,9 @@ export const cases = {
             const pole = await ctx.actor('magnet ally');
             const magnet = await cast('Magnetize', 4, [pole]);
             out.magnet = {kind: magnet.plan.resolution.kind, note: noteSpan(pole, 'Magnetize')};
-            const sense = await cast('Elemental Sense', 4);
-            out.sense = {kind: sense.plan.resolution.kind, note: noteSpan(sense.fixture.caster, 'Elemental Sense')};
+            // (Elemental Sense's senses are a stated Effect since notes batch 1 — the caster picks the sense; that case casts it: here, the kind.)
+            const sense = await ctx.setup('Elemental Sense');
+            out.sense = {kind: (await ctx.api.compile(sense.spell)).resolution.kind};
             const overlayFor = (spell, time) => Object.entries(spell._source.system.overlays ?? {}).find(([, o]) => o.system?.time?.value === time)?.[0];
             const whirl = await ctx.setup('Plasma Whirl');
             const run = async (variant, degrees) => {
@@ -29601,7 +29608,7 @@ export const cases = {
         } catch (error) { out.error = error.stack ?? error.message; }
         const c = out.conveyance ?? {}, t = out.transfer ?? {}, i = out.imposition ?? {}, b = out.beacon ?? {}, m = out.magnet ?? {}, e = out.sense ?? {}, w3 = out.whirl3 ?? {}, w1 = out.whirl1 ?? {};
         assert(!out.error && c.kind === 'spell-note' && c.note === '1 hours' && t.supported && t.reminder && t.dazzled && i.supported && i.note === '1 days'
-            && b.kind === 'spell-note' && b.note && m.kind === 'spell-note' && m.note === '1 minutes' && e.kind === 'spell-note' && e.note === '10 minutes'
+            && b.kind === 'spell-note' && b.note && m.kind === 'spell-note' && m.note === '1 minutes' && e.kind === 'stated-effect'
             && w3.supported && w3.sickened.join() === '1,2' && w3.lost[0] >= 10 && w1.supported && w1.sickened.join() === '0' && w1.lost[0] >= 4, `Rank 3 batch 30: ${JSON.stringify(out)}`);
         return {batch30: out};
     },
@@ -29757,8 +29764,7 @@ export const cases = {
             && l.supported && l.lost >= 10 && l.lost <= 60 && !l.swapped && u.casterUndead && u.swapped === 'vitality → void' && u.lost >= 10, `Rank 5 batch 8: ${JSON.stringify(out)}`);
         return {batch8: out};
     },
-    // Rank 3 batch 28: notes — Travel by Turtle at 7th (the caster's note for 7 days), Tiny Wings on a familiar-like target (fly Speed 20 from
-    // the note's BaseSpeed), Transcribe Conflict at 5th (the note for 8 hours, no rule on it).
+    // Rank 3 batch 28: notes — Travel by Turtle at 7th (the caster's note for 7 days), Tiny Wings (a stated Effect now: its kind), Transcribe Conflict at 5th (the note for 8 hours, no rule on it).
     async rank3Batch28(ctx) {
         const wait = ms => new Promise(r => setTimeout(r, ms));
         const NSX = 'pf2e-automatic-resolution';
@@ -29778,18 +29784,15 @@ export const cases = {
         try {
             const turtle = await cast('Travel by Turtle', 7);
             out.turtle = {kind: turtle.plan.resolution.kind, error: turtle.error, note: span(noteOn(turtle.fixture.caster, 'Travel by Turtle'))};
-            const familiar = await ctx.actor('Tiny Wings familiar', {level: 1});
-            const before = familiar.system.movement?.speeds?.fly?.value ?? familiar.system.attributes.speed?.otherSpeeds?.find(s => s.type === 'fly')?.value ?? 0;
-            const wings = await cast('Tiny Wings', 3, [familiar]);
-            await wait(500);
-            const fly = familiar.system.movement?.speeds?.fly?.value ?? familiar.system.attributes.speed?.otherSpeeds?.find(s => s.type === 'fly')?.total ?? familiar.system.attributes.speed?.otherSpeeds?.find(s => s.type === 'fly')?.value ?? 0;
-            out.wings = {kind: wings.plan.resolution.kind, error: wings.error, before, fly, note: span(noteOn(familiar, 'Tiny Wings'))};
+            // (Tiny Wings is a stated Effect on the caster's familiar since notes batch 1 — that case casts it on a real familiar: here, the kind.)
+            const wings = await ctx.setup('Tiny Wings');
+            out.wings = {kind: (await ctx.api.compile(wings.spell)).resolution.kind};
             const transcribe = await cast('Transcribe Conflict', 5);
             const tn = noteOn(transcribe.fixture.caster, 'Transcribe Conflict');
             out.transcribe = {kind: transcribe.plan.resolution.kind, error: transcribe.error, note: span(tn), rules: tn?.system.rules?.length ?? null};
         } catch (error) { out.error = error.stack ?? error.message; }
         const t = out.turtle ?? {}, w = out.wings ?? {}, c = out.transcribe ?? {};
-        assert(!out.error && t.kind === 'spell-note' && !t.error && t.note === '7 days' && w.kind === 'spell-note' && !w.error && w.before === 0 && w.fly === 20 && w.note === '1 hours'
+        assert(!out.error && t.kind === 'spell-note' && !t.error && t.note === '7 days' && w.kind === 'stated-effect'
             && c.kind === 'spell-note' && !c.error && c.note === '8 hours' && c.rules === 0, `Rank 3 batch 28: ${JSON.stringify(out)}`);
         return {batch28: out};
     },
@@ -30207,7 +30210,8 @@ export const cases = {
             out.glimmer = {kind: glimmer.plan.resolution.kind, perception: beast.perception.mod - perception, will: beast.saves.will.mod - will, error: glimmer.error};
             const person = await ctx.actor('glimmer person');
             const refused = await cast('Movanic Glimmer', [person]);
-            out.glimmer.nonAnimalRefused = /isn't a valid target/.test(refused.error ?? '');
+            // (A stated Effect since notes batch 1: "1 animal" refused as "isn't an animal".)
+            out.glimmer.nonAnimalRefused = /isn't (a valid target|an animal)/.test(refused.error ?? '');
             const lines = await cast('Forgotten Lines');
             out.lines = {kind: lines.plan.resolution.kind, card: !!lines.card, effect: lines.fixture.caster.itemTypes.effect.some(e => e.name.startsWith('Spell Note:'))};
             const word = await cast('Wordsmith');
@@ -30219,7 +30223,7 @@ export const cases = {
             out.empathy = {kind: empathy.plan.resolution.kind, error: empathy.error, note: pet.itemTypes.effect.some(e => e.name.startsWith('Spell Note:')) || empathy.fixture.caster.itemTypes.effect.some(e => e.name.startsWith('Spell Note:'))};
         } catch (error) { out.error = error.stack ?? error.message; }
         for (const actor of extra) { await canvas.scene.deleteEmbeddedDocuments('Token', canvas.scene.tokens.filter(t => t.actorId === actor.id).map(t => t.id)); await actor.delete(); }
-        assert(!out.error && out.glimmer.kind === 'spell-note' && !out.glimmer.error && out.glimmer.perception === 2 && out.glimmer.will === 2 && out.glimmer.nonAnimalRefused
+        assert(!out.error && out.glimmer.kind === 'stated-effect' && !out.glimmer.error && out.glimmer.perception === 2 && out.glimmer.will === 2 && out.glimmer.nonAnimalRefused
             && out.lines.kind === 'spell-note' && out.lines.card && !out.lines.effect && out.word.unit === 'unlimited' && out.empathy.kind === 'spell-note' && !out.empathy.error && out.empathy.note,
             `Rank 4 batch 7: ${JSON.stringify(out)}`);
         return {batch7: out};
@@ -31289,9 +31293,10 @@ export const cases = {
             out.level = plan.automation.level;
             const cast = (targets, extra = {}) => ctx.api.execute(blizzard.spell, {sourceActor: blizzard.caster, plan, skipConfirmation: true, dc: 24, castRank: 3, targets, ...extra});
             try { await cast([tStrong, tWeak]); out.refused = null; } catch (error) { out.refused = error.message; }
-            const cs = await cast([tStrong]); await wait(500);
+            // (The GM's result: a natural 20 raises even −30's critical failure to a failure, a natural 1 lowers +60's critical success.)
+            const cs = await cast([tStrong], {degree: 'criticalSuccess'}); await wait(500);
             out.criticalSuccess = {degree: cs.degree, lost: 500 - strong.hitPoints.value};
-            const cf = await cast([tWeak]); await wait(1200);
+            const cf = await cast([tWeak], {degree: 'criticalFailure'}); await wait(1200);
             const persistent = weak.itemTypes.condition.find(c => c.slug === 'persistent-damage');
             const rec = id => ctx.api.ongoing.records().find(r => r.castId === id);
             out.criticalFailure = {degree: cf.degree, formula: cf.formula, direct: cf.total, lost: 500 - weak.hitPoints.value, concealed: weak.hasCondition('concealed'),
@@ -31802,8 +31807,10 @@ export const cases = {
                 if (fresh.degreeAdjustment) await ctx.api.saves.correctTarget(card, t.id, {action: swim === 'applies' ? 'adjustment-applies' : 'adjustment-not-applicable', expectedRevision: fresh.revision});
             }
             const swimmerX = tSwimmer.x;
+            // (The push is the module's forced movement now — the swimmer stands apart from the caster: the card says it was pushed.)
             await ctx.api.saves.finalize(card); await wait(1500);
-            out.first = {walker: {prone: walker.hasCondition('prone'), hp: walker.system.attributes.hp.value}, swimmer: {prone: swimmer.hasCondition('prone'), hp: swimmer.system.attributes.hp.value, pushNote: /surge swimmer is pushed 20 feet away from the caster/.test(game.messages.get(card.id).content)},
+            out.first = {walker: {prone: walker.hasCondition('prone'), hp: walker.system.attributes.hp.value}, swimmer: {prone: swimmer.hasCondition('prone'), hp: swimmer.system.attributes.hp.value, pushNote: /surge swimmer (is pushed 20 feet away from the caster|was pushed \d+ feet[^.]*\. The module moved the token)/
+                    .test(game.messages.get(card.id).content.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' '))},
                 degrees: state().targets.map(t => [t.name.replace('PFTEST P23 Affliction ', ''), t.degree, t.degreeAdjustment?.status ?? null])};
             const waveCard = game.messages.contents.find(m => !earlier.has(m.id) && m.getFlag(NS, 'waveRepeat'));
             const [region] = await canvas.scene.createEmbeddedDocuments('Region', [{name: 'PFTEST Sea Surge wave', shapes: [{type: 'rectangle', x: 2200, y: 1400, width: 100, height: 100}], color: '#3366ff'}]);
