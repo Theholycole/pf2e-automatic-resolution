@@ -2103,11 +2103,13 @@ export class EffectRuntime {
             const reduced = Math.min(data.reduce, amount);
             const hp = victim.system.attributes.hp;
             await victim.update({ "system.attributes.hp.value": Math.min(Number(hp.max), Number(hp.value) + reduced) });
-            // ("If the crossing effect deals damage to multiple creatures, the shield only takes damage once.")
-            const key = `${origin.uuid}|${game.combat?.round ?? 0}|${game.combat?.turn ?? 0}|${Math.floor(Date.now() / 5000)}`;
-            const first = !data.seen.includes(key);
+            // ("If the crossing effect deals damage to multiple creatures, the shield only takes damage once": the same origin's damage on this turn within
+            // a few seconds of its last is one effect — a sliding window, so a burst applied to several creatures isn't split at a fixed time boundary.)
+            const key = `${origin.uuid}|${game.combat?.round ?? 0}|${game.combat?.turn ?? 0}`, now = Date.now();
+            const seen = (data.seen ?? []).filter(entry => entry && typeof entry === "object");
+            const first = !seen.some(entry => entry.key === key && now - Number(entry.at ?? 0) < 6000);
             const remaining = first ? data.remaining - reduced : data.remaining;
-            await effect.update({ [`flags.${MODULE_ID}.spiritBoundary.remaining`]: remaining, [`flags.${MODULE_ID}.spiritBoundary.seen`]: [...data.seen.slice(-20), key], name: `${data.spell}: the shield (${Math.max(0, remaining)} HP)` });
+            await effect.update({ [`flags.${MODULE_ID}.spiritBoundary.remaining`]: remaining, [`flags.${MODULE_ID}.spiritBoundary.seen`]: [...seen.slice(-20), { key, at: now }], name: `${data.spell}: the shield (${Math.max(0, remaining)} HP)` });
             try { await ChatMessage.create({ content: `<p><strong>${escapeHTML(data.spell)}</strong>: the shield reduces the damage to ${escapeHTML(victim.name)} by ${reduced}${first ? ` and takes ${reduced} (${Math.max(0, remaining)} HP left)` : " (it already took this effect's damage)"}.</p>` }); } catch (_) {}
             if (remaining <= 0 && data.castId) await this.ongoing.request("end", { castId: data.castId });
             return { reduced, remaining, first };
