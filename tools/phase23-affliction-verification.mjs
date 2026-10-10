@@ -17537,7 +17537,10 @@ export const cases = {
             const plan = await ctx.api.compile(s.spell);
             const flyer = await make('sky flyer'), ground = await make('sky ground'), high = await make('sky high');
             const tf = await ctx.token(flyer), tg = await ctx.token(ground), th = await ctx.token(high);
-            await (tf.document ?? tf).update({elevation: 40}); await (th.document ?? th).update({elevation: 80}); await wait(400);
+            // (Without the animation, and settled: Foundry v14 moves elevation like a position, and a cast mid-move read 31.5 feet.)
+            await (tf.document ?? tf).update({elevation: 40}, {animate: false, teleport: true}); await (th.document ?? th).update({elevation: 80}, {animate: false, teleport: true});
+            for (let i = 0; i < 40 && !(Number((tf.document ?? tf).elevation) === 40 && Number((th.document ?? th).elevation) === 80); i++) await wait(100);
+            await wait(300);
             const {card} = await ctx.api.saves.start(s.spell, {sourceActor: s.caster, plan, targets: [tf, tg, th], castRank: 8, dc: 30, skipConfirmation: true});
             for (const [i, t] of ctx.state(card).targets.entries()) { await ctx.api.saves.rollSave(card, t.id, {skipDialog: true}); await ctx.api.saves.correctTarget(card, t.id, {action: 'degree', degree: ['criticalSuccess', 'failure', 'criticalFailure'][i]}); }
             await ctx.api.saves.finalize(card); await wait(2500);
