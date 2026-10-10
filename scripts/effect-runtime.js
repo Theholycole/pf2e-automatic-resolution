@@ -5715,7 +5715,8 @@ export class EffectRuntime {
 
     /**
      * Radiant Heart of Devotion: the sustained emanation around the caster (the caster's light); the good side inside holds the bonus and the extra dice; at the
-     * start of their turns the others save (Dazzled, or Blinded for the evil). The card's control reclassifies a targeted creature.
+     * start of their turns the others save (Dazzled, or Blinded for the evil). Alignment is the GM's (no side, no effect): the card sets targeted creatures'
+     * sides, and a creature in the radiance with none brings a card asking the GM.
      */
     async #executeRadiantHeart(itemOrSource, plan, sourceActor, options) {
         const data = plan.resolution.radiantHeart;
@@ -5731,13 +5732,13 @@ export class EffectRuntime {
                 rules: [{ key: "FlatModifier", selector: "attack-roll", type: data.good.type, value: data.good.bonus, label: plan.source.name },
                     { key: "DamageDice", selector: "strike-damage", diceNumber: dice, dieSize: `d${data.good.faces}`, damageType: data.good.damageType, label: plan.source.name }] },
             hazardDamage: { formula: "0", type: null, label: plan.source.name, radiantSides: { statistic: data.statistic, dc, neutral: data.neutral, evil: data.evil } },
-            notes: ["Good: the caster, its allies and holy creatures; evil: unholy creatures; neutral: the rest (reclassify from the spell's card)."] });
+            notes: ["Alignment is the GM's: each creature's side (good, neutral or evil) is set from the spell's card, or from the card asking about a creature with none."] });
         const light = await this.#ruleEffect(sourceActor, { name: `${plan.source.name}: radiance`, rules: [{ key: "TokenLight", value: { bright: data.radius, dim: data.radius } }], seconds: data.seconds,
             sustained: true, sourceActor, itemOrSource, flags: {}, description: `<p>Bright light in the ${data.radius}-foot emanation.</p>` });
         const journal = this.ongoing.find(started.castId);
         if (journal) await this.ongoing.attach(journal, light);
         try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "radiant-heart", radiantHeart: { castId: started.castId } } },
-            content: `<h3>${escapeHTML(plan.source.name)}</h3><p>The ${data.radius}-foot emanation (sustained): the good inside get +${data.good.bonus} to attack rolls and ${dice}d${data.good.faces} ${escapeHTML(data.good.damageType)} on Strikes; neutral creatures starting a turn inside save (DC ${dc}) or are ${escapeHTML(data.neutral.name)} for ${data.neutral.rounds} round, evil ones ${escapeHTML(data.evil.name)}.</p>`
+            content: `<h3>${escapeHTML(plan.source.name)}</h3><p>The ${data.radius}-foot emanation (sustained): the good inside get +${data.good.bonus} to attack rolls and ${dice}d${data.good.faces} ${escapeHTML(data.good.damageType)} on Strikes; neutral creatures starting a turn inside save (DC ${dc}) or are ${escapeHTML(data.neutral.name)} for ${data.neutral.rounds} round, evil ones ${escapeHTML(data.evil.name)}. Alignment is the GM's: target creatures and set their side; a creature in the radiance with none brings a card asking.</p>`
                 + ["good", "neutral", "evil"].map(side => `<button type="button" class="pf2e-auto-card-action" data-action="radiant-${side}"><i class="fa-solid fa-scale-balanced"></i> The targeted creature is ${side}</button>`).join("") }); } catch (_) {}
         if (options.sourceMessageId) try { await game.messages.get(options.sourceMessageId)?.setFlag(MODULE_ID, "resolvedCast", { castInstanceId: started.castId, resolutionKind: "radiant-heart" }); } catch (_) {}
         return { status: "applied", plan, castInstanceId: started.castId, dice, dc };
@@ -5797,7 +5798,7 @@ export class EffectRuntime {
     }
 
     /**
-     * Chromatic Wall: the color rolled at the cast rank (the reroll result rerolled, its save penalty kept); the GM draws the wall; the card's control for the
+     * Chromatic Wall: the color rolled at the cast rank (the reroll result rerolled, its penalty kept for each crossing's save); the GM draws the wall; the card's control for the
      * creatures that passed through runs the color's crossing effect. What the wall stops, its light and the counteracting spell are notes.
      */
     async #executeColorWall(itemOrSource, plan, sourceActor, options) {
@@ -5816,7 +5817,7 @@ export class EffectRuntime {
             : color.slowed ? `a ${color.slowed.statistic} save or ${color.slowed.condition.replace(/@UUID\[[^\]]+\]\{([^}]+)\}/g, "$1")} for ${color.slowed.minutes} minute (a critical failure: ${color.teleport.name} instead)` : `the effects of ${color.borrowed.name}`;
         const message = await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }),
             flags: { [MODULE_ID]: { kind: "color-wall", colorWall: { spellUuid: itemOrSource?.uuid ?? null, sourceActorUuid: sourceActor.uuid, castRank, roll: value, penalty, spellName: plan.source.name, expiresAt: game.time.worldTime + seconds } } },
-            content: `<h3>${escapeHTML(plan.source.name)}: ${escapeHTML(color.name)}</h3><p>A creature passing through takes ${escapeHTML(effect)}${penalty ? `, with a −${penalty.penalty} ${penalty.type} penalty to its saves` : ""}. The caster can ignore the wall.</p>`
+            content: `<h3>${escapeHTML(plan.source.name)}: ${escapeHTML(color.name)}</h3><p>A creature passing through takes ${escapeHTML(effect)}${penalty ? `; a creature passing through takes a −${penalty.penalty} ${penalty.type} penalty to that crossing's save` : ""}. The caster can ignore the wall.</p>`
                 + `<p class="pf2e-auto-gm-reminder"><strong>GM:</strong> draw the opaque wall (straight and vertical, ${data.length} feet long and ${data.height} feet high; not through a creature) with bright light ${data.light.bright} feet on each side and dim light to ${data.light.dim} feet. It lasts ${seconds >= 3600 ? `${seconds / 3600} hour` : `${seconds / 60} minutes`}.</p>`
                 + color.notes.map(note => `<p class="pf2e-auto-gm-reminder"><strong>GM:</strong> ${escapeHTML(note)}</p>`).join("")
                 + `<button type="button" class="pf2e-auto-card-action" data-action="color-wall"><i class="fa-solid fa-person-walking-arrow-right"></i> Creatures passed through the wall (target them)</button>` });
@@ -5862,21 +5863,17 @@ export class EffectRuntime {
     }
 
     /**
-     * Establish Ward: the burst around the caster (or the GM's selected region) as a placed area whose rules are the caster's — Quickened inside, Slowed outside;
-     * the card's Strikes for the duration.
+     * Establish Ward: the burst the GM draws around the caster — it doesn't move with them (the user, 2026-10-10): the given region, PF2e's template placed from the
+     * spell's card, or the selected region — as a placed area whose rules are the caster's — Quickened inside, Slowed outside; the card's Strikes for the duration.
      */
     async #executeWard(itemOrSource, plan, sourceActor, options) {
         const data = plan.resolution.ward;
         if (!this.ongoing?.startAreaRules) throw new Error(`${plan.source.name} needs the ongoing spell manager.`);
         const castRank = Number(options.castRank ?? itemOrSource?.rank ?? plan.rank);
         const at = wardAt(data, castRank, plan.rank);
-        const casterToken = sourceActor.getActiveTokens?.(false, true)?.[0];
-        if (!casterToken) throw new Error(`${plan.source.name}: the caster needs a token on the scene.`);
-        const size = canvas.grid.size;
-        const centre = { x: casterToken.x + Number(casterToken.width ?? 1) * size / 2, y: casterToken.y + Number(casterToken.height ?? 1) * size / 2 };
-        const pixels = at.radius / canvas.dimensions.distance * size;
-        const [region] = options.region ? [options.region] : await canvas.scene.createEmbeddedDocuments("Region", [{ name: `${plan.source.name} (${sourceActor.name})`, color: "#3a7d44",
-            shapes: [{ type: "circle", x: centre.x, y: centre.y, radiusX: pixels, radiusY: pixels, radius: pixels, rotation: 0, hole: false }] }]);
+        const region = options.region ?? (options.sourceMessageId ? canvas.scene?.regions.find(entry => entry.flags?.pf2e?.messageId === options.sourceMessageId) : null)
+            ?? canvas.regions?.controlled?.[0]?.document ?? null;
+        if (!region) throw new Error(`${plan.source.name}: draw the ${at.radius}-foot burst centred on ${sourceActor.name} (PF2e's template from the spell's card, or a region you select), then resolve it.`);
         const link = (uuid, name) => [{ key: "GrantItem", uuid, onDeleteActions: { grantee: "restrict" } }];
         const started = await this.ongoing.startAreaRules({ spellName: plan.source.name, sourceActorUuid: sourceActor.uuid, sourceItemUuid: itemOrSource?.uuid ?? null, castRank, region, durationSeconds: data.seconds,
             areaRules: { name: `${plan.source.name}: ${data.inside.name} inside the ward`, rules: link(data.inside.uuid), only: sourceActor.uuid,
@@ -6331,8 +6328,9 @@ export class EffectRuntime {
     }
 
     /**
-     * Shepherd of Souls (after the triggering damage): the caster's sacrifice (at most the rank's maximum and its Hit Points) is lost; the target regains the
-     * multiple of it — the damage reduced and any excess healed together — back from Dying if it was.
+     * Shepherd of Souls: the caster's sacrifice (at most the rank's maximum and its Hit Points) is lost; the target gets an Effect reducing its next damage by
+     * the multiple of it — after resistances, before its Hit Points (sacrificeBefore/After, from the damage listener) — used up by that damage, whose excess heals
+     * it. The players put it on before the damage is applied (the user, 2026-10-10); unused, it lasts a round.
      */
     async #executeSacrificeHeal(itemOrSource, plan, sourceActor, options) {
         const data = plan.resolution.sacrificeHeal;
@@ -6341,20 +6339,49 @@ export class EffectRuntime {
         const castRank = Number(options.castRank ?? itemOrSource?.rank ?? plan.rank);
         const cap = Math.min(sacrificeMax(data, castRank, plan.rank), Number(sourceActor.system?.attributes?.hp?.value ?? 0));
         const sacrifice = Number(options.sacrifice ?? await foundry.applications.api.DialogV2.prompt({ window: { title: `${plan.source.name} — sacrifice` },
-            content: `<p>Lose how many Hit Points (1–${cap})? ${escapeHTML(target.name)} reduces the damage by ${data.multiplier === 2 ? "twice" : "three times"} that, any excess healing it.</p><input type="number" name="hp" min="1" max="${cap}" value="${cap}">`,
+            content: `<p>Lose how many Hit Points (1–${cap})? ${escapeHTML(target.name)}'s next damage is reduced by ${data.multiplier === 2 ? "twice" : "three times"} that, any excess healing it.</p><input type="number" name="hp" min="1" max="${cap}" value="${cap}">`,
             ok: { callback: (_event, button) => Number(button.form.elements.hp.value) }, rejectClose: false }));
         if (!Number.isInteger(sacrifice) || sacrifice < 1) return { status: "cancelled", plan };
         if (sacrifice > cap) throw new Error(`${plan.source.name}: at most ${cap} Hit Points.`);
         const hp = sourceActor.system.attributes.hp;
         await sourceActor.update({ "system.attributes.hp.value": Math.max(0, Number(hp.value) - sacrifice) });
-        const restored = sacrifice * data.multiplier;
-        const wasDying = isDying(target);
-        const receipt = await applyDamageWithReceipt(target, { damage: -restored, token: token.document ?? token, item: itemOrSource ?? undefined, rollOptions: new Set(["item:trait:healing"]), skipIWR: false }, randomID());
-        await recoverFromDying(target, wasDying);
+        const reduction = sacrifice * data.multiplier;
         const castInstanceId = options.castInstanceId ?? randomID();
-        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), content: `<h3>${escapeHTML(plan.source.name)}</h3><p>${escapeHTML(sourceActor.name)} loses ${sacrifice} Hit Points; ${escapeHTML(target.name)} reduces the damage by ${restored} (any excess heals it).</p>` }); } catch (_) {}
+        const effect = await this.#ruleEffect(target, { name: `${plan.source.name}: the next damage −${reduction}`, seconds: 6, sourceActor, itemOrSource,
+            rules: [],
+            flags: { sacrificeReduction: { castId: castInstanceId, amount: reduction, spell: plan.source.name } },
+            description: `<p>The next damage this creature takes is reduced by ${reduction}; if the reduction exceeds the damage, it regains the excess as Hit Points. Used up by that damage.</p>` });
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), content: `<h3>${escapeHTML(plan.source.name)}</h3><p>${escapeHTML(sourceActor.name)} loses ${sacrifice} Hit Points; ${escapeHTML(target.name)}'s next damage is reduced by ${reduction} (any excess heals it).</p><p class="pf2e-auto-gm-reminder">Apply the triggering damage after this reaction: the reduction is on ${escapeHTML(target.name)} until that damage.</p>` }); } catch (_) {}
         if (options.sourceMessageId) try { await game.messages.get(options.sourceMessageId)?.setFlag(MODULE_ID, "resolvedCast", { castInstanceId, resolutionKind: "sacrifice-heal" }); } catch (_) {}
-        return { status: "applied", plan, castInstanceId, sacrifice, restored, receipt };
+        return { status: "applied", plan, castInstanceId, sacrifice, reduction, effectUuid: effect.uuid };
+    }
+
+    /**
+     * Shepherd of Souls' reduction, as damage reaches its holder (synchronous, before PF2e's applyDamage reads the Hit Points): the amount added to the temporary
+     * Hit Points PF2e starts from — its own sums then take the damage, after resistances and a Shield Block, off the reduction first. Returns what the after-step
+     * needs; an update hook tells it whether PF2e changed the Hit Points at all (no damage left after resistances: the whole reduction is excess).
+     */
+    sacrificeBefore(actor, effect) {
+        const amount = Number(effect.flags[MODULE_ID].sacrificeReduction.amount ?? 0);
+        const hp = actor.system.attributes.hp;
+        const held = { effectId: effect.id, amount, oldTemp: Number(hp.temp ?? 0), updated: false };
+        held.hook = Hooks.on("updateActor", (document, _changes, context) => { if (document.uuid === actor.uuid && Number.isFinite(context?.damageTaken)) held.updated = true; });
+        hp.temp = held.oldTemp + amount;
+        return held;
+    }
+
+    /** After that damage: the real temporary Hit Points restored, the reduction's unused part healed (the excess over the damage), the Effect used up. */
+    async sacrificeAfter(actor, held) {
+        Hooks.off("updateActor", held.hook);
+        // (Prepared again from the saved data: the added amount was never saved.)
+        actor.reset();
+        const pool = Number(actor._source?.system?.attributes?.hp?.temp ?? actor.system.attributes.hp.temp ?? 0);
+        // (PF2e saved the combined pool's remainder: what's above the real temporary Hit Points is the reduction left; nothing saved, no damage got through.)
+        const left = held.updated ? Math.max(0, pool - held.oldTemp) : held.amount;
+        if (held.updated && pool > held.oldTemp) await actor.update({ "system.attributes.hp.temp": held.oldTemp });
+        await actor.items.get(held.effectId)?.delete().catch(() => null);
+        if (left > 0) await actor.applyDamage({ damage: -left, rollOptions: new Set(["item:trait:healing"]) });
+        return { reduced: held.amount - left, excess: left };
     }
 
     /**
@@ -6675,6 +6702,8 @@ export class EffectRuntime {
         const tokens = (options.targets ?? [...game.user.targets]).map(target => target?.object ?? target).filter(token => token?.actor);
         if (!tokens.length || tokens.length > most) throw new Error(`${plan.source.name}: target ${most === 1 ? "yourself or 1 ally" : `up to ${most} creatures`}.`);
         const present = data.conditions.filter(condition => tokens.some(token => token.actor.hasCondition?.(condition.slug)));
+        // (The GM picks the condition targeted — the module can't tell which effect applied it —; a failure then locks that condition on that target for a day.)
+        if (!options.condition && !present.length) throw new Error(`${plan.source.name}: the targets have none of ${data.conditions.map(entry => entry.name).join(", ")}.`);
         const slug = options.condition ?? (present.length === 1 ? present[0].slug : await foundry.applications.api.DialogV2.wait({ window: { title: `${plan.source.name} — the condition` }, content: "<p>Counteract the effect applying which condition?</p>",
             buttons: present.map(condition => ({ action: condition.slug, label: condition.name })), close: () => null, rejectClose: false }));
         const condition = data.conditions.find(entry => entry.slug === slug);
@@ -8482,7 +8511,9 @@ export class EffectRuntime {
     }
 
     /** A card's control (Murderous Vine's destruction): the grab ends and the spell's record with it. */
-    async cardAction(message, action, { targets = [...game.user.targets] } = {}) {
+    async cardAction(message, action, { targets = [...game.user.targets], ...extra } = {}) {
+        // Essence Eating Shell: the shell spell's school (the caster's pick), then the target's and the magus's save cards.
+        if (action === "essence-shell") return (await import("./essence-shell-runtime.js")).resolveEssenceShell(message, { school: extra.school ?? null });
         // Radiant Heart of Devotion: the GM sets the targeted creatures' side (the good side's Effect is removed from one that isn't).
         const side = /^radiant-(good|neutral|evil)$/.exec(action)?.[1];
         if (side) {
@@ -8490,8 +8521,10 @@ export class EffectRuntime {
             const journal = data ? this.ongoing?.find?.(data.castId) : null;
             if (!journal) throw new Error("The radiance has ended.");
             const record = clone(journal.getFlag(MODULE_ID, ONGOING_FLAG));
-            const actors = uniqueActors(targets);
-            if (!actors.length) throw new Error("Target the creatures to classify.");
+            // (The card asking about one creature sets that creature's side; the spell's own card, the targeted creatures'.)
+            const asked = data.actorUuid ? await fromUuid(data.actorUuid).catch(() => null) : null;
+            const actors = data.actorUuid ? (asked ? [asked] : []) : uniqueActors(targets);
+            if (!actors.length) throw new Error(data.actorUuid ? "That creature is gone." : "Target the creatures to classify.");
             const uuids = actors.map(actor => actor.uuid);
             record.declaration.alignment = [...(Array.isArray(record.declaration.alignment) ? record.declaration.alignment : []).filter(entry => !uuids.includes(entry.actorUuid)), ...uuids.map(actorUuid => ({ actorUuid, side }))];
             if (side !== "good") for (const actor of actors) {
@@ -8499,6 +8532,8 @@ export class EffectRuntime {
                 if (ids.length) await actor.deleteEmbeddedDocuments("Item", ids);
             }
             await this.ongoing.save(journal, record);
+            // (A good creature inside gets its bonuses now.)
+            void this.ongoing.reconcile?.()?.catch?.(() => null);
             return { status: "classified", side, count: actors.length };
         }
         // Black Tentacles: a targeted creature Escaped (or its tentacle was destroyed): its grab ends.
@@ -8531,15 +8566,14 @@ export class EffectRuntime {
             const wall = plan.resolution?.colorWall;
             const color = wall?.colors.find(entry => entry.roll === data.roll);
             if (!color) throw new Error(`${data.spellName}: the spell no longer compiles to the wall.`);
-            const result = { status: "started", color: color.name, penalty: [] };
-            // (The rerolled wall: the crossing creatures' saves take the penalty — an Effect until the end of their turn, covering the wall's save.)
-            if (data.penalty) for (const token of tokens) result.penalty.push((await this.#ruleEffect(token.actor, { name: `${data.spellName}: −${data.penalty.penalty} to saves`,
-                rules: [{ key: "FlatModifier", selector: "saving-throw", type: data.penalty.type, value: -data.penalty.penalty }], seconds: 6, expiry: "turn-end", sourceActor: caster, itemOrSource: spell,
-                description: `<p>Passed through the wall: −${data.penalty.penalty} ${data.penalty.type} penalty to saves.</p>` })).uuid);
+            // (The rerolled wall: the crossing's own save takes the penalty, once — the user, 2026-10-10 — not a lasting Effect.)
+            const saveModifier = data.penalty ? { value: -data.penalty.penalty, type: data.penalty.type, label: `${data.spellName} (rerolled wall)` } : null;
+            const result = { status: "started", color: color.name, penalty: saveModifier ? saveModifier.value : 0 };
             const high = data.castRank >= wall.highFrom;
             const dc = Number(spell.spellcasting?.statistic?.dc?.value ?? NaN);
             if (color.damage || color.slowed) {
-                const { card } = await this.saves.start(spell, { plan: clone(color.damage && high ? color.highPlan : color.savePlan), sourceActor: caster, targets: tokens, castRank: data.castRank, skipConfirmation: true });
+                const { card } = await this.saves.start(spell, { plan: clone(color.damage && high ? color.highPlan : color.savePlan), sourceActor: caster, targets: tokens, castRank: data.castRank, skipConfirmation: true,
+                    ...(saveModifier ? { saveModifier } : {}) });
                 result.cardId = card?.id ?? null;
             }
             const say = async content => { try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: caster }), content: `<p class="pf2e-auto-gm-reminder"><strong>${escapeHTML(data.spellName)}</strong>: ${content}</p>` }); } catch (_) {} };
@@ -8548,7 +8582,8 @@ export class EffectRuntime {
                 const borrowed = await fromUuid(color.borrowed.uuid);
                 const borrowedPlan = borrowed ? await this.compile(borrowed) : null;
                 if (borrowedPlan?.resolution?.kind === "save" && this.saves.supports(borrowedPlan)) {
-                    const { card } = await this.saves.start(borrowed, { plan: clone(borrowedPlan), sourceActor: caster, targets: tokens, castRank: data.castRank, dc, skipConfirmation: true });
+                    const { card } = await this.saves.start(borrowed, { plan: clone(borrowedPlan), sourceActor: caster, targets: tokens, castRank: data.castRank, dc, skipConfirmation: true,
+                        ...(saveModifier ? { saveModifier } : {}) });
                     result.cardId = card?.id ?? null;
                 } else await say(`the creatures passing through are subject to <strong>${escapeHTML(color.borrowed.name)}</strong> (DC ${dc}, rank ${data.castRank}): the module doesn't resolve that spell yet; the GM applies it.`);
                 result.borrowed = color.borrowed.name;

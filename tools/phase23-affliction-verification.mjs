@@ -20679,7 +20679,8 @@ export const cases = {
         return {batch80: out};
     },
     // Rank 5 batch 79: Black Tentacles, in combat — at the cast a weak creature inside (Fortitude −40) is Grabbed and takes 3d6; a strong one (+60) isn't; one outside
-    // is untouched; the weak one's turn ends: 1d6; the strong one, made weak, ends its turn: Grabbed and 3d6; the card releases the first; the spell ends: no grabs.
+    // is untouched; the weak one's turn ends: 1d6; the strong one, made weak, ends its turn: Grabbed, no damage (only the already held take the turn's damage — the user,
+    // 2026-10-10); the card releases the first; the spell ends: no grabs.
     async rank5Batch79(ctx) {
         const wait = ms => new Promise(r => setTimeout(r, ms));
         const place = async (actor, x, y) => (await canvas.scene.createEmbeddedDocuments('Token', [{...actor.prototypeToken.toObject(), actorId: actor.id, actorLink: true, x, y}]))[0];
@@ -20724,8 +20725,8 @@ export const cases = {
         if (region && await fromUuid(region.uuid)) await region.delete();
         await wait(500);
         const c = out.cast ?? {};
-        assert(!out.error && out.kind === 'tentacle-area' && c.weakGrabbed && c.weakCondition && c.strong === false && c.outside === 0 && c.results.length === 2 && c.results.some(r => r[1] === 'grabbed' && r[2] >= 3 && r[2] <= 18)
-            && out.weakTurn >= 1 && out.weakTurn <= 6 && out.strongTurn?.grabbed && out.strongTurn.damage >= 3 && out.strongTurn.damage <= 18 && out.released?.count === 1 && out.released.weak === false
+        assert(!out.error && out.kind === 'tentacle-area' && c.weakGrabbed && c.weakCondition && c.strong === false && c.outside === 0 && c.results.filter(r => /tentacle/.test(r[0])).length === 2 && c.results.some(r => r[1] === 'grabbed' && r[2] >= 3 && r[2] <= 18)
+            && out.weakTurn >= 1 && out.weakTurn <= 6 && out.strongTurn?.grabbed && out.strongTurn.damage === 0 && out.released?.count === 1 && out.released.weak === false
             && out.released.grabbedCondition === false && out.ended?.strong === false && out.ended.condition === false, `Rank 5 batch 79: ${JSON.stringify(out)}`);
         return {batch79: out};
     },
@@ -20794,8 +20795,10 @@ export const cases = {
             && out.away === 10 && out.markerAfterAttack === false && out.ended === false && out.high?.hp === 70 && out.high.dice === 4, `Rank 5 batch 77: ${JSON.stringify(out)}`);
         return {batch77: out};
     },
-    // Rank 5 batch 76: Shepherd of Souls — at 5th a 16 HP sacrifice is refused (15 the most); 10 sacrificed: the caster loses 10, the hurt ally regains 20; at 7th 20
-    // allowed; a dying ally (0 HP) given 5: 10 HP and no longer dying.
+    // Rank 5 batch 76: Shepherd of Souls — the sacrifice is an Effect reducing the target's next damage (the user, 2026-10-10: put on before the damage). At 5th
+    // a 16 HP sacrifice is refused (15 the most); 10 sacrificed: the caster loses 10, the ally (5 HP) holds −20; 22 bludgeoning takes 2 (3 HP, not dying), the
+    // Effect used up; 5 sacrificed (−10) and 4 damage: none taken, the excess 6 healed; against resistance 5 fire, −10 and 12 fire (7 after resistance): the
+    // excess 3 healed; at 7th 20 allowed (−40).
     async rank5Batch76(ctx) {
         const wait = ms => new Promise(r => setTimeout(r, ms));
         const out = {};
@@ -20803,23 +20806,33 @@ export const cases = {
             const fixture = await ctx.setup('Shepherd of Souls');
             const caster = fixture.caster;
             await caster.update({'system.attributes.hp.max': 200}); await caster.update({'system.attributes.hp.value': 200});
-            const [ally, fallen] = await Promise.all(['shepherd ally', 'shepherd fallen'].map(name => ctx.actor(name)));
-            for (const a of [ally, fallen]) await a.update({'system.attributes.hp.max': 100});
-            await ally.update({'system.attributes.hp.value': 50});
-            const [tAlly, tFallen] = [await ctx.token(ally), await ctx.token(fallen)]; await wait(400);
+            const [ally, resistant] = await Promise.all(['shepherd ally', 'shepherd resistant'].map(name => ctx.actor(name)));
+            for (const a of [ally, resistant]) await a.update({'system.attributes.hp.max': 100});
+            await ally.update({'system.attributes.hp.value': 5}); await resistant.update({'system.attributes.hp.value': 50, 'system.attributes.resistances': [{type: 'fire', value: 5, exceptions: [], doubleVs: []}]});
+            const [tAlly, tResistant] = [await ctx.token(ally), await ctx.token(resistant)]; await wait(400);
+            const DamageRoll = CONFIG.Dice.rolls.find(r => r.name === 'DamageRoll');
+            const hurt = async (actor, token, formula) => { await actor.applyDamage({damage: await new DamageRoll(formula).evaluate(), token}); await wait(900); };
+            const held = actor => actor.itemTypes.effect.find(e => e.flags?.['pf2e-automatic-resolution']?.sacrificeReduction);
             const plan = await ctx.api.compile(fixture.spell);
             out.kind = plan.resolution.kind;
             out.tooMuch = await ctx.api.execute(fixture.spell, {sourceActor: caster, plan, castRank: 5, targets: [tAlly], sacrifice: 16, skipConfirmation: true}).then(() => 'allowed', error => error.message);
             const first = await ctx.api.execute(fixture.spell, {sourceActor: caster, plan, castRank: 5, targets: [tAlly], sacrifice: 10, skipConfirmation: true}); await wait(600);
-            out.first = {restored: first.restored, caster: caster.system.attributes.hp.value, ally: ally.system.attributes.hp.value};
+            out.first = {reduction: first.reduction, caster: caster.system.attributes.hp.value, allyBefore: ally.system.attributes.hp.value, holds: held(ally)?.flags?.['pf2e-automatic-resolution']?.sacrificeReduction?.amount ?? null, tempBefore: ally.system.attributes.hp.temp};
+            await hurt(ally, tAlly, '{22[bludgeoning]}');
+            Object.assign(out.first, {ally: ally.system.attributes.hp.value, dying: ally.hasCondition('dying'), usedUp: !held(ally), temp: ally.system.attributes.hp.temp});
+            await ctx.api.execute(fixture.spell, {sourceActor: caster, plan, castRank: 5, targets: [tAlly], sacrifice: 5, skipConfirmation: true}); await wait(600);
+            await hurt(ally, tAlly, '{4[bludgeoning]}');
+            out.excess = {ally: ally.system.attributes.hp.value, usedUp: !held(ally)};
+            await ctx.api.execute(fixture.spell, {sourceActor: caster, plan, castRank: 5, targets: [tResistant], sacrifice: 5, skipConfirmation: true}); await wait(600);
+            await hurt(resistant, tResistant, '{12[fire]}');
+            out.resisted = {hp: resistant.system.attributes.hp.value, usedUp: !held(resistant)};
             const high = await ctx.api.execute(fixture.spell, {sourceActor: caster, plan, castRank: 7, targets: [tAlly], sacrifice: 20, skipConfirmation: true}); await wait(600);
-            out.high = {status: high.status, ally: ally.system.attributes.hp.value, caster: caster.system.attributes.hp.value};
-            await fallen.update({'system.attributes.hp.value': 0}); await fallen.increaseCondition('dying'); await wait(400);
-            await ctx.api.execute(fixture.spell, {sourceActor: caster, plan, castRank: 5, targets: [tFallen], sacrifice: 5, skipConfirmation: true}); await wait(600);
-            out.fallen = {hp: fallen.system.attributes.hp.value, dying: fallen.hasCondition('dying')};
+            out.high = {status: high.status, reduction: high.reduction};
         } catch (error) { out.error = error.stack ?? error.message; }
-        assert(!out.error && out.kind === 'sacrifice-heal' && /at most 15/.test(out.tooMuch) && out.first?.restored === 20 && out.first.caster === 190 && out.first.ally === 70
-            && out.high?.status === 'applied' && out.high.ally === 100 && out.high.caster === 170 && out.fallen?.hp === 10 && out.fallen.dying === false, `Rank 5 batch 76: ${JSON.stringify(out)}`);
+        const f = out.first ?? {};
+        assert(!out.error && out.kind === 'sacrifice-heal' && /at most 15/.test(out.tooMuch) && f.reduction === 20 && f.caster === 190 && f.allyBefore === 5 && f.holds === 20
+            && f.ally === 3 && f.dying === false && f.usedUp && f.temp === f.tempBefore && out.excess?.ally === 9 && out.excess.usedUp && out.resisted?.hp === 53 && out.resisted.usedUp
+            && out.high?.status === 'applied' && out.high.reduction === 40, `Rank 5 batch 76: ${JSON.stringify(out)}`);
         return {batch76: out};
     },
     // Rank 5 batch 75: Rewrite Possibility — the target's +1 status to initiative; it fails a Fortitude save (DC 60): the reaction's PF2e reroll with +2 status, the
@@ -21071,6 +21084,7 @@ export const cases = {
     },
     // Rank 5 batch 69: Establish Ward at 5th — the caster Quickened inside the 30-foot ward; a Strike (slashing) on a creature inside hits (AC 5) for 3d8; one
     // outside is refused; the caster walks out: Slowed 1, not Quickened; back in: Quickened again; the spell ends: neither, the ward's region gone; at 7th 35 feet, 4d8.
+    // The GM draws the ward around the caster (the user, 2026-10-10): with no region the cast asks for it.
     async rank5Batch69(ctx) {
         const wait = ms => new Promise(r => setTimeout(r, ms));
         const place = async (actor, x, y) => (await canvas.scene.createEmbeddedDocuments('Token', [{...actor.prototypeToken.toObject(), actorId: actor.id, actorLink: true, x, y}]))[0];
@@ -21086,7 +21100,11 @@ export const cases = {
             const tIn = await place(inside, 18 * g, 12 * g), tOut = await place(outside, 26 * g, 12 * g); await wait(800);
             const plan = await ctx.api.compile(fixture.spell);
             out.kind = plan.resolution.kind;
-            const cast = await ctx.api.execute(fixture.spell, {sourceActor: fixture.caster, plan, castRank: 5, skipConfirmation: true}); await wait(1500);
+            out.noRegion = await ctx.api.execute(fixture.spell, {sourceActor: fixture.caster, plan, castRank: 5, skipConfirmation: true}).then(() => 'cast', error => error.message);
+            // (The GM's drawing: a circle of the burst's radius around the caster.)
+            const drawn = async feet => { const r = feet / canvas.dimensions.distance * g, c = {x: casterToken.x + g / 2, y: casterToken.y + g / 2};
+                return (await canvas.scene.createEmbeddedDocuments('Region', [{name: 'PFTEST Establish Ward drawn', color: '#3a7d44', shapes: [{type: 'circle', x: c.x, y: c.y, radiusX: r, radiusY: r, radius: r, rotation: 0, hole: false}]}]))[0]; };
+            const cast = await ctx.api.execute(fixture.spell, {sourceActor: fixture.caster, plan, castRank: 5, region: await drawn(30), skipConfirmation: true}); await wait(1500);
             castId = cast.castInstanceId;
             out.cast = {radius: cast.radius, dice: cast.dice, quickened: fixture.caster.hasCondition('quickened'), slowed: fixture.caster.hasCondition('slowed')};
             const message = game.messages.get(cast.messageId);
@@ -21101,14 +21119,14 @@ export const cases = {
             await ctx.api.ongoing.request('end', {castId}); await wait(1500);
             out.ended = {quickened: fixture.caster.hasCondition('quickened'), slowed: fixture.caster.hasCondition('slowed'), region: !!(await fromUuid(cast.regionUuid))};
             castId = null;
-            const high = await ctx.api.execute(fixture.spell, {sourceActor: fixture.caster, plan, castRank: 7, skipConfirmation: true}); await wait(1200);
+            const high = await ctx.api.execute(fixture.spell, {sourceActor: fixture.caster, plan, castRank: 7, region: await drawn(35), skipConfirmation: true}); await wait(1200);
             highId = high.castInstanceId;
             out.high = {radius: high.radius, dice: high.dice};
         } catch (error) { out.error = error.stack ?? error.message; }
         for (const id of [castId, highId]) if (id) await ctx.api.ongoing.request('end', {castId: id}).catch(() => null);
         await wait(800);
         const c = out.cast ?? {}, st = out.strike ?? {};
-        assert(!out.error && out.kind === 'ward' && c.radius === 30 && c.dice === 3 && c.quickened && !c.slowed && st.status === 'hit' && st.total >= (st.degree === 3 ? 6 : 3) && st.total <= (st.degree === 3 ? 48 : 24)
+        assert(!out.error && out.kind === 'ward' && /draw the 30-foot burst/.test(out.noRegion ?? '') && c.radius === 30 && c.dice === 3 && c.quickened && !c.slowed && st.status === 'hit' && st.total >= (st.degree === 3 ? 6 : 3) && st.total <= (st.degree === 3 ? 48 : 24)
             && st.hp === 300 - st.damage && /isn't within the ward/.test(out.refused) && out.outside?.quickened === false && out.outside.slowed === 1 && /must be within the ward/.test(out.strikeOutside)
             && out.back?.quickened && !out.back.slowed && out.ended?.quickened === false && out.ended.slowed === false && out.ended.region === false && out.high?.radius === 35 && out.high.dice === 4,
             `Rank 5 batch 69: ${JSON.stringify(out)}`);
@@ -21156,7 +21174,7 @@ export const cases = {
         return {batch68: out};
     },
     // Rank 5 batch 67: Chromatic Wall — at 5th green: the crossing creature's failed Fortitude takes 10 poison and Enfeebled 1; at 7th the reroll then red: the
-    // −2 to saves Effect and a failed Reflex takes 30 fire; violet: a failed Will Slowed 1; blue: Petrify's own resolution.
+    // crossing's Reflex save at −2, once (no lasting Effect: the user, 2026-10-10) and a failure takes 30 fire; violet: a failed Will Slowed 1; blue: Petrify's own resolution.
     async rank5Batch67(ctx) {
         const wait = ms => new Promise(r => setTimeout(r, ms));
         const NSX = 'pf2e-automatic-resolution';
@@ -21173,11 +21191,14 @@ export const cases = {
                 const message = game.messages.get(cast.messageId);
                 const before = foe.system.attributes.hp.value;
                 const result = await ctx.api.cardAction(message, 'color-wall', {targets: [tFoe]}); await wait(600);
-                const row = {color: cast.color, penalty: cast.penalty, seconds: cast.seconds, borrowed: result.borrowed ?? null, penaltyEffect: result.penalty.length ? (await fromUuid(result.penalty[0]))?.system.rules[0] ?? null : null};
+                const row = {color: cast.color, penalty: cast.penalty, seconds: cast.seconds, borrowed: result.borrowed ?? null, resultPenalty: result.penalty,
+                    lasting: foe.itemTypes.effect.some(e => /to saves/.test(e.name))};
                 const card = result.cardId ? game.messages.get(result.cardId) : null;
                 if (card && degree) {
                     const t = ctx.state(card).targets[0];
-                    await ctx.api.saves.rollSave(card, t.id, {skipDialog: true}); await ctx.api.saves.correctTarget(card, t.id, {action: 'degree', degree});
+                    await ctx.api.saves.rollSave(card, t.id, {skipDialog: true});
+                    row.saveMod = {rolled: ctx.state(card).targets[0].saveModifier ?? null, base: foe.saves[ctx.state(card).saveStatistic]?.mod ?? null};
+                    await ctx.api.saves.correctTarget(card, t.id, {action: 'degree', degree});
                     await ctx.api.saves.finalize(card); await wait(1200);
                 }
                 row.damage = before - foe.system.attributes.hp.value;
@@ -21193,7 +21214,8 @@ export const cases = {
         } catch (error) { out.error = error.stack ?? error.message; }
         const g = out.green ?? {}, r = out.red ?? {}, v = out.violet ?? {};
         assert(!out.error && out.kind === 'color-wall' && g.color === 'Green' && g.damage === 10 && g.enfeebled === 1 && g.seconds === 600 && g.penalty === null
-            && r.color === 'Red' && r.penalty?.penalty === 2 && r.penaltyEffect?.value === -2 && [r.penaltyEffect.selector].flat().join() === 'saving-throw' && r.damage === 30 && r.seconds === 3600
+            && g.saveMod?.rolled === g.saveMod.base && r.color === 'Red' && r.penalty?.penalty === 2 && r.resultPenalty === -2 && !r.lasting && r.saveMod?.rolled === r.saveMod.base - 2
+            && r.damage === 30 && r.seconds === 3600
             && v.color === 'Violet' && v.slowed === 1 && out.blue?.color === 'Blue' && out.blue.borrowed === 'Petrify', `Rank 5 batch 67: ${JSON.stringify(out)}`);
         return {batch67: out};
     },
@@ -21285,8 +21307,71 @@ export const cases = {
             `Rank 4 batch 134: ${JSON.stringify(out)}`);
         return {batch134: out};
     },
-    // Rank 4 batch 133: Radiant Heart of Devotion at 6th — the ally inside holds +1 attack and 2d6 spirit on Strikes; a neutral creature (Will −20) starting its
-    // turn inside is Dazzled; an unholy one Blinded; the GM reclassifies the neutral one as good: it holds the bonuses.
+    // User decisions 2026-10-10: Essence Eating Shell (Magus+) — the caster picks the shell spell's school. After a critically hitting Spellstrike: divination at
+    // rank 3 on the target (Will −20: frightened) and on the magus (+3 status, a degree better: the rolled failure becomes a success); transmutation: the target
+    // sickened and −10 feet to its Speeds while sickened, gone with the condition; conjuration: the DC 5 manipulate flat check note; necromancy against an undead
+    // (immune to void): fizzled for both; a critically failed Spellstrike: no card.
+    async essenceShellDecision(ctx) {
+        const wait = ms => new Promise(r => setTimeout(r, ms));
+        const NSX = 'pf2e-automatic-resolution';
+        const out = {};
+        try {
+            const {offerEssenceShell} = await import(`/modules/${NSX}/scripts/essence-shell-runtime.js`);
+            // (A character magus: PF2e gives NPCs no feats.)
+            const magus = await Actor.create({name: 'PFTEST P23 Affliction essence magus', type: 'character', flags: {[NSX]: {phase23AfflictionFixture: true}}, system: {details: {level: {value: 7}}}});
+            ctx.saved.actors.push(magus.id); await ctx.persist(); await ctx.token(magus);
+            const [entry] = await magus.createEmbeddedDocuments('Item', [{name: 'Arcane prepared', type: 'spellcastingEntry', system: {tradition: {value: 'arcane'}, prepared: {value: 'prepared'}, ability: {value: 'int'}, proficiency: {value: 1}}}]);
+            const pack = game.packs.get('pf2e.spells-srd'), fearSource = (await pack.getDocument((await pack.getIndex()).find(i => i.name === 'Fear')._id)).toObject();
+            delete fearSource._id; fearSource.system.location = {value: entry.id};
+            const created = await magus.createEmbeddedDocuments('Item', [fearSource, {name: 'Essence Eating Shell', type: 'feat', system: {slug: 'essence-eating-shell'}}]);
+            const fear = created.find(i => i.type === 'spell');
+            out.hasFeat = magus.itemTypes.feat.some(f => f.name === 'Essence Eating Shell');
+            const foe = await ctx.actor('essence foe', {save: -20}); const tFoe = await ctx.token(foe); await wait(400);
+            const offer = async (degree, target = tFoe) => {
+                const r = await offerEssenceShell({caster: magus, cast: {flags: {pf2e: {casting: {castRank: 3}}}, item: fear},
+                    strike: {flags: {pf2e: {context: {target: {token: target.uuid, actor: target.actor.uuid}}}}}, degree});
+                return r?.messageId ? game.messages.get(r.messageId) : null;
+            };
+            const settle = async (cardId, degree) => {
+                const card = game.messages.get(cardId); const t = ctx.state(card).targets[0];
+                await ctx.api.saves.rollSave(card, t.id, {skipDialog: true});
+                const rolled = ctx.state(card).targets[0];
+                const info = {mod: rolled.saveModifier ?? null, rolled: rolled.rolledDegree ?? null};
+                if (degree) await ctx.api.saves.correctTarget(card, t.id, {action: 'degree', degree});
+                await ctx.api.saves.finalize(card); await wait(1200);
+                return {...info, degree: ctx.state(card).targets[0].degree};
+            };
+            out.noCardOnCritFail = (await offer('criticalFailure')) === null;
+            const div = await ctx.api.cardAction(await offer('criticalSuccess'), 'essence-shell', {school: 'divination'}); await wait(500);
+            const foeCard = div.cards.find(c => !c.magus).cardId, magusCard = div.cards.find(c => c.magus).cardId;
+            const magusState = ctx.state(game.messages.get(magusCard));
+            out.divination = {target: await settle(foeCard, null), frightened: foe.getCondition('frightened')?.value ?? 0,
+                magusBonus: magusState.cardSaveModifier?.value ?? null, magusAdjust: !!magusState.degreeAdjustment, magus: await settle(magusCard, null)};
+            for (const c of [...foe.itemTypes.condition]) await c.delete().catch(() => null);
+            const trans = await ctx.api.cardAction(await offer('success'), 'essence-shell', {school: 'transmutation'}); await wait(500);
+            await settle(trans.cards.find(c => !c.magus).cardId, 'failure');
+            await settle(trans.cards.find(c => c.magus).cardId, 'success'); await wait(600);
+            const speedEffect = () => foe.itemTypes.effect.find(e => e.flags?.[NSX]?.essenceShellSpeed);
+            out.transmutation = {sickened: foe.getCondition('sickened')?.value ?? 0, speed: speedEffect()?.system.rules?.[0]?.value ?? null};
+            await foe.decreaseCondition('sickened', {forceRemove: true}); await wait(900);
+            out.transmutation.goneWithSickened = !speedEffect();
+            const conj = await ctx.api.cardAction(await offer('success'), 'essence-shell', {school: 'conjuration'}); await wait(500);
+            await settle(conj.cards.find(c => !c.magus).cardId, 'failure'); await wait(600);
+            out.conjuration = {flatCheck: foe.itemTypes.effect.find(e => e.flags?.[NSX]?.runtime?.castFlatCheck)?.flags[NSX].runtime.castFlatCheck ?? null};
+            await settle(conj.cards.find(c => c.magus).cardId, 'success');
+            const undead = await ctx.actor('essence undead', {save: -20, traits: ['undead']}); await undead.update({'system.attributes.immunities': [{type: 'void', exceptions: []}]});
+            const tUndead = await ctx.token(undead); await wait(400);
+            out.necromancy = (await ctx.api.cardAction(await offer('success', tUndead), 'essence-shell', {school: 'necromancy'})).status;
+        } catch (error) { out.error = error.stack ?? error.message; }
+        const d = out.divination ?? {};
+        assert(!out.error && out.hasFeat && out.noCardOnCritFail && d.frightened >= 1 && d.magusBonus === 3 && d.magusAdjust && d.target?.mod != null
+            && (d.magus?.rolled === 'criticalSuccess' || d.magus?.degree !== d.magus?.rolled) && out.transmutation?.sickened === 2 && out.transmutation.speed === -10
+            && out.transmutation.goneWithSickened && out.conjuration?.flatCheck?.dc === 5 && out.necromancy === 'fizzled', `Essence Eating Shell: ${JSON.stringify(out)}`);
+        return {essenceShell: out};
+    },
+    // Rank 4 batch 133: Radiant Heart of Devotion at 6th — alignment is the GM's (the user, 2026-10-10): at the cast no one holds anything and the GM is asked
+    // about each creature inside; answered (the ally good, one neutral, one evil): the ally holds +1 attack and 2d6 spirit on Strikes; the neutral creature (Will −20)
+    // starting its turn inside is Dazzled, the evil one Blinded; the GM sets the neutral one good from the spell's card: it holds the bonuses.
     async rank4Batch133(ctx) {
         const wait = ms => new Promise(r => setTimeout(r, ms));
         const NSX = 'pf2e-automatic-resolution';
@@ -21311,20 +21396,25 @@ export const cases = {
             castId = cast.castInstanceId;
             await ctx.api.ongoing.reconcile(); await wait(1500);
             const holds = actor => actor.itemTypes.effect.find(e => /radiant devotion/.test(e.name));
+            const asked = actor => game.messages.contents.findLast(m => m.flags?.[NSX]?.radiantHeart?.actorUuid === actor.uuid);
+            out.atCast = {anyHolds: [ally, neutral, evil].some(a => !!holds(a)), asked: [ally, neutral, evil].map(a => !!asked(a))};
+            for (const [actor, side] of [[ally, 'good'], [neutral, 'neutral'], [evil, 'evil']]) if (asked(actor)) { await ctx.api.cardAction(asked(actor), `radiant-${side}`); await wait(300); }
+            await ctx.api.ongoing.reconcile(); await wait(1500);
             out.ally = {holds: !!holds(ally), dice: holds(ally)?.system.rules.find(r => r.key === 'DamageDice')?.diceNumber ?? null};
             out.neutralHoldsAtCast = !!holds(neutral);
             const turn = async () => { await combat.nextTurn(); await ctx.api.ongoing.reconcile({clockEvent: true}); await wait(1500); };
             await turn(); await turn(); // the caster's and the ally's turns end: the neutral creature's starts
             out.neutral = neutral.hasCondition('dazzled');
             await turn(); out.evil = evil.hasCondition('blinded');
-            const card = game.messages.contents.findLast(m => m.flags?.[NSX]?.radiantHeart);
+            const card = game.messages.contents.findLast(m => m.flags?.[NSX]?.radiantHeart && !m.flags[NSX].radiantHeart.actorUuid);
             await ctx.api.cardAction(card, 'radiant-good', {targets: [tNeutral]}); await wait(500);
             await ctx.api.ongoing.reconcile(); await wait(1200);
             out.reclassified = !!holds(neutral);
         } catch (error) { out.error = error.stack ?? error.message; }
         if (combat) await combat.delete();
         if (castId) await ctx.api.ongoing.request('end', {castId}).catch(() => null); await wait(500);
-        assert(!out.error && out.ally?.holds && out.ally.dice === 2 && out.neutralHoldsAtCast === false && out.neutral && out.evil && out.reclassified, `Rank 4 batch 133: ${JSON.stringify(out)}`);
+        assert(!out.error && out.atCast?.anyHolds === false && out.atCast.asked.every(Boolean) && out.ally?.holds && out.ally.dice === 2 && out.neutralHoldsAtCast === false
+            && out.neutral && out.evil && out.reclassified, `Rank 4 batch 133: ${JSON.stringify(out)}`);
         return {batch133: out};
     },
     // Rank 4 batch 132: Chromatic Ray — at 4th a green ray (25 poison, doubled on a critical hit) and its Fortitude card; at 6th the intense color (Dazzled, or

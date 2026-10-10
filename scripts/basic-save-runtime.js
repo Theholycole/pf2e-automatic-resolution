@@ -2521,6 +2521,9 @@ export class BasicSaveRuntime {
             killEffect: clone(plan.resolution.killEffect ?? null),
             // (Promised Renewal: the growth around a creature this save kills — started by the effect runtime on saveApplied.)
             ...(options.renewalGrowth ? { renewalGrowth: clone(options.renewalGrowth) } : {}),
+            // (A penalty or bonus on this card's saves alone, once — a rerolled Chromatic Wall's −2 to the crossing save.)
+            ...(options.saveModifier && Number.isFinite(Number(options.saveModifier.value)) ? { cardSaveModifier: { value: Number(options.saveModifier.value),
+                type: String(options.saveModifier.type ?? "circumstance"), label: String(options.saveModifier.label ?? "") } } : {}),
             backlash: clone(plan.resolution.backlash ?? null),
             areaFall: clone(plan.resolution.areaFall ?? null),
             casterRowEffect: clone(plan.resolution.casterRowEffect ?? null),
@@ -3941,11 +3944,17 @@ export class BasicSaveRuntime {
                 ...traits.map(trait => `item:trait:${trait}`)
             ],
             traits,
-            ...(saveBonus !== 0 ? { modifiers: [new game.pf2e.Modifier({ slug: "spell-save-adjustment", label: state.spellName, modifier: saveBonus, type: saveAdjustment.modifierType })] }
-                : traitBonus ? { modifiers: [new game.pf2e.Modifier({ slug: "spell-trait-save-bonus", label: `${state.spellName} (${traitBonus.trait})`, modifier: traitBonus.value, type: traitBonus.type })] }
-                // The second save's own penalty or bonus (Firework Blast's −2 after a critical failure).
-                : stage === "secondary" && secondarySave?.check?.modifier ? { modifiers: [new game.pf2e.Modifier({ slug: "secondary-save-adjustment", label: state.spellName,
-                    modifier: Number(secondarySave.check.modifier.value), type: secondarySave.check.modifier.type })] } : {}),
+            ...(() => {
+                const modifiers = saveBonus !== 0 ? [new game.pf2e.Modifier({ slug: "spell-save-adjustment", label: state.spellName, modifier: saveBonus, type: saveAdjustment.modifierType })]
+                    : traitBonus ? [new game.pf2e.Modifier({ slug: "spell-trait-save-bonus", label: `${state.spellName} (${traitBonus.trait})`, modifier: traitBonus.value, type: traitBonus.type })]
+                    // The second save's own penalty or bonus (Firework Blast's −2 after a critical failure).
+                    : stage === "secondary" && secondarySave?.check?.modifier ? [new game.pf2e.Modifier({ slug: "secondary-save-adjustment", label: state.spellName,
+                        modifier: Number(secondarySave.check.modifier.value), type: secondarySave.check.modifier.type })] : [];
+                // (The card's own one-time modifier, on the primary save.)
+                if (stage !== "secondary" && state.cardSaveModifier) modifiers.push(new game.pf2e.Modifier({ slug: "card-save-modifier", label: state.cardSaveModifier.label || state.spellName,
+                    modifier: state.cardSaveModifier.value, type: state.cardSaveModifier.type }));
+                return modifiers.length ? { modifiers } : {};
+            })(),
             createMessage: false,
             skipDialog: heroPoint ? true : typeof skipDialog === "boolean"
                 ? skipDialog

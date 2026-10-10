@@ -1946,15 +1946,16 @@ export class OngoingFamilies {
         }
         // Ravenous Darkness: a creature ending its turn inside — the teeth's damage if attached, else their attack.
         if (hazard.teeth) return this.teethBite(record, actor, token, spell);
-        // Black Tentacles: a creature ending its turn inside — the held damage if the tentacles hold it, else their attempt to grab it.
+        // Black Tentacles: a creature ending its turn inside — the held damage if the tentacles hold it, else their attempt to grab it (no damage with that grab).
         if (hazard.tentacles) {
             if (!spell) throw Error(`${record.name}: the spell is unavailable.`);
-            const result = await tentacleAttempt({ spell, actor, token: token ?? null, castId: record.castId, castRank: record.rank, data: hazard.tentacles });
+            const result = await tentacleAttempt({ spell, actor, token: token ?? null, castId: record.castId, castRank: record.rank, data: hazard.tentacles, turnEnd: true });
             return { total: result.damage ?? 0, status: result.status };
         }
-        // Radiant Heart of Devotion: a neutral creature's save against Dazzled, an evil one's against Blinded; the good are spared.
+        // Radiant Heart of Devotion: a neutral creature's save against Dazzled, an evil one's against Blinded; the good are spared. (No side yet: the GM is asked.)
         if (hazard.radiantSides) {
             const side = await this.radiantSide(record, actor);
+            if (!side) { await this.askRadiantSide(record, actor); return { total: 0, skipped: true, unassigned: true }; }
             if (side === "good") return { total: 0, skipped: true };
             const result = hazard.radiantSides[side];
             const roll = await actor.saves?.[hazard.radiantSides.statistic]?.roll({ dc: { value: Number(hazard.radiantSides.dc) }, item: spell ?? undefined, skipDialog: true });
@@ -2312,18 +2313,22 @@ export class OngoingFamilies {
      * flagged to the area so a creature that leaves loses it (clearLeaveArea), and it ends with the area.
      */
     /**
-     * Radiant Heart of Devotion's side for a creature (PF2e's remaster has no alignment): the GM's reclassification if any; else the caster, its allies and holy
-     * creatures are good, unholy creatures evil, the rest neutral.
+     * Radiant Heart of Devotion's side for a creature: PF2e's remaster has no alignment, so the GM assigns each one (the user, 2026-10-10) — null until then.
      */
     async radiantSide(record, actor) {
         // (A list, not a map: a flag's keys can't hold the dots of a UUID.)
-        const set = (Array.isArray(record.declaration?.alignment) ? record.declaration.alignment : []).find(entry => entry.actorUuid === actor.uuid)?.side;
-        if (set) return set;
-        const caster = await fromUuid(record.sourceActorUuid);
-        const traits = actor.traits ?? new Set(actor.system?.traits?.value ?? []);
-        const has = trait => traits.has?.(trait) ?? traits.includes?.(trait);
-        if (actor === caster || caster?.isAllyOf?.(actor) || has("holy")) return "good";
-        return has("unholy") ? "evil" : "neutral";
+        return (Array.isArray(record.declaration?.alignment) ? record.declaration.alignment : []).find(entry => entry.actorUuid === actor.uuid)?.side ?? null;
+    }
+    /** A creature in the radiance with no side yet: the GM is asked once (per cast, this session), its card's buttons setting that creature's side. */
+    async askRadiantSide(record, actor) {
+        const key = `${record.castId}|${actor.uuid}`;
+        if ((this._radiantAsked ??= new Set()).has(key)) return;
+        this._radiantAsked.add(key);
+        const caster = await fromUuid(record.sourceActorUuid).catch(() => null);
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: caster ?? undefined }), whisper: game.users.filter(user => user.isGM).map(user => user.id),
+            flags: { [MODULE_ID]: { kind: "radiant-heart", radiantHeart: { castId: record.castId, actorUuid: actor.uuid } } },
+            content: `<h3>${escapeHTML(record.name)}</h3><p><strong>GM:</strong> ${escapeHTML(actor.name)} is in the radiance with no side set. Good holds the bonuses; neutral and evil save at the start of their turns.</p>`
+                + ["good", "neutral", "evil"].map(side => `<button type="button" class="pf2e-auto-card-action" data-action="radiant-${side}"><i class="fa-solid fa-scale-balanced"></i> ${escapeHTML(actor.name)} is ${side}</button>`).join("") }); } catch (_) {}
     }
     /** The area is difficult terrain for this creature (each of the record's regions, a per-creature movement cost); until the spell ends or its turn starts. */
     async addRowTerrain(record, actorUuid) {
@@ -2365,8 +2370,12 @@ export class OngoingFamilies {
             const actor = await fromUuid(actorUuid);
             if (member.all ? !actor : member.allies ? !(actor && (actor === caster || caster?.isAllyOf?.(actor)))
                 : member.enemies ? !(actor && sourceCaster && actor !== sourceCaster && !sourceCaster.isAllyOf?.(actor)) : !actor?.traits?.has?.(member.trait)) continue;
-            // (Radiant Heart of Devotion: only the creatures on the "good" side.)
-            if (member.sides && (await this.radiantSide(record, actor)) !== "good") continue;
+            // (Radiant Heart of Devotion: only the creatures on the "good" side; one with no side yet: the GM is asked.)
+            if (member.sides) {
+                const side = await this.radiantSide(record, actor);
+                if (!side) await this.askRadiantSide(record, actor);
+                if (side !== "good") continue;
+            }
             if ((actor.itemTypes?.effect ?? []).some(effect => effect.flags?.[MODULE_ID]?.leaveArea?.castId === record.castId && (effect.flags[MODULE_ID].leaveArea.slot ?? 0) === slot)) continue;
             // (Only a creature ending its turn inside — the turn that just ended; not one that used the resistance in the last 10 minutes.)
             if (member.turnEnd && record.turnEndedActor !== actorUuid) continue;

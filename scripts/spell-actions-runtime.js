@@ -403,6 +403,10 @@ async function spellstrikeFeatures({ caster, cast, strike, degree }) {
             results.push({ label: `${read.name}: offered`, status: "note" });
         }
     }
+    // (Essence Eating Shell: the card asking for the shell spell's school — essence-shell-runtime.js.)
+    const { offerEssenceShell } = await import("./essence-shell-runtime.js");
+    const essence = await offerEssenceShell({ caster, cast, strike, degree }).catch(error => { console.warn(`${MODULE_ID} | Essence Eating Shell's card failed.`, error); return null; });
+    if (essence) results.push(essence);
     return results;
 }
 

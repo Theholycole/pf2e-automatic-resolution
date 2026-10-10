@@ -1914,3 +1914,16 @@ The user (2026-10-06): "audit and implement all of them" (the conditions, the sp
   - Magus+ (the "magus" module): "Everything". The Spellstrike variants and confluxes, plus the Arcane Cascade and Havok stances, Strike riders and martial passives.
   - The 773 grants-spell, spell-modifier and mentions-spells entries: "Triage then automate". Automate those that change how spells resolve, and record the rest as out of scope with a reason.
 - **ANSWERED 2026-10-07 (Magus+ scope, refining "Everything"):** "Split by spell link". The spell-linked parts of Magus+ are built in this module: Spellstrike variants, conflux and focus spells, the cascades entered after a cast, Reverse Spellstrike, Scissored Assault and Big Shot. The purely martial ones (armor, ropes, senses, Strike-only feats) are recorded for the separate pf2e-automatic-ability-resolution module, so this module isn't bloated with non-spell automation.
+
+## The user's answers (2026-10-10) to the questions still open
+
+1. **Radiant Heart of Devotion:** alignment no longer exists; the GM assigns each creature's side. No side, no effect: a creature in the radiance with none brings a card asking the GM (Good, Neutral, Evil); the spell's card still sets targeted creatures' sides.
+2. **Belittling Boast:** the caster's +1 is a status bonus (as built).
+3. **Chromatic Wall:** the rerolled wall's −2 is for the crossing's own save, once — the save card's modifier, not a lasting Effect.
+4. **Establish Ward:** centred on the caster but it doesn't move, so the GM draws it: the given region, PF2e's template placed from the spell's card, or the selected region; otherwise the cast asks for it.
+5. **Forceful Hand:** the hand's saves are the caster's spell DC − 10 (as built).
+6. **Shepherd of Souls:** an Effect on the target reduces its next damage once; the players put it on before applying the damage. The module takes the reduction off after resistances and before Hit Points, heals any excess and removes the Effect.
+7. **Black Tentacles:** a grab as a creature ends its turn deals no damage; creatures already Grabbed take the 1d6.
+8. **Symphony of the Unfettered Heart:** the module asks which condition is targeted (when more than one listed condition is present) and a failure makes the 1-day lockout for that condition on that target (as built; a target with none of the conditions is now refused).
+9. **Holy Host:** the smoke lasts 1 minute (as built).
+10. **Essence Eating Shell (Magus+):** the caster picks the shell spell's school. After a Spellstrike that isn't a critical failure, a card asks for it; the school's effect goes on the target and on the magus as save cards (the magus +3 status on a hit, a degree better on a critical hit), with each school's extra parts after the save.

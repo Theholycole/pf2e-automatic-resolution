@@ -601,7 +601,13 @@ function damageFollowUps(actor, params) {
     try { params = halvedCopyDamage(params); } catch (error) { console.warn(`${MODULE_ID} | The copy's half damage failed.`, error); }
     const before = Number(actor.hitPoints?.value ?? actor.system?.attributes?.hp?.value ?? NaN);
     const beforeTemp = Number(actor.system?.attributes?.hp?.temp ?? 0);
+    // (Shepherd of Souls: the reduction comes off this damage after resistances, before Hit Points — added for this application to the temporary Hit Points PF2e
+    // reads as it starts, so its own sums absorb it — then the real temporary Hit Points restored, the reduction's excess healed, and the Effect used up. Not by healing.)
+    const sacrifice = actor.itemTypes?.effect?.find(effect => effect.flags?.[MODULE_ID]?.sacrificeReduction);
+    const harmful = typeof params?.damage === "number" ? params.damage > 0 : Number(params?.damage?.total ?? 0) > 0 && !params?.damage?.kinds?.has?.("healing");
+    const held = sacrifice && harmful && actor.system?.attributes?.hp ? runtime.sacrificeBefore(actor, sacrifice) : null;
     return { params, after: async () => {
+        try { if (held) await runtime.sacrificeAfter(actor, held); } catch (error) { console.warn(`${MODULE_ID} | The sacrifice's reduction failed.`, error); }
         // (Spiritual Guardian: a protected creature's damage beside the guardian, up to its amount, comes off the guardian instead.)
         try { if (actor.itemTypes?.effect?.some(effect => effect.flags?.[MODULE_ID]?.guardianProtect) && Number.isFinite(before)) await runtime.guardianAbsorb(actor, before, beforeTemp); } catch (error) { console.warn(`${MODULE_ID} | The guardian's protection failed.`, error); }
         // (Soulshelter Vessel: a creature that would drop to 0 HP regains the rescue from the stone instead.)
@@ -1968,8 +1974,16 @@ const MEMBERSHIP_KEYS = ["x", "y", "elevation", "width", "height", "hidden", "di
 Hooks.on("updateToken", (_token, changes) => { if (MEMBERSHIP_KEYS.some(key => key in changes)) void ongoing.reconcile().catch(error => notifyError("Ongoing target review failed", error)); });
 // (Promised Renewal: the growth around a creature its save killed.)
 Hooks.on(`${MODULE_ID}.saveApplied`, ({ card, state }) => {
-    if (!state?.renewalGrowth || !game.user?.isGM || game.users.activeGM?.id !== game.user.id) return;
+    if (!game.user?.isGM || game.users.activeGM?.id !== game.user.id) return;
+    // (Essence Eating Shell: each creature's note, weakness or speed penalty by its degree.)
+    if (card?.flags?.[MODULE_ID]?.essenceShellNote) void import("./essence-shell-runtime.js").then(module => module.essenceShellAfterSave(card, state)).catch(error => notifyError("Essence Eating Shell's effect failed", error));
+    if (!state?.renewalGrowth) return;
     void runtime.renewalOnKill(state).catch(error => notifyError("Promised Renewal's growth failed", error));
+});
+// (Essence Eating Shell's transmutation: the speed penalty goes with the sickened condition.)
+Hooks.on("deleteItem", item => {
+    if (item?.type !== "condition" || item.slug !== "sickened" || !game.user?.isGM || game.users.activeGM?.id !== game.user.id) return;
+    void import("./essence-shell-runtime.js").then(module => module.essenceShellSickenedGone(item)).catch(error => notifyError("Essence Eating Shell's speed penalty failed", error));
 });
 
 Hooks.on("updateActor", () => { void ongoing.reconcile().catch(error => notifyError("Ongoing source review failed", error)); });
