@@ -13,7 +13,7 @@ A Foundry VTT module for the Pathfinder Second Edition system that resolves spel
 In Foundry's setup screen, **Add-on Modules → Install Module**, and paste this manifest URL:
 
 ```
-https://github.com/Theholycole/pf2e-automatic-resolution/releases/latest/download/module.json
+https://github.com/Theholycole/pf2e-automatic-spell-resolution/releases/latest/download/module.json
 ```
 
 Updates arrive the same way: each release on GitHub carries its `module.json` and `module.zip`.
