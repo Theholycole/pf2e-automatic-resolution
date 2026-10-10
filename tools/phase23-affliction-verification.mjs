@@ -74,13 +74,16 @@ async function context() {
         finally { clearInterval(watchdog); }
         if (answered.length) result = {...result, passed: false, error: `Dialogs left open, answered with their defaults: ${[...new Set(answered)].join('; ')}${result.error ? ` — then: ${result.error}` : ''}`};
         for (const combat of game.combats.filter(combat => !before.has(combat.id) && /^PFTEST /.test(combat.scene?.name ?? ''))) await combat.delete().catch(() => null);
-        // (A passed case's chat cards go with it — the ones its own test creatures spoke (not the simulator's or the kineticist's): left behind they
+        // (A passed case's chat cards go with it — the ones its own test creatures spoke and the module's speakerless ones (not the simulator's or the kineticist's): left behind they
         // piled up to tens of thousands over the sweeps and filled Foundry's memory. A failed case's cards stay, to read.)
         if (result.passed) {
             const ids = game.messages.filter(message => {
                 if (Number(message.timestamp ?? 0) < since) return false;
                 const name = (message.speaker?.actor ? game.actors.get(message.speaker.actor)?.name : null) ?? message.speaker?.alias ?? '';
-                return /^PFTEST /.test(name) && !/^PFTEST (SIM|KIN)\b/.test(name);
+                if (/^PFTEST /.test(name)) return !/^PFTEST (SIM|KIN)\b/.test(name);
+                // (And the module's speakerless cards it made — Ongoing's "actions due", GM reminders —: its markup or the case's creatures in them.)
+                const content = String(message.content ?? '');
+                return !name && /Ongoing spells — actions due|pf2e-auto-|PFTEST P23/.test(content) && !/PFTEST (SIM|KIN)/.test(content);
             }).map(message => message.id);
             for (let index = 0; index < ids.length; index += 200) await ChatMessage.deleteDocuments(ids.slice(index, index + 200)).catch(() => null);
         }
@@ -20694,8 +20697,9 @@ export const cases = {
             const [weak, strong, outside] = await Promise.all(['tentacle weak', 'tentacle strong', 'tentacle outside'].map(name => ctx.actor(name)));
             for (const a of [weak, strong, outside]) { await a.update({'system.attributes.hp.max': 300, 'system.saves.fortitude.value': -40}); await a.update({'system.attributes.hp.value': 300}); }
             await strong.update({'system.saves.fortitude.value': 60});
-            const tWeak = await place(weak, 20 * g, 8 * g), tStrong = await place(strong, 21 * g, 8 * g), tOut = await place(outside, 26 * g, 8 * g); await wait(800);
-            [region] = await canvas.scene.createEmbeddedDocuments('Region', [{name: 'tentacle test area', shapes: [{type: 'circle', x: 20.5 * g, y: 8.5 * g, radiusX: 4 * g, radiusY: 4 * g, radius: 4 * g, rotation: 0, hole: false}]}]);
+            // (Away from the scene's other tokens — a "CASTER" character at (18, 6) isn't the case's —: the tentacles attack every creature in the area.)
+            const tWeak = await place(weak, 20 * g, 12 * g), tStrong = await place(strong, 21 * g, 12 * g), tOut = await place(outside, 26 * g, 12 * g); await wait(800);
+            [region] = await canvas.scene.createEmbeddedDocuments('Region', [{name: 'PFTEST tentacle test area', shapes: [{type: 'circle', x: 20.5 * g, y: 12.5 * g, radiusX: 4 * g, radiusY: 4 * g, radius: 4 * g, rotation: 0, hole: false}]}]);
             combat = await Combat.create({scene: canvas.scene.id, active: true});
             await combat.createEmbeddedDocuments('Combatant', [casterToken, tWeak, tStrong, tOut].map((t, i) => ({tokenId: t.id, sceneId: canvas.scene.id, actorId: t.actorId, initiative: 40 - i * 10})));
             await combat.startCombat(); await wait(500);
