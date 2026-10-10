@@ -513,7 +513,10 @@ export async function coverSquareOnEnd(item) {
 /** Dim the Light's marker ended with the turn: the caster stops being Hidden (the active GM; the GM deletes the marker earlier to keep it). */
 export async function hiddenTurnEnd(item, options) {
     if (!item?.flags?.[MODULE_ID]?.hiddenTurnEnd || item.type !== "effect" || !item.actor || !game.user?.isGM || game.users.activeGM?.id !== game.user.id) return null;
-    if (options?.[MODULE_ID]?.reason !== "turn-ended") return null;
+    // (Its turn over: the module's turn-end pass, or PF2e expiring its 6 seconds first on the same clock change — it's over either way. Deleted
+    // before then, it's the GM keeping the caster Hidden.)
+    const ended = options?.[MODULE_ID]?.reason === "turn-ended" || item.isExpired === true || turnBoundEnded(item.flags[MODULE_ID].turnBound);
+    if (!ended) return null;
     if (item.actor.hasCondition?.("hidden")) await item.actor.decreaseCondition("hidden", { forceRemove: true });
     return true;
 }
