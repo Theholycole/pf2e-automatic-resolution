@@ -12471,7 +12471,8 @@ export const cases = {
             await wizard.update({'system.details.alliance': 'opposition', 'system.details.level.value': 7});
             const [entry] = await wizard.createEmbeddedDocuments('Item', [{name: 'arcane prepared', type: 'spellcastingEntry', system: {tradition: {value: 'arcane'}, prepared: {value: 'prepared'}, spelldc: {dc: 24, value: 14}}}]);
             const fb = await from('pf2e.spells-srd', 'Fireball'); fb.system.location = {value: entry.id};
-            const [prepared] = await wizard.createEmbeddedDocuments('Item', [fb, await from('pf2e.feats-srd', "Master's Counterspell")]);
+            // (The spell, by type: the created items needn't come back in the order given.)
+            const prepared = (await wizard.createEmbeddedDocuments('Item', [fb, await from('pf2e.feats-srd', "Master's Counterspell")])).find(i => i.type === 'spell');
             await entry.update({'system.slots.slot3': {max: 1, value: 1, prepared: [{id: prepared.id, expended: false}]}});
             await ctx.token(wizard); await wait(500);
             const like = {actor: kin, name: 'Elemental Blast', slug: 'elemental-blast', traits: ['impulse', 'kineticist', 'primal', 'attack'], elements: ['fire'], rank: 3, level: 5, actions: 2,
@@ -12554,7 +12555,8 @@ export const cases = {
             await wizard.update({'system.details.alliance': 'party', 'system.details.level.value': 5});
             const [entry] = await wizard.createEmbeddedDocuments('Item', [{name: 'arcane prepared', type: 'spellcastingEntry', system: {tradition: {value: 'arcane'}, prepared: {value: 'prepared'}, spelldc: {dc: 22, value: 12}}}]);
             const fb = await from('pf2e.spells-srd', 'Fireball'); fb.system.location = {value: entry.id};
-            const [prepared] = await wizard.createEmbeddedDocuments('Item', [fb, await from('pf2e.feats-srd', 'Counterspell (Prepared)')]);
+            // (The spell, by type: the created items needn't come back in the order given.)
+            const prepared = (await wizard.createEmbeddedDocuments('Item', [fb, await from('pf2e.feats-srd', 'Counterspell (Prepared)')])).find(i => i.type === 'spell');
             await entry.update({'system.slots.slot3': {max: 1, value: 1, prepared: [{id: prepared.id, expended: false}]}});
             await ctx.token(wizard); await wait(500);
             const mark4 = game.messages.size;
