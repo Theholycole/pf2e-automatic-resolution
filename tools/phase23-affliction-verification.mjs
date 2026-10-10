@@ -8776,7 +8776,9 @@ export const cases = {
             for (let y = 3; y <= 8 && !spot; y++) for (let x = 10; x <= 34 && !spot; x++) if (!canvas.scene.tokens.some(t => Math.hypot(t.x / g + t.width / 2 - x, t.y / g + t.height / 2 - y) < 5)) spot = {x, y};
             const [inA, inB, outC, outD] = await Promise.all(['in a', 'in b', 'out c', 'out d'].map(n => ctx.actor(`tp64 ${n}`, {level: 1})));
             for (const x of [inA, inB, outC]) { await x.update({'system.attributes.hp.max': 200}); await x.update({'system.attributes.hp.value': 200}); }
-            const [claw, bite, sting, slam] = await outD.createEmbeddedDocuments('Item', ['Claw', 'Bite', 'Sting', 'Slam'].map(name => ({name, type: 'melee', system: {bonus: {value: 5}, damageRolls: {a: {damage: '1d4', damageType: 'slashing'}}, weaponType: {value: 'melee'}}})));
+            // (By name: the created items needn't come back in the order given.)
+            const madeAttacks = await outD.createEmbeddedDocuments('Item', ['Claw', 'Bite', 'Sting', 'Slam'].map(name => ({name, type: 'melee', system: {bonus: {value: 5}, damageRolls: {a: {damage: '1d4', damageType: 'slashing'}}, weaponType: {value: 'melee'}}})));
+            const [claw, bite, sting, slam] = ['Claw', 'Bite', 'Sting', 'Slam'].map(name => madeAttacks.find(i => i.name === name));
             const [inner] = await inA.createEmbeddedDocuments('Item', [{name: 'Fist', type: 'melee', system: {bonus: {value: 5}, damageRolls: {a: {damage: '1d4', damageType: 'bludgeoning'}}, weaponType: {value: 'melee'}}}]);
             await place(caster, (spot.x - 4) * g, spot.y * g);
             const tA = await place(inA, (spot.x - 1) * g, (spot.y - 1) * g), tB = await place(inB, spot.x * g, spot.y * g), tC = await place(outC, (spot.x + 4) * g, spot.y * g), tD = await place(outD, (spot.x + 4) * g, (spot.y + 2) * g); await wait(1500);
@@ -37950,7 +37952,9 @@ export const cases = {
         const caster = fixture.caster;
         const pack = game.packs.get('pf2e.spells-srd'), index = await pack.getIndex();
         const load = async name => { const source = (await pack.getDocument(index.find(item => item.name === name)._id)).toObject(); delete source._id; source.system.location = {value: fixture.spell.system.location.value}; return source; };
-        const [arc, ignition] = await caster.createEmbeddedDocuments('Item', [await load('Electric Arc'), await load('Ignition')]);
+        // (By name: the created items needn't come back in the order given.)
+        const madeSpells = await caster.createEmbeddedDocuments('Item', [await load('Electric Arc'), await load('Ignition')]);
+        const arc = madeSpells.find(i => i.name === 'Electric Arc'), ignition = madeSpells.find(i => i.name === 'Ignition');
         const [foe, other] = await Promise.all(['true name foe', 'true name other caster'].map(name => ctx.actor(name, {level: 1})));
         await foe.update({'system.attributes.ac.value': 20});
         const token = await ctx.token(foe);
@@ -38897,7 +38901,8 @@ export const cases = {
             const sources = await Promise.all(['Untamed Form', 'Untamed Shift', 'Gravity Weapon'].map(async name => { const source = (await pack.getDocument(index.find(item => item.name === name)._id)).toObject(); delete source._id; source.system.location = {value: entry.id}; return source; }));
             const created = await druid.createEmbeddedDocuments('Item', [feat, ...sources, {name: 'Test Club', type: 'weapon', system: {damage: {dice: 1, die: 'd6', damageType: 'bludgeoning'},
                 equipped: {carryType: 'held', handsHeld: 1}, category: 'simple', group: 'club', traits: {value: []}}}]);
-            const spell = name => created.find(item => item.name === name);
+            // (The spell, not the feat of the same name: the created items needn't come back in the order given.)
+            const spell = name => created.find(item => item.name === name && item.type === 'spell');
             const club = created.find(item => item.name === 'Test Club');
             await wait(800);
             const cast = async (name, rank, pick = () => true) => {
@@ -39025,8 +39030,10 @@ export const cases = {
                 const f = await ctx.setup('Curse of Recoil');
                 const archer = await Actor.create({name: 'PFTEST P23 Affliction recoil archer', type: 'character', flags: {[NSP]: {phase23AfflictionFixture: true}}});
                 ctx.saved.actors.push(archer.id); await ctx.persist(); const tArcher = await ctx.token(archer);
-                const [bow, sling] = await archer.createEmbeddedDocuments('Item', ['Test Bow', 'Test Sling'].map(name => ({name, type: 'weapon', system: {damage: {dice: 1, die: 'd6', damageType: 'piercing'},
+                // (By name: the created items needn't come back in the order given.)
+                const madeWeapons = await archer.createEmbeddedDocuments('Item', ['Test Bow', 'Test Sling'].map(name => ({name, type: 'weapon', system: {damage: {dice: 1, die: 'd6', damageType: 'piercing'},
                     equipped: {carryType: 'held', handsHeld: 1}, category: 'simple', group: name === 'Test Bow' ? 'bow' : 'sling', range: 60, traits: {value: []}}})));
+                const [bow, sling] = ['Test Bow', 'Test Sling'].map(name => madeWeapons.find(i => i.name === name));
                 await wait(500);
                 await ctx.cast(f, [tArcher], ['criticalFailure']); await wait(1200);
                 const curse = () => archer.itemTypes.effect.find(e => /Curse of Recoil/.test(e.name));
@@ -39375,7 +39382,9 @@ export const cases = {
             ctx.saved.actors.push(summoner.id); await ctx.persist(); await ctx.token(summoner);
             const [entry] = await summoner.createEmbeddedDocuments('Item', [{name: 'Eidolon link', type: 'spellcastingEntry', system: {tradition: {value: 'arcane'}, prepared: {value: 'focus'}, ability: {value: 'cha'}, proficiency: {value: 1}}}]);
             const sources = await Promise.all(['Extend Boost', 'Reinforce Eidolon'].map(async name => { const source = (await pack.getDocument(index.find(item => item.name === name)._id)).toObject(); delete source._id; source.system.location = {value: entry.id}; return source; }));
-            const [extend, reinforce] = await summoner.createEmbeddedDocuments('Item', sources);
+            // (By name: the created items needn't come back in the order given.)
+            const madeSpells = await summoner.createEmbeddedDocuments('Item', sources);
+            const extend = madeSpells.find(i => i.name === 'Extend Boost'), reinforce = madeSpells.find(i => i.name === 'Reinforce Eidolon');
             const eidolon = await ctx.actor('extended eidolon', {level: 1}); await eidolon.update({'system.traits.value': [...eidolon.system.traits.value, 'eidolon']}); const tEidolon = await ctx.token(eidolon); await wait(500);
             const x = await ctx.api.execute(extend, {sourceActor: summoner, plan: await ctx.api.compile(extend), targets: [], castRank: 1, skipConfirmation: true, skipDialog: true}); await wait(900);
             await ctx.api.execute(reinforce, {sourceActor: summoner, plan: await ctx.api.compile(reinforce), targets: [canvas.scene.tokens.get(tEidolon.id)], castRank: 1, skipConfirmation: true}); await wait(1500);
@@ -39432,7 +39441,9 @@ export const cases = {
             await tBard.update({x: 2200, y: 1000}, {teleport: true, animate: false});
             const [entry] = await bard.createEmbeddedDocuments('Item', [{name: 'Occult repertoire', type: 'spellcastingEntry', system: {tradition: {value: 'occult'}, prepared: {value: 'spontaneous'}, ability: {value: 'cha'}, proficiency: {value: 1}}}]);
             const sources = await Promise.all(['Song of Marching', 'Tentacular Limbs'].map(async name => { const source = (await pack.getDocument(index.find(item => item.name === name)._id)).toObject(); delete source._id; source.system.location = {value: entry.id}; return source; }));
-            const [song, limbs] = await bard.createEmbeddedDocuments('Item', sources);
+            // (By name: the created items needn't come back in the order given.)
+            const madeSpells = await bard.createEmbeddedDocuments('Item', sources);
+            const song = madeSpells.find(i => i.name === 'Song of Marching'), limbs = madeSpells.find(i => i.name === 'Tentacular Limbs');
             const side = bard.system.details?.alliance ?? 'party';
             const near = await ctx.actor('marching near', {level: 1}), far = await ctx.actor('marching far', {level: 1});
             for (const a of [near, far]) await a.update({'system.details.alliance': side});
@@ -40910,14 +40921,14 @@ export const cases = {
         assert(s.success.perception[1] === s.success.perception[0] - 1 && s.success.effects.join() === 'Perception penalty 1 rounds'
             && s.failure.unconscious && s.failure.effects.join() === 'Unconscious 1 minutes,Wakes up 1 minutes' && s.criticalFailure.unconscious && s.criticalFailure.effects.join() === 'Unconscious 1 hours,Wakes up 1 hours',
             `Sleep: rows applied: ${JSON.stringify(s)}`);
-        // At 4th rank, its heightened rows aren't automated: the card refuses.
+        // At 4th rank, its heightened rows (automated since rank 2 batch 16 — rank2Batch16 resolves them): the card starts.
         const sleep4 = await ctx.setup('Sleep');
         await sleep4.caster.update({'system.details.level.value': 7}); await sleep4.spell.update({'system.location.heightenedLevel': 4});
         const other = await ctx.actor('sleep 4');
         let refused = null;
         try { await ctx.api.saves.start(sleep4.spell, {sourceActor: sleep4.caster, plan: await ctx.api.compile(sleep4.spell), targets: [await ctx.token(other)], castRank: 4, dc: 24, skipConfirmation: true}); } catch (error) { refused = error.message; }
         out.rank4 = refused;
-        assert(/at rank 4 and above its heightened rules aren't automated/.test(refused ?? ''), `Sleep at 4th: refused: ${refused}`);
+        assert(refused === null, `Sleep at 4th: refused: ${refused}`);
         return out;
     },
     async cr1Batch18(ctx) {
@@ -41568,12 +41579,14 @@ export const cases = {
         const songNotes = notes(before);
         const has = (actor, name) => actor.itemTypes.effect.some(e => e.name === name);
         out.dataTrust = {
-            reinforce: {applied: has(eidolon, 'Spell Effect: Reinforce Eidolon'), note: reinforceNotes[0] ?? null},
+            // (Since the user's text-over-data decision, the text's minimum is added to PF2e's formula — resistance 1 at rank 1 — not noted.)
+            reinforce: {applied: has(eidolon, 'Spell Effect: Reinforce Eidolon'), note: reinforceNotes[0] ?? null,
+                resistance: eidolon.attributes.resistances.find(r => r.type === 'all-damage')?.value ?? null},
             ghostly: {onTarget: has(shifted, 'Spell Effect: Ghostly Shift'), onCaster: has(ghostly.caster, 'Spell Effect: Ghostly Shift'), note: ghostlyNotes[0] ?? null},
             song: {caster: has(song.caster, 'Spell Effect: Song of Strength'), ally: has(friend, 'Spell Effect: Song of Strength'), note: songNotes[0] ?? null}
         };
         const dt = out.dataTrust;
-        assert(dt.reinforce.applied && /resistance 0 at rank 1/.test(dt.reinforce.note ?? '') && dt.ghostly.onTarget && !dt.ghostly.onCaster && /Target is 1 creature/.test(dt.ghostly.note ?? '')
+        assert(dt.reinforce.applied && dt.reinforce.note === null && dt.reinforce.resistance === 1 && dt.ghostly.onTarget && !dt.ghostly.onCaster && /Target is 1 creature/.test(dt.ghostly.note ?? '')
             && dt.song.caster && dt.song.ally && /Disarm/.test(dt.song.note ?? ''),
             `PF2e Effects applied with data notes: ${JSON.stringify(dt)}`);
         return out;
