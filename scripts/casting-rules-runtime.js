@@ -57,25 +57,41 @@ export async function castingRulesOnCast(message, { spellLike = null } = {}) {
     await message.setFlag(MODULE_ID, "castingRules", true).catch(() => null);
     const done = {};
     const conditions = !spellLike || spellLike.castConditions === true;
-    // Stupefied. (Not a spell-like card's: its module rolls that one.)
-    const stupefied = Number(actor.getCondition?.("stupefied")?.value ?? 0);
-    if (stupefied > 0 && !spellLike) {
-        const dc = 5 + stupefied;
-        done.stupefied = await flatCheck(actor, dc, `${spell.name}: Stupefied ${stupefied}`);
-        if (!done.stupefied) { await loseSpell(message, `disrupted (Stupefied ${stupefied}: flat check DC ${dc} failed)`); return done; }
-    }
-    // The caster's conditions: restrained, grabbed (a manipulate spell), deafened (an auditory spell).
+    // The caster's conditions: restrained (a manipulate spell: no check, it's lost).
     const traits = spell.system?.traits?.value ?? [];
     if (conditions && traits.includes("manipulate") && actor.hasCondition?.("restrained")) {
         done.restrained = false;
         await loseSpell(message, "a restrained creature can't use manipulate actions");
         return done;
     }
+    // A note Effect forbidding spells with a trait (Sensory Deprivation: "cannot take actions with the manipulate trait").
+    for (const note of conditions ? actor.itemTypes?.effect ?? [] : []) {
+        const forbid = note.flags?.[MODULE_ID]?.runtime?.castForbid;
+        if (!forbid || !traits.includes(forbid.trait)) continue;
+        done.forbidden = forbid.trait;
+        await loseSpell(message, `${note.name}: it can't take actions with the ${forbid.trait} trait`);
+        return done;
+    }
+    // The flat checks that make the spell fail — Stupefied (not a spell-like card's: its module rolls that one), Grabbed (a manipulate spell),
+    // Deafened (an auditory spell), a note Effect's on every cast (Silence of the Archmage's critical failure: "on a failure, the action fails") —:
+    // "If more than one flat check would ever cause or prevent the same thing, just roll once and use the highest DC."
+    const checks = [];
+    const stupefied = Number(actor.getCondition?.("stupefied")?.value ?? 0);
+    if (stupefied > 0 && !spellLike) checks.push({ key: "stupefied", dc: 5 + stupefied, label: `Stupefied ${stupefied}`, lost: dc => `disrupted (Stupefied ${stupefied}: flat check DC ${dc} failed)` });
     for (const [slug, trait] of conditions ? [["grabbed", "manipulate"], ["deafened", "auditory"]] : []) {
         // (Restrained creatures are also grabbed in effect; the grabbed check is for the grabbed alone.)
-        if (!traits.includes(trait) || !actor.hasCondition?.(slug)) continue;
-        done[slug] = await flatCheck(actor, 5, `${spell.name}: ${slug[0].toUpperCase()}${slug.slice(1)} (${trait})`);
-        if (!done[slug]) { await loseSpell(message, `lost (${slug}: flat check DC 5 failed)`); return done; }
+        if (traits.includes(trait) && actor.hasCondition?.(slug)) checks.push({ key: slug, dc: 5, label: `${slug[0].toUpperCase()}${slug.slice(1)} (${trait})`, lost: dc => `lost (${slug}: flat check DC ${dc} failed)` });
+    }
+    for (const note of conditions ? actor.itemTypes?.effect ?? [] : []) {
+        const check = note.flags?.[MODULE_ID]?.runtime?.castFlatCheck;
+        if (!check || !Number.isInteger(check.dc) || (check.trait && !traits.includes(check.trait))) continue;
+        checks.push({ key: "noteCheck", dc: check.dc, label: note.name, lost: dc => `${note.name}: the flat check DC ${dc} failed, the spell fails and its resources are wasted` });
+    }
+    if (checks.length) {
+        const highest = checks.reduce((top, check) => check.dc > top.dc ? check : top);
+        const hit = await flatCheck(actor, highest.dc, `${spell.name}: ${checks.map(check => check.label).join(", ")}${checks.length > 1 ? " (one roll, the highest DC)" : ""}`);
+        for (const check of checks) done[check.key] = hit;
+        if (!hit) { await loseSpell(message, highest.lost(highest.dc)); return done; }
     }
     for (const slug of conditions ? ["fascinated", "confused"] : []) if (actor.hasCondition?.(slug)) {
         const note = slug === "fascinated" ? (traits.includes("concentrate") ? "a fascinated creature can use a concentrate action only if it relates to the subject of its fascination" : null)
@@ -101,21 +117,6 @@ export async function castingRulesOnCast(message, { spellLike = null } = {}) {
             await message.setFlag(MODULE_ID, "targetMisses", misses);
             try { await ChatMessage.create({ speaker: message.speaker, content: `<p><strong>${escapeHTML(spell.name)}</strong> fails to affect ${escapeHTML(done.targetChecks.filter(entry => !entry.hit).map(entry => entry.target).join(", "))} (the flat check failed).</p>` }); } catch (_) {}
         }
-    }
-    // A note Effect forbidding spells with a trait (Sensory Deprivation: "cannot take actions with the manipulate trait").
-    for (const note of conditions ? actor.itemTypes?.effect ?? [] : []) {
-        const forbid = note.flags?.[MODULE_ID]?.runtime?.castForbid;
-        if (!forbid || !traits.includes(forbid.trait)) continue;
-        done.forbidden = forbid.trait;
-        await loseSpell(message, `${note.name}: it can't take actions with the ${forbid.trait} trait`);
-        return done;
-    }
-    // A note Effect's flat check on every cast (Silence of the Archmage's critical failure: "on a failure, the action fails").
-    for (const note of conditions ? actor.itemTypes?.effect ?? [] : []) {
-        const check = note.flags?.[MODULE_ID]?.runtime?.castFlatCheck;
-        if (!check || !Number.isInteger(check.dc) || (check.trait && !traits.includes(check.trait))) continue;
-        done.noteCheck = await flatCheck(actor, check.dc, `${spell.name}: ${note.name}`);
-        if (!done.noteCheck) { await loseSpell(message, `${note.name}: the flat check DC ${check.dc} failed, the spell fails and its resources are wasted`); return done; }
     }
     // A curse's flat check on every cast — Nethys's Moderate Curse: "Whenever you cast a spell, attempt a DC 11 flat check. On a failure, if your spell was
     // harmful, you instead cast a beneficial spell of the same rank … You still lose the spell slot."
