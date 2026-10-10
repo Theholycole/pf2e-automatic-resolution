@@ -6854,7 +6854,7 @@ Evidence: `docs/verification/phase-third-party-batch-67.md`.
 
 The last two, per the user's decisions:
 - **The empty Dynamic Breathe Fire** (`writtenTwin`, `proxy-cast` with variants) casts its written copy.
-- **Patron's Apocalypse** (new `patron-apocalypse.js`, kind `patron-apocalypse`, with the book's table in `supplements/patrons-apocalypse.js`):
+- **Patron's Apocalypse** (new `patron-apocalypse.js`, kind `patron-apocalypse`; the book's table is the user's own copy, outside the module since 2026-10-10: `Data/pf2e-automatic-resolution-supplements/patrons-apocalypse.json`, read at startup through `supplements/supplement-store.js`):
   - burst regions with a basic-save turn-start hazard and the type's effects;
   - the Sustain's move leaves hazardous terrain.
 - Lingering hazards gained `alwaysEffect` (rules for some rounds, persistent damage), and `startRegionArea` gained `enemiesOnly` and `concealment`.

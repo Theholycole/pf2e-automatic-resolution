@@ -55,6 +55,14 @@ import { exploitOnCard, channelSmiteOnStrike, exploitAuraTurnStart, bindExploitB
 import { catalystOnDamage, catalystOnDecoy, catalystOnFlatCheck, catalystOnCast, catalystAfterResolve, catalystTurnStart, catalystOnMove, catalystOnEffectEnded, catalystShieldBlocked, bindCatalystButtons } from "./catalyst-runtime.js";
 import { essenceOnCast, essenceOnCombatStart, essenceOnCombatEnd, lifeReservoirRank, lifeReservoirOnHealing, lifeReservoirOnRefocus, essenceConduitOnCard, essenceActivationOnCard, incantationsOnRefocus, unstableDrawOnCard } from "./essence-runtime.js";
 import { creatureAbilitiesOnCast, runCreatureAbility, bindCreatureAbilityButtons, readCreatureSpellAbility } from "./creature-spell-abilities-runtime.js";
+import { SUPPLEMENT_FILES, SUPPLEMENT_FOLDER, setSupplement } from "../src/compiler/supplements/supplement-store.js";
+
+// The user's own copies of tables the module doesn't ship (Patron's Apocalypse's, from the book): Data/pf2e-automatic-resolution-supplements/, read as the module
+// loads; a missing file leaves that spell unautomated.
+for (const [name, file] of Object.entries(SUPPLEMENT_FILES)) {
+    void fetch(`${globalThis.foundry?.utils?.getRoute?.(`${SUPPLEMENT_FOLDER}/${file}`) ?? `/${SUPPLEMENT_FOLDER}/${file}`}`, { cache: "no-store" })
+        .then(response => response.ok ? response.json() : null).then(value => setSupplement(name, value)).catch(() => null);
+}
 
 const immediate = new ImmediateRuntime();
 const runtime = new EffectRuntime();

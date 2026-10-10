@@ -3,11 +3,14 @@ import fs from 'node:fs';
 import test from 'node:test';
 
 import {compileAbility} from '../src/compiler/compile-ability.js';
+import {setSupplement} from '../src/compiler/supplements/supplement-store.js';
 
 // Third-party batch 68 (2026-10-07): the last two (user decisions 2026-10-07) — Magic+'s empty Dynamic Breathe Fire cast as its written copy (its variant asked); Patron's
-// Apocalypse with the book's table of apocalypses (the user's text): four 10-foot bursts, each type's damage (basic Reflex) and effects, the Sustain's 30-foot move
+// Apocalypse with the book's table of apocalypses (the user's copy, outside the repository): four 10-foot bursts, each type's damage (basic Reflex) and effects, the Sustain's 30-foot move
 // leaving 10-damage hazardous terrain.
 const items = JSON.parse(fs.readFileSync(new URL('../.cache/third-party-items.json', import.meta.url)));
+// (The book's table: the user's copy, kept outside the repository as the module keeps it outside the module.)
+setSupplement('patronsApocalypse', JSON.parse(fs.readFileSync(new URL('../.cache/supplements/patrons-apocalypse.json', import.meta.url))));
 const spell = name => structuredClone(items.find(item => item.type === 'spell' && item.name === name && item.system.description.value));
 const compile = (source, referencedSpells = new Map()) => compileAbility(source, {nativeEffectCatalog: new Map(), referencedSpells});
 
