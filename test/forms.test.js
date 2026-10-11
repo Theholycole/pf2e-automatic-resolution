@@ -33,3 +33,13 @@ test('expired managed forms still delegate source-aware native temporary HP clea
  globalThis.game={pf2e:{RuleElements:{builtin:{BattleForm:Battle,TempHP:Temp}}}};globalThis.CONFIG={PF2E:{Item:{documentClasses:{spellcastingEntry:Entry,consumable:Consumable}},Actor:{documentClasses:{character:Character}}}};
  try{installFormGuards();const b=new Battle({id:'form',getFlag:()=>true});const own={source:'form',temp:10};assert.equal(b.onDelete(own),'native');assert.equal(own.temp,0);const other={source:'other',temp:40};b.onDelete(other);assert.equal(other.temp,40);assert.equal(calls,2);}finally{globalThis.game=oldGame;globalThis.CONFIG=oldConfig;}
 });
+test('with libWrapper on, the form guards go through it once, as WRAPPER or MIXED (2026-10-11)',()=>{
+ const oldGame=globalThis.game,oldConfig=globalThis.CONFIG,registered=[];
+ class Entry{cast(){return 'native';}}class Consumable{consume(){}}class Character{prepareData(){}}class Battle{onDelete(){}}class Temp{onDelete(){}}
+ globalThis.libWrapper={register(id,target,fn,type){registered.push([id,target,type]);const path=target.split('.'),key=path.pop(),owner=path.reduce((o,p)=>o[p],globalThis),original=owner[key];owner[key]=function(...args){return fn.call(this,(...inner)=>original.apply(this,inner),...args);};}};
+ globalThis.game={modules:new Map([['lib-wrapper',{active:true}]]),pf2e:{RuleElements:{builtin:{BattleForm:Battle,TempHP:Temp}}}};globalThis.CONFIG={PF2E:{Item:{documentClasses:{spellcastingEntry:Entry,consumable:Consumable}},Actor:{documentClasses:{character:Character}}}};
+ try{installFormGuards();installFormGuards();
+  assert.deepEqual(registered,[['pf2e-automatic-resolution','game.pf2e.RuleElements.builtin.BattleForm.prototype.onDelete','WRAPPER'],['pf2e-automatic-resolution','CONFIG.PF2E.Actor.documentClasses.character.prototype.prepareData','WRAPPER'],['pf2e-automatic-resolution','CONFIG.PF2E.Item.documentClasses.spellcastingEntry.prototype.cast','MIXED'],['pf2e-automatic-resolution','CONFIG.PF2E.Item.documentClasses.consumable.prototype.consume','MIXED']]);
+  const entry=new Entry();entry.actor={items:[],flags:{pf2e:{battleForm:true}}};assert.equal(entry.cast(),'native');
+ }finally{delete globalThis.libWrapper;globalThis.game=oldGame;globalThis.CONFIG=oldConfig;}
+});
