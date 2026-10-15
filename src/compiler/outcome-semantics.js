@@ -10,7 +10,8 @@ export function inferTerminalResult(text, { conditionalScopeClaimed = false } = 
     }
     if (/\b(?:it|the target|target|creature)\s+(?:is reduced to 0 (?:hp|hit points) and )?dies\b/.test(normalized)
         || /\b(?:killed|dies) instantly\b/.test(normalized)) {
-        return { kind: "death", label: "Dies", automatic: true };
+        // ("It is reduced to 0 Hit Points and dies": its Hit Points too.)
+        return { kind: "death", label: "Dies", automatic: true, ...(/\bis reduced to 0 (?:hp|hit points) and dies\b/.test(normalized) ? { zeroHp: true } : {}) };
     }
     return null;
 }

@@ -631,6 +631,9 @@ async function applyTerminalDeath(state, target, actor, terminal) {
     if (typeof actor.toggleStatusEffect !== "function") {
         throw new Error(`${target.name} does not expose PF2e's dead-status control.`);
     }
+    // ("It is reduced to 0 Hit Points and dies.")
+    if (terminal?.zeroHp && (Number(actor.system?.attributes?.hp?.value ?? 0) > 0 || Number(actor.system?.attributes?.hp?.temp ?? 0) > 0))
+        await actor.update({ "system.attributes.hp.value": 0, "system.attributes.hp.temp": 0 });
     if (!actor.statuses?.has?.("dead")) await actor.toggleStatusEffect("dead", { active: true });
     if (actor.statuses?.has?.("dead") !== true) {
         throw new Error(`PF2e did not confirm the Dead status on ${target.name}.`);
