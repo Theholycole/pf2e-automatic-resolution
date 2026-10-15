@@ -100,7 +100,7 @@ import { castSpellFromUuid, rememberCastSpell, spellFromSource } from './cast-sp
 import { CASTER_SAVE_ACTIONS } from './chat-card-controls.js';
 import { postControlsCard, copyCreature } from './incarnate-parts-runtime.js';
 import { startFollowingAura } from './form-aura-runtime.js';
-import { AFFLICTION_HANDLER } from "./runtime-utils.js";
+import { AFFLICTION_HANDLER, tempHPSourceId } from "./runtime-utils.js";
 
 const SAVE_SCHEMA = 9;
 const SAVE_OPTION_PREFIX = "pf2e-auto-basic-save";
@@ -1660,7 +1660,7 @@ async function applyCasterBenefit(state, journal, ongoing, createdEffects) {
     if (!effect) throw new Error(`${state.spellName}: the caster's temporary Hit Points Effect was not confirmed.`);
     createdEffects.push(effect);
     // PF2e writes the actor's temporary HP after the Effect is created.
-    const confirmed = await waitForActor(caster, actor => actor._source?.system?.attributes?.hp?.tempsource === effect.id
+    const confirmed = await waitForActor(caster, actor => tempHPSourceId(actor._source?.system?.attributes?.hp) === effect.id
         && Number(actor._source.system.attributes.hp.temp) === temporary);
     if (!confirmed) throw new Error(`${state.spellName}: PF2e did not confirm ${temporary} temporary Hit Points on the caster.`);
     if (journal) await ongoing.attach(journal, effect);

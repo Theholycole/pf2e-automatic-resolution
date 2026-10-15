@@ -1,6 +1,6 @@
 import { waitForNativeFormUpdate } from './form-native-guards.js';
 import { MODULE_ID } from './effect-runtime.js';
-import { clone, randomID, escapeHTML as esc, confirmAction } from './runtime-utils.js';
+import { clone, randomID, escapeHTML as esc, confirmAction, tempHPSourceId } from './runtime-utils.js';
 import { FORM_EFFECT_HASHES } from './form-baseline.js';
 import { canonicalFormMechanics, FORM_PROFILES, validateFormRank, formSize, prepareFormSource, rechargeReady } from './form-core.js';
 const state = journal => journal.getFlag(MODULE_ID, 'ongoingCast');
@@ -89,7 +89,7 @@ export class FormRuntime {
             const [effect]=await actor.createEmbeddedDocuments('Item',[source]);
             if(!effect || !actor.flags.pf2e.battleForm)throw Error('Native form did not prepare. Review before retrying.');
             const temp=Number(effect.rules.find(r=>r.key==='BattleForm')?.overrides.tempHP)||0;
-            if(temp>previousTemp)await waitForNativeFormUpdate(actor,()=>actor.system.attributes.hp.tempsource===effect.id&&actor.system.attributes.hp.temp===temp,'Form temporary HP');
+            if(temp>previousTemp)await waitForNativeFormUpdate(actor,()=>tempHPSourceId(actor.system.attributes.hp)===effect.id&&actor.system.attributes.hp.temp===temp,'Form temporary HP');
             const dimensions=actor.system.traits.size.tokenDimensions;
             token.parent.syncTokenDimensions(token,dimensions);
             await waitForNativeFormUpdate(token,()=>token.width===dimensions.width&&token.height===dimensions.height,'Form token space','updateToken');
@@ -105,7 +105,7 @@ export class FormRuntime {
     async reconcile(journal,record){
         try{for(const entry of record.entries.filter(e=>e.status==='ended'&&!e.detached)){
             const actor=await fromUuid(entry.actorUuid);if(!actor)continue;
-            await waitForNativeFormUpdate(actor,()=>actor.system.attributes.hp.tempsource!==entry.uuid.split('.').at(-1),'Form temporary HP removal');
+            await waitForNativeFormUpdate(actor,()=>tempHPSourceId(actor.system.attributes.hp)!==entry.uuid.split('.').at(-1),'Form temporary HP removal');
             const token=await fromUuid(record.tokenUuid),dimensions=actor.system.traits.size.tokenDimensions;
             if(token?.linkToActorSize){token.parent.syncTokenDimensions(token,dimensions);await waitForNativeFormUpdate(token,()=>token.width===dimensions.width&&token.height===dimensions.height,'Reverted token space','updateToken');}
         }}catch(error){await this.ongoing.review(journal,error.message);return;}

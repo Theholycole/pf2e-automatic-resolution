@@ -1604,7 +1604,8 @@ export const cases = {
         await ctx.api.strikeEffects.start(fling.spell, flingPlan, {sourceActor: fling.caster, castRank: fling.spell.rank});
         await strikeOf(fling.caster, flingClaw).damage({event: shift()}); await wait(900);
         out.forceFling = {effects: effects(fling.caster), damage: lastMessage(fling.caster, 'damage-roll')?.rolls?.[0]?.formula};
-        assert(out.forceFling.effects.includes('Effect: Force Fling') && /force/.test(out.forceFling.damage ?? '') && !/slashing/.test(out.forceFling.damage ?? ''),
+        // (PF2e 8.6 names it "Spell Effect: Force Fling"; 8.5 "Effect: Force Fling".)
+        assert(out.forceFling.effects.some(name => /^(Spell )?Effect: Force Fling$/.test(name)) && /force/.test(out.forceFling.damage ?? '') && !/slashing/.test(out.forceFling.damage ?? ''),
             `Force Fling: Effect on the caster; the Strike deals force: ${JSON.stringify(out.forceFling)}`);
         // Inner Upheaval: +1 status to the attack and 1d6 of the chosen type (force) on the Strike's damage.
         const upheaval = await ctx.setup('Inner Upheaval');
@@ -5694,7 +5695,9 @@ export const cases = {
             // Beguiling Feint on Hydraulic Push.
             const mark2 = game.messages.size;
             await arm('Beguiling Feint'); const m4 = await castNow('Hydraulic Push', 1);
-            const c4 = await start(m4, 'Hydraulic Push', 1, [tFoe]);
+            // (The Feint's d20 held off a natural 1, which would make the DC −20 critical success a success.)
+            const uniform = CONFIG.Dice.randomUniform; CONFIG.Dice.randomUniform = () => 0.7;
+            let c4; try { c4 = await start(m4, 'Hydraulic Push', 1, [tFoe]); } finally { CONFIG.Dice.randomUniform = uniform; }
             const check = game.messages.contents.slice(mark2).find(m => m.flags?.pf2e?.context?.type === 'skill-check');
             const during = foe.hasCondition('off-guard');
             await finish(c4, 'success');
