@@ -91,6 +91,9 @@ async function context() {
     };
     // (An ended spell's record is deleted once nothing needs it — the module's "keep ended" setting off —, so a case reading it after the end found none.
     // Each record is kept here as it was when deleted, and the cases' records() return it beside the live ones: its final status and end reason.)
+    // (Foundry 14's game.combat is the encounter the combat tracker shows, and a combat made by code doesn't take the tracker over — another session's
+    // empty encounter in view made the cases' combats invisible to the module. A combat a case makes on a test scene is put in view.)
+    globalThis.__pftestCombatView ??= Hooks.on('createCombat', combat => { if (/^PFTEST /.test(combat.scene?.name ?? '') && ui.combat) ui.combat.viewed = combat; });
     const removed = globalThis.__pftestRemovedRecords ??= (() => {
         const map = new Map();
         Hooks.on('preDeleteJournalEntry', journal => { const flag = journal.getFlag(NS, 'ongoingCast'); if (flag?.castId) map.set(flag.castId, {journalId: journal.id, ...foundry.utils.deepClone(flag), removed: true}); });
