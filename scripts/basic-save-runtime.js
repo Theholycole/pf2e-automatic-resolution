@@ -1319,15 +1319,12 @@ function conditionFloorSource(state, target, actor, floor) {
     const whileCondition = floor.lifetime === "while-condition" ? floor.whileCondition : null;
     const rules = [{ key: "GrantItem", uuid, flag: "floor", allowDuplicate: true, alterations: [{ mode: "override", property: "badge-value", value: floor.value }],
         onDeleteActions: { granter: "cascade", grantee: "restrict" } }];
-    if (floor.situational) {
-        rules.push({ key: "RollOption", domain: "all", option: toggle, toggleable: true, value: false, label: `${state.spellName}: ${floor.situational.circumstance}` });
-        rules.push({ key: "GrantItem", uuid: conditionUuidFor(floor.situational.grant.slug), flag: "situational", allowDuplicate: true, reevaluateOnUpdate: true,
-            predicate: [toggle, `self:condition:${floor.situational.requires}`],
-            alterations: [{ mode: "override", property: "badge-value", value: floor.situational.grant.value }], onDeleteActions: { granter: "cascade" } });
-    }
+    // (The situational condition — "Slowed 1 while at sea" —: the GM's toggle on the curse; the module gives it while the toggle is on and the creature has the
+    // floor condition (situationalCurseToggle in main.js). PF2e 8.6's re-evaluated grants lost track of what they granted.)
+    if (floor.situational) rules.push({ key: "RollOption", domain: "all", option: toggle, toggleable: true, value: false, label: `${state.spellName}: ${floor.situational.circumstance}` });
     return {
         name: ["spell", "while-condition", "while-persistent", "until-lifted", "fixed"].includes(floor.lifetime) ? `${state.spellName}: ${floor.slug} floor` : `${state.spellName} (curse)`, type: "effect", img: "icons/svg/skull.svg",
-        flags: { [MODULE_ID]: { conditionFloor: clone(floor), outcomeEffect: { castId: state.castId, sourceActorUuid: state.sourceActorUuid, sourceItemUuid: state.sourceItemUuid,
+        flags: { [MODULE_ID]: { conditionFloor: clone(floor), ...(floor.situational ? { situationalToggle: toggle } : {}), outcomeEffect: { castId: state.castId, sourceActorUuid: state.sourceActorUuid, sourceItemUuid: state.sourceItemUuid,
             sourceItemName: state.spellName, targetId: target.id, conditions: [],
             // Removed with the creature's last persistent damage of that type (persistent-link-runtime.js) — a secondary target's with the
             // primary target's.
@@ -5887,4 +5884,33 @@ export class BasicSaveRuntime {
         try { return await job; }
         finally { if (this.#jobs.get(key) === job) this.#jobs.delete(key); }
     }
+}
+
+/**
+ * A curse's situational condition (Mariner's Curse: "Slowed 1 while at sea"): given — a small Effect granting it, flagged to the curse — while the curse's
+ * toggle is on and the creature has the floor condition; removed when the toggle is off, the floor condition is gone or the curse ends. The active GM.
+ */
+export async function situationalCurseSync(actor) {
+    if (!actor || !game.user?.isGM || game.users.activeGM?.id !== game.user.id) return [];
+    const changes = [];
+    const curses = (actor.itemTypes?.effect ?? []).filter(effect => effect.flags?.[MODULE_ID]?.conditionFloor?.situational && effect.flags[MODULE_ID].situationalToggle);
+    const children = (actor.itemTypes?.effect ?? []).filter(effect => effect.flags?.[MODULE_ID]?.situationalOf);
+    for (const child of children) if (!curses.some(curse => curse.id === child.flags[MODULE_ID].situationalOf)) { await child.delete().catch(() => null); changes.push({ removed: child.name }); }
+    for (const curse of curses) {
+        const situational = curse.flags[MODULE_ID].conditionFloor.situational;
+        const toggle = curse.flags[MODULE_ID].situationalToggle;
+        const on = (curse.system?.rules ?? []).some(rule => rule.key === "RollOption" && rule.option === toggle && rule.value === true) && !!actor.hasCondition?.(situational.requires);
+        const child = children.find(entry => entry.flags[MODULE_ID].situationalOf === curse.id && actor.items.has(entry.id));
+        if (on && !child) {
+            const name = `${curse.name.replace(/ \(curse\)$/, "")}: ${situational.grant.slug} ${situational.grant.value} (${situational.circumstance})`;
+            await actor.createEmbeddedDocuments("Item", [{ name, type: "effect", img: curse.img,
+                flags: { [MODULE_ID]: { situationalOf: curse.id } },
+                system: { duration: { value: -1, unit: "unlimited", expiry: null, sustained: false }, start: { value: game.time.worldTime, initiative: null }, tokenIcon: { show: true },
+                    description: { value: `<p>While ${escapeHTML(situational.circumstance)} (the curse's toggle).</p>` },
+                    rules: [{ key: "GrantItem", uuid: conditionUuidFor(situational.grant.slug), allowDuplicate: true, onDeleteActions: { grantee: "restrict" },
+                        alterations: [{ mode: "override", property: "badge-value", value: situational.grant.value }] }] } }]);
+            changes.push({ added: name });
+        } else if (!on && child) { await child.delete().catch(() => null); changes.push({ removed: child.name }); }
+    }
+    return changes;
 }

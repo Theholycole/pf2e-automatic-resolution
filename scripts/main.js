@@ -26,7 +26,7 @@ import { aidModifier } from "../src/compiler/aid-prepare.js";
 import { triggerAuraOnCondition, triggerAuraOnSave } from "./trigger-aura-runtime.js";
 import { autoToggleNewRound, autoToggleOnDamage, climbAidOnCheck, cloudActionOnCondition, consumeUsedEffects, runeWardOnDamage, endAfterMovement, endMarksWithoutPersistent, expireTurnBound, lockToFirstItem, oncePerSourceOnCast, oncePerSourceOnHealing, retroBonusOnRoll, syncNearTokens, recordDamage, delayedDamageOnEnd, consumeOnDamageTaken, spellshapeOnEffect, sharedLoreOnEnd, attackWardOnAttack, lastDamageOf, summonOnEnd, conjuredOnEnd, hiddenTurnEnd, coverSquareSync, coverSquareOnEnd, sceneWallsOnEnd } from "./climb-aid-runtime.js";
 import { isStrikeDamage } from "../src/compiler/ward-families.js";
-import { BasicSaveRuntime } from "./basic-save-runtime.js";
+import { BasicSaveRuntime, situationalCurseSync } from "./basic-save-runtime.js";
 import { EscapeTermination } from "./escape-termination.js";
 import { AfflictionCareRuntime } from "./affliction-care-runtime.js";
 import { MessageRuntime } from "./message-runtime.js";
@@ -1862,6 +1862,10 @@ Hooks.on("updateCombat", (_combat, changes) => {
     if ("turn" in changes || "round" in changes) void turnEndSaves(_combat).catch(error => notifyError("Turn-end save failed", error));
     if ("round" in changes) void autoToggleNewRound().catch(error => notifyError("First-Strike toggle failed", error));
 });
+// (A curse's situational condition — Mariner's Curse's Slowed at sea —: kept in step with its toggle, its floor condition and the curse itself.)
+Hooks.on("updateItem", item => { if (item?.type === "effect" && item.flags?.[MODULE_ID]?.situationalToggle) void situationalCurseSync(item.actor).catch(error => notifyError("The curse's situational condition failed", error)); });
+Hooks.on("deleteItem", item => { if (item?.actor && (item.flags?.[MODULE_ID]?.situationalToggle || (item.type === "condition" && item.actor.itemTypes?.effect?.some(effect => effect.flags?.[MODULE_ID]?.situationalOf))))
+    void situationalCurseSync(item.actor).catch(error => notifyError("The curse's situational condition failed", error)); });
 // (The casts made for other modules: their temporary entries and spells go once their time has passed, or with the encounter they were cast in.)
 Hooks.on("updateWorldTime", () => { void sweepItemCastTemps().catch(error => notifyError("Removing an item's temporary spells failed", error)); });
 Hooks.on("deleteCombat", combat => { void sweepItemCastTemps({ combatId: combat?.id ?? null }).catch(error => notifyError("Removing an item's temporary spells failed", error)); });
