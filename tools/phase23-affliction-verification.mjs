@@ -1759,6 +1759,76 @@ export const cases = {
             `Ray of Frost crit: double + −10-ft status all Speeds from the text: ${JSON.stringify(out.frostCrit)}`);
         return out;
     },
+    // api.castFromItem (2026-10-15, the item module's calls): a character drinks an Invisibility Potion (rank 2, on itself): PF2e's cast card, the item named,
+    // Invisible; a Truesight Potion (rank 7, counteract +25): the temporary entry's counteract check is +25; a Potion of Leaping (Jump, rank 1, self) and Psyche
+    // Salts (Clear Mind, rank 2, self) cast; while their time lasts the temporary entry, spell and numbers are on the sheet, after 10 minutes of world time none.
+    async castFromItemLive(ctx) {
+        const wait = ms => new Promise(r => setTimeout(r, ms));
+        const NSX = 'pf2e-automatic-resolution';
+        const out = {};
+        try {
+            const drinker = await Actor.create({name: 'PFTEST P23 Affliction potion drinker', type: 'character', flags: {[NSX]: {phase23AfflictionFixture: true}}, system: {details: {level: {value: 9}}}});
+            ctx.saved.actors.push(drinker.id); await ctx.persist();
+            const token = await ctx.token(drinker); await wait(500);
+            const index = await game.packs.get('pf2e.spells-srd').getIndex();
+            const uuidOf = name => `Compendium.pf2e.spells-srd.Item.${index.find(i => i.name === name)._id}`;
+            const temps = () => drinker.items.filter(i => i.flags?.[NSX]?.castFromItemTemp).map(i => i.type).sort();
+            const cast = (spell, extra, itemName) => ctx.api.castFromItem({actor: drinker, token, spell: uuidOf(spell), targets: [token], item: {name: itemName, uuid: `Actor.${drinker.id}.Item.potion${itemName.replace(/\W/g, '').slice(0, 8)}`}, ...extra});
+            const invis = await cast('Invisibility', {rank: 2}, 'Invisibility Potion'); await wait(1500);
+            // (The GM resolves the cast from its card, as any cast.)
+            const resolveButton = () => document.querySelector(`[data-message-id="${invis.message?.id}"] .pf2e-auto-runtime-resolve`);
+            for (let i = 0; i < 20 && !resolveButton(); i++) await wait(250);
+            resolveButton()?.click(); await wait(2000);
+            out.invisibility = {message: !!invis.message, resolveButton: !!resolveButton(), flavor: /Invisibility Potion/.test(invis.message?.flavor ?? ''), rank: invis.rank, invisible: drinker.hasCondition('invisible'), temps: temps()};
+            const sight = await cast('Truesight', {rank: 7, counteract: 25}, 'Truesight Potion'); await wait(1200);
+            const sightSpell = await fromUuid(sight.spellUuid);
+            // (The counteract check as rolled for the spell — the item's modifier applies to this entry's spells only.)
+            const counter = await sightSpell?.spellcasting?.counteraction?.check?.roll({dc: {value: 10}, item: sightSpell, extraRollOptions: ['action:counteract'], skipDialog: true, createMessage: false});
+            const natural = counter?.dice?.[0]?.total ?? null;
+            out.truesight = {rank: sight.rank, counteract: counter && natural != null ? counter.total - natural : null, message: !!sight.message};
+            const jump = await cast('Jump', {rank: 1}, 'Potion of Leaping'); await wait(1000);
+            const clear = await cast('Clear Mind', {rank: 2}, 'Psyche Salts'); await wait(1000);
+            out.others = {jump: !!jump.message, clearMind: !!clear.message};
+            out.whileActive = temps();
+            await game.time.advance(3700); await wait(2500);
+            out.after = temps();
+            out.entriesLeft = drinker.itemTypes.spellcastingEntry.length;
+        } catch (error) { out.error = error.stack ?? error.message; }
+        assert(!out.error && out.invisibility?.message && out.invisibility.flavor && out.invisibility.rank === 2 && out.invisibility.invisible
+            && out.invisibility.temps.includes('spellcastingEntry') && out.invisibility.temps.includes('spell') && out.truesight?.counteract === 25 && out.truesight.rank === 7
+            && out.others?.jump && out.others.clearMind && out.after?.length === 0 && out.entriesLeft === 0, `castFromItem: ${JSON.stringify(out)}`);
+        return {castFromItem: out};
+    },
+    // Weird's critical failure (2026-10-13): three creatures critically fail the Will save and attempt the Fortitude save — a failure: reduced to 0 Hit Points
+    // and dies; a success: double damage, Frightened 2 and Fleeing until the end of its next turn; a critical success: double damage and Frightened 2, not Fleeing.
+    async weirdCriticalFailure(ctx) {
+        const wait = ms => new Promise(r => setTimeout(r, ms));
+        const out = {};
+        try {
+            const weird = await ctx.setup('Weird');
+            const plan = await ctx.api.compile(weird.spell);
+            const names = ['weird dies', 'weird flees', 'weird steady'];
+            const actors = await Promise.all(names.map(name => ctx.actor(name, {level: 17})));
+            for (const a of actors) { await a.update({'system.attributes.hp.max': 400}); await a.update({'system.attributes.hp.value': 400}); }
+            const {card} = await ctx.api.saves.start(weird.spell, {sourceActor: weird.caster, plan, targets: await Promise.all(actors.map(a => ctx.token(a))), castRank: 9, dc: 40, skipConfirmation: true});
+            const second = ['failure', 'success', 'criticalSuccess'];
+            for (const [i, t] of ctx.state(card).targets.entries()) {
+                await ctx.api.saves.rollSave(card, t.id, {skipDialog: true}); await ctx.api.saves.correctTarget(card, t.id, {action: 'degree', degree: 'criticalFailure'});
+                await ctx.api.saves.rollSave(card, t.id, {skipDialog: true, stage: 'secondary'});
+                await ctx.api.saves.correctTarget(card, t.id, {action: 'degree', degree: second[i], stage: 'secondary'});
+            }
+            await ctx.api.saves.finalize(card); await wait(1500);
+            const total = ctx.state(card).damage?.total ?? null;
+            const look = a => ({hp: a.system.attributes.hp.value, lost: 400 - a.system.attributes.hp.value, dead: a.isDead ?? a.hasCondition('dead') ?? null,
+                frightened: a.getCondition('frightened')?.value ?? 0, fleeing: a.hasCondition('fleeing')});
+            out.total = total;
+            [out.dies, out.flees, out.steady] = actors.map(look);
+        } catch (error) { out.error = error.stack ?? error.message; }
+        const {dies = {}, flees = {}, steady = {}} = out;
+        assert(!out.error && out.total > 0 && dies.hp === 0 && flees.lost === 2 * out.total && flees.frightened === 2 && flees.fleeing
+            && steady.lost === 2 * out.total && steady.frightened === 2 && !steady.fleeing, `Weird's critical failure: ${JSON.stringify(out)}`);
+        return {weird: out};
+    },
     // Repeated blasts (Scorching Blast, Aqueous Blast) and an attack's critical follow-up save (Exploding Earth).
     async repeatAndFollowUp(ctx) {
         const wait = ms => new Promise(r => setTimeout(r, ms));
