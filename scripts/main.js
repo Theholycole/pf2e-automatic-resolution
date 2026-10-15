@@ -44,6 +44,7 @@ import { armItemSpellshape, runItemShapeCard, bindItemShapeButtons, itemShapeTur
 import { readItemSpellshape } from "../src/compiler/item-spellshape.js";
 import { offerItemCasts, castFromItem, itemCastOnCard, bindItemCastButtons, reservoirOnCast, reservoirOnStrike, runReservoirButton, castSpellForItem, sweepItemCastTemps } from "./item-cast-runtime.js";
 import { readItemCasts } from "../src/compiler/item-casts.js";
+import { claims as itemClaimed, itemClaims } from "../src/compiler/item-claims.js";
 import { spellTriggerItemsOnCast, runTriggerItem, bindTriggerItemButtons } from "./spell-trigger-items-runtime.js";
 import { spellActionsOnCast, runSpellAction, bindSpellActionButtons, deliveryOnStrike, slidecastNow, invigorateOnDamage } from "./spell-actions-runtime.js";
 import { backfireAmmoOnCard, backfireAmmoOnStrike, backfireAmmoOnCast } from "./plus-ammo-runtime.js";
@@ -1553,6 +1554,8 @@ Hooks.once("init", () => {
             creatureAbilities: { read: source => readCreatureSpellAbility(source), onCast: message => creatureAbilitiesOnCast(message), run: message => runCreatureAbility(message) },
             // (Another module's item casting a spell — the item module's consumables: cast through PF2e from a temporary entry with the item's numbers.)
             castFromItem: options => castSpellForItem(options),
+            // (The items this module acts on — scrolls, wands, staves, spellhearts, catalysts, and what its item readers read — for other modules to leave alone.)
+            claims: source => itemClaimed(source?.toObject?.() ?? source), claimsWhy: source => itemClaims(source?.toObject?.() ?? source),
             itemCasts: { read: source => readItemCasts(source), offer: item => offerItemCasts(item), cast: (item, index, options) => castFromItem(item, index, options), reservoir: (message, action) => runReservoirButton(message, action) },
             itemShapes: { read: source => readItemSpellshape(source), arm: (message, item) => armItemSpellshape(message, item), run: (message, button) => runItemShapeCard(message, button), turnStart: combat => itemShapeTurnStart(combat), watch: message => itemShapeWatchMessage(message) },
             bloodMagic: { onCast: message => bloodMagicOnCast(message), run: (message, choice, options) => runBloodMagic(message, choice, options), spite: (uuid, token) => spiteStrikes(uuid, token) },
