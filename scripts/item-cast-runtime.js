@@ -314,6 +314,17 @@ export async function castSpellForItem({ actor, token = null, spell, rank = null
     const holder = { uuid: itemUuid, id: (String(itemUuid).split(".").at(-1).replace(/[^A-Za-z0-9]/g, "") || randomID()).slice(-16), name: item?.name ?? source.name, img: item?.img ?? source.img };
     const tradition = (source.system?.traits?.traditions ?? [])[0] ?? "arcane";
     const entry = await itemEntry(actor, holder, tradition, numbers, autoHeighten);
+    // (A character's counteract checks: PF2e builds them from the entry's attribute and proficiency, not its attack — the item's modifier comes from a
+    // counteract modifier on the numbers' Effect, only for this entry's spells, calibrated like the attack. An NPC's entry takes the item's number already.)
+    if (counteract != null && actor.type !== "npc") {
+        const numbersEffect = (actor.itemTypes?.effect ?? []).find(effect => effect.flags?.[MODULE_ID]?.itemCastStat === itemUuid);
+        const base = Number(actor.items.get(entry.id)?.counteraction?.check?.mod ?? NaN);
+        if (numbersEffect && Number.isFinite(base)) {
+            const rules = foundry.utils.deepClone(numbersEffect.system.rules ?? []).filter(rule => rule.slug !== "item-cast-counteract");
+            rules.push({ key: "FlatModifier", slug: "item-cast-counteract", selector: "counteract-check", value: Number(counteract) - base, label: holder.name, predicate: [`spellcasting:id:${entry.id}`] });
+            await numbersEffect.update({ "system.rules": rules });
+        }
+    }
     const made = await entrySpell(actor, entry, uuid ?? `castFromItem.${source.name}`, castRank, cantrip, uuid ? null : source);
     // (Temporary: the entry, the spell and the numbers' Effect go once the spell's duration has passed — at least 10 minutes, at most an hour.)
     const until = Number(game.time.worldTime) + Math.min(3600, Math.max(600, spellDurationSeconds(source)));
@@ -322,7 +333,10 @@ export async function castSpellForItem({ actor, token = null, spell, rank = null
     for (const document of [entry, made, stat].filter(Boolean)) await document.setFlag(MODULE_ID, "castFromItemTemp", temporary);
     // (The tokens it's cast on: the user's targets as PF2e's cast is made, as for any cast.)
     const tokens = (targets ?? []).map(target => target?.object ?? target?.document?.object ?? target).filter(Boolean);
-    if (tokens.length && typeof game.user?.updateTokenTargets === "function") game.user.updateTokenTargets(tokens.map(entry => entry.id ?? entry.document?.id).filter(Boolean));
+    // (Foundry 14: the canvas's setTargets — the user's own updateTokenTargets is gone; tokens on another scene can't be targeted.)
+    const ids = tokens.map(entry => entry.id ?? entry.document?.id).filter(Boolean);
+    if (ids.length && typeof canvas?.tokens?.setTargets === "function") canvas.tokens.setTargets(ids);
+    else if (ids.length && typeof game.user?.updateTokenTargets === "function") game.user.updateTokenTargets(ids);
     rememberCastSpell(made);
     const mark = game.messages.size;
     await entry.cast(made, { rank: castRank, consume: false });
