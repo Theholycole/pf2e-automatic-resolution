@@ -42,7 +42,7 @@ import { bloodMagicOnCast, runBloodMagic, spiteStrikes, spiteTurnStart, bindBloo
 import { castingRulesOnCast, runCastingRule, bindCastingRuleButtons, spellLikeCast } from "./casting-rules-runtime.js";
 import { armItemSpellshape, runItemShapeCard, bindItemShapeButtons, itemShapeTurnStart, itemShapeWatchMessage, starChartOnCast, catalystSporesOnDamage, shieldShardsBlock } from "./item-spellshape-runtime.js";
 import { readItemSpellshape } from "../src/compiler/item-spellshape.js";
-import { offerItemCasts, castFromItem, itemCastOnCard, bindItemCastButtons, reservoirOnCast, reservoirOnStrike, runReservoirButton } from "./item-cast-runtime.js";
+import { offerItemCasts, castFromItem, itemCastOnCard, bindItemCastButtons, reservoirOnCast, reservoirOnStrike, runReservoirButton, castSpellForItem, sweepItemCastTemps } from "./item-cast-runtime.js";
 import { readItemCasts } from "../src/compiler/item-casts.js";
 import { spellTriggerItemsOnCast, runTriggerItem, bindTriggerItemButtons } from "./spell-trigger-items-runtime.js";
 import { spellActionsOnCast, runSpellAction, bindSpellActionButtons, deliveryOnStrike, slidecastNow, invigorateOnDamage } from "./spell-actions-runtime.js";
@@ -1551,6 +1551,8 @@ Hooks.once("init", () => {
             triggerItems: { onCast: message => spellTriggerItemsOnCast(message), run: (message, button) => runTriggerItem(message, button) },
             castActions: { onCast: message => spellActionsOnCast(message), run: (message, button) => runSpellAction(message, button) },
             creatureAbilities: { read: source => readCreatureSpellAbility(source), onCast: message => creatureAbilitiesOnCast(message), run: message => runCreatureAbility(message) },
+            // (Another module's item casting a spell — the item module's consumables: cast through PF2e from a temporary entry with the item's numbers.)
+            castFromItem: options => castSpellForItem(options),
             itemCasts: { read: source => readItemCasts(source), offer: item => offerItemCasts(item), cast: (item, index, options) => castFromItem(item, index, options), reservoir: (message, action) => runReservoirButton(message, action) },
             itemShapes: { read: source => readItemSpellshape(source), arm: (message, item) => armItemSpellshape(message, item), run: (message, button) => runItemShapeCard(message, button), turnStart: combat => itemShapeTurnStart(combat), watch: message => itemShapeWatchMessage(message) },
             bloodMagic: { onCast: message => bloodMagicOnCast(message), run: (message, choice, options) => runBloodMagic(message, choice, options), spite: (uuid, token) => spiteStrikes(uuid, token) },
@@ -1857,6 +1859,10 @@ Hooks.on("updateCombat", (_combat, changes) => {
     if ("turn" in changes || "round" in changes) void turnEndSaves(_combat).catch(error => notifyError("Turn-end save failed", error));
     if ("round" in changes) void autoToggleNewRound().catch(error => notifyError("First-Strike toggle failed", error));
 });
+// (The casts made for other modules: their temporary entries and spells go once their time has passed, or with the encounter they were cast in.)
+Hooks.on("updateWorldTime", () => { void sweepItemCastTemps().catch(error => notifyError("Removing an item's temporary spells failed", error)); });
+Hooks.on("deleteCombat", combat => { void sweepItemCastTemps({ combatId: combat?.id ?? null }).catch(error => notifyError("Removing an item's temporary spells failed", error)); });
+Hooks.once("ready", () => { void sweepItemCastTemps().catch(error => notifyError("Removing an item's temporary spells failed", error)); });
 Hooks.on("deleteCombat", () => { void expireTurnBound().catch(error => notifyError("Turn-bound Effect expiry failed", error)); });
 Hooks.on("updateWorldTime", () => {
     void expireTurnBound().catch(error => notifyError("Turn-bound Effect expiry failed", error));

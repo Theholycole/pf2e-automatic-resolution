@@ -10,7 +10,8 @@ import { readItemCasts } from "../src/compiler/item-casts.js";
 import { loadNativeEffectTemplate, prepareNativeEffectSource, createNativeEffect } from "./native-outcome-effects.js";
 import { shapeEffect, timedConditions } from "./spellshape-runtime.js";
 import { loseSpell } from "./casting-rules-runtime.js";
-import { MODULE_ID, activeGM, escapeHTML, gmIds, isCastMessage, ownerIds } from "./runtime-utils.js";
+import { MODULE_ID, activeGM, escapeHTML, gmIds, isCastMessage, ownerIds, randomID } from "./runtime-utils.js";
+import { rememberCastSpell } from "./cast-spell.js";
 
 const unlink = text => String(text ?? "").replace(/@UUID\[[^\]]+\]\{([^}]+)\}/g, "$1").replace(/@(?:Damage|Check|Template)\[([^\]]+)\](?:\{([^}]+)\})?/g, (all, inner, label) => label ?? inner.split("|")[0]);
 
@@ -66,12 +67,12 @@ async function itemEntry(actor, item, tradition, numbers, autoHeighten) {
     return actor.items.get(entry.id);
 }
 
-/** The spell on the item's entry at the rank (made from PF2e's compendium the first time). */
-async function entrySpell(actor, entry, uuid, rank, cantrip) {
+/** The spell on the item's entry at the rank (made from PF2e's compendium the first time, or from the source given — `uuid` then only its key). */
+async function entrySpell(actor, entry, uuid, rank, cantrip, given = null) {
     const existing = (actor.itemTypes?.spell ?? []).find(spell => spell.system?.location?.value === entry.id && spell.flags?.[MODULE_ID]?.itemCastSpell === uuid
         && (cantrip || Number(spell.system.location.heightenedLevel ?? 0) === rank));
     if (existing) return existing;
-    const source = (await fromUuid(uuid))?.toObject();
+    const source = given ? foundry.utils.deepClone(given) : (await fromUuid(uuid))?.toObject();
     if (!source) throw new Error(`The item's spell (${uuid}) isn't in PF2e's compendium.`);
     delete source._id;
     source.system.location = { value: entry.id, ...(cantrip ? {} : { heightenedLevel: rank }) };
@@ -279,4 +280,77 @@ export async function runReservoirButton(message, action) {
         return { released: held.name, spellId: spell.id };
     }
     throw new Error(`Unknown Spell Reservoir action ${action}.`);
+}
+
+// ---- Another module's item casting a spell (api.castFromItem): the item module's consumables (2026-10-15) ----
+
+const SECONDS = { round: 6, rounds: 6, minute: 60, minutes: 60, hour: 3600, hours: 3600, day: 86400, days: 86400 };
+/** A spell's stated duration in seconds ("10 minutes", "until the end of your next turn": a round), 0 when it states none. */
+export function spellDurationSeconds(source) {
+    const text = String(source?.system?.duration?.value ?? "").toLowerCase();
+    const m = /(\d+)\s*(rounds?|minutes?|hours?|days?)/.exec(text);
+    if (m) return Number(m[1]) * SECONDS[m[2]];
+    return /next turn|1 round/.test(text) ? 12 : 0;
+}
+
+/**
+ * A spell an item casts for another module (the item module's potions and talismans — scrolls, wands, staves and catalysts stay PF2e's and this module's):
+ * cast through PF2e from a temporary innate entry carrying the item's numbers — its DC, its counteract modifier — so this module resolves it like any other
+ * cast. `spell` is a spells-srd UUID or a spell source; `rank` the item's, else the spell's own (a cantrip at half the actor's level); `targets` the tokens
+ * (the actor's own for "on you"); `item` {name, uuid}. The entry, the spell and its numbers' Effect are temporary: removed once the spell's duration has passed
+ * (at least 10 minutes, at most an hour of world time) or as the encounter ends — nothing stays on the sheet.
+ */
+export async function castSpellForItem({ actor, token = null, spell, rank = null, dc = null, counteract = null, targets = null, item = null } = {}) {
+    if (!actor) throw new Error("castFromItem: the actor is missing.");
+    const uuid = typeof spell === "string" ? spell : spell?.uuid ?? spell?._stats?.compendiumSource ?? spell?.flags?.core?.sourceId ?? null;
+    const source = typeof spell === "string" ? (await fromUuid(spell))?.toObject() : spell ? foundry.utils.deepClone(spell.toObject?.() ?? spell) : null;
+    if (source?.type !== "spell") throw new Error("castFromItem: the spell isn't a spell (a spells-srd UUID or its source).");
+    const cantrip = (source.system?.traits?.value ?? []).includes("cantrip");
+    const autoHeighten = Math.max(1, Math.ceil(Number(actor.level ?? 1) / 2));
+    const castRank = Number(rank) > 0 ? Number(rank) : cantrip ? autoHeighten : Number(source.system?.level?.value ?? 1);
+    // (The item's numbers: its counteract modifier is the entry's check, a stated DC the entry's DC; one gives the other.)
+    const numbers = { attack: counteract != null ? Number(counteract) : dc != null ? Number(dc) - 10 : null, dc: dc != null ? Number(dc) : counteract != null ? Number(counteract) + 10 : null };
+    const itemUuid = item?.uuid ?? `castFromItem.${source.name}`;
+    const holder = { uuid: itemUuid, id: (String(itemUuid).split(".").at(-1).replace(/[^A-Za-z0-9]/g, "") || randomID()).slice(-16), name: item?.name ?? source.name, img: item?.img ?? source.img };
+    const tradition = (source.system?.traits?.traditions ?? [])[0] ?? "arcane";
+    const entry = await itemEntry(actor, holder, tradition, numbers, autoHeighten);
+    const made = await entrySpell(actor, entry, uuid ?? `castFromItem.${source.name}`, castRank, cantrip, uuid ? null : source);
+    // (Temporary: the entry, the spell and the numbers' Effect go once the spell's duration has passed — at least 10 minutes, at most an hour.)
+    const until = Number(game.time.worldTime) + Math.min(3600, Math.max(600, spellDurationSeconds(source)));
+    const temporary = { until, itemUuid, combatId: game.combat?.started ? game.combat.id : null };
+    const stat = (actor.itemTypes?.effect ?? []).find(effect => effect.flags?.[MODULE_ID]?.itemCastStat === itemUuid);
+    for (const document of [entry, made, stat].filter(Boolean)) await document.setFlag(MODULE_ID, "castFromItemTemp", temporary);
+    // (The tokens it's cast on: the user's targets as PF2e's cast is made, as for any cast.)
+    const tokens = (targets ?? []).map(target => target?.object ?? target?.document?.object ?? target).filter(Boolean);
+    if (tokens.length && typeof game.user?.updateTokenTargets === "function") game.user.updateTokenTargets(tokens.map(entry => entry.id ?? entry.document?.id).filter(Boolean));
+    rememberCastSpell(made);
+    const mark = game.messages.size;
+    await entry.cast(made, { rank: castRank, consume: false });
+    let message = null;
+    for (let i = 0; i < 40 && !message; i++) { message = game.messages.contents.slice(mark).find(entry => isCastMessage(entry) && entry.actor === actor); if (!message) await new Promise(resolve => setTimeout(resolve, 250)); }
+    if (message) {
+        await message.setFlag(MODULE_ID, "castFromItem", { itemName: holder.name, itemUuid, rank: castRank, dc: numbers.dc, counteract: counteract != null ? Number(counteract) : null,
+            targets: tokens.map(entry => entry.document?.uuid ?? entry.uuid).filter(Boolean) }).catch(() => null);
+        // (The card's header names the item.)
+        await message.update({ flavor: `<strong>${escapeHTML(holder.name)}</strong>${message.flavor ? ` ${message.flavor}` : ""}` }).catch(() => null);
+    }
+    return { message, rank: castRank, numbers, spellUuid: made.uuid, until };
+}
+
+/** The temporary items of the casts made for other modules whose time has passed (or all of them, `force`): removed, their spells' sources kept for the casts' records. */
+export async function sweepItemCastTemps({ force = false, combatId = null } = {}) {
+    if (!activeGM()) return 0;
+    const now = Number(game.time.worldTime);
+    let removed = 0;
+    const actors = [...game.actors, ...(canvas?.scene?.tokens ?? []).filter(token => !token.actorLink).map(token => token.actor).filter(Boolean)];
+    for (const actor of actors) {
+        const due = actor.items.filter(document => { const temp = document.flags?.[MODULE_ID]?.castFromItemTemp; return temp && (force || Number(temp.until) <= now || (combatId && temp.combatId === combatId)); });
+        if (!due.length) continue;
+        for (const document of due) if (document.type === "spell") rememberCastSpell(document);
+        // (The spells first: PF2e deletes an entry's spells with it.)
+        const order = [...due.filter(document => document.type === "spell"), ...due.filter(document => document.type !== "spell")].map(document => document.id).filter(id => actor.items.has(id));
+        await actor.deleteEmbeddedDocuments("Item", order).catch(() => null);
+        removed += order.length;
+    }
+    return removed;
 }
