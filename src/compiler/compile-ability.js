@@ -94,6 +94,8 @@ import { extractTriggeredBlast } from "./triggered-blast.js";
 import { extractShadowPin } from "./shadow-pin.js";
 import { extractShadowDetach } from "./shadow-detach.js";
 import { extractCurrentLine } from "./current-line.js";
+import { extractBlastLingering, BLAST_LINGERING_MINUTES } from "./blast-lingering.js";
+import { compileSuppressionSave } from "./suppression-save.js";
 import { extractDownpourCloud } from "./downpour-cloud.js";
 import { compileSelfPulse } from "./gloom-mantle.js";
 import { compileHealBack } from "./heal-back.js";
@@ -5921,6 +5923,32 @@ function compileSpell(item, options) {
             }
         }
     }
+    // A blast leaving a lingering area (Brimstone Rain): the area's turn-start save and difficult terrain, its blast a basic save card for the creatures inside
+    // when it starts (1 minute: PF2e's data has none — the user's decision).
+    if (!options.traitModeSource && !options.downpourSource && !options.blastLingeringSource) {
+        const blast = extractBlastLingering(adaptSpellSource(item, options));
+        if (blast) {
+            const area = cloneJSON(item);
+            area.system.description.value = blast.lingerHTML; area.system.damage = {}; area.system.heightening = null;
+            area.system.duration = { value: `${BLAST_LINGERING_MINUTES} minute${BLAST_LINGERING_MINUTES === 1 ? "" : "s"}`, sustained: false };
+            area.system.defense = { save: { statistic: "fortitude", basic: false } };
+            const blastSave = /must attempt an? (Fortitude|Reflex|Will) save/.exec(blast.lingerHTML)?.[1]?.toLowerCase();
+            if (blastSave) area.system.defense.save.statistic = blastSave;
+            const save = cloneJSON(item);
+            save.system.description.value = blast.saveHTML;
+            const plan = compileSpell(area, { ...options, blastLingeringSource: true });
+            const savePlan = compileSpell(save, { ...options, blastLingeringSource: true });
+            if (plan.resolution?.lingering && !(plan.automation?.pendingCapabilities ?? []).length && savePlan.resolution?.kind === "save" && savePlan.resolution.check?.basic === true
+                && !(savePlan.automation?.pendingCapabilities ?? []).length) {
+                plan.resolution.castSavePlan = savePlan;
+                if (blast.reminder) plan.resolution.reminders = [...(plan.resolution.reminders ?? []), { kind: "spell-note", text: blast.reminder, sourceText: blast.sentences[1] }];
+                plan.resolution.dataNotes = [...(plan.resolution.dataNotes ?? []), blast.dataNote];
+                plan.compilerEvidence.blastLingering = blast.sentences;
+                plan.automation.compiledCapabilities.push("blast-lingering");
+                return plan;
+            }
+        }
+    }
     // A basic-save downpour leaving a concealing cloud (Searing Rain): the cloud's concealing area, its save card for the creatures inside when cast.
     if (!options.traitModeSource && !options.downpourSource) {
         const downpour = extractDownpourCloud(adaptSpellSource(item, options));
@@ -5936,6 +5964,18 @@ function compileSpell(item, options) {
                 plan.resolution.concealingArea.savePlan = savePlan;
                 plan.compilerEvidence.downpourCloud = downpour.sentences;
                 plan.automation.compiledCapabilities.push("downpour-cloud");
+                return plan;
+            }
+        }
+    }
+    // An ally's save to suppress an effect, and its bonuses (Rude Awakening): PF2e's data gives the spell a Reflex save of its own — the text's Will save is the
+    // ally's, against the effect it suppresses: read without that save, as the module's card (the user's decision, 2026-10-16).
+    if (!options.traitModeSource && !options.suppressionSource && adaptSpellSource(item, options).defense?.kind === "save") {
+        const copy = cloneJSON(item); copy.system.defense = null;
+        if (compileSuppressionSave(adaptSpellSource(copy, options))) {
+            const plan = compileSpell(copy, { ...options, suppressionSource: true });
+            if (plan.resolution?.kind === "suppression-save") {
+                plan.resolution.dataNotes = [...(plan.resolution.dataNotes ?? []), `PF2e's data gives the spell a ${String(item.system?.defense?.save?.statistic ?? "reflex").replace(/^./, letter => letter.toUpperCase())} save; the text's Will save is the ally's, against the effect it suppresses. PF2e's Effect gives the bonuses as circumstance bonuses; the module's are status, as written.`];
                 return plan;
             }
         }

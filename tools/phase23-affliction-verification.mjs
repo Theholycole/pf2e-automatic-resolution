@@ -42379,6 +42379,79 @@ export const cases = {
         assert(!out.error && g.card && g.spell === 'Gust of Wind' && g.dc === g.expected && g.statistic === 'fortitude' && g.temporary, `Cheliax batch 12: ${JSON.stringify(out)}`);
         return {cheliax12: out};
     },
+    // PF2e 8.6's last new spells, after the user's answers, batch 13 (2026-10-16): Brimstone Rain (A: 1 minute) — the area starts with its blast's basic Reflex
+    // card for the two creatures inside (not the one outside); a creature starting its turn inside critically fails its Fortitude save: 2d6 persistent poison
+    // (rank 5) and Sickened 1. Rude Awakening (A: a card for the ally) — the ally's status bonuses; its Will save suppresses Frightened 2; when the spell's Effect
+    // ends, Frightened 2 comes back (no time went by).
+    async cheliaxBatch13(ctx) {
+        const wait = ms => new Promise(r => setTimeout(r, ms));
+        const NSX = 'pf2e-automatic-resolution';
+        const g = canvas.grid.size;
+        const place = async (actor, x, y) => (await canvas.scene.createEmbeddedDocuments('Token', [{...actor.prototypeToken.toObject(), actorId: actor.id, actorLink: true, x, y}]))[0];
+        const move = (token, x, y) => token.update({x, y}, {teleport: true, animate: false});
+        const out = {};
+        let region = null, combat = null;
+        try {
+            const rain = await ctx.setup('Brimstone Rain');
+            const casterToken = canvas.scene.tokens.find(t => t.actorId === rain.caster.id); await move(casterToken, 10 * g, 26 * g);
+            const [a, b, c] = await Promise.all(['rain a', 'rain b', 'rain out'].map(name => ctx.actor(name)));
+            const ta = await place(a, 30 * g, 26 * g), tb = await place(b, 31 * g, 26 * g), tc = await place(c, 40 * g, 26 * g);
+            [region] = await canvas.scene.createEmbeddedDocuments('Region', [{name: 'PFTEST Brimstone Rain area', shapes: [{type: 'circle', x: 30.5 * g, y: 26.5 * g, radius: 4 * g}], color: '#aa5522'}]);
+            await wait(800);
+            const plan = await ctx.api.compile(rain.spell);
+            const started = await ctx.api.ongoing.startLingering(rain.spell, plan, {castRank: 5, region, dc: 24});
+            const card = started.castSaveCard ? game.messages.get(started.castSaveCard) : null;
+            const blast = card ? ctx.state(card) : null;
+            out.blast = {card: !!card, statistic: blast?.saveStatistic ?? null, targets: (blast?.targets ?? []).map(t => t.name.replace('PFTEST P23 Affliction ', '')).sort()};
+            if (card) {
+                for (const t of ctx.state(card).targets) { await ctx.api.saves.rollSave(card, t.id, {skipDialog: true}); await ctx.api.saves.correctTarget(card, t.id, {action: 'degree', degree: 'failure'}); }
+                await ctx.api.saves.finalize(card); await wait(1500);
+            }
+            out.blast.lost = [a, b, c].map(x => 500 - x.hitPoints.value);
+            const rec = () => ctx.api.ongoing.records().find(r => r.castId === started.castId);
+            combat = await Combat.create({scene: canvas.scene.id, active: true});
+            await combat.createEmbeddedDocuments('Combatant', [casterToken, ta].map((t, i) => ({tokenId: t.id, sceneId: canvas.scene.id, actorId: t.actorId, initiative: 30 - i * 10})));
+            await combat.startCombat(); await wait(1200);
+            await combat.nextTurn(); await wait(1800);
+            for (const o of rec().obligations.filter(o => o.kind === 'membership' && o.status === 'pending'))
+                await ctx.api.ongoing.request('review-targets', {castId: started.castId, revision: rec().revision, key: o.key, affected: o.actorUuid === a.uuid});
+            await wait(1200);
+            const save = rec().obligations.find(o => o.kind === 'save');
+            const fort = save?.cardId ? game.messages.get(save.cardId) : null;
+            if (fort) { const t = ctx.state(fort).targets[0]; await ctx.api.saves.rollSave(fort, t.id, {skipDialog: true}); await ctx.api.saves.correctTarget(fort, t.id, {action: 'degree', degree: 'criticalFailure'});
+                await ctx.api.saves.finalize(fort); await wait(1500); }
+            const persistent = a.itemTypes.condition.find(x => x.slug === 'persistent-damage');
+            out.turn = {card: !!fort, statistic: fort ? ctx.state(fort).saveStatistic : null, persistent: persistent ? `${persistent.system.persistent?.formula} ${persistent.system.persistent?.damageType}` : null, sickened: a.getCondition('sickened')?.value ?? 0,
+                minutes: Math.round((Number(rec()?.maximumAt ?? 0) - Number(rec()?.createdAt ?? 0)) / 60)};
+            await ctx.api.ongoing.request('end', {castId: started.castId}).catch(() => null);
+        } catch (error) { out.error = error.stack ?? error.message; }
+        finally { if (combat) await combat.delete().catch(() => null); if (region) await region.delete().catch(() => null); }
+        try {
+            const rude = await ctx.setup('Rude Awakening');
+            const ally = await ctx.actor('rude ally'); await ally.update({'system.details.alliance': 'party'});
+            const tAlly = await ctx.token(ally);
+            await ally.increaseCondition('frightened', {value: 2}); await wait(400);
+            const plan = await ctx.api.compile(rude.spell);
+            const result = await ctx.api.execute(rude.spell, {sourceActor: rude.caster, plan, targets: [tAlly.object ?? tAlly], castRank: 1, skipConfirmation: true}); await wait(1000);
+            const effect = await fromUuid(result.effectUuid);
+            const saveMods = ally.saves.fortitude.modifiers.filter(m => /suppression-save/.test(m.slug)).map(m => `${m.type} ${m.modifier} ${m.enabled}`);
+            const frightened = ally.itemTypes.condition.find(x => x.slug === 'frightened');
+            // (A middling die: 10 + the save + 2 against DC 15.)
+            const uniform = CONFIG.Dice.randomUniform; CONFIG.Dice.randomUniform = () => 0.5;
+            let save;
+            try { save = await ctx.api.suppressionSave(effect, {choice: `condition:${frightened.id}`, dc: 15}); } finally { CONFIG.Dice.randomUniform = uniform; }
+            await wait(800);
+            out.rude = {kind: plan.resolution.kind, mods: saveMods, degree: save?.degree ?? null, suppressed: save?.suppressed?.kind ?? null, frightenedAfter: ally.getCondition('frightened')?.value ?? 0};
+            await effect.delete(); await wait(1500);
+            out.rude.back = ally.getCondition('frightened')?.value ?? 0;
+        } catch (error) { out.error = (out.error ? `${out.error} | ` : '') + (error.stack ?? error.message); }
+        const bl = out.blast ?? {}, tu = out.turn ?? {}, r = out.rude ?? {};
+        assert(!out.error && bl.card && bl.statistic === 'reflex' && JSON.stringify(bl.targets) === '["rain a","rain b"]' && bl.lost?.[0] > 0 && bl.lost[1] > 0 && bl.lost[2] === 0
+            && tu.card && tu.statistic === 'fortitude' && /^2d6 poison$|^\{?2d6\}? poison$/.test(tu.persistent ?? '') && tu.sickened === 1 && tu.minutes === 1
+            && r.kind === 'suppression-save' && r.mods.some(m => /^status 1/.test(m)) && r.degree >= 2 && r.suppressed === 'condition' && r.frightenedAfter === 0 && r.back === 2,
+            `Cheliax batch 13: ${JSON.stringify(out)}`);
+        return {cheliax13: out};
+    },
     async cleanup(ctx) {
         // (The deleted records kept for the last case's reads: gone with it.)
         globalThis.__pftestRemovedRecords?.clear();

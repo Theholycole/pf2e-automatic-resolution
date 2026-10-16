@@ -206,6 +206,7 @@ export const SUPPORTED_RESOLUTION_KINDS = Object.freeze([
     "animated-spark",
     "patron-apocalypse",
     "conjured-item",
+    "suppression-save",
     "item-repair",
     "hide-reaction",
     "aid-attack",

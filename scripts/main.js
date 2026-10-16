@@ -28,6 +28,7 @@ import { autoToggleNewRound, autoToggleOnDamage, climbAidOnCheck, cloudActionOnC
 import { isStrikeDamage } from "../src/compiler/ward-families.js";
 import { BasicSaveRuntime, situationalCurseSync } from "./basic-save-runtime.js";
 import { holdCurseStage, curseCreatureCheck, curseCreatureSlain } from "./curse-creature.js";
+import { suppressionSave, suppressionEnded } from "./suppression-save-runtime.js";
 import { EscapeTermination } from "./escape-termination.js";
 import { AfflictionCareRuntime } from "./affliction-care-runtime.js";
 import { MessageRuntime } from "./message-runtime.js";
@@ -1544,6 +1545,8 @@ Hooks.once("init", () => {
             compile: (item, options) => runtime.compile(item, options),
             gmOption: (message, key, options) => runGmOption(message, key, options),
             sourceCreatureDamage: (plan, item, targets) => sourceCreatureDamage(plan, item, targets),
+            // (Rude Awakening's card button: the ally's save to suppress — {choice, dc} given, or asked.)
+            suppressionSave: (effect, options) => suppressionSave(effect, options),
             castingRules: { onCast: message => castingRulesOnCast(message), run: (message, button) => runCastingRule(message, button),
                 // (A card that counts as a spell — a kineticist's 2-action impulse —: Counterspell, the spellshapes and, if asked, the casting conditions.)
                 onSpellLike: (message, like) => spellLikeCast(message, like) },
@@ -2074,6 +2077,8 @@ Hooks.on("preUpdateItem", (item, changes) => { try { markEffectGmNotesUpdate(ite
 Hooks.on("preUpdateItem", (item, changes) => { try { holdCurseStage(item, changes); } catch (error) { console.warn(`${MODULE_ID} | The curse's stage hold failed.`, error); } });
 for (const event of ["createItem", "updateItem"]) Hooks.on(event, item => { if (item?.flags?.[MODULE_ID]?.stageCreature) void curseCreatureCheck(item).catch(error => notifyError("The curse's creature failed", error)); });
 Hooks.on("updateActor", actor => { if (actor?.flags?.[MODULE_ID]?.curseCreature) void curseCreatureSlain(actor).catch(error => notifyError("The curse's ending failed", error)); });
+// Rude Awakening: what the ally suppressed comes back when the spell's Effect ends, if it would still apply.
+Hooks.on("deleteItem", (item, options) => { if (item?.flags?.[MODULE_ID]?.suppressionSave?.suppressed) void suppressionEnded(item, options).catch(error => notifyError("The suppressed effect's return failed", error)); });
 Hooks.once("ready", () => { void markExistingGmNotes().catch(error => console.warn(`${MODULE_ID} | GM note marking failed.`, error)); });
 Hooks.on("renderChatMessageHTML", (message, html) => { try { hideGmNotes(message, html); } catch (error) { console.warn(`${MODULE_ID} | GM note hiding failed.`, error); } });
 

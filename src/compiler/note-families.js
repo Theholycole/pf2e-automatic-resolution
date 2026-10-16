@@ -22,6 +22,7 @@ import { compileSummon } from "./summon-families.js";
 import { compileRuleSet } from "./rule-sets.js";
 import { compileStatedEffect } from "./stated-effect.js";
 import { compileConjuredItem, compileItemRepair } from "./item-families.js";
+import { compileSuppressionSave } from "./suppression-save.js";
 import { compileAidAttack, compileFormChoice, compileHideReaction, compileSeekWhistle } from "./check-actions.js";
 import { compileCoverSquare, compileLureSave, compileSaveRetry } from "./area-saves.js";
 import { compileSceneWalls, compileShrubWall } from "./scene-features.js";
@@ -77,6 +78,7 @@ const FAMILIES = [
     { kind: "rule-set", key: "ruleSet", compile: adapted => compileRuleSet(adapted) },
     { kind: "stated-effect", key: "statedEffect", compile: adapted => compileStatedEffect(adapted) },
     { kind: "conjured-item", key: "conjuredItem", compile: (adapted, nativeSpellEffects) => compileConjuredItem(adapted, nativeSpellEffects) },
+    { kind: "suppression-save", key: "suppressionSave", compile: adapted => compileSuppressionSave(adapted) },
     { kind: "item-repair", key: "itemRepair", compile: adapted => compileItemRepair(adapted) },
     { kind: "hide-reaction", key: "hideReaction", compile: adapted => compileHideReaction(adapted) },
     { kind: "aid-attack", key: "aidAttack", compile: adapted => compileAidAttack(adapted) },

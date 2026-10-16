@@ -445,7 +445,15 @@ export class OngoingFamilies {
             label: `Review ${member.name}'s exposure when ${item.name} was cast`, actorUuid: member.actorUuid, tokenUuid: member.tokenUuid });
         await this.ongoing.save(journal, data);
         await this.ongoing.activate(journal);
-        return { status: "prepared", castId: record.castId, journal, regionUuid: region?.uuid ?? null, members };
+        // (Brimstone Rain: the blast's basic save card for the creatures inside as the area starts.)
+        let castSaveCard = null;
+        if (plan.resolution.castSavePlan && members.length) {
+            const tokens = (await Promise.all(members.map(member => fromUuid(member.tokenUuid)))).filter(Boolean).map(token => token.object ?? token);
+            const started = await this.saves.start(item, { plan: clone(plan.resolution.castSavePlan), sourceActor: item.actor, targets: tokens, castRank: rank,
+                ...(options.dc ? { dc: options.dc } : {}), sourceMessageId: options.sourceMessageId ?? null, skipConfirmation: options.skipConfirmation ?? true });
+            castSaveCard = started?.card?.id ?? null;
+        }
+        return { status: "prepared", castId: record.castId, journal, regionUuid: region?.uuid ?? null, members, ...(castSaveCard ? { castSaveCard } : {}) };
     }
     /**
      * A hazard left in a target's squares by a save or attack (“the ground in the target's space catches fire, dealing 1d6 fire damage

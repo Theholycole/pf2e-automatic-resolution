@@ -1930,7 +1930,12 @@ The user (2026-10-06): "audit and implement all of them" (the conditions, the sp
 
 ## PF2e 8.6 (2026-10-16): the new spells (Lost Omens Cheliax, Infernal Inheritance)
 
-### Question: Brimstone Rain has no duration in PF2e's data
+### Answered (2026-10-16): Brimstone Rain has no duration in PF2e's data — **A, 1 minute**
+
+Built: the 1-minute lingering area (difficult terrain; breathing creatures' turn-start Fortitude save, its persistent poison and Sickened 1), its blast a
+basic Reflex save card for the creatures inside as the area starts (src/compiler/blast-lingering.js); the GM leaves out creatures that don't breathe.
+
+The question as asked:
 "Globs of smoldering brimstone erupt from the earth, dealing 8d6 fire damage to each creature in the area with a basic Reflex save … For the duration,
 the area is difficult terrain, and breathing creatures that start their turn in the area must succeed at a Fortitude save or take … persistent poison
 damage … You can Dismiss the spell." PF2e 8.6.1's item has an empty Duration, so the lingering area has no time to end. Options:
@@ -1939,7 +1944,14 @@ damage … You can Dismiss the spell." PF2e 8.6.1's item has an empty Duration, 
 - **C. You give the book's duration** and the module uses that.
 Until then the spell stays guided (the basic Reflex save works on its card; the lingering part is the GM's).
 
-### Question: Rude Awakening's suppression save
+### Answered (2026-10-16): Rude Awakening's suppression save — **A, a card for the ally**
+
+Built: the ally's Effect (+1 status to saves, +2 against emotion effects) and the card's button (src/compiler/suppression-save.js,
+scripts/suppression-save-runtime.js): the GM picks the emotion effect, Frightened or Stupefied and types its DC; the Will save (+2 circumstance); a success
+removes it (or the Effect granting it) and puts it back when the minute ends, if it would still apply (an effect with time left; Frightened lowered by the rounds
+gone by; Stupefied as it was).
+
+The question as asked:
 "The target can immediately attempt a Will save with a +2 circumstance bonus against an ongoing emotion effect or against the frightened or stupefied
 condition, suppressing the effect or condition for the duration on a success. In addition, the target gains a +1 status bonus to all saving throws for the
 duration, which increases to a +2 status bonus to saving throws against emotion effects." The save is against the DC of the effect being suppressed, which the

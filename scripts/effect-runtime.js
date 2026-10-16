@@ -135,6 +135,7 @@ import { diffractCone } from '../src/compiler/power-prism.js';
 import { treeAt } from '../src/compiler/engulfing-tree.js';
 import { grappleSizeAt } from '../src/compiler/weapon-grapple.js';
 import { disbeliefPain } from "./disbelief-pain.js";
+import { suppressionSave } from "./suppression-save-runtime.js";
 
 export const MODULE_ID = "pf2e-automatic-resolution";
 
@@ -692,6 +693,7 @@ export class EffectRuntime {
         if (plan.resolution.kind === "rule-set") return this.#executeRuleSet(itemOrSource, plan, sourceActor, options);
         if (plan.resolution.kind === "stated-effect") return this.#executeStatedEffect(itemOrSource, plan, sourceActor, options);
         if (plan.resolution.kind === "conjured-item") return this.#executeConjuredItem(itemOrSource, plan, sourceActor, options);
+        if (plan.resolution.kind === "suppression-save") return this.#executeSuppressionSave(itemOrSource, plan, sourceActor, options);
         if (plan.resolution.kind === "item-repair") return this.#executeItemRepair(itemOrSource, plan, sourceActor, options);
         if (plan.resolution.kind === "hide-reaction") return this.#executeHideReaction(itemOrSource, plan, sourceActor, options);
         if (plan.resolution.kind === "aid-attack") return this.#executeAidAttack(itemOrSource, plan, sourceActor, options);
@@ -1673,6 +1675,27 @@ export class EffectRuntime {
                 start: { value: game.time.worldTime, initiative: game.combat?.combatant?.initiative ?? null },
                 context: { origin: { actor: sourceActor.uuid, item: itemOrSource?.uuid ?? null }, target: { actor: actor.uuid }, roll: null } } }]);
         return effect;
+    }
+
+    /**
+     * Rude Awakening (the user's option A, 2026-10-16): the ally's bonus Effect for the duration (the text's status bonuses), and the card's button for its save
+     * against an emotion effect or a condition (suppression-save-runtime.js), once.
+     */
+    async #executeSuppressionSave(itemOrSource, plan, sourceActor, options) {
+        const data = plan.resolution.suppressionSave;
+        const ally = this.#singleTarget(plan, options, "the ally").actor;
+        const castInstanceId = options.castInstanceId ?? randomID();
+        const what = `${data.against.traits.map(trait => `an ${trait} effect`).join(" or ")}, ${data.against.conditions.join(" or ")}`;
+        const effect = await this.#ruleEffect(ally, { name: plan.source.name, rules: foundry.utils.deepClone(data.rules), seconds: data.seconds, sourceActor, itemOrSource,
+            flags: { suppressionSave: { castId: castInstanceId, spellName: plan.source.name, statistic: data.statistic, bonus: { ...data.bonus }, against: foundry.utils.deepClone(data.against), used: false, suppressed: null } },
+            description: `<p>+${data.rules[0].value} status bonus to saving throws (+${data.rules[1].value} against ${escapeHTML(data.against.traits.join(" or "))} effects).</p>`
+                + `<p>Once: a ${escapeHTML(data.statistic)} save (+${data.bonus.value} ${escapeHTML(data.bonus.type)}) against ${escapeHTML(what)} — the GM picks it and its DC from the spell's card; a success suppresses it for the duration.</p>` });
+        const button = `<button type="button" class="pf2e-auto-runtime-button" data-runtime-action="suppression-save" data-actor-uuid="${ally.uuid}" data-effect-id="${effect.id}"><i class="fa-solid fa-droplet"></i> ${escapeHTML(ally.name)}'s ${escapeHTML(data.statistic)} save to suppress (GM: pick it, type its DC)</button>`;
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "suppression-save", castInstanceId } },
+            content: `<h3>${escapeHTML(plan.source.name)}</h3><p>${escapeHTML(ally.name)} gains the bonuses for ${Math.round(data.seconds / 60)} minute${data.seconds === 60 ? "" : "s"} and can try to suppress ${escapeHTML(what)}.</p>`
+                + (plan.resolution.dataNotes ?? []).map(note => `<p class="pf2e-auto-gm-reminder"><strong>PF2e data:</strong> ${escapeHTML(note)}</p>`).join("") + button }); } catch (_) {}
+        if (options.sourceMessageId) try { await game.messages.get(options.sourceMessageId)?.setFlag(MODULE_ID, "resolvedCast", { castInstanceId, resolutionKind: "suppression-save" }); } catch (_) {}
+        return { status: "applied", plan, castInstanceId, effectUuid: effect.uuid, actorUuid: ally.uuid };
     }
 
     /** The caster's spell DC for a cast. */
@@ -13313,6 +13336,7 @@ export class EffectRuntime {
         if (button.dataset.runtimeAction === "spell-storm") return await this.spellStorm(effectDocument);
         if (button.dataset.runtimeAction === "thrall-on-crit") return await this.thrallOnCrit(effectDocument);
         if (button.dataset.runtimeAction === "cast-grant") return await this.castGrant(effectDocument);
+        if (button.dataset.runtimeAction === "suppression-save") return await suppressionSave(effectDocument);
         if (button.dataset.runtimeAction === "giant-thrall") return await this.giantThrallStrikes(effectDocument);
         if (button.dataset.runtimeAction === "thrall-control") return await this.thrallControl(effectDocument, Number(button.dataset.index ?? 0));
         if (button.dataset.runtimeAction === "cannibalize") return await this.cannibalHunger(effectDocument);
