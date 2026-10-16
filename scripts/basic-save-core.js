@@ -2876,10 +2876,13 @@ export function isExecutableStoredTriggerPlan(plan) {
     // A sustained aura on the caster: any number of triggers while sustained.
     const aura = stored.aura === true && stored.endsOnTrigger === false && stored.sustained === true && Number.isInteger(stored.durationSeconds) && stored.durationSeconds > 0
         && stored.markerDuration == null && !stored.held;
+    // A ward on an entrance, triggered any number of times while it lasts (Devil's Horseshoe).
+    const ward = stored.ward === true && stored.endsOnTrigger === false && stored.sustained !== true && Number.isInteger(stored.durationSeconds) && stored.durationSeconds > 0
+        && stored.markerDuration == null && !stored.held && !stored.aura && stored.effectMarker == null;
     // Images on the caster that take hits, broken by misses, added on each Sustain (Trickster's Mirrors).
     const images = stored.images != null && isStoredImages(stored.images) && stored.saveTarget === "attacker" && stored.endsOnTrigger === false && stored.sustained === true
         && Number.isInteger(stored.durationSeconds) && stored.durationSeconds > 0 && stored.markerDuration == null && !stored.held && !stored.aura && stored.effectMarker == null;
-    return typeof stored.trigger === "string" && stored.trigger.length > 0 && (stored.images != null ? images : stored.held ? held : stored.aura ? aura : (timed || untilNextTurn || effectUntilNextTurn || effectSustained)) && typeof stored.supersedes === "boolean"
+    return typeof stored.trigger === "string" && stored.trigger.length > 0 && (stored.images != null ? images : stored.held ? held : stored.aura ? aura : stored.ward ? ward : (timed || untilNextTurn || effectUntilNextTurn || effectSustained)) && typeof stored.supersedes === "boolean"
         && Array.isArray(stored.notes) && stored.notes.every(note => typeof note === "string")
         && Array.isArray(stored.rowNotes) && stored.rowNotes.every(note => typeof note?.text === "string" && ["criticalSuccess", "success", "failure", "criticalFailure"].includes(note.degree))
         && inspectSavePlan(storedTriggerExposurePlan(plan)).supported;

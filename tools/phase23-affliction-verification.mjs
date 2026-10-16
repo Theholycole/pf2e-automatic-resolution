@@ -32061,7 +32061,9 @@ export const cases = {
         for (const actor of extra) { await canvas.scene.deleteEmbeddedDocuments('Token', canvas.scene.tokens.filter(t => t.actorId === actor.id).map(t => t.id)); await actor.delete(); }
         const o = out.one ?? {}, t = out.three ?? {};
         assert(!out.error && out.level === 'automatic' && o.hit && o.formula === '1d6' && o.up === 10 && o.back === 10 && o.fallen === 5 && o.x === 2200 && o.prone && o.mythic > 0
-            && t.hit && t.formula === '3d6' && t.up === 50 && t.back === 40 && t.fallen === 25 && t.x === 2200, `Banishing Touch: ${JSON.stringify(out)}`);
+            // (The 40 feet stop at the scene's edge if it's nearer: the lab's right edge was at 2200, the sweep scene's is past the 8 squares.)
+            && t.hit && t.formula === '3d6' && t.up === 50 && t.back === 40 && t.fallen === 25 && t.x === Math.min(2000 + 8 * canvas.grid.size, canvas.dimensions.sceneRect.right - canvas.grid.size),
+            `Banishing Touch: ${JSON.stringify(out)}`);
         return {batch72: out};
     },
     // Rank 2 batch 71: Blazing Armory: at 2nd one character gets a held longsword +1 striking with fire damage (no versatile); two targets are
@@ -33526,7 +33528,9 @@ export const cases = {
             const record = () => ctx.api.ongoing.records().find(r => r.castId === castId);
             const before = {fascinated: [dreamer, steady].map(a => a.hasCondition('fascinated')), notes: [dreamer, steady].map(a => a.itemTypes.effect.filter(e => e.flags?.[NSX]?.runtime?.disbelieve || /Focused on/.test(e.name)).map(e => e.name))};
             const entry = record()?.entries.find(e => e.actorUuid === dreamer.uuid && e.metadata?.disbelieve);
-            const result = entry ? await ctx.api.ongoing.request('disbelieve', {castId, uuid: entry.uuid}) : null; await wait(1500);
+            // (The DC 5 Perception check's d20 held off a natural 1.)
+            const uniform = CONFIG.Dice.randomUniform; CONFIG.Dice.randomUniform = () => 0.5;
+            let result; try { result = entry ? await ctx.api.ongoing.request('disbelieve', {castId, uuid: entry.uuid}) : null; } finally { CONFIG.Dice.randomUniform = uniform; } await wait(1500);
             out.treasure = {before, dc: entry?.metadata?.disbelieve?.dc ?? null, result: result?.status ?? null, ended: result?.ended ?? null, status: record()?.status ?? null,
                 after: [dreamer, steady].map(a => a.hasCondition('fascinated'))};
         } catch (error) { out.treasureError = error.stack ?? error.message; }
@@ -42127,6 +42131,43 @@ export const cases = {
             && r.subject?.notes.includes('Compelled') && r.rebel?.notes.includes('Compelled') && r.rebel.frightened >= 1 && !r.rebel.notes.includes('Ends if the caster is hostile'),
             `Cheliax batch 6: ${JSON.stringify(out)}`);
         return {cheliax6: out};
+    },
+    // PF2e 8.6's new spells, batch 7 (2026-10-16): Devil's Horseshoe — the ward waits (8 hours); a fiend passing through, triggered by the GM, takes the spirit
+    // damage on a failure with Enfeebled 1, Stupefied 1 and the silver note for 1 minute; a second fiend triggers it again (the ward lasts) and critically fails.
+    async cheliaxBatch7(ctx) {
+        const wait = ms => new Promise(r => setTimeout(r, ms));
+        const NSX = 'pf2e-automatic-resolution';
+        const out = {};
+        const extra = [];
+        const make = async (name, traits) => { const actor = await Actor.create({name: `PFTEST P23 Affliction ${name}`, type: 'npc', flags: {[NSX]: {phase23AfflictionFixture: true}},
+            system: {details: {level: {value: 3}}, traits: {value: traits}, attributes: {hp: {value: 300, max: 300}}}}); extra.push(actor); return actor; };
+        try {
+            const shoe = await ctx.setup("Devil's Horseshoe");
+            const plan = await ctx.api.compile(shoe.spell);
+            out.supports = ctx.api.storedTriggers.supports(plan);
+            const set = await ctx.api.storedTriggers.start(shoe.spell, plan, {sourceActor: shoe.caster, castRank: shoe.spell.rank});
+            const results = [];
+            for (const [name, degree] of [['horseshoe imp', 'failure'], ['horseshoe devil', 'criticalFailure']]) {
+                const fiend = await make(name, ['fiend', 'devil']);
+                const token = await ctx.token(fiend);
+                const trig = await ctx.api.storedTriggers.trigger({castId: set.castId, uuid: set.effectUuid, targetUuid: token.uuid});
+                const card = game.messages.get(trig.cardId);
+                const t0 = ctx.state(card).targets[0];
+                await ctx.api.saves.rollSave(card, t0.id, {skipDialog: true}); await ctx.api.saves.correctTarget(card, t0.id, {action: 'degree', degree});
+                await ctx.api.saves.finalize(card); await wait(1200);
+                const silver = fiend.itemTypes.effect.find(effect => /Attacks count as silver/.test(effect.name));
+                results.push({lost: 300 - fiend.hitPoints.value, enfeebled: fiend.getCondition('enfeebled')?.value ?? 0, stupefied: fiend.getCondition('stupefied')?.value ?? 0,
+                    silver: silver ? `${silver.system.duration.value} ${silver.system.duration.unit}` : null});
+            }
+            out.results = results;
+            out.still = ctx.api.ongoing.records().some(r => r.castId === set.castId && r.status === 'active');
+            await ctx.api.ongoing.request('end', {castId: set.castId}).catch(() => null);
+        } catch (error) { out.error = error.stack ?? error.message; }
+        for (const actor of extra) { await canvas.scene.deleteEmbeddedDocuments('Token', canvas.scene.tokens.filter(t => t.actorId === actor.id).map(t => t.id)); await actor.delete(); }
+        const [a, b] = out.results ?? [];
+        assert(!out.error && out.supports && a?.lost >= 2 && a.enfeebled === 1 && a.stupefied === 1 && a.silver === '1 minutes' && b?.lost >= 4 && b.enfeebled === 2 && b.stupefied === 2
+            && b.silver === '10 minutes' && out.still, `Cheliax batch 7: ${JSON.stringify(out)}`);
+        return {cheliax7: out};
     },
     async cleanup(ctx) {
         // (The deleted records kept for the last case's reads: gone with it.)

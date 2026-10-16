@@ -637,3 +637,54 @@ export function extractRuneTrigger(adapted) {
         claimed: [...(domain ? [htmlToPlainText(domain).trim()] : []), ...sentences, ...(step ? [step[0]] : [])]
     };
 }
+
+// A ward on an entrance that hurts a creature of one kind passing through (Devil's Horseshoe, PF2e 8.6):
+//   "… you conjure a silver horseshoe over an entrance." / "A fiend that passes through the target takes 2d6 spirit damage and must attempt a Will save." with
+//   rows "The fiend is unaffected." / "The fiend takes half damage, and attacks against the fiend are treated as magical silver for 1 round." / "The fiend takes
+//   full damage and is {Enfeebled 1} and {Stupefied 1} for 1 minute. Attacks against the fiend are treated as magical silver for 1 minute." / "The fiend takes
+//   double damage and is {Enfeebled 2} and {Stupefied 2} for 1 minute. Attacks against the fiend are treated as magical silver for 10 minutes."
+// The marker lasts the spell; its Trigger control opens the save card for the creature the GM targets (each time one passes through); the silver attacks are
+// the row's note for its time (the GM: the creature's silver weakness or resistance applies to them).
+const WARD_PASS = /^An? ([a-z]+) that passes through the target takes (\d+d\d+) ([a-z]+) damage and must attempt an? (Fortitude|Reflex|Will) save\.$/;
+const WARD_ROWS = {
+    criticalSuccess: /^The ([a-z]+) is unaffected\.$/,
+    success: /^The ([a-z]+) takes half damage, and attacks against the \1 are treated as magical silver for (\d+) (round|minute)s?\.$/,
+    failure: /^The ([a-z]+) takes full damage and is (@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{[A-Za-z]+ \d\}) and (@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{[A-Za-z]+ \d\}) for (\d+) (round|minute)s?\. Attacks against the \1 are treated as magical silver for (\d+) (round|minute)s?\.$/,
+    criticalFailure: /^The ([a-z]+) takes double damage and is (@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{[A-Za-z]+ \d\}) and (@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{[A-Za-z]+ \d\}) for (\d+) (round|minute)s?\. Attacks against the \1 are treated as magical silver for (\d+) (round|minute)s?\.$/
+};
+
+export function extractWardTrigger(adapted) {
+    if (adapted.defense?.kind !== "save" || adapted.defense.basic || adapted.targeting?.area || !/^one door or similar opening$/i.test(String(adapted.targeting?.target ?? "").trim())) return null;
+    const components = adapted.damageComponents ?? [];
+    if (components.length !== 1 || components[0].category) return null;
+    const durationSeconds = seconds(adapted.lifecycle?.duration);
+    const [body, table, heightened = "", ...rest] = String(adapted.descriptionHTML ?? "").split(/<hr\s*\/?>/i).map(section => section.trim());
+    if (!durationSeconds || !table || rest.length) return null;
+    const lead = sentencesOf(body);
+    const at = lead.findIndex(sentence => WARD_PASS.test(sentence));
+    if (at < 0 || at > 1 || lead.length !== at + 1 || lead.slice(0, at).some(sentence => /\d|@|\b(?:damage|save|bonus|penalty)\b/i.test(sentence))) return null;
+    const pass = WARD_PASS.exec(lead[at]);
+    if (String(components[0].formula).replace(/\s+/g, "") !== pass[2] || String(components[0].type).toLowerCase() !== pass[3] || pass[4].toLowerCase() !== adapted.defense.statistic) return null;
+    const kind = pass[1];
+    const rows = {};
+    for (const [degree, heading] of Object.entries({ criticalSuccess: "Critical Success", success: "Success", failure: "Failure", criticalFailure: "Critical Failure" })) {
+        const text = new RegExp(String.raw`<p>\s*<strong>\s*${heading}\s*</strong>\s*([\s\S]*?)</p>`).exec(table)?.[1]?.replace(/\s+/g, " ").trim() ?? "";
+        rows[degree] = WARD_ROWS[degree].exec(text);
+        if (!rows[degree] || rows[degree][1] !== kind) return null;
+    }
+    const plural = (count, unit) => `${count} ${unit}${count === "1" ? "" : "s"}`;
+    const silver = (value, unit, sourceText) => ({ label: "Attacks count as silver", text: `Attacks against it are treated as magical silver (its silver weakness or resistance applies: the GM).`,
+        sourceText, duration: { mode: "fixed", value: Number(value), unit: `${unit}s`, expiry: unit === "round" ? "turn-start" : null, anchor: "effect-start", offset: 0, sourceText: `for ${plural(value, unit)}` } });
+    const conditionRow = (verb, match) => `The target takes ${verb} damage, is ${match[2]} for ${plural(match[4], match[5])}, and is ${match[3]} for ${plural(match[4], match[5])}.`;
+    const statistic = pass[4];
+    return {
+        html: `<p>The target takes ${pass[2]} ${pass[3]} damage and must attempt a ${statistic} save.</p><hr /><p><strong>Critical Success</strong> The target is unaffected.</p>`
+            + `<p><strong>Success</strong> The target takes half damage.</p><p><strong>Failure</strong> ${conditionRow("full", rows.failure)}</p>`
+            + `<p><strong>Critical Failure</strong> ${conditionRow("double", rows.criticalFailure)}</p>${heightened ? `<hr />${heightened}` : ""}`,
+        target: "1 creature",
+        storedTrigger: { trigger: `If a ${kind} passes through the warded entrance.`, endsOnTrigger: false, ward: true, notes: [`Only a ${kind} triggers it: target the ${kind} that passes through, then Trigger.`],
+            rowNotes: [], supersedes: false, durationSeconds, markerDuration: null, castTarget: String(adapted.targeting.target).trim(), sourceText: lead[at] },
+        rowNoteEffects: { success: [silver(rows.success[2], rows.success[3], rows.success[0])], failure: [silver(rows.failure[6], rows.failure[7], rows.failure[0])],
+            criticalFailure: [silver(rows.criticalFailure[6], rows.criticalFailure[7], rows.criticalFailure[0])] }
+    };
+}

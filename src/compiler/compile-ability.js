@@ -424,7 +424,7 @@ import { compileDirectDamage } from "./direct-damage.js";
 import { compileAllyEnemySplit, compileAllyTempEnemySave } from "./ally-enemy-split.js";
 import { compileMessage } from "./message-compiler.js";
 import { extractThrall, rewriteThrallHorde } from "./thrall-compiler.js";
-import { extractStoredTrigger, extractHeldTrigger, extractAuraTrigger, extractEffectTrigger, extractShieldTrigger, extractPactTrigger, extractMurmurTrigger, extractProphecyTrigger, extractGemTrigger, extractMirrorTrigger, extractRuneTrigger } from "./stored-trigger.js";
+import { extractStoredTrigger, extractWardTrigger, extractHeldTrigger, extractAuraTrigger, extractEffectTrigger, extractShieldTrigger, extractPactTrigger, extractMurmurTrigger, extractProphecyTrigger, extractGemTrigger, extractMirrorTrigger, extractRuneTrigger } from "./stored-trigger.js";
 import { rewriteHealOrHarm } from "./heal-or-harm.js";
 import { rewriteBorrowedConcealment, rewriteBorrowedObscure, rewriteBorrowedSpell, rewriteBorrowedEffects, rewriteBorrowedTraitSave } from "./borrowed-spell.js";
 import { rewriteTraitGrant } from "./trait-grant.js";
@@ -6327,7 +6327,7 @@ function compileSpell(item, options) {
         ? { sentence: SLOT_TRIGGER.exec(adapted.descriptionHTML)[0].trim(), link: slotLinks[0][1] } : null;
     if (slotTrigger) adapted.descriptionHTML = String(adapted.descriptionHTML).replace(SLOT_TRIGGER, "").replace(slotLinks[0][0], "");
     // A spell that waits for a trigger, then makes the triggering creature save (Animus Mine, Bandit's Doom).
-    const storedTrigger = extractStoredTrigger(adapted) ?? extractHeldTrigger(adapted) ?? extractAuraTrigger(adapted) ?? extractEffectTrigger(adapted) ?? extractShieldTrigger(adapted) ?? extractPactTrigger(adapted) ?? extractMurmurTrigger(adapted) ?? extractProphecyTrigger(adapted) ?? extractGemTrigger(adapted) ?? extractMirrorTrigger(adapted) ?? extractRuneTrigger(adapted);
+    const storedTrigger = extractStoredTrigger(adapted) ?? extractWardTrigger(adapted) ?? extractHeldTrigger(adapted) ?? extractAuraTrigger(adapted) ?? extractEffectTrigger(adapted) ?? extractShieldTrigger(adapted) ?? extractPactTrigger(adapted) ?? extractMurmurTrigger(adapted) ?? extractProphecyTrigger(adapted) ?? extractGemTrigger(adapted) ?? extractMirrorTrigger(adapted) ?? extractRuneTrigger(adapted);
     if (storedTrigger) { adapted.descriptionHTML = storedTrigger.html; adapted.targeting = { ...adapted.targeting, target: storedTrigger.target }; }
     // (Unknowable Icon: the text's basic save over the item's; the save is each creature's near the rune, not the cast's area.)
     if (storedTrigger?.defense) adapted.defense = storedTrigger.defense;
@@ -9443,6 +9443,8 @@ function compileSpell(item, options) {
     if (storedTrigger) {
         if (plan.resolution.kind !== "save") plan.automation.pendingCapabilities.push("stored-trigger-route");
         plan.resolution.storedTrigger = storedTrigger.storedTrigger;
+        // (Devil's Horseshoe: the rows' notes the text gave apart from their conditions.)
+        for (const [degree, notes] of Object.entries(storedTrigger.rowNoteEffects ?? {})) if (plan.resolution.outcomes?.[degree]) plan.resolution.outcomes[degree].noteEffects = [...(plan.resolution.outcomes[degree].noteEffects ?? []), ...notes];
         // "… and treat the result as one category worse" when the target had accepted (the GM answers on the triggered save's card).
         if (storedTrigger.degreeAdjustment) { plan.resolution.degreeAdjustment = storedTrigger.degreeAdjustment; plan.compilerEvidence.pactAccepted = storedTrigger.degreeAdjustment.sourceText; }
         if (unqualifiedNote) plan.resolution.dataNotes = [...(plan.resolution.dataNotes ?? []), unqualifiedNote];

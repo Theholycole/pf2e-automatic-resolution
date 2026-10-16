@@ -1952,7 +1952,8 @@ module can't know, and PF2e has no "suppressed" state for a condition. (PF2e's E
 ### Not built yet (no question — they need new runtime parts)
 - **Tenebrous Freedom:** the detached shadow (a token moving 5/10/15 feet on each Cast or Sustain), Enfeebled 2 and Clumsy 2 while it's away, reattached
   by a Grapple against the spell DC or a 2-action manipulate activity in reach.
-- **Devil's Horseshoe:** a ward on a door: a fiend passing through takes the damage and saves; attacks against it count as magical silver (rows' times).
+- ~~Devil's Horseshoe~~ — built 2026-10-16 as a ward (the GM's Trigger for each fiend passing through; the silver attacks a note for the row's time).
 - **Gift of Dusk:** a curse with stages (Enfeebled 2, 3, then 4 and the shadow freed as a Shadow or Greater Shadow, friendly to the caster).
 - **Control Currents:** a current along a line on water, moving creatures 10 (20) feet each turn (the caster's direction), a Fortitude save for unwilling
-  ones, difficult terrain against it.
+  ones, difficult terrain against it. (The lingering area with a push reads; the caster's toward/away choice for the push is the missing part. PF2e's data
+  heightens it at rank 2, the text at 4th.)

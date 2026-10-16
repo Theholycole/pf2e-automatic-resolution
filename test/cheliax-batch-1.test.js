@@ -193,3 +193,13 @@ test('Kiss the Ring: the GM\'s degree question for creatures ranked below the ca
         [['No hostile actions against the caster', 'Ends if the caster is hostile', 'Compelled'], ['No hostile actions against the caster', 'Compelled']]);
     assert.ok([...plan.resolution.outcomes.failure.noteEffects, ...plan.resolution.outcomes.criticalFailure.noteEffects].every(validNoteEffect));
 });
+
+test('Devil\'s Horseshoe: a ward the GM triggers for each fiend passing through, the rows\' conditions and the silver note', async () => {
+    const {isExecutableStoredTriggerPlan} = await import('../scripts/basic-save-core.js');
+    const plan = compile(await spell('rank-1/devils-horseshoe'));
+    assert.equal(isExecutableStoredTriggerPlan(plan), true);
+    assert.deepEqual([plan.resolution.storedTrigger.ward, plan.resolution.storedTrigger.endsOnTrigger, plan.resolution.storedTrigger.durationSeconds], [true, false, 28800]);
+    const rows = plan.resolution.outcomes;
+    assert.deepEqual(rows.failure.effects.map(effect => `${effect.slug}${effect.value}`).sort(), ['enfeebled1', 'stupefied1']);
+    assert.deepEqual(['success', 'failure', 'criticalFailure'].map(degree => rows[degree].noteEffects.map(note => `${note.duration.value} ${note.duration.unit}`)), [['1 rounds'], ['1 minutes'], ['10 minutes']]);
+});
