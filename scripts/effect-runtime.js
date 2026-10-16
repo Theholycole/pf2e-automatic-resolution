@@ -1193,6 +1193,17 @@ export class EffectRuntime {
             try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), content: `<p><strong>${escapeHTML(plan.source.name)}</strong>: once during the duration, ${escapeHTML(sourceActor.name)} can cast ${grant.rank}${["", "st", "nd", "rd"][grant.rank] ?? "th"}-rank ${escapeHTML(grant.name)} as a ${escapeHTML(grant.tradition)} innate spell.</p>`
                 + `<button type="button" class="pf2e-auto-runtime-button" data-runtime-action="cast-grant" data-actor-uuid="${sourceActor.uuid}" data-effect-id="${grantHolder.id}"><i class="fa-solid fa-wand-sparkles"></i> Cast ${escapeHTML(grant.name)}</button>` }); } catch (_) {}
         }
+        // (Turnip Lantern: the light the spell's aura doesn't give — the caster's token light for the same time.)
+        const lightHolder = plan.resolution.casterLight ? created.find(document => document.actor?.uuid === sourceActor.uuid) ?? null : null;
+        if (lightHolder) {
+            const light = plan.resolution.casterLight;
+            const [lit] = await sourceActor.createEmbeddedDocuments("Item", [{ name: `${plan.source.name}: light`, type: "effect", img: lightHolder.img,
+                flags: { [MODULE_ID]: { casterLight: { castInstanceId, of: lightHolder.id } } },
+                system: { description: { value: `<p>Bright light for ${light.bright} feet and dim light to ${light.dim} feet. ${escapeHTML(light.note)}</p>` },
+                    duration: clone(lightHolder.system.duration), start: clone(lightHolder.system.start), rules: [{ key: "TokenLight", value: { bright: light.bright, dim: light.dim } }],
+                    tokenIcon: { show: false }, traits: { value: ["light"] } } }]).catch(() => []);
+            if (lit) created.push(lit);
+        }
         let receipt = null;
         try {
             receipt = await this.#postReceipt({ plan, sourceActor, created, castInstanceId, sequence });

@@ -28720,7 +28720,9 @@ export const cases = {
             const onCard = await ctx.api.execute(body.spell, {sourceActor: body.caster, plan, castRank: 4, skipConfirmation: true}); await wait(800);
             out.card = {from: onCard.from, to: onCard.to, degree: ctx.state(card).targets[0].degree};
             await ctx.api.saves.finalize(card); await wait(1000);
-            await body.caster.saves.fortitude.roll({dc: {value: 60}, skipDialog: true}); await wait(800);
+            // (The d20 held off a natural 20, which would make the critical failure a failure.)
+            const uniform = CONFIG.Dice.randomUniform; CONFIG.Dice.randomUniform = () => 0.5;
+            try { await body.caster.saves.fortitude.roll({dc: {value: 60}, skipDialog: true}); } finally { CONFIG.Dice.randomUniform = uniform; } await wait(800);
             const before = new Set(game.messages.contents.map(m => m.id));
             const plain = await ctx.api.execute(body.spell, {sourceActor: body.caster, plan, castRank: 4, skipConfirmation: true}); await wait(800);
             const note = game.messages.contents.filter(m => !before.has(m.id)).map(m => m.content ?? '').join(' ');
@@ -42081,6 +42083,50 @@ export const cases = {
         assert(!out.error && JSON.stringify(out.modes?.find(m => /ally/.test(m[0]))) === '["roar ally","ally"]' && out.ally?.temp === 15 && out.ally.effect && out.penalty
             && out.foes.every(f => f.lost >= 12 && f.frightened === 1 && f.stupefied === 1), `Cheliax batch 5: ${JSON.stringify(out)}`);
         return {cheliax5: out};
+    },
+    // PF2e 8.6's new spells, batch 6 (2026-10-16): Turnip Lantern — PF2e's aura on the caster and the module's token light (bright 20, dim 40); a creature 10
+    // feet away gets PF2e's +1 (against unholy creatures) from the aura.
+    async cheliaxBatch6(ctx) {
+        const wait = ms => new Promise(r => setTimeout(r, ms));
+        const g = canvas.grid.size;
+        const out = {};
+        try {
+            const fixture = await ctx.setup('Turnip Lantern');
+            const casterToken = canvas.scene.tokens.find(t => t.actorId === fixture.caster.id);
+            const friend = await ctx.actor('lantern friend');
+            await canvas.scene.createEmbeddedDocuments('Token', [{...friend.prototypeToken.toObject(), actorId: friend.id, actorLink: true, x: casterToken.x + 2 * g, y: casterToken.y}]);
+            await wait(800);
+            const plan = await ctx.api.compile(fixture.spell);
+            await ctx.api.execute(fixture.spell, {sourceActor: fixture.caster, plan, targets: [], castRank: 1, skipConfirmation: true}); await wait(2500);
+            const light = fixture.caster.itemTypes.effect.find(effect => /Turnip Lantern: light/.test(effect.name));
+            out.lantern = {kind: plan.resolution.kind, aura: fixture.caster.itemTypes.effect.some(effect => effect.name === 'Aura: Turnip Lantern'),
+                light: light ? light.system.rules.find(rule => rule.key === 'TokenLight')?.value ?? null : null, tokenLight: casterToken.light?.bright ?? null,
+                friend: friend.itemTypes.effect.some(effect => effect.name === 'Spell Effect: Turnip Lantern')};
+        } catch (error) { out.error = error.stack ?? error.message; }
+        // Kiss the Ring at 6th: a foe the GM says ranks below the caster saves a degree worse (a success becomes a failure: Frightened 1, the compulsion and the
+        // hostility notes); a critically failing one has the notes, but not the spell's end on the caster's hostility.
+        try {
+            const ring = await ctx.setup('Kiss the Ring');
+            const [subject, other] = await Promise.all(['ring subject', 'ring rebel'].map(name => ctx.actor(name, {level: 6})));
+            const plan = await ctx.api.compile(ring.spell);
+            const {card} = await ctx.api.saves.start(ring.spell, {sourceActor: ring.caster, plan, targets: [await ctx.token(subject), await ctx.token(other)], castRank: 6, skipConfirmation: true});
+            const now = id => ctx.state(card).targets.find(t => t.id === id);
+            const [a, b] = ctx.state(card).targets;
+            await ctx.api.saves.correctTarget(card, a.id, {action: 'adjustment-applies', expectedRevision: now(a.id).revision});
+            await ctx.api.saves.correctTarget(card, b.id, {action: 'adjustment-not-applicable', expectedRevision: now(b.id).revision});
+            const uniform = CONFIG.Dice.randomUniform; CONFIG.Dice.randomUniform = () => 0.5;
+            try { for (const t of [a, b]) await ctx.api.saves.rollSave(card, t.id, {skipDialog: true}); } finally { CONFIG.Dice.randomUniform = uniform; }
+            const rolled = now(a.id).degree;
+            await ctx.api.saves.correctTarget(card, b.id, {action: 'degree', degree: 'criticalFailure'});
+            await ctx.api.saves.finalize(card); await wait(1500);
+            const notes = actor => actor.itemTypes.effect.filter(effect => effect.name.startsWith('Kiss the Ring: ')).map(effect => effect.name.slice('Kiss the Ring: '.length)).sort();
+            out.ring = {rolledA: rolled, subject: {frightened: subject.getCondition('frightened')?.value ?? 0, notes: notes(subject)}, rebel: {frightened: other.getCondition('frightened')?.value ?? 0, notes: notes(other)}};
+        } catch (error) { out.error = error.stack ?? error.message; }
+        const l = out.lantern ?? {}, r = out.ring ?? {};
+        assert(!out.error && l.kind === 'effect' && l.aura && l.light?.bright === 20 && l.light?.dim === 40 && l.friend
+            && r.subject?.notes.includes('Compelled') && r.rebel?.notes.includes('Compelled') && r.rebel.frightened >= 1 && !r.rebel.notes.includes('Ends if the caster is hostile'),
+            `Cheliax batch 6: ${JSON.stringify(out)}`);
+        return {cheliax6: out};
     },
     async cleanup(ctx) {
         // (The deleted records kept for the last case's reads: gone with it.)

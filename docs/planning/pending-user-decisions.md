@@ -1938,3 +1938,21 @@ damage … You can Dismiss the spell." PF2e 8.6.1's item has an empty Duration, 
 - **B. Until Dismissed** (no maximum): the area lasts until the caster Dismisses it or the GM ends it.
 - **C. You give the book's duration** and the module uses that.
 Until then the spell stays guided (the basic Reflex save works on its card; the lingering part is the GM's).
+
+### Question: Rude Awakening's suppression save
+"The target can immediately attempt a Will save with a +2 circumstance bonus against an ongoing emotion effect or against the frightened or stupefied
+condition, suppressing the effect or condition for the duration on a success. In addition, the target gains a +1 status bonus to all saving throws for the
+duration, which increases to a +2 status bonus to saving throws against emotion effects." The save is against the DC of the effect being suppressed, which the
+module can't know, and PF2e has no "suppressed" state for a condition. (PF2e's Effect also gives the bonuses as circumstance, the text status.) Options:
+- **A. A card for the ally:** the GM picks the effect or condition and types its DC; the module rolls the Will save (+2 circumstance); on a success it removes
+  the condition (or the emotion Effect) and puts it back when the spell's minute ends, if it would still apply. The bonuses: the module's Effect, status as written.
+- **B. The bonuses automated, the suppression the GM's** (a note with the save to roll).
+- **C. PF2e's Effect as it is** (circumstance) and the suppression the GM's.
+
+### Not built yet (no question — they need new runtime parts)
+- **Tenebrous Freedom:** the detached shadow (a token moving 5/10/15 feet on each Cast or Sustain), Enfeebled 2 and Clumsy 2 while it's away, reattached
+  by a Grapple against the spell DC or a 2-action manipulate activity in reach.
+- **Devil's Horseshoe:** a ward on a door: a fiend passing through takes the damage and saves; attacks against it count as magical silver (rows' times).
+- **Gift of Dusk:** a curse with stages (Enfeebled 2, 3, then 4 and the shadow freed as a Shadow or Greater Shadow, friendly to the caster).
+- **Control Currents:** a current along a line on water, moving creatures 10 (20) feet each turn (the caster's direction), a Fortitude save for unwilling
+  ones, difficult terrain against it.

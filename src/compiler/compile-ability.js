@@ -2854,6 +2854,12 @@ function settleRowClauses(plan, outcome, clauses, claim, manualKinds = []) {
 }
 
 function compileSpell(item, options) {
+    // (PF2e 8.6's Turnip Lantern has its duration in the Target field — "1 minute" — and none in Duration: read as its duration.)
+    if (/^\d+ (?:round|minute|hour|day)s?$/i.test(String(item?.system?.target?.value ?? "").trim()) && !String(item?.system?.duration?.value ?? "").trim()) {
+        item = cloneJSON(item);
+        item.system.duration = { ...(item.system.duration ?? {}), value: String(item.system.target.value).trim() };
+        item.system.target = { ...item.system.target, value: "" };
+    }
     // A sustained single-target save whose failure clings to the target (Personal Blizzard).
     if (!options.traitModeSource) {
         const adaptedSource = adaptSpellSource(item, options);
@@ -8547,6 +8553,14 @@ function compileSpell(item, options) {
             plan.resolution.castGrant = { rank: Number(grant[1]), uuid: grant[2], name: grant[3], tradition: grant[4], uses: 1, sourceText: grant[0] };
             plan.compilerEvidence.castGrant = grant[0];
         }
+        // "The turnip is held in one hand and sheds bright light for 20 feet and dim light for 20 feet beyond that." (Turnip Lantern, PF2e 8.6): PF2e's aura
+        // has no light — the caster's token light for the Effect's time, the hand it fills a note.
+        const LIGHT = /The ([a-z]+) is held in one hand and sheds bright light for (\d+) feet and dim light for (\d+) feet beyond that\./;
+        const light = LIGHT.exec(String(adapted.descriptionHTML ?? "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " "));
+        if (light && plan.nativeEffects?.onUse?.[0]?.recipient?.actor === "source") {
+            plan.resolution.casterLight = { bright: Number(light[2]), dim: Number(light[2]) + Number(light[3]), note: `The ${light[1]} is held in one hand.`, sourceText: light[0] };
+            plan.compilerEvidence.casterLight = light[0];
+        }
     }
     // "If the creature has the ooze, unholy, or water trait, it also takes @Damage[(@item.level)d4[persistent,spirit]] damage." on the failure and "The creature
     // takes double damage, and double persistent damage if it has the ooze, unholy, or water trait." (Spray of Salt, PF2e 8.6): the trait's extra damage on
@@ -8585,6 +8599,25 @@ function compileSpell(item, options) {
                 sourceText: `${clauses[at].text} ${clauses[at + 1].text}`, targetTrait: gate[1], castFlatCheck: { dc: Number(dc), trait },
                 duration: { mode: "fixed", value: Number(value), unit: `${unit}s`, expiry: unit === "round" ? "turn-start" : null, anchor: "effect-start", offset: 0, sourceText: `For ${value} ${unit}` } }];
             settleRowClauses(plan, outcome, [clauses[at], clauses[at + 1]], "note-effect", ["forced-movement", "conditional-effect"]);
+        }
+    }
+    // "On its next turn, it must Stride in your direction (stopping if its movement brings it adjacent to you), then Drop Prone before using actions to do anything
+    // else." with "As failure, but hostility doesn't end the effect." (Kiss the Ring, PF2e 8.6): the compulsion the GM's note on both failing rows (the hostility
+    // sentences are the other readers' notes); the critical failure's spell doesn't end on the caster's hostility.
+    if (plan.resolution.kind === "save" && plan.lifecycle?.sustained === true && /^(\d+) minutes?$/.test(String(adapted.lifecycle?.duration ?? "").trim())) {
+        const COMPEL = /^On its next turn, it must Stride in your direction \(stopping if its movement brings it adjacent to you\), then Drop Prone before using actions to do anything else\.$/;
+        const failure = plan.resolution.outcomes?.failure, critical = plan.resolution.outcomes?.criticalFailure;
+        const compel = (failure?.semanticCoverage?.clauses ?? []).find(clause => COMPEL.test(clause.text) && clause.status !== "compiled");
+        const hostileEnds = note => /^Ends if the caster is hostile$/.test(note.label ?? "");
+        if (compel && /^As failure, but hostility doesn't end the effect\.$/.test(String(critical?.rawText ?? "").trim()) && (failure.noteEffects ?? []).some(hostileEnds)) {
+            const minutes = Number(/^(\d+)/.exec(String(adapted.lifecycle.duration).trim())[1]);
+            const note = { label: "Compelled", text: "On its next turn it must Stride toward the caster (stopping if it becomes adjacent), then Drop Prone before using actions to do anything else (the GM).",
+                sourceText: compel.text, duration: { mode: "fixed", value: 1, unit: "rounds", expiry: "turn-end", anchor: "target-turn", offset: 0, sourceText: "on its next turn" } };
+            failure.noteEffects = [...(failure.noteEffects ?? []), note];
+            critical.noteEffects = [...(critical.noteEffects ?? []).filter(entry => !hostileEnds(entry)), structuredClone(note)];
+            settleRowClauses(plan, failure, [compel], "note-effect", ["conditional-effect"]);
+            settleRowClauses(plan, critical, (critical.semanticCoverage?.clauses ?? []).filter(entry => entry.status !== "compiled"), "note-effect", ["conditional-effect", "attitude-or-hostility"]);
+            plan.compilerEvidence.kneeling = [compel.text, critical.rawText.trim(), minutes];
         }
     }
     // "…, and one ongoing emotion effect on them of your choice that has a lower counteract rank than this spell is suppressed for the spell's duration." and "As

@@ -169,3 +169,27 @@ test('Roar of Freedom: the enemies\' Will save with the GM\'s penalty for tyrant
     assert.deepEqual(plan.targeting.actorConstraints.predicates.map(predicate => predicate.kind), ['enemy-of-caster']);
     assert.deepEqual(plan.resolution.outcomes.criticalFailure.effects.map(effect => `${effect.slug}${effect.value}`).sort(), ['frightened2', 'stupefied2']);
 });
+
+test('Turnip Lantern: its duration from PF2e\'s Target field, PF2e\'s aura on the caster, and the caster\'s light', async () => {
+    const {readdir} = await import('node:fs/promises');
+    const nativeEffectCatalog = new Map();
+    for (const name of await readdir(new URL('spell-effects/', base))) {
+        const effect = JSON.parse(await readFile(new URL(`spell-effects/${name}`, base), 'utf8')); const rules = effect.system?.rules ?? [];
+        nativeEffectCatalog.set(effect.name, {id: effect._id, name: effect.name, type: effect.type, sourceFile: `spell-effects/${name}`,
+            automation: {ruleKeys: [...new Set(rules.map(rule => rule.key))], requiresConfiguration: rules.some(rule => rule.key === 'ChoiceSet'), removesAfterRoll: false},
+            mechanics: {rules, duration: effect.system?.duration ?? null, start: effect.system?.start ?? null}});
+    }
+    const plan = compileAbility(await spell('rank-1/turnip-lantern'), {nativeEffectCatalog, referencedSpells: new Map()});
+    assert.deepEqual([plan.resolution.kind, plan.automation.level, plan.lifecycle.durationSpec.value, plan.lifecycle.durationSpec.unit], ['effect', 'automatic', 1, 'minutes']);
+    assert.equal(plan.nativeEffects.onUse[0].label, 'Aura: Turnip Lantern');
+    assert.deepEqual([plan.resolution.casterLight.bright, plan.resolution.casterLight.dim], [20, 40]);
+});
+
+test('Kiss the Ring: the GM\'s degree question for creatures ranked below the caster, frightened, compelled, and only a failure ends on the caster\'s hostility', async () => {
+    const plan = compile(await spell('rank-6/kiss-the-ring'));
+    assert.equal(inspectSavePlan(plan).supported, true, JSON.stringify(inspectSavePlan(plan).blockers));
+    assert.match(plan.resolution.degreeAdjustment.predicate.question, /rank below the caster in a shared hierarchical organization/);
+    assert.deepEqual(['failure', 'criticalFailure'].map(degree => plan.resolution.outcomes[degree].noteEffects.map(note => note.label)),
+        [['No hostile actions against the caster', 'Ends if the caster is hostile', 'Compelled'], ['No hostile actions against the caster', 'Compelled']]);
+    assert.ok([...plan.resolution.outcomes.failure.noteEffects, ...plan.resolution.outcomes.criticalFailure.noteEffects].every(validNoteEffect));
+});

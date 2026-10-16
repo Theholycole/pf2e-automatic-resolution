@@ -47,6 +47,9 @@ const SLEEPING_WORSE = /^If you target a sleeping creature, it wakes up as it at
 
 /** Ordained Purpose form: a described creature's result one step worse or better ("At the GM's discretion, …" too) — the GM's per-target call. */
 const DESCRIBED_SHIFT = /^(?:At the GM's discretion, )?(a creature [^.]+?) uses the outcome one degree of success (worse|better) than the result of its saving throw\.$/i;
+// Kiss the Ring (PF2e 8.6): "Creatures that rank below you in a shared hierarchical organization treat the result of their Will save as one degree of success
+// worse." — the GM's answer for each creature.
+const RANK_SHIFT = /^Creatures that (rank below you in a shared hierarchical organization) treat the result of their (?:Fortitude|Reflex|Will) save as one degree of success (worse|better)\.$/;
 const IDENTITY = { criticalSuccess: "criticalSuccess", success: "success", failure: "failure", criticalFailure: "criticalFailure" };
 
 export function compileDegreeAdjustments(html) {
@@ -81,6 +84,9 @@ export function compileDegreeAdjustments(html) {
             predicate: { kind: "gm-confirmed", question: "Is the target an item this creature holds, and does it Release the item? If so, its result is one step better." },
             map: { ...BETTER }, sourceText: sentence
         });
+        const ranked = RANK_SHIFT.exec(sentence);
+        if (ranked) adjustments.push({ predicate: { kind: "gm-confirmed", question: `Does this creature ${ranked[1].replace(/\byou\b/, "the caster")}? If so, its result is one step ${ranked[2]}.` },
+            map: { ...(ranked[2] === "worse" ? WORSE : BETTER) }, sourceText: sentence });
         const explicit = EXPLICIT.exec(sentence);
         if (explicit) adjustments.push({
             predicate: { kind: "gm-confirmed", question: `Does this apply: ${explicit[1].trim()}?` },
