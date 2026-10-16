@@ -9792,7 +9792,8 @@ export const cases = {
         try {
             const source = (await game.packs.get('witches-remaster.witches-remaster-focus-spells').getDocuments()).find(d => d.name === 'Secret of the Forebearers' && d.type === 'spell').toObject();
             const witch = async (name, rank, y) => {
-                const [actor] = await Actor.create([{name: `PFTEST P23 Affliction ${name}`, type: 'character'}]);
+                // (Fixture-flagged: the cleanup removes them with their tokens.)
+                const [actor] = await Actor.create([{name: `PFTEST P23 Affliction ${name}`, type: 'character', flags: {'pf2e-automatic-resolution': {phase23AfflictionFixture: true}}}]);
                 await actor.update({'system.skills.occultism.rank': rank});
                 const [entry] = await actor.createEmbeddedDocuments('Item', [{name: 'innate', type: 'spellcastingEntry', system: {tradition: {value: 'occult'}, prepared: {value: 'innate'}, spelldc: {dc: 20, value: 10}, ability: {value: 'int'}}}]);
                 const copy = foundry.utils.deepClone(source); delete copy._id; copy.system.location = {value: entry.id};
@@ -16289,7 +16290,7 @@ export const cases = {
         try {
             // Calcification.
             const calc = await ctx.setup('Calcification');
-            const thrall = await Actor.create({name: 'PFTEST P23 Affliction calc thrall', type: 'npc', flags: {[NS]: {'phase23-affliction-fixture': true, thrall: {casterUuid: calc.caster.uuid}}},
+            const thrall = await Actor.create({name: 'PFTEST P23 Affliction calc thrall', type: 'npc', flags: {[NS]: {[FIXTURE]: true, thrall: {casterUuid: calc.caster.uuid}}},
                 system: {details: {level: {value: -1}}, attributes: {hp: {value: 1, max: 1}, ac: {value: 10}}}}); ctx.saved.actors.push(thrall.id); await ctx.persist();
             const tThrall = await place(thrall, 6 * g, 5 * g);
             const bone = await ctx.actor('calc bone', {level: 1}); const tBone = await place(bone, 7 * g, 5 * g);
@@ -16674,7 +16675,7 @@ export const cases = {
             out.pipe.ended = {controlled: follower.hasCondition('controlled'), minion: follower.system.traits.value.includes('minion')};
             // Flesh Tsunami.
             const tsunami = await ctx.setup('Flesh Tsunami');
-            const thrall = async (name, x, y) => { const a = await Actor.create({name: `PFTEST P23 Affliction ${name}`, type: 'npc', flags: {[NS]: {'phase23-affliction-fixture': true, thrall: {casterUuid: tsunami.caster.uuid}}},
+            const thrall = async (name, x, y) => { const a = await Actor.create({name: `PFTEST P23 Affliction ${name}`, type: 'npc', flags: {[NS]: {[FIXTURE]: true, thrall: {casterUuid: tsunami.caster.uuid}}},
                 system: {details: {level: {value: -1}}, attributes: {hp: {value: 1, max: 1}, ac: {value: 10}}}}); ctx.saved.actors.push(a.id); await ctx.persist(); return place(a, x, y); };
             const t1 = await thrall('wave thrall one', 12 * g, 9 * g), t2 = await thrall('wave thrall two', 13 * g, 9 * g);
             const foe = await ctx.actor('wave foe', {level: 1, save: -20}); const tFoe = await place(foe, 14 * g, 9 * g);
