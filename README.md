@@ -5,7 +5,7 @@ A Foundry VTT module for the Pathfinder Second Edition system that resolves spel
 ## Requirements
 
 - Foundry VTT 14
-- The PF2e system 8.5
+- The PF2e system 8.5 or 8.6 (checked on 8.6.1)
 - [PF2e Resolution Core](https://github.com/Theholycole/PF2e-Automation-Core) (Foundry offers to install it with this module)
 - Optional: [libWrapper](https://foundryvtt.com/packages/lib-wrapper). When it's active, the module's battle-form guards on PF2e's character preparation, spellcasting and consumables go through it, so other modules that wrap the same functions (PF2e Dailies, Magic+) are ordered with them.
 
