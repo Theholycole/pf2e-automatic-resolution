@@ -94,6 +94,9 @@ async function context() {
     // (Foundry 14's game.combat is the encounter the combat tracker shows, and a combat made by code doesn't take the tracker over — another session's
     // empty encounter in view made the cases' combats invisible to the module. A combat a case makes on a test scene is put in view.)
     globalThis.__pftestCombatView ??= Hooks.on('createCombat', combat => { if (/^PFTEST /.test(combat.scene?.name ?? '') && ui.combat) ui.combat.viewed = combat; });
+    // (And made active, as the tracker's own button makes it: a tracker render that infers its combat again — "combat: null" — picks the active one, where an
+    // inactive one could leave game.combat null as the combat started, so the module's turn clock missed the turn (The End is Nigh's frightened, PF2e 8.6.1).)
+    globalThis.__pftestCombatActive ??= Hooks.on('preCreateCombat', combat => { if (/^PFTEST /.test(combat.scene?.name ?? '') && !combat.active) combat.updateSource({active: true}); });
     const removed = globalThis.__pftestRemovedRecords ??= (() => {
         const map = new Map();
         Hooks.on('preDeleteJournalEntry', journal => { const flag = journal.getFlag(NS, 'ongoingCast'); if (flag?.castId) map.set(flag.castId, {journalId: journal.id, ...foundry.utils.deepClone(flag), removed: true}); });
@@ -12325,8 +12328,9 @@ export const cases = {
             await arm("Juubun's One Thousand Poems");
             target(tAlly);
             await castNow('Command', 1);
-            await until(() => ally.itemTypes.effect.find(e => /Juubun/.test(e.name)));
-            out.juubun = {effect: ally.itemTypes.effect.some(e => /Juubun/.test(e.name)), temp: ally.system.attributes.hp.temp};
+            // (PF2e 8.6 names its Effect "Effect: Poetic Spellcasting"; 8.5 "Effect: Juubun's One Thousand Poems".)
+            await until(() => ally.itemTypes.effect.find(e => /Juubun|Poetic Spellcasting/.test(e.name)));
+            out.juubun = {effect: ally.itemTypes.effect.some(e => /Juubun|Poetic Spellcasting/.test(e.name)), temp: ally.system.attributes.hp.temp};
             // Liar's Lexicon: Fear — the Lie against those observing.
             await arm("Liar's Lexicon");
             target(tFoe); let mark = game.messages.size;
