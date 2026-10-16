@@ -401,7 +401,44 @@ export function extractLastingCurse(adapted) {
     // (Undertaker's rows state their own damage; PF2e's item has none.)
     const graves = undertaker(adapted);
     if (graves) return graves;
-    return undermineReality(adapted) ?? fabricatedTruth(adapted) ?? cursedMetamorphosis(adapted) ?? remakePhysiology(adapted) ?? chrysopoeticCurse(adapted) ?? dreadSecret(adapted) ?? overwhelmingPresence(adapted) ?? tanglecurse(adapted);
+    return undermineReality(adapted) ?? fabricatedTruth(adapted) ?? cursedMetamorphosis(adapted) ?? remakePhysiology(adapted) ?? chrysopoeticCurse(adapted) ?? dreadSecret(adapted) ?? overwhelmingPresence(adapted) ?? tanglecurse(adapted)
+        ?? slipperySteps(adapted);
+}
+
+// Curse of Slippery Steps (PF2e 8.6): "You curse the target with perpetually poor footing and wet boots." / "The target must attempt a Reflex save." with rows
+// "The target is unaffected." / "The target treats all terrain as difficult terrain for 1 round." / "The target treats all terrain as difficult terrain, and it
+// leaves a trail of water behind it, giving any skill checks to [[/act track]] it during the duration a +2 circumstance bonus. The duration is 1 hour." / "As
+// failure, except the duration is 24 hours." — its footing a note for the row's time (difficult terrain for one creature, and others' bonus to Track it, the GM's).
+const SLIPPERY = {
+    lead: [/^You curse the target with [a-z ,]+\.$/, /^The target must attempt an? (Fortitude|Reflex|Will) save\.$/],
+    rows: { criticalSuccess: /^The target is unaffected\.$/, success: /^The target treats all terrain as difficult terrain for (\d+) (round|minute)s?\.$/,
+        failure: /^The target treats all terrain as difficult terrain, and it leaves a trail of water behind it, giving any skill checks to (?:\[\[\/act track\]\]|Track) it during the duration a \+(\d) circumstance bonus\. The duration is (\d+) (minute|hour|day)s?\.$/,
+        criticalFailure: /^As failure, except the duration is (\d+) (minute|hour|day)s?\.$/ }
+};
+
+function slipperySteps(adapted) {
+    if (!/^1 creature$/i.test(String(adapted.targeting?.target ?? "").trim()) || !/^varies$/i.test(String(adapted.lifecycle?.duration ?? "").trim()) || adapted.targeting?.area) return null;
+    const [body, table, ...rest] = String(adapted.descriptionHTML ?? "").split(/<hr\s*\/?>/i);
+    if (!table || rest.length || (table.match(/<p>/g) ?? []).length !== 4) return null;
+    const lead = sentencesOf(plain(body));
+    if (lead.length !== 2 || SLIPPERY.lead.some((pattern, index) => !pattern.test(lead[index]))) return null;
+    const statistic = SLIPPERY.lead[1].exec(lead[1])[1];
+    if (statistic.toLowerCase() !== adapted.defense.statistic) return null;
+    const rows = Object.fromEntries(ROWS.map(([degree, heading]) => [degree, plain(rowOf(table, heading) ?? "")]));
+    const m = Object.fromEntries(ROWS.map(([degree]) => [degree, SLIPPERY.rows[degree].exec(rows[degree])]));
+    if (Object.values(m).some(hit => !hit)) return null;
+    const time = (value, unit, sourceText) => ({ mode: "fixed", value: Number(value), unit: `${unit}s`, expiry: unit === "round" ? "turn-end" : null, anchor: "effect-start", offset: 0, sourceText });
+    const footing = "It treats all terrain as difficult terrain (the GM: for this creature only)";
+    const trail = `${footing}, and leaves a trail of water: skill checks to Track it get a +${m.failure[1]} circumstance bonus.`;
+    return {
+        html: PLAIN_ROWS(statistic, {}),
+        notes: {
+            success: [{ label: "Slippery steps", text: `${footing}.`, sourceText: rows.success, duration: time(m.success[1], m.success[2], `for ${m.success[1]} ${m.success[2]}`) }],
+            failure: [{ label: "Slippery steps", text: trail, sourceText: rows.failure, duration: time(m.failure[2], m.failure[3], `The duration is ${m.failure[2]} ${m.failure[3]}`) }],
+            criticalFailure: [{ label: "Slippery steps", text: trail, sourceText: rows.criticalFailure, duration: time(m.criticalFailure[1], m.criticalFailure[2], `the duration is ${m.criticalFailure[1]} ${m.criticalFailure[2]}`) }]
+        },
+        claimed: [...lead, ...ROWS.map(([degree, heading]) => `${heading} ${rows[degree]}`)]
+    };
 }
 
 const BONE = {

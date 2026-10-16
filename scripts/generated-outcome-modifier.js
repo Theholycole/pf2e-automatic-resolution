@@ -38,7 +38,8 @@ export function inspectGeneratedSpeedProof(proof, outcomes, {lifecycle} = {}) {
     // (Or the spell's fixed time when every penalty lasts until the creature Escapes: Stone Lance.)
     const allEscape = hasModifiers && DEGREES.every(degree => (outcomes?.[degree]?.modifiers ?? []).every(modifier => modifier.duration?.mode === 'escape'));
     if (proof?.kind !== 'degree-speed-penalties' || (leaveArea && proof.lingering !== true)
-        || lifecycle && !proof.lingering && ((lifecycle.durationSpec?.mode !== 'instantaneous' && !(allEscape && lifecycle.durationSpec?.mode === 'fixed' && !lifecycle.sustained))
+        // (Or "varies": the penalties' own times — Pin the Spears in the Lamb.)
+        || lifecycle && !proof.lingering && ((!['instantaneous', 'outcome'].includes(lifecycle.durationSpec?.mode) && !(allEscape && lifecycle.durationSpec?.mode === 'fixed' && !lifecycle.sustained))
             || lifecycle.controller?.required === true)) {
         return {supported:false,used:true,reason:'generated Speed proof or item lifecycle changed'};
     }

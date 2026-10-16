@@ -780,7 +780,7 @@ export class OngoingFamilies {
             content: `<p><strong>${escapeHTML(spellName)}</strong></p>${notes.map(note => `<p class="pf2e-auto-gm-reminder">${escapeHTML(note)}</p>`).join("")}` });
         await this.ongoing.save(journal, data);
         await this.ongoing.activate(journal);
-        return { status: "started", journalId: journal.id, castId: record.castId, members: members.map(member => member.actorUuid) };
+        return { status: "started", journalId: journal.id, castId: record.castId, members: members.map(member => member.actorUuid), memberTokens: members.map(member => member.tokenUuid) };
     }
     /**
      * An emanation on the caster whose Effect the caster and its allies hold while inside (Frenzied Revelry): a lingering record for the
@@ -1621,6 +1621,40 @@ export class OngoingFamilies {
         await this.ongoing.save(journal, data);
         await this.ongoing.activate(journal);
         return { status: "started", journalId: journal.id, castId: record.castId, first };
+    }
+    /**
+     * A self pulse (Gloom Mantle): a sustained record on the caster whose Effect grants the condition until the end of the caster's next turn, made when cast
+     * and again the first time each round the spell is Sustained (the newest replaces the last).
+     */
+    async startSelfPulse({ spellName, sourceActorUuid, sourceItemUuid, castRank, durationSeconds, selfPulse, castId = null }) {
+        this.ongoing.assertCoordinator();
+        const clock = this.ongoing.clock();
+        const declaration = { centre: "caster", events: [], selfPulse: clone(selfPulse), oncePerRound: false, excludeCaster: false, enemiesOnly: false, initial: false, concealment: false,
+            area: { type: "emanation", value: 0 }, sustained: true, durationSeconds, sourceText: [] };
+        const record = { castId: castId ?? randomID(), name: spellName, kind: "lingering", sourceActorUuid, sourceItemUuid, rank: castRank, dc: null,
+            recipientUuids: [], recipients: [], exposure: [], members: [], declaration, exposurePlan: null,
+            maximumAt: game.time.worldTime + durationSeconds, castRound: clock.round, dismissal: { authority: "source-actor", scope: "cast", action: "Dismiss" } };
+        const journal = await this.ongoing.begin(record);
+        const data = clone(state(journal));
+        const first = await this.applySelfPulse(data);
+        await this.ongoing.save(journal, data);
+        await this.ongoing.activate(journal);
+        return { status: "started", journalId: journal.id, castId: record.castId, effectUuid: first?.uuid ?? null };
+    }
+    /** The caster's Effect for the self pulse: the condition until the end of its next turn, and the note; an earlier one of this cast goes. */
+    async applySelfPulse(record) {
+        const pulse = record.declaration.selfPulse;
+        const caster = await fromUuid(record.sourceActorUuid);
+        if (!caster) throw Error(`${record.name}: the caster is gone.`);
+        const old = (caster.itemTypes?.effect ?? []).filter(effect => effect.flags?.[MODULE_ID]?.selfPulse?.castId === record.castId).map(effect => effect.id);
+        if (old.length) await caster.deleteEmbeddedDocuments("Item", old);
+        const [effect] = await caster.createEmbeddedDocuments("Item", [{ name: `${record.name}: ${pulse.condition.name}`, type: "effect", img: "icons/magic/perception/shadow-stealth-eyes-purple.webp",
+            flags: { [MODULE_ID]: { selfPulse: { castId: record.castId } } },
+            system: { description: { value: `<p>${escapeHTML(pulse.condition.name)} until the end of your next turn.</p><p class="pf2e-auto-gm-reminder">${escapeHTML(pulse.note)}</p>` },
+                duration: { value: 1, unit: "rounds", expiry: "turn-end", sustained: false }, start: { value: game.time.worldTime, initiative: game.combat?.combatant?.initiative ?? null },
+                rules: [{ key: "GrantItem", uuid: pulse.condition.uuid, onDeleteActions: { grantee: "restrict" } }], tokenIcon: { show: true }, traits: { value: [] } } }]);
+        try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: caster }), content: `<p><strong>${escapeHTML(record.name)}</strong>: ${escapeHTML(caster.name)} is ${escapeHTML(pulse.condition.slug)} until the end of its next turn. ${escapeHTML(pulse.note)}</p>` }); } catch (_) {}
+        return effect ?? null;
     }
     /** Whether the actor holds the pulse's after-Effect (from any casting). */
     static holdsPulseEffect(actor, afterEffect) {
@@ -3412,6 +3446,8 @@ export class OngoingFamilies {
                     await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: await fromUuid(record.sourceActorUuid) }), flags: { [MODULE_ID]: { spiritAid: { castId: record.castId } } },
                         content: `<section class="pf2e-auto-runtime-card"><header><strong>${escapeHTML(record.name)} — this round's aid</strong></header><p>The area can move up to ${record.declaration.spiritAid.moveFeet} feet (move the region). Choose the aid:</p>${aids.map(aid => `<button type="button" class="pf2e-auto-spirit-aid" data-aid="${aid}">${aid}</button>`).join("")}</section>` });
                 }
+                // Gloom Mantle: "the first time each round you Sustain it, you become Concealed until the end of your next turn".
+                if (record.declaration.selfPulse && record.sustainedRound !== clock.round) await this.applySelfPulse(record);
                 // "the first time you Sustain it on each subsequent round, you generate a pulse …"
                 if (record.declaration.healingPulse && record.sustainedRound !== clock.round) {
                     record.status = "applying"; await this.ongoing.save(journal, record);

@@ -18,6 +18,7 @@ export const SUPPORTED_RESOLUTION_KINDS = Object.freeze([
     "temp-hp",
     "turn-healing",
     "healing-pulse",
+    "self-pulse",
     "thrall-strike",
     "offer-effect",
     "size-bond",

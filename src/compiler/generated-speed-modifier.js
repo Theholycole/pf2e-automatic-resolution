@@ -119,7 +119,9 @@ export function compileGeneratedSpeedPenalties(plan, {lingering = false} = {}) {
     const untilEscape = plan.lifecycle?.durationSpec?.mode === 'fixed' && !plan.lifecycle?.sustained
         && Object.values(plan.resolution?.outcomes ?? {}).every(outcome => { const modifier = parseGeneratedSpeedClause(outcome); return !modifier || modifier.duration.mode === 'escape'; })
         && Object.values(plan.resolution?.outcomes ?? {}).some(outcome => parseGeneratedSpeedClause(outcome));
-    if (plan.resolution?.kind !== 'save' || (plan.lifecycle?.durationSpec?.mode !== 'instantaneous' && !lingering && !untilEscape)
+    // (Or "varies": each row's own time — Pin the Spears in the Lamb's "for 1 round" — the clause's.)
+    const varies = plan.lifecycle?.durationSpec?.mode === 'outcome' || (plan.lifecycle?.durationSpec?.mode === 'text' && /^varies$/i.test(String(plan.lifecycle.durationSpec.raw ?? plan.lifecycle?.duration ?? '').trim()));
+    if (plan.resolution?.kind !== 'save' || (plan.lifecycle?.durationSpec?.mode !== 'instantaneous' && !varies && !lingering && !untilEscape)
         // (A sustained lingering area's controller is its Ongoing record.)
         || (plan.lifecycle?.controller?.required === true && !lingering)
         || Object.values(plan.resolution.outcomes ?? {}).some(outcome => outcome.nativeEffects?.length)) return null;

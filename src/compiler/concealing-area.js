@@ -25,6 +25,7 @@ const ACTION_AREA = /^<p>\s*<span class="action-glyph">([123])<\/span>\s*\([a-z,
 // creature enters or starts its turn inside (double for the trait; "made primarily of liquid" is the GM's note), and the breathing rule is a note.
 const HAZARD = /^Creatures entering or starting their turn in the ([a-z ]+) take (\d+)d(\d+) ([a-z]+) damage\.$/;
 const DOUBLE_TRAIT = /^Creatures that have the ([a-z]+) trait or that are made primarily of liquid take double damage\.$/;
+const SUFFOCATE = /^All breathing creatures within the [a-z]+ must hold their breath or begin to suffocate\.$/;
 const BREATH = /^The [a-z]+ also makes the air unbreathable; creatures in the area must hold their breath, though wearing a scarf or similar clothing over the mouth increases the time the creature can hold its breath to (\d+) rounds\.$/;
 const NARRATION_RULES = /\d|\[\[|\b(?:damage|saves?|bonus|penalty|conditions?|immune|Sustain|can't|must|each|terrain|rounds?|minutes?|concealed|hidden|invisible)\b/i;
 
@@ -70,6 +71,8 @@ export function compileConcealingArea(adapted) {
         if (doubled) { hazard.doubleTrait = doubled[1]; notes.push(`Creatures made primarily of liquid also take double damage (the module doubles it for creatures with the ${doubled[1]} trait; the GM doubles it for others).`); claimed.push(sentence); continue; }
         const breath = conceal && BREATH.exec(sentence);
         if (breath) { notes.push(`The air in the area is unbreathable: creatures inside must hold their breath (a scarf or similar clothing over the mouth lets a creature hold it for ${breath[1]} rounds).`); claimed.push(sentence); continue; }
+        // (Choking Fog, PF2e 8.6: "All breathing creatures within the fog must hold their breath or begin to suffocate." — the GM's note, PF2e's suffocation rules.)
+        if (conceal && SUFFOCATE.test(sentence)) { notes.push("Breathing creatures inside must hold their breath or begin to suffocate (PF2e's suffocation rules: the GM)."); claimed.push(sentence); continue; }
         if (!conceal && narrated < 1 && !NARRATION_RULES.test(sentence)) { narrated++; continue; }
         return null;
     }

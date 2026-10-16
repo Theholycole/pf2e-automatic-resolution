@@ -12,7 +12,7 @@ import { spellNoteText } from "../src/compiler/spell-note.js";
 import { proveCasterMark } from "../src/compiler/caster-mark.js";
 import { isDying, recoverFromDying, revivedNote } from "./dying-recovery.js";
 import { recipientMatchesProof, inspectCasterBenefitClaim, sameEffectMechanics } from "./effect-modifier-proof.js";
-import { proveAllyEffect } from "../src/compiler/ally-enemy-split.js";
+import { proveAllyEffect, proveAllyTempHP } from "../src/compiler/ally-enemy-split.js";
 import { proveBolsterEffect } from "../src/compiler/bolster-split.js";
 import { proveStrikeMark } from "../src/compiler/attack-mark.js";
 import { heightenedDurationAt } from "../src/compiler/heightened-duration-compiler.js";
@@ -1494,8 +1494,11 @@ function healingSummary(state, target) {
 
 /** An ally in an ally/enemy area: no save; healed by the ally roll and given the spell's Effect at Finalize. */
 function allySummary(state, target) {
-    const bonus = state.allySplit?.bonus;
-    const benefit = bonus ? `+${bonus.value} ${bonus.type} bonus to ${bonus.statistic} saves for ${bonus.duration}` : "the spell's Effect";
+    const bonus = state.allySplit?.bonus, temp = state.allySplit?.tempHP;
+    const benefit = bonus ? `+${bonus.value} ${bonus.type} bonus to ${bonus.statistic} saves for ${bonus.duration}`
+        : temp ? `${temp.base + temp.step * Math.max(0, Number(state.castRank) - temp.rank)} temporary Hit Points for ${temp.duration}` : "the spell's Effect";
+    // (Roar of Freedom: the Effect's temporary Hit Points, no healing.)
+    if (!state.allySplit?.healing) return target.applicationStatus === "applied" ? `<strong>Ally</strong> — ${escapeHTML(benefit)}` : `<strong>Ally</strong> — no save; ${escapeHTML(benefit)} at Finalize`;
     return target.applicationStatus === "applied"
         ? `<strong>Ally</strong> — healed ${escapeHTML(String(target.damageResults?.[0]?.total ?? ""))} HP (${escapeHTML(String(target.hpBefore ?? "?"))} → ${escapeHTML(String(target.hpAfter ?? "?"))}) and ${escapeHTML(benefit)}`
         : `<strong>Ally</strong> — no save; healed (${escapeHTML(state.allySplit?.healing?.formula ?? "")}) and ${escapeHTML(benefit)} at Finalize`;
@@ -4293,7 +4296,7 @@ export class BasicSaveRuntime {
                 return `<li>${escapeHTML(target.name)}: unaffected — ${escapeHTML(target.eligibilityReason)}</li>`;
             }
             if (target.mode === "healing") return `<li>${escapeHTML(target.name)}: healed ${escapeHTML(String(state.damage?.total ?? "?"))} HP (no save)</li>`;
-            if (target.mode === "ally") return `<li>${escapeHTML(target.name)}: ally — healed (${escapeHTML(state.allySplit?.healing?.formula ?? "")}) and ${escapeHTML(state.allySplit?.effect?.label ?? "the spell's Effect")} (no save)</li>`;
+            if (target.mode === "ally") return `<li>${escapeHTML(target.name)}: ally — ${state.allySplit?.healing ? `healed (${escapeHTML(state.allySplit.healing.formula ?? "")}) and ` : ""}${escapeHTML(state.allySplit?.effect?.label ?? "the spell's Effect")} (no save)</li>`;
             if (target.mode === "splash") return `<li>${escapeHTML(target.name)}: splash damage if the attack hit</li>`;
             const multiplier = damageMultiplierForTarget(state, target);
             const formulas = [
@@ -5094,7 +5097,9 @@ export class BasicSaveRuntime {
             if (allies.some(target => target.applicationStatus !== "applied")) {
                 const spell = await castSpellFromUuid(state);
                 if (!spell) throw new Error(`${state.spellName}: the spell is missing; its allies can't be healed.`);
-                if (!state.allySplit.roll) {
+                // (Roar of Freedom: no healing — the Effect's temporary Hit Points.)
+                const healing = state.allySplit.healing != null;
+                if (healing && !state.allySplit.roll) {
                     const rollData = spell.getRollData?.({ castRank: state.castRank }) ?? { item: { rank: state.castRank, level: state.castRank } };
                     const HealingRoll = (CONFIG.Dice?.rolls ?? []).find(candidate => candidate?.name === "DamageRoll");
                     if (!HealingRoll) throw new Error("PF2e's DamageRoll class could not be resolved.");
@@ -5105,7 +5110,7 @@ export class BasicSaveRuntime {
                 }
                 const template = await loadNativeEffectTemplate(state.allySplit.effect.uuid);
                 const mechanics = { rules: template.system?.rules, duration: template.system?.duration, start: template.system?.start };
-                if (!sameEffectMechanics(mechanics, state.allySplit.effect.document?.mechanics) || !proveAllyEffect(mechanics, state.allySplit.bonus))
+                if (!sameEffectMechanics(mechanics, state.allySplit.effect.document?.mechanics) || !(healing ? proveAllyEffect(mechanics, state.allySplit.bonus) : proveAllyTempHP(mechanics, state.allySplit.tempHP)))
                     throw new Error(`${state.spellName}: ${template.name} changed since it was compiled.`);
                 for (const target of allies) {
                     if (target.applicationStatus === "applied") continue;
@@ -5115,12 +5120,14 @@ export class BasicSaveRuntime {
                     target.hpBefore = hpValue(actor);
                     target.applicationStatus = "applying";
                     damageApplied = true;
-                    const wasDying = isDying(actor);
-                    const receipt = await applyDamageWithReceipt(actor, { damage: -state.allySplit.roll.total, token: token ?? undefined, skipIWR: true,
-                        rollOptions: new Set(), shieldBlockRequest: false }, randomID());
-                    target.damageResults = [{ kind: "healing", receipt, formula: state.allySplit.roll.formula, multiplier: -1, total: state.allySplit.roll.total }];
-                    const revived = await recoverFromDying(actor, wasDying);
-                    if (revived) target.revived = revived;
+                    if (healing) {
+                        const wasDying = isDying(actor);
+                        const receipt = await applyDamageWithReceipt(actor, { damage: -state.allySplit.roll.total, token: token ?? undefined, skipIWR: true,
+                            rollOptions: new Set(), shieldBlockRequest: false }, randomID());
+                        target.damageResults = [{ kind: "healing", receipt, formula: state.allySplit.roll.formula, multiplier: -1, total: state.allySplit.roll.total }];
+                        const revived = await recoverFromDying(actor, wasDying);
+                        if (revived) target.revived = revived;
+                    }
                     const created = await createNativeEffect(actor, prepareNativeEffectSource(template, { castInstanceId: state.castId, castRank: state.castRank,
                         sourceActorUuid: state.sourceActorUuid, sourceItemUuid: state.sourceItemUuid, sourceItemName: state.spellName, resolutionKind: "save", compilerVersion: state.compilerVersion }));
                     target.effectUuids = [created.uuid];

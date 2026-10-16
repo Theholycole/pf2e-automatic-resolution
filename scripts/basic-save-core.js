@@ -2,7 +2,7 @@ import { isExecutableImpossible } from "../src/compiler/impossible-spell.js";
 import { KILL_BENEFIT, OR_INCREASE, VALUE_INCREASE, killEffectMatches } from "../src/compiler/kill-effect.js";
 import { casterRowEffectMatches } from "../src/compiler/caster-row-effect.js";
 import { validNoteEffect, validNoteRule } from "./note-effects.js";
-import { proveAllyEffect } from "../src/compiler/ally-enemy-split.js";
+import { proveAllyEffect, proveAllyTempHP } from "../src/compiler/ally-enemy-split.js";
 import {inspectCompiledNativeOutcomeEffect} from './native-outcome-effects.js';
 import { inspectCasterBenefitClaim } from "./effect-modifier-proof.js";
 import { proveCasterMark } from "../src/compiler/caster-mark.js";
@@ -519,8 +519,11 @@ export function executableCasterChoice(plan) {
 export function executableAllySplit(plan) {
     const split = plan?.resolution?.allySplit;
     if (split == null) return true;
-    return plan.resolution.check?.basic === true && /^(?:\(@item\.(?:level|rank)\)|\d+)d\d+\[healing\]$/.test(split.healing?.formula ?? "")
-        && typeof split.effect?.uuid === "string" && split.effect.document?.type === "effect" && proveAllyEffect(split.effect.document.mechanics, split.bonus ?? {})
+    // (Or allies given temporary Hit Points by the Effect, no healing, while enemies roll the table's save: Roar of Freedom.)
+    const tempOnly = split.healing == null && split.tempHP != null && plan.resolution.check?.basic !== true && proveAllyTempHP(split.effect?.document?.mechanics, split.tempHP);
+    return (tempOnly || (plan.resolution.check?.basic === true && /^(?:\(@item\.(?:level|rank)\)|\d+)d\d+\[healing\]$/.test(split.healing?.formula ?? "")
+        && proveAllyEffect(split.effect?.document?.mechanics, split.bonus ?? {})))
+        && typeof split.effect?.uuid === "string" && split.effect.document?.type === "effect"
         && (plan.targeting?.actorConstraints?.predicates ?? []).some(predicate => predicate.kind === "enemy-of-caster")
         && Array.isArray(plan.compilerEvidence?.allySplit) && plan.compilerEvidence.allySplit.length === 3;
 }
@@ -1850,6 +1853,10 @@ export function inspectDegreeSavePlan(plan) {
             || (reminder.kind === "teleport-note" && plan.resolution.controls != null && Array.isArray(plan.compilerEvidence?.teleportSpell) && plan.compilerEvidence.teleportSpell.includes(reminder.sourceText))
             // (Arcane Explosion: the caster's form after the blast — its claimed sentences.)
             || (reminder.kind === "caster-form" && plan.resolution.casterForm != null && Array.isArray(plan.compilerEvidence?.casterForm) && plan.compilerEvidence.casterForm.includes(reminder.sourceText))
+            // Targets counted by the actions spent (Pin the Spears in the Lamb): the caster's reminder.
+            || (reminder.kind === "targets-by-actions" && typeof plan.compilerEvidence?.targetsByActions === "string" && reminder.sourceText === plan.compilerEvidence.targetsByActions)
+            // A reaction's blast around the triggering creature (Glimpse the Netherworld): its trigger and placement, the caster's reminder.
+            || (reminder.kind === "triggered-blast" && Array.isArray(plan.compilerEvidence?.triggeredBlast) && reminder.sourceText === `${plan.compilerEvidence.triggeredBlast[0]} ${plan.compilerEvidence.triggeredBlast.at(-2)}`)
             // A spell also cast as a reaction (The Night is Mine): its reaction sentence, the caster's reminder.
             || (reminder.kind === "reaction-cast" && typeof plan.compilerEvidence?.reactionCast === "string" && reminder.sourceText === plan.compilerEvidence.reactionCast)
             // A spell that moves an object target instead of the creature's save (Grasping Vine): the object branch is the GM's.

@@ -68,10 +68,22 @@ async function context() {
                 if (button) { answered.push(app.title ?? app.options?.window?.title ?? 'a dialog'); button.click(); }
             }
         }, 5000);
+        // (Creatures on the test scenes that aren't the cases' — another session's or the user's (CASTER, the deadliness study's) — are put back as they
+        // were: a case's area caught them, and their Hit Points and the Effects or conditions the case gave them stayed, 2026-10-16.)
+        const bystanders = canvas.scene && /^PFTEST /.test(canvas.scene.name ?? '') ? canvas.scene.tokens.filter(token => token.actor && !/^PFTEST /.test(token.actor.name ?? '') && !token.actor.flags?.[NS]?.[FIXTURE])
+            .map(token => ({token, actor: token.actor, hp: token.actor.system?.attributes?.hp?.value, temp: token.actor.system?.attributes?.hp?.temp, items: new Set(token.actor.items.map(item => item.id))})) : [];
         let result;
         try { result = {label, passed: true, at: new Date().toISOString(), details: await fn()}; }
         catch (error) { result = {label, passed: false, error: error.message, stack: error.stack}; }
         finally { clearInterval(watchdog); }
+        for (const {token, actor, hp, temp, items} of bystanders) {
+            const current = token.actor ?? actor;
+            if (!current) continue;
+            const added = current.items.filter(item => !items.has(item.id) && ['effect', 'condition'].includes(item.type) && !item.flags?.pf2e?.grantedBy).map(item => item.id);
+            if (added.length) await current.deleteEmbeddedDocuments('Item', added).catch(() => null);
+            if (Number.isFinite(hp) && (current.system?.attributes?.hp?.value !== hp || current.system?.attributes?.hp?.temp !== temp))
+                await current.update({'system.attributes.hp.value': hp, 'system.attributes.hp.temp': temp ?? 0}).catch(() => null);
+        }
         if (answered.length) result = {...result, passed: false, error: `Dialogs left open, answered with their defaults: ${[...new Set(answered)].join('; ')}${result.error ? ` — then: ${result.error}` : ''}`};
         for (const combat of game.combats.filter(combat => !before.has(combat.id) && /^PFTEST /.test(combat.scene?.name ?? ''))) await combat.delete().catch(() => null);
         // (A passed case's chat cards go with it — the ones its own test creatures spoke and the module's speakerless ones (not the simulator's or the kineticist's): left behind they
@@ -21089,11 +21101,12 @@ export const cases = {
         try {
             const fixture = await ctx.setup('Flammable Fumes');
             await fixture.caster.update({'system.details.level.value': 9});
-            const casterToken = canvas.scene.tokens.find(t => t.actorId === fixture.caster.id); await casterToken.update({x: 10 * g, y: 4 * g}, {animate: false});
+            // (In the scene's empty lower-left corner: another session's creatures stand around the middle, and the blast must catch only these two.)
+            const casterToken = canvas.scene.tokens.find(t => t.actorId === fixture.caster.id); await casterToken.update({x: 1 * g, y: 8 * g}, {animate: false});
             const [inner, walker] = await Promise.all(['fumes inner', 'fumes walker'].map(name => ctx.actor(name)));
             for (const a of [inner, walker]) { await a.update({'system.attributes.hp.max': 400, 'system.saves.reflex.value': 0}); await a.update({'system.attributes.hp.value': 400}); }
-            const tInner = await place(inner, 20 * g, 8 * g), tWalker = await place(walker, 26 * g, 8 * g); await wait(800);
-            [region] = await canvas.scene.createEmbeddedDocuments('Region', [{name: 'fumes test cloud', shapes: [{type: 'circle', x: 20.5 * g, y: 8.5 * g, radiusX: 4 * g, radiusY: 4 * g, radius: 4 * g, rotation: 0, hole: false}]}]);
+            const tInner = await place(inner, 6 * g, 13 * g), tWalker = await place(walker, 12 * g, 13 * g); await wait(800);
+            [region] = await canvas.scene.createEmbeddedDocuments('Region', [{name: 'fumes test cloud', shapes: [{type: 'circle', x: 6.5 * g, y: 13.5 * g, radiusX: 4 * g, radiusY: 4 * g, radius: 4 * g, rotation: 0, hole: false}]}]);
             combat = await Combat.create({scene: canvas.scene.id, active: true});
             await combat.createEmbeddedDocuments('Combatant', [casterToken, tInner, tWalker].map((t, i) => ({tokenId: t.id, sceneId: canvas.scene.id, actorId: t.actorId, initiative: 30 - i * 10})));
             await combat.startCombat(); await wait(500);
@@ -21106,7 +21119,7 @@ export const cases = {
             out.early = await ctx.api.fumeDetonate(message).then(() => 'allowed', error => error.message);
             await combat.nextTurn(); await ctx.api.ongoing.reconcile({clockEvent: true}); await wait(1500);
             out.innerTurn = 400 - inner.system.attributes.hp.value;
-            await (tWalker.document ?? tWalker).update({x: 21 * g}, {animate: false}); await wait(600); await ctx.api.ongoing.reconcile(); await wait(1500);
+            await (tWalker.document ?? tWalker).update({x: 7 * g}, {animate: false}); await wait(600); await ctx.api.ongoing.reconcile(); await wait(1500);
             out.walkerEnter = 400 - walker.system.attributes.hp.value;
             await combat.nextTurn(); await ctx.api.ongoing.reconcile({clockEvent: true}); await wait(1500);
             out.walkerTurn = 400 - walker.system.attributes.hp.value;
@@ -41886,6 +41899,181 @@ export const cases = {
         assert(!out.error && s.supported && s.lost[0] - s.lost[1] >= 24 && s.lost[1] >= 24 && JSON.stringify(s.fiendTether) === '{"dc":11,"trait":"teleportation"}' && !s.plainTether
             && j.supported && j.lost >= 4 && j.reminder && n.supported && n.lost >= 2 && n.reminder, `Cheliax batch 1: ${JSON.stringify(out)}`);
         return {cheliax1: out};
+    },
+    // PF2e 8.6's new spells, batch 2 (2026-10-16): Spray of Salt failed by a water creature and a humanoid (only the water one takes the persistent spirit) and
+    // critically failed by an ooze (double); Glimpse the Netherworld's failure (persistent cold); Pin the Spears in the Lamb's success (the Speed penalty) and
+    // failure (Immobilized until it Escapes); Curse of Slippery Steps's failure (the note for 1 hour); Unending Tears' critical failure (stupefied, dazzled, notes).
+    async cheliaxBatch2(ctx) {
+        const wait = ms => new Promise(r => setTimeout(r, ms));
+        const NSX = 'pf2e-automatic-resolution';
+        const out = {};
+        const extra = [];
+        const make = async (name, traits) => { const actor = await Actor.create({name: `PFTEST P23 Affliction ${name}`, type: 'npc', flags: {[NSX]: {phase23AfflictionFixture: true}},
+            system: {details: {level: {value: 6}}, traits: {value: traits}, attributes: {hp: {value: 400, max: 400}, ac: {value: 20}}}}); extra.push(actor); return actor; };
+        const run = async (name, targets, degrees, rank) => {
+            const fixture = await ctx.setup(name);
+            const plan = await ctx.api.compile(fixture.spell);
+            const {card} = await ctx.api.saves.start(fixture.spell, {sourceActor: fixture.caster, plan, targets: await Promise.all(targets.map(actor => ctx.token(actor))), castRank: rank, skipConfirmation: true});
+            for (const [i, t] of ctx.state(card).targets.entries()) { await ctx.api.saves.rollSave(card, t.id, {skipDialog: true}); await ctx.api.saves.correctTarget(card, t.id, {action: 'degree', degree: degrees[i]}); }
+            await ctx.api.saves.finalize(card); await wait(1500);
+            return {supported: ctx.api.saves.supports(plan), card: game.messages.get(card.id)};
+        };
+        const persistent = (actor, type) => actor.itemTypes.condition.filter(condition => condition.slug === 'persistent-damage' && condition.system.persistent?.damageType === type).length;
+        const notes = (actor, spell) => actor.itemTypes.effect.filter(effect => effect.name.startsWith(`${spell}: `)).map(effect => effect.name.slice(spell.length + 2)).sort();
+        try {
+            const water = await make('salt water', ['elemental', 'water']), plain = await make('salt humanoid', ['humanoid']), ooze = await make('salt ooze', ['ooze']);
+            const salt = await run('Spray of Salt', [water, plain, ooze], ['failure', 'failure', 'criticalFailure'], 2);
+            out.salt = {supported: salt.supported, spirit: [water, plain, ooze].map(actor => persistent(actor, 'spirit')), lost: [water, plain, ooze].map(actor => 400 - actor.system.attributes.hp.value)};
+            const shade = await make('glimpse foe', ['humanoid']);
+            const glimpse = await run('Glimpse the Netherworld', [shade], ['failure'], 4);
+            out.glimpse = {supported: glimpse.supported, cold: persistent(shade, 'cold'), lost: 400 - shade.system.attributes.hp.value, reminder: /triggering enemy/.test(glimpse.card?.content ?? '')};
+            const [slow, held] = [await make('pin slow', ['humanoid']), await make('pin held', ['humanoid'])];
+            const pin = await run('Pin the Spears in the Lamb', [slow, held], ['success', 'failure'], 1);
+            const speedRule = effect => (effect.system.rules ?? []).find(rule => rule.key === 'FlatModifier' && [rule.selector].flat().some(selector => /speed/.test(String(selector))));
+            const speed = slow.itemTypes.effect.find(speedRule);
+            out.pin = {supported: pin.supported, speed: speed ? Number(speedRule(speed).value) : null, effects: slow.itemTypes.effect.map(effect => effect.name), immobilized: held.hasCondition('immobilized'),
+                reminder: /One target for each action/.test(pin.card?.content ?? '')};
+            const cursed = await make('slippery foe', ['humanoid']);
+            const slip = await run('Curse of Slippery Steps', [cursed], ['failure'], 1);
+            const slipNote = cursed.itemTypes.effect.find(effect => /Slippery steps/.test(effect.name));
+            out.slip = {supported: slip.supported, note: slipNote?.name ?? null, unit: slipNote?.system.duration.unit ?? null, value: slipNote?.system.duration.value ?? null};
+            const weeper = await make('tears foe', ['humanoid']);
+            const tears = await run('Unending Tears', [weeper], ['criticalFailure'], 4);
+            out.tears = {supported: tears.supported, stupefied: weeper.getCondition('stupefied')?.value ?? 0, dazzled: weeper.hasCondition('dazzled'), notes: notes(weeper, 'Unending Tears')};
+        } catch (error) { out.error = error.stack ?? error.message; }
+        for (const actor of extra) { await canvas.scene.deleteEmbeddedDocuments('Token', canvas.scene.tokens.filter(t => t.actorId === actor.id).map(t => t.id)); await actor.delete(); }
+        const a = out.salt ?? {}, g = out.glimpse ?? {}, p = out.pin ?? {}, c = out.slip ?? {}, t = out.tears ?? {};
+        assert(!out.error && a.supported && JSON.stringify(a.spirit) === '[1,0,1]' && a.lost.every(lost => lost >= 5)
+            && g.supported && g.cold === 1 && g.lost >= 4 && g.reminder
+            && p.supported && p.speed === -10 && p.immobilized && p.reminder
+            && c.supported && c.note && c.unit === 'hours' && c.value === 1
+            && t.supported && t.stupefied === 1 && t.dazzled && t.notes.some(note => /suppressed/.test(note)) && t.notes.includes("Can't speak"), `Cheliax batch 2: ${JSON.stringify(out)}`);
+        return {cheliax2: out};
+    },
+    // PF2e 8.6's new spells, batch 3 (2026-10-16): Searing Rain on a placed area — the creature inside Concealed by the steam and on the downpour's basic Reflex
+    // card (a failure: bludgeoning and persistent fire), the one outside neither; Choking Fog — Concealed inside, its suffocation note on the card.
+    async cheliaxBatch3(ctx) {
+        const wait = ms => new Promise(r => setTimeout(r, ms));
+        const place = async (actor, x, y) => (await canvas.scene.createEmbeddedDocuments('Token', [{...actor.prototypeToken.toObject(), actorId: actor.id, actorLink: true, x, y}]))[0];
+        const g = canvas.grid.size;
+        const out = {};
+        const regions = [], casts = [];
+        const circle = async (name, cx, cy) => { const [region] = await canvas.scene.createEmbeddedDocuments('Region', [{name, shapes: [{type: 'circle', x: cx * g, y: cy * g, radiusX: 4 * g, radiusY: 4 * g, radius: 4 * g, rotation: 0, hole: false}]}]); regions.push(region); return region; };
+        try {
+            const rain = await ctx.setup('Searing Rain');
+            const [inside, outside] = await Promise.all(['rain inside', 'rain outside'].map(name => ctx.actor(name)));
+            for (const a of [inside, outside]) { await a.update({'system.attributes.hp.max': 400}); await a.update({'system.attributes.hp.value': 400}); }
+            await place(inside, 30 * g, 8 * g); await place(outside, 40 * g, 8 * g); await wait(800);
+            const region = await circle('rain test area', 30.5, 8.5);
+            const plan = await ctx.api.compile(rain.spell);
+            const cast = await ctx.api.execute(rain.spell, {sourceActor: rain.caster, plan, castRank: 5, region, skipConfirmation: true}); await wait(1500);
+            casts.push(cast.castInstanceId);
+            const card = cast.saveCardId ? game.messages.get(cast.saveCardId) : null;
+            const targets = card ? ctx.state(card).targets.map(t => t.name) : [];
+            if (card) { for (const t of ctx.state(card).targets) { await ctx.api.saves.rollSave(card, t.id, {skipDialog: true}); await ctx.api.saves.correctTarget(card, t.id, {action: 'degree', degree: 'failure'}); }
+                await ctx.api.saves.finalize(card); await wait(1500); }
+            out.rain = {kind: plan.resolution.kind, card: !!card, targets, lost: 400 - inside.system.attributes.hp.value, outsideLost: 400 - outside.system.attributes.hp.value,
+                fire: inside.itemTypes.condition.some(c => c.slug === 'persistent-damage' && c.system.persistent?.damageType === 'fire'), concealed: inside.hasCondition('concealed'), outsideConcealed: outside.hasCondition('concealed')};
+            const fog = await ctx.setup('Choking Fog');
+            const smog = await ctx.actor('fog inside'); await place(smog, 50 * g, 8 * g); await wait(800);
+            const fogRegion = await circle('fog test area', 50.5, 8.5);
+            const fogPlan = await ctx.api.compile(fog.spell);
+            const mark = game.messages.size;
+            const fogCast = await ctx.api.execute(fog.spell, {sourceActor: fog.caster, plan: fogPlan, castRank: 4, region: fogRegion, skipConfirmation: true}); await wait(1500);
+            casts.push(fogCast.castInstanceId);
+            // (The area's notes are the GM's whisper.)
+            out.fog = {kind: fogPlan.resolution.kind, concealed: smog.hasCondition('concealed'), note: game.messages.contents.slice(mark).some(m => /begin to suffocate/.test(m.content ?? ''))};
+        } catch (error) { out.error = error.stack ?? error.message; }
+        for (const castId of casts) await ctx.api.ongoing.request('end', {castId}).catch(() => null);
+        await wait(800);
+        for (const region of regions) if (await fromUuid(region.uuid)) await region.delete();
+        const r = out.rain ?? {}, f = out.fog ?? {};
+        // The inside creature took a failure's full 6d6 bludgeoning (6-36) and has the persistent fire; the outside one nothing.
+        assert(!out.error && r.kind === 'concealing-area' && r.card && r.targets.length === 1 && /rain inside/.test(r.targets[0]) && r.lost >= 6 && r.fire && r.concealed && !r.outsideConcealed && r.outsideLost === 0
+            && f.kind === 'concealing-area' && f.concealed && f.note, `Cheliax batch 3: ${JSON.stringify(out)}`);
+        return {cheliax3: out};
+    },
+    // PF2e 8.6's new spells, batch 4 (2026-10-16): Gloom Mantle — the caster Concealed when cast (its Effect until the end of its next turn, with the note); in
+    // combat the first Sustain of a round makes it again (one Effect, newer), a second Sustain that round nothing; dismissed, the record ends.
+    async cheliaxBatch4(ctx) {
+        const wait = ms => new Promise(r => setTimeout(r, ms));
+        const out = {};
+        let combat = null, castId = null;
+        try {
+            const fixture = await ctx.setup('Gloom Mantle');
+            const casterToken = canvas.scene.tokens.find(t => t.actorId === fixture.caster.id);
+            const plan = await ctx.api.compile(fixture.spell);
+            const cast = await ctx.api.execute(fixture.spell, {sourceActor: fixture.caster, plan, targets: [], castRank: 1, skipConfirmation: true}); await wait(1200);
+            castId = cast.castInstanceId;
+            const rec = () => ctx.api.ongoing.records().find(r => r.castId === castId);
+            const mantles = () => fixture.caster.itemTypes.effect.filter(effect => effect.flags?.['pf2e-automatic-resolution']?.selfPulse?.castId === castId);
+            out.cast = {kind: plan.resolution.kind, concealed: fixture.caster.hasCondition('concealed'), effects: mantles().length, expiry: mantles()[0]?.system.duration.expiry ?? null,
+                note: /Hide or Sneak/.test(mantles()[0]?.system.description.value ?? '')};
+            const firstId = mantles()[0]?.id ?? null;
+            combat = await Combat.create({scene: canvas.scene.id, active: true});
+            await combat.createEmbeddedDocuments('Combatant', [{tokenId: casterToken.id, sceneId: canvas.scene.id, actorId: casterToken.actorId, initiative: 20}]);
+            // (Cast before the encounter: its first round's Sustain is the first of that round.)
+            await combat.startCombat(); await wait(600); await ctx.api.ongoing.reconcile({clockEvent: true});
+            await ctx.api.ongoing.request('sustain', {castId, revision: rec().revision}); await wait(1200);
+            out.sustain = {effects: mantles().length, renewed: mantles()[0]?.id !== firstId, concealed: fixture.caster.hasCondition('concealed')};
+            const secondId = mantles()[0]?.id ?? null;
+            await ctx.api.ongoing.request('sustain', {castId, revision: rec().revision}).catch(() => null); await wait(800);
+            out.again = {effects: mantles().length, same: mantles()[0]?.id === secondId};
+            await ctx.api.ongoing.request('end', {castId}); await wait(800); castId = null;
+            out.ended = !ctx.api.ongoing.records().some(r => r.castId === cast.castInstanceId && r.status === 'active');
+            // Diabolical Mantle: PF2e's Effect on the caster, and its card's button casts 4th-rank Translocate once.
+            const mantle = await ctx.setup('Diabolical Mantle');
+            const mark = game.messages.size;
+            const mantlePlan = await ctx.api.compile(mantle.spell);
+            await ctx.api.execute(mantle.spell, {sourceActor: mantle.caster, plan: mantlePlan, targets: [], castRank: 7, skipConfirmation: true}); await wait(1200);
+            const holder = mantle.caster.itemTypes.effect.find(effect => effect.getFlag('pf2e-automatic-resolution', 'castGrant'));
+            const button = () => { const card = game.messages.contents.slice(mark).find(m => /data-runtime-action="cast-grant"/.test(m.content ?? '')); return card ? document.querySelector(`[data-message-id="${card.id}"] [data-runtime-action="cast-grant"]`) : null; };
+            const castMark = game.messages.size;
+            button()?.click(); await wait(2500);
+            const translocate = game.messages.contents.slice(castMark).some(m => m.flags?.pf2e?.origin?.type === 'spell' && /Translocate/.test(m.flags?.pf2e?.casting ? (m.item?.name ?? '') : m.flavor ?? m.content ?? ''));
+            out.mantle = {effect: !!holder, resistance: (mantle.caster.attributes?.resistances ?? []).some(r => r.type === 'physical'), used: holder?.getFlag('pf2e-automatic-resolution', 'castGrant')?.used ?? null,
+                translocate, cast: game.messages.contents.slice(castMark).map(m => m.item?.name ?? null).filter(Boolean)};
+        } catch (error) { out.error = error.stack ?? error.message; }
+        if (combat) await combat.delete();
+        if (castId) await ctx.api.ongoing.request('end', {castId}).catch(() => null);
+        const c = out.cast ?? {}, su = out.sustain ?? {}, a = out.again ?? {};
+        assert(!out.error && c.kind === 'self-pulse' && c.concealed && c.effects === 1 && c.expiry === 'turn-end' && c.note && su.effects === 1 && su.renewed && su.concealed
+            && a.effects === 1 && a.same && out.ended && out.mantle?.effect && out.mantle.resistance && out.mantle.used === 1 && out.mantle.cast.includes('Translocate'), `Cheliax batch 4: ${JSON.stringify(out)}`);
+        return {cheliax4: out};
+    },
+    // PF2e 8.6's new spells, batch 5 (2026-10-16): Roar of Freedom at 8th — an ally gets PF2e's Effect (15 temporary Hit Points, no save); two enemies save, the GM
+    // says one is tyrannical (−2 circumstance to its Will save), and a failure takes the damage, Frightened 1 and Stupefied 1.
+    async cheliaxBatch5(ctx) {
+        const wait = ms => new Promise(r => setTimeout(r, ms));
+        const NSX = 'pf2e-automatic-resolution';
+        const out = {};
+        const extra = [];
+        const make = async (name, alliance) => { const actor = await Actor.create({name: `PFTEST P23 Affliction ${name}`, type: 'npc', flags: {[NSX]: {phase23AfflictionFixture: true}},
+            system: {details: {level: {value: 8}, alliance}, traits: {value: ['humanoid']}, attributes: {hp: {value: 400, max: 400}}}}); extra.push(actor); return actor; };
+        try {
+            const fixture = await ctx.setup('Roar of Freedom');
+            const ally = await make('roar ally', 'party'), tyrant = await make('roar tyrant', 'opposition'), plain = await make('roar plain', 'opposition');
+            const plan = await ctx.api.compile(fixture.spell);
+            const {card} = await ctx.api.saves.start(fixture.spell, {sourceActor: fixture.caster, plan, targets: await Promise.all([ally, tyrant, plain].map(a => ctx.token(a))), castRank: 8, skipConfirmation: true});
+            const targets = () => ctx.state(card).targets;
+            const byName = name => targets().find(t => t.name.includes(name));
+            out.modes = targets().map(t => [t.name.replace('PFTEST P23 Affliction ', ''), t.mode ?? 'save']);
+            await ctx.api.saves.correctTarget(card, byName('tyrant').id, {action: 'attack-adjustment', degree: '-2'}).catch(error => { out.answer = error.message; });
+            await ctx.api.saves.correctTarget(card, byName('plain').id, {action: 'attack-adjustment', degree: '0'}).catch(() => null);
+            const modifiers = {};
+            for (const name of ['tyrant', 'plain']) { const t = byName(name); const roll = await ctx.api.saves.rollSave(card, t.id, {skipDialog: true}); modifiers[name] = roll?.options?.totalModifier ?? null;
+                await ctx.api.saves.correctTarget(card, byName(name).id, {action: 'degree', degree: 'failure'}); }
+            // (The same creature otherwise: the tyrant's save modifier is 2 lower.)
+            out.penalty = modifiers.plain - modifiers.tyrant === 2;
+            out.modifiers = modifiers;
+            await ctx.api.saves.finalize(card); await wait(1500);
+            out.ally = {temp: ally.system.attributes.hp.temp, effect: ally.itemTypes.effect.some(e => /Roar of Freedom/.test(e.name))};
+            out.foes = [tyrant, plain].map(a => ({lost: 400 - a.system.attributes.hp.value, frightened: a.getCondition('frightened')?.value ?? 0, stupefied: a.getCondition('stupefied')?.value ?? 0}));
+        } catch (error) { out.error = error.stack ?? error.message; }
+        for (const actor of extra) { await canvas.scene.deleteEmbeddedDocuments('Token', canvas.scene.tokens.filter(t => t.actorId === actor.id).map(t => t.id)); await actor.delete(); }
+        assert(!out.error && JSON.stringify(out.modes?.find(m => /ally/.test(m[0]))) === '["roar ally","ally"]' && out.ally?.temp === 15 && out.ally.effect && out.penalty
+            && out.foes.every(f => f.lost >= 12 && f.frightened === 1 && f.stupefied === 1), `Cheliax batch 5: ${JSON.stringify(out)}`);
+        return {cheliax5: out};
     },
     async cleanup(ctx) {
         // (The deleted records kept for the last case's reads: gone with it.)

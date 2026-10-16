@@ -1927,3 +1927,14 @@ The user (2026-10-06): "audit and implement all of them" (the conditions, the sp
 8. **Symphony of the Unfettered Heart:** the module asks which condition is targeted (when more than one listed condition is present) and a failure makes the 1-day lockout for that condition on that target (as built; a target with none of the conditions is now refused).
 9. **Holy Host:** the smoke lasts 1 minute (as built).
 10. **Essence Eating Shell (Magus+):** the caster picks the shell spell's school. After a Spellstrike that isn't a critical failure, a card asks for it; the school's effect goes on the target and on the magus as save cards (the magus +3 status on a hit, a degree better on a critical hit), with each school's extra parts after the save.
+
+## PF2e 8.6 (2026-10-16): the new spells (Lost Omens Cheliax, Infernal Inheritance)
+
+### Question: Brimstone Rain has no duration in PF2e's data
+"Globs of smoldering brimstone erupt from the earth, dealing 8d6 fire damage to each creature in the area with a basic Reflex save … For the duration,
+the area is difficult terrain, and breathing creatures that start their turn in the area must succeed at a Fortitude save or take … persistent poison
+damage … You can Dismiss the spell." PF2e 8.6.1's item has an empty Duration, so the lingering area has no time to end. Options:
+- **A. 1 minute** (the usual duration for a lingering area of this kind; the module would treat it as written so).
+- **B. Until Dismissed** (no maximum): the area lasts until the caster Dismisses it or the GM ends it.
+- **C. You give the book's duration** and the module uses that.
+Until then the spell stays guided (the basic Reflex save works on its card; the lingering part is the GM's).

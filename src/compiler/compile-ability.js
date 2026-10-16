@@ -90,6 +90,10 @@ import { compileAreaCounteractTerrain } from "./area-counteract-terrain.js";
 import { compileBolsterSplit } from "./bolster-split.js";
 import { compileThrallStrike } from "./thrall-strike.js";
 import { extractReactionCast } from "./reaction-cast.js";
+import { extractTriggeredBlast } from "./triggered-blast.js";
+import { extractShadowPin } from "./shadow-pin.js";
+import { extractDownpourCloud } from "./downpour-cloud.js";
+import { compileSelfPulse } from "./gloom-mantle.js";
 import { compileHealBack } from "./heal-back.js";
 import { extractAttackMark, proveStrikeMark } from "./attack-mark.js";
 import { extractOptionAttack } from "./option-attack.js";
@@ -417,7 +421,7 @@ import { rewriteBloodlineDamage } from "./bloodline-damage.js";
 import { extractAreaChoice } from "./area-choice.js";
 import { parseHeightenedDurations } from "./heightened-duration-compiler.js";
 import { compileDirectDamage } from "./direct-damage.js";
-import { compileAllyEnemySplit } from "./ally-enemy-split.js";
+import { compileAllyEnemySplit, compileAllyTempEnemySave } from "./ally-enemy-split.js";
 import { compileMessage } from "./message-compiler.js";
 import { extractThrall, rewriteThrallHorde } from "./thrall-compiler.js";
 import { extractStoredTrigger, extractHeldTrigger, extractAuraTrigger, extractEffectTrigger, extractShieldTrigger, extractPactTrigger, extractMurmurTrigger, extractProphecyTrigger, extractGemTrigger, extractMirrorTrigger, extractRuneTrigger } from "./stored-trigger.js";
@@ -2833,6 +2837,20 @@ function basePlan(adapted) {
         },
         diagnostics: []
     };
+}
+
+// A row's clauses a post-pass claimed: compiled, their manual instructions gone, the row's coverage and the plan's pending parts recounted.
+function settleRowClauses(plan, outcome, clauses, claim, manualKinds = []) {
+    for (const clause of clauses) Object.assign(clause, { status: "compiled", compiledClaims: [claim], guidedClaims: [], unexplainedSignals: [] });
+    outcome.manualInstructions = (outcome.manualInstructions ?? []).filter(entry => !manualKinds.includes(entry.kind));
+    const coverage = outcome.semanticCoverage;
+    coverage.residualClauseCount = coverage.clauses.filter(entry => entry.status === "residual").length;
+    coverage.guidedClauseCount = coverage.clauses.filter(entry => entry.status === "guided").length;
+    coverage.compiledClauseCount = coverage.clauses.filter(entry => entry.status === "compiled").length;
+    coverage.complete = coverage.fullyCompiled = coverage.clauses.every(entry => entry.status === "compiled");
+    const left = Object.values(plan.resolution.outcomes).flatMap(entry => entry?.manualInstructions ?? []).map(entry => entry.kind);
+    plan.automation.pendingCapabilities = plan.automation.pendingCapabilities.filter(capability => !(capability.startsWith("manual:") && !left.includes(capability.slice(7)))
+        && !(capability === "residual-prose" && Object.values(plan.resolution.outcomes).every(entry => (entry?.semanticCoverage?.clauses ?? []).every(clause => clause.status !== "residual"))));
 }
 
 function compileSpell(item, options) {
@@ -5845,6 +5863,86 @@ function compileSpell(item, options) {
             }
         }
     }
+    // Enemies saving, allies given temporary Hit Points by PF2e's Effect, some foes' penalty the GM's answer (Roar of Freedom): the table's save for the
+    // enemies, the Effect on the allies.
+    if (!options.traitModeSource && !options.allyTempSource && /Allied creatures within the emanation gain \d+ temporary Hit Points/.test(String(item?.system?.description?.value ?? ""))) {
+        const original = compileSpell(item, { ...options, allyTempSource: true });
+        const roar = compileAllyTempEnemySave(adaptSpellSource(item, options), original.nativeEffects ?? {});
+        if (roar) {
+            const copy = cloneJSON(item);
+            copy.system.description.value = roar.html;
+            const plan = compileSpell(copy, { ...options, allyTempSource: true });
+            if (plan.resolution?.kind === "save" && plan.resolution.check?.basic !== true && !(plan.automation?.pendingCapabilities ?? []).length && !plan.resolution.attackAdjustment) {
+                plan.resolution.allySplit = roar.allySplit;
+                addEnemyPredicate(plan);
+                plan.resolution.attackAdjustment = roar.saveAdjustment;
+                plan.compilerEvidence.saveAdjustment = roar.saveAdjustment.sourceText;
+                plan.compilerEvidence.allySplit = roar.sentences;
+                plan.automation.compiledCapabilities.push("ally-enemy-split");
+                return plan;
+            }
+        }
+    }
+    // A basic-save downpour leaving a concealing cloud (Searing Rain): the cloud's concealing area, its save card for the creatures inside when cast.
+    if (!options.traitModeSource && !options.downpourSource) {
+        const downpour = extractDownpourCloud(adaptSpellSource(item, options));
+        if (downpour) {
+            const cloud = cloneJSON(item);
+            cloud.system.description.value = downpour.cloudHTML; cloud.system.defense = null; cloud.system.damage = {};
+            const save = cloneJSON(item);
+            save.system.description.value = downpour.saveHTML;
+            const plan = compileSpell(cloud, { ...options, downpourSource: true });
+            const savePlan = compileSpell(save, { ...options, downpourSource: true });
+            if (plan.resolution?.kind === "concealing-area" && plan.automation?.level === "automatic" && savePlan.resolution?.kind === "save" && savePlan.resolution.check?.basic === true
+                && !(savePlan.automation?.pendingCapabilities ?? []).length) {
+                plan.resolution.concealingArea.savePlan = savePlan;
+                plan.compilerEvidence.downpourCloud = downpour.sentences;
+                plan.automation.compiledCapabilities.push("downpour-cloud");
+                return plan;
+            }
+        }
+    }
+    // Targets counted by the actions spent, the hold ending on an Escape stated after its row (Pin the Spears in the Lamb): each target's own save, the
+    // count the caster's reminder.
+    if (!options.traitModeSource) {
+        const pin = extractShadowPin(adaptSpellSource(item, options));
+        if (pin) {
+            const copy = cloneJSON(item);
+            copy.system.description.value = pin.html;
+            copy.system.target = { value: pin.target };
+            const plan = compileSpell(copy, { ...options, traitModeSource: true });
+            if (plan.resolution?.kind === "save" && !(plan.automation?.pendingCapabilities ?? []).length) {
+                plan.resolution.reminders = [...(plan.resolution.reminders ?? []), pin.reminder];
+                plan.compilerEvidence.targetsByActions = pin.reminder.sourceText;
+                plan.compilerEvidence.shadowPin = pin.sentences;
+                plan.automation.compiledCapabilities.push("shadow-pin");
+                return plan;
+            }
+        }
+    }
+    // A reaction's blast around the triggering creature with persistent damage on a failure (Glimpse the Netherworld): the basic save of the creatures in
+    // the area, the failing rows' persistent damage, and the trigger and placement the caster's reminders.
+    if (!options.traitModeSource) {
+        const triggered = extractTriggeredBlast(adaptSpellSource(item, options));
+        if (triggered) {
+            const copy = cloneJSON(item);
+            copy.system.description.value = triggered.html;
+            const plan = compileSpell(copy, { ...options, traitModeSource: true });
+            if (plan.resolution?.kind === "save" && plan.resolution.check?.basic === true && !(plan.automation?.pendingCapabilities ?? []).length) {
+                for (const degree of ["failure", "criticalFailure"]) {
+                    const outcome = plan.resolution.outcomes[degree];
+                    outcome.damage = { mode: "mixed", shared: outcome.damage, formulas: [{ formula: triggered.persistent[degree], source: "description-inline" }], rollScope: "outcome" };
+                }
+                for (const degree of DEGREES) plan.resolution.outcomes[degree].semanticCoverage = { fullyCompiled: true };
+                plan.resolution.reminders = [...(plan.resolution.reminders ?? []), ...triggered.reminders];
+                plan.compilerEvidence.basicPersistentDamageRider = triggered.persistent.sourceText;
+                plan.compilerEvidence.triggeredBlast = triggered.sentences;
+                plan.automation.level = "guided";
+                plan.automation.compiledCapabilities.push("triggered-blast");
+                return plan;
+            }
+        }
+    }
     // A spell also cast as a reaction (The Night is Mine): compiled without its "[1] or [R]" line and the reaction sentence, the reaction a reminder.
     if (!options.reactionCastSource) {
         const reaction = extractReactionCast(item);
@@ -7029,6 +7127,7 @@ function compileSpell(item, options) {
     const stabilize = tempHp || retaliation || spellNote || directHealing || foodHealing || messageSpell || directDamage ? null : compileStabilize(adapted, nativeSpellEffects);
     // A sustained emanation that heals each creature inside when cast and on the first Sustain each round, then PF2e's Effect on those healed.
     const healingPulse = directHealing || spellNote || effectNote ? null : compileHealingPulse(adapted, [...(nativeSpellEffects.unscoped ?? []), ...(nativeSpellEffects.onUse ?? [])]);
+    const selfPulse = directHealing || spellNote || effectNote || healingPulse ? null : compileSelfPulse(adapted);
     // A thrall commanded to Stride and Strike with extra damage (a generated damage-dice Effect on the thrall).
     const thrallStrike = directHealing || spellNote || effectNote || healingPulse ? null : compileThrallStrike(adapted);
     // A sustained bargain on the caster: a chosen skill's bonus and a rolled price (a generated Effect).
@@ -8055,6 +8154,13 @@ function compileSpell(item, options) {
         plan.automation = { level: "automatic", confidence: 1, compiledCapabilities: ["source", "offer-effect"], pendingCapabilities: [] };
         plan.compilerEvidence.offerEffect = offerEffect.claimed;
         plan.diagnostics = plan.diagnostics.filter(entry => !["DESCRIPTION_SEMANTICS_PENDING", "TARGET_ELIGIBILITY_PENDING"].includes(entry.code));
+    } else if (selfPulse) {
+        // Gloom Mantle: the caster's condition when cast and on the first Sustain each round (Ongoing spells).
+        plan.resolution = { kind: "self-pulse", check: null, sharedDamage: null, outcomes: plan.resolution.outcomes, postDamageTerminal: null, applications: [], selfPulse: selfPulse.selfPulse };
+        plan.targeting.actorConstraints = { sourceText: "the caster", supportsActorTargets: false, complete: true, predicates: [] };
+        plan.automation = { level: "automatic", confidence: 1, compiledCapabilities: ["source", "self-pulse"], pendingCapabilities: [] };
+        plan.compilerEvidence.selfPulse = selfPulse.claimed;
+        plan.diagnostics = plan.diagnostics.filter(entry => !["DESCRIPTION_SEMANTICS_PENDING", "TARGET_ELIGIBILITY_PENDING", "COMPILER_PATH_NOT_IMPLEMENTED"].includes(entry.code));
     } else if (healingPulse) {
         plan.resolution = { kind: "healing-pulse", check: null, sharedDamage: null, outcomes: plan.resolution.outcomes, postDamageTerminal: null, applications: [],
             healingPulse: { ...healingPulse.healingPulse, area: healingPulse.area, durationSeconds: healingPulse.durationSeconds,
@@ -8432,6 +8538,16 @@ function compileSpell(item, options) {
                 plan.automation.pendingCapabilities = plan.automation.pendingCapabilities.filter(capability => capability !== "residual-prose");
         }
     }
+    // "Once during the duration, you can cast 4th-rank @UUID[…]{Translocate} as a divine innate spell." (Diabolical Mantle, PF2e 8.6): PF2e's Effect doesn't
+    // grant it — the caster's one cast from the Effect's card (the item-cast runtime's temporary entry).
+    if (plan.resolution.kind === "effect" && (plan.resolution.applications ?? []).length === 1 && plan.resolution.applications[0].kind === "native-spell-effect") {
+        const GRANT = /Once during the duration, you can cast (\d+)(?:st|nd|rd|th)-rank @UUID\[(Compendium\.pf2e\.spells-srd\.Item\.[A-Za-z0-9]+)\]\{([^}]+)\} as an? (arcane|divine|occult|primal) innate spell\./;
+        const grant = GRANT.exec(String(adapted.descriptionHTML ?? "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " "));
+        if (grant) {
+            plan.resolution.castGrant = { rank: Number(grant[1]), uuid: grant[2], name: grant[3], tradition: grant[4], uses: 1, sourceText: grant[0] };
+            plan.compilerEvidence.castGrant = grant[0];
+        }
+    }
     // "If the creature has the ooze, unholy, or water trait, it also takes @Damage[(@item.level)d4[persistent,spirit]] damage." on the failure and "The creature
     // takes double damage, and double persistent damage if it has the ooze, unholy, or water trait." (Spray of Salt, PF2e 8.6): the trait's extra damage on
     // the failing rows only, for a creature with any of the traits (doubled with the row).
@@ -8449,19 +8565,8 @@ function compileSpell(item, options) {
             const traits = fail[1].split(/,? or |, /).map(trait => trait.trim()).filter(Boolean);
             failure.damage = { mode: "shared", multiplier: 1, sourceComponentIds: [...shared.sourceComponentIds] };
             plan.resolution.conditionalDamage = [{ formula: fail[2], damageType: fail[3], trait: traits[0], traits, degrees: ["failure", "criticalFailure"], sourceText: `${failClause.text} ${critClause.text}` }];
-            for (const [outcome, clause] of [[failure, failClause], [critical, critClause]]) {
-                Object.assign(clause, { status: "compiled", compiledClaims: ["conditional-damage"], guidedClaims: [], unexplainedSignals: [] });
-                outcome.manualInstructions = (outcome.manualInstructions ?? []).filter(entry => entry.kind !== "conditional-effect");
-                const coverage = outcome.semanticCoverage;
-                coverage.residualClauseCount = coverage.clauses.filter(entry => entry.status === "residual").length;
-                coverage.guidedClauseCount = coverage.clauses.filter(entry => entry.status === "guided").length;
-                coverage.compiledClauseCount = coverage.clauses.filter(entry => entry.status === "compiled").length;
-                coverage.complete = coverage.fullyCompiled = coverage.clauses.every(entry => entry.status === "compiled");
-            }
+            for (const [outcome, clause] of [[failure, failClause], [critical, critClause]]) settleRowClauses(plan, outcome, [clause], "conditional-damage", ["conditional-effect"]);
             plan.compilerEvidence.conditionalDamage = plan.resolution.conditionalDamage[0].sourceText;
-            const left = Object.values(plan.resolution.outcomes).flatMap(entry => entry?.manualInstructions ?? []).map(entry => entry.kind);
-            plan.automation.pendingCapabilities = plan.automation.pendingCapabilities.filter(capability => !(capability.startsWith("manual:") && !left.includes(capability.slice(7)))
-                && !(capability === "residual-prose" && Object.values(plan.resolution.outcomes).every(entry => (entry?.semanticCoverage?.clauses ?? []).every(clause => clause.status !== "residual"))));
         }
     }
     // "If the creature is a fiend, the spear magically tethers it. For 1 minute, any teleportation actions it attempts are disrupted unless it first
@@ -8479,16 +8584,33 @@ function compileSpell(item, options) {
             outcome.noteEffects = [...(outcome.noteEffects ?? []), { label: "Tethered", text: `Any ${trait} actions it attempts are disrupted unless it first succeeds at a DC ${dc} flat check.`,
                 sourceText: `${clauses[at].text} ${clauses[at + 1].text}`, targetTrait: gate[1], castFlatCheck: { dc: Number(dc), trait },
                 duration: { mode: "fixed", value: Number(value), unit: `${unit}s`, expiry: unit === "round" ? "turn-start" : null, anchor: "effect-start", offset: 0, sourceText: `For ${value} ${unit}` } }];
-            for (const clause of [clauses[at], clauses[at + 1]]) Object.assign(clause, { status: "compiled", compiledClaims: ["note-effect"], guidedClaims: [], unexplainedSignals: [] });
-            outcome.manualInstructions = (outcome.manualInstructions ?? []).filter(entry => !["forced-movement", "conditional-effect"].includes(entry.kind));
-            const coverage = outcome.semanticCoverage;
-            coverage.residualClauseCount = coverage.clauses.filter(entry => entry.status === "residual").length;
-            coverage.guidedClauseCount = coverage.clauses.filter(entry => entry.status === "guided").length;
-            coverage.compiledClauseCount = coverage.clauses.filter(entry => entry.status === "compiled").length;
-            coverage.complete = coverage.fullyCompiled = coverage.clauses.every(entry => entry.status === "compiled");
-            const left = Object.values(plan.resolution.outcomes).flatMap(entry => entry?.manualInstructions ?? []).map(entry => entry.kind);
-            plan.automation.pendingCapabilities = plan.automation.pendingCapabilities.filter(capability => !(capability.startsWith("manual:") && !left.includes(capability.slice(7)))
-                && !(capability === "residual-prose" && Object.values(plan.resolution.outcomes).every(entry => (entry?.semanticCoverage?.clauses ?? []).every(clause => clause.status !== "residual"))));
+            settleRowClauses(plan, outcome, [clauses[at], clauses[at + 1]], "note-effect", ["forced-movement", "conditional-effect"]);
+        }
+    }
+    // "…, and one ongoing emotion effect on them of your choice that has a lower counteract rank than this spell is suppressed for the spell's duration." and "As
+    // failure, and the target can't speak for as long as they are stupefied." (Unending Tears, PF2e 8.6): the suppression the GM's note for the spell's time on
+    // both failing rows; the silence a note lasting while it's stupefied.
+    if (plan.resolution.kind === "save" && plan.lifecycle?.durationSpec?.mode === "fixed") {
+        const SUPPRESS = /, and one ongoing ([a-z]+) effect on (?:them|it) of your choice that has a lower counteract rank than this spell is suppressed for the spell's duration\.$/;
+        const SILENT = /^As failure, and the (?:target|creature) can't speak for as long as (?:they are|it is) (stupefied|dazzled|frightened|sickened)\.$/;
+        const failure = plan.resolution.outcomes?.failure, critical = plan.resolution.outcomes?.criticalFailure;
+        const clause = (failure?.semanticCoverage?.clauses ?? []).find(entry => SUPPRESS.test(entry.text) && entry.status !== "compiled");
+        const silent = /^As failure\b/.test(critical?.rawText ?? "") ? SILENT.exec(String(critical.rawText).trim()) : null;
+        const spellTime = plan.lifecycle.durationSpec;
+        if (clause && silent && Number.isInteger(Number(spellTime.value)) && ["rounds", "minutes", "hours"].includes(spellTime.unit)) {
+            const trait = SUPPRESS.exec(clause.text)[1];
+            const suppressed = { label: `${trait[0].toUpperCase()}${trait.slice(1)} effect suppressed`, text: `One ongoing ${trait} effect on it of the caster's choice, with a lower counteract rank than this spell, is suppressed for the spell's duration (the GM).`,
+                sourceText: clause.text, duration: { mode: "fixed", value: Number(spellTime.value), unit: spellTime.unit, expiry: null, anchor: "effect-start", offset: 0, sourceText: "for the spell's duration" } };
+            failure.noteEffects = [...(failure.noteEffects ?? []), suppressed];
+            critical.noteEffects = [...(critical.noteEffects ?? []), structuredClone(suppressed),
+                { label: "Can't speak", text: `It can't speak while it's ${silent[1]}.`, sourceText: silent[0], withCondition: { slug: silent[1] }, duration: { mode: "unlimited", value: null, unit: null, sourceText: `for as long as ${silent[1]}` } }];
+            settleRowClauses(plan, failure, [clause], "note-effect", ["gm-choice", "counteract"]);
+            settleRowClauses(plan, critical, (critical.semanticCoverage?.clauses ?? []).filter(entry => entry.status !== "compiled"), "note-effect", ["gm-choice", "counteract"]);
+            // (A spell neither sustained nor dismissed lasts its fixed time: the rows' conditions for the spell's minute need no end of their own.)
+            if (!plan.lifecycle.sustained && !/\bDismiss\b/.test(String(adapted.descriptionHTML ?? ""))) for (const outcome of [failure, critical]) for (const effect of outcome.effects ?? []) {
+                if (effect.endsWhen?.length === 1 && effect.endsWhen[0].event === "spell-ended" && effect.duration?.mode === "fixed" && Number(effect.duration.value) === Number(spellTime.value)
+                    && effect.duration.unit === spellTime.unit) { delete effect.endsWhen; delete effect.expirationMode; }
+            }
         }
     }
     // "As long as the target is taking this persistent spirit damage, it takes a –1 status penalty to its AC." (Warshard Shot's critical hit):

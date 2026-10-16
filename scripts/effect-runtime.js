@@ -862,6 +862,17 @@ export class EffectRuntime {
         // Stick On: stuck together until the target Escapes; PF2e's sizes pick who is Immobilized.
         if (plan.resolution.kind === "size-bond") return this.#executeSizeBond(itemOrSource, plan, sourceActor, options);
         // Garden of Healing: an emanation that heals the creatures inside now and on the first Sustain each round (Ongoing spells).
+        // Gloom Mantle: the caster's condition now and on the first Sustain each round (Ongoing spells).
+        if (plan.resolution.kind === "self-pulse") {
+            if (!this.ongoing) throw new Error(`${plan.source.name} needs the ongoing spell manager.`);
+            const data = plan.resolution.selfPulse;
+            const castRank = Number(options.castRank ?? itemOrSource?.rank ?? plan.rank);
+            const started = await this.ongoing.startSelfPulse({ spellName: plan.source.name, sourceActorUuid: sourceActor.uuid, sourceItemUuid: itemOrSource?.uuid ?? null, castRank,
+                durationSeconds: data.durationSeconds, selfPulse: data, castId: options.castInstanceId ?? null });
+            if (options.sourceMessageId) try { await game.messages.get(options.sourceMessageId)?.setFlag(MODULE_ID, "resolvedCast", { castInstanceId: started.castId, resolutionKind: "self-pulse" }); } catch (_) {}
+            Hooks.callAll(`${MODULE_ID}.resolved`, { plan, created: [], castInstanceId: started.castId });
+            return { status: "applied", plan, created: [], castInstanceId: started.castId, effectUuid: started.effectUuid };
+        }
         if (plan.resolution.kind === "healing-pulse") {
             if (!this.ongoing) throw new Error(`${plan.source.name} needs the ongoing spell manager.`);
             const data = plan.resolution.healingPulse;
@@ -1173,6 +1184,14 @@ export class EffectRuntime {
             await critHolder.setFlag(MODULE_ID, "thrallOnCrit", { spell: plan.source.name, count: plan.resolution.thrallOnCrit.count, itemUuid: itemOrSource?.uuid ?? null });
             try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), content: `<p><strong>${escapeHTML(plan.source.name)}</strong>: ${escapeHTML(plan.resolution.thrallOnCrit.sourceText)}.</p>`
                 + `<button type="button" class="pf2e-auto-runtime-button" data-repeatable="true" data-runtime-action="thrall-on-crit" data-actor-uuid="${sourceActor.uuid}" data-effect-id="${critHolder.id}"><i class="fa-solid fa-skull"></i> A critical hit: create a thrall beside the target (target it)</button>` }); } catch (_) {}
+        }
+        // (Diabolical Mantle: a spell the caster can cast once during the duration — a button on its Effect's card.)
+        const grantHolder = plan.resolution.castGrant ? created.find(document => document.actor?.uuid === sourceActor.uuid) ?? null : null;
+        if (grantHolder) {
+            const grant = plan.resolution.castGrant;
+            await grantHolder.setFlag(MODULE_ID, "castGrant", { ...grant, used: 0 });
+            try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), content: `<p><strong>${escapeHTML(plan.source.name)}</strong>: once during the duration, ${escapeHTML(sourceActor.name)} can cast ${grant.rank}${["", "st", "nd", "rd"][grant.rank] ?? "th"}-rank ${escapeHTML(grant.name)} as a ${escapeHTML(grant.tradition)} innate spell.</p>`
+                + `<button type="button" class="pf2e-auto-runtime-button" data-runtime-action="cast-grant" data-actor-uuid="${sourceActor.uuid}" data-effect-id="${grantHolder.id}"><i class="fa-solid fa-wand-sparkles"></i> Cast ${escapeHTML(grant.name)}</button>` }); } catch (_) {}
         }
         let receipt = null;
         try {
@@ -6001,6 +6020,16 @@ export class EffectRuntime {
     }
 
     /** The detonation: every creature in the cloud's basic save of the blaze at the cast rank, then the spell ends. */
+    /** Diabolical Mantle: the granted spell, cast once while the Effect lasts (the item-cast runtime's temporary entry at the stated rank). */
+    async castGrant(effect) {
+        const grant = effect?.getFlag?.(MODULE_ID, "castGrant");
+        if (!grant) throw new Error("This Effect grants no spell.");
+        if (Number(grant.used ?? 0) >= Number(grant.uses ?? 1)) throw new Error(`${grant.name} was already cast from ${effect.name}.`);
+        const { castSpellForItem } = await import("./item-cast-runtime.js");
+        const token = effect.actor?.getActiveTokens?.()?.[0] ?? null;
+        await effect.setFlag(MODULE_ID, "castGrant", { ...grant, used: Number(grant.used ?? 0) + 1 });
+        return castSpellForItem({ actor: effect.actor, token, spell: grant.uuid, rank: grant.rank, item: effect });
+    }
     async fumeDetonate(message, { skipConfirmation = true } = {}) {
         const data = message?.getFlag?.(MODULE_ID, "fumeCloud");
         if (!data) throw new Error("This card has no cloud.");
@@ -10696,7 +10725,14 @@ export class EffectRuntime {
         try { await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: sourceActor }), flags: { [MODULE_ID]: { kind: "concealing-area", castInstanceId: started.castId } },
             content: `<h3>${escapeHTML(plan.source.name)}</h3><p>A ${radius}-foot ${escapeHTML(data.sizes ? "burst" : data.area.type)} for ${escapeHTML(time)}${/^1 /.test(time) ? "" : "s"}: creatures inside are Concealed, and creatures outside are concealed to them.${data.dismissible ? " You can Dismiss it (End in Ongoing spells)." : ""}${data.turnCondition ? ` A creature starting its turn inside is ${escapeHTML(data.turnCondition.note)}` : ""}${hazard ? ` A creature entering or starting its turn inside takes ${escapeHTML(hazard.formula)} ${escapeHTML(hazard.type)} damage${hazard.doubleTrait ? ` (double with the ${escapeHTML(hazard.doubleTrait)} trait)` : ""}.` : ""}</p>` }); } catch (_) {}
         if (options.sourceMessageId) try { await game.messages.get(options.sourceMessageId)?.setFlag(MODULE_ID, "resolvedCast", { castInstanceId: started.castId, resolutionKind: "concealing-area" }); } catch (_) {}
-        return { status: "applied", plan, castInstanceId: started.castId, members: started.members, regionUuid: region.uuid, radius };
+        // (Searing Rain: the downpour's basic save for the creatures inside as it's cast — its own card.)
+        let saveCard = null;
+        if (data.savePlan) {
+            const tokens = (await Promise.all((started.memberTokens ?? []).map(uuid => fromUuid(uuid).catch(() => null)))).filter(token => token?.actor).map(token => token.object ?? token);
+            if (tokens.length) saveCard = (await this.saves.start(itemOrSource, { plan: clone(data.savePlan), sourceActor, targets: tokens, castRank, sourceMessageId: options.sourceMessageId,
+                skipConfirmation: options.skipConfirmation, ...(options.dc ? { dc: options.dc } : {}) }))?.card ?? null;
+        }
+        return { status: "applied", plan, castInstanceId: started.castId, members: started.members, regionUuid: region.uuid, radius, saveCardId: saveCard?.id ?? null };
     }
 
     /**
@@ -13263,6 +13299,7 @@ export class EffectRuntime {
         if (button.dataset.runtimeAction === "ritual-hive-gone") return await this.ritualHiveGone(effectDocument);
         if (button.dataset.runtimeAction === "spell-storm") return await this.spellStorm(effectDocument);
         if (button.dataset.runtimeAction === "thrall-on-crit") return await this.thrallOnCrit(effectDocument);
+        if (button.dataset.runtimeAction === "cast-grant") return await this.castGrant(effectDocument);
         if (button.dataset.runtimeAction === "giant-thrall") return await this.giantThrallStrikes(effectDocument);
         if (button.dataset.runtimeAction === "thrall-control") return await this.thrallControl(effectDocument, Number(button.dataset.index ?? 0));
         if (button.dataset.runtimeAction === "cannibalize") return await this.cannibalHunger(effectDocument);

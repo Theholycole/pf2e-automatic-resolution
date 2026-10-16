@@ -71,6 +71,7 @@ export class OngoingRuntime {
     startSpiritAid(args) { return this.enqueue(() => this.#family.startSpiritAid(args)); }
     memberCriticalSave(message) { return this.#family?.memberCriticalSave(message); }
     startHealingPulse(args) { return this.enqueue(() => this.#family.startHealingPulse(args)); }
+    startSelfPulse(args) { return this.enqueue(() => this.#family.startSelfPulse(args)); }
     startHpTransfer(args) { return this.enqueue(() => this.#family.startHpTransfer(args)); }
     records() { return (game.journal?.contents ?? []).filter(journal => value(journal)); }
     find(castId) { return this.records().find(journal => value(journal).castId === castId); }

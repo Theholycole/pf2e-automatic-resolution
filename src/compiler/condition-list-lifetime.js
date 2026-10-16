@@ -39,7 +39,8 @@ const ESCAPE = String.raw`(?:(?:,)?\s+or\s+until\s+${SUBJECT}\s+(?:successfully\
 // Interact action to wipe its eyes"; "though it can Interact to ... and remove
 // the condition"). The purpose phrase is short flavor bounded by punctuation.
 const PURPOSE = String.raw`(?:\s+to\s+[a-z' ]{1,40}?(?=[,.;]|$)|(?=[,.;]|$))`;
-const ACTION_END = String.raw`(?:(?:,)?\s+or\s+until\s+${SUBJECT}\s+uses?\s+an\s+Interact\s+action${PURPOSE}|\s+until\s+${SUBJECT}\s+uses?\s+an\s+Interact\s+action${PURPOSE}|,\s+though\s+${SUBJECT}\s+can\s+Interact\s+to\s+[a-z' ]{1,40}?\s+and\s+remove\s+the\s+condition)(?:,\s+whichever comes first)?`;
+// (Or "until they Interact to clear their vision": Unending Tears, PF2e 8.6.)
+const ACTION_END = String.raw`(?:(?:,)?\s+or\s+until\s+${SUBJECT}\s+uses?\s+an\s+Interact\s+action${PURPOSE}|\s+until\s+${SUBJECT}\s+uses?\s+an\s+Interact\s+action${PURPOSE}|\s+until\s+${SUBJECT}\s+Interacts?${PURPOSE}|,\s+though\s+${SUBJECT}\s+can\s+Interact\s+to\s+[a-z' ]{1,40}?\s+and\s+remove\s+the\s+condition)(?:,\s+whichever comes first)?`;
 /** Escape-DC wording the positional grammar proves; residual analysis may claim it. */
 export const ESCAPE_DC_PATTERN = new RegExp(ESCAPE_DC, "gi");
 // A short agent phrase ("immobilized by the vampiric maiden for 1 round") is
