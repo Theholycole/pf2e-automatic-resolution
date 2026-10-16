@@ -19,12 +19,15 @@ export function escapeDegree(total, natural, dc) {
 
 export function escapeCheck(message) {
     const context = message?.flags?.pf2e?.context;
-    if (!Array.isArray(context?.options) || !context.options.includes("action:escape")) return null;
+    // (A Grapple ends only the Effects that say so: Tenebrous Freedom's shadow taken back.)
+    const action = !Array.isArray(context?.options) ? null : context.options.includes("action:escape") ? "escape" : context.options.includes("action:grapple") ? "grapple" : null;
+    if (!action) return null;
     const roll = message.rolls?.[0];
     const total = Number(roll?.total);
     if (!Number.isFinite(total)) return null;
     const natural = Number(roll?.dice?.[0]?.total ?? roll?.terms?.[0]?.total);
     return {
+        action,
         total,
         natural: Number.isFinite(natural) ? natural : null,
         reroll: context.isReroll === true,
@@ -44,7 +47,7 @@ export function gradeEscapeCandidates(effects, check) {
     return [...(effects ?? [])]
         .filter(effect => effect?.type === "effect" && !effect.isExpired)
         .map(effect => ({ effect, escape: escapeMetadata(effect) }))
-        .filter(entry => entry.escape)
+        .filter(entry => entry.escape && (entry.escape.check ?? "escape") === (check.action ?? "escape"))
         .map(entry => ({ ...entry, degree: escapeDegree(check.total, check.natural, entry.escape.dc) }))
         .map(entry => ({ ...entry, escaped: ["success", "criticalSuccess"].includes(entry.degree) }));
 }
@@ -64,8 +67,12 @@ function cardContent(entries, check, actorName, status = {}) {
         const button = done
             ? `<em>${escapeHTML(done)}</em>`
             : `<button type="button" class="pf2e-auto-escape-button" data-escape-action="end" data-entry-id="${escapeHTML(entry.id)}"><i class="fa-solid fa-link-slash"></i> End ${escapeHTML(entry.name)}</button>`;
-        return `<li><strong>${escapeHTML(entry.name)}</strong> — Escape DC ${escapeHTML(entry.dc)}: ${escapeHTML(entry.degree === "criticalSuccess" ? "critical success" : "success")}<div>${button}</div></li>`;
+        return `<li><strong>${escapeHTML(entry.name)}</strong> — ${check.action === "grapple" ? "Grapple" : "Escape"} DC ${escapeHTML(entry.dc)}: ${escapeHTML(entry.degree === "criticalSuccess" ? "critical success" : "success")}<div>${button}</div></li>`;
     }).join("");
+    if (check.action === "grapple") return `<section class="pf2e-auto-runtime-card"><header><strong>Grapple</strong></header>`
+        + `<p>${escapeHTML(actorName)} rolled ${escapeHTML(check.total)}${check.natural == null ? "" : ` (natural ${escapeHTML(check.natural)})`} to Grapple. `
+        + `It beat these spells' DCs; end the one it took back.</p>`
+        + `<ul class="pf2e-auto-runtime-effects">${rows}</ul></section>`;
     return `<section class="pf2e-auto-runtime-card"><header><strong>Escape</strong></header>`
         + `<p>${escapeHTML(actorName)} rolled ${escapeHTML(check.total)}${check.natural == null ? "" : ` (natural ${escapeHTML(check.natural)})`} to Escape. `
         + `These spell restraints were beaten. A successful Escape frees the creature from one restraint; end the one it escaped.</p>`

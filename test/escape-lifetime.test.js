@@ -114,10 +114,16 @@ test('Escape checks are graded against each restraint\'s snapshotted DC with nat
     assert.equal(escapeDegree(25, 1, 25), 'failure');
     const message = {flags: {pf2e: {context: {options: ['action:escape', 'action:escape:athletics'], origin: {actor: 'Actor.x'}}}},
         rolls: [{total: 22, dice: [{total: 14}]}], speaker: {actor: 'x'}};
-    assert.deepEqual(escapeCheck(message), {total: 22, natural: 14, reroll: false, actorUuid: 'Actor.x', speakerActorId: 'x'});
-    assert.equal(escapeCheck({...message, flags: {pf2e: {context: {options: ['action:grapple']}}}}), null);
+    assert.deepEqual(escapeCheck(message), {action: 'escape', total: 22, natural: 14, reroll: false, actorUuid: 'Actor.x', speakerActorId: 'x'});
+    // A Grapple is read too, but ends only an Effect that says a Grapple ends it (Tenebrous Freedom's shadow); never an Escape's.
+    const grapple = {...message, flags: {pf2e: {context: {options: ['action:grapple']}}}};
+    assert.equal(escapeCheck(grapple).action, 'grapple');
+    assert.equal(escapeCheck({...message, flags: {pf2e: {context: {options: ['action:trip']}}}}), null);
     const effect = (dc, extra = {}) => ({type: 'effect', isExpired: false, flags: {'pf2e-automatic-resolution': {outcomeEffect: {castId: 'c', escape: {dc}}}}, ...extra});
     const graded = gradeEscapeCandidates([effect(20), effect(23), effect(21, {isExpired: true}),
         {type: 'effect', flags: {}}, {type: 'condition', flags: {'pf2e-automatic-resolution': {outcomeEffect: {escape: {dc: 1}}}}}], escapeCheck(message));
     assert.deepEqual(graded.map(entry => [entry.escape.dc, entry.degree, entry.escaped]), [[20, 'success', true], [23, 'failure', false]]);
+    const shadow = {type: 'effect', isExpired: false, flags: {'pf2e-automatic-resolution': {outcomeEffect: {castId: 'c', escape: {dc: 20, check: 'grapple'}}}}};
+    assert.deepEqual(gradeEscapeCandidates([effect(20), shadow], escapeCheck(grapple)).map(entry => entry.effect), [shadow]);
+    assert.deepEqual(gradeEscapeCandidates([effect(20), shadow], escapeCheck(message)).map(entry => entry.escape.check ?? null), [null]);
 });

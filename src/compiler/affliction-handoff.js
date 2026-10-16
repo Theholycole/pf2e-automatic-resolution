@@ -67,6 +67,12 @@ const AFFLICTED_CAPPED = new RegExp(`^${SUBJECT} is afflicted with (.+?) at stag
 const DAMAGE_THEN_AFFLICTED = new RegExp(`^${SUBJECT} takes (full|double the) ([a-z]+) damage and becomes afflicted with (.+?) at stage (\\d+)\\.$`, "i");
 const TYPED_SHARED = new RegExp(`^${SUBJECT} takes (\\d+d\\d+) ([a-z]+) damage\\.$`, "i");
 
+// "As failure, but the creature is afflicted at stage 2." (Gift of Dusk): the failure row's affliction at another stage.
+const AFFLICTED_AS_FAILURE = new RegExp(`^As failure, but ${SUBJECT.replace("The ", "the ")} is afflicted at stage (\\d+)\\.$`, "i");
+// "The Fortitude DC to recover is equal to your spell DC.": the handoff's DC is the cast's already.
+const RECOVER_DC = /^The (Fortitude|Reflex|Will) DC to recover is equal to your spell DC\.$/;
+// A row's leading sentence without rules ("The shadow's freedom is short lived."), before the row's own rules.
+const RULE_WORDS = /\d|@|\[\[|\b(?:damage|save|bonus|penalty|condition|immune|must|each|unaffected|afflicted|stage|takes?|becomes?|can't|cannot|until|instead)\b/i;
 const IMMUNE = new RegExp(`^${SUBJECT} is unaffected and is immune to (.+?) for (\\d+|one|a) (rounds?|minutes?|hours?|days?|weeks?)\\.$`, "i");
 const PER_RANK_AND_PENALTY = new RegExp(`^${SUBJECT} takes (\\d+) ([a-z]+) damage per spell rank, and takes a [-–](\\d+) status penalty to saves against (.+?) for (\\d+|one|a) (rounds?|minutes?|hours?|days?|weeks?) or until the (?:target|creature) contracts it, whichever comes first\\.$`, "i");
 const DURATION_UNITS = { round: "rounds", minute: "minutes", hour: "hours", day: "days", week: "days" };
@@ -143,11 +149,17 @@ export function compileAfflictionHandoff(plan, adapted) {
     // A lasting cast only when the block says the affliction ends with the spell (the affliction Effect then ends with the cast).
     // (Or a lasting area that afflicts the creatures it exposes, with the affliction's own maximum duration: Dread Mosquito Storm's disease outlives nothing.)
     const areaAffliction = adapted.lingeringAffliction === true && !plan.lifecycle?.sustained && !!block.maximumDuration;
-    if ((plan.lifecycle?.durationSpec?.mode !== "instantaneous" || plan.lifecycle?.sustained) && !block.endsWithSpell && !areaAffliction) return { blocked: "lifecycle" };
+    // (Or the item's duration "varies": the rows' own times and the affliction's — Gift of Dusk, the cast itself instantaneous.)
+    const varies = plan.lifecycle?.durationSpec?.mode === "text" && /^varies$/i.test(String(plan.lifecycle.durationSpec.raw ?? "").trim()) && !plan.lifecycle?.sustained;
+    if ((plan.lifecycle?.durationSpec?.mode !== "instantaneous" || plan.lifecycle?.sustained) && !block.endsWithSpell && !areaAffliction && !varies) return { blocked: "lifecycle" };
     const components = adapted.damageComponents ?? [];
     const single = components.length === 1 && components[0].kinds?.length === 1 && components[0].kinds[0] === "damage"
         && !components[0].category ? components[0] : null;
     const outcomes = plan.resolution.outcomes;
+    const leadText = htmlToPlainText(String(adapted.descriptionHTML ?? "").split(/<strong\b[^>]*>\s*(?:Critical Success|Success|Failure|Critical Failure)\s*<\/strong>/i)[0]);
+    // (Not a vehicle the spell introduces — "A tiny, bone-white moth emerges…": the residual analysis's narrative nouns claim those already.)
+    const vehicles = new Set([...leadText.matchAll(/(?:^|[.!?]\s+)An? (?:[a-z-]+,? ){0,3}?([a-z]+) (?:emerges|appears|flies|springs|forms|materializes)\b/gi)].map(match => match[1].toLowerCase()));
+    const leadNouns = new Set((leadText.toLowerCase().match(/[a-z]+/g) ?? []).filter(word => !vehicles.has(word)));
     const claims = {};
     let afflicted = 0;
     for (const [degree, outcome] of Object.entries(outcomes)) {
@@ -176,6 +188,26 @@ export function compileAfflictionHandoff(plan, adapted) {
                 outcome.damage = { mode: "shared", multiplier: /double/i.test(match[1]) ? 2 : 1, sourceComponentIds: [single.id] };
                 outcome.affliction = { name: block.name, stage, sourceText: clause };
                 afflicted++;
+                continue;
+            }
+            match = AFFLICTED_AS_FAILURE.exec(clause);
+            if (match) {
+                const stage = stageRef(block, block.name, match[1], plan.traits ?? []);
+                if (degree !== "criticalFailure" || !outcomes.failure?.affliction || !stage) return { blocked: "affliction-name" };
+                outcome.affliction = { name: block.name, stage, sourceText: clause };
+                afflicted++;
+                continue;
+            }
+            match = RECOVER_DC.exec(clause);
+            if (match) {
+                if (match[1].toLowerCase() !== plan.resolution.check?.statistic) return { blocked: "affliction-dc" };
+                outcome.afflictionDCText = clause;
+                continue;
+            }
+            // (About a thing the spell's lead text names — "your target's shadow": "The shadow's freedom is short lived." — never anything else.)
+            const subject = /^The ([a-z]+)(?:'s)? /.exec(clause)?.[1];
+            if (clause === clauseSplit(outcome.rawText)[0] && clauseSplit(outcome.rawText).length > 1 && !RULE_WORDS.test(clause) && subject && leadNouns.has(subject)) {
+                outcome.afflictionNarration = clause;
                 continue;
             }
             // "The creature is unaffected and is immune to blister pox for 1 week."
@@ -241,10 +273,16 @@ export function compileAfflictionHandoff(plan, adapted) {
         if (found.length === 1 && found[0][1].includes("@item.rank")) rankDamage[stage.stage] = { count: found[0][1], faces: Number(found[0][2]), type: found[0][3] };
         else if (/@item\.rank/.test(stage.text)) return { blocked: "affliction-stage-damage" };
     }
+    // "… and the shadow detaches as an independent creature. Use the statistics for a Shadow, …": the stage's creature (Gift of Dusk).
+    const creature = stageCreature(block);
+    if (creature?.blocked) return creature;
+    // (The stages in Pseudo Afflictions' own terms, for an affliction its list doesn't have — PF2e 8.6's: the module makes its Effect.)
+    const handlerStages = pseudoAfflictionStages(block, creature);
     return {
+        varies,
         block: { name: block.name, traits: block.traits, level: block.level, maximumDuration: block.maximumDuration,
             stages: block.stages, ...(block.immunity ? { immunity: block.immunity } : {}), ...(block.endsWithSpell ? { endsWithSpell: true } : {}),
-            ...(Object.keys(rankDamage).length ? { rankDamage } : {}) },
+            ...(Object.keys(rankDamage).length ? { rankDamage } : {}), ...(creature ? { stageCreature: creature } : {}), ...(handlerStages ? { handlerStages } : {}) },
         blockHTML: block.blockHTML,
         delivery,
         castChoice: behaviour?.choice ?? null,
@@ -252,6 +290,48 @@ export function compileAfflictionHandoff(plan, adapted) {
         castImmunity: castImmunity?.sentence ?? null,
         claimedSentences: [...(delivery ? [delivery.sentence, ...(delivery.gate ? [delivery.saveSentence] : [])] : []), ...(behaviour?.claimedSentences ?? [])]
     };
+}
+
+// Gift of Dusk's stage 3: "Enfeebled 4 and the shadow detaches as an independent creature. Use the statistics for a Shadow, though it can't create shadow spawn.
+// The shadow is friendly to the curse's caster and hostile to the creature it was attached to. The stage can't be reduced until the shadow is slain, which
+// immediately ends the curse."
+const DETACHES = /^(.+?) and the ([a-z]+) detaches as an independent creature\. Use the statistics for an? @UUID\[(Compendium\.[a-z0-9-]+\.[a-z0-9-]+\.Actor\.[A-Za-z0-9]+)\]\{([^}]+)\}(?:, though (it can't [^.]+))?\. The \2 is friendly to the curse's caster and hostile to the creature it was attached to\. The stage can't be reduced until the \2 is slain, which immediately ends the curse\.$/;
+
+// A stage as conditions and a time: "@UUID[…]{Enfeebled 2} (1 round)", "@UUID[…]{Sickened 1} and @UUID[…]{Slowed 1} (1 day)" — or the creature's stage (its
+// conditions, then the creature: no time of its own).
+const STAGE_CONDITION = /^@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{([A-Za-z-]+)(?: (\d+))?\}$/;
+const STAGE_UNITS = { round: "rounds", minute: "minutes", hour: "hours", day: "days", week: "weeks" };
+
+/** {N: {conditions: [{slug, value?}], duration}} for Pseudo Afflictions, or null when a stage says more than conditions and a time. */
+function pseudoAfflictionStages(block, creature) {
+    const stages = {};
+    for (const stage of block.stages) {
+        let text = stage.text.replace(/\s+/g, " ").trim();
+        if (creature && stage.stage === creature.stage) text = text.slice(0, text.length - creature.sourceText.length).replace(/ and $/, "").trim();
+        const timed = /^(.+?) \((\d+) (round|minute|hour|day|week)s?\)$/.exec(text);
+        const parts = (timed ? timed[1] : text).split(/,? and |, /);
+        const conditions = parts.map(part => STAGE_CONDITION.exec(part.trim()));
+        if (conditions.some(match => !match) || (!timed && !(creature && stage.stage === creature.stage))) return null;
+        stages[stage.stage] = {
+            conditions: conditions.map(match => ({ slug: match[1].toLowerCase(), ...(match[2] ? { value: Number(match[2]) } : {}) })),
+            duration: timed ? { value: Number(timed[2]), unit: STAGE_UNITS[timed[3]], expiry: "turn-end", sustained: false } : { value: -1, unit: "unlimited", expiry: "turn-end", sustained: false }
+        };
+    }
+    return stages;
+}
+
+/** The stage that brings a creature, {stage, uuid, name, …}, {blocked} when a stage names one some other way, or null. */
+function stageCreature(block) {
+    for (const stage of block.stages) {
+        const text = stage.text.replace(/\s+/g, " ").trim();
+        if (!/independent creature|Use the statistics for/i.test(text)) continue;
+        const match = DETACHES.exec(text);
+        // (Its other rules — the conditions before it — are the handler's own stage.)
+        if (!match || stage.stage !== block.stages.length || !/^@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{[A-Za-z]+ \d+\}$/.test(match[1])) return { blocked: "affliction-stage-creature" };
+        return { stage: stage.stage, uuid: match[3], name: match[4], what: match[2], ...(match[5] ? { note: `${match[5][0].toUpperCase()}${match[5].slice(1)}.` } : {}),
+            locksStage: true, endsCurseWhenSlain: true, sourceText: text.slice(match[1].length + 5) };
+    }
+    return null;
 }
 
 /**

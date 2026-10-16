@@ -166,7 +166,7 @@ export function compileEffectDuration(effect, text, lifecycle) {
         const at = sentence.indexOf(effect.raw);
         if (at >= 0 && /^ for (?:its|their) next action(?=[.,;]|$)/.test(sentence.slice(at + effect.raw.length))) endsWhen.push({ event: "action", action: "next" });
     }
-    if (proof?.escape) endsWhen.push({ event: "escape", dc: proof.escapeDC ?? "spell" });
+    if (proof?.escape) endsWhen.push({ event: "escape", dc: proof.escapeDC ?? "spell", ...(proof.escapeCheck ? { check: proof.escapeCheck } : {}) });
     if (proof?.actionEnd) endsWhen.push({ event: "action", action: proof.actionEnd });
     if (proof ? proof.spellEnds : /\b(?:until|or) (?:the|this) spell ends?\b/i.test(sentence)) endsWhen.push({ event: "spell-ended" });
     // "The target is fascinated by the cloud.": the condition lasts as long as the area does (not ended by leaving it).

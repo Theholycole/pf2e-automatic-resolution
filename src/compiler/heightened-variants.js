@@ -28,8 +28,19 @@ function fixed(value, unit, sourceText) {
     return { mode: "fixed", value: Number(value), unit: UNIT[unit], expiry: unit === "round" ? "turn-start" : null, anchor: "effect-start", sourceText };
 }
 
-/** The affliction at a heightened rank (virulent, raised condition values), or null. */
-function variantAffliction(handoff, text) {
+// Gift of Dusk: "The curse's level increases to 11. At stage 3, instead of a shadow, you create a Greater Shadow." — the stage's creature swapped (its uuid
+// from the entry's link), the curse's level raised.
+const CREATURE_SWAP = /^The curse's level increases to (\d+)\. At stage (\d+), instead of an? ([a-z ]+), you create an? (.+?)\.$/;
+
+/** The affliction at a heightened rank (virulent, raised condition values; another stage creature), or null. */
+function variantAffliction(handoff, text, html = "") {
+    const swap = CREATURE_SWAP.exec(text);
+    if (swap) {
+        const creature = handoff?.stageCreature;
+        const link = [...String(html).matchAll(/@UUID\[(Compendium\.[a-z0-9-]+\.[a-z0-9-]+\.Actor\.[A-Za-z0-9]+)\]\{([^}]+)\}/g)];
+        if (!creature || creature.stage !== Number(swap[2]) || creature.what !== swap[3].toLowerCase() || link.length !== 1 || link[0][2] !== swap[4]) return null;
+        return { ...clone(handoff), level: Number(swap[1]), levelPatch: Number(swap[1]), stageCreature: { ...clone(creature), uuid: link[0][1], name: link[0][2] } };
+    }
     const virulent = VIRULENT.exec(text);
     if (!virulent || !handoff?.stages?.length) return null;
     const slugs = virulent[1].split(/,\s*(?:or\s+)?|\s+or\s+/).map(slug => slug.trim()).filter(Boolean);
@@ -100,12 +111,12 @@ function variantOutcomes(outcomes, text) {
 export function compileHeightenedVariants(plan, html) {
     if (plan.resolution?.kind !== "save" || !plan.resolution.outcomes) return [];
     const blocks = [...String(html ?? "").matchAll(/<strong>\s*Heightened \((\d+)(?:st|nd|rd|th)\)\s*<\/strong>([\s\S]*?)(?=<strong>\s*Heightened|$)/g)]
-        .map(match => ({ rank: Number(match[1]), text: htmlToPlainText(match[2]).replace(/@UUID\[[^\]]+\]\{([^}]+)\}/g, "$1").replace(/\s+/g, " ").trim() }));
+        .map(match => ({ rank: Number(match[1]), html: match[2], text: htmlToPlainText(match[2]).replace(/@UUID\[[^\]]+\]\{([^}]+)\}/g, "$1").replace(/\s+/g, " ").trim() }));
     const variants = [];
     for (const block of blocks) {
         if (block.rank <= Number(plan.rank)) continue;
         const outcomes = variantOutcomes(plan.resolution.outcomes, block.text);
-        const affliction = !outcomes && plan.resolution.afflictionHandoff ? variantAffliction(plan.resolution.afflictionHandoff, block.text) : null;
+        const affliction = !outcomes && plan.resolution.afflictionHandoff ? variantAffliction(plan.resolution.afflictionHandoff, block.text, block.html) : null;
         if (outcomes) variants.push({ minRank: block.rank, sourceText: block.text, outcomes });
         else if (affliction) variants.push({ minRank: block.rank, sourceText: block.text, outcomes: clone(plan.resolution.outcomes), afflictionHandoff: affliction });
     }

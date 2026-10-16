@@ -48,13 +48,49 @@ function chosenWeapon(adapted, sentences, rest) {
     return { conjuredItem: { seconds, weapon: { maxBulk: Number(bulk[1]), rarity: "common" }, runes, held: true, notes: after }, claimed: [...sentences, ...rest.map(plain)] };
 }
 
+// PF2e 8.6's Summon Instrument: "You materialize a handheld musical instrument in your grasp. …" and a link to its own Effect, whose GrantItem rules
+// hold the items ("{item|level}" below 5 and from 5: the heightened entry's "The instrument is instead a virtuoso handheld instrument.") — the
+// same conjured item, its items read from that Effect (which isn't applied as well: it would grant a second one).
+const MATERIALIZE_PLAIN = /^You materialize an? ([a-z ]+) in your grasp\.$/;
+// (By id live; PF2e's source files write the Effect's name.)
+const SELF_LINK = /@UUID\[Compendium\.pf2e\.spell-effects\.Item\.[^\]]+\]\{[^}]+\}/g;
+function linkedItem(adapted, sentences, rest, nativeSpellEffects) {
+    const made = MATERIALIZE_PLAIN.exec(sentences[0] ?? "");
+    const links = [...(nativeSpellEffects?.unscoped ?? []), ...(nativeSpellEffects?.onUse ?? [])].filter(effect => effect.resolutionStatus === "resolved");
+    if (!made || links.length !== 1) return null;
+    const grants = links[0].document?.mechanics?.rules ?? [];
+    if (!grants.length || grants.some(rule => rule.key !== "GrantItem" || !/^Compendium\.[^.]+\.[^.]+\.Item\.[A-Za-z0-9]+$/.test(String(rule.uuid ?? "")))) return null;
+    const steps = rest.map(section => /^Heightened \((\d+)(?:st|nd|rd|th)\) The [a-z]+ is instead an? ([a-z ]+)\.$/.exec(plain(section)));
+    if (steps.some(step => !step) || steps.length > 1) return null;
+    // One item, or one below the heightened rank and one from it (the Effect's own predicates on its rank).
+    const bound = (rule, op) => rule.predicate?.length === 1 && Array.isArray(rule.predicate[0]?.[op]) && rule.predicate[0][op][0] === "{item|level}" ? Number(rule.predicate[0][op][1]) : null;
+    let item, heightened = [];
+    if (!steps.length) {
+        if (grants.length !== 1 || grants[0].predicate?.length) return null;
+        item = { uuid: grants[0].uuid, name: made[1] };
+    } else {
+        const rank = Number(steps[0][1]);
+        const below = grants.find(rule => bound(rule, "lt") === rank), from = grants.find(rule => bound(rule, "gte") === rank);
+        if (grants.length !== 2 || !below || !from) return null;
+        item = { uuid: below.uuid, name: made[1] };
+        heightened = [{ minRank: rank, uuid: from.uuid, name: steps[0][2] }];
+    }
+    const named = namedItem(adapted, [`You materialize a @UUID[${item.uuid}]{${item.name}} in your grasp.`, ...sentences.slice(1)], []);
+    if (!named) return null;
+    named.conjuredItem.steps = heightened;
+    named.conjuredItem.itemsFrom = { effect: links[0].uuid };
+    return { conjuredItem: named.conjuredItem, claimed: [...sentences, ...rest.map(plain)] };
+}
+
 /** Returns {conjuredItem, claimed} or null. */
-export function compileConjuredItem(adapted) {
+export function compileConjuredItem(adapted, nativeSpellEffects = null) {
     if ((adapted.defense?.kind !== "none" && adapted.defense?.kind !== undefined) || (adapted.damageComponents ?? []).length || adapted.lifecycle?.sustained) return null;
     const [body, ...rest] = String(adapted.descriptionHTML ?? "").replace(/<\/?em>/g, "").split(/<hr\s*\/?>/i);
     const sections = rest.flatMap(section => section.split(/(?=<p>\s*<strong>\s*Heightened)/)).filter(section => plain(section));
     const sentences = split(plain(body));
-    return namedItem(adapted, sentences, sections) ?? chosenWeapon(adapted, sentences, sections);
+    const linked = SELF_LINK.test(body) ? linkedItem(adapted, split(plain(body.replace(SELF_LINK, ""))), sections, nativeSpellEffects) : null;
+    SELF_LINK.lastIndex = 0;
+    return linked ?? namedItem(adapted, sentences, sections) ?? chosenWeapon(adapted, sentences, sections);
 }
 
 /** The conjured item or runes at a cast rank. */

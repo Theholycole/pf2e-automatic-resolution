@@ -1949,11 +1949,14 @@ module can't know, and PF2e has no "suppressed" state for a condition. (PF2e's E
 - **B. The bonuses automated, the suppression the GM's** (a note with the save to roll).
 - **C. PF2e's Effect as it is** (circumstance) and the suppression the GM's.
 
-### Not built yet (no question — they need new runtime parts)
-- **Tenebrous Freedom:** the detached shadow (a token moving 5/10/15 feet on each Cast or Sustain), Enfeebled 2 and Clumsy 2 while it's away, reattached
-  by a Grapple against the spell DC or a 2-action manipulate activity in reach.
+### Built after all (2026-10-16; no question)
+- ~~Tenebrous Freedom~~ — each row's Enfeebled 2 and Clumsy 2 (3 at 8th) while the spell is Sustained, ended when the target's Grapple beats the spell DC (the
+  Escape card, now also for a Grapple); how far the shadow moves and the 2-action manipulate activity are the card's reminder. PF2e's data doesn't mark it
+  sustained; the text's Sustain is used (a data note).
 - ~~Devil's Horseshoe~~ — built 2026-10-16 as a ward (the GM's Trigger for each fiend passing through; the silver attacks a note for the row's time).
-- **Gift of Dusk:** a curse with stages (Enfeebled 2, 3, then 4 and the shadow freed as a Shadow or Greater Shadow, friendly to the caster).
-- **Control Currents:** a current along a line on water, moving creatures 10 (20) feet each turn (the caster's direction), a Fortitude save for unwilling
-  ones, difficult terrain against it. (The lingering area with a push reads; the caster's toward/away choice for the push is the missing part. PF2e's data
-  heightens it at rank 2, the text at 4th.)
+- ~~Gift of Dusk~~ — the curse handed to Pseudo Afflictions (stage 1, or 2 on a critical failure; the success row's Enfeebled 1 for 1 minute); at stage 3 the
+  module places the Shadow (Greater Shadow at 6th, the curse's level 11) beside the creature on the caster's side, holds the stage at 3 while it lives, and
+  ends the curse when it's slain.
+- ~~Control Currents~~ — the card asks the current's direction (away: a push, toward: a pull); creatures entering or starting their turn in the line save
+  (Fortitude), a failure moves them 10 feet (20 from 4th). Which squares are water, willing creatures (no save), vehicles and the difficult terrain against
+  the current are the GM's reminders; PF2e's data heightens the line at rank 2, the text at 4th (a data note).

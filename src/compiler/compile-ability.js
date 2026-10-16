@@ -92,6 +92,8 @@ import { compileThrallStrike } from "./thrall-strike.js";
 import { extractReactionCast } from "./reaction-cast.js";
 import { extractTriggeredBlast } from "./triggered-blast.js";
 import { extractShadowPin } from "./shadow-pin.js";
+import { extractShadowDetach } from "./shadow-detach.js";
+import { extractCurrentLine } from "./current-line.js";
 import { extractDownpourCloud } from "./downpour-cloud.js";
 import { compileSelfPulse } from "./gloom-mantle.js";
 import { compileHealBack } from "./heal-back.js";
@@ -4971,6 +4973,36 @@ function compileSpell(item, options) {
             }
         }
     }
+    // A line of water current flowing away from the caster or toward it (Control Currents): each direction a lingering mode, its turn-start and entering save
+    // moving the creature (farther from the heightened rank); the water, a willing creature, vehicles and the current's difficult terrain the GM's.
+    if (!options.traitModeSource && !options.lingeringMode) {
+        const current = extractCurrentLine(adaptSpellSource(item, options));
+        if (current) {
+            const plans = current.modes.map(mode => {
+                const copy = cloneJSON(item);
+                copy.system.description.value = mode.html;
+                const plan = compileSpell(copy, { ...options, lingeringMode: true });
+                if (current.heightened) for (const degree of ["failure", "criticalFailure"]) {
+                    const move = plan.resolution?.outcomes?.[degree]?.forcedMovement;
+                    if (move) move.heightening = { minRank: current.heightened.minRank, distance: current.heightened.feet, sourceText: current.heightened.sourceText };
+                }
+                plan.resolution.reminders = [...(plan.resolution.reminders ?? []), ...current.notes.map(text => ({ kind: "spell-note", text, sourceText: current.sentences[0] }))];
+                plan.compilerEvidence.currentLine = current.sentences;
+                return { key: mode.key, label: mode.label, plan };
+            });
+            const moves = entry => ["failure", "criticalFailure"].every(degree => entry.plan.resolution?.outcomes?.[degree]?.forcedMovement?.distance === current.feet);
+            if (plans.every(entry => entry.plan.resolution?.lingering && moves(entry) && !(entry.plan.automation?.pendingCapabilities ?? []).length)) {
+                const plan = cloneJSON(plans[0].plan);
+                plan.resolution.lingeringModes = plans.map(entry => ({ key: entry.key, label: entry.label, plan: entry.plan }));
+                // (PF2e's data puts the 60-foot line at rank 2; the text's Heightened entry is the 4th.)
+                const dataLine = Object.entries(item.system?.heightening?.levels ?? {}).find(([, level]) => level?.area?.type === "line");
+                if (current.heightened && dataLine && Number(dataLine[0]) !== current.heightened.minRank)
+                    plan.resolution.dataNotes = [...(plan.resolution.dataNotes ?? []), `PF2e's data makes the line ${dataLine[1].area.value} feet from rank ${dataLine[0]}; the text says from the ${current.heightened.minRank}th: below it, draw the ${item.system?.area?.value ?? 30}-foot line.`];
+                plan.automation.compiledCapabilities.push("lingering-modes", "current-line");
+                return plan;
+            }
+        }
+    }
     // Another spell's effects plus a critical failure's persistent damage (Ranger's Bramble): the referenced spell's text for this spell, its
     // critical failure row's damage the inline roll (persistent).
     if (!options.traitModeSource && !options.borrowedRider) {
@@ -5922,6 +5954,25 @@ function compileSpell(item, options) {
                 plan.compilerEvidence.targetsByActions = pin.reminder.sourceText;
                 plan.compilerEvidence.shadowPin = pin.sentences;
                 plan.automation.compiledCapabilities.push("shadow-pin");
+                return plan;
+            }
+        }
+    }
+    // A creature's shadow detached until it takes it back (Tenebrous Freedom): each row's conditions while the spell is Sustained or until the target Grapples
+    // against the spell DC; the shadow's moves the caster's reminder. (The heightened rank's values: a variant of the rows.)
+    if (!options.traitModeSource) {
+        const detach = extractShadowDetach(adaptSpellSource(item, options));
+        if (detach) {
+            const copyAt = html => { const copy = cloneJSON(item); copy.system.description.value = html; copy.system.duration = { sustained: true, value: "" }; return copy; };
+            const plan = compileSpell(copyAt(detach.html), { ...options, traitModeSource: true });
+            const high = detach.heightened.map(entry => ({ entry, plan: compileSpell(copyAt(entry.html), { ...options, traitModeSource: true }) }));
+            const sound = candidate => candidate.resolution?.kind === "save" && candidate.resolution.check?.basic === false && !(candidate.automation?.pendingCapabilities ?? []).length;
+            if (sound(plan) && high.every(variant => sound(variant.plan))) {
+                plan.resolution.reminders = [...(plan.resolution.reminders ?? []), detach.reminder];
+                plan.resolution.dataNotes = [...(plan.resolution.dataNotes ?? []), detach.dataNote];
+                if (high.length) plan.resolution.heightenedVariants = high.map(variant => ({ minRank: variant.entry.minRank, sourceText: variant.entry.sourceText, outcomes: variant.plan.resolution.outcomes }));
+                plan.compilerEvidence.shadowDetach = detach.sentences;
+                plan.automation.compiledCapabilities.push("shadow-detach");
                 return plan;
             }
         }
@@ -8346,6 +8397,8 @@ function compileSpell(item, options) {
     if (afflictionHandoff?.blocked) plan.automation.pendingCapabilities.push(`affliction-handoff:${afflictionHandoff.blocked}`);
     else if (afflictionHandoff) {
         plan.resolution.afflictionHandoff = afflictionHandoff.block;
+        // (The item's "varies": the rows' and the affliction's own times — the cast itself is instantaneous.)
+        if (afflictionHandoff.varies) plan.lifecycle.durationSpec = { mode: "instantaneous", raw: plan.lifecycle.durationSpec.raw };
         if (afflictionHandoff.castChoice) plan.resolution.castChoice = afflictionHandoff.castChoice;
         if (afflictionHandoff.castImmunity) plan.compilerEvidence.afflictionCastImmunity = afflictionHandoff.castImmunity;
         const lifted = compileLiftedAfflictionImmunity(adapted.descriptionHTML, afflictionHandoff.block);

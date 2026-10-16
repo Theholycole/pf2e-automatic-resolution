@@ -37068,7 +37068,8 @@ export const cases = {
             await resolve({later: 'criticalFailure'});
         } finally { await combat.delete(); }
         const f = results.failer, sv = results.saver, l = results.later;
-        assert(f && sv && l && f.lost === f.total && JSON.stringify(f.persistent) === '["1 fire"]' && sv.lost === Math.floor(sv.total / 2) && sv.persistent.length === 0
+        // (PF2e halves each damage instance and rounds each down: two odd rolls lose one more point than half the total.)
+        assert(f && sv && l && f.lost === f.total && JSON.stringify(f.persistent) === '["1 fire"]' && sv.lost <= Math.floor(sv.total / 2) && sv.lost >= Math.floor(sv.total / 2) - 1 && sv.persistent.length === 0
             && l.lost === l.total * 2 && l.persistent.length === 1 && /2/.test(l.persistent[0]),
             `Earth's Bile: the saves when cast and after moving the area: ${JSON.stringify(results)}`);
         return {results};
@@ -42168,6 +42169,125 @@ export const cases = {
         assert(!out.error && out.supports && a?.lost >= 2 && a.enfeebled === 1 && a.stupefied === 1 && a.silver === '1 minutes' && b?.lost >= 4 && b.enfeebled === 2 && b.stupefied === 2
             && b.silver === '10 minutes' && out.still, `Cheliax batch 7: ${JSON.stringify(out)}`);
         return {cheliax7: out};
+    },
+    // PF2e 8.6's new spells, batch 8 (2026-10-16): Gift of Dusk — a failure hands the curse to Pseudo Afflictions at stage 1 with the stage creature written on
+    // its Effect; at stage 3 the shadow appears beside the afflicted creature on the caster's side; a recovery to stage 2 is held at 3 while it lives; slain, the
+    // curse ends.
+    async cheliaxBatch8(ctx) {
+        const wait = ms => new Promise(r => setTimeout(r, ms));
+        const NSX = 'pf2e-automatic-resolution';
+        const out = {};
+        let shadow = null;
+        try {
+            out.handler = game.modules.get('pseudo-afflictions')?.active === true;
+            const dusk = await ctx.setup('Gift of Dusk');
+            const victim = await ctx.actor('dusk victim', {level: 5}); const tVictim = await ctx.token(victim); await wait(300);
+            await ctx.cast(dusk, [tVictim.object ?? tVictim], ['failure'], ['affected']); await wait(2500);
+            const curse = () => victim.itemTypes.effect.find(effect => effect.flags?.[NSX]?.stageCreature);
+            out.handed = {stage: curse()?.badge?.value ?? null, creature: curse()?.flags[NSX].stageCreature.name ?? null, caster: curse()?.flags[NSX].stageCreature.casterUuid === dusk.caster.uuid};
+            await curse().update({'system.badge.value': 3}); await wait(3000);
+            const spawned = curse()?.flags[NSX].stageCreature.spawned;
+            shadow = spawned?.actorUuid ? await fromUuid(spawned.actorUuid) : null;
+            const shadowToken = spawned?.tokenUuid ? await fromUuid(spawned.tokenUuid) : null;
+            const casterToken = canvas.scene.tokens.find(t => t.actorId === dusk.caster.id);
+            out.spawned = {name: shadow?.name ?? null, alliance: shadow?.alliance ?? null, sameSide: shadowToken?.disposition === casterToken?.disposition,
+                near: shadowToken ? Math.max(Math.abs(shadowToken.x - tVictim.x), Math.abs(shadowToken.y - tVictim.y)) <= 6 * canvas.grid.size : false};
+            await curse().update({'system.badge.value': 2}); await wait(800);
+            out.held = curse()?.badge?.value ?? null;
+            await shadow.update({'system.attributes.hp.value': 0}); await wait(2000);
+            out.ended = !curse();
+        } catch (error) { out.error = error.stack ?? error.message; }
+        if (shadow) { for (const scene of game.scenes) { const ids = scene.tokens.filter(t => t.actorId === shadow.id).map(t => t.id); if (ids.length) await scene.deleteEmbeddedDocuments('Token', ids); } await shadow.delete().catch(() => null); }
+        const h = out.handed ?? {}, s = out.spawned ?? {};
+        assert(!out.error && out.handler && h.stage === 1 && h.creature === 'Shadow' && h.caster && /^Shadow \(/.test(s.name ?? '') && s.alliance === 'party' && s.sameSide && s.near
+            && out.held === 3 && out.ended, `Cheliax batch 8: ${JSON.stringify(out)}`);
+        return {cheliax8: out};
+    },
+    // PF2e 8.6's new spells, batch 9 (2026-10-16): Tenebrous Freedom — a failure gives Enfeebled 2 and Clumsy 2 while the shadow is away, the card's reminder
+    // says how far it moves; an Escape doesn't end it, a Grapple beating the spell DC does (the GM ends it from the card).
+    async cheliaxBatch9(ctx) {
+        const wait = ms => new Promise(r => setTimeout(r, ms));
+        const NSX = 'pf2e-automatic-resolution';
+        const out = {};
+        const scripted = async (actor, action) => {
+            const before = new Set(game.messages.contents.map(message => message.id));
+            const check = await ChatMessage.create({speaker: ChatMessage.getSpeaker({actor}), rolls: [await new Roll('40').evaluate()], content: `PFTEST scripted ${action}`,
+                flags: {pf2e: {context: {type: 'skill-check', options: [`action:${action}`, `action:${action}:athletics`], origin: {actor: actor.uuid}, isReroll: false}}}});
+            await wait(1200);
+            return game.messages.contents.find(candidate => !before.has(candidate.id) && candidate.flags?.[NSX]?.escapeTermination?.checkMessageId === check.id) ?? null;
+        };
+        try {
+            const free = await ctx.setup('Tenebrous Freedom');
+            const victim = await ctx.actor('shadow victim'); const tVictim = await ctx.token(victim); await wait(300);
+            const card = await ctx.cast(free, [tVictim.object ?? tVictim], ['failure'], ['affected']); await wait(1500);
+            out.applied = {enfeebled: victim.getCondition('enfeebled')?.value ?? 0, clumsy: victim.getCondition('clumsy')?.value ?? 0,
+                reminder: /moves 5 feet on a success, 10 on a failure or 15/.test(game.messages.get(card.id).content)};
+            out.escapeCard = !!(await scripted(victim, 'escape'));
+            const grapple = await scripted(victim, 'grapple');
+            const entries = grapple?.flags[NSX].escapeTermination.entries ?? [];
+            out.grapple = {card: !!grapple, entries: entries.length, header: /Grapple/.test(grapple?.content ?? '')};
+            for (const entry of entries) await ctx.api.escape.end(game.messages.get(grapple.id), entry.id).catch(() => null);
+            await wait(1500);
+            out.after = {enfeebled: victim.getCondition('enfeebled')?.value ?? 0, clumsy: victim.getCondition('clumsy')?.value ?? 0};
+            // A second cast: the conditions end with the spell (no Sustain).
+            const other = await ctx.actor('shadow other'); const tOther = await ctx.token(other); await wait(300);
+            const second = await ctx.cast(free, [tOther.object ?? tOther], ['criticalFailure'], ['affected']); await wait(1500);
+            const castId = ctx.state(second).castId;
+            out.second = {sustained: ctx.api.ongoing.records().find(r => r.castId === castId)?.sustained ?? null, clumsy: other.getCondition('clumsy')?.value ?? 0};
+            await ctx.api.ongoing.request('end', {castId}).catch(() => null); await wait(1500);
+            out.second.afterEnd = other.getCondition('clumsy')?.value ?? 0;
+        } catch (error) { out.error = error.stack ?? error.message; }
+        const a = out.applied ?? {}, g = out.grapple ?? {};
+        assert(!out.error && a.enfeebled === 2 && a.clumsy === 2 && a.reminder && !out.escapeCard && g.card && g.entries === 1 && g.header && out.after?.enfeebled === 0 && out.after.clumsy === 0
+            && out.second?.sustained === true && out.second.clumsy === 2 && out.second.afterEnd === 0,
+            `Cheliax batch 9: ${JSON.stringify(out)}`);
+        return {cheliax9: out};
+    },
+    // PF2e 8.6's new spells, batch 10 (2026-10-16): Control Currents — flowing away, a creature starting its turn in the line that fails is pushed 10 feet
+    // away from the caster; flowing toward, one is pulled 10 feet toward it.
+    async cheliaxBatch10(ctx) {
+        const wait = ms => new Promise(r => setTimeout(r, ms));
+        const out = {};
+        const g = canvas.grid.size;
+        const place = async (actor, x, y) => (await canvas.scene.createEmbeddedDocuments('Token', [{...actor.prototypeToken.toObject(), actorId: actor.id, actorLink: true, x, y}]))[0];
+        const move = (token, x, y) => token.update({x, y}, {teleport: true, animate: false});
+        const fixture = await ctx.setup('Control Currents');
+        const casterToken = canvas.scene.tokens.find(t => t.actorId === fixture.caster.id);
+        const plan = await ctx.api.compile(fixture.spell);
+        const results = {};
+        for (const [index, key] of ['away', 'toward'].entries()) {
+            const y = 2400 + index * 4 * g;
+            const swimmer = await ctx.actor(`current ${key}`);
+            await move(casterToken, 2000, y); await wait(600);
+            const tSwim = await place(swimmer, 2000 + 4 * g, y);
+            const [region] = await canvas.scene.createEmbeddedDocuments('Region', [{name: `PFTEST Control Currents ${key}`, shapes: [{type: 'rectangle', x: 2000 + g, y, width: 6 * g, height: g}], color: '#3366aa'}]);
+            const mode = plan.resolution.lingeringModes.find(entry => entry.key === key).plan;
+            const combat = await Combat.create({scene: canvas.scene.id, active: true});
+            try {
+                const started = await ctx.api.ongoing.startLingering(fixture.spell, mode, {castRank: 1, region, dc: 24});
+                const rec = () => ctx.api.ongoing.records().find(r => r.castId === started.castId);
+                await combat.createEmbeddedDocuments('Combatant', [casterToken, tSwim].map((t, i) => ({tokenId: t.id, sceneId: canvas.scene.id, actorId: t.actorId, initiative: 30 - i * 10})));
+                await combat.startCombat(); await wait(1200);
+                // (A sustained spell: the caster Sustains on its turn, or the current ends.)
+                await ctx.api.ongoing.request('sustain', {castId: started.castId, revision: rec().revision}); await wait(800);
+                await combat.nextTurn(); await wait(1800);
+                for (const o of rec().obligations.filter(o => o.kind === 'membership' && o.status === 'pending'))
+                    await ctx.api.ongoing.request('review-targets', {castId: started.castId, revision: rec().revision, key: o.key, affected: o.actorUuid === swimmer.uuid});
+                await wait(1200);
+                const save = rec().obligations.find(o => o.kind === 'save');
+                const card = save?.cardId ? game.messages.get(save.cardId) : null;
+                const before = tSwim.x;
+                if (card) { const t = ctx.state(card).targets[0]; await ctx.api.saves.rollSave(card, t.id, {skipDialog: true}); await ctx.api.saves.correctTarget(card, t.id, {action: 'degree', degree: 'failure'});
+                    await ctx.api.saves.finalize(card); await wait(2000); }
+                results[key] = {card: !!card, moved: (canvas.scene.tokens.get(tSwim.id).x - before) / g};
+                await ctx.api.ongoing.request('end', {castId: started.castId}).catch(() => null);
+            } catch (error) { out.error = error.stack ?? error.message; }
+            finally { await combat.delete().catch(() => null); await region.delete().catch(() => null); }
+        }
+        out.results = results;
+        const a = results.away ?? {}, t = results.toward ?? {};
+        assert(!out.error && a.card && a.moved === 2 && t.card && t.moved === -2, `Cheliax batch 10: ${JSON.stringify(out)}`);
+        return {cheliax10: out};
     },
     async cleanup(ctx) {
         // (The deleted records kept for the last case's reads: gone with it.)

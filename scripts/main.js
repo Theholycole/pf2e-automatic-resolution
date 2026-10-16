@@ -27,6 +27,7 @@ import { triggerAuraOnCondition, triggerAuraOnSave } from "./trigger-aura-runtim
 import { autoToggleNewRound, autoToggleOnDamage, climbAidOnCheck, cloudActionOnCondition, consumeUsedEffects, runeWardOnDamage, endAfterMovement, endMarksWithoutPersistent, expireTurnBound, lockToFirstItem, oncePerSourceOnCast, oncePerSourceOnHealing, retroBonusOnRoll, syncNearTokens, recordDamage, delayedDamageOnEnd, consumeOnDamageTaken, spellshapeOnEffect, sharedLoreOnEnd, attackWardOnAttack, lastDamageOf, summonOnEnd, conjuredOnEnd, hiddenTurnEnd, coverSquareSync, coverSquareOnEnd, sceneWallsOnEnd } from "./climb-aid-runtime.js";
 import { isStrikeDamage } from "../src/compiler/ward-families.js";
 import { BasicSaveRuntime, situationalCurseSync } from "./basic-save-runtime.js";
+import { holdCurseStage, curseCreatureCheck, curseCreatureSlain } from "./curse-creature.js";
 import { EscapeTermination } from "./escape-termination.js";
 import { AfflictionCareRuntime } from "./affliction-care-runtime.js";
 import { MessageRuntime } from "./message-runtime.js";
@@ -2069,6 +2070,10 @@ Hooks.on("preCreateChatMessage", message => { try { whisperGmNotes(message); } c
 // (Effects: their descriptions' GM notes carry PF2e's data-visibility="gm", hidden from players by PF2e.)
 Hooks.on("preCreateItem", item => { try { markEffectGmNotes(item); } catch (error) { console.warn(`${MODULE_ID} | GM note marking failed.`, error); } });
 Hooks.on("preUpdateItem", (item, changes) => { try { markEffectGmNotesUpdate(item, changes); } catch (error) { console.warn(`${MODULE_ID} | GM note marking failed.`, error); } });
+// A curse stage that brings a creature (Gift of Dusk): placed when the curse reaches it; the stage held while it lives; the curse ended when it's slain.
+Hooks.on("preUpdateItem", (item, changes) => { try { holdCurseStage(item, changes); } catch (error) { console.warn(`${MODULE_ID} | The curse's stage hold failed.`, error); } });
+for (const event of ["createItem", "updateItem"]) Hooks.on(event, item => { if (item?.flags?.[MODULE_ID]?.stageCreature) void curseCreatureCheck(item).catch(error => notifyError("The curse's creature failed", error)); });
+Hooks.on("updateActor", actor => { if (actor?.flags?.[MODULE_ID]?.curseCreature) void curseCreatureSlain(actor).catch(error => notifyError("The curse's ending failed", error)); });
 Hooks.once("ready", () => { void markExistingGmNotes().catch(error => console.warn(`${MODULE_ID} | GM note marking failed.`, error)); });
 Hooks.on("renderChatMessageHTML", (message, html) => { try { hideGmNotes(message, html); } catch (error) { console.warn(`${MODULE_ID} | GM note hiding failed.`, error); } });
 

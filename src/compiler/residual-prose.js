@@ -241,7 +241,8 @@ export function analyzeResidualProse(outcome, {degree, inlinePersistentProof, ge
         if (outcome?.damage?.mode === "none" && /\btakes? no damage\b/i.test(text)) compiled.push("no-damage");
         // Compiled affliction handoff: the exact sentence naming the stage
         // block and starting stage; progression itself is delegated.
-        const afflictionClaimed = outcome?.affliction?.sourceText === text;
+        // (Its "The Fortitude DC to recover is equal to your spell DC." — the cast's DC is the handoff's — and a leading sentence without rules.)
+        const afflictionClaimed = outcome?.affliction?.sourceText === text || (!!outcome?.affliction && outcome.afflictionDCText === text) || outcome?.afflictionNarration === text;
         if (afflictionClaimed) compiled.push("affliction-handoff");
         const floorClaimed = (outcome?.conditionFloor?.sourceTexts ?? []).includes(text);
         if (floorClaimed) {
@@ -383,6 +384,7 @@ export function analyzeResidualProse(outcome, {degree, inlinePersistentProof, ge
             if (fallingClaimed && ["movement", "damage"].includes(signal)) return false;
             if (restClaimed && ["duration", "state", "timing", "condition"].includes(signal)) return false;
             if (afflictionClaimed && signal === "state") return false;
+            if (afflictionClaimed && outcome.afflictionDCText === text && signal === "modifier") return false;
             if (floorClaimed) return false;
             if (outcome?.rowImmunityText === text && ["duration", "modifier", "timing"].includes(signal)) return false;
             if (afflictionExtra && ["duration", "modifier"].includes(signal)) return false;

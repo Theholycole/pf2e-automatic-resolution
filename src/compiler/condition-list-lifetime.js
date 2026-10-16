@@ -33,7 +33,8 @@ const SUBJECT = String.raw`(?:it|they|the target|the creature)`;
 const ESCAPE_DC = String.raw`(?:\s+\((?:against your spell DC|the DC is your spell DC|the Escape DC is your spell DC|with a DC equal to your spell DC)\)|\s+against your spell DC|\s+with an Escape DC equal to your spell DC)`;
 const SPELL_ENDS = String.raw`(?:\s+or\s+(?:until\s+)?the spell ends)`;
 // Escape may be plain text, a PF2e action link, or an inline /act escape.
-const ESCAPE_WORD = String.raw`(?:@UUID\[Compendium\.pf2e\.actionspf2e\.Item\.SkZAQRkLLkmBQNB9\]\{Escapes?\}|\[\[/act escape\]\]\{Escapes?\}|Escapes?)`;
+// (Or the shadow taken back with a Grapple against the spell DC: Tenebrous Freedom's rewritten rows, PF2e 8.6 — "until it Grapples against your spell DC".)
+const ESCAPE_WORD = String.raw`(?:@UUID\[Compendium\.pf2e\.actionspf2e\.Item\.SkZAQRkLLkmBQNB9\]\{Escapes?\}|\[\[/act escape\]\]\{Escapes?\}|Escapes?|Grapples(?= against your spell DC))`;
 const ESCAPE = String.raw`(?:(?:,)?\s+or\s+until\s+${SUBJECT}\s+(?:successfully\s+)?${ESCAPE_WORD}|\s+until\s+${SUBJECT}\s+(?:successfully\s+)?${ESCAPE_WORD}|\s+unless\s+${SUBJECT}\s+${ESCAPE_WORD}|,\s+(?:but|though)\s+${SUBJECT}\s+can\s+attempt\s+to\s+${ESCAPE_WORD})${ESCAPE_DC}?(?:,\s+whichever comes first)?`;
 // The creature's own Interact action ends the condition ("until it uses an
 // Interact action to wipe its eyes"; "though it can Interact to ... and remove
@@ -87,7 +88,8 @@ function durationFromTimer(text) {
 
 function lifetimeFrom(text) {
     if (!text) return null;
-    const escape = /\bEscapes?\b/i.test(text);
+    const grapple = /\bGrapples against your spell DC\b/.test(text);
+    const escape = /\bEscapes?\b/i.test(text) || grapple;
     const actionEnd = /\bInteract\b/.test(text);
     const duration = durationFromTimer(text);
     const spellEnds = /\bthe spell ends\b/i.test(text);
@@ -97,6 +99,7 @@ function lifetimeFrom(text) {
         duration,
         escape,
         escapeDC: escape ? "spell" : null,
+        ...(grapple ? { escapeCheck: "grapple" } : {}),
         actionEnd: actionEnd ? "interact" : null,
         spellEnds,
         whicheverFirst: /\bwhichever comes first\b/i.test(text)

@@ -146,6 +146,9 @@ export function compileActorTargetConstraints(targeting, {
         return { sourceText, supportsActorTargets: true, complete: true,
             predicates: [{ kind: "gm-confirmed", question: `Does the creature have ${anatomy[1]}? Only such a creature can be targeted.`, sourceText }] };
     }
+    // "1 creature that has a shadow" (Tenebrous Freedom, Gift of Dusk; PF2e 8.6): the GM confirms the shadow.
+    if (/^(?:1|one) creature that has a shadow$/.test(target)) return { sourceText, supportsActorTargets: true, complete: true,
+        predicates: [{ kind: "gm-confirmed", question: "Does the creature have a shadow? Only such a creature can be targeted.", sourceText }] };
     // "1 creature made of organic material" (Petrify), "1 creature made of flesh" (Lignify): the GM confirms what it's made of.
     const madeOfOnly = /^(?:1|one) creature made of ([a-z]+(?: [a-z]+)?)$/.exec(target);
     if (madeOfOnly) return { sourceText, supportsActorTargets: true, complete: true,

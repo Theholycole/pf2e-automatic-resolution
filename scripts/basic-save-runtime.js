@@ -101,6 +101,7 @@ import { CASTER_SAVE_ACTIONS } from './chat-card-controls.js';
 import { postControlsCard, copyCreature } from './incarnate-parts-runtime.js';
 import { startFollowingAura } from './form-aura-runtime.js';
 import { AFFLICTION_HANDLER, tempHPSourceId } from "./runtime-utils.js";
+import { stageCreatureFlag } from "./curse-creature.js";
 
 const SAVE_SCHEMA = 9;
 const SAVE_OPTION_PREFIX = "pf2e-auto-basic-save";
@@ -1072,7 +1073,7 @@ function conditionGroupSource(state, target, actor, conditions, linkedTo = null)
             // Ended (or lowered by 1) by PF2e's Rest for the Night.
             ...(isRestLifetime(conditions[0]) ? { restLifetime: { mode: conditions[0].endsWhen[0].mode } } : {}),
             ...(isLeaveAreaLifetime(conditions[0]) ? { leaveAreaLifetime: true } : {}),
-            ...(isEscapeLifetime(conditions[0]) ? { escape: { dc: state.dc, event: "escape", expirationMode: conditions[0].expirationMode } } : {}),
+            ...(isEscapeLifetime(conditions[0]) ? { escape: { dc: state.dc, event: "escape", ...(conditions[0].endsWhen[0].check ? { check: conditions[0].endsWhen[0].check } : {}), expirationMode: conditions[0].expirationMode } } : {}),
             ...(isActionEndLifetime(conditions[0]) ? { actionEnd: { action: conditions[0].endsWhen[0].action, expirationMode: conditions[0].expirationMode } } : {}),
             // (Coral Scourge: it grows as each of the creature's turns begins; Ongoing raises it, and grants the further condition at the maximum.)
             ...(conditions[0].growth ? { growth: clone(conditions[0].growth) } : {}),
@@ -1093,7 +1094,7 @@ function conditionGroupSource(state, target, actor, conditions, linkedTo = null)
             }))
         } } },
         system: {
-            description: { value: `<p>Applies ${labels.map(escapeHTML).join(", ")} from <strong>${escapeHTML(state.spellName)}</strong> after a ${escapeHTML(readableSaveDegree(target.degree))}${target.secondary ? ` and a secondary ${escapeHTML(readableSaveDegree(target.secondary.degree))}` : ""}.</p>${persistentLink ? `<p>Ends when the creature is no longer taking persistent ${escapeHTML(persistentLink.damageType)} damage.</p>` : ""}${isEscapeLifetime(conditions[0]) ? `<p>Ends early when the creature succeeds at an Escape check against DC ${escapeHTML(state.dc)}.</p>` : ""}${isActionEndLifetime(conditions[0]) ? conditions[0].endsWhen[0].action === "next-turn-action" ? `<p>Ends once the creature has completed its first action on its next turn (end it in Ongoing spells).</p>` : conditions[0].endsWhen[0].action === "next" ? `<p>Ends when the creature takes its next action (end it in Ongoing spells).</p>` : conditions[0].endsWhen[0].action === "outside-action" ? `<p>Once outside the area, the creature can spend 1 action to end this (in Ongoing spells).</p>` : `<p>The creature can spend an Interact action to end this.</p>` : ""}${isRestLifetime(conditions[0]) ? (conditions[0].endsWhen[0].mode === "end" ? `<p>Ends when the creature next gets 8 hours of rest (Rest for the Night).</p>` : `<p>Each 8 hours of rest (Rest for the Night) lowers these conditions by 1.</p>`) : ""}${isRecurringSaveLifetime(conditions[0]) ? `<p>At the ${conditions[0].recurringSave.timing === "caster-turn-start" ? "start of each of the caster's turns" : "end of each of its turns"}, the creature attempts a DC ${escapeHTML(state.dc)} ${escapeHTML(conditions[0].recurringSave.statistic)} save: ${conditions[0].recurringSave.mode === "reduce" ? "a success reduces the remaining duration by 1 round; a critical success ends it" : conditions[0].recurringSave.mode === "escalate" ? `a failure raises the condition by ${conditions[0].recurringSave.steps.failure} (${conditions[0].recurringSave.steps.criticalFailure} on a critical failure, to at most ${conditions[0].recurringSave.maximum}); a success lowers it by ${-conditions[0].recurringSave.steps.success}; at 0 it ends` : "a success ends it"}.</p>` : ""}` },
+            description: { value: `<p>Applies ${labels.map(escapeHTML).join(", ")} from <strong>${escapeHTML(state.spellName)}</strong> after a ${escapeHTML(readableSaveDegree(target.degree))}${target.secondary ? ` and a secondary ${escapeHTML(readableSaveDegree(target.secondary.degree))}` : ""}.</p>${persistentLink ? `<p>Ends when the creature is no longer taking persistent ${escapeHTML(persistentLink.damageType)} damage.</p>` : ""}${isEscapeLifetime(conditions[0]) ? conditions[0].endsWhen[0].check === "grapple" ? `<p>Ends early when the creature succeeds at a Grapple against DC ${escapeHTML(state.dc)}: [[/act grapple dc=${escapeHTML(state.dc)}]].</p>` : `<p>Ends early when the creature succeeds at an Escape check against DC ${escapeHTML(state.dc)}.</p>` : ""}${isActionEndLifetime(conditions[0]) ? conditions[0].endsWhen[0].action === "next-turn-action" ? `<p>Ends once the creature has completed its first action on its next turn (end it in Ongoing spells).</p>` : conditions[0].endsWhen[0].action === "next" ? `<p>Ends when the creature takes its next action (end it in Ongoing spells).</p>` : conditions[0].endsWhen[0].action === "outside-action" ? `<p>Once outside the area, the creature can spend 1 action to end this (in Ongoing spells).</p>` : `<p>The creature can spend an Interact action to end this.</p>` : ""}${isRestLifetime(conditions[0]) ? (conditions[0].endsWhen[0].mode === "end" ? `<p>Ends when the creature next gets 8 hours of rest (Rest for the Night).</p>` : `<p>Each 8 hours of rest (Rest for the Night) lowers these conditions by 1.</p>`) : ""}${isRecurringSaveLifetime(conditions[0]) ? `<p>At the ${conditions[0].recurringSave.timing === "caster-turn-start" ? "start of each of the caster's turns" : "end of each of its turns"}, the creature attempts a DC ${escapeHTML(state.dc)} ${escapeHTML(conditions[0].recurringSave.statistic)} save: ${conditions[0].recurringSave.mode === "reduce" ? "a success reduces the remaining duration by 1 round; a critical success ends it" : conditions[0].recurringSave.mode === "escalate" ? `a failure raises the condition by ${conditions[0].recurringSave.steps.failure} (${conditions[0].recurringSave.steps.criticalFailure} on a critical failure, to at most ${conditions[0].recurringSave.maximum}); a success lowers it by ${-conditions[0].recurringSave.steps.success}; at 0 it ends` : "a success ends it"}.</p>` : ""}` },
             duration: {
                 value: duration.value,
                 unit: duration.unit,
@@ -1468,13 +1469,45 @@ async function handOffAffliction(state, target, actor, affliction = null) {
         }
         // Started at a stage other than the handler's own for this degree.
         // (Not with an onset, whose counter is one ahead of the stages.)
+        // (Gift of Dusk: the stage that brings a creature — curse-creature.js places it when the curse gets there; at 6th the curse's level is 11.)
+        if (effect && createdId && state.afflictionHandoff?.stageCreature) await effect.update({[`flags.${MODULE_ID}.stageCreature`]: stageCreatureFlag(state.afflictionHandoff.stageCreature, state),
+            ...(state.afflictionHandoff.levelPatch ? {"system.level.value": state.afflictionHandoff.levelPatch} : {})});
         if (effect && createdId && affliction && !effect.flags?.[AFFLICTION_HANDLER]?.onset && effect.badge?.value !== affliction.stage) await effect.update({"system.badge.value": affliction.stage});
         if (effect && state.castChoice?.selected) await recordCastChoice(state, effect);
         if (effect) return {status: "applied", others: immunity?.others ?? null, created: createdId ? effect : null, updated: !!updatedId && !createdId,
             effectUuid: effect.uuid, effectName: effect.name, stage: after.get(effect.id)};
         await new Promise(resolve => setTimeout(resolve, 100));
     }
+    // (An affliction Pseudo Afflictions' list doesn't have — PF2e 8.6's Gift of Dusk —: its Effect made in the handler's own terms from the compiled
+    // stages; the handler runs it from there.)
+    const built = state.afflictionHandoff?.handlerStages ? await buildHandlerAffliction(state, actor, spell, affliction) : null;
+    if (built) return {status: "applied", others: immunity?.others ?? null, created: built, updated: false, effectUuid: built.uuid, effectName: built.name, stage: built.badge?.value ?? null};
     return {status: "manual", others: immunity?.others ?? null, reason: "Pseudo Afflictions did not pick up this spell"};
+}
+
+/** The handler's affliction Effect from the compiled stages, at the stage the result starts (its save the cast's DC), or null. */
+async function buildHandlerAffliction(state, actor, spell, affliction) {
+    const handoff = state.afflictionHandoff, stages = handoff.handlerStages;
+    const count = Object.keys(stages).length, start = Math.min(count, Math.max(1, Number(affliction?.stage ?? 1)));
+    if (!count || !Number.isFinite(Number(state.dc))) return null;
+    const labels = Array.from({length: count}, (_, index) => `Stage ${index + 1}`);
+    const [effect] = await actor.createEmbeddedDocuments("Item", [{
+        name: `Affliction Effect: ${handoff.name}`, type: "effect", img: spell?.img ?? "icons/svg/biohazard.svg",
+        flags: { [AFFLICTION_HANDLER]: { save: { type: state.saveStatistic, value: Number(state.dc) }, stages: clone(stages) },
+            [MODULE_ID]: { builtAffliction: { castId: state.castId, spellName: state.spellName },
+                ...(handoff.stageCreature ? { stageCreature: stageCreatureFlag(handoff.stageCreature, state) } : {}) } },
+        system: {
+            slug: `effect-${game.pf2e?.system?.sluggify?.(handoff.name) ?? String(handoff.name).toLowerCase().replace(/[^a-z0-9]+/g, "-")}`,
+            badge: { type: "counter", value: start, min: 1, max: count, labels, label: labels[start - 1], loop: false },
+            duration: { value: -1, unit: "unlimited", expiry: null, sustained: false },
+            level: { value: Number(handoff.levelPatch ?? handoff.level ?? state.castRank) },
+            traits: { value: [...new Set(handoff.traits ?? [])], otherTags: [] },
+            description: { value: `<p>From <strong>${escapeHTML(state.spellName)}</strong> (DC ${escapeHTML(state.dc)} ${escapeHTML(state.saveStatistic)}).</p>${(handoff.stages ?? []).map(stage => `<p><strong>Stage ${escapeHTML(stage.stage)}</strong> ${stage.text}</p>`).join("")}` },
+            context: { origin: { actor: state.sourceActorUuid, item: state.sourceItemUuid }, target: { actor: actor.uuid, token: null }, roll: null },
+            rules: []
+        }
+    }]);
+    return effect ?? null;
 }
 
 function appliedConditionLabel(result) {

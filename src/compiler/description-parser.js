@@ -329,6 +329,7 @@ export function extractScopedConditionReferences(html, catalog = []) {
                     shared: !!lifetime && !item.ownLifetime,
                     escape: lifetime?.escape === true,
                     escapeDC: lifetime?.escapeDC ?? null,
+                    ...(lifetime?.escapeCheck ? { escapeCheck: lifetime.escapeCheck } : {}),
                     actionEnd: lifetime?.actionEnd ?? null,
                     spellEnds: lifetime?.spellEnds === true
                 }
