@@ -11,7 +11,8 @@ import { htmlToPlainText } from "./description-parser.js";
 
 const RULES = [
     /^You create a shroud of darkness that prevents light from penetrating or emanating within the area\.$/,
-    /^Light does not enter the area and any non-magical light sources, such as a torch or lantern, do not emanate any light while inside the area, even if their light radius would extend beyond the darkness\.$/,
+    // (PF2e 8.6 sets "darkness" in emphasis — "beyond the <em>darkness</em>." —, so the plain text has a space before the period.)
+    /^Light does not enter the area and any non-magical light sources, such as a torch or lantern, do not emanate any light while inside the area, even if their light radius would extend beyond the darkness ?\.$/,
     /^This also suppresses magical light of your darkness spell's rank or lower\.$/,
     /^Light can't pass through, so creatures in the area can't see outside\.$/,
     /^From outside, it appears as a globe of pure darkness\.$/

@@ -12,7 +12,7 @@
 // it), or reminds the GM to remove the thrall (thralls are marks on the map); Bony Barrage's card asks whether a second thrall is destroyed —
 // then the caster and its allies among the targets take no damage and get the AC bonus until the start of the caster's next turn.
 import { htmlToPlainText } from "./description-parser.js";
-import { NARRATION_RULES_NO_TERRAIN as NARRATION_RULES } from "./text-patterns.js";
+import { NARRATION_RULES_NO_TERRAIN as NARRATION_RULES, SPELL_EFFECT_LINK_ANY as LINK } from "./text-patterns.js";
 
 const MINION_BLAST = /^The target is immediately slain, and the explosion deals (\d+)d(\d+) ([a-z]+) damage to creatures within (\d+) feet of it with a basic (Fortitude|Reflex|Will) save\.$/;
 const TRAIT_TYPE = /^If the target has the ([a-z]+) or ([a-z]+) trait, the spell deals ([a-z]+) damage and has the \3 trait instead of the ([a-z]+) trait\.$/;
@@ -30,6 +30,8 @@ export function extractSacrificeBlast(adapted) {
     const [body, ...rest] = String(adapted.descriptionHTML ?? "").split(/<hr\s*\/?>/i).map(section => section.trim());
     if (rest.length > 1) return null;
     const sentences = htmlToPlainText(body).replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s+(?=[A-Z@])/).map(sentence => sentence.trim()).filter(Boolean);
+    // (PF2e 8.6 links its own "Spell Effect: Bony Barrage" — the bone armor's +1 to AC — after the text: read and left, the card's bone armor gives it.)
+    const link = LINK.test(sentences.at(-1) ?? "") ? sentences.pop() : null;
     const statistic = adapted.defense.statistic;
     const matches = (dice, faces, type, save) => `${dice}d${faces}` === String(components[0].formula).replace(/\s+/g, "") && type === String(components[0].type).toLowerCase()
         && save.toLowerCase() === statistic;
@@ -61,6 +63,7 @@ export function extractSacrificeBlast(adapted) {
         const step = /^<p>\s*<strong>\s*Heightened \(\+(\d)\)\s*<\/strong>\s*The damage increases by (\d+d\d+)\.\s*<\/p>$/.exec(entries[0]);
         if (!step || !(adapted.heightening?.type === "interval" && Number(adapted.heightening.interval) === Number(step[1]) && adapted.heightening.damage?.[components[0].id] === step[2])) return null;
     }
+    if (link && !parsed.boneArmor) return null;
     return { html: `<p>Each creature in the area takes ${parsed.dice} ${parsed.type} damage (basic ${parsed.save} save).</p>`, sacrifice: parsed.sacrifice,
-        ...(parsed.boneArmor ? { boneArmor: parsed.boneArmor } : {}), sentences: parsed.sentences };
+        ...(parsed.boneArmor ? { boneArmor: parsed.boneArmor } : {}), sentences: link ? [...parsed.sentences, link] : parsed.sentences };
 }

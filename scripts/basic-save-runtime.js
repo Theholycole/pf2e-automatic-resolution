@@ -185,6 +185,8 @@ function snapshotTargets(targets, constraints, degreeAdjustment = null, dualMode
             tokenUuid: token?.uuid ?? null,
             name: actor.name,
             level: Number(actor.level ?? actor.system?.details?.level?.value ?? 0),
+            // (Its traits, for a row's note on a creature with a trait: Silver Spear's tether on a fiend.)
+            traits: [...(actor.traits ?? actor.system?.traits?.value ?? [])].filter(trait => typeof trait === "string"),
             excluded: false,
             revision: 0,
             originalEligibility: clone(eligibility),
@@ -4329,13 +4331,15 @@ export class BasicSaveRuntime {
         if (needsDamage && !DamageRoll?.fromData) throw new Error("PF2e's DamageRoll class could not be resolved.");
         // Trait-conditional extra damage: one roll per entry, only when a damaged target has the trait.
         const hasTrait = (actor, trait) => actor?.traits?.has?.(trait) ?? (actor?.system?.traits?.value ?? []).includes(trait);
+        // (An entry may name several traits — any of them — and only some rows: Spray of Salt's persistent spirit damage on a failure.)
+        const traitApplies = (entry, actor, target) => (entry.traits ?? [entry.trait]).some(trait => hasTrait(actor, trait)) && (!entry.degrees || entry.degrees.includes(target?.degree));
         for (const entry of state.conditionalDamage ?? []) {
             if (entry.rollJSON) continue;
             const needed = [];
             for (const target of state.targets) {
                 if (!targetParticipates(target) || damageMultiplierForTarget(state, target) <= 0) continue;
                 const { actor } = await resolveTargetDocuments(target);
-                if (entry.gate === "target-upgrade" ? target.upgradeAnswer?.answer === "yes" : entry.gate === "attack-adjustment" ? Number(target.attackAdjustment?.value ?? 0) > 0 : hasTrait(actor, entry.trait)) needed.push(target.id);
+                if (entry.gate === "target-upgrade" ? target.upgradeAnswer?.answer === "yes" : entry.gate === "attack-adjustment" ? Number(target.attackAdjustment?.value ?? 0) > 0 : traitApplies(entry, actor, target)) needed.push(target.id);
             }
             if (!needed.length) continue;
             const ConditionalRoll = (CONFIG.Dice?.rolls ?? []).find(candidate => candidate?.name === "DamageRoll");
@@ -4615,7 +4619,7 @@ export class BasicSaveRuntime {
                     // The trait's extra damage, scaled by the same result.
                     for (const entry of state.conditionalDamage ?? []) {
                         if (entry.replaces) continue;
-                        if (!entry.rollJSON || !(entry.gate === "attack-adjustment" ? Number(target.attackAdjustment?.value ?? 0) > 0 : hasTrait(actor, entry.trait))) continue;
+                        if (!entry.rollJSON || !(entry.gate === "attack-adjustment" ? Number(target.attackAdjustment?.value ?? 0) > 0 : traitApplies(entry, actor, target))) continue;
                         const extraBase = DamageRoll.fromData(clone(entry.rollJSON));
                         // A gated persistent roll isn't doubled on a critical hit.
                         const extra = multiplier === 1 || entry.doubles === false ? extraBase : extraBase.alter(multiplier, 0);

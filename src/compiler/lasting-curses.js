@@ -165,8 +165,13 @@ const REMAKE = {
 
 function remakePhysiology(adapted) {
     const html = String(adapted.descriptionHTML ?? "");
-    const shape = /^<p>([\s\S]*?)<\/p>\s*<ul>\s*<li>\s*<p>([\s\S]*?)<\/p>\s*<\/li>\s*<li>\s*<p>([\s\S]*?)<\/p>\s*<\/li>\s*<li>\s*<p>([\s\S]*?)<\/p>\s*<\/li>\s*<li>\s*<p>([\s\S]*?)<\/p>\s*<hr\s*\/?>([\s\S]*?)<\/li>\s*<\/ul>$/.exec(html.trim());
+    // (PF2e 8.5 put the table inside the list's last item; 8.6 closes the list before it and links its own Effect after each row — "Spell Effect: Remake
+    // Physiology (Failure)" —, read and left: the notes carry the same parts and the turn-start flat check too.)
+    const shape = /^<p>([\s\S]*?)<\/p>\s*<ul>\s*<li>\s*<p>([\s\S]*?)<\/p>\s*<\/li>\s*<li>\s*<p>([\s\S]*?)<\/p>\s*<\/li>\s*<li>\s*<p>([\s\S]*?)<\/p>\s*<\/li>\s*<li>\s*<p>([\s\S]*?)<\/p>\s*<hr\s*\/?>([\s\S]*?)<\/li>\s*<\/ul>$/.exec(html.trim())
+        ?? /^<p>([\s\S]*?)<\/p>\s*<ul>\s*<li>\s*<p>([\s\S]*?)<\/p>\s*<\/li>\s*<li>\s*<p>([\s\S]*?)<\/p>\s*<\/li>\s*<li>\s*<p>([\s\S]*?)<\/p>\s*<\/li>\s*<li>\s*<p>([\s\S]*?)<\/p>\s*<\/li>\s*<\/ul>\s*<hr\s*\/?>([\s\S]*)$/.exec(html.trim());
     if (!shape) return null;
+    const links = [...shape[6].matchAll(/<p>\s*(@UUID\[Compendium\.pf2e\.spell-effects\.Item\.[^\]]+\]\{Spell Effect: [^}]+\})\s*<\/p>/g)].map(match => match[1]);
+    if ((shape[6].match(/<p>/g) ?? []).length !== ROWS.length + links.length || (links.length && links.length !== ROWS.length - 1)) return null;
     const lead = sentencesOf(plain(shape[1]));
     if (lead.length !== 2 || REMAKE.lead.some((pattern, index) => !pattern.test(lead[index]))) return null;
     const speed = REMAKE.speed.exec(plain(shape[2])), conditions = REMAKE.conditions.exec(shape[3].replace(/\s+/g, " ").trim()), dazzled = REMAKE.dazzled.exec(shape[4].replace(/\s+/g, " ").trim());
@@ -189,7 +194,7 @@ function remakePhysiology(adapted) {
             failure: [remade({ mode: "fixed", value: Number(m.failure[1]) * 10, unit: "rounds", expiry: "turn-end", anchor: "effect-start", offset: 0, sourceText: `for ${m.failure[1]} minute` }, rows.failure)],
             criticalFailure: [remade(UNLIMITED("permanent"), rows.criticalFailure)]
         },
-        claimed: [...lead, plain(shape[2]), plain(shape[3]), plain(shape[4]), plain(shape[5]), ...ROWS.map(([degree, heading]) => `${heading} ${rows[degree]}`)]
+        claimed: [...lead, plain(shape[2]), plain(shape[3]), plain(shape[4]), plain(shape[5]), ...ROWS.map(([degree, heading]) => `${heading} ${rows[degree]}`), ...links]
     };
 }
 

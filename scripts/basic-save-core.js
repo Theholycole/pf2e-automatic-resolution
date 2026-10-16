@@ -355,7 +355,10 @@ function executableConditionalDamage(plan) {
     if (entries == null) return true;
     return Array.isArray(entries) && entries.length > 0 && plan.resolution.sharedDamage != null && entries.every(entry =>
         typeof entry?.formula === "string" && /\[[a-z]+\]$/.test(entry.formula) && typeof entry.trait === "string" && /^[a-z-]+$/.test(entry.trait)
-        && [...entry.formula.matchAll(/@([a-z0-9_.-]+)/gi)].every(match => ["item.rank", "item.level"].includes(match[1].toLowerCase())));
+        && [...entry.formula.matchAll(/@([a-z0-9_.-]+)/gi)].every(match => ["item.rank", "item.level"].includes(match[1].toLowerCase()))
+        // (Or persistent damage on the failing rows only, for a creature with any of the traits: Spray of Salt.)
+        || (typeof entry?.formula === "string" && /^\(@item\.(?:rank|level)\)d\d+\[persistent,[a-z]+\]$/.test(entry.formula) && Array.isArray(entry.traits) && entry.traits.length > 0
+            && entry.traits.every(trait => /^[a-z-]+$/.test(trait)) && entry.trait === entry.traits[0] && JSON.stringify(entry.degrees) === '["failure","criticalFailure"]'));
 }
 
 /**
@@ -1800,6 +1803,8 @@ export function inspectDegreeSavePlan(plan) {
             || (["save-or-skill", "surroundings", "object-branch"].includes(reminder.kind) && Array.isArray(plan.compilerEvidence?.areaOrObject) && plan.compilerEvidence.areaOrObject.includes(reminder.sourceText))
             // An object target's Hardness on a hit, and a target that blocks the spell with an item: the GM's.
             || (reminder.kind === "object-hardness" && plan.resolution.check.statistic === "spell-attack" && reminder.sourceText === plan.compilerEvidence?.objectHardness)
+            // (Piercing Jet: its damage ignores a low Hardness — the GM's, for a target with Hardness.)
+            || (reminder.kind === "ignore-hardness" && plan.resolution.check.statistic === "spell-attack" && reminder.sourceText === plan.compilerEvidence?.ignoreHardness)
             || (reminder.kind === "shield-blocked" && plan.resolution.check.statistic === "spell-attack" && reminder.sourceText === plan.compilerEvidence?.shieldBlocked)
             // "Bane can counteract Bless.": the caster's counteract check against that spell, rolled from the card.
             || (reminder.kind === "counteract-spell" && /^[a-z' ]+$/.test(reminder.target ?? "") && typeof plan.compilerEvidence?.counteractSpell === "string" && reminder.sourceText === plan.compilerEvidence.counteractSpell)
@@ -1845,6 +1850,8 @@ export function inspectDegreeSavePlan(plan) {
             || (reminder.kind === "teleport-note" && plan.resolution.controls != null && Array.isArray(plan.compilerEvidence?.teleportSpell) && plan.compilerEvidence.teleportSpell.includes(reminder.sourceText))
             // (Arcane Explosion: the caster's form after the blast — its claimed sentences.)
             || (reminder.kind === "caster-form" && plan.resolution.casterForm != null && Array.isArray(plan.compilerEvidence?.casterForm) && plan.compilerEvidence.casterForm.includes(reminder.sourceText))
+            // A spell also cast as a reaction (The Night is Mine): its reaction sentence, the caster's reminder.
+            || (reminder.kind === "reaction-cast" && typeof plan.compilerEvidence?.reactionCast === "string" && reminder.sourceText === plan.compilerEvidence.reactionCast)
             // A spell that moves an object target instead of the creature's save (Grasping Vine): the object branch is the GM's.
             || (reminder.kind === "object-branch" && typeof plan.compilerEvidence?.objectMove === "string" && reminder.sourceText === plan.compilerEvidence.objectMove)
             // What the caster does for a target that failed a basic save (Recall Knowledge with its modifier).
@@ -3260,7 +3267,9 @@ export function synchronizeSecondary(state, target) {
 /** A target's row notes: a note chosen by the cast's roll applies only when that result was rolled. */
 export function targetOutcomeNotes(state, target) {
     // (With a second save's row notes: Phantasmal Calamity's belief.)
-    return [...(outcomeForTarget(state, target)?.noteEffects ?? []), ...(secondaryOutcomeForTarget(state, target)?.noteEffects ?? [])].filter(note => !note.choiceGroup
+    // (A note for a target with a trait only — Silver Spear's tether on a fiend —: the traits the card recorded for the creature.)
+    return [...(outcomeForTarget(state, target)?.noteEffects ?? []), ...(secondaryOutcomeForTarget(state, target)?.noteEffects ?? [])]
+        .filter(note => !note.targetTrait || (target?.traits ?? []).includes(note.targetTrait)).filter(note => !note.choiceGroup
         || (note.choiceGroup === "condition-roll" && state.conditionRoll?.slug != null && note.choice === state.conditionRoll.slug)
         // A form's note: only the form the caster picked.
         || (note.choiceGroup === "caster-option" && state.casterChoice?.kind === "option" && note.option === state.casterChoice.selected)

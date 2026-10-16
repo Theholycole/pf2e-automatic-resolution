@@ -20,9 +20,19 @@ export function rewriteGraspingSnakes(adapted) {
     if (adapted.defense?.kind !== "save" || adapted.defense.basic !== false || !adapted.targeting?.area) return null;
     const [body, table, heightened = "", ...rest] = String(adapted.descriptionHTML ?? "").split(/<hr\s*\/?>/i).map(section => section.trim());
     if (!table || rest.length) return null;
-    const lead = LEAD.exec(htmlToPlainText(body).replace(/\s+/g, " ").trim());
     const rows = [...table.matchAll(/<p>([\s\S]*?)<\/p>/gi)].map(match => match[1].replace(/\s+/g, " ").trim());
-    const plain = heading => htmlToPlainText(rows.find(p => new RegExp(String.raw`^<strong>\s*${heading}\s*<\/strong>`).test(p))?.replace(/^<strong>[^<]*<\/strong>\s*/, "") ?? "").replace(/\s+/g, " ").trim();
+    const rowHTML = heading => rows.find(p => new RegExp(String.raw`^<strong>\s*${heading}\s*<\/strong>`).test(p)) ?? "";
+    // (PF2e 8.6 writes the lead's damage plain and its conditions unlinked — linked in the rows instead, "is {Grabbed} by a snake" — and the Escape as
+    // "[[/act escape]]": read as 8.5's text.)
+    const grabbedLink = /\bis (@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{Grabbed\}) by an? [a-z]+\./.exec(rowHTML("Failure"))?.[1];
+    const restrainedLink = /\bis (@UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{Restrained\}) by an? [a-z]+\./.exec(rowHTML("Critical Failure"))?.[1];
+    let leadText = htmlToPlainText(body).replace(/\s+/g, " ").trim()
+        .replace(/ takes (\d+d\d+) ([a-z]+) damage and (\d+d\d+) persistent ([a-z]+) damage from /, " takes @Damage[$1[$2]] damage and @Damage[$3[persistent,$4]] damage from ");
+    if (grabbedLink && restrainedLink) leadText = leadText.replace(/, and it's grabbed or restrained depending on /, `, and it's ${grabbedLink} or ${restrainedLink} depending on `);
+    const lead = LEAD.exec(leadText);
+    const plain = heading => htmlToPlainText(rowHTML(heading).replace(/^<strong>[^<]*<\/strong>\s*/, "")).replace(/\s+/g, " ").trim()
+        .replace(/\bis @UUID\[Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+\]\{(Grabbed|Restrained)\} by /, (all, label) => `is ${label.toLowerCase()} by `)
+        .replace(/\[\[\/act escape\]\]/, "Escape");
     const failure = FAILURE.exec(plain("Failure")), step = STEP.exec(htmlToPlainText(heightened).replace(/\s+/g, " ").trim());
     if (!lead || lead[10].toLowerCase() !== adapted.defense.statistic || rows.length !== 3 || plain("Success") !== "The creature is unaffected." || !failure || !CRITICAL.test(plain("Critical Failure")) || !step
         || step[2] !== lead[5] || step[4] !== lead[4] || step[3] !== "1" || lead[3] !== "1") return null;

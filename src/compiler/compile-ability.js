@@ -89,6 +89,7 @@ import { compileTemporaryShield } from "./temporary-shield.js";
 import { compileAreaCounteractTerrain } from "./area-counteract-terrain.js";
 import { compileBolsterSplit } from "./bolster-split.js";
 import { compileThrallStrike } from "./thrall-strike.js";
+import { extractReactionCast } from "./reaction-cast.js";
 import { compileHealBack } from "./heal-back.js";
 import { extractAttackMark, proveStrikeMark } from "./attack-mark.js";
 import { extractOptionAttack } from "./option-attack.js";
@@ -5844,6 +5845,21 @@ function compileSpell(item, options) {
             }
         }
     }
+    // A spell also cast as a reaction (The Night is Mine): compiled without its "[1] or [R]" line and the reaction sentence, the reaction a reminder.
+    if (!options.reactionCastSource) {
+        const reaction = extractReactionCast(item);
+        if (reaction) {
+            const copy = cloneJSON(item);
+            copy.system.description.value = reaction.html;
+            const plan = compileSpell(copy, { ...options, reactionCastSource: true });
+            if (plan.resolution?.kind && plan.resolution.kind !== "unsupported") {
+                plan.resolution.reminders = [...(plan.resolution.reminders ?? []), reaction.reminder];
+                plan.compilerEvidence.reactionCast = reaction.sourceText;
+                plan.automation.compiledCapabilities.push("reaction-cast");
+                return plan;
+            }
+        }
+    }
     // A basic-save blast made by destroying the caster's minion or thrall (Final Sacrifice, Bony Barrage): the ordinary basic save of the
     // creatures in the area, with the card's choice of the minion (or the thrall reminder) and Bony Barrage's bone armor question.
     if (!options.traitModeSource) {
@@ -7864,12 +7880,14 @@ function compileSpell(item, options) {
                 : `The choice selector was compiled, with remaining semantics: ${choiceVariantResolution.completeness.blockers.join(", ")}.`
         ));
     } else if (thrallStrike) {
+        // (PF2e 8.6's own "Spell Effect: Thrall Charge" link: the generated Effect is the one applied.)
+        nativeSpellEffects.unscoped = []; nativeSpellEffects.onUse = [];
         plan.resolution = { kind: "thrall-strike", check: null, sharedDamage: null, outcomes: plan.resolution.outcomes, postDamageTerminal: null, applications: [],
             thrallStrike: thrallStrike.thrallStrike };
         plan.targeting.actorConstraints = { sourceText: "1 of your thralls (the caster's choice)", supportsActorTargets: true, complete: true, predicates: [] };
         plan.automation = { level: "automatic", confidence: 1, compiledCapabilities: ["source", "thrall-strike"], pendingCapabilities: [] };
         plan.compilerEvidence.thrallStrike = thrallStrike.thrallStrike.sourceText;
-        plan.diagnostics = plan.diagnostics.filter(entry => !["DESCRIPTION_SEMANTICS_PENDING", "TARGET_ELIGIBILITY_PENDING"].includes(entry.code));
+        plan.diagnostics = plan.diagnostics.filter(entry => !["DESCRIPTION_SEMANTICS_PENDING", "TARGET_ELIGIBILITY_PENDING", "NATIVE_SPELL_EFFECT_SCOPE_PENDING"].includes(entry.code));
     } else if (temporaryShield) {
         plan.resolution = { kind: "temporary-shield", check: null, sharedDamage: null, outcomes: plan.resolution.outcomes, postDamageTerminal: null, applications: [], temporaryShield: temporaryShield.temporaryShield,
             dataNotes: ["PF2e always gives a shield a Broken Threshold of half its maximum Hit Points, so the shield item carries twice the spell's Hit Points; the spell's Hit Points are those above the threshold, and the spell ends when the shield would break. PF2e counts it as held in one hand."] };
@@ -8414,6 +8432,65 @@ function compileSpell(item, options) {
                 plan.automation.pendingCapabilities = plan.automation.pendingCapabilities.filter(capability => capability !== "residual-prose");
         }
     }
+    // "If the creature has the ooze, unholy, or water trait, it also takes @Damage[(@item.level)d4[persistent,spirit]] damage." on the failure and "The creature
+    // takes double damage, and double persistent damage if it has the ooze, unholy, or water trait." (Spray of Salt, PF2e 8.6): the trait's extra damage on
+    // the failing rows only, for a creature with any of the traits (doubled with the row).
+    if (plan.resolution.kind === "save" && plan.resolution.check?.basic !== true && plan.resolution.sharedDamage && !plan.resolution.conditionalDamage) {
+        const LIST = String.raw`((?:[a-z-]+, )+or [a-z-]+|[a-z-]+ or [a-z-]+|[a-z-]+)`;
+        const FAIL = new RegExp(String.raw`^If the creature has the ${LIST} trait, it also takes @Damage\[(\(@item\.(?:level|rank)\)d\d+\[persistent,([a-z]+)\])\] damage\.$`);
+        const CRIT = new RegExp(String.raw`^The creature takes double damage, and double persistent damage if it has the ${LIST} trait\.$`);
+        const failure = plan.resolution.outcomes?.failure, critical = plan.resolution.outcomes?.criticalFailure;
+        const failClause = (failure?.semanticCoverage?.clauses ?? []).find(clause => FAIL.test(clause.text));
+        const critClause = (critical?.semanticCoverage?.clauses ?? []).find(clause => CRIT.test(clause.text));
+        const fail = failClause ? FAIL.exec(failClause.text) : null, crit = critClause ? CRIT.exec(critClause.text) : null;
+        const shared = failure?.damage?.shared ?? null;
+        if (fail && crit && fail[1] === crit[1] && failure.damage.mode === "mixed" && shared?.multiplier === 1 && (failure.damage.formulas ?? []).length === 1 && failure.damage.formulas[0].formula === fail[2]
+            && critical.damage?.mode === "shared" && critical.damage.multiplier === 2) {
+            const traits = fail[1].split(/,? or |, /).map(trait => trait.trim()).filter(Boolean);
+            failure.damage = { mode: "shared", multiplier: 1, sourceComponentIds: [...shared.sourceComponentIds] };
+            plan.resolution.conditionalDamage = [{ formula: fail[2], damageType: fail[3], trait: traits[0], traits, degrees: ["failure", "criticalFailure"], sourceText: `${failClause.text} ${critClause.text}` }];
+            for (const [outcome, clause] of [[failure, failClause], [critical, critClause]]) {
+                Object.assign(clause, { status: "compiled", compiledClaims: ["conditional-damage"], guidedClaims: [], unexplainedSignals: [] });
+                outcome.manualInstructions = (outcome.manualInstructions ?? []).filter(entry => entry.kind !== "conditional-effect");
+                const coverage = outcome.semanticCoverage;
+                coverage.residualClauseCount = coverage.clauses.filter(entry => entry.status === "residual").length;
+                coverage.guidedClauseCount = coverage.clauses.filter(entry => entry.status === "guided").length;
+                coverage.compiledClauseCount = coverage.clauses.filter(entry => entry.status === "compiled").length;
+                coverage.complete = coverage.fullyCompiled = coverage.clauses.every(entry => entry.status === "compiled");
+            }
+            plan.compilerEvidence.conditionalDamage = plan.resolution.conditionalDamage[0].sourceText;
+            const left = Object.values(plan.resolution.outcomes).flatMap(entry => entry?.manualInstructions ?? []).map(entry => entry.kind);
+            plan.automation.pendingCapabilities = plan.automation.pendingCapabilities.filter(capability => !(capability.startsWith("manual:") && !left.includes(capability.slice(7)))
+                && !(capability === "residual-prose" && Object.values(plan.resolution.outcomes).every(entry => (entry?.semanticCoverage?.clauses ?? []).every(clause => clause.status !== "residual"))));
+        }
+    }
+    // "If the creature is a fiend, the spear magically tethers it. For 1 minute, any teleportation actions it attempts are disrupted unless it first
+    // succeeds at a DC 11 flat check." (Silver Spear's critical hit, PF2e 8.6): a note Effect on a target with the trait, its flat check made as it casts
+    // a spell of that trait (other teleportation actions: its text, the GM's).
+    if (plan.resolution.kind === "save") {
+        const TETHER_IF = /^If the creature is an? ([a-z-]+), the [a-z]+ magically tethers it\.$/;
+        const TETHER = /^For (\d+) (round|minute)s?, any ([a-z]+) actions it attempts are disrupted unless it first succeeds at a @Check\[flat\|dc:(\d+)(?:\|[^\]]*)?\]\.$/;
+        for (const outcome of Object.values(plan.resolution.outcomes ?? {})) {
+            const clauses = outcome?.semanticCoverage?.clauses ?? [];
+            const at = clauses.findIndex(clause => TETHER_IF.test(clause.text));
+            const gate = at >= 0 ? TETHER_IF.exec(clauses[at].text) : null, tether = gate ? TETHER.exec(clauses[at + 1]?.text ?? "") : null;
+            if (!tether || clauses[at].status === "compiled") continue;
+            const [, value, unit, trait, dc] = tether;
+            outcome.noteEffects = [...(outcome.noteEffects ?? []), { label: "Tethered", text: `Any ${trait} actions it attempts are disrupted unless it first succeeds at a DC ${dc} flat check.`,
+                sourceText: `${clauses[at].text} ${clauses[at + 1].text}`, targetTrait: gate[1], castFlatCheck: { dc: Number(dc), trait },
+                duration: { mode: "fixed", value: Number(value), unit: `${unit}s`, expiry: unit === "round" ? "turn-start" : null, anchor: "effect-start", offset: 0, sourceText: `For ${value} ${unit}` } }];
+            for (const clause of [clauses[at], clauses[at + 1]]) Object.assign(clause, { status: "compiled", compiledClaims: ["note-effect"], guidedClaims: [], unexplainedSignals: [] });
+            outcome.manualInstructions = (outcome.manualInstructions ?? []).filter(entry => !["forced-movement", "conditional-effect"].includes(entry.kind));
+            const coverage = outcome.semanticCoverage;
+            coverage.residualClauseCount = coverage.clauses.filter(entry => entry.status === "residual").length;
+            coverage.guidedClauseCount = coverage.clauses.filter(entry => entry.status === "guided").length;
+            coverage.compiledClauseCount = coverage.clauses.filter(entry => entry.status === "compiled").length;
+            coverage.complete = coverage.fullyCompiled = coverage.clauses.every(entry => entry.status === "compiled");
+            const left = Object.values(plan.resolution.outcomes).flatMap(entry => entry?.manualInstructions ?? []).map(entry => entry.kind);
+            plan.automation.pendingCapabilities = plan.automation.pendingCapabilities.filter(capability => !(capability.startsWith("manual:") && !left.includes(capability.slice(7)))
+                && !(capability === "residual-prose" && Object.values(plan.resolution.outcomes).every(entry => (entry?.semanticCoverage?.clauses ?? []).every(clause => clause.status !== "residual"))));
+        }
+    }
     // "As long as the target is taking this persistent spirit damage, it takes a –1 status penalty to its AC." (Warshard Shot's critical hit):
     // a note Effect carrying the penalty, removed with that persistent damage.
     if (plan.resolution.kind === "save") {
@@ -8429,6 +8506,10 @@ function compileSpell(item, options) {
             if (!dealt) continue;
             outcome.noteEffects = [...(outcome.noteEffects ?? []), { label: "AC penalty", text: `It takes a −${value} ${type} penalty to its AC while it takes this persistent ${damageType} damage.`,
                 sourceText: clause.text, duration: { mode: "unlimited" }, whilePersistent: damageType, rules: [{ key: "FlatModifier", selector: "ac", type, value: -Number(value) }] }];
+            // (PF2e 8.6 links its own Effect here — the same persistent damage, granted, and the penalty while it lasts (Warshard Shot) —: the row deals the
+            // damage and the note carries the penalty, so that Effect is left.)
+            outcome.nativeEffects = (outcome.nativeEffects ?? []).filter(effect => !(effect.document?.mechanics?.rules ?? []).some(rule => rule.key === "GrantItem"
+                && rule.alterations?.some(alteration => alteration.property === "persistent-damage" && alteration.value?.damageType === damageType)));
             Object.assign(clause, { status: "compiled", compiledClaims: ["note-effect"], guidedClaims: [], unexplainedSignals: [] });
             changed = true;
             const coverage = outcome.semanticCoverage;
@@ -9148,6 +9229,7 @@ function compileSpell(item, options) {
         }
     }
     if ((attackTable?.reminders ?? []).some(reminder => reminder.kind === "object-hardness")) plan.compilerEvidence.objectHardness = attackTable.reminders.find(reminder => reminder.kind === "object-hardness").sourceText;
+    if ((attackTable?.reminders ?? []).some(reminder => reminder.kind === "ignore-hardness")) plan.compilerEvidence.ignoreHardness = attackTable.reminders.find(reminder => reminder.kind === "ignore-hardness").sourceText;
     // "If a creature uses an item to block …, the item is automatically affected, but the creature doesn't take damage …": the GM's.
     if (attackTable?.shieldBlocked) {
         plan.resolution.reminders = [...(plan.resolution.reminders ?? []), { kind: "shield-blocked", text: `${attackTable.shieldBlocked} If the target Shield Blocks, exclude it and apply the spell to the shield yourself.`, sourceText: attackTable.shieldBlocked }];

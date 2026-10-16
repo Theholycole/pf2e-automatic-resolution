@@ -10,13 +10,16 @@
 import { htmlToPlainText } from "./description-parser.js";
 import { HEADINGS, NARRATION_RULES_NO_TERRAIN as NARRATION_RULES, ATTEMPTS_SAVE as SAVE, trimmedSentences as split } from "./text-patterns.js";
 
+// (PF2e 8.5 writes the rows' damage as inline rolls — "@Damage[1d6[persistent,cold]] damage" —, 8.6 plain — "1d6 persistent cold damage" —, and its critical
+// failure's dice "are 2d6" for 8.5's "increase to 2d6": the inline rolls are read as the plain words.)
+const plainDamage = sentence => sentence.replace(/@Damage\[(\d+d\d+)\[persistent,([a-z]+)\]\]/g, "$1 persistent $2").replace(/@Damage\[(\d+d\d+)\[([a-z]+)\]\]/g, "$1 $2");
 const ROWS = {
     criticalSuccess: [/^The target is unaffected\.$/],
-    success: [/^The target takes @Damage\[(\d+d\d+)\[([a-z]+)\]\] damage, and the spell ends\.$/],
-    failure: [/^The target takes @Damage\[(\d+d\d+)\[([a-z]+)\]\] damage and @Damage\[(\d+d\d+)\[persistent,([a-z]+)\]\] damage\.$/,
+    success: [/^The target takes (\d+d\d+) ([a-z]+) damage, and the spell ends\.$/],
+    failure: [/^The target takes (\d+d\d+) ([a-z]+) damage and (\d+d\d+) persistent ([a-z]+) damage\.$/,
         /^The persistent damage automatically ends when the spell ends\.$/,
         /^It is @UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{Concealed\} to other creatures, and other creatures are concealed to it\.$/],
-    criticalFailure: [/^As failure, but both the ([a-z]+) damage and the persistent ([a-z]+) damage increase to (\d+d\d+)\.$/]
+    criticalFailure: [/^As failure, but both the ([a-z]+) damage and the persistent ([a-z]+) damage (?:increase to|are) (\d+d\d+)\.$/]
 };
 const HEIGHTENED = /^<p>\s*<strong>\s*Heightened \(\+(\d+)\)\s*<\/strong>\s*The ([a-z]+) damage and persistent ([a-z]+) damage increase by (\d+) \((\d+) on a critical failure\)\.\s*<\/p>$/;
 // (Witches+'s Personal Blizzard+: "Heightened (+2) The cold damage increases by 1d6 and the persistent cold damage increases by 2 (2d6 and 4 on a critical
@@ -38,7 +41,7 @@ export function compileSustainedSaveDamage(adapted) {
         const text = new RegExp(String.raw`<p>\s*<strong>\s*${heading}\s*</strong>([\s\S]*?)</p>`).exec(table)?.[1];
         const sentences = split(htmlToPlainText(text ?? ""));
         if (sentences.length !== ROWS[degree].length) return null;
-        rows[degree] = ROWS[degree].map((pattern, index) => pattern.exec(sentences[index]));
+        rows[degree] = ROWS[degree].map((pattern, index) => pattern.exec(plainDamage(sentences[index])));
         if (rows[degree].some(match => !match)) return null;
     }
     const hit = rows.failure[0];

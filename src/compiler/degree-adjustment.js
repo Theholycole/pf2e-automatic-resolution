@@ -39,7 +39,8 @@ const COMBAT_FLOOR = /^A creature currently engaged in combat can't get a result
 const EXPLICIT = /^This is especially disorienting for ([^;]+); if such creatures roll a critical success on their save, they get a success instead, and if they roll a failure, they get a critical failure instead\.$/;
 
 /** Heat Metal form: a creature holding the targeted item can Release it for a result one step better (the GM confirms it does). */
-const RELEASE_BETTER = /^If you target an item held by the creature, the creature can @UUID\[Compendium\.pf2e\.actionspf2e\.Item\.[A-Za-z0-9]+\]\{Release\} the item to improve (?:their|its) degree of success by one step from the result of (?:their|its) saving throw\.$/;
+// (PF2e 8.5 links the Release action; 8.6 writes it plain.)
+const RELEASE_BETTER = /^If you target an item held by the creature, the creature can (?:@UUID\[Compendium\.pf2e\.actionspf2e\.Item\.[A-Za-z0-9]+\]\{Release\}|Release) the item to improve (?:their|its) degree of success by one step from the result of (?:their|its) saving throw\.$/;
 
 /** Hypnopompic Terrors form: a sleeping target wakes as it saves, its result one step worse (the GM confirms it was asleep). */
 const SLEEPING_WORSE = /^If you target a sleeping creature, it wakes up as it attempts the save but takes one degree of success worse than the result it rolled on its save\.$/;

@@ -15563,7 +15563,9 @@ export const cases = {
             combat = await Combat.create({scene: canvas.scene.id, active: true});
             await combat.createEmbeddedDocuments('Combatant', [casterToken(vib), tShaken, tSteady].map((t, i) => ({tokenId: t.id, sceneId: canvas.scene.id, actorId: t.actorId, initiative: 30 - i * 10})));
             await combat.startCombat(); await wait(800);
-            await ctx.api.execute(vib.spell, {sourceActor: vib.caster, plan: await ctx.api.compile(vib.spell), targets: [], castRank: 7, skipConfirmation: true, areaRadius: 20}); await wait(1500);
+            // (The saves' d20s held off a natural 1, which would make the steady foe's critical success a success: half the sonic damage at its turn's end.)
+            const uniform = CONFIG.Dice.randomUniform; CONFIG.Dice.randomUniform = () => 0.7;
+            try { await ctx.api.execute(vib.spell, {sourceActor: vib.caster, plan: await ctx.api.compile(vib.spell), targets: [], castRank: 7, skipConfirmation: true, areaRadius: 20}); await wait(1500); } finally { CONFIG.Dice.randomUniform = uniform; }
             await ctx.api.ongoing.reconcile({clockEvent: true}); await wait(2000);
             const rec = game.journal.contents.map(j => j.getFlag(NS, 'ongoingCast')).filter(r => /Vibrant Vibrato/.test(r?.name ?? '')).at(-1);
             out.vib = {radius: canvas.scene.regions.filter(r => /Vibrant Vibrato/.test(r.name)).at(-1)?.shapes[0]?.radius ?? null,
@@ -41847,6 +41849,43 @@ export const cases = {
             && ef.escape.entries.length === 2 && ef.escape.bPenalty === 0 && !ef.escape.bImmobilized && ef.escape.bSpeed === ef.base,
             `Entangling Flora: leaving ends the penalty; one Escape ends the penalty and Immobilized: ${JSON.stringify(ef)}`);
         return out;
+    },
+    // PF2e 8.6's new spells, batch 1 (2026-10-16): Silver Spear on a fiend and a humanoid, both critically hit (the fiend's extra spirit damage and its tether's
+    // flat check for teleportation spells; none for the humanoid), Piercing Jet's Hardness reminder on its card, The Night is Mine's reaction reminder.
+    async cheliaxBatch1(ctx) {
+        const wait = ms => new Promise(r => setTimeout(r, ms));
+        const NSX = 'pf2e-automatic-resolution';
+        const out = {};
+        const extra = [];
+        const make = async (name, traits) => { const actor = await Actor.create({name: `PFTEST P23 Affliction ${name}`, type: 'npc', flags: {[NSX]: {phase23AfflictionFixture: true}},
+            system: {details: {level: {value: 6}}, traits: {value: traits}, attributes: {hp: {value: 400, max: 400}, ac: {value: 20}}}}); extra.push(actor); return actor; };
+        const run = async (name, targets, degrees, rank) => {
+            const fixture = await ctx.setup(name);
+            const plan = await ctx.api.compile(fixture.spell);
+            const {card} = await ctx.api.saves.start(fixture.spell, {sourceActor: fixture.caster, plan, targets: await Promise.all(targets.map(actor => ctx.token(actor))), castRank: rank, skipConfirmation: true});
+            for (const [i, t] of ctx.state(card).targets.entries()) { await ctx.api.saves.rollSave(card, t.id, {skipDialog: true, attackNumber: 1}); await ctx.api.saves.correctTarget(card, t.id, {action: 'degree', degree: degrees[i]}); }
+            await ctx.api.saves.finalize(card); await wait(1500);
+            return {supported: ctx.api.saves.supports(plan), card: game.messages.get(card.id)};
+        };
+        try {
+            const fiend = await make('spear fiend', ['fiend', 'devil']), plain = await make('spear humanoid', ['humanoid']);
+            const spear = await run('Silver Spear', [fiend, plain], ['criticalSuccess', 'criticalSuccess'], 6);
+            const tether = actor => actor.itemTypes.effect.find(effect => /Silver Spear: Tethered/.test(effect.name));
+            out.spear = {supported: spear.supported, lost: [fiend, plain].map(actor => 400 - actor.system.attributes.hp.value),
+                fiendTether: tether(fiend)?.flags?.[NSX]?.runtime?.castFlatCheck ?? null, plainTether: !!tether(plain)};
+            const jetFoe = await make('jet foe', ['humanoid']);
+            const jet = await run('Piercing Jet', [jetFoe], ['success'], 2);
+            out.jet = {supported: jet.supported, lost: 400 - jetFoe.system.attributes.hp.value, reminder: /ignores it if it's twice the spell's rank or lower/.test(jet.card?.content ?? '')};
+            const nightFoe = await make('night foe', ['humanoid']);
+            const night = await run('The Night is Mine', [nightFoe], ['failure'], 1);
+            out.night = {supported: night.supported, lost: 400 - nightFoe.system.attributes.hp.value, reminder: /Also cast as a reaction/.test(night.card?.content ?? '')};
+        } catch (error) { out.error = error.stack ?? error.message; }
+        for (const actor of extra) { await canvas.scene.deleteEmbeddedDocuments('Token', canvas.scene.tokens.filter(t => t.actorId === actor.id).map(t => t.id)); await actor.delete(); }
+        const s = out.spear ?? {}, j = out.jet ?? {}, n = out.night ?? {};
+        // The fiend lost the doubled piercing and the doubled spirit (12d6 each: at least 24 more); only it is tethered (DC 11 for teleportation spells).
+        assert(!out.error && s.supported && s.lost[0] - s.lost[1] >= 24 && s.lost[1] >= 24 && JSON.stringify(s.fiendTether) === '{"dc":11,"trait":"teleportation"}' && !s.plainTether
+            && j.supported && j.lost >= 4 && j.reminder && n.supported && n.lost >= 2 && n.reminder, `Cheliax batch 1: ${JSON.stringify(out)}`);
+        return {cheliax1: out};
     },
     async cleanup(ctx) {
         // (The deleted records kept for the last case's reads: gone with it.)

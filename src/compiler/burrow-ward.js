@@ -14,7 +14,8 @@ const CANT = /^Creatures that can't burrow through stone can't burrow through th
 const UNDER = /^Such creatures already underground within the area must succeed at an? (Fortitude|Reflex|Will) save or be ejected from the area toward the surface\.$/;
 const SUCCEED = /^Those who succeed are forced out of the area but can remain underground\.$/;
 const STONE = /^Creatures that can burrow through stone treat the area as difficult terrain\.$/;
-const HEIGHTENED = /^<p>\s*<strong>\s*Heightened \((\d+)(?:st|nd|rd|th)\)\s*<\/strong>\s*You create an? @Template\[emanation\|distance:(\d+)\]\.\s*<\/p>$/;
+// (PF2e 8.5 "You create a @Template[emanation|distance:30]."; 8.6 "You create a 30-foot emanation.", with the area in its heightening data.)
+const HEIGHTENED = /^<p>\s*<strong>\s*Heightened \((\d+)(?:st|nd|rd|th)\)\s*<\/strong>\s*You create an? (?:@Template\[emanation\|distance:(\d+)\]|(\d+)-foot emanation)\.\s*<\/p>$/;
 
 /** Returns {burrowWard, claimed} or null. */
 export function compileBurrowWard(adapted) {
@@ -29,7 +30,7 @@ export function compileBurrowWard(adapted) {
     const under = UNDER.exec(sentences[at + 1]), heightened = HEIGHTENED.exec(rest[0]);
     if (!under || !SUCCEED.test(sentences[at + 2]) || !STONE.test(sentences[at + 3]) || !heightened || under[1].toLowerCase() !== adapted.defense.statistic) return null;
     return {
-        burrowWard: { radius: [{ minRank: Number(adapted.rank), feet: Number(area.value) }, { minRank: Number(heightened[1]), feet: Number(heightened[2]) }],
+        burrowWard: { radius: [{ minRank: Number(adapted.rank), feet: Number(area.value) }, { minRank: Number(heightened[1]), feet: Number(heightened[2] ?? heightened[3]) }],
             durationSeconds: Number(minutes[1]) * 60, statistic: adapted.defense.statistic, terrain: { action: "burrow", difficulty: 2 },
             outcomes: { failure: "ejected from the area toward the surface", success: "forced out of the area, but can remain underground" },
             notes: [sentences[at]] },

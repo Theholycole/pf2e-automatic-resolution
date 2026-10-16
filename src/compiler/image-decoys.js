@@ -61,9 +61,11 @@ export function compileImageDecoys(adapted, nativeSpellEffects) {
 // {Frightened 1}.") — the referenced spell's images (its own compiled data: `mirror` is Mirror Image's imageDecoys), and each destroyed image's 1d4 color:
 // that row's damage (and condition) on the attacker the GM targets.
 const CHROMA_LEAD = /^You call forth (three|four|five) illusory images of yourself, and each of the [a-z]+ of you takes on a different color, your colors all shifting each time someone attacks you\.$/;
-const CHROMA_HAS = /^This has the effects of @UUID\[(Compendium\.pf2e\.spells-srd\.Item\.[A-Za-z0-9]+)\]\{([^}]+)\}, except that whenever a foe destroys one of the images, roll \[\[\/r 1d(\d+)\]\](?:\{1d\d+\})? to see which color the image was when it was destroyed\.$/;
+const CHROMA_HAS = /^This has the effects of @UUID\[(Compendium\.pf2e\.spells-srd\.Item\.[A-Za-z0-9]+)\]\{([^}]+)\}, except that whenever a foe destroys one of the images, roll \[\[\/r 1d(\d+)(?: #[^\]]*)?\]\](?:\{1d\d+\})? to see which color the image was when it was destroyed\.$/;
 const CHROMA_TAKES = /^The attacker takes the corresponding effect\.$/;
-const CHROMA_ROW = /^<strong>([A-Z][a-z]+)<\/strong>\s*((?:@Damage\[\d+\[[a-z]+\]\] damage(?: and |, )?)+)(?:, plus it's @UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Z][a-z]+)(?: (\d))?\})?\.$/;
+// (PF2e 8.6: the d4 has a flavor — "[[/r 1d4 #Chromatic Image Color]]" —, each row is a paragraph, and its damage one roll — "@Damage[5[fire],5[mental]]
+// damage" — for 8.5's two.)
+const CHROMA_ROW = /^<strong>([A-Z][a-z]+)<\/strong>\s*((?:@Damage\[\d+\[[a-z]+\](?:,\d+\[[a-z]+\])*\] damage(?: and |, )?)+)(?:, plus it's @UUID\[(Compendium\.pf2e\.conditionitems\.Item\.[A-Za-z0-9]+)\]\{([A-Z][a-z]+)(?: (\d))?\})?\.$/;
 /** The referenced spell's uuid, or null (a cheap look before compiling it). */
 export function chromaticReference(adapted) {
     const plain = htmlToPlainText(String(adapted.descriptionHTML ?? "").replace(/<ol>[\s\S]*<\/ol>/, "")).replace(/\s+/g, " ");
@@ -79,9 +81,9 @@ export function compileChromaticImage(adapted, mirror) {
     const sentences = htmlToPlainText(html.replace(/<ol>[\s\S]*<\/ol>/, "")).replace(/\s+/g, " ").trim().split(/(?<=[.!?])\s+(?=[A-Z@])/).filter(Boolean);
     const lead = CHROMA_LEAD.exec(sentences[0] ?? ""), has = CHROMA_HAS.exec(sentences[1] ?? "");
     if (!list || !lead || !has || !CHROMA_TAKES.test(sentences[2] ?? "") || sentences.length !== 3 || WORDS[lead[1].toLowerCase()] !== mirror.images) return null;
-    const rows = [...list[1].matchAll(/<li>([\s\S]*?)<\/li>/g)].map(match => CHROMA_ROW.exec(match[1].replace(/\s+/g, " ").trim()));
+    const rows = [...list[1].matchAll(/<li>([\s\S]*?)<\/li>/g)].map(match => CHROMA_ROW.exec(match[1].replace(/\s+/g, " ").trim().replace(/^<p>\s*([\s\S]*?)\s*<\/p>$/, "$1")));
     if (rows.length !== Number(has[3]) || rows.some(row => !row)) return null;
-    const colors = rows.map((row, index) => ({ face: index + 1, label: row[1], damage: [...row[2].matchAll(/@Damage\[(\d+)\[([a-z]+)\]\]/g)].map(match => `${match[1]}[${match[2]}]`),
+    const colors = rows.map((row, index) => ({ face: index + 1, label: row[1], damage: [...row[2].matchAll(/(\d+)\[([a-z]+)\]/g)].map(match => `${match[1]}[${match[2]}]`),
         ...(row[3] ? { condition: { uuid: row[3], slug: row[4].toLowerCase(), value: row[5] ? Number(row[5]) : null } } : {}) }));
     return { imageDecoys: { ...structuredClone(mirror), colors: { die: Number(has[3]), rows: colors, sourceText: sentences[1] } },
         claimed: [...sentences, ...rows.map(row => htmlToPlainText(row[0]).trim())] };

@@ -30,15 +30,32 @@ function unnamedRestraintSave(description) {
     return rows.slice(1).every(row => /\bEscapes?\b/.test(row) && /\bmove\b/.test(row));
 }
 
+// And the other slip: a damaging spell flagged non-basic whose text says "… deals 6d6 bludgeoning damage and 2d6 persistent fire damage, with a basic Reflex
+// save to each creature in the area" (Searing Rain, PF2e 8.6) and has no result table — its save is the basic save the text names, when that sentence
+// names each of the item's damage entries.
+function unflaggedBasic(save, damage, description) {
+    const text = String(description ?? "");
+    const entries = Object.values(damage ?? {});
+    // (Not a text of action-count paragraphs: their own readers judge each version — Dynamic Caustic Blast.)
+    if (save.basic === true || !entries.length || /<strong>\s*(?:Critical Success|Success|Failure|Critical Failure)\s*<\/strong>|class="action-glyph"/.test(text)) return false;
+    const plain = text.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
+    const sentence = plain.split(/(?<=[.!?])\s+/).find(entry => /\bwith a basic (?:Fortitude|Reflex|Will) save\b/i.test(entry));
+    const named = sentence ? /\bwith a basic (Fortitude|Reflex|Will) save\b/i.exec(sentence) : null;
+    return !!named && named[1].toLowerCase() === String(save.statistic ?? "").toLowerCase()
+        && entries.every(entry => sentence.includes(`${String(entry.formula ?? "").replace(/\s+/g, "")} ${entry.category === "persistent" ? "persistent " : ""}${String(entry.type ?? "").toLowerCase()} damage`));
+}
+
 function normalizeDefense(save, damage, description) {
     if (!save && unnamedRestraintSave(description)) return { kind: "save", statistic: "reflex", basic: false, assumed: "unnamed-restraint-save" };
     if (!save) return { kind: "none", statistic: null, basic: false };
     const ignored = mislabelledBasic(save, damage, description);
+    const stated = !ignored && unflaggedBasic(save, damage, description);
     return {
         kind: "save",
         statistic: nonEmptyString(save.statistic)?.toLowerCase() ?? null,
-        basic: save.basic === true && !ignored,
-        ...(ignored ? { basicFlagIgnored: true } : {})
+        basic: (save.basic === true && !ignored) || stated,
+        ...(ignored ? { basicFlagIgnored: true } : {}),
+        ...(stated ? { basicFlagAssumed: "text" } : {})
     };
 }
 

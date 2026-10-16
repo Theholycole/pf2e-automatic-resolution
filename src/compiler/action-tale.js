@@ -20,6 +20,8 @@ export function compileActionTale(adapted) {
     const [body, heightened = "", ...rest] = String(adapted.descriptionHTML ?? "").split(/<hr\s*\/?>/i).map(section => section.trim());
     if (rest.length || components.length !== 1 || components[0].category) return null;
     const paragraphs = [...body.matchAll(/<p>([\s\S]*?)<\/p>/gi)].map(match => match[1].trim());
+    // (PF2e 8.6 puts the link to its spell Effect at the body's end, 8.5 after the heightened step: either is left.)
+    const bodyLink = paragraphs.length === 5 && /^@UUID\[Compendium\.pf2e\.spell-effects\.Item\.[^\]]+\]\{[^}]+\}$/.test(paragraphs[4]) ? paragraphs.pop() : null;
     if (paragraphs.length !== 4) return null;
     const lead = split(plain(paragraphs[0]));
     if (!LEAD.test(lead.at(-1) ?? "") || lead.slice(0, -1).some(sentence => /\d|@|\b(?:damage|save|bonus|penalty|Hit Points)\b/i.test(sentence))) return null;

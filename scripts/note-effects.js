@@ -67,6 +67,8 @@ export function validNoteEffect(note) {
         // (Or only for spells with one trait: Lurking Doom's concentrate actions.)
         && (note.castFlatCheck == null || (Number.isInteger(note.castFlatCheck.dc) && note.castFlatCheck.dc >= 2 && note.castFlatCheck.dc <= 20
             && (note.castFlatCheck.trait == null || /^[a-z-]+$/.test(note.castFlatCheck.trait)) && Object.keys(note.castFlatCheck).every(key => ["dc", "trait"].includes(key))))
+        // Only on a target with the trait (Silver Spear's tether on a fiend): basic-save-core.js's targetOutcomeNotes.
+        && (note.targetTrait == null || /^[a-z-]+$/.test(note.targetTrait))
         // Removed after the caster's next attack roll against the holder (Dynamic Daze): note-watchers.js.
         && (note.consumedBySourceAttack == null || note.consumedBySourceAttack === true)
         && (note.conditionHold == null || (note.conditionHold.slug === "frightened" && note.conditionHold.trigger === "failed-attack-or-skill" && Object.keys(note.conditionHold).length === 2))

@@ -41,6 +41,8 @@ const FORMS = [
     new RegExp(String.raw`^${ATTACK}, dealing ${DICE} on a (?:hit|success)\.$`),
     // "… On a hit, the target takes 3d6 bludgeoning damage and 3d6 piercing damage, or double damage on a critical hit."
     new RegExp(String.raw`^${ATTACK}\. On a hit, the target takes ${DICE}, or double damage on a critical hit\.$`),
+    // "… On a hit, the target takes 4d6 piercing damage. On a critical hit, the target takes double damage." (Piercing Jet, PF2e 8.6)
+    new RegExp(String.raw`^${ATTACK}\. On a hit, the target takes ${DICE}\. On a critical hit, the target takes double damage\.$`),
     // "… On a hit, the target takes 2d12 electricity damage." / "If you hit, the projectile deals 7d10 bludgeoning damage."
     // (a spell attack's critical hit deals double damage)
     new RegExp(String.raw`^${ATTACK}\. (?:On a hit, the target takes|(?:If you hit|On a hit), the [a-z]+ deals) ${DICE}\.$`),
@@ -263,6 +265,18 @@ const htmlToPlain = html => String(html ?? "").replace(/<[^>]+>/g, " ").replace(
 // variant paragraph and is set aside, because it describes a different variant.
 const ACTIONS_INTRO = /^The number of actions you spend when Casting this Spell determines (?:its |the )?range(?:,? (?:as well as|and) other parameters)?\.$/i;
 const ACTION_PARAGRAPH = /^This spell has a range of (\d+) feet(?: and deals half damage on a failure \(but not a critical failure\)(?: as [a-z ,']+)?)?\.$/i;
+// (PF2e 8.6 writes Moonlight Ray's Success row before its Critical Success: a run of degree rows, each once, is read in the usual order.)
+const ROW_ORDER = ["Critical Success", "Success", "Failure", "Critical Failure"];
+function usualRowOrder(html) {
+    const run = /(?:<p>\s*<strong>\s*(?:Critical Success|Success|Failure|Critical Failure)\s*<\/strong>[\s\S]*?<\/p>\s*)+/.exec(html);
+    if (!run) return html;
+    const rows = [...run[0].matchAll(/<p>\s*<strong>\s*(Critical Success|Success|Failure|Critical Failure)\s*<\/strong>[\s\S]*?<\/p>/g)];
+    if (rows.length < 2 || new Set(rows.map(row => row[1])).size !== rows.length
+        || rows.every((row, index) => !index || ROW_ORDER.indexOf(row[1]) > ROW_ORDER.indexOf(rows[index - 1][1]))) return html;
+    const sorted = [...rows].sort((a, b) => ROW_ORDER.indexOf(a[1]) - ROW_ORDER.indexOf(b[1])).map(row => row[0]).join("\n");
+    return `${html.slice(0, run.index)}${sorted}\n${html.slice(run.index + run[0].length)}`;
+}
+
 function variantParagraphs(base, adapted) {
     const time = String(adapted.activation?.time ?? "").trim();
     const range = String(adapted.targeting?.range ?? "").trim().toLowerCase();
@@ -433,7 +447,7 @@ export function expandSpellAttackTable(adapted) {
     const base0 = (heightening >= 0 ? html.slice(0, heightening) : html).replace(/<hr\b[^>]*>/gi, "");
     const variants = variantParagraphs(base0, adapted);
     if (!variants) return nope(421);
-    const base = variants.base;
+    const base = usualRowOrder(variants.base);
     const rest = heightening >= 0 ? [html.slice(heightening)] : [];
     const links = [];
     const masked = base.replace(LINK, link => `@@${links.push(link) - 1}@@`);
@@ -465,7 +479,20 @@ export function expandSpellAttackTable(adapted) {
         // conditional-damage sentence.)
         const split = preamble.replace(/^(.*? deals? \d+d\d+ [a-z]+ damage); if (the target has the [a-z-]+ trait, you deal an extra \d+d\d+ [a-z]+ damage\.)/m, (all, first, second) => `${first}. If ${second}`)
             .replace(/ deals? (\d+d\d+ [a-z]+ damage); if (the target has the [a-z-]+ trait, you deal an extra \d+d\d+ [a-z]+ damage\.)/, (all, first, second) => ` deals ${first}. If ${second}`);
-        const adjusted = attackAdjustments(split.split(/(?<=[.!?])\s+(?=[A-Z@])/).filter(Boolean), unmask, rest.join(" "), links);
+        // (Silver Spear, PF2e 8.6: a table under an attack spell's text that names no attack — the attack trait's spell attack —, "The spear is made of silver and
+        // deals 12d6 piercing damage." of an entry carrying the material, and "If the target is a fiend, it deals an additional 12d6 spirit damage." — the
+        // trait's extra damage.)
+        let stated = split.split(/(?<=[.!?])\s+(?=[A-Z@])/).filter(Boolean)
+            .map(sentence => sentence.replace(/^The ([a-z]+) is made of (silver|cold iron|adamantine) and deals (\d+d\d+) ([a-z]+) damage\.$/, (all, noun, material, dice, type) =>
+                adapted.damageComponents.some(component => String(component.formula).replace(/\s+/g, "") === dice && String(component.type).toLowerCase() === type && (component.materials ?? []).includes(material.replace(" ", "-")))
+                    ? `The ${noun} deals ${dice} ${type} damage.` : all)
+                .replace(/^If the target is an? ([a-z-]+), it deals an additional (\d+d\d+ [a-z]+ damage)\.$/, "If the target has the $1 trait, you deal an extra $2."));
+        const range = String(adapted.targeting?.range ?? "").trim().toLowerCase();
+        if (!stated.some(sentence => new RegExp(String.raw`^${ATTACK}\b`).test(sentence)) && /^\d+ feet$/.test(range) && /^(?:1|one) creature$/i.test(targets)
+            && headings.join() === "critical success,success" && stated.some(sentence => /^The [a-z]+ deals \d+d\d+ [a-z]+ damage\.$/.test(sentence)))
+            stated = [...stated.filter(sentence => !/^The [a-z]+ deals \d+d\d+ [a-z]+ damage\.$/.test(sentence) && !/^If the target has the [a-z-]+ trait, you deal an extra /.test(sentence)),
+                "Make a ranged spell attack roll against the target.", ...stated.filter(sentence => /^The [a-z]+ deals \d+d\d+ [a-z]+ damage\.$/.test(sentence) || /^If the target has the [a-z-]+ trait, you deal an extra /.test(sentence))];
+        const adjusted = attackAdjustments(stated, unmask, rest.join(" "), links);
         if (!adjusted || adjusted.gated || adjusted.casterEffect) return nope(455); // read in the one-sentence forms only // a gated persistent rider is read in the one-sentence form only
         const sentences = adjusted.sentences;
         // The preamble is narration, one attack statement, and at most one damage sentence (the spell's damage).
@@ -539,6 +566,11 @@ export function expandSpellAttackTable(adapted) {
         if (!attack || (linkedEffect && !linkedLink) || (lodged && !(lodged.explosion && lodged.removal))) return nope(510);
         // Keep the written rows; a paragraph after them must be the counteract-along-the-ray rule.
         let tableHTML = base.slice(base.search(/<p>\s*<strong\b/i)).trim();
+        // (PF2e 8.6 states a critical hit's persistent damage at the base rank — "double damage and 5 persistent spirit damage" — with "Heightened (+1) … The
+        // persistent spirit damage on a critical hit increases by 1.", where 8.5 wrote "@Damage[(@item.rank)[persistent,spirit]] damage": the spell's rank.)
+        const rankStep = /<strong>\s*Heightened \(\+1\)\s*<\/strong>[^<]*\bThe persistent ([a-z]+) damage on a critical hit increases by 1\./.exec(rest[0] ?? "");
+        if (rankStep && Number(adapted.rank) > 0) tableHTML = tableHTML.replace(new RegExp(String.raw`(<strong>\s*Critical Success\s*<\/strong>[^<]*? and )${Number(adapted.rank)} persistent ${rankStep[1]} damage\b`),
+            `$1@Damage[(@item.rank)[persistent,${rankStep[1]}]] damage`);
         // "You miss and the creature takes no damage." is the miss row's "unaffected".
         tableHTML = tableHTML.replace(/(<strong>\s*Failure\s*<\/strong>)\s*You miss and the (?:creature|target) takes no damage\./, "$1 The target is unaffected.");
         // "The target takes double cold damage, as well as double spirit damage if a fiend or undead." with the extra damage kept above: the
@@ -554,7 +586,10 @@ export function expandSpellAttackTable(adapted) {
                 return row ? { row: row[0], text: row[1].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim() } : null;
             };
             const miss = rowText("Failure"), criticalMiss = rowText("Critical Failure");
-            const selective = miss && SELECTIVE_ROW.exec(miss.text);
+            // (PF2e 8.6 writes the kept entry as a labelled roll — "The target takes the @Damage[(max(5,@item.rank))d6[spirit]]{spirit} damage, but not the
+            // piercing damage." (Warshard Shot): read as the entry named by its type, the item's own entry giving the dice.)
+            const missText = miss?.text.replace(/@Damage\[(?:[^\[\]]|\[[^\[\]]*\])*\[([a-z]+)\]\]\{([a-z]+)\} damage/g, (all, type, label) => type === label ? `${label} damage` : all);
+            const selective = miss && SELECTIVE_ROW.exec(missText);
             // (Or a miss for half damage, with its own conditions: the degree compilers judge the row as written.)
             const halfMiss = !selective && /^The target takes half damage(?: and is [^.]+)?\.$/.test(miss?.text ?? "") && criticalMiss?.text === "The target is unaffected.";
             if (!halfMiss) {
@@ -867,6 +902,13 @@ export function expandSpellAttackTable(adapted) {
         if (!matchesDamage(adapted, withCondition[1], withCondition[2])) return nope(825);
         return withAdjustment({ html: `${lead}${table(`The target takes double damage and is ${unmask(withCondition[4])}.`, `The target takes full damage and is ${unmask(withCondition[3])}.`)}${rest.join("")}`, sourceText: unmask(combined), ...(multiple ? { multipleTargets: true, sharedMultipleAttackPenalty: sharedMap } : {}) });
     }
+    // "…, ignoring the target's Hardness if it's @Damage[@item.level*2] or lower." (Piercing Jet): the GM's reminder for a target with Hardness.
+    const IGNORE_HARDNESS = /, ignoring the target's Hardness if it's (?:@Damage\[@item\.(?:level|rank)\*(\d+)\]|(\d+)) or lower(?=\.)/;
+    const ignore = IGNORE_HARDNESS.exec(combined);
+    const ignoreReminder = ignore ? { kind: "ignore-hardness", text: ignore[1]
+        ? `A target with Hardness: the damage ignores it if it's ${ignore[1] === "2" ? "twice" : `${ignore[1]} times`} the spell's rank or lower (the GM).`
+        : `A target with Hardness: the damage ignores it if it's ${ignore[2]} or lower (the GM).`, sourceText: unmask(combined) } : null;
+    if (ignore) combined = combined.replace(ignore[0], "");
     const match = FORMS.map(form => form.exec(combined)).find(Boolean);
     if (!match || !damageFor(match[1], match[2])) return nope(829);
     // A condition lasting as long as the persistent damage joins both hit rows.
@@ -877,5 +919,6 @@ export function expandSpellAttackTable(adapted) {
             persistentLinks: [{ kind: "condition", damageType: linkedCondition.type, claimText: linkedCondition.claimText, degrees: ["criticalSuccess", "success"] }],
             ...(multiple ? { multipleTargets: true, sharedMultipleAttackPenalty: sharedMap } : {}) });
     }
-    return withAdjustment({ html: `${lead}${table("The target takes double damage.", "The target takes full damage.")}${rest.join("")}`, sourceText: combined, ...(multiple ? { multipleTargets: true, sharedMultipleAttackPenalty: sharedMap } : {}) });
+    return withAdjustment({ html: `${lead}${table("The target takes double damage.", "The target takes full damage.")}${rest.join("")}`, sourceText: ignoreReminder?.sourceText ?? combined,
+        ...(ignoreReminder ? { reminders: [ignoreReminder] } : {}), ...(multiple ? { multipleTargets: true, sharedMultipleAttackPenalty: sharedMap } : {}) });
 }

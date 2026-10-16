@@ -5,6 +5,7 @@
 // A generated PF2e Effect on the thrall adds the dice (of the Strike's own damage type) to its next Strike's damage and is removed after
 // that damage roll; destroying the thrall (the caster's choice when casting) adds the status bonus, and the GM removes the thrall.
 import { htmlToPlainText } from "./description-parser.js";
+import { SPELL_EFFECT_LINK_ANY as LINK } from "./text-patterns.js";
 
 const COMMAND = /^You command the target thrall to Stride and then make a Strike that deals an additional (\d+)d(\d+) damage\.$/;
 const DESTROY = /^You can destroy the thrall as part of this Strike to add a status bonus to the Strike's damage equal to this spell's rank\.$/;
@@ -19,7 +20,10 @@ export function compileThrallStrike(adapted) {
     const base = cut < 0 ? html : html.slice(0, cut);
     const sentences = htmlToPlainText(base).split(/(?<=[.!?])\s+(?=[A-Z@])/).map(sentence => sentence.trim()).filter(Boolean);
     const at = sentences.findIndex(sentence => COMMAND.test(sentence));
-    if (at < 0 || !DESTROY.test(sentences[at + 1] ?? "") || sentences.length !== at + 2) return null;
+    // (PF2e 8.6 adds a link to its own "Spell Effect: Thrall Charge" after the text — read and left: the generated Effect, removed after the Strike's damage
+    // roll, carries the dice, where PF2e's lasts to the turn's end.)
+    const link = sentences.length === at + 3 && LINK.test(sentences[at + 2]) ? sentences[at + 2] : null;
+    if (at < 0 || !DESTROY.test(sentences[at + 1] ?? "") || sentences.length !== at + 2 + (link ? 1 : 0)) return null;
     if (sentences.slice(0, at).some(sentence => /\d|@|\b(?:damage|save|bonus|penalty|condition|Strike)\b/i.test(sentence))) return null;
     const [, count, die] = COMMAND.exec(sentences[at]);
     const ranks = [{ rank: Number(adapted.rank) || 1, dice: Number(count) }];
@@ -30,6 +34,6 @@ export function compileThrallStrike(adapted) {
     }
     return {
         thrallStrike: { dieSize: `d${die}`, ranks, destroyBonus: "rank", range: Number(/^(\d+)/.exec(adapted.targeting.range)[1]), sourceText: [sentences[at], sentences[at + 1]] },
-        sentences: sentences.slice(0, at + 2)
+        sentences: sentences.slice(0, at + 2 + (link ? 1 : 0))
     };
 }
