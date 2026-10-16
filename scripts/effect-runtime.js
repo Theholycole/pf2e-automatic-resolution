@@ -134,6 +134,7 @@ import { seedsAt } from '../src/compiler/divine-seeds.js';
 import { diffractCone } from '../src/compiler/power-prism.js';
 import { treeAt } from '../src/compiler/engulfing-tree.js';
 import { grappleSizeAt } from '../src/compiler/weapon-grapple.js';
+import { disbeliefPain } from "./disbelief-pain.js";
 
 export const MODULE_ID = "pf2e-automatic-resolution";
 
@@ -12316,6 +12317,7 @@ export class EffectRuntime {
         if (act === "disbelieve") {
             if (illusion.disbelievers.includes(target.uuid)) throw new Error(`${target.name} already disbelieved it.`);
             const roll = await target.perception?.roll({ dc: { value: Number(record.dc) }, extraRollOptions: ["action:disbelieve"], skipDialog: true });
+            if (roll) await disbeliefPain({ casterUuid: record.sourceActorUuid, itemUuid: record.sourceItemUuid ?? null, rank: record.rank ?? record.castRank, target: target, spellName: record.name }).catch(() => null);
             const success = Number(roll?.degreeOfSuccess ?? 0) >= 2;
             let healed = 0;
             if (success) {

@@ -185,6 +185,15 @@ export async function actionCastOnCard(message) {
     const say = text => ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content: `<p><strong>${item.name}</strong>: ${text}</p>` }).catch(() => null);
     const residual = residualEnergyOf(actor);
     if (read.spendsResidual && !residual) { await say(`${actor.name} has no residual energy.`); return { refused: "no residual energy" }; }
+    if (read.kind === "spell-effects") {
+        // (Ferocious Gust: the spell cast through PF2e from the module's temporary entry at the higher of the user's class DC and spell DC — its own card follows, a
+        // lingering area's placement too.)
+        const dcs = [Number(actor.classDC?.dc?.value ?? actor.system?.attributes?.classDC?.value), ...(actor.spellcasting?.regular ?? []).map(entry => Number(entry.statistic?.dc?.value))].filter(Number.isFinite);
+        if (!dcs.length) { await say(`${actor.name} has no class DC or spell DC.`); return { refused: "dc" }; }
+        const { castSpellForItem } = await import("./item-cast-runtime.js");
+        const cast = await castSpellForItem({ actor, spell: read.spell.uuid, dc: Math.max(...dcs), item });
+        return { cast: read.spell.name, dc: Math.max(...dcs), messageId: cast?.message?.id ?? null };
+    }
     if (read.kind === "become-form") {
         const sourceSpell = await fromUuid(read.spell.uuid).catch(() => null);
         const link = /@UUID\[([^\]]+)\]\{Spell Effect: [^}]+\}/.exec(sourceSpell?.system?.description?.value ?? "")?.[1];

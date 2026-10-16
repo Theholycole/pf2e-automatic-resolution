@@ -33,6 +33,9 @@ export function readRequirements(text) {
     const sinbladed = /^([a-z]+) or ([a-z]+) spell that affects a single target, and you either succeed on your attack roll or the target fails its saving throw against the spell$/.exec(rest);
     // (The user, 2026-10-05: the Runelord's sin spells aren't marked in PF2e; every spell cast with Sinbladed Spell is taken as valid — the table's.)
     if (sinbladed) return { table: [`a non-cantrip ${sinbladed[1]} or ${sinbladed[2]} spell that affects a single target`] };
+    // ("either fear or spiritual armament as an innate spell": those spells by name, unlinked, cast from an innate entry — Invoke Infernal Potency.)
+    const innateNamed = /^either ([a-z' ]+) or ([a-z' ]+) as an innate spell$/.exec(rest);
+    if (innateNamed) return { spells: [innateNamed[1], innateNamed[2]].map(name => name.replace(/\b[a-z]/g, letter => letter.toUpperCase())), innate: true };
     // ("cast untamed form": the spell by its name, unlinked.)
     if (/^untamed form$/i.test(rest)) return { spells: ["Untamed Form"] };
     // ("a witch cantrip or witch spell that deals damage": the class's spells, the table's.)
@@ -78,6 +81,8 @@ export function readRequirements(text) {
         else if (/^deals damage to a single target and the spell successfully damages that target$/.test(clause)) { requires.damaging = true; requires.singleTarget = true; }
         else if (/^affects an area$/.test(clause)) requires.area = true;
         else if (/^has no duration$|^doesn't have a duration$/.test(clause)) requires.noDuration = true;
+        // (Painful Spell, PF2e 8.6: "deals damage, has no duration, and isn't a cantrip".)
+        else if (/^isn't a cantrip$|^is not a cantrip$/.test(clause)) requires.nonCantrip = true;
         else if (/^targets a single creature$/.test(clause)) requires.singleTarget = true;
         else if ((m = /^(?:deals damage (?:at|to) a single target)$/.exec(clause))) { requires.damaging = true; requires.singleTarget = true; }
         else if ((m = /^requires an? (Fortitude|Reflex|Will) saving throw$/.exec(clause))) requires.saves = [m[1].toLowerCase()];
@@ -133,6 +138,15 @@ export function readRequirements(text) {
 
 // The rider sentences (the text after the lead's comma, and each sentence after it).
 const RIDERS = [
+    // Painful Spell (PF2e 8.6): "it deals an additional 1d4 nonlethal mental damage per spell rank." with "You take nonlethal mental damage equal to the
+    // additional mental damage, which can't be reduced or prevented in any way." — the dice per rank (nonlethal), and the caster the same amount.
+    [/^it deals an additional (\d+)d(\d+) nonlethal ([a-z]+) damage per spell rank\.$/, m => ({ type: "extra-damage", formula: `${m[1]}*rank-d${m[2]}`, damageType: m[3], scaled: true, nonlethal: true })],
+    [/^You take nonlethal ([a-z]+) damage equal to the additional \1 damage, which can't be reduced or prevented in any way\.$/, (m, riders) => {
+        const extra = riders.at(-1);
+        if (extra?.type !== "extra-damage" || extra.damageType !== m[1] || !extra.nonlethal) return null;
+        extra.selfEqual = { nonlethal: true, unpreventable: true };
+        return [];
+    }],
     // "any target who fails their saving throw is also Frightened 1 (or Frightened 2 on a critical failure)."
     [new RegExp(String.raw`^any target who fails their saving throw is also ${COND} \(or ${COND} on a critical failure\)\.$`),
         m => ({ type: "conditions", degrees: { failure: [condition(m, 1)], criticalFailure: [condition(m, 4)] } })],
@@ -466,6 +480,10 @@ const RIDERS = [
     // is heightened to the highest spell rank that you can cast."; Simple Mastery's "you Cast the Spell as though it is 1 rank higher, up to the highest
     // rank spell you can cast."
     [/^reduce its rank by (\d+) \(making it \d+ ranks lower than the maximum spell rank you can cast\)\.$/, m => ({ type: "rank-change", by: -Number(m[1]) })],
+    // Invoke Infernal Potency (PF2e 8.6): "you can heighten the spell to a rank 1 lower than half your level rounded up." with "You then increase the value
+    // of your doomed condition by 1."
+    [/^you can heighten the spell to a rank (\d+) lower than half your level rounded up\.$/, m => ({ type: "rank-change", to: "half-level", offset: -Number(m[1]) })],
+    [/^You then increase the value of your ([a-z]+) condition by (\d+)\.$/, m => ({ type: "self-increase", slug: m[1], by: Number(m[2]) })],
     [/^that spell is heightened to the highest spell rank that you can cast\.$/, () => ({ type: "rank-change", to: "highest" })],
     [/^you Cast the Spell as though it is (\d+) rank higher, up to the highest rank spell you can cast\.$/, m => ({ type: "rank-change", by: Number(m[1]), cap: "highest" })],
     // Mythic proficiency: "use mythic proficiency to determine your spell attack rolls and save DC for that spell." / "Any spell attack roll is made with
@@ -856,7 +874,9 @@ function readOfficialSpellshape(source) {
             // what the module follows; the eidolon is the table's.)
             .replace(/ is to Manifest your Eidolon as a three-action activity, or to Cast /, " is to Cast ")
             // ("If the next spell you cast is a …": the same lead.)
-            .replace(/^If the next spell you cast is /, "If your next action is to Cast "));
+            .replace(/^If the next spell you cast is /, "If your next action is to Cast ")
+            // ("Requirements You are doomed Effect If your next action …": Invoke Infernal Potency's requirement is the table's.)
+            .replace(/^Requirements [^.]+? Effect (?=If (?:the |your )?next action)/, ""));
     const LEAD = /^If (?:(?:the |your )?next action (?:you (?:use|take|perform) )?(?:this turn )?is (?:to )?(?:use your divine font to )?|you use your next action to )(?:Cast|cast|casting) (.+?), (?:(?:the spell [a-z ]+, in addition to its other effects)|(.+))$/;
     const at = sentences.findIndex(sentence => LEAD.test(sentence));
     // (A spellshape action with no "If your next action …" — Apparition's Reflection, Knowledge of Shapes: each sentence read; its preconditions the
@@ -996,6 +1016,7 @@ function unmetBase(requires, facts) {
     if (requires.actions && facts.actions != null && !requires.actions.includes(facts.actions)) return `it doesn't take ${requires.actions.join(" or ")} actions`;
     if (requires.spells && !requires.spells.some(name => name.toLowerCase() === String(facts.name ?? "").toLowerCase())) return `it isn't ${requires.spells.join(" or ")}`;
     if (requires.nonCantrip && facts.cantrip) return "a cantrip";
+    if (requires.innate && facts.innate === false) return "it isn't cast as an innate spell";
     if (requires.damaging && !facts.damageTypes.length) return "it deals no damage";
     if (requires.damageType && !facts.damageTypes.includes(requires.damageType)) return `it deals no ${requires.damageType} damage`;
     if (requires.damageTypesAny && !requires.damageTypesAny.some(type => facts.damageTypes.includes(type))) return `it deals no ${requires.damageTypesAny.join(", ")} damage`;

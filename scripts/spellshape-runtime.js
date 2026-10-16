@@ -42,6 +42,8 @@ export function spellFacts(spell) {
         actions: /^[123]$/.test(String(system.time?.value ?? "")) ? Number(system.time.value) : null,
         // (A prepared entry's spell; a spell that heals — its healing trait or healing damage entry.)
         prepared: spell?.spellcasting ? Boolean(spell.spellcasting.isPrepared) : spell ? false : null,
+        // (Invoke Infernal Potency: "cast … as an innate spell".)
+        innate: spell?.spellcasting ? Boolean(spell.spellcasting.isInnate ?? spell.spellcasting.system?.prepared?.value === "innate") : spell ? false : null,
         healing: spell ? traits.includes("healing") || Object.values(system.damage ?? {}).some(entry => [...(entry.kinds ?? [])].includes("healing")) : null,
         // (The highest rank the caster can cast, for "at least 2 ranks below your maximum rank".)
         highest: spell?.actor ? highestCastableRank(spell.actor) : null,
@@ -510,6 +512,11 @@ async function applyCastRiders(actor, message, shapes, facts, spell, rank) {
             }
         } else if (rider.type === "self-conditions") {
             results.push(...await timedConditions(actor, rider.list, shape.name, { caster: actor }));
+        } else if (rider.type === "self-increase") {
+            // (Invoke Infernal Potency: "You then increase the value of your doomed condition by 1.")
+            const before = Number(actor.getCondition?.(rider.slug)?.value ?? 0);
+            for (let step = 0; step < Number(rider.by ?? 1); step++) await actor.increaseCondition(rider.slug).catch(() => null);
+            results.push({ label: `${shape.name}: ${rider.slug} ${before} → ${Number(actor.getCondition?.(rider.slug)?.value ?? 0)}`, status: "applied" });
         } else if (["ally-heal", "arrival", "delayed-burst", "surge", "control-card", "landing"].includes(rider.type) || (rider.type === "card" && rider.center !== "target")) {
             results.push(...await castCards(actor, message, shape, rider, facts, spell, rank));
         } else if (rider.type === "slot-refund") {
@@ -763,7 +770,9 @@ export async function recordShaping(message, { spellLike = null } = {}) {
         const highest = highestCastableRank(actor);
         const from = shapedRank ?? castRank;
         // (Draw From the Pages: "automatically heightened to a rank equal to half your level".)
-        shapedRank = rider.to === "highest" ? Math.max(from, highest) : rider.to === "half-level" ? Math.max(1, Math.ceil(Number(actor.level ?? 1) / 2)) : Math.max(1, from + Number(rider.by ?? 0));
+        // (Invoke Infernal Potency: "a rank 1 lower than half your level rounded up" — never below the rank it has.)
+        shapedRank = rider.to === "highest" ? Math.max(from, highest) : rider.to === "half-level" ? Math.max(1, Math.ceil(Number(actor.level ?? 1) / 2) + Number(rider.offset ?? 0), rider.offset ? from : 1)
+            : Math.max(1, from + Number(rider.by ?? 0));
         if (rider.cap === "highest") shapedRank = Math.min(shapedRank, Math.max(highest, from));
         // ("up to a maximum of 10th-rank")
         else if (Number.isFinite(Number(rider.cap))) shapedRank = Math.min(shapedRank, Math.max(Number(rider.cap), from));
@@ -1216,7 +1225,18 @@ export function shapeSpellFacts(spell) {
 const traitsOf = actor => { const traits = actor.traits ?? new Set(actor.system?.traits?.value ?? []); return [...traits]; };
 // ("rank", "focus-rank", or a sum of the rank: "2*rank".)
 const rankFormula = (formula, state, caster) => formula === "per4levels-d4" ? `${Math.max(1, Math.floor(Number(caster?.level ?? 1) / 4))}d4` : formula === "rank" ? String(Number(state.castRank)) : formula === "focus-rank" ? String(Math.ceil(Number(caster?.level ?? 1) / 2))
-    : /^\d+\*rank$/.test(String(formula)) ? String(Number(String(formula).split("*")[0]) * Number(state.castRank)) : formula;
+    : /^\d+\*rank$/.test(String(formula)) ? String(Number(String(formula).split("*")[0]) * Number(state.castRank))
+    // ("1d4 … per spell rank": that many dice for each rank — Painful Spell.)
+    : /^\d+\*rank-d\d+$/.test(String(formula)) ? `${Number(String(formula).split("*")[0]) * Number(state.castRank)}d${String(formula).split("-d")[1]}` : formula;
+/** Nonlethal damage that brought a creature from above 0 Hit Points to 0: Unconscious, not dying. */
+async function knockedOut(actor, before) {
+    if (!(before > 0) || Number(actor.hitPoints?.value ?? 1) > 0) return false;
+    for (const condition of (actor.itemTypes?.condition ?? []).filter(entry => entry.slug === "dying")) await condition.delete().catch(() => null);
+    if (actor.statuses?.has?.("dead")) await actor.toggleStatusEffect?.("dead", { active: false, overlay: true }).catch(() => null);
+    if (!actor.hasCondition?.("unconscious")) await actor.increaseCondition("unconscious").catch(() => null);
+    return true;
+}
+
 /** The caster's choice for a rider: given on the cast's message (`shaping.choices`), else the GM's pick. */
 export async function riderChoice(shape, label, choices) {
     if (shape.choice != null && choices.some(choice => choice.value === shape.choice)) return shape.choice;
@@ -1545,7 +1565,7 @@ export async function applyShapeRiders(state, target, actor, token, { DamageRoll
             await applyDamageWithReceipt(actor, { damage: roll, token: token ?? undefined, skipIWR: false, rollOptions: new Set() }, foundry.utils.randomID());
             results.push({ label: `${shape.name}: ${formula} persistent ${damageType}`, status: "applied" });
         } else if (rider.type === "extra-damage") {
-            if (!(multiplier > 0)) continue;
+            if (!(multiplier > 0) && !rider.selfEqual) continue;
             state.shapeRolls ??= {};
             // (Consecrate Spell's spirit or vitality: the caster's choice, once for the cast.)
             state.shapeTypes ??= {};
@@ -1554,9 +1574,25 @@ export async function applyShapeRiders(state, target, actor, token, { DamageRoll
             const key = `${shape.name}:${rider.formula}:${damageType}`;
             state.shapeRolls[key] ??= (await new DamageRoll(`${rankFormula(rider.formula, state, caster)}[${damageType}]`).evaluate()).toJSON();
             const base = DamageRoll.fromData(foundry.utils.deepClone(state.shapeRolls[key]));
+            // (Painful Spell: "You take nonlethal mental damage equal to the additional mental damage, which can't be reduced or prevented in any way." — the
+            // rolled amount, once for the cast, past the caster's resistances.)
+            state.shapeSelf ??= {};
+            if (rider.selfEqual && caster && !state.shapeSelf[key]) {
+                state.shapeSelf[key] = true;
+                const casterToken = caster.getActiveTokens?.(true, true)?.[0];
+                const before = Number(caster.hitPoints?.value ?? 0);
+                const self = await new DamageRoll(`${base.total}[${damageType}]`).evaluate();
+                await applyDamageWithReceipt(caster, { damage: self, token: casterToken ?? undefined, skipIWR: true, rollOptions: new Set(["nonlethal"]) }, foundry.utils.randomID());
+                if (rider.selfEqual.nonlethal) await knockedOut(caster, before);
+                results.push({ label: `${shape.name}: ${caster.name} takes ${base.total} nonlethal ${damageType}`, status: "applied" });
+            }
+            if (!(multiplier > 0)) continue;
             const roll = multiplier === 1 ? base : base.alter(multiplier, 0);
-            const receipt = await applyDamageWithReceipt(actor, { damage: roll, token: token ?? undefined, skipIWR: false, rollOptions: new Set() }, foundry.utils.randomID());
-            results.push({ label: `${shape.name}: ${receipt.damage} ${damageType} more`, status: "applied" });
+            const before = Number(actor.hitPoints?.value ?? 0);
+            const receipt = await applyDamageWithReceipt(actor, { damage: roll, token: token ?? undefined, skipIWR: false, rollOptions: new Set(rider.nonlethal ? ["nonlethal"] : []) }, foundry.utils.randomID());
+            // (Nonlethal extra damage that brings the creature to 0 Hit Points knocks it out instead.)
+            if (rider.nonlethal) await knockedOut(actor, before);
+            results.push({ label: `${shape.name}: ${receipt.damage} ${rider.nonlethal ? "nonlethal " : ""}${damageType} more`, status: "applied" });
         } else if (rider.type === "prone-damage") {
             // (Wand of Caustic Effluence: a creature that fails its Reflex save and falls Prone takes 1d6 acid.)
             if (!["failure", "criticalFailure"].includes(degree) || (rider.statistic && state.saveStatistic !== rider.statistic) || !actor.hasCondition?.("prone")) continue;

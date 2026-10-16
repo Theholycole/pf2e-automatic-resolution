@@ -42289,6 +42289,95 @@ export const cases = {
         assert(!out.error && a.card && a.moved === 2 && t.card && t.moved === -2, `Cheliax batch 10: ${JSON.stringify(out)}`);
         return {cheliax10: out};
     },
+    // PF2e 8.6's new spell features, batch 11 (2026-10-16): Painful Spell on Breathe Fire (the failing foe takes 2d4 nonlethal mental more; the caster the rolled
+    // amount past its resistances), Invoke Infernal Potency on an innate Fear (heightened to rank 4 at 9th level; doomed 1 → 2), And Yet it Still Hurts (a foe
+    // disbelieving the caster's Illusory Creature takes 4 nonlethal mental, rank 2, whatever its result).
+    async cheliaxBatch11(ctx) {
+        const wait = ms => new Promise(r => setTimeout(r, ms));
+        const NSX = 'pf2e-automatic-resolution';
+        const place = async (actor, x, y) => (await canvas.scene.createEmbeddedDocuments('Token', [{...actor.prototypeToken.toObject(), actorId: actor.id, actorLink: true, x, y}]))[0];
+        const g = canvas.grid.size;
+        const out = {};
+        const fromPack = async (pack, name) => { const doc = (await game.packs.get(pack).getDocuments()).find(d => d.name === name); if (!doc) throw new Error(`${name} isn't in ${pack}`); const o = doc.toObject(); delete o._id; return o; };
+        try {
+            const caster = await Actor.create({name: 'PFTEST P23 Affliction ch11 caster', type: 'character', flags: {[NSX]: {phase23AfflictionFixture: true}}});
+            await caster.update({'system.details.alliance': 'party', 'system.details.level.value': 9});
+            await caster.createEmbeddedDocuments('Item', [{name: 'PFTEST hit points', type: 'effect', system: {rules: [{key: 'FlatModifier', selector: 'hp', value: 100}]}}]);
+            const entries = await caster.createEmbeddedDocuments('Item', [
+                {name: 'arcane prepared', type: 'spellcastingEntry', system: {tradition: {value: 'arcane'}, prepared: {value: 'prepared'}, spelldc: {dc: 30, value: 20}, proficiency: {value: 1}}},
+                {name: 'divine innate', type: 'spellcastingEntry', system: {tradition: {value: 'divine'}, prepared: {value: 'innate'}, spelldc: {dc: 30, value: 20}, proficiency: {value: 1}}}]);
+            const at = (name, entry) => fromPack('pf2e.spells-srd', name).then(o => { o.system.location = {value: entry.id}; return o; });
+            const spells = await Promise.all([at('Breathe Fire', entries[0]), at('Illusory Creature', entries[0]), at('Fear', entries[1])]);
+            const feats = await Promise.all([fromPack('pf2e.feats-srd', 'Painful Spell'), fromPack('pf2e.feats-srd', 'And Yet it Still Hurts'), fromPack('pf2e.actionspf2e', 'Invoke Infernal Potency')]);
+            const made = await caster.createEmbeddedDocuments('Item', [...spells, ...feats]);
+            const spell = name => made.find(i => i.type === 'spell' && i.name === name);
+            await place(caster, 30 * g, 22 * g);
+            await caster.update({'system.attributes.hp.value': caster.hitPoints.max});
+            const foe = await ctx.actor('ch11 foe', {level: 1}); await foe.update({'system.details.alliance': 'opposition', 'system.attributes.hp.max': 300}); await foe.update({'system.attributes.hp.value': 300});
+            const tFoe = await place(foe, 31 * g, 22 * g);
+            await wait(1000);
+            const lastCast = () => game.messages.contents.filter(m => m.flags?.pf2e?.context?.type === 'spell-cast').at(-1);
+            // (Armed once its pending Effect is there; the cast read once its shaping is recorded.)
+            const until = async (test, ms = 6000) => { for (let waited = 0; waited < ms; waited += 200) { const value = test(); if (value) return value; await wait(200); } return null; };
+            const arm = async name => { await made.find(i => i.name === name).toMessage(); await until(() => caster.itemTypes.effect.some(e => e.flags?.[NSX]?.pendingSpellshape)); await wait(300); };
+            const castNow = async (name, rank) => { const sp = spell(name); await sp.spellcasting.cast(sp, {rank, consume: false}); await wait(1500); const cast = lastCast(); await until(() => cast?.getFlag(NSX, 'shaping')); return cast; };
+            // Painful Spell on Breathe Fire at rank 2.
+            await arm('Painful Spell');
+            const m1 = await castNow('Breathe Fire', 2);
+            const hp0 = caster.hitPoints.value;
+            const r1 = await ctx.api.saves.start(spell('Breathe Fire'), {plan: await ctx.api.compile(spell('Breathe Fire')), sourceActor: caster, targets: [tFoe], castRank: 2, skipConfirmation: true, sourceMessageId: m1.id});
+            const c1 = r1.card ?? r1;
+            const t1 = ctx.state(c1).targets[0];
+            await ctx.api.saves.rollSave(c1, t1.id, {skipDialog: true}); await ctx.api.saves.correctTarget(c1, t1.id, {action: 'degree', degree: 'failure'});
+            await ctx.api.saves.finalize(c1); await wait(2500);
+            const labels = (ctx.state(c1).targets[0].conditionResults ?? []).map(r => r.label);
+            out.painful = {shaped: m1.getFlag(NSX, 'shaping')?.shapes?.map(s => s.name) ?? null, foe: labels.find(l => /Painful Spell: \d+ nonlethal mental more/.test(l)) ?? null, labels, casterLost: hp0 - caster.hitPoints.value,
+                casterLabel: labels.find(l => /takes \d+ nonlethal mental/.test(l)) ?? null};
+            await caster.update({'system.attributes.hp.value': caster.hitPoints.max}); await foe.update({'system.attributes.hp.value': 300});
+            // Invoke Infernal Potency on the innate Fear.
+            await caster.increaseCondition('doomed'); await wait(500);
+            await arm('Invoke Infernal Potency');
+            const m2 = await castNow('Fear', 1); await wait(800);
+            out.potency = {rank: m2.getFlag(NSX, 'shaping')?.castRank ?? null, doomed: caster.getCondition('doomed')?.value ?? 0};
+            for (const c of caster.itemTypes.condition.filter(c => c.slug === 'doomed')) await c.delete();
+            // And Yet it Still Hurts on the Illusory Creature's Disbelieve.
+            const plan = await ctx.api.compile(spell('Illusory Creature'));
+            const r3 = await ctx.api.execute(spell('Illusory Creature'), {sourceActor: caster, plan, castRank: 2, skipConfirmation: true, dc: 30, size: {size: 'med', name: 'Wolf'}, position: {x: 30 * g, y: 24 * g}}); await wait(1500);
+            const card = game.messages.contents.filter(m => m.flags?.[NSX]?.illusoryCard?.castId === r3.castInstanceId).at(-1);
+            const before = foe.hitPoints.value;
+            await ctx.api.illusoryAct(card, {act: 'disbelieve', tokenUuid: tFoe.uuid}); await wait(1500);
+            out.hurts = {lost: before - foe.hitPoints.value, card: game.messages.contents.slice(-6).some(m => m.flags?.[NSX]?.disbeliefPain?.targetUuid === foe.uuid)};
+            await ctx.api.ongoing.request('end', {castId: r3.castInstanceId}).catch(() => null);
+        } catch (error) { out.error = error.stack ?? error.message; }
+        const p = out.painful ?? {}, q = out.potency ?? {}, h = out.hurts ?? {};
+        assert(!out.error && p.shaped?.includes('Painful Spell') && /nonlethal mental more/.test(p.foe ?? '') && p.casterLost >= 2 && p.casterLost <= 8 && p.casterLabel
+            && q.rank === 4 && q.doomed === 2 && h.lost === 4 && h.card, `Cheliax batch 11: ${JSON.stringify(out)}`);
+        return {cheliax11: out};
+    },
+    // PF2e 8.6's new spell features, batch 12 (2026-10-16): Ferocious Gust — its card casts Gust of Wind from the module's temporary entry at the higher of the user's
+    // class DC and spell DC.
+    async cheliaxBatch12(ctx) {
+        const wait = ms => new Promise(r => setTimeout(r, ms));
+        const NSX = 'pf2e-automatic-resolution';
+        const out = {};
+        try {
+            const user = await Actor.create({name: 'PFTEST P23 Affliction ch12 strix', type: 'character', flags: {[NSX]: {phase23AfflictionFixture: true}}});
+            await user.update({'system.details.level.value': 9});
+            await user.createEmbeddedDocuments('Item', [{name: 'primal prepared', type: 'spellcastingEntry', system: {tradition: {value: 'primal'}, prepared: {value: 'prepared'}, proficiency: {value: 2}}}]);
+            const gust = (await game.packs.get('pf2e.feats-srd').getDocuments()).find(d => d.name === 'Ferocious Gust').toObject(); delete gust._id;
+            const [feat] = await user.createEmbeddedDocuments('Item', [gust]);
+            await canvas.scene.createEmbeddedDocuments('Token', [{...user.prototypeToken.toObject(), actorId: user.id, actorLink: true, x: 3000, y: 2600}]);
+            const expected = Math.max(...[Number(user.classDC?.dc?.value), ...(user.spellcasting?.regular ?? []).map(e => Number(e.statistic?.dc?.value))].filter(Number.isFinite));
+            const before = new Set(game.messages.contents.map(m => m.id));
+            await feat.toMessage(); await wait(2500);
+            const card = game.messages.contents.find(m => !before.has(m.id) && m.flags?.pf2e?.context?.type === 'spell-cast' && m.item?.name === 'Gust of Wind');
+            out.gust = {expected, card: !!card, spell: card?.item?.name ?? null, dc: card?.item?.spellcasting?.statistic?.dc?.value ?? null, statistic: card?.item?.system?.defense?.save?.statistic ?? null,
+                temporary: !!card?.item?.getFlag(NSX, 'castFromItemTemp')};
+        } catch (error) { out.error = error.stack ?? error.message; }
+        const g = out.gust ?? {};
+        assert(!out.error && g.card && g.spell === 'Gust of Wind' && g.dc === g.expected && g.statistic === 'fortitude' && g.temporary, `Cheliax batch 12: ${JSON.stringify(out)}`);
+        return {cheliax12: out};
+    },
     async cleanup(ctx) {
         // (The deleted records kept for the last case's reads: gone with it.)
         globalThis.__pftestRemovedRecords?.clear();

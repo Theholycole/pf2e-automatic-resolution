@@ -412,6 +412,12 @@ export function readCastReaction(source) {
 export function readActionCast(source) {
     const text = plain(source?.system?.description?.value);
     let m;
+    // Ferocious Gust (PF2e 8.6): "Frequency once per 10 minutes With heavy wing beats, you whip up a furious gust and direct it at your opponents. This air blast has the
+    // effects of @UUID[…]{Gust of Wind} with a @Check[fortitude|against:class-spell|traits:air]{fortitude DC} equal to your class DC or spell DC, whichever is higher." —
+    // the spell's save card at that DC (the frequency PF2e's; the lead narration).
+    if ((m = /^(?:Frequency once per [a-z0-9 ]+ )?([^.@\d]+\. )?This [a-z ]+ has the effects of @UUID\[(Compendium\.pf2e\.spells-srd\.Item\.[A-Za-z0-9]+)\]\{([^}]+)\} with a @Check\[(fortitude|reflex|will)\|against:class-spell[^\]]*\]\{[^}]+\} equal to your class DC or spell DC, whichever is higher\.$/.exec(text))
+        && !/\b(?:damage|bonus|penalty|save|DC)\b/i.test(m[1] ?? ""))
+        return { kind: "spell-effects", name: source.name, spell: { uuid: m[2], name: m[3] }, statistic: m[4], dc: "class-or-spell" };
     if ((m = /^Requirements You have residual energy\. .*You expend your residual energy to cast a (\d+)(?:st|nd|rd|th)-rank @UUID\[(Compendium\.pf2e\.spells-srd\.(?:Item\.)?[A-Za-z0-9]+)\]\{([^}]+)\} spell on yourself, except that you gain a \+(\d+)-foot status bonus to your speeds if your speed was higher, an attack modifier of \+(\d+), and a damage bonus of \+(\d+)\. The type of elemental you become must have the same elemental trait as the residual energy you expended\.$/.exec(text)))
         return { kind: "become-form", name: source.name, spell: { uuid: m[2].replace(/spells-srd\.(?!Item\.)/, "spells-srd.Item."), name: m[3] }, rank: Number(m[1]), speedBonus: Number(m[4]), attack: Number(m[5]), damage: Number(m[6]), spendsResidual: true };
     if ((m = /^Requirements You have residual energy\. .*You expend your residual energy to cast @UUID\[(Compendium\.pf2e\.spells-srd\.(?:Item\.)?[A-Za-z0-9]+)\]\{([^}]+)\} as an? ([a-z]+) innate spell, heightened to a spell rank equal to half your level\. The elemental you summon must have the same elemental trait as the residual energy you expended\.$/.exec(text)))

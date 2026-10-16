@@ -57,3 +57,31 @@ Each batch has:
 - a live case (`spellFeaturesBatchN`, batch 4 as 4a and 4b);
 - its write-up;
 - its interpretations in `docs/planning/pending-user-decisions.md`.
+
+## PF2e 8.6 (2026-10-16): Lost Omens Cheliax, Infernal Inheritance
+
+The new book's 244 non-spell items were searched in pftest's PF2e 8.6.1 packs: 67 mention spells. By group:
+
+- **Built:**
+  - Painful Spell: a spellshape, 1d4 nonlethal mental per rank, and the caster takes the rolled amount past its resistances.
+  - Invoke Infernal Potency: an innate Fear or Spiritual Armament heightened to half the level less 1, and doomed raised by 1.
+  - And Yet it Still Hurts: a disbelief attempt against the caster's illusion deals nonlethal mental damage equal to twice the rank (`scripts/disbelief-pain.js`, on all four disbelief rolls).
+  - Ferocious Gust: Gust of Wind cast from a temporary entry at the higher of the class DC and spell DC (its lingering area placed as usual).
+  - The tests are in `test/cheliax-batch-3.test.js`; the live cases are `cheliaxBatch11` and `cheliaxBatch12`.
+- **PF2e's own rules:**
+  - Frightful Figment: its +2 to Intimidation, with Figment's 8.6 Effect.
+  - Mocking Invisibility: its Effect.
+  - The Devil Inside, Swamp Gas Form, Shadowy Disguise, Ancestor's Transformation and the like: their Resistance, Weakness, BaseSpeed and ItemAlteration rules.
+- **Innate or focus spells granted:** 24 feats, plus the two school class features. The module resolves the spells themselves.
+- **The item module's:** the items' activations that cast a spell, and the consumables:
+  - Soulpiercer's Phantom Pain (DC 28).
+  - Crown of the New Moon's Moonlight Ray (+22).
+  - Exploitative Wealth's paranoia (DC 19, the −2 when outnumbered).
+  - Pit's Protection's Diabolical Mantle.
+  - Illicit Knowledge's Hypercognition.
+  - Limitless Power.
+  - Devil's Trap, Night Sky Elixir and Megaphone Mutagen.
+- **Not spell features:** actions that only use the class or spell DC: Inflict Punishment, Call Hellfire, Death of Hope, Impose Order, Condemn Soul, Know I Approach, Submit to Shadow, Stranglehold, Annul Compulsion.
+- **Not built:**
+  - Swamp Gas Form's fire returned to a 10-foot emanation when it takes fire damage.
+  - The thaumaturge's Adept Benefit (Censer): the smoke's save when an enemy Casts a Spell within it.

@@ -22,6 +22,7 @@ import { tentacleAttempt } from './tentacle-grab.js';
 import { castSpellFromUuid } from './cast-spell.js';
 import { spellAttack } from './attack-shapes-runtime.js';
 import { grantMinionControl } from './minion-control-runtime.js';
+import { disbeliefPain } from "./disbelief-pain.js";
 
 // The lantern's light: bright in the area, dim to its multiple.
 const lanternLightRule = (radius, light) => ({ key: "TokenLight", value: { bright: Number(radius) * light.brightTimes, dim: Number(radius) * light.dimTimes } });
@@ -3182,6 +3183,7 @@ export class OngoingFamilies {
                 if (!actor) continue;
                 if (this.heldBySpell(record, actor.uuid)) { results.push({ actorUuid: actor.uuid, status: "already disbelieved" }); continue; }
                 const roll = await actor.perception?.roll({ dc: { value: Number(record.dc) }, extraRollOptions: ["action:disbelieve"], skipDialog: true });
+                if (roll) await disbeliefPain({ casterUuid: record.sourceActorUuid, itemUuid: record.sourceItemUuid ?? null, rank: record.rank ?? record.castRank, target: actor, spellName: record.name }).catch(() => null);
                 const success = Number(roll?.degreeOfSuccess ?? 0) >= 2;
                 if (success) await actor.createEmbeddedDocuments("Item", [{ name: `${record.name}: disbelieved`, type: "effect", img: "icons/svg/eye.svg",
                     flags: { [MODULE_ID]: { spellImmunity: { key: disbelief.key }, runtime: { castInstanceId: record.castId, sourceActorUuid: record.sourceActorUuid, sourceItemName: record.name } } },

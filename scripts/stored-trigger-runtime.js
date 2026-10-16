@@ -5,6 +5,7 @@
 import { assertSpellNotLost, dropMissedTargets } from "./casting-rules-runtime.js";
 import { isExecutableStoredTriggerPlan, storedPoolHp, storedTriggerExposurePlan, detonationPlan } from "./basic-save-core.js";
 import { escapeHTML, randomID, MODULE_ID } from "./runtime-utils.js";
+import { disbeliefPain } from "./disbelief-pain.js";
 import { ONGOING_FLAG } from "./ongoing-core.js";
 import { nativeConditionTiming } from "./condition-timing.js";
 import { applyDamageWithReceipt } from "./native-damage-receipt.js";
@@ -466,6 +467,8 @@ export class StoredTriggerRuntime {
         if (disbelieve.penalty && !Modifier) throw new Error("PF2e's Modifier class is unavailable for the disbelief penalty.");
         const roll = disbelieve.needs === "automatic" ? null : await statistic.roll({ dc: { value: disbelieve.dc }, extraRollOptions: ["action:disbelieve"], skipDialog: true, modifiers: penalty });
         const degree = roll?.degreeOfSuccess ?? null;
+        // (And Yet it Still Hurts: an attempt hurts, whatever its result.)
+        if (roll) await disbeliefPain({ casterUuid: record.sourceActorUuid, itemUuid: record.sourceItemUuid ?? null, rank: record.rank ?? record.castRank, target: actor, spellName: record.name }).catch(() => null);
         const disbelieved = disbelieve.needs === "automatic" || Number(degree) >= (disbelieve.needs === "criticalSuccess" ? 3 : 2);
         if (disbelieved && disbelieve.endsSpell) await this.ongoing.end(journal, { reason: "disbelieved" });
         // (Only this creature's note: the illusion stays for the others.)
@@ -669,6 +672,7 @@ export class StoredTriggerRuntime {
         if (!toucher?.perception?.roll) throw new Error("The touching creature's Perception is unavailable.");
         if (toucher === target) throw new Error("Target the creature that touches it, not the illusion's target.");
         const roll = await toucher.perception.roll({ dc: { value: Number(disbelieve.dc) }, extraRollOptions: ["action:disbelieve"], skipDialog: true });
+        if (roll) await disbeliefPain({ casterUuid: record.sourceActorUuid, itemUuid: record.sourceItemUuid ?? null, rank: record.rank ?? record.castRank, target: toucher, spellName: record.name }).catch(() => null);
         const degree = roll?.degreeOfSuccess ?? null;
         const disbelieved = Number(degree) >= 2;
         const caster = await fromUuid(record.sourceActorUuid);
