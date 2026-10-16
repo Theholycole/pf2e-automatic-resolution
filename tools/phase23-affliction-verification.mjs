@@ -68,6 +68,13 @@ async function context() {
                 if (button) { answered.push(app.title ?? app.options?.window?.title ?? 'a dialog'); button.click(); }
             }
         }, 5000);
+        // (Never on a scene holding the user's own creatures — the lab holds the user's player character and their encounter's foes —: the cases run on
+        // "PFTEST P23 Sweep", a scene with only theirs, 2026-10-16.)
+        const users = canvas.scene ? canvas.scene.tokens.filter(token => token.actor && !/^PFTEST /.test(token.actor.name ?? '') && token.actor.type === 'character') : [];
+        if (canvas.scene?.name === 'PFTEST Corrections laboratory' || users.length) {
+            const refused = {label, passed: false, at: new Date().toISOString(), error: `Refused: the scene "${canvas.scene?.name}" holds creatures that aren't the cases' (${users.map(token => token.name).join(', ') || 'the user\'s'}); view "PFTEST P23 Sweep" to run the cases.`};
+            clearInterval(watchdog); saved.results.push(refused); await persist(); return refused;
+        }
         // (Creatures on the test scenes that aren't the cases' — another session's or the user's (CASTER, the deadliness study's) — are put back as they
         // were: a case's area caught them, and their Hit Points and the Effects or conditions the case gave them stayed, 2026-10-16.)
         const bystanders = canvas.scene && /^PFTEST /.test(canvas.scene.name ?? '') ? canvas.scene.tokens.filter(token => token.actor && !/^PFTEST /.test(token.actor.name ?? '') && !token.actor.flags?.[NS]?.[FIXTURE])
